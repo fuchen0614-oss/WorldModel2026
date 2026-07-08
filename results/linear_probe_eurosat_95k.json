@@ -1,0 +1,19 @@
+{
+  "checkpoint": "checkpoints/stage1_vits_dual_staged/checkpoint_epoch200_step_95000.pt",
+  "final_oa": 0.7614814639091492,
+  "best_oa": 0.7614814639091492,
+  "per_class": {
+    "AnnualCrop": 0.7089678645133972,
+    "Forest": 0.9114139676094055,
+    "HerbaceousVegetation": 0.7201309204101562,
+    "Highway": 0.24000000953674316,
+    "Industrial": 0.9415322542190552,
+    "Pasture": 0.7671568989753723,
+    "PermanentCrop": 0.7272726893424988,
+    "Residential": 0.6798623204231262,
+    "River": 0.8837675452232361,
+    "SeaLake": 0.9797822833061218
+  },
+  "baseline": 0.941,
+  "verdict": "❌ 偏低"
+}

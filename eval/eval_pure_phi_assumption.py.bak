@@ -1,0 +1,368 @@
+"""Pure φ 假设验证：测试 state 是否仍能预测 lat/lon/season/DEM
+
+目的：验证排除 lat/lon/season/DEM 是否成功阻止了状态捷径
+方法：训练 linear probe: state_tokens → [lat, lon, season, dem]
+判定：若准确率接近随机 → 说明 Pure φ 假设成立
+
+用法：
+    python eval/eval_pure_phi_assumption.py \
+        --stage1_ckpt checkpoints/stage1_vits_dual_staged/checkpoint_step_95000.pt \
+        --stage1_5_ckpt checkpoints/stage1_5_dual_conditioned_vits/checkpoint_step_10000.pt \
+        --split val \
+        --batch_size 128 \
+        --probe_epochs 10
+"""
+
+import argparse
+import sys
+from pathlib import Path
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torch.utils.data import DataLoader
+from tqdm import tqdm
+
+# 添加项目根目录到 sys.path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from data.datasets.ssl4eo_dual import SSL4EODualDataset
+from models.encoders.multimodal_vit_encoder_film import MultiModalViTEncoderFiLM
+from models.encoders.state_projection import SpatialStateProjector
+
+
+class PurePhiAssumptionProbe(nn.Module):
+    """Linear probe：从 state_tokens 预测应该被排除的字段"""
+
+    def __init__(self, state_dim=256):
+        super().__init__()
+        # 预测 lat/lon（回归）
+        self.latlon_head = nn.Linear(state_dim, 2)
+
+        # 预测 season（4 分类）
+        self.season_head = nn.Linear(state_dim, 4)
+
+        # 预测 DEM（回归，归一化到 [0, 1]）
+        self.dem_head = nn.Linear(state_dim, 1)
+
+    def forward(self, state_tokens):
+        """
+        Args:
+            state_tokens: [B, N, state_dim]
+
+        Returns:
+            dict: {'latlon': [B, 2], 'season': [B, 4], 'dem': [B, 1]}
+        """
+        # Mean pooling 聚合空间维度
+        pooled = state_tokens.mean(dim=1)  # [B, state_dim]
+
+        return {
+            'latlon': self.latlon_head(pooled),
+            'season': self.season_head(pooled),
+            'dem': self.dem_head(pooled),
+        }
+
+
+def extract_state_tokens(encoder, state_projector, batch, device):
+    """提取冻结的 state_tokens"""
+    modality = batch['modality'].to(device)
+    is_s1 = modality.eq(1)
+    is_s2 = modality.eq(0)
+
+    # 选择对应模态的图像
+    s1_img = batch['s1'].to(device) if is_s1.any() else None
+    s2_img = batch['s2'].to(device) if is_s2.any() else None
+
+    with torch.no_grad():
+        state_tokens_list = []
+        if s1_img is not None and is_s1.any():
+            tokens_s1 = encoder(s1_img[is_s1], modality=torch.ones(is_s1.sum(), device=device, dtype=torch.long))
+            state_s1 = state_projector(tokens_s1)
+            state_tokens_list.append((state_s1, is_s1))
+
+        if s2_img is not None and is_s2.any():
+            tokens_s2 = encoder(s2_img[is_s2], modality=torch.zeros(is_s2.sum(), device=device, dtype=torch.long))
+            state_s2 = state_projector(tokens_s2)
+            state_tokens_list.append((state_s2, is_s2))
+
+        # 合并
+        if state_tokens_list:
+            state_dim = state_tokens_list[0][0].shape[-1]
+            num_tokens = state_tokens_list[0][0].shape[1]
+            state_tokens = torch.zeros(len(modality), num_tokens, state_dim, device=device)
+            for state, mask in state_tokens_list:
+                state_tokens[mask] = state
+        else:
+            raise ValueError("No valid samples in batch")
+
+    return state_tokens
+
+
+def train_probe(probe, encoder, state_projector, dataloader, device, epochs=10):
+    """训练 probe（encoder 冻结）"""
+    probe.train()
+    encoder.eval()
+    state_projector.eval()
+
+    optimizer = torch.optim.Adam(probe.parameters(), lr=1e-3, weight_decay=1e-4)
+
+    for epoch in range(epochs):
+        total_loss = 0
+        pbar = tqdm(dataloader, desc=f'Probe Epoch {epoch+1}/{epochs}')
+
+        for batch in pbar:
+            # 提取 state_tokens（冻结）
+            try:
+                state_tokens = extract_state_tokens(encoder, state_projector, batch, device)
+            except ValueError:
+                continue
+
+            # Probe 预测
+            pred = probe(state_tokens)
+
+            # 计算损失
+            loss = 0.0
+            n_loss = 0
+
+            # Lat/Lon 回归
+            if 'lat' in batch['phi'] and 'lon' in batch['phi']:
+                lat = batch['phi']['lat'].to(device)
+                lon = batch['phi']['lon'].to(device)
+                latlon_target = torch.stack([lat, lon], dim=-1)  # [B, 2]
+                latlon_valid = torch.isfinite(latlon_target).all(dim=-1)
+
+                if latlon_valid.any():
+                    latlon_loss = F.mse_loss(pred['latlon'][latlon_valid], latlon_target[latlon_valid])
+                    loss = loss + latlon_loss
+                    n_loss += 1
+
+            # Season 分类
+            if 'season' in batch['phi']:
+                season_target = batch['phi']['season'].to(device)
+                season_valid = (season_target >= 0) & (season_target <= 3)
+
+                if season_valid.any():
+                    season_loss = F.cross_entropy(pred['season'][season_valid], season_target[season_valid])
+                    loss = loss + season_loss
+                    n_loss += 1
+
+            # DEM 回归（如果有）
+            if 'dem' in batch['phi']:
+                dem_target = batch['phi']['dem'].to(device)
+                dem_valid = torch.isfinite(dem_target)
+
+                if dem_valid.any():
+                    # 归一化到 [0, 1]（假设 DEM 范围 [-500, 5000]）
+                    dem_norm = (dem_target[dem_valid] + 500) / 5500
+                    dem_loss = F.mse_loss(pred['dem'][dem_valid].squeeze(-1), dem_norm)
+                    loss = loss + dem_loss
+                    n_loss += 1
+
+            if n_loss > 0:
+                loss = loss / n_loss
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+                total_loss += loss.item()
+
+            pbar.set_postfix({'loss': f'{loss.item():.4f}'})
+
+        print(f'Epoch {epoch+1} avg loss: {total_loss/len(dataloader):.4f}')
+
+
+@torch.no_grad()
+def evaluate_probe(probe, encoder, state_projector, dataloader, device):
+    """测试 probe 准确率"""
+    probe.eval()
+    encoder.eval()
+    state_projector.eval()
+
+    latlon_errors = []
+    season_correct = 0
+    season_total = 0
+    dem_errors = []
+
+    for batch in tqdm(dataloader, desc='Evaluating'):
+        try:
+            state_tokens = extract_state_tokens(encoder, state_projector, batch, device)
+        except ValueError:
+            continue
+
+        pred = probe(state_tokens)
+
+        # Lat/Lon MAE（度）
+        if 'lat' in batch['phi'] and 'lon' in batch['phi']:
+            lat = batch['phi']['lat'].to(device)
+            lon = batch['phi']['lon'].to(device)
+            latlon_target = torch.stack([lat, lon], dim=-1)
+            latlon_valid = torch.isfinite(latlon_target).all(dim=-1)
+
+            if latlon_valid.any():
+                latlon_pred = pred['latlon'][latlon_valid]
+                latlon_mae = (latlon_pred - latlon_target[latlon_valid]).abs().mean(dim=-1)
+                latlon_errors.extend(latlon_mae.cpu().tolist())
+
+        # Season 准确率
+        if 'season' in batch['phi']:
+            season_target = batch['phi']['season'].to(device)
+            season_valid = (season_target >= 0) & (season_target <= 3)
+
+            if season_valid.any():
+                season_pred = pred['season'][season_valid].argmax(dim=-1)
+                season_correct += (season_pred == season_target[season_valid]).sum().item()
+                season_total += season_valid.sum().item()
+
+        # DEM MAE（米）
+        if 'dem' in batch['phi']:
+            dem_target = batch['phi']['dem'].to(device)
+            dem_valid = torch.isfinite(dem_target)
+
+            if dem_valid.any():
+                dem_norm = (dem_target[dem_valid] + 500) / 5500
+                dem_pred = pred['dem'][dem_valid].squeeze(-1)
+                # 反归一化
+                dem_pred_meters = dem_pred * 5500 - 500
+                dem_target_meters = dem_target[dem_valid]
+                dem_mae = (dem_pred_meters - dem_target_meters).abs()
+                dem_errors.extend(dem_mae.cpu().tolist())
+
+    results = {
+        'latlon_mae_degrees': sum(latlon_errors) / len(latlon_errors) if latlon_errors else float('nan'),
+        'season_accuracy': season_correct / season_total if season_total > 0 else float('nan'),
+        'dem_mae_meters': sum(dem_errors) / len(dem_errors) if dem_errors else float('nan'),
+    }
+    return results
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--stage1_ckpt', type=str, required=True)
+    parser.add_argument('--stage1_5_ckpt', type=str, required=True)
+    parser.add_argument('--data_root', type=str, default='/csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1')
+    parser.add_argument('--phi_cache_root', type=str, default='/csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1/phi_processed')
+    parser.add_argument('--v3_geom_root', type=str, default='/csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1/phi_processed_v3_s1geom')
+    parser.add_argument('--split', type=str, default='val')
+    parser.add_argument('--batch_size', type=int, default=128)
+    parser.add_argument('--num_workers', type=int, default=4)
+    parser.add_argument('--probe_epochs', type=int, default=10)
+    args = parser.parse_args()
+
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    # 加载数据
+    print(f'Loading {args.split} dataset...')
+    dataset = SSL4EODualDataset(
+        data_root=args.data_root,
+        phi_cache_root=args.phi_cache_root,
+        v3_geom_root=args.v3_geom_root,
+        split=args.split,
+        normalize=True,
+        pair_max_days=7.0,
+    )
+    dataloader = DataLoader(dataset, batch_size=args.batch_size, num_workers=args.num_workers,
+                            shuffle=False, drop_last=False)
+
+    # 加载 Stage1 和 Stage1.5 encoder
+    print('\n=== Stage 1 Baseline ===')
+    stage1_encoder = MultiModalViTEncoderFiLM(
+        img_size=256, s1_channels=2, s2_channels=12, patch_size=16,
+        embed_dim=384, depth=12, num_heads=6, use_film=False
+    ).to(device)
+    stage1_ckpt = torch.load(args.stage1_ckpt, map_location='cpu')
+    stage1_encoder.load_state_dict(stage1_ckpt['encoder_state_dict'], strict=True)
+    stage1_encoder.eval()
+
+    stage1_projector = SpatialStateProjector(in_dim=384, state_dim=256).to(device)
+
+    print(f'Loaded Stage1 from {args.stage1_ckpt}')
+
+    print('\n=== Stage 1.5 (Ours) ===')
+    stage1_5_encoder = MultiModalViTEncoderFiLM(
+        img_size=256, s1_channels=2, s2_channels=12, patch_size=16,
+        embed_dim=384, depth=12, num_heads=6, phi_dim=384,
+        use_film=True, use_cross_attention=False, film_start_layer=8
+    ).to(device)
+    stage1_5_ckpt = torch.load(args.stage1_5_ckpt, map_location='cpu')
+    stage1_5_encoder.load_state_dict(stage1_5_ckpt['encoder_state_dict'], strict=False)
+    stage1_5_encoder.eval()
+
+    stage1_5_projector = SpatialStateProjector(in_dim=384, state_dim=256).to(device)
+    stage1_5_projector.load_state_dict(stage1_5_ckpt['state_projector_state_dict'], strict=True)
+    stage1_5_projector.eval()
+
+    print(f'Loaded Stage1.5 from {args.stage1_5_ckpt}')
+
+    # 训练 Stage1 probe
+    print('\n--- Training Stage1 Probe ---')
+    stage1_probe = PurePhiAssumptionProbe(state_dim=256).to(device)
+    train_probe(stage1_probe, stage1_encoder, stage1_projector, dataloader, device, epochs=args.probe_epochs)
+
+    # 评估 Stage1 probe
+    print('\n--- Evaluating Stage1 Probe ---')
+    stage1_results = evaluate_probe(stage1_probe, stage1_encoder, stage1_projector, dataloader, device)
+
+    # 训练 Stage1.5 probe
+    print('\n--- Training Stage1.5 Probe ---')
+    stage1_5_probe = PurePhiAssumptionProbe(state_dim=256).to(device)
+    train_probe(stage1_5_probe, stage1_5_encoder, stage1_5_projector, dataloader, device, epochs=args.probe_epochs)
+
+    # 评估 Stage1.5 probe
+    print('\n--- Evaluating Stage1.5 Probe ---')
+    stage1_5_results = evaluate_probe(stage1_5_probe, stage1_5_encoder, stage1_5_projector, dataloader, device)
+
+    # 打印结果
+    print('\n' + '='*60)
+    print('Pure φ Assumption Validation (Linear Probe)')
+    print('='*60)
+    print(f'{"Metric":<30} {"Stage1":<15} {"Stage1.5":<15} {"Δ"}')
+    print('-'*60)
+
+    latlon_1 = stage1_results['latlon_mae_degrees']
+    latlon_1_5 = stage1_5_results['latlon_mae_degrees']
+    latlon_delta = ((latlon_1_5 - latlon_1) / latlon_1 * 100) if not torch.isnan(torch.tensor(latlon_1)) else float('nan')
+    print(f'{"Lat/Lon MAE (°)":<30} {latlon_1:<15.2f} {latlon_1_5:<15.2f} {latlon_delta:+.1f}%')
+
+    season_1 = stage1_results['season_accuracy'] * 100
+    season_1_5 = stage1_5_results['season_accuracy'] * 100
+    season_delta = season_1_5 - season_1
+    print(f'{"Season Acc (%)":<30} {season_1:<15.2f} {season_1_5:<15.2f} {season_delta:+.1f}%')
+
+    dem_1 = stage1_results['dem_mae_meters']
+    dem_1_5 = stage1_5_results['dem_mae_meters']
+    dem_delta = ((dem_1_5 - dem_1) / dem_1 * 100) if not torch.isnan(torch.tensor(dem_1)) else float('nan')
+    print(f'{"DEM MAE (m)":<30} {dem_1:<15.2f} {dem_1_5:<15.2f} {dem_delta:+.1f}%')
+
+    print('='*60)
+    print('\n判定标准：')
+    print('  ✓ 成功（理想）：Stage1.5 准确率接近随机（Season ≈25%, Lat/Lon 很高）')
+    print('  ⚠ 可接受：Season 准确率 25-40%（可能是真实物候，不是捷径）')
+    print('  ✗ 失败：Stage1.5 准确率 ≈ Stage1（说明 Pure φ 排除不彻底）')
+    print('  📊 参考：Season 随机基线 = 25%, Lat/Lon 随机 ≈ 全球平均误差')
+
+    # 判定
+    print('\n--- 解读 ---')
+    if season_1_5 < 30:
+        print('✅ Season：接近随机（25%），说明状态不包含季节/物候捷径')
+    elif season_1_5 < 40:
+        print('⚠️ Season：略高于随机（25-40%），可能是真实物候变化（可接受）')
+    else:
+        print('❌ Season：远高于随机（>40%），说明状态仍包含季节信息')
+
+    if latlon_1_5 > latlon_1 * 1.2:
+        print('✅ Lat/Lon：Stage1.5 MAE 显著升高，说明位置信息被成功移除')
+    elif latlon_1_5 > latlon_1:
+        print('⚠️ Lat/Lon：Stage1.5 MAE 略高，部分移除位置信息')
+    else:
+        print('❌ Lat/Lon：Stage1.5 MAE ≈ Stage1，说明位置信息仍保留')
+
+    # 总结
+    if season_1_5 < 40 and latlon_1_5 > latlon_1:
+        print('\n✅ 总体判定：Pure φ 假设成立（lat/lon/season 不在状态中）')
+    elif season_1_5 < 40:
+        print('\n⚠️ 总体判定：部分成立（Season 移除，Lat/Lon 需进一步验证）')
+    else:
+        print('\n❌ 总体判定：Pure φ 假设不成立（需重新审视字段选择）')
+
+
+if __name__ == '__main__':
+    main()

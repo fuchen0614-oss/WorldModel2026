@@ -1,0 +1,98 @@
+# ============================================================
+# Stage 1 ViT-S/16 双模态 MAE 预训练配置 - 150 epoch 从零开始
+# ============================================================
+# 本配置用于从初始权重训练 150 epoch，带可视化
+#
+# Step/Epoch 换算（权威：23_Step_Epoch换算与各阶段训练时长权威汇总.md）
+#   - Global batch: 8 GPU × 512/GPU = 4096
+#   - Dual 模式 S2 视角：476.6 steps/epoch
+#   - 100 epoch = 47,500 steps (重点保存)
+#   - 150 epoch = 71,500 steps (训练终点)
+# ============================================================
+
+# ---------- 训练模式 ----------
+# 'dual'(S1/S2 轮流) | 's1_only' | 's2_only'
+training_mode: dual
+
+# ---------- 模型配置 ----------
+model:
+  encoder:
+    # ViT-S/16 标准（embed=384 / depth=12 / heads=6, ~22M 参数）
+    img_size: 256
+    s1_channels: 2          # S1 GRD: VV/VH
+    s2_channels: 12         # S2 L2A: 12 bands
+    patch_size: 16
+    embed_dim: 384
+    depth: 12
+    num_heads: 6
+    mlp_ratio: 4.0
+    dropout: 0.0
+
+  decoder:
+    # MAE 风格的轻量 decoder（is 是 encoder 一半,4 blocks）
+    in_dim: 384             # 必须 == encoder.embed_dim
+    s1_channels: 2
+    s2_channels: 12
+    patch_size: 16
+    img_size: 256
+    decoder_embed_dim: 192  # decoder = encoder 一半（MAE 原论文）
+    depth: 4                # 4 blocks（MAE 风格）
+    num_heads: 6
+    mlp_ratio: 4.0
+    dropout: 0.0
+    decoder_mode: transformer
+
+# ---------- 数据 ----------
+data:
+  split: train
+  random_season: true     # 每步随机取 1 季，配合 dual 模态轮流
+  normalize: true
+  # ⭐ STAGED: S2 在 /dev/shm (运存), S1 在 /tmp (本地盘软链)
+  # 训练完成后会自动清理这些临时数据
+  data_root: /dev/shm/zjliu17_ssl4eo
+  batch_size: 512        # 每卡 batch（8卡 → global 4096）
+  num_workers: 6         # Staged 最快方案
+  prefetch_factor: 1
+  shard_pattern: "ssl4eos12_shard_{000001..000477}.tar"
+  cache_size: 2000
+
+# ---------- 训练超参 ----------
+# 150 epoch = 71,500 steps (S2 视角 dual 模式)
+max_steps: 71500
+warmup_steps: 2000
+log_interval: 100
+
+# Loss
+loss:
+  s1_weight: 1.0
+  s2_weight: 1.0
+  loss_type: l1
+
+# 掩码比例
+mask_ratio: 0.75
+
+# ---------- 优化器 ----------
+optimizer:
+  name: adamw
+  lr: 0.0003
+  weight_decay: 0.05
+  betas: [0.9, 0.95]
+
+# ---------- 调度器 ----------
+scheduler:
+  name: cosine
+  warmup_steps: 2000
+  min_lr: 0.00003           # 降低到 1/10，给后续微调留空间
+
+# ---------- Epoch 标记（额外保存带 tag 的 ckpt 副本）----------
+epoch_tag_steps:
+  - {step: 47500, tag: epoch100}    # 100 epoch 重点保存
+  - {step: 71500, tag: epoch150}    # 150 epoch 终点
+
+# ---------- 输出路径 ----------
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage1_150ep_viz
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage1_150ep_viz
+checkpoint_interval: 2500  # 每 2500 step 存一次（共 29 个）
+
+# 可视化间隔（每 500 step 保存重建样本）
+viz_interval: 500

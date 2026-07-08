@@ -1,0 +1,49 @@
+# ============================================================
+# Stage 1 多卡 FSDP 训练配置（torchrun 启动）
+# 用法: torchrun --nproc_per_node=N train/train_stage1_ssl4eo.py --config 本文件
+# ============================================================
+
+# ---------- 训练超参 ----------
+max_steps: 10                # 总训练步数（smoke test 用 10，正式训练改大）
+learning_rate: 0.0001        # 注意必须写成 0.0001 而非 1e-4（YAML 会把 1e-4 解析成字符串）
+optimizer: adamw
+weight_decay: 0.05
+warmup_steps: 0
+loss_type: masked_mse        # 可选: masked_mse / masked_l1 / charbonnier
+precision: bf16              # bf16 混合精度（H200 原生支持）
+log_interval: 2              # 每多少步打印一次日志
+
+# ---------- 路径 ----------
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs
+
+# ---------- FSDP 设置 ----------
+distributed: true
+fsdp_version: fsdp2          # 使用 FSDP2 (fully_shard)
+fsdp_sharding: FULL_SHARD    # 全分片：参数/梯度/优化器状态全部切分
+
+# ---------- 数据配置 ----------
+data:
+  data_root: /csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1
+  modality: S2L2A            # 输入模态：S2L2A(12波段) / S2RGB(3波段) 可切换
+  split: train
+  batch_size: 8              # 每张卡的 batch size（总 batch = batch_size × GPU数）
+  num_workers: 0
+  random_season: true        # 随机抽 1 个季节（4 季中），保留时序接口
+  normalize: true            # 归一化到 [0,1]
+  shard_pattern: "ssl4eos12_shard_{000001..000005}.tar"  # smoke 只用前 5 个 shard
+
+# ---------- 模型配置 ----------
+model:
+  encoder:                   # TinyViT 编码器
+    img_size: 256            # 输入尺寸（从 264 中心裁剪到 256，可被 patch_size 整除）
+    in_channels: 12          # 输入通道：S2L2A=12，切 S2RGB 时改成 3
+    patch_size: 16
+    embed_dim: 256
+    depth: 4                 # Transformer 层数
+    num_heads: 4
+  decoder:                   # 轻量重建解码器
+    in_dim: 256
+    out_channels: 12         # 输出通道：须与 encoder.in_channels 一致
+    depth: 2
+    img_size: 256

@@ -1,0 +1,100 @@
+# Stage 1.5 canonical configuration: E(X,phi)->state and R(state,phi)->X.
+# One optimizer step consumes 8 GPU * 64 samples * accumulation 2 = 1024 locations.
+# Both S1 and S2 are processed every step; there is NO dual-mode /2 factor.
+
+model:
+  encoder:
+    type: MultiModalViTEncoderFiLM
+    img_size: 256
+    s1_channels: 2
+    s2_channels: 12
+    patch_size: 16
+    embed_dim: 384
+    depth: 12
+    num_heads: 6
+    mlp_ratio: 4.0
+    dropout: 0.0
+    phi_dim: 384
+    use_film: true
+    use_cross_attention: false
+    film_start_layer: 8       # inject phi only in the final 4 blocks
+
+  phi_encoder:
+    type: PureImagingConditionEncoder
+    embed_dim: 384
+    sun_dim: 64
+    sar_geom_dim: 64
+    dropout: 0.0
+    condition_dropout: 0.10
+    use_sar_geometry: true
+
+  state_projector:
+    type: SpatialStateProjector
+    in_dim: 384
+    state_dim: 256
+    hidden_dim: 512
+
+  decoder:
+    type: DualHeadDecoder
+    in_dim: 384
+    s1_channels: 2
+    s2_channels: 12
+    patch_size: 16
+    img_size: 256
+    decoder_embed_dim: 192
+    depth: 4
+    num_heads: 6
+    mlp_ratio: 4.0
+    dropout: 0.0
+    decoder_mode: transformer
+    phi_dim: 384
+
+data:
+  split: train
+  normalize: true
+  data_root: /csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1
+  phi_cache_root: /csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1/phi_processed
+  v3_geom_root: /csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1/phi_processed_v3_s1geom
+  shard_pattern: "ssl4eos12_shard_{000001..000477}.tar"
+  batch_size: 64             # per GPU; 8 GPUs => physical global batch 512
+  num_workers: 4
+  prefetch_factor: 2
+  cache_size: 500
+  pair_max_days: 7.0         # <=14 days is reserved for an ablation
+
+training:
+  max_steps: 60000
+  gradient_accumulation_steps: 2  # effective global batch 1024 on 8 GPUs
+  warmup_steps: 1000
+  mask_ratio: 0.75
+  recon_loss: l1
+  grad_clip: 1.0
+  new_modules_only_steps: 2000
+  partial_unfreeze_steps: 10000
+  loss_weights:
+    mae: 1.0
+    alignment_start: 0.05
+    alignment_end: 0.20
+    nuisance_start: 0.0
+    nuisance_end: 0.02
+    anchor: 0.10
+    ramp_end_step: 10000
+  vicreg:
+    invariance_weight: 25.0
+    variance_weight: 25.0
+    covariance_weight: 1.0
+
+optimizer:
+  name: adamw
+  base_lr: 0.00001
+  new_lr: 0.0001
+  base_min_lr: 0.000001
+  new_min_lr: 0.000001
+  weight_decay: 0.05
+  betas: [0.9, 0.95]
+
+resume_from: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage1_vits_dual_staged/checkpoint_step_95000.pt
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage1_5_dual_conditioned_vits_60k
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage1_5_dual_conditioned_vits_60k
+checkpoint_interval: 5000
+log_interval: 50

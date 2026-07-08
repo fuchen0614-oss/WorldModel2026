@@ -1,0 +1,57 @@
+# ============================================================
+# Stage 1 正式训练配置（10000 步，含训练曲线和重建可视化）
+# 用法: torchrun --nproc_per_node=N train/train_stage1_ssl4eo.py \
+#         --config configs/train/stage1_long.yaml \
+#         --viz-interval 500
+#
+# 与 stage1_check / stage1_fsdp 的差别:
+#   max_steps: 10000
+#   warmup_steps: 500           充分预热
+#   shard_pattern: 200 个 shard ≈ 10万样本，4卡每epoch~3000步,10k步约3 epoch
+#   log_interval: 50            10k/50=200 行日志
+# ============================================================
+
+# ---------- 训练超参 ----------
+max_steps: 10000
+learning_rate: 0.0001
+optimizer: adamw
+weight_decay: 0.05
+warmup_steps: 500              # 前 500 步线性 warmup
+loss_type: masked_mse
+precision: bf16
+log_interval: 50               # 每 50 步打一次
+
+# ---------- 路径 ----------
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/long_run
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/long_run
+
+# ---------- FSDP ----------
+distributed: true
+fsdp_version: fsdp2
+fsdp_sharding: FULL_SHARD
+
+# ---------- 数据 ----------
+data:
+  data_root: /csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1
+  modality: S2L2A
+  split: train
+  batch_size: 8                # 4卡 → 全局 batch 32
+  num_workers: 0
+  random_season: true
+  normalize: true
+  shard_pattern: "ssl4eos12_shard_{000001..000200}.tar"  # 200 shard ≈ 10万样本
+
+# ---------- 模型 ----------
+model:
+  encoder:
+    img_size: 256
+    in_channels: 12
+    patch_size: 16
+    embed_dim: 256
+    depth: 4
+    num_heads: 4
+  decoder:
+    in_dim: 256
+    out_channels: 12
+    depth: 2
+    img_size: 256

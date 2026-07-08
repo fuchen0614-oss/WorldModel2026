@@ -1,0 +1,57 @@
+# ============================================================
+# Stage 1 正式训练配置 v2（50000 步，8 卡，含训练曲线和重建可视化）
+# 用法: torchrun --nproc_per_node=8 train/train_stage1_ssl4eo.py \
+#         --config configs/train/stage1_long_v2.yaml \
+#         --viz-interval 2000
+#
+# 相对 v1 的变化:
+#   max_steps: 50000            余弦退火按 --max-steps 自动对齐
+#   warmup_steps: 2000          长训练用更长 warmup（~4% 总步数）
+#   输出目录改为 long_run_v2     不覆盖 v1 的 20k 成果
+#   中文字体已修复（visualization.py 自动注册思源黑体）
+# ============================================================
+
+# ---------- 训练超参 ----------
+max_steps: 100000
+learning_rate: 0.0001
+optimizer: adamw
+weight_decay: 0.05
+warmup_steps: 4000             # 前 4000 步线性 warmup（约占总步数 4%）
+loss_type: masked_mse
+precision: bf16
+log_interval: 50               # 每 50 步打一次
+
+# ---------- 路径 ----------
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/long_run_v3_100k
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/long_run_v3_100k
+
+# ---------- FSDP ----------
+distributed: true
+fsdp_version: fsdp2
+fsdp_sharding: FULL_SHARD
+
+# ---------- 数据 ----------
+data:
+  data_root: /csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1
+  modality: S2L2A
+  split: train
+  batch_size: 64               # 8卡 → 全局 batch 512（每卡64，充分利用H200显存）
+  num_workers: 16              # 增加数据加载并行度
+  random_season: true
+  normalize: true
+  shard_pattern: "ssl4eos12_shard_{000001..000200}.tar"  # 200 shard ≈ 10万样本
+
+# ---------- 模型 ----------
+model:
+  encoder:
+    img_size: 256
+    in_channels: 12
+    patch_size: 16
+    embed_dim: 256
+    depth: 4
+    num_heads: 4
+  decoder:
+    in_dim: 256
+    out_channels: 12
+    depth: 2
+    img_size: 256

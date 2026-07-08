@@ -1,0 +1,56 @@
+# ============================================================
+# Stage 1 稳定性验证配置（1000 步，看 loss 趋势是否真在下降）
+# 用法: torchrun --nproc_per_node=N train/train_stage1_ssl4eo.py --config 本文件
+#
+# 与 stage1_fsdp.yaml 的差别（仅这几处）:
+#   max_steps: 10 -> 1000
+#   warmup_steps: 0 -> 100        从 0 平滑升到 lr，避免一开始就大步乱跳
+#   log_interval: 2 -> 25         每 25 步打一次，1000/25=40 行，清晰看趋势
+#   shard_pattern: 5 个 -> 30 个   样本量从 ~2560 升到 ~15000，避免过拟合小子集
+#   checkpoint_interval CLI 设 200 5 个 ckpt 看中间状态
+# ============================================================
+
+# ---------- 训练超参 ----------
+max_steps: 1000              # 1000 步足以看清 loss 趋势
+learning_rate: 0.0001
+optimizer: adamw
+weight_decay: 0.05
+warmup_steps: 100            # 前 100 步 warmup，避免初始 lr 冲击
+loss_type: masked_mse
+precision: bf16
+log_interval: 25             # 每 25 步打一次日志
+
+# ---------- 路径 ----------
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stability_check
+
+# ---------- FSDP ----------
+distributed: true
+fsdp_version: fsdp2
+fsdp_sharding: FULL_SHARD
+
+# ---------- 数据 ----------
+data:
+  data_root: /csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1
+  modality: S2L2A
+  split: train
+  batch_size: 8              # 每卡 8，4 卡 = 全局 batch 32
+  num_workers: 0
+  random_season: true
+  normalize: true
+  shard_pattern: "ssl4eos12_shard_{000001..000030}.tar"  # 30 shard ≈ 15000 样本
+
+# ---------- 模型（与 fsdp 配置完全一致） ----------
+model:
+  encoder:
+    img_size: 256
+    in_channels: 12
+    patch_size: 16
+    embed_dim: 256
+    depth: 4
+    num_heads: 4
+  decoder:
+    in_dim: 256
+    out_channels: 12
+    depth: 2
+    img_size: 256

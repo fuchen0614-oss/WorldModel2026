@@ -1,0 +1,72 @@
+# S2 单模态 Stage 1 预训练配置
+# 仅 S2 L2A，MAE 重建，对标论文 baseline
+
+# ========== 训练模式 ==========
+training_mode: s2_only   # 'dual', 's1_only', 's2_only'
+
+# ========== 模型配置 ==========
+model:
+  encoder:
+    img_size: 256
+    s1_channels: 2     # 保留接口但不用
+    s2_channels: 12    # S2 L2A: 12 bands
+    patch_size: 16
+    embed_dim: 256
+    depth: 6
+    num_heads: 4
+    mlp_ratio: 4.0
+    dropout: 0.1
+
+  decoder:
+    in_dim: 256
+    s1_channels: 2
+    s2_channels: 12
+    patch_size: 16
+    img_size: 256
+    decoder_embed_dim: 128
+    depth: 2
+    num_heads: 4
+    mlp_ratio: 4.0
+    dropout: 0.0
+    decoder_mode: transformer
+
+# ========== 数据配置 ==========
+data:
+  split: train
+  random_season: true
+  normalize: true
+  data_root: /csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1
+  batch_size: 64
+  num_workers: 8
+  prefetch_factor: 4
+  shard_pattern: "ssl4eos12_shard_{000001..000477}.tar"
+  cache_size: 500
+
+# ========== 训练配置 ==========
+max_steps: 50000      # 与双模态相同总步数，但 S2 得到全部训练
+warmup_steps: 1000
+log_interval: 50
+
+# Loss 权重
+loss:
+  loss_type: l1
+  s1_weight: 0.0      # 🔴 关键：S1 权重为 0，实际只训 S2
+  s2_weight: 1.0
+
+# ========== 优化器 ==========
+optimizer:
+  lr: 0.0001
+  weight_decay: 0.05
+  betas: [0.9, 0.95]
+
+# ========== 学习率调度 ==========
+scheduler:
+  warmup_steps: 1000
+  min_lr: 0.00001
+
+# ========== Checkpoint ==========
+checkpoint_dir: checkpoints/stage1_s2only
+checkpoint_interval: 2500
+
+# ========== 日志 ==========
+log_dir: logs/stage1_s2only

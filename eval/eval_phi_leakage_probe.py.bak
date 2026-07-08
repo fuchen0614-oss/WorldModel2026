@@ -1,0 +1,369 @@
+"""非线性 φ 泄漏 probe 验证
+
+目的：验证 cross-covariance 正则是否真的阻止了非线性 φ 泄漏
+方法：训练 3 层 MLP probe: state_tokens → [sun_elevation, orbit_direction, satellite]
+判定：若准确率显著低于 Stage1 → 说明 φ 泄漏约束有效
+
+用法：
+    python eval/eval_phi_leakage_probe.py \
+        --stage1_ckpt checkpoints/stage1_vits_dual_staged/checkpoint_step_95000.pt \
+        --stage1_5_ckpt checkpoints/stage1_5_dual_conditioned_vits/checkpoint_step_10000.pt \
+        --split val \
+        --batch_size 128 \
+        --probe_epochs 5
+"""
+
+import argparse
+import sys
+from pathlib import Path
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torch.utils.data import DataLoader
+from tqdm import tqdm
+
+# 添加项目根目录到 sys.path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from data.datasets.ssl4eo_dual import SSL4EODualIterableDataset, create_ssl4eo_dual_dataset
+from models.encoders.multimodal_vit_encoder_film import MultiModalViTEncoderFiLM
+from models.encoders.pure_imaging_condition_encoder import PureImagingConditionEncoder
+from models.encoders.state_projection import SpatialStateProjector
+
+
+class NonlinearPhiProbe(nn.Module):
+    """3 层 MLP probe：从 state_tokens 预测 φ 字段"""
+
+    def __init__(self, state_dim=256):
+        super().__init__()
+        # S2: 预测 sun_elevation（回归）
+        self.sun_head = nn.Sequential(
+            nn.Linear(state_dim, 128),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(64, 1),
+        )
+
+        # S1: 预测 orbit_direction（分类：asc/desc）
+        self.orbit_head = nn.Sequential(
+            nn.Linear(state_dim, 128),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(64, 2),
+        )
+
+        # S1: 预测 satellite（分类：S1A/S1B）
+        self.satellite_head = nn.Sequential(
+            nn.Linear(state_dim, 128),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(64, 2),
+        )
+
+    def forward(self, state_tokens, modality):
+        """
+        Args:
+            state_tokens: [B, N, state_dim] 空间 state tokens
+            modality: [B] 0=S2, 1=S1
+
+        Returns:
+            dict: {'sun': [B, 1], 'orbit': [B, 2], 'satellite': [B, 2]}
+        """
+        # Mean pooling 聚合空间维度
+        pooled = state_tokens.mean(dim=1)  # [B, state_dim]
+
+        return {
+            'sun': self.sun_head(pooled),
+            'orbit': self.orbit_head(pooled),
+            'satellite': self.satellite_head(pooled),
+        }
+
+
+def extract_state_tokens(encoder, state_projector, batch, device):
+    """提取冻结的 state_tokens"""
+    modality = batch['modality'].to(device)
+    is_s1 = modality.eq(1)
+    is_s2 = modality.eq(0)
+
+    # 选择对应模态的图像
+    s1_img = batch['s1'].to(device) if is_s1.any() else None
+    s2_img = batch['s2'].to(device) if is_s2.any() else None
+
+    with torch.no_grad():
+        # 前向传播（不需要 phi，因为只测试 encoder）
+        if s1_img is not None and is_s1.any():
+            tokens_s1 = encoder(s1_img[is_s1], modality=torch.ones(is_s1.sum(), device=device, dtype=torch.long))
+            state_s1 = state_projector(tokens_s1)
+        else:
+            state_s1 = None
+
+        if s2_img is not None and is_s2.any():
+            tokens_s2 = encoder(s2_img[is_s2], modality=torch.zeros(is_s2.sum(), device=device, dtype=torch.long))
+            state_s2 = state_projector(tokens_s2)
+        else:
+            state_s2 = None
+
+    # 合并
+    state_tokens = torch.zeros(len(modality), tokens_s1.shape[1] if state_s1 is not None else tokens_s2.shape[1],
+                                state_s1.shape[-1] if state_s1 is not None else state_s2.shape[-1], device=device)
+    if state_s1 is not None:
+        state_tokens[is_s1] = state_s1
+    if state_s2 is not None:
+        state_tokens[is_s2] = state_s2
+
+    return state_tokens
+
+
+def train_probe(probe, encoder, state_projector, dataloader, device, epochs=5):
+    """训练 probe（encoder 冻结）"""
+    probe.train()
+    encoder.eval()
+    state_projector.eval()
+
+    optimizer = torch.optim.Adam(probe.parameters(), lr=1e-3, weight_decay=1e-4)
+
+    for epoch in range(epochs):
+        total_loss = 0
+        pbar = tqdm(dataloader, desc=f'Probe Epoch {epoch+1}/{epochs}')
+
+        for batch in pbar:
+            modality = batch['modality'].to(device)
+
+            # 提取 state_tokens（冻结）
+            state_tokens = extract_state_tokens(encoder, state_projector, batch, device)
+
+            # Probe 预测
+            pred = probe(state_tokens, modality)
+
+            # 计算损失
+            loss = 0.0
+            n_loss = 0
+
+            # S2: sun_elevation 回归
+            is_s2 = modality.eq(0)
+            if is_s2.any():
+                sun_target = batch['phi']['sun_elevation'][is_s2].to(device)
+                sun_valid = torch.isfinite(sun_target)
+                if sun_valid.any():
+                    sun_loss = F.mse_loss(pred['sun'][is_s2][sun_valid], sun_target[sun_valid].unsqueeze(-1))
+                    loss = loss + sun_loss
+                    n_loss += 1
+
+            # S1: orbit_direction 分类
+            is_s1 = modality.eq(1)
+            if is_s1.any():
+                orbit_target = batch['phi'].get('s1_orbit_direction', torch.full_like(modality, -1))[is_s1].to(device)
+                orbit_valid = orbit_target.ge(0)
+                if orbit_valid.any():
+                    orbit_loss = F.cross_entropy(pred['orbit'][is_s1][orbit_valid], orbit_target[orbit_valid])
+                    loss = loss + orbit_loss
+                    n_loss += 1
+
+                # S1: satellite 分类
+                sat_target = batch['phi'].get('s1_satellite', torch.full_like(modality, -1))[is_s1].to(device)
+                sat_valid = sat_target.ge(0)
+                if sat_valid.any():
+                    sat_loss = F.cross_entropy(pred['satellite'][is_s1][sat_valid], sat_target[sat_valid])
+                    loss = loss + sat_loss
+                    n_loss += 1
+
+            if n_loss > 0:
+                loss = loss / n_loss
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+                total_loss += loss.item()
+
+            pbar.set_postfix({'loss': f'{loss.item():.4f}'})
+
+        print(f'Epoch {epoch+1} avg loss: {total_loss/len(dataloader):.4f}')
+
+
+@torch.no_grad()
+def evaluate_probe(probe, encoder, state_projector, dataloader, device):
+    """测试 probe 准确率"""
+    probe.eval()
+    encoder.eval()
+    state_projector.eval()
+
+    sun_errors = []
+    orbit_correct = 0
+    orbit_total = 0
+    sat_correct = 0
+    sat_total = 0
+
+    for batch in tqdm(dataloader, desc='Evaluating'):
+        modality = batch['modality'].to(device)
+        state_tokens = extract_state_tokens(encoder, state_projector, batch, device)
+        pred = probe(state_tokens, modality)
+
+        # S2: sun_elevation MAE
+        is_s2 = modality.eq(0)
+        if is_s2.any():
+            sun_target = batch['phi']['sun_elevation'][is_s2].to(device)
+            sun_valid = torch.isfinite(sun_target)
+            if sun_valid.any():
+                sun_pred = pred['sun'][is_s2][sun_valid].squeeze(-1)
+                sun_mae = (sun_pred - sun_target[sun_valid]).abs()
+                sun_errors.extend(sun_mae.cpu().tolist())
+
+        # S1: orbit accuracy
+        is_s1 = modality.eq(1)
+        if is_s1.any():
+            orbit_target = batch['phi'].get('s1_orbit_direction', torch.full_like(modality, -1))[is_s1].to(device)
+            orbit_valid = orbit_target.ge(0)
+            if orbit_valid.any():
+                orbit_pred = pred['orbit'][is_s1][orbit_valid].argmax(dim=-1)
+                orbit_correct += (orbit_pred == orbit_target[orbit_valid]).sum().item()
+                orbit_total += orbit_valid.sum().item()
+
+            # S1: satellite accuracy
+            sat_target = batch['phi'].get('s1_satellite', torch.full_like(modality, -1))[is_s1].to(device)
+            sat_valid = sat_target.ge(0)
+            if sat_valid.any():
+                sat_pred = pred['satellite'][is_s1][sat_valid].argmax(dim=-1)
+                sat_correct += (sat_pred == sat_target[sat_valid]).sum().item()
+                sat_total += sat_valid.sum().item()
+
+    results = {
+        'sun_elevation_mae': sum(sun_errors) / len(sun_errors) if sun_errors else float('nan'),
+        'orbit_accuracy': orbit_correct / orbit_total if orbit_total > 0 else float('nan'),
+        'satellite_accuracy': sat_correct / sat_total if sat_total > 0 else float('nan'),
+    }
+    return results
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--stage1_ckpt', type=str, required=True)
+    parser.add_argument('--stage1_5_ckpt', type=str, required=True)
+    parser.add_argument('--data_root', type=str, default='/csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1')
+    parser.add_argument('--phi_cache_root', type=str, default='/csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1/phi_processed')
+    parser.add_argument('--v3_geom_root', type=str, default='/csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1/phi_processed_v3_s1geom')
+    parser.add_argument('--split', type=str, default='val')
+    parser.add_argument('--batch_size', type=int, default=128)
+    parser.add_argument('--num_workers', type=int, default=4)
+    parser.add_argument('--probe_epochs', type=int, default=5)
+    args = parser.parse_args()
+
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    # 加载数据
+    print(f'Loading {args.split} dataset...')
+    from data.datasets.ssl4eo_dual import SSL4EODualConfig
+    config = SSL4EODualConfig(
+        base_path=args.data_root,
+        split=args.split,
+        random_season=True,
+        use_phi_cache=True,
+        phi_cache_root=args.phi_cache_root,
+        v3_geom_root=args.v3_geom_root,
+        two_view=False,
+        conditioned_pair=False,
+        normalize=True,
+    )
+    dataloader = create_ssl4eo_dual_dataset(
+        config=config,
+        batch_size=args.batch_size,
+        num_workers=args.num_workers,
+        shuffle=False,
+        infinite=False,
+    )
+
+    # 加载 Stage1 和 Stage1.5 encoder
+    print('\n=== Stage 1 Baseline ===')
+    stage1_encoder = MultiModalViTEncoderFiLM(
+        img_size=256, s1_channels=2, s2_channels=12, patch_size=16,
+        embed_dim=384, depth=12, num_heads=6, use_film=False
+    ).to(device)
+    stage1_ckpt = torch.load(args.stage1_ckpt, map_location='cpu')
+    stage1_encoder.load_state_dict(stage1_ckpt['encoder_state_dict'], strict=True)
+    stage1_encoder.eval()
+
+    stage1_projector = SpatialStateProjector(in_dim=384, state_dim=256).to(device)
+
+    print(f'Loaded Stage1 from {args.stage1_ckpt}')
+
+    print('\n=== Stage 1.5 (Ours) ===')
+    stage1_5_encoder = MultiModalViTEncoderFiLM(
+        img_size=256, s1_channels=2, s2_channels=12, patch_size=16,
+        embed_dim=384, depth=12, num_heads=6, phi_dim=384,
+        use_film=True, use_cross_attention=False, film_start_layer=8
+    ).to(device)
+    stage1_5_ckpt = torch.load(args.stage1_5_ckpt, map_location='cpu')
+    stage1_5_encoder.load_state_dict(stage1_5_ckpt['encoder_state_dict'], strict=False)
+    stage1_5_encoder.eval()
+
+    stage1_5_projector = SpatialStateProjector(in_dim=384, state_dim=256).to(device)
+    stage1_5_projector.load_state_dict(stage1_5_ckpt['state_projector_state_dict'], strict=True)
+    stage1_5_projector.eval()
+
+    print(f'Loaded Stage1.5 from {args.stage1_5_ckpt}')
+
+    # 训练 Stage1 probe
+    print('\n--- Training Stage1 Probe ---')
+    stage1_probe = NonlinearPhiProbe(state_dim=256).to(device)
+    train_probe(stage1_probe, stage1_encoder, stage1_projector, dataloader, device, epochs=args.probe_epochs)
+
+    # 评估 Stage1 probe
+    print('\n--- Evaluating Stage1 Probe ---')
+    stage1_results = evaluate_probe(stage1_probe, stage1_encoder, stage1_projector, dataloader, device)
+
+    # 训练 Stage1.5 probe
+    print('\n--- Training Stage1.5 Probe ---')
+    stage1_5_probe = NonlinearPhiProbe(state_dim=256).to(device)
+    train_probe(stage1_5_probe, stage1_5_encoder, stage1_5_projector, dataloader, device, epochs=args.probe_epochs)
+
+    # 评估 Stage1.5 probe
+    print('\n--- Evaluating Stage1.5 Probe ---')
+    stage1_5_results = evaluate_probe(stage1_5_probe, stage1_5_encoder, stage1_5_projector, dataloader, device)
+
+    # 打印结果
+    print('\n' + '='*60)
+    print('φ Leakage Probe Results (Non-linear 3-layer MLP)')
+    print('='*60)
+    print(f'{"Metric":<30} {"Stage1":<15} {"Stage1.5":<15} {"Δ"}')
+    print('-'*60)
+
+    sun_mae_1 = stage1_results['sun_elevation_mae']
+    sun_mae_1_5 = stage1_5_results['sun_elevation_mae']
+    sun_delta = ((sun_mae_1_5 - sun_mae_1) / sun_mae_1 * 100) if not torch.isnan(torch.tensor(sun_mae_1)) else float('nan')
+    print(f'{"Sun Elevation MAE (°)":<30} {sun_mae_1:<15.2f} {sun_mae_1_5:<15.2f} {sun_delta:+.1f}%')
+
+    orbit_acc_1 = stage1_results['orbit_accuracy'] * 100
+    orbit_acc_1_5 = stage1_5_results['orbit_accuracy'] * 100
+    orbit_delta = orbit_acc_1_5 - orbit_acc_1
+    print(f'{"Orbit Direction Acc (%)":<30} {orbit_acc_1:<15.2f} {orbit_acc_1_5:<15.2f} {orbit_delta:+.1f}%')
+
+    sat_acc_1 = stage1_results['satellite_accuracy'] * 100
+    sat_acc_1_5 = stage1_5_results['satellite_accuracy'] * 100
+    sat_delta = sat_acc_1_5 - sat_acc_1
+    print(f'{"Satellite Acc (%)":<30} {sat_acc_1:<15.2f} {sat_acc_1_5:<15.2f} {sat_delta:+.1f}%')
+
+    print('='*60)
+    print('\n判定标准：')
+    print('  ✓ 成功：Stage1.5 准确率显著低于 Stage1（MAE 更高，Acc 更低）')
+    print('  ✗ 失败：Stage1.5 准确率 ≈ Stage1（说明非线性泄漏仍存在）')
+    print('  ⚠ 参考：Orbit/Satellite 随机基线 = 50%')
+
+    # 判定
+    if orbit_acc_1_5 < 60 and sat_acc_1_5 < 60:
+        print('\n✅ 判定：φ 泄漏约束有效（非线性 probe 准确率接近随机）')
+    elif orbit_acc_1_5 < orbit_acc_1 - 10:
+        print('\n⚠️ 判定：部分有效（准确率下降但未达随机基线）')
+    else:
+        print('\n❌ 判定：φ 泄漏约束无效（准确率仍高，需加对抗训练）')
+
+
+if __name__ == '__main__':
+    main()

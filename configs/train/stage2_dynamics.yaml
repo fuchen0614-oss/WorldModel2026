@@ -1,0 +1,64 @@
+# Stage 2 状态动力学训练配置（骨架，TODO[Stage2]）
+#
+# ObsWorld 主线阶段 2：z_t + D + G → StateDynamicsModule → z_{t+h}
+# 见 13_*.md §1.1、14_*.md §2.6。
+#
+# ⚠️ 本配置为骨架占位：StateDynamicsModule / StateDynamicsLoss 已可运行（残差动力学），
+#    但真实训练需要 DynamicEarthNet / EarthNet 这类时间序列数据集 + loader（未实现）。
+#    SSL4EO 的 4 个时间片间隔不规则，不适合做精确动力学监督。
+
+# ========== 模型 ==========
+model:
+  # 复用 Stage1.5 的 encoder 产出 z_t（冻结或微调，Stage2 决定）
+  encoder:
+    type: MultiModalViTEncoderFiLM
+    from_checkpoint: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage1_5_film/checkpoint_step_50000.pt
+    freeze: true            # TODO[Stage2]: 是否解冻微调
+
+  dynamics:
+    type: StateDynamicsModule
+    latent_dim: 256
+    dynamics_type: gru      # 'gru' | 'transformer' | 'mlp'
+    driver_dim: 0           # TODO[Stage2]: ERA5 气象等外生驱动 D 的维度（join 后填）
+    geo_dim: 0              # TODO[Stage2]: DEM/坡度等地理先验 G 的维度
+    hidden_dim: 256
+    num_layers: 2
+    num_heads: 4
+    dropout: 0.0
+
+# ========== 数据（TODO[Stage2]）==========
+data:
+  # TODO[Stage2]: 需 DynamicEarthNet / EarthNet loader（同地点多时刻序列）
+  dataset: dynamic_earthnet   # 占位
+  data_root: null
+  seq_len: 5                  # 时间序列长度
+  predict_horizon: 1          # 预测步长 h
+  batch_size: 16
+  num_workers: 4
+
+# ========== 训练 ==========
+training:
+  max_steps: 50000
+  warmup_steps: 2000
+  mask_ratio: 0.0             # 动力学阶段不掩码
+
+  loss_weights:
+    w_pred: 1.0               # 预测损失
+    w_smooth: 0.1             # 平滑性
+    w_dir: 0.0                # 方向一致性（默认关）
+  pred_metric: cosine         # 'cosine' | 'mse'
+
+# ========== 优化器 ==========
+optimizer:
+  name: adamw
+  lr: 0.0001
+  weight_decay: 0.05
+  betas: [0.9, 0.95]
+  min_lr: 0.00001
+
+# ========== 输出 ==========
+resume_from: null
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_dynamics
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_dynamics
+checkpoint_interval: 5000
+log_interval: 50

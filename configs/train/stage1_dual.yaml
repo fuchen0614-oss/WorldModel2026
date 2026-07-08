@@ -1,0 +1,77 @@
+# 双模态（S1 GRD + S2 L2A）Stage 1 预训练配置
+# 模态内 MAE 重建（S1→S1, S2→S2），共享 Transformer
+
+# ========== 训练模式 ==========
+training_mode: dual   # 'dual' (轮流), 's1_only', 's2_only'
+
+# ========== 模型配置 ==========
+model:
+  encoder:
+    img_size: 256
+    s1_channels: 2     # S1 GRD: VV/VH
+    s2_channels: 12    # S2 L2A: 12 bands
+    patch_size: 16
+    embed_dim: 256
+    depth: 6
+    num_heads: 4
+    mlp_ratio: 4.0
+    dropout: 0.1
+
+  decoder:
+    in_dim: 256
+    s1_channels: 2
+    s2_channels: 12
+    patch_size: 16
+    img_size: 256
+    decoder_embed_dim: 128
+    depth: 2
+    num_heads: 4
+    mlp_ratio: 4.0
+    dropout: 0.0
+    decoder_mode: transformer
+
+# ========== 数据配置 ==========
+data:
+  split: train
+  random_season: true
+  normalize: true
+  data_root: /csy-mix02/cog8/zjliu17/Agent/TrainData/SSL4EO-S12-v1.1
+  batch_size: 64      # 每卡 batch size（显存只用 2.5%，大幅提升）
+  num_workers: 8      # 多进程并行解压（原来是假参数，现在真的生效）
+  prefetch_factor: 4  # DataLoader prefetch，与 GPU 计算重叠
+  shard_pattern: "ssl4eos12_shard_{000001..000477}.tar"
+  cache_size: 500     # shuffle buffer 大小（样本级）
+
+# ========== 训练配置 ==========
+max_steps: 50000
+warmup_steps: 1000
+log_interval: 50
+
+# Loss 权重（模态内 MAE）
+loss:
+  s1_weight: 1.0      # S1 重建 loss 权重
+  s2_weight: 1.0      # S2 重建 loss 权重
+  loss_type: l1       # 'l1' 或 'mse'
+
+# 掩码比例
+mask_ratio: 0.75
+
+# 优化器
+optimizer:
+  name: adamw
+  lr: 0.0001          # 基础学习率
+  weight_decay: 0.05
+  betas: [0.9, 0.95]
+
+# 学习率调度
+scheduler:
+  name: cosine
+  warmup_steps: 1000
+  min_lr: 0.00001
+
+# ========== 输出路径 ==========
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage1_dual
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage1_dual
+
+# 可视化间隔（0 = 关闭）
+viz_interval: 0

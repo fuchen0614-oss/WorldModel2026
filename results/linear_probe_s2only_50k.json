@@ -1,0 +1,19 @@
+{
+  "checkpoint": "checkpoints/stage1_s2only/checkpoint_step_50000.pt",
+  "final_oa": 0.7042592763900757,
+  "best_oa": 0.7042592763900757,
+  "per_class": {
+    "AnnualCrop": 0.6345177292823792,
+    "Forest": 0.9080067873001099,
+    "HerbaceousVegetation": 0.5810147523880005,
+    "Highway": 0.20400001108646393,
+    "Industrial": 0.7963709235191345,
+    "Pasture": 0.7916666865348816,
+    "PermanentCrop": 0.7210743427276611,
+    "Residential": 0.6144578456878662,
+    "River": 0.7535070180892944,
+    "SeaLake": 0.9922239780426025
+  },
+  "baseline": 0.941,
+  "verdict": "❌ 偏低"
+}
