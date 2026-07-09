@@ -547,23 +547,99 @@ def _discover_npz_files(config: EarthNet2021Config) -> List[Path]:
         config.split == "train" or using_train_holdout
     )
     if apply_holdout:
-        # Apply the same deterministic partition whether a dedicated val folder
-        # exists or val falls back to the official train directory.
-        selected = []
-        threshold = int(config.validation_fraction * 10000)
-        for path in files:
-            group_name = (
+        group_by_path = {
+            path: (
                 _canonical_cubename(path.name)[:5]
                 if config.validation_group == "tile"
                 else path.name
             )
-            bucket = _stable_bucket(group_name, config.split_seed)
-            is_val = bucket < threshold
-            if (config.split == "val" and is_val) or (config.split == "train" and not is_val):
-                selected.append(path)
-        if selected or using_train_holdout:
-            files = selected
+            for path in files
+        }
+        group_counts: Dict[str, int] = {}
+        for group_name in group_by_path.values():
+            group_counts[group_name] = group_counts.get(group_name, 0) + 1
+        validation_groups = _choose_validation_groups(
+            group_counts,
+            validation_fraction=config.validation_fraction,
+            seed=config.split_seed,
+        )
+        files = [
+            path
+            for path in files
+            if (
+                group_by_path[path] in validation_groups
+                if config.split == "val"
+                else group_by_path[path] not in validation_groups
+            )
+        ]
     return files
+
+
+def _choose_validation_groups(
+    group_counts: Dict[str, int],
+    validation_fraction: float,
+    seed: int,
+) -> set[str]:
+    """Choose whole groups while matching the requested sample fraction.
+
+    A hash threshold over groups can badly miss the requested sample fraction
+    when geographic tiles have very different cube counts. This deterministic
+    subset-sum keeps train/validation tiles disjoint and selects the group
+    combination closest to the target number of samples.
+    """
+
+    if not 0.0 <= validation_fraction <= 1.0:
+        raise ValueError(
+            f"validation_fraction must be in [0,1], got {validation_fraction}"
+        )
+    if not group_counts or validation_fraction <= 0.0:
+        return set()
+    if validation_fraction >= 1.0:
+        return set(group_counts)
+    if len(group_counts) > 512:
+        threshold = int(validation_fraction * 10000)
+        return {
+            name
+            for name in group_counts
+            if _stable_bucket(name, seed) < threshold
+        }
+
+    total = sum(group_counts.values())
+    target = int(round(total * validation_fraction))
+    ordered_groups = sorted(
+        group_counts,
+        key=lambda name: (_stable_bucket(name, seed), name),
+    )
+    # sum -> (previous sum, group added). Snapshotting keys ensures each group
+    # is used at most once.
+    parents: Dict[int, Optional[Tuple[int, str]]] = {0: None}
+    for group_name in ordered_groups:
+        count = group_counts[group_name]
+        for previous in sorted(list(parents), reverse=True):
+            current = previous + count
+            if current not in parents:
+                parents[current] = (previous, group_name)
+
+    candidates = [value for value in parents if 0 < value < total]
+    if not candidates:
+        return {ordered_groups[0]}
+    best = min(
+        candidates,
+        key=lambda value: (
+            abs(value - target),
+            value > target,
+            value,
+        ),
+    )
+    selected = set()
+    while best:
+        parent = parents[best]
+        if parent is None:
+            break
+        previous, group_name = parent
+        selected.add(group_name)
+        best = previous
+    return selected
 
 
 def _select_required_array(arrays: Dict[str, np.ndarray], keys: Sequence[str], ndim: Optional[int] = None) -> np.ndarray:

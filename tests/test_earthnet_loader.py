@@ -6,6 +6,7 @@ from data.datasets.earthnet2021 import (
     EarthNet2021Config,
     EarthNet2021Dataset,
     _canonical_cubename,
+    _choose_validation_groups,
 )
 
 
@@ -97,3 +98,21 @@ def test_canonical_cubename_strips_official_prefix():
     name = "context_32UMC_2017_01_01_2017_05_31_1_2_3_4_5_6_7_8.npz"
     assert _canonical_cubename(name).startswith("32UMC_2017_01_01")
     assert not _canonical_cubename(name).endswith(".npz")
+
+
+def test_group_holdout_matches_sample_fraction_and_is_deterministic():
+    group_counts = {
+        "29SND": 2344,
+        "30ABC": 1700,
+        "31XYZ": 900,
+        "32DEF": 400,
+        "33GHI": 100,
+    }
+    selected = _choose_validation_groups(group_counts, 0.1, seed=42)
+    repeated = _choose_validation_groups(group_counts, 0.1, seed=42)
+    selected_count = sum(group_counts[name] for name in selected)
+    target = round(sum(group_counts.values()) * 0.1)
+
+    assert selected == repeated
+    assert selected
+    assert abs(selected_count - target) <= 50
