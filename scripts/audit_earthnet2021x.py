@@ -277,7 +277,7 @@ def main() -> int:
             failed = True
         if split_report["zero_byte_files"] or split_report["scan_failures"]:
             failed = True
-        if args.compare_remote:
+        if args.compare_remote and split in required:
             try:
                 remote_report = compare_with_remote(
                     split,
@@ -286,12 +286,11 @@ def main() -> int:
                     args.proxy,
                 )
                 split_report["remote"] = remote_report
-                if split in required and not remote_report["complete"]:
+                if not remote_report["complete"]:
                     failed = True
             except Exception as exc:
                 split_report["remote_error"] = f"{type(exc).__name__}: {exc}"
-                if split in required:
-                    failed = True
+                failed = True
         report["splits"][split] = split_report
 
     duplicate_ids = sorted(
