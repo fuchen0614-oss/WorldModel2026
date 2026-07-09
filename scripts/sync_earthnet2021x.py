@@ -52,6 +52,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--split", required=True, choices=SPLITS)
     parser.add_argument("--workers", type=int, default=8)
+    parser.add_argument(
+        "--manifest-workers",
+        type=int,
+        default=4,
+        help="Concurrent region listings used while building the remote manifest.",
+    )
     parser.add_argument("--retries", type=int, default=3)
     parser.add_argument(
         "--manifest",
@@ -93,12 +99,17 @@ def resolve_dataset_root(path: Path) -> Path:
 def make_s3(proxy: str | None):
     import s3fs
 
+    config_kwargs: dict[str, Any] = {
+        "connect_timeout": 15,
+        "read_timeout": 90,
+        "retries": {"max_attempts": 4, "mode": "standard"},
+    }
+    if proxy:
+        config_kwargs["proxies"] = {"http": proxy, "https": proxy}
     return s3fs.S3FileSystem(
         anon=True,
         client_kwargs={"endpoint_url": ENDPOINT, "region_name": REGION},
-        config_kwargs=(
-            {"proxies": {"http": proxy, "https": proxy}} if proxy else {}
-        ),
+        config_kwargs=config_kwargs,
     )
 
 
@@ -114,6 +125,7 @@ def load_manifest(
     split: str,
     proxy: str | None,
     rescan: bool,
+    manifest_workers: int,
 ) -> list[RemoteObject]:
     if manifest_path.exists() and not rescan:
         payload = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -133,10 +145,51 @@ def load_manifest(
 
     prefix = f"{REMOTE_ROOT}/{split}"
     print(
-        f"[sync] querying official S3 manifest for {split}; this may take minutes",
+        f"[sync] listing region prefixes for official {split} split",
         flush=True,
     )
-    details = make_s3(proxy).find(prefix, detail=True)
+    s3 = make_s3(proxy)
+    entries = s3.ls(prefix, detail=True)
+    region_prefixes = []
+    direct_details: dict[str, dict[str, Any]] = {}
+    for entry in entries:
+        name = str(entry.get("name", "")).rstrip("/")
+        if not name:
+            continue
+        if name.endswith(".nc"):
+            direct_details[name] = entry
+        else:
+            region_prefixes.append(name)
+    region_prefixes = sorted(set(region_prefixes))
+    print(
+        f"[sync] found {len(region_prefixes)} region prefixes; "
+        f"scanning with {manifest_workers} workers",
+        flush=True,
+    )
+    details = dict(direct_details)
+    if region_prefixes:
+        with ThreadPoolExecutor(
+            max_workers=min(manifest_workers, len(region_prefixes))
+        ) as executor:
+            futures = {
+                executor.submit(find_remote_region, region, proxy): region
+                for region in region_prefixes
+            }
+            completed = 0
+            for future in as_completed(futures):
+                region = futures[future]
+                region_details = future.result()
+                details.update(region_details)
+                completed += 1
+                print(
+                    f"[sync] remote regions {completed}/{len(region_prefixes)}; "
+                    f"latest={Path(region).name}; objects={len(details)}",
+                    flush=True,
+                )
+    elif not direct_details:
+        raise RuntimeError(
+            f"Official S3 listing returned no regions or NetCDF files for {prefix}"
+        )
     objects = []
     for remote_path, metadata in details.items():
         if not remote_path.endswith(".nc"):
@@ -169,6 +222,18 @@ def load_manifest(
         flush=True,
     )
     return objects
+
+
+def find_remote_region(
+    region_prefix: str,
+    proxy: str | None,
+) -> dict[str, dict[str, Any]]:
+    details = make_s3(proxy).find(region_prefix, detail=True)
+    return {
+        path: metadata
+        for path, metadata in details.items()
+        if path.endswith(".nc")
+    }
 
 
 def plan_sync(
@@ -265,6 +330,8 @@ def main() -> int:
     args = parse_args()
     if args.workers < 1:
         raise ValueError("--workers must be at least 1.")
+    if args.manifest_workers < 1:
+        raise ValueError("--manifest-workers must be at least 1.")
     dataset_root = resolve_dataset_root(Path(args.root))
     split_root = dataset_root / args.split
     default_manifest = (
@@ -276,6 +343,7 @@ def main() -> int:
         args.split,
         args.proxy,
         args.rescan,
+        args.manifest_workers,
     )
     missing, mismatched, matching = plan_sync(split_root, objects)
     todo = [*missing, *mismatched]

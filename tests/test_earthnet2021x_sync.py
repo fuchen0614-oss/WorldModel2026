@@ -31,3 +31,33 @@ def test_plan_sync_distinguishes_missing_mismatched_and_matching(tmp_path):
     assert [item.relative_path for item in missing] == ["tile/missing.nc"]
     assert [item.relative_path for item in mismatched] == ["tile/mismatched.nc"]
     assert [item.relative_path for item in matching] == ["tile/matching.nc"]
+
+
+def test_manifest_is_built_region_by_region(tmp_path, monkeypatch):
+    class FakeS3:
+        def ls(self, prefix, detail):
+            assert prefix == "earthnet/earthnet2021x/train"
+            assert detail is True
+            return [
+                {"name": f"{prefix}/29SND", "type": "directory"},
+                {"name": f"{prefix}/30ABC", "type": "directory"},
+            ]
+
+        def find(self, prefix, detail):
+            assert detail is True
+            name = f"{prefix}/{Path(prefix).name}_cube.nc"
+            return {name: {"name": name, "size": 123}}
+
+    monkeypatch.setattr(MODULE, "make_s3", lambda proxy: FakeS3())
+    manifest = tmp_path / "manifest.json"
+    objects = MODULE.load_manifest(
+        manifest,
+        split="train",
+        proxy=None,
+        rescan=False,
+        manifest_workers=2,
+    )
+
+    assert len(objects) == 2
+    assert {item.size for item in objects} == {123}
+    assert manifest.exists()
