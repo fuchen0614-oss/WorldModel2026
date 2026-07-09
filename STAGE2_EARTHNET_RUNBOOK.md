@@ -71,6 +71,33 @@ python scripts/repair_earthnet2021x_file.py \
 
 修复工具先下载到 `.part` 并验证 NetCDF，成功后才原子替换原文件。
 
+不要使用仅以“文件大于 50KB”为完整标准的旧下载脚本。它会把截断但仍大于
+50KB 的文件误判为正常，并且直接写最终 `.nc`，强制终止时会留下损坏文件。
+
+使用安全增量同步器检查 train，首次需要从官方 S3 构建带字节数的清单：
+
+```bash
+python scripts/sync_earthnet2021x.py \
+  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
+  --split train \
+  --dry-run \
+  --report logs/earthnet2021x_train_sync_plan.json
+```
+
+确认缺失和大小不一致数量后进行补齐：
+
+```bash
+python scripts/sync_earthnet2021x.py \
+  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
+  --split train \
+  --workers 8 \
+  --report logs/earthnet2021x_train_sync.json
+```
+
+同一脚本依次用于下载 `iid`、`ood`、`extreme`、`seasonal`。它会跳过远端大小
+一致的现有文件；新文件先写入 `.part`，核对大小并验证 NetCDF 后才原子替换，
+因而中断后可以安全重跑。不要同时启动多个 split，也不要再用 `kill -9`。
+
 下载缺少的官方划分，例如：
 
 ```bash

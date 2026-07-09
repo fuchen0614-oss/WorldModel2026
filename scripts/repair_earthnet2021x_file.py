@@ -162,6 +162,17 @@ def main() -> int:
     if not args.repair:
         print("[repair] check only; add --repair to replace this file.", flush=True)
         return 0 if local_validation["ok"] else 1
+    if (
+        local_validation["ok"]
+        and local_bytes == remote_bytes
+        and (
+            remote_etag is None
+            or "-" in remote_etag
+            or local_md5 == remote_etag
+        )
+    ):
+        print("[repair] local file already matches the remote object; nothing to do.")
+        return 0
 
     local_path.parent.mkdir(parents=True, exist_ok=True)
     part_path = local_path.with_name(local_path.name + ".part")
