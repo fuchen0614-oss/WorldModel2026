@@ -98,6 +98,17 @@ python scripts/sync_earthnet2021x.py \
 一致的现有文件；新文件先写入 `.part`，核对大小并验证 NetCDF 后才原子替换，
 因而中断后可以安全重跑。不要同时启动多个 split，也不要再用 `kill -9`。
 
+剩余四个测试 split 可以用一个包装脚本顺序完成：
+
+```bash
+DATA_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
+WORKERS=8 MANIFEST_WORKERS=4 \
+bash scripts/sync_remaining_earthnet2021x.sh
+```
+
+包装脚本按 `iid -> ood -> extreme -> seasonal` 顺序同步；每个 split 内默认使用
+8 个下载线程，完成后自动再做一次只读验收。中途停止后重复同一命令即可续传。
+
 下载缺少的官方划分，例如：
 
 ```bash
