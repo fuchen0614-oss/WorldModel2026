@@ -1,15 +1,11 @@
 #!/usr/bin/env python
-"""Audit a local EarthNet2021x mirror and optionally compare it with S3.
-
-The local structural audit is useful without network access. ``--compare-remote``
-is the authoritative completeness check because it compares every relative
-NetCDF path with the official EarthNet object listing.
-"""
+"""Audit a local EarthNet2021x mirror and optionally compare it with S3."""
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from collections import Counter
 from pathlib import Path
@@ -64,7 +60,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--compare-remote",
         action="store_true",
-        help="Compare local relative paths and sizes with the official anonymous S3 listing.",
+        help="Compare local relative paths with the official anonymous S3 listing.",
+    )
+    parser.add_argument(
+        "--compare-sizes",
+        action="store_true",
+        help="Also stat every local file and compare byte sizes; slow on network filesystems.",
     )
     parser.add_argument("--proxy", help="Optional HTTP proxy for the S3 client.")
     parser.add_argument("--output", help="Optional JSON report path.")
@@ -93,6 +94,19 @@ def choose_evenly(files: list[Path], limit: int) -> list[Path]:
         for index in range(limit)
     }
     return [files[index] for index in sorted(indices)]
+
+
+def discover_netcdf_files(split_root: Path) -> list[Path]:
+    """Walk once without a separate stat call for every file."""
+
+    files: list[Path] = []
+    if not split_root.is_dir():
+        return files
+    for directory, _, filenames in os.walk(split_root):
+        base = Path(directory)
+        files.extend(base / name for name in filenames if name.endswith(".nc"))
+    files.sort()
+    return files
 
 
 def audit_netcdf(path: Path, read_arrays: bool) -> dict[str, Any]:
@@ -150,9 +164,10 @@ def local_split_report(
     max_files: int,
 ) -> tuple[dict[str, Any], list[Path]]:
     split_root = dataset_root / split
-    files = sorted(split_root.glob("**/*.nc")) if split_root.is_dir() else []
+    print(f"[audit] discovering local {split} files under {split_root}", flush=True)
+    files = discover_netcdf_files(split_root)
+    print(f"[audit] found {len(files)} local {split} NetCDF files", flush=True)
     tile_counts = Counter(path.parent.name for path in files)
-    sizes = [path.stat().st_size for path in files]
     selected = (
         files
         if scan_mode == "full"
@@ -160,10 +175,20 @@ def local_split_report(
         if scan_mode == "metadata"
         else []
     )
-    inspections = [
-        audit_netcdf(path, read_arrays=(scan_mode == "full"))
+    inspections = []
+    for index, path in enumerate(selected, start=1):
+        print(
+            f"[audit] opening {split} sample {index}/{len(selected)}: {path.name}",
+            flush=True,
+        )
+        inspections.append(
+            audit_netcdf(path, read_arrays=(scan_mode == "full"))
+        )
+    selected_sizes = {
+        str(path): path.stat().st_size
         for path in selected
-    ]
+        if path.exists()
+    }
     report = {
         "directory": str(split_root),
         "exists": split_root.is_dir(),
@@ -174,8 +199,15 @@ def local_split_report(
             "median": _median(tile_counts.values()),
             "max": max(tile_counts.values(), default=0),
         },
-        "total_bytes": sum(sizes),
-        "zero_byte_files": [str(path) for path in files if path.stat().st_size == 0],
+        "total_bytes": None,
+        "size_scope": (
+            "selected_files_only"
+            if selected
+            else "not_collected"
+        ),
+        "zero_byte_files": [
+            path for path, size in selected_sizes.items() if size == 0
+        ],
         "scanned_files": len(inspections),
         "scan_failures": [item for item in inspections if not item["ok"]],
     }
@@ -207,7 +239,13 @@ def remote_listing(split: str, proxy: str | None) -> dict[str, int]:
         config_kwargs=config_kwargs,
     )
     prefix = f"{S3_PREFIX}/{split}"
+    print(
+        f"[audit] requesting official S3 listing for {split}; "
+        "the server may take several minutes",
+        flush=True,
+    )
     details = s3.find(prefix, detail=True)
+    print(f"[audit] official S3 listing returned {len(details)} objects", flush=True)
     output: dict[str, int] = {}
     for remote_path, metadata in details.items():
         if not remote_path.endswith(".nc"):
@@ -222,32 +260,47 @@ def compare_with_remote(
     split_root: Path,
     local_files: list[Path],
     proxy: str | None,
+    compare_sizes: bool,
 ) -> dict[str, Any]:
     remote = remote_listing(split, proxy)
-    local = {
-        path.relative_to(split_root).as_posix(): path.stat().st_size
-        for path in local_files
+    local_paths = {
+        path.relative_to(split_root).as_posix(): path for path in local_files
     }
-    missing = sorted(set(remote) - set(local))
-    extra = sorted(set(local) - set(remote))
-    size_mismatches = [
-        {
-            "path": name,
-            "local_bytes": local[name],
-            "remote_bytes": remote[name],
-        }
-        for name in sorted(set(local) & set(remote))
-        if remote[name] >= 0 and local[name] != remote[name]
-    ]
+    missing = sorted(set(remote) - set(local_paths))
+    extra = sorted(set(local_paths) - set(remote))
+    size_mismatches = []
+    if compare_sizes:
+        common = sorted(set(local_paths) & set(remote))
+        for index, name in enumerate(common, start=1):
+            if index == 1 or index % 1000 == 0 or index == len(common):
+                print(
+                    f"[audit] comparing local sizes {index}/{len(common)}",
+                    flush=True,
+                )
+            local_size = local_paths[name].stat().st_size
+            if remote[name] >= 0 and local_size != remote[name]:
+                size_mismatches.append(
+                    {
+                        "path": name,
+                        "local_bytes": local_size,
+                        "remote_bytes": remote[name],
+                    }
+                )
+    complete = not missing and not extra and (
+        not compare_sizes or not size_mismatches
+    )
     return {
         "remote_num_files": len(remote),
+        "sizes_compared": compare_sizes,
         "missing_files_count": len(missing),
         "extra_files_count": len(extra),
-        "size_mismatches_count": len(size_mismatches),
+        "size_mismatches_count": (
+            len(size_mismatches) if compare_sizes else None
+        ),
         "missing_files_preview": missing[:50],
         "extra_files_preview": extra[:50],
         "size_mismatches_preview": size_mismatches[:50],
-        "complete": not missing and not extra and not size_mismatches,
+        "complete": complete,
     }
 
 
@@ -260,6 +313,7 @@ def main() -> int:
         "required_splits": sorted(required),
         "scan_mode": args.scan_mode,
         "remote_comparison_requested": args.compare_remote,
+        "remote_size_comparison_requested": args.compare_sizes,
         "splits": {},
     }
     all_stems: list[str] = []
@@ -284,6 +338,7 @@ def main() -> int:
                     dataset_root / split,
                     files,
                     args.proxy,
+                    args.compare_sizes,
                 )
                 split_report["remote"] = remote_report
                 if not remote_report["complete"]:

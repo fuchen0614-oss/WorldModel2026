@@ -51,6 +51,25 @@ python scripts/audit_earthnet2021x.py \
 ```
 
 不加 `--compare-remote` 只能验证本地结构与抽样文件可读，不能证明远端文件一个不少。
+默认远端检查比较相对路径，不会在共享盘上逐个读取 2 万多个文件的大小；只有确实需要
+字节级核对时才增加 `--compare-sizes`，该选项可能运行很久。
+
+若审计报告给出损坏文件，先检查远端大小与本地可读性，再显式修复：
+
+```bash
+python scripts/repair_earthnet2021x_file.py \
+  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
+  --split train \
+  --relative-path '<tile>/<cubename>.nc'
+
+python scripts/repair_earthnet2021x_file.py \
+  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
+  --split train \
+  --relative-path '<tile>/<cubename>.nc' \
+  --repair
+```
+
+修复工具先下载到 `.part` 并验证 NetCDF，成功后才原子替换原文件。
 
 下载缺少的官方划分，例如：
 
