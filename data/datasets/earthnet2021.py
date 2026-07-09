@@ -1,10 +1,8 @@
-"""EarthNet2021 dataset utilities for ObsWorld Stage 2.
+"""EarthNet2021 and EarthNet2021x dataset utilities for ObsWorld Stage 2.
 
-The loader targets the common EarthNet minicube ``.npz`` layout
-(``highresdynamic``, ``mesodynamic``, ``highresstatic`` / ``mesostatic``), but
-keeps parsing defensive because local mirrors often differ in directory names
-or axis order. Use ``scripts/inspect_earthnet2021.py`` first on the server and
-adjust config mappings if needed.
+Both the legacy ``.npz`` layout and the current EarthNet2021x ``.nc`` layout
+are supported. Dataset-specific assumptions stay explicit so server-side
+inspection can validate them before a long run.
 """
 
 from __future__ import annotations
@@ -38,14 +36,15 @@ class EarthNet2021Config:
     root: str
     split: str = "train"
     split_subdirs: Dict[str, List[str]] = field(default_factory=lambda: {
-        "train": ["train", "iid/train", "earthnet2021/train"],
+        "train": ["train", "earthnet2021x/train", "iid/train", "earthnet2021/train"],
         "val": ["val", "valid", "validation", "iid/val"],
         "test": ["test", "iid_test_split/context"],
-        "iid": ["iid_test_split/context", "iid_test/context"],
-        "ood": ["ood_test_split/context", "ood_test/context"],
-        "extreme": ["extreme_test_split/context", "extreme_test/context"],
-        "seasonal": ["seasonal_test_split/context", "seasonal_test/context"],
+        "iid": ["iid", "earthnet2021x/iid", "iid_test_split/context", "iid_test/context"],
+        "ood": ["ood", "earthnet2021x/ood", "ood_test_split/context", "ood_test/context"],
+        "extreme": ["extreme", "earthnet2021x/extreme", "extreme_test_split/context", "extreme_test/context"],
+        "seasonal": ["seasonal", "earthnet2021x/seasonal", "seasonal_test_split/context", "seasonal_test/context"],
     })
+    data_format: str = "auto"
     file_glob: str = "**/*.npz"
     context_frames: int = 10
     target_frames: int = 20
@@ -60,6 +59,11 @@ class EarthNet2021Config:
     meso_crop_size: int = 2
     elevation_channel: int = 0
     elevation_scale: float = 2000.0
+    netcdf_s2_offset_days: int = 4
+    netcdf_dem_variables: List[str] = field(
+        default_factory=lambda: ["nasa_dem", "alos_dem", "cop_dem"]
+    )
+    netcdf_solar_scale: float = 0.0864
     validation_fraction: float = 0.1
     validation_group: str = "tile"
     split_seed: int = 42
@@ -89,6 +93,7 @@ class EarthNet2021Config:
             root=str(data_cfg["root"]),
             split=split or str(data_cfg.get("split", "train")),
             split_subdirs=split_subdirs if split_subdirs is not None else cls.__dataclass_fields__["split_subdirs"].default_factory(),
+            data_format=str(data_cfg.get("data_format", "auto")).lower(),
             file_glob=str(data_cfg.get("file_glob", "**/*.npz")),
             context_frames=int(data_cfg.get("context_frames", 10)),
             target_frames=int(data_cfg.get("target_frames", 20)),
@@ -103,6 +108,14 @@ class EarthNet2021Config:
             meso_crop_size=int(data_cfg.get("meso_crop_size", 2)),
             elevation_channel=int(data_cfg.get("elevation_channel", 0)),
             elevation_scale=float(data_cfg.get("elevation_scale", 2000.0)),
+            netcdf_s2_offset_days=int(data_cfg.get("netcdf_s2_offset_days", 4)),
+            netcdf_dem_variables=list(
+                data_cfg.get(
+                    "netcdf_dem_variables",
+                    ["nasa_dem", "alos_dem", "cop_dem"],
+                )
+            ),
+            netcdf_solar_scale=float(data_cfg.get("netcdf_solar_scale", 0.0864)),
             validation_fraction=float(data_cfg.get("validation_fraction", 0.1)),
             validation_group=str(data_cfg.get("validation_group", "tile")),
             split_seed=int(data_cfg.get("split_seed", 42)),
@@ -128,7 +141,8 @@ class EarthNet2021Dataset(Dataset):
         self.files = _discover_npz_files(config)
         if not self.files:
             raise FileNotFoundError(
-                f"No EarthNet npz files found under root={config.root!r}, split={config.split!r}. "
+                f"No EarthNet files matching {config.file_glob!r} found under "
+                f"root={config.root!r}, split={config.split!r}. "
                 "Run scripts/inspect_earthnet2021.py to verify the dataset layout."
             )
         if config.max_files is not None:
@@ -139,16 +153,20 @@ class EarthNet2021Dataset(Dataset):
 
     def __getitem__(self, index: int) -> Dict[str, Any]:
         path = self.files[index]
-        with np.load(path, allow_pickle=True) as cube:
-            arrays = {k: cube[k] for k in cube.files}
-        external_drivers, external_channel_map = _load_external_drivers(path, self.config)
-        sample = parse_earthnet_npz(
-            arrays,
-            self.config,
-            sample_name=path.name,
-            external_drivers=external_drivers,
-            external_channel_map=external_channel_map,
-        )
+        data_format = _infer_data_format(path, self.config.data_format)
+        if data_format == "netcdf":
+            sample = parse_earthnet_netcdf(path, self.config)
+        else:
+            with np.load(path, allow_pickle=True) as cube:
+                arrays = {k: cube[k] for k in cube.files}
+            external_drivers, external_channel_map = _load_external_drivers(path, self.config)
+            sample = parse_earthnet_npz(
+                arrays,
+                self.config,
+                sample_name=path.name,
+                external_drivers=external_drivers,
+                external_channel_map=external_channel_map,
+            )
         sample["meta"] = {
             "path": str(path),
             "sample_id": _canonical_cubename(path.name),
@@ -194,61 +212,185 @@ def parse_earthnet_npz(
         )
 
     image = high_tchw[:, : config.image_channels]
-    if config.normalize:
-        image = _normalize_reflectance(image, config.band_spec)
-
-    total_needed = config.context_frames + config.target_frames
-    original_frames = image.shape[0]
-    if image.shape[0] < total_needed:
-        if config.strict:
-            raise ValueError(f"Need {total_needed} frames, found {image.shape[0]}")
-        pad = np.repeat(image[-1:], total_needed - image.shape[0], axis=0)
-        image = np.concatenate([image, pad], axis=0)
-
-    x_context = image[: config.context_frames]
-    x_target = image[config.context_frames: total_needed, : config.target_channels]
-
     clear_mask = _extract_clear_mask(arrays, high_tchw, config)
-    context_mask = clear_mask[: config.context_frames]
-    target_mask = clear_mask[config.context_frames: total_needed]
-    if original_frames < config.context_frames:
-        context_mask[original_frames:] = 0.0
-    if original_frames < total_needed:
-        valid_target_frames = max(0, original_frames - config.context_frames)
-        target_mask[valid_target_frames:] = 0.0
-
     meso = _extract_meso_features(arrays, crop_size=config.meso_crop_size)
     start_date = _parse_start_date(sample_name)
-    drivers, driver_mask = _build_driver_features(
-        meso=meso,
-        num_targets=config.target_frames,
-        context_frames=config.context_frames,
-        frame_interval_days=config.frame_interval_days,
-        meso_steps_per_image=config.meso_steps_per_image,
-        driver_spec=config.driver_spec,
-        start_date=start_date,
-        external_drivers=external_drivers,
-        external_channel_map=external_channel_map,
-    )
-    for feature_name in config.disabled_driver_features:
-        if feature_name not in config.driver_spec.feature_names:
-            raise ValueError(f"Unknown disabled D feature: {feature_name}")
-        feature_index = config.driver_spec.feature_names.index(feature_name)
-        drivers[:, feature_index] = 0.0
-        driver_mask[:, feature_index] = 0.0
-    drivers = _normalize_driver_features(
-        drivers, driver_mask, config.driver_mean, config.driver_std
-    )
     elevation, geo_mask = _extract_elevation(
         arrays,
         image_hw=image.shape[-2:],
         channel=config.elevation_channel,
         scale=config.elevation_scale,
     )
+    return _format_stage2_sample(
+        image=image,
+        clear_mask=clear_mask,
+        meso=meso,
+        elevation=elevation,
+        geo_mask=geo_mask,
+        config=config,
+        start_date=start_date,
+        external_drivers=external_drivers,
+        external_channel_map=external_channel_map,
+    )
 
-    h = np.arange(1, config.target_frames + 1, dtype=np.float32) * float(config.frame_interval_days)
 
-    # Resize all image-space tensors to the Stage1.5 model resolution.
+def parse_earthnet_netcdf(
+    path: Path,
+    config: EarthNet2021Config,
+) -> Dict[str, Any]:
+    """Parse one EarthNet2021x minicube into the shared Stage2 contract."""
+
+    try:
+        import xarray as xr
+    except ImportError as exc:
+        raise RuntimeError(
+            "EarthNet2021x .nc loading requires xarray and netCDF4."
+        ) from exc
+
+    s2_variables = ("s2_B02", "s2_B03", "s2_B04", "s2_B8A")
+    weather_variables = ("eobs_rr", "eobs_tg", "eobs_hu", "eobs_qq")
+    with xr.open_dataset(path, cache=False) as cube:
+        missing = [
+            name
+            for name in (*s2_variables, "s2_mask", *weather_variables)
+            if name not in cube.variables
+        ]
+        if missing:
+            raise KeyError(f"{path}: missing EarthNet2021x variables {missing}")
+
+        indices = slice(
+            config.netcdf_s2_offset_days,
+            None,
+            config.frame_interval_days,
+        )
+        image = np.stack(
+            [
+                _xarray_to_thw(cube[name], name)[indices]
+                for name in s2_variables
+            ],
+            axis=1,
+        ).astype(np.float32)
+        raw_mask = _xarray_to_thw(cube["s2_mask"], "s2_mask")[indices]
+        clear_mask = (
+            np.isfinite(raw_mask) & (raw_mask <= 0)
+            & np.all(np.isfinite(image), axis=1)
+        ).astype(np.float32)
+
+        meso = _extract_netcdf_weather(cube, config)
+
+        dem_name = next(
+            (name for name in config.netcdf_dem_variables if name in cube.variables),
+            None,
+        )
+        if dem_name is None:
+            if config.strict:
+                raise KeyError(
+                    f"{path}: no DEM found; expected one of "
+                    f"{config.netcdf_dem_variables}"
+                )
+            elevation = np.zeros((1, image.shape[-2], image.shape[-1]), dtype=np.float32)
+            geo_mask = np.zeros_like(elevation)
+        else:
+            elevation_2d = _xarray_to_hw(cube[dem_name], dem_name)
+            elevation = elevation_2d[None].astype(np.float32)
+            geo_mask = np.isfinite(elevation).astype(np.float32)
+            elevation = np.nan_to_num(elevation, nan=0.0)
+            if config.elevation_scale > 0:
+                elevation = elevation / float(config.elevation_scale)
+
+        start_date = _xarray_start_date(cube) or _parse_start_date(path.name)
+
+    netcdf_driver_spec = _earthnet2021x_driver_spec(config)
+    return _format_stage2_sample(
+        image=image,
+        clear_mask=clear_mask,
+        meso=meso,
+        elevation=elevation,
+        geo_mask=geo_mask,
+        config=config,
+        start_date=start_date,
+        driver_spec=netcdf_driver_spec,
+        driver_time_offset_days=config.netcdf_s2_offset_days,
+    )
+
+
+def _format_stage2_sample(
+    image: np.ndarray,
+    clear_mask: np.ndarray,
+    meso: Optional[np.ndarray],
+    elevation: np.ndarray,
+    geo_mask: np.ndarray,
+    config: EarthNet2021Config,
+    start_date: Optional[date],
+    external_drivers: Optional[np.ndarray] = None,
+    external_channel_map: Optional[Dict[str, int]] = None,
+    driver_spec: Optional[DriverSpec] = None,
+    driver_time_offset_days: int = 0,
+) -> Dict[str, Any]:
+    if config.normalize:
+        image = _normalize_reflectance(image, config.band_spec)
+    total_needed = config.context_frames + config.target_frames
+    original_frames = image.shape[0]
+    if original_frames < total_needed:
+        if config.strict:
+            raise ValueError(f"Need {total_needed} frames, found {original_frames}")
+        image = np.concatenate(
+            [image, np.repeat(image[-1:], total_needed - original_frames, axis=0)],
+            axis=0,
+        )
+        clear_mask = np.concatenate(
+            [
+                clear_mask,
+                np.zeros(
+                    (total_needed - original_frames, *clear_mask.shape[-2:]),
+                    dtype=np.float32,
+                ),
+            ],
+            axis=0,
+        )
+
+    x_context = image[: config.context_frames]
+    x_target = image[
+        config.context_frames:total_needed,
+        : config.target_channels,
+    ]
+    context_mask = clear_mask[: config.context_frames].copy()
+    target_mask = clear_mask[config.context_frames:total_needed].copy()
+    if original_frames < config.context_frames:
+        context_mask[original_frames:] = 0.0
+    if original_frames < total_needed:
+        target_mask[max(0, original_frames - config.context_frames):] = 0.0
+
+    active_driver_spec = driver_spec or config.driver_spec
+    drivers, driver_mask = _build_driver_features(
+        meso=meso,
+        num_targets=config.target_frames,
+        context_frames=config.context_frames,
+        frame_interval_days=config.frame_interval_days,
+        meso_steps_per_image=config.meso_steps_per_image,
+        driver_spec=active_driver_spec,
+        start_date=start_date,
+        external_drivers=external_drivers,
+        external_channel_map=external_channel_map,
+        time_offset_days=driver_time_offset_days,
+    )
+    for feature_name in config.disabled_driver_features:
+        if feature_name not in active_driver_spec.feature_names:
+            raise ValueError(f"Unknown disabled D feature: {feature_name}")
+        feature_index = active_driver_spec.feature_names.index(feature_name)
+        drivers[:, feature_index] = 0.0
+        driver_mask[:, feature_index] = 0.0
+    drivers = _normalize_driver_features(
+        drivers,
+        driver_mask,
+        config.driver_mean,
+        config.driver_std,
+    )
+    h = (
+        np.arange(1, config.target_frames + 1, dtype=np.float32)
+        * float(config.frame_interval_days)
+    )
+
     x_context_t = _resize_tchw(torch.from_numpy(x_context), config.model_img_size, mode="bilinear")
     x_target_t = _resize_tchw(torch.from_numpy(x_target), config.model_img_size, mode="bilinear")
     context_mask_t = _resize_thw(torch.from_numpy(context_mask), config.model_img_size, mode="nearest")
@@ -298,14 +440,82 @@ def inspect_npz_file(path: Path) -> Dict[str, Any]:
     return info
 
 
-def inspect_earthnet_root(root: str, split: str = "train", max_files: int = 3) -> Dict[str, Any]:
-    cfg = EarthNet2021Config(root=root, split=split, max_files=max_files)
+def inspect_netcdf_file(path: Path) -> Dict[str, Any]:
+    try:
+        import xarray as xr
+    except ImportError as exc:
+        raise RuntimeError("NetCDF inspection requires xarray and netCDF4.") from exc
+    info: Dict[str, Any] = {"path": str(path), "dimensions": {}, "variables": {}}
+    with xr.open_dataset(path, cache=False) as cube:
+        info["dimensions"] = {
+            name: int(value) for name, value in cube.sizes.items()
+        }
+        for key in (
+            "s2_B02",
+            "s2_B03",
+            "s2_B04",
+            "s2_B8A",
+            "s2_mask",
+            "eobs_rr",
+            "eobs_tg",
+            "eobs_hu",
+            "eobs_qq",
+            "nasa_dem",
+            "alos_dem",
+            "cop_dem",
+        ):
+            if key not in cube.variables:
+                continue
+            array = cube[key]
+            item: Dict[str, Any] = {
+                "dims": list(array.dims),
+                "shape": list(array.shape),
+                "dtype": str(array.dtype),
+                "units": array.attrs.get("units"),
+            }
+            values = np.asarray(array.values)
+            finite = values[np.isfinite(values)]
+            if finite.size:
+                item.update(
+                    {
+                        "min": float(np.min(finite)),
+                        "max": float(np.max(finite)),
+                        "mean": float(np.mean(finite)),
+                    }
+                )
+            info["variables"][key] = item
+    return info
+
+
+def inspect_earthnet_root(
+    root: str,
+    split: str = "train",
+    max_files: int = 3,
+    data_format: str = "auto",
+    file_glob: Optional[str] = None,
+) -> Dict[str, Any]:
+    if file_glob is None:
+        file_glob = "**/*.nc" if data_format in {"netcdf", "nc", "earthnet2021x"} else "**/*.npz"
+    cfg = EarthNet2021Config(
+        root=root,
+        split=split,
+        max_files=max_files,
+        data_format=data_format,
+        file_glob=file_glob,
+    )
     files = _discover_npz_files(cfg)
     return {
         "root": root,
         "split": split,
+        "data_format": data_format,
+        "file_glob": file_glob,
         "num_files_found": len(files),
-        "files": [inspect_npz_file(path) for path in files[:max_files]],
+        "files": [
+            inspect_netcdf_file(path)
+            if _infer_data_format(path, data_format) == "netcdf"
+            else inspect_npz_file(path)
+            for path in files[:max_files]
+        ],
     }
 
 
@@ -528,6 +738,7 @@ def _build_driver_features(
     start_date: Optional[date],
     external_drivers: Optional[np.ndarray] = None,
     external_channel_map: Optional[Dict[str, int]] = None,
+    time_offset_days: int = 0,
 ) -> Tuple[np.ndarray, np.ndarray]:
     features = np.zeros((num_targets, driver_spec.dim), dtype=np.float32)
     mask = np.zeros_like(features, dtype=np.float32)
@@ -536,14 +747,18 @@ def _build_driver_features(
         values: Dict[str, float] = {}
         valid: Dict[str, float] = {}
         if start_date is not None:
-            target_date = start_date + timedelta(days=(context_frames + j) * frame_interval_days)
+            target_date = start_date + timedelta(
+                days=time_offset_days + (context_frames + j) * frame_interval_days
+            )
             target_doy = target_date.timetuple().tm_yday
             values["target_doy_sin"] = math.sin(2.0 * math.pi * target_doy / 365.25)
             values["target_doy_cos"] = math.cos(2.0 * math.pi * target_doy / 365.25)
             valid["target_doy_sin"] = valid["target_doy_cos"] = 1.0
 
-        last_context_day = (context_frames - 1) * meso_steps_per_image
-        target_day = (context_frames + j) * meso_steps_per_image
+        last_context_day = (
+            time_offset_days + (context_frames - 1) * meso_steps_per_image
+        )
+        target_day = time_offset_days + (context_frames + j) * meso_steps_per_image
         interval = _meso_interval(meso, start=last_context_day + 1, end=target_day + 1)
         _add_weather_values(values, valid, interval, driver_spec.channel_map)
         external_interval = _meso_interval(
@@ -585,8 +800,11 @@ def _add_weather_values(values: Dict[str, float], valid: Dict[str, float], inter
         if idx < 0 or idx >= interval.shape[1]:
             return None
         data = interval[:, idx].astype(np.float32)
-        data = data[np.isfinite(data)]
-        return data if data.size else None
+        # A cumulative forcing window is valid only when every day is present.
+        # Partial sums would silently make different horizons incomparable.
+        if data.size == 0 or not np.isfinite(data).all():
+            return None
+        return data
 
     precip = get_channel("precipitation")
     if precip is not None:
@@ -678,6 +896,12 @@ def _parse_start_date(sample_name: Optional[str]) -> Optional[date]:
     if not sample_name:
         return None
     stem = Path(sample_name).stem
+    iso_match = re.search(r"(?<!\d)(\d{4})-(\d{2})-(\d{2})(?!\d)", stem)
+    if iso_match:
+        try:
+            return date(*(int(value) for value in iso_match.groups()))
+        except ValueError:
+            pass
     parts = stem.split("_")
     # Official cubename: tile_YYYY_MM_DD_YYYY_MM_DD_...
     for i in range(max(0, len(parts) - 2)):
@@ -808,5 +1032,146 @@ def _canonical_cubename(filename: str) -> str:
     for index, part in enumerate(parts):
         if tile_pattern.fullmatch(part):
             cubename = "_".join(parts[index:])
-            return cubename[:-4] if cubename.endswith(".npz") else cubename
+            for suffix in (".npz", ".nc"):
+                if cubename.endswith(suffix):
+                    return cubename[: -len(suffix)]
+            return cubename
     return Path(filename).stem
+
+
+def _infer_data_format(path: Path, configured: str) -> str:
+    aliases = {
+        "nc": "netcdf",
+        "earthnet2021x": "netcdf",
+        "npz": "npz",
+        "earthnet2021": "npz",
+    }
+    if configured != "auto":
+        resolved = aliases.get(configured, configured)
+        if resolved not in {"netcdf", "npz"}:
+            raise ValueError(
+                f"Unsupported data_format={configured!r}; use auto, netcdf, or npz."
+            )
+        return resolved
+    if path.suffix.lower() == ".nc":
+        return "netcdf"
+    if path.suffix.lower() == ".npz":
+        return "npz"
+    raise ValueError(f"Cannot infer EarthNet data format from {path}")
+
+
+def _xarray_to_thw(array: Any, name: str) -> np.ndarray:
+    required = {"time", "lat", "lon"}
+    if not required.issubset(array.dims):
+        raise ValueError(
+            f"{name} must contain dimensions time/lat/lon, got {array.dims}"
+        )
+    return np.asarray(
+        array.transpose("time", "lat", "lon").values,
+        dtype=np.float32,
+    )
+
+
+def _xarray_to_time(array: Any, name: str) -> np.ndarray:
+    if "time" not in array.dims:
+        raise ValueError(f"{name} must contain a time dimension, got {array.dims}")
+    other_dims = [dimension for dimension in array.dims if dimension != "time"]
+    ordered = array.transpose("time", *other_dims)
+    values = np.asarray(ordered.values, dtype=np.float32)
+    if values.ndim > 1:
+        values = np.nanmean(values, axis=tuple(range(1, values.ndim)))
+    return values
+
+
+def _xarray_to_hw(array: Any, name: str) -> np.ndarray:
+    if not {"lat", "lon"}.issubset(array.dims):
+        raise ValueError(f"{name} must contain lat/lon dimensions, got {array.dims}")
+    selected = array
+    for dimension in array.dims:
+        if dimension not in {"lat", "lon"}:
+            selected = selected.isel({dimension: 0})
+    return np.asarray(selected.transpose("lat", "lon").values, dtype=np.float32)
+
+
+def _extract_netcdf_weather(
+    cube: Any,
+    config: EarthNet2021Config,
+) -> np.ndarray:
+    precip = _xarray_to_time(cube["eobs_rr"], "eobs_rr")
+    temperature = _temperature_to_celsius(
+        _xarray_to_time(cube["eobs_tg"], "eobs_tg")
+    )
+    humidity = _relative_humidity_percent(
+        _xarray_to_time(cube["eobs_hu"], "eobs_hu")
+    )
+    vpd = _vpd_from_temperature_humidity(temperature, humidity)
+    # E-OBS qq is mean irradiance in W/m2. Convert it to daily MJ/m2 so
+    # cumulative solar forcing has a physical unit before train-only z-score.
+    solar = (
+        _xarray_to_time(cube["eobs_qq"], "eobs_qq")
+        * float(config.netcdf_solar_scale)
+    )
+    return np.stack(
+        [precip, temperature, vpd, solar],
+        axis=1,
+    ).astype(np.float32)
+
+
+def _earthnet2021x_driver_spec(config: EarthNet2021Config) -> DriverSpec:
+    return DriverSpec(
+        feature_names=list(config.driver_spec.feature_names),
+        channel_map={
+            "precipitation": 0,
+            "temperature": 1,
+            "vpd": 2,
+            "solar_radiation": 3,
+        },
+    )
+
+
+def _xarray_start_date(cube: Any) -> Optional[date]:
+    if "time" not in cube.coords or cube.sizes.get("time", 0) == 0:
+        return None
+    value = cube["time"].values[0]
+    try:
+        converted = np.datetime64(value, "D").astype(object)
+        if isinstance(converted, date):
+            return converted
+    except (TypeError, ValueError, OverflowError):
+        pass
+    match = re.search(r"(\d{4})-(\d{2})-(\d{2})", str(value))
+    if match:
+        try:
+            return date(*(int(part) for part in match.groups()))
+        except ValueError:
+            return None
+    return None
+
+
+def _temperature_to_celsius(values: np.ndarray) -> np.ndarray:
+    output = values.astype(np.float32)
+    finite = output[np.isfinite(output)]
+    if finite.size and float(np.nanmedian(finite)) > 100.0:
+        output = output - 273.15
+    return output
+
+
+def _relative_humidity_percent(values: np.ndarray) -> np.ndarray:
+    output = values.astype(np.float32)
+    finite = output[np.isfinite(output)]
+    if finite.size and float(np.nanmax(finite)) <= 1.5:
+        output = output * 100.0
+    return np.clip(output, 0.0, 100.0)
+
+
+def _vpd_from_temperature_humidity(
+    temperature_c: np.ndarray,
+    relative_humidity_percent: np.ndarray,
+) -> np.ndarray:
+    saturation = 0.6108 * np.exp(
+        17.27 * temperature_c / (temperature_c + 237.3)
+    )
+    return np.maximum(
+        saturation * (1.0 - relative_humidity_percent / 100.0),
+        0.0,
+    ).astype(np.float32)

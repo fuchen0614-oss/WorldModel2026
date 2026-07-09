@@ -31,13 +31,19 @@ def main():
     parser.add_argument("--try-loader", action="store_true", help="Also instantiate the Stage2 dataset and print one sample shape")
     args = parser.parse_args()
 
-    report = inspect_earthnet_root(args.root, split=args.split, max_files=args.max_files)
+    with open(args.config, "r", encoding="utf-8") as handle:
+        full_config = yaml.safe_load(handle)
+    data_config = dict(full_config["data"])
+    report = inspect_earthnet_root(
+        args.root,
+        split=args.split,
+        max_files=args.max_files,
+        data_format=str(data_config.get("data_format", "auto")),
+        file_glob=data_config.get("file_glob"),
+    )
     print(json.dumps(report, indent=2, ensure_ascii=False))
 
     if args.try_loader:
-        with open(args.config, "r", encoding="utf-8") as handle:
-            full_config = yaml.safe_load(handle)
-        data_config = dict(full_config["data"])
         data_config["root"] = args.root
         data_config["split"] = args.split
         data_config["max_files"] = args.max_files

@@ -19,14 +19,8 @@ sys.path.insert(0, str(ROOT))
 from data.datasets.earthnet2021 import (
     EarthNet2021Config,
     EarthNet2021Dataset,
-    _build_driver_features,
     _discover_npz_files,
-    _extract_elevation,
-    _extract_meso_features,
     _load_external_drivers,
-    _parse_start_date,
-    _select_required_array,
-    _to_tchw,
 )
 from train.train_stage2_earthnet import create_stage2_model
 
@@ -67,62 +61,34 @@ def _scan_data(
     issue_count = 0
     high_shapes: Dict[str, int] = {}
     meso_shapes: Dict[str, int] = {}
+    dataset = EarthNet2021Dataset(data_cfg)
 
     for index, path in enumerate(files, start=1):
         try:
-            with np.load(path, allow_pickle=True) as cube:
-                arrays = {key: cube[key] for key in cube.files}
-            high = _select_required_array(arrays, ("highresdynamic",), ndim=4)
-            high_tchw = _to_tchw(high)
-            high_shapes[str(tuple(high.shape))] = (
-                high_shapes.get(str(tuple(high.shape)), 0) + 1
+            sample = dataset[index - 1]
+            context_shape = tuple(sample["x_context"].shape)
+            high_shapes[str(context_shape)] = (
+                high_shapes.get(str(context_shape), 0) + 1
             )
-            required_frames = data_cfg.context_frames + data_cfg.target_frames
-            if high_tchw.shape[0] < required_frames and data_cfg.strict:
-                raise ValueError(
-                    f"highresdynamic has {high_tchw.shape[0]} frames; "
-                    f"{required_frames} required"
-                )
-            if high_tchw.shape[1] < max(data_cfg.image_channels, 5):
-                raise ValueError(
-                    f"highresdynamic has only {high_tchw.shape[1]} channels"
-                )
-
-            start_date = _parse_start_date(path.name)
-            if start_date is None:
+            driver_shape = tuple(sample["D"].shape)
+            meso_shapes[str(driver_shape)] = (
+                meso_shapes.get(str(driver_shape), 0) + 1
+            )
+            if sample.get("start_date") is None:
                 date_failures += 1
-            meso = _extract_meso_features(
-                arrays,
-                crop_size=data_cfg.meso_crop_size,
-            )
-            if meso is not None:
-                meso_shapes[str(tuple(meso.shape))] = (
-                    meso_shapes.get(str(tuple(meso.shape)), 0) + 1
-                )
-            external, channel_map = _load_external_drivers(path, data_cfg)
+            if data_cfg.external_driver_root:
+                external, _ = _load_external_drivers(path, data_cfg)
+            else:
+                external = None
             if external is not None:
                 sidecars_found += 1
-            drivers, driver_mask = _build_driver_features(
-                meso=meso,
-                num_targets=data_cfg.target_frames,
-                context_frames=data_cfg.context_frames,
-                frame_interval_days=data_cfg.frame_interval_days,
-                meso_steps_per_image=data_cfg.meso_steps_per_image,
-                driver_spec=data_cfg.driver_spec,
-                start_date=start_date,
-                external_drivers=external,
-                external_channel_map=channel_map,
-            )
+            drivers = sample["D"].numpy()
+            driver_mask = sample["D_mask"].numpy()
             if not np.isfinite(drivers).all():
                 raise ValueError("constructed D contains non-finite values")
             valid_counts += (driver_mask > 0).sum(axis=0)
 
-            _, geo_mask = _extract_elevation(
-                arrays,
-                image_hw=high_tchw.shape[-2:],
-                channel=data_cfg.elevation_channel,
-                scale=data_cfg.elevation_scale,
-            )
+            geo_mask = sample["G_mask"].numpy()
             valid_geo = int((geo_mask > 0).sum())
             geo_valid_pixels += valid_geo
             geo_total_pixels += int(geo_mask.size)
@@ -160,8 +126,8 @@ def _scan_data(
         "total_files_in_split": len(all_files),
         "scanned_files": len(files),
         "scan_is_full_split": len(files) == len(all_files),
-        "highresdynamic_shapes": high_shapes,
-        "mesodynamic_time_channel_shapes": meso_shapes,
+        "context_tensor_shapes": high_shapes,
+        "driver_tensor_shapes": meso_shapes,
         "external_sidecars_found": sidecars_found,
         "date_parse_failures": date_failures,
         "zero_valid_elevation_files": zero_geo_files,

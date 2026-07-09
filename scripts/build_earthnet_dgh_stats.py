@@ -18,9 +18,13 @@ from data.datasets.earthnet2021 import (
     EarthNet2021Config,
     _build_driver_features,
     _discover_npz_files,
+    _earthnet2021x_driver_spec,
     _extract_meso_features,
+    _extract_netcdf_weather,
+    _infer_data_format,
     _load_external_drivers,
     _parse_start_date,
+    _xarray_start_date,
 )
 
 
@@ -51,7 +55,10 @@ def main():
     if args.max_files:
         files = files[: args.max_files]
     if not files:
-        raise FileNotFoundError(f"No train npz files found under {data_cfg.root}")
+        raise FileNotFoundError(
+            f"No train files matching {data_cfg.file_glob!r} found under "
+            f"{data_cfg.root}"
+        )
 
     dim = data_cfg.driver_spec.dim
     sums = np.zeros(dim, dtype=np.float64)
@@ -59,23 +66,45 @@ def main():
     counts = np.zeros(dim, dtype=np.int64)
 
     for index, path in enumerate(files, start=1):
-        with np.load(path, allow_pickle=True) as cube:
-            arrays = {key: cube[key] for key in cube.files}
-        meso = _extract_meso_features(
-            arrays,
-            crop_size=data_cfg.meso_crop_size,
-        )
-        external_drivers, external_channel_map = _load_external_drivers(path, data_cfg)
+        data_format = _infer_data_format(path, data_cfg.data_format)
+        time_offset_days = 0
+        driver_spec = data_cfg.driver_spec
+        if data_format == "netcdf":
+            try:
+                import xarray as xr
+            except ImportError as exc:
+                raise RuntimeError(
+                    "EarthNet2021x statistics require xarray and netCDF4."
+                ) from exc
+            with xr.open_dataset(path, cache=False) as cube:
+                meso = _extract_netcdf_weather(cube, data_cfg)
+                start_date = _xarray_start_date(cube) or _parse_start_date(path.name)
+            external_drivers = None
+            external_channel_map = None
+            driver_spec = _earthnet2021x_driver_spec(data_cfg)
+            time_offset_days = data_cfg.netcdf_s2_offset_days
+        else:
+            with np.load(path, allow_pickle=True) as cube:
+                arrays = {key: cube[key] for key in cube.files}
+            meso = _extract_meso_features(
+                arrays,
+                crop_size=data_cfg.meso_crop_size,
+            )
+            start_date = _parse_start_date(path.name)
+            external_drivers, external_channel_map = _load_external_drivers(
+                path, data_cfg
+            )
         features, mask = _build_driver_features(
             meso=meso,
             num_targets=data_cfg.target_frames,
             context_frames=data_cfg.context_frames,
             frame_interval_days=data_cfg.frame_interval_days,
             meso_steps_per_image=data_cfg.meso_steps_per_image,
-            driver_spec=data_cfg.driver_spec,
-            start_date=_parse_start_date(path.name),
+            driver_spec=driver_spec,
+            start_date=start_date,
             external_drivers=external_drivers,
             external_channel_map=external_channel_map,
+            time_offset_days=time_offset_days,
         )
         valid = mask > 0
         sums += np.where(valid, features, 0.0).sum(axis=0)
@@ -92,7 +121,11 @@ def main():
     std[counts <= 1] = 1.0
 
     report = {
-        "dataset": "EarthNet2021",
+        "dataset": (
+            "EarthNet2021x"
+            if data_cfg.data_format in {"netcdf", "nc", "earthnet2021x"}
+            else "EarthNet2021"
+        ),
         "fit_split": "train",
         "num_files": len(files),
         "target_frames_per_file": data_cfg.target_frames,

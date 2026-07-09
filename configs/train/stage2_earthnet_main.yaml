@@ -109,10 +109,11 @@ model:
     output_activation: sigmoid
 
 data:
-  dataset: earthnet2021
+  dataset: earthnet2021x
   root: /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
   split: train
-  file_glob: "**/*.npz"
+  data_format: netcdf
+  file_glob: "**/*.nc"
   context_frames: 10
   target_frames: 20
   frame_interval_days: 5
@@ -121,11 +122,15 @@ data:
   eval_img_size: 128
   image_channels: 4
   target_channels: 4
-  # Official highresdynamic order: blue, green, red, nir, cloud_prob, scene_class, cloud_mask.
-  cloud_mask_channel: 6
+  # EarthNet2021x uses s2_B02/B03/B04/B8A and s2_mask.
+  cloud_mask_channel: 0
   cloud_mask_is_invalid: true
-  # mesodynamic is daily while highresdynamic is sampled every five days.
+  # E-OBS is daily; S2 uses day indices 4, 9, ..., 149.
   meso_steps_per_image: 5
+  netcdf_s2_offset_days: 4
+  # eobs_qq is W/m2; 0.0864 converts a daily mean to MJ/m2/day.
+  netcdf_solar_scale: 0.0864
+  netcdf_dem_variables: [nasa_dem, alos_dem, cop_dem]
   # Official EarthNet overlap is the central 2x2 part of the 80x80 meso window.
   meso_crop_size: 2
   elevation_channel: 0
@@ -136,10 +141,9 @@ data:
   use_train_holdout: true
   # Set after running scripts/build_earthnet_dgh_stats.py.
   dgh_stats_path: null
-  # Optional daily sidecars keyed by EarthNet cube filename. Use these to add
-  # VPD/solar radiation; built-in EarthNet data only supplies precipitation/temp.
+  # EarthNet2021x contains humidity and radiation, so no ERA5 sidecar is needed.
   external_driver_root: null
-  external_driver_required: true
+  external_driver_required: false
   disabled_driver_features: []
   normalize: true
   strict: true
@@ -154,13 +158,12 @@ data:
     scale_factor: 10000.0
     auto_scale: true
   driver_spec:
-    # Official mesodynamic order: precipitation, pressure, mean/min/max temperature.
-    # VPD and solar radiation require an external sidecar (ERA5 or equivalent).
+    # The NetCDF loader builds this physical order from embedded E-OBS fields.
     channel_map:
       precipitation: 0
-      temperature: 2
-      vpd: null
-      solar_radiation: null
+      temperature: 1
+      vpd: 2
+      solar_radiation: 3
 
 training:
   seed: 42
