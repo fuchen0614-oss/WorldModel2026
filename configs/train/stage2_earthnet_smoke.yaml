@@ -1,0 +1,184 @@
+model:
+  use_phi_encoder: true
+  compute_latent_targets: true
+  conditions:
+    use_D: true
+    use_G: true
+    use_h: true
+  encoder:
+    type: MultiModalViTEncoderFiLM
+    from_checkpoint: null
+    freeze: false
+    unfreeze_at_step: 0
+    unfreeze_last_blocks: 0
+    unfreeze_state_projector: false
+    img_size: 32
+    s1_channels: 2
+    s2_channels: 12
+    patch_size: 16
+    embed_dim: 32
+    depth: 1
+    num_heads: 4
+    mlp_ratio: 2.0
+    dropout: 0.0
+    phi_dim: 32
+    use_film: true
+    use_cross_attention: false
+    film_start_layer: 0
+  phi_encoder:
+    type: PureImagingConditionEncoder
+    embed_dim: 32
+    sun_dim: 8
+    sar_geom_dim: 8
+    dropout: 0.0
+    condition_dropout: 0.0
+    use_sar_geometry: true
+  state_projector:
+    type: SpatialStateProjector
+    in_dim: 32
+    state_dim: 16
+    hidden_dim: 32
+  band_adapter:
+    type: EarthNetInputAdapter
+    in_channels: 4
+    out_channels: 12
+    hidden_channels: 16
+    mode: linear
+    source_to_canonical: [1, 2, 3, 7]
+  context_aggregator:
+    type: ContextStateAggregator
+    state_dim: 16
+    hidden_dim: 32
+    dropout: 0.0
+    max_context_frames: 16
+  driver_encoder:
+    type: DriverEncoder
+    in_dim: 9
+    hidden_dim: 16
+    out_dim: 8
+    dropout: 0.0
+  horizon_encoder:
+    type: HorizonEncoder
+    out_dim: 8
+    hidden_dim: 16
+    max_h_days: 100.0
+  geo_tokenizer:
+    type: GeoTokenizer
+    in_channels: 1
+    geo_dim: 4
+    img_size: 32
+    patch_size: 16
+  dynamics:
+    type: StateDynamicsModule
+    latent_dim: 16
+    dynamics_type: transformer
+    driver_dim: 8
+    geo_dim: 4
+    time_dim: 8
+    hidden_dim: 32
+    num_layers: 1
+    num_heads: 4
+    dropout: 0.0
+  decoder:
+    type: EarthNetObservationDecoder
+    in_dim: 16
+    out_channels: 4
+    patch_size: 16
+    img_size: 32
+    depth: 1
+    num_heads: 4
+    decoder_embed_dim: 32
+    mlp_ratio: 2.0
+    dropout: 0.0
+    decoder_mode: transformer
+    predict_logvar: false
+    output_activation: sigmoid
+
+data:
+  dataset: earthnet2021
+  root: /tmp/obsworld_en21_smoke
+  split: train
+  file_glob: "**/*.npz"
+  context_frames: 10
+  target_frames: 20
+  frame_interval_days: 5
+  max_h_days: 100
+  model_img_size: 32
+  eval_img_size: 32
+  image_channels: 4
+  target_channels: 4
+  cloud_mask_channel: 6
+  cloud_mask_is_invalid: true
+  meso_steps_per_image: 5
+  meso_crop_size: 2
+  elevation_channel: 0
+  elevation_scale: 2000.0
+  validation_fraction: 0.1
+  validation_group: tile
+  split_seed: 42
+  use_train_holdout: false
+  dgh_stats_path: null
+  external_driver_root: null
+  external_driver_required: true
+  disabled_driver_features: []
+  normalize: true
+  strict: true
+  batch_size: 1
+  num_workers: 0
+  band_spec:
+    input_bands: [blue, green, red, nir]
+    target_bands: [blue, green, red, nir]
+    red_band: red
+    nir_band: nir
+    scale_factor: 10000.0
+    auto_scale: true
+  driver_spec:
+    channel_map:
+      precipitation: 0
+      temperature: 2
+      vpd: null
+      solar_radiation: null
+
+training:
+  seed: 42
+  max_steps: 2
+  warmup_steps: 1
+  gradient_accumulation_steps: 1
+  horizons_per_sample: 3
+  grad_clip: 1.0
+  require_dgh_stats: true
+  require_all_driver_features: true
+  require_geo: true
+
+validation:
+  split: val
+  interval: 0
+  batch_size: 1
+  num_workers: 0
+  max_samples: 0
+  max_batches: 1
+  primary_metric: loss/total
+  mode: min
+
+loss:
+  obs_loss: huber
+  weights:
+    obs: 1.0
+    ndvi: 0.5
+    latent: 0.2
+    delta: 0.1
+    smooth: 0.02
+
+optimizer:
+  name: adamw
+  lr: 0.0001
+  backbone_lr: 0.00001
+  min_lr: 0.000001
+  weight_decay: 0.05
+  betas: [0.9, 0.95]
+
+checkpoint_dir: outputs/stage2_earthnet_smoke/checkpoints
+log_dir: outputs/stage2_earthnet_smoke/logs
+resume_from: null
+checkpoint_interval: 1
+log_interval: 1

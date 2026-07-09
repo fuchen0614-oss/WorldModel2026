@@ -1,0 +1,209 @@
+# ObsWorld Stage2 main EarthNet2021 training config.
+# Main experiment first: full model z_context + D + G + h -> future observations.
+
+model:
+  use_phi_encoder: true
+  compute_latent_targets: true
+  conditions:
+    use_D: true
+    use_G: true
+    use_h: true
+
+  encoder:
+    type: MultiModalViTEncoderFiLM
+    from_checkpoint: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage1_5_dual_conditioned_vits_60k/checkpoint_step_60000.pt
+    freeze: true
+    unfreeze_at_step: 5000
+    unfreeze_last_blocks: 2
+    unfreeze_state_projector: true
+    img_size: 256
+    s1_channels: 2
+    s2_channels: 12
+    patch_size: 16
+    embed_dim: 384
+    depth: 12
+    num_heads: 6
+    mlp_ratio: 4.0
+    dropout: 0.0
+    phi_dim: 384
+    use_film: true
+    use_cross_attention: false
+    film_start_layer: 8
+
+  phi_encoder:
+    type: PureImagingConditionEncoder
+    embed_dim: 384
+    sun_dim: 64
+    sar_geom_dim: 64
+    dropout: 0.0
+    condition_dropout: 0.0
+    use_sar_geometry: true
+
+  state_projector:
+    type: SpatialStateProjector
+    in_dim: 384
+    state_dim: 256
+    hidden_dim: 512
+
+  band_adapter:
+    type: EarthNetInputAdapter
+    in_channels: 4
+    out_channels: 12
+    hidden_channels: 32
+    mode: linear
+    # EarthNet [blue, green, red, nir] -> SSL4EO [B02, B03, B04, B08].
+    source_to_canonical: [1, 2, 3, 7]
+
+  context_aggregator:
+    type: ContextStateAggregator
+    state_dim: 256
+    hidden_dim: 256
+    dropout: 0.0
+    max_context_frames: 32
+
+  driver_encoder:
+    type: DriverEncoder
+    in_dim: 9
+    hidden_dim: 64
+    out_dim: 32
+    dropout: 0.0
+
+  horizon_encoder:
+    type: HorizonEncoder
+    out_dim: 16
+    hidden_dim: 32
+    max_h_days: 100.0
+
+  geo_tokenizer:
+    type: GeoTokenizer
+    in_channels: 1
+    geo_dim: 16
+    img_size: 256
+    patch_size: 16
+
+  dynamics:
+    type: StateDynamicsModule
+    latent_dim: 256
+    dynamics_type: transformer
+    driver_dim: 32
+    geo_dim: 16
+    time_dim: 16
+    hidden_dim: 256
+    num_layers: 2
+    num_heads: 4
+    dropout: 0.0
+
+  decoder:
+    type: EarthNetObservationDecoder
+    in_dim: 256
+    out_channels: 4
+    patch_size: 16
+    img_size: 256
+    depth: 3
+    num_heads: 4
+    decoder_embed_dim: 192
+    mlp_ratio: 4.0
+    dropout: 0.0
+    decoder_mode: transformer
+    predict_logvar: false
+    output_activation: sigmoid
+
+data:
+  dataset: earthnet2021
+  root: /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
+  split: train
+  file_glob: "**/*.npz"
+  context_frames: 10
+  target_frames: 20
+  frame_interval_days: 5
+  max_h_days: 100
+  model_img_size: 256
+  eval_img_size: 128
+  image_channels: 4
+  target_channels: 4
+  # Official highresdynamic order: blue, green, red, nir, cloud_prob, scene_class, cloud_mask.
+  cloud_mask_channel: 6
+  cloud_mask_is_invalid: true
+  # mesodynamic is daily while highresdynamic is sampled every five days.
+  meso_steps_per_image: 5
+  # Official EarthNet overlap is the central 2x2 part of the 80x80 meso window.
+  meso_crop_size: 2
+  elevation_channel: 0
+  elevation_scale: 2000.0
+  validation_fraction: 0.1
+  validation_group: tile
+  split_seed: 42
+  use_train_holdout: true
+  # Set after running scripts/build_earthnet_dgh_stats.py.
+  dgh_stats_path: null
+  # Optional daily sidecars keyed by EarthNet cube filename. Use these to add
+  # VPD/solar radiation; built-in EarthNet data only supplies precipitation/temp.
+  external_driver_root: null
+  external_driver_required: true
+  disabled_driver_features: []
+  normalize: true
+  strict: true
+  batch_size: 2
+  num_workers: 4
+  band_spec:
+    # Official EarthNet order, verified against the published dataset loader.
+    input_bands: [blue, green, red, nir]
+    target_bands: [blue, green, red, nir]
+    red_band: red
+    nir_band: nir
+    scale_factor: 10000.0
+    auto_scale: true
+  driver_spec:
+    # Official mesodynamic order: precipitation, pressure, mean/min/max temperature.
+    # VPD and solar radiation require an external sidecar (ERA5 or equivalent).
+    channel_map:
+      precipitation: 0
+      temperature: 2
+      vpd: null
+      solar_radiation: null
+
+training:
+  seed: 42
+  max_steps: 50000
+  warmup_steps: 2000
+  gradient_accumulation_steps: 1
+  horizons_per_sample: 6
+  grad_clip: 1.0
+  require_dgh_stats: true
+  require_all_driver_features: true
+  require_geo: true
+
+validation:
+  split: val
+  interval: 1000
+  batch_size: 2
+  num_workers: 4
+  # Evenly spaced deterministic monitor subset; final reporting uses eval script.
+  max_samples: 512
+  max_batches: 0
+  primary_metric: MAE
+  mode: min
+
+loss:
+  obs_loss: huber
+  weights:
+    obs: 1.0
+    ndvi: 0.5
+    latent: 0.2
+    delta: 0.1
+    smooth: 0.02
+
+optimizer:
+  name: adamw
+  lr: 0.0001
+  backbone_lr: 0.00001
+  min_lr: 0.000001
+  backbone_min_lr: 0.000001
+  weight_decay: 0.05
+  betas: [0.9, 0.95]
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_main
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_main
+resume_from: null
+checkpoint_interval: 5000
+log_interval: 50

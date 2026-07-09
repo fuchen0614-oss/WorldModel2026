@@ -1,22 +1,8 @@
-"""
-StateDynamicsModule —— 状态动力学模块（Stage 2 骨架）
+"""ObsWorld 状态动力学模块。
 
-ObsWorld 主线（见 13_*.md §1.1）：
-    z_t (当前地表状态) + D (外生驱动) + G (地理先验)
-        → StateDynamicsModule → z_{t+h} (未来地表状态)
-
-本文件提供**可运行的最小实现**（GRU / Transformer 二选一），但训练 loop、
-真实的 D/G 注入、DynamicEarthNet/EarthNet loader 留到 Stage 2（已用 TODO[Stage2] 标注）。
-
-设计要点：
-- 输入 z_t [B, N, latent_dim]（来自 Stage1.5 encoder 的 patch tokens）或 [B, latent_dim]（池化后）
-- driver D / geo G 为可选条件，通过 FiLM-style 或拼接注入（当前用拼接 + 投影）
-- time_delta h 编码为标量条件（未来多步预测用）
-- 输出与 z_t 同形状的 z_{t+h}
-
-约束（与 Stage1.5 一致）：
-- D/G 缺失时走 learnable missing embedding（接口预留，Stage2 实现 join）
-- dynamics_type 可切换，方便消融
+输入当前地表状态 ``z_t``、外生驱动 ``D``、地理背景 ``G`` 和预测跨度
+``h`` 的编码，直接预测对应跨度的未来状态 ``z_{t+h}``。EarthNet 主实验会
+同时请求多个 h，因此同一个上下文状态可并行得到多跨度结果。
 """
 
 from typing import Optional
@@ -29,10 +15,11 @@ class StateDynamicsModule(nn.Module):
     """状态动力学：给定当前状态 z_t + 驱动 D + 地理 G，预测未来状态 z_{t+h}。
 
     Args:
-        latent_dim: 地表状态维度（= Stage1.5 encoder 的 embed_dim，默认 256）
+        latent_dim: Stage1.5 状态投影后的 token 维度。
         dynamics_type: 'gru' | 'transformer' | 'mlp'
-        driver_dim: 外生驱动 D 的维度（ERA5 气象等，Stage2 join）；0 表示暂不使用
-        geo_dim: 地理先验 G 的维度（DEM/坡度等）；0 表示暂不使用
+        driver_dim: 外生驱动编码维度；0 表示不使用。
+        geo_dim: 地理编码维度；0 表示不使用。
+        time_dim: 预测跨度编码维度。
         hidden_dim: 内部隐藏维度
         num_layers: GRU/Transformer 层数
     """
@@ -43,6 +30,7 @@ class StateDynamicsModule(nn.Module):
         dynamics_type: str = 'gru',
         driver_dim: int = 0,
         geo_dim: int = 0,
+        time_dim: int = 1,
         hidden_dim: int = 256,
         num_layers: int = 2,
         num_heads: int = 4,
@@ -53,9 +41,10 @@ class StateDynamicsModule(nn.Module):
         self.dynamics_type = dynamics_type
         self.driver_dim = driver_dim
         self.geo_dim = geo_dim
+        self.time_dim = time_dim
 
         # 条件投影：把 [z_t ; D ; G ; time_delta] 投到 hidden_dim
-        cond_in = latent_dim + driver_dim + geo_dim + 1  # +1 for time_delta scalar
+        cond_in = latent_dim + driver_dim + geo_dim + time_dim
         self.input_proj = nn.Linear(cond_in, hidden_dim)
 
         if dynamics_type == 'gru':
@@ -78,11 +67,20 @@ class StateDynamicsModule(nn.Module):
         nn.init.zeros_(self.output_proj.weight)
         nn.init.zeros_(self.output_proj.bias)
 
-        # D/G 缺失时的 learnable missing embedding（接口预留）
+        # 常规缺失掩膜由条件编码器处理。这里的常量仅覆盖直接传入 None
+        # 的兼容路径，不应成为正式训练中的闲置参数。
         if driver_dim > 0:
-            self.driver_missing = nn.Parameter(torch.zeros(driver_dim))
+            self.register_buffer(
+                "driver_missing",
+                torch.zeros(driver_dim),
+                persistent=True,
+            )
         if geo_dim > 0:
-            self.geo_missing = nn.Parameter(torch.zeros(geo_dim))
+            self.register_buffer(
+                "geo_missing",
+                torch.zeros(geo_dim),
+                persistent=True,
+            )
 
     def forward(
         self,
@@ -95,8 +93,8 @@ class StateDynamicsModule(nn.Module):
         Args:
             z_t: [B, N, latent_dim] 或 [B, latent_dim] 当前地表状态
             driver: [B, driver_dim] 外生驱动 D（None → missing embedding / 跳过）
-            geo: [B, geo_dim] 地理先验 G
-            time_delta: [B] 预测步长 h（默认 1）
+            geo: [B, geo_dim] 或 [B, N, geo_dim] 地理先验 G
+            time_delta: [B,time_dim] 预测跨度 h 的编码。
 
         Returns:
             z_pred: 与 z_t 同形状的 z_{t+h}（残差形式：z_t + Δ）
@@ -109,8 +107,14 @@ class StateDynamicsModule(nn.Module):
         device = z_t.device
 
         if time_delta is None:
-            time_delta = torch.ones(B, device=device)
-        td = time_delta.view(B, 1, 1).expand(B, N, 1).float()
+            time_delta = torch.ones(B, self.time_dim, device=device)
+        elif time_delta.dim() == 1:
+            time_delta = time_delta[:, None]
+        if time_delta.shape != (B, self.time_dim):
+            raise ValueError(
+                f"time_delta must be [B,{self.time_dim}], got {tuple(time_delta.shape)}"
+            )
+        td = time_delta[:, None, :].expand(B, N, self.time_dim).float()
 
         feats = [z_t, td]
         if self.driver_dim > 0:
@@ -120,7 +124,17 @@ class StateDynamicsModule(nn.Module):
         if self.geo_dim > 0:
             if geo is None:
                 geo = self.geo_missing.expand(B, self.geo_dim)
-            feats.insert(-1, geo.unsqueeze(1).expand(B, N, self.geo_dim))
+            if geo.dim() == 2:
+                geo_feat = geo.unsqueeze(1).expand(B, N, self.geo_dim)
+            elif geo.dim() == 3:
+                if geo.shape[1] != N or geo.shape[2] != self.geo_dim:
+                    raise ValueError(
+                        f"geo token shape must be [B,{N},{self.geo_dim}], got {tuple(geo.shape)}"
+                    )
+                geo_feat = geo
+            else:
+                raise ValueError(f"geo must be [B,G] or [B,N,G], got {tuple(geo.shape)}")
+            feats.insert(-1, geo_feat)
 
         x = torch.cat(feats, dim=-1)
         h = self.input_proj(x)
@@ -135,9 +149,6 @@ class StateDynamicsModule(nn.Module):
         delta = self.output_proj(h)
         z_pred = z_t + delta  # 残差动力学：起点等价恒等
 
-        # TODO[Stage2]: 多步 rollout（z_t → z_{t+1} → ... → z_{t+h}）、
-        #               teacher forcing、以及 D/G 的真实 join（ERA5/DEM）。
-
         if squeeze_back:
             z_pred = z_pred.squeeze(1)
         return z_pred
@@ -148,22 +159,23 @@ class StateDynamicsModule(nn.Module):
             'dynamics_type': self.dynamics_type,
             'driver_dim': self.driver_dim,
             'geo_dim': self.geo_dim,
+            'time_dim': self.time_dim,
         }
 
 
 if __name__ == '__main__':
-    print("=== StateDynamicsModule 骨架自测 ===")
+    print("=== StateDynamicsModule self-test ===")
     for dt in ('gru', 'transformer', 'mlp'):
         m = StateDynamicsModule(latent_dim=256, dynamics_type=dt, driver_dim=4, geo_dim=3)
-        # token 形式
         z = torch.randn(2, 16, 256)
         zp = m(z, driver=torch.randn(2, 4), geo=torch.randn(2, 3), time_delta=torch.tensor([1., 2.]))
         assert zp.shape == z.shape
-        # 起点应≈恒等（output_proj 零初始化）
         diff = (zp - z).abs().max().item()
-        # 池化形式 + 缺失 D/G
         zp2 = m(torch.randn(2, 256))
         assert zp2.shape == (2, 256)
-        print(f"  [{dt:11s}] token {tuple(zp.shape)} 残差≈{diff:.2e}, 池化 {tuple(zp2.shape)}, "
-              f"params={sum(p.numel() for p in m.parameters())/1e6:.2f}M ✓")
-    print("✓ StateDynamicsModule 骨架自测通过")
+        print(
+            f"  [{dt:11s}] token={tuple(zp.shape)} residual={diff:.2e}, "
+            f"pooled={tuple(zp2.shape)}, "
+            f"params={sum(p.numel() for p in m.parameters()) / 1e6:.2f}M"
+        )
+    print("StateDynamicsModule self-test passed.")

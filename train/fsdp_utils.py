@@ -40,7 +40,7 @@ def setup_distributed():
 
     torchrun 会自动注入 RANK / LOCAL_RANK / WORLD_SIZE 等环境变量。
     本函数据此判断是否处于分布式模式：
-    - 若 WORLD_SIZE > 1：初始化 NCCL 进程组，绑定当前进程到对应 GPU
+    - 若 WORLD_SIZE > 1：GPU 使用 NCCL；无 GPU 的测试环境使用 Gloo
     - 否则：判定为单卡模式，不做任何初始化
 
     返回:
@@ -54,13 +54,14 @@ def setup_distributed():
         rank = int(os.environ["RANK"])
         local_rank = int(os.environ["LOCAL_RANK"])
 
-        # 绑定当前进程到指定 GPU，再初始化 NCCL 进程组
-        # 把集合通信超时从默认 10 分钟放宽到 30 分钟：卡数越多、训练越久，
-        # 最后保存 checkpoint 时的 all-gather 越容易触发 watchdog 超时，放宽更稳。
+        # GPU runs use NCCL. Gloo keeps CPU distributed smoke tests available
+        # without changing the production backend.
         from datetime import timedelta
-        torch.cuda.set_device(local_rank)
+        backend = "nccl" if torch.cuda.is_available() else "gloo"
+        if torch.cuda.is_available():
+            torch.cuda.set_device(local_rank)
         dist.init_process_group(
-            backend="nccl",
+            backend=backend,
             init_method="env://",
             timeout=timedelta(minutes=30),
         )
@@ -72,7 +73,7 @@ def setup_distributed():
 
 
 def cleanup_distributed():
-    """销毁分布式进程组，释放 NCCL 资源（训练结束时调用）。"""
+    """销毁分布式进程组并释放通信资源。"""
     if is_distributed():
         dist.destroy_process_group()
 

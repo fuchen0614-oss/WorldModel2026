@@ -1,4 +1,5 @@
-# Stage 2 状态动力学训练配置（骨架，TODO[Stage2]）
+# 历史 Stage2 骨架，仅保留用于追溯，不用于当前 EarthNet 正式训练。
+# 当前入口：configs/train/stage2_earthnet_main.yaml
 #
 # ObsWorld 主线阶段 2：z_t + D + G → StateDynamicsModule → z_{t+h}
 # 见 13_*.md §1.1、14_*.md §2.6。
