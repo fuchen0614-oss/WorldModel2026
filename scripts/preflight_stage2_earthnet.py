@@ -30,6 +30,13 @@ def _load_yaml(path: str) -> dict:
         return yaml.safe_load(handle)
 
 
+def _min_driver_valid_fraction(config: dict) -> float:
+    value = float(config.get("training", {}).get("min_driver_valid_fraction", 1.0))
+    if not 0.0 <= value <= 1.0:
+        raise ValueError("training.min_driver_valid_fraction must be in [0, 1]")
+    return value
+
+
 def _record_issue(issues: List[dict], path: Path, message: str) -> None:
     if len(issues) < 50:
         issues.append({"file": str(path), "error": message})
@@ -107,13 +114,30 @@ def _scan_data(
         for name, count in zip(names, valid_counts.tolist())
         if count < expected_per_feature
     ]
+    missing = [
+        name
+        for name, count in zip(names, valid_counts.tolist())
+        if count == 0
+    ]
+    min_valid_fraction = _min_driver_valid_fraction(config)
+    low_coverage = [
+        name
+        for name, fraction in zip(names, valid_fraction.tolist())
+        if fraction < min_valid_fraction
+    ]
     fatal_reasons = []
     if issue_count:
         fatal_reasons.append(f"{issue_count} cube/sidecar parsing failures")
     if date_failures:
         fatal_reasons.append(f"{date_failures} cube names have no parseable start date")
-    if bool(config["training"].get("require_all_driver_features", True)) and incomplete:
-        fatal_reasons.append(f"incomplete D features: {incomplete}")
+    if bool(config["training"].get("require_all_driver_features", True)):
+        if missing:
+            fatal_reasons.append(f"missing D features: {missing}")
+        if low_coverage:
+            fatal_reasons.append(
+                "D feature valid_fraction below "
+                f"{min_valid_fraction:.3f}: {low_coverage}"
+            )
     if bool(config["training"].get("require_geo", True)) and zero_geo_files:
         fatal_reasons.append(f"{zero_geo_files} cubes have no valid elevation")
     if data_cfg.external_driver_required and sidecars_found != len(files):
@@ -135,6 +159,9 @@ def _scan_data(
         "driver_valid_count": dict(zip(names, valid_counts.tolist())),
         "driver_valid_fraction": dict(zip(names, valid_fraction.tolist())),
         "incomplete_driver_features": incomplete,
+        "missing_driver_features": missing,
+        "low_coverage_driver_features": low_coverage,
+        "min_driver_valid_fraction": min_valid_fraction,
         "issue_count": issue_count,
         "sample_issues": issues,
         "fatal_reasons": fatal_reasons,
@@ -188,14 +215,38 @@ def _check_stats(config: dict) -> Dict[str, Any]:
         )
     expected_count = expected_files * int(config["data"].get("target_frames", 20))
     valid_count = list(stats.get("valid_count", []))
+    min_valid_fraction = _min_driver_valid_fraction(config)
+    valid_fraction = stats.get("valid_fraction")
+    if valid_fraction is None and valid_count:
+        valid_fraction = [
+            float(count) / max(expected_count, 1)
+            for count in valid_count
+        ]
+    valid_fraction = list(valid_fraction or [])
     if bool(config["training"].get("require_all_driver_features", True)):
-        if len(valid_count) != len(expected_names) or any(
-            int(count) != expected_count for count in valid_count
-        ):
-            errors.append(
-                "stats valid_count does not prove complete D coverage over all "
-                "train cubes and horizons"
-            )
+        if len(valid_count) != len(expected_names):
+            errors.append("stats valid_count length differs from the configured D layout")
+        else:
+            missing = [
+                name
+                for name, count in zip(expected_names, valid_count)
+                if int(count) == 0
+            ]
+            if missing:
+                errors.append(f"stats prove missing D features: {missing}")
+        if len(valid_fraction) != len(expected_names):
+            errors.append("stats valid_fraction length differs from the configured D layout")
+        else:
+            low_coverage = [
+                name
+                for name, fraction in zip(expected_names, valid_fraction)
+                if float(fraction) < min_valid_fraction
+            ]
+            if low_coverage:
+                errors.append(
+                    "stats D valid_fraction below "
+                    f"{min_valid_fraction:.3f}: {low_coverage}"
+                )
     if errors:
         raise ValueError("; ".join(errors))
     return {
@@ -203,7 +254,9 @@ def _check_stats(config: dict) -> Dict[str, Any]:
         "fit_split": stats.get("fit_split"),
         "num_files": stats_files,
         "feature_names": stats.get("feature_names"),
-        "complete_driver_coverage": True,
+        "min_driver_valid_fraction": min_valid_fraction,
+        "driver_valid_fraction": dict(zip(expected_names, valid_fraction)),
+        "driver_coverage_ok": True,
     }
 
 

@@ -174,6 +174,10 @@ training:
   grad_clip: 1.0
   require_dgh_stats: true
   require_all_driver_features: true
+  # EarthNet2021x E-OBS variables can contain rare missing values. The loader
+  # exposes D_mask, so formal checks require high coverage rather than exact
+  # 100% validity for every horizon.
+  min_driver_valid_fraction: 0.99
   require_geo: true
 
 validation:
