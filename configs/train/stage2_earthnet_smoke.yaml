@@ -44,7 +44,7 @@ model:
     out_channels: 12
     hidden_channels: 16
     mode: linear
-    source_to_canonical: [1, 2, 3, 7]
+    source_to_canonical: [1, 2, 3, 8]
   context_aggregator:
     type: ContextStateAggregator
     state_dim: 16

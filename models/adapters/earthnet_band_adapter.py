@@ -32,7 +32,10 @@ class EarthNetInputAdapter(nn.Module):
         self.source_to_canonical = (
             list(source_to_canonical)
             if source_to_canonical is not None
-            else ([1, 2, 3, 7] if in_channels == 4 and out_channels == 12 else None)
+            # EarthNet's fourth optical band is B8A.  Stage1.5 keeps B08 and
+            # B8A as separate canonical channels, so B8A must land at index 8
+            # rather than being silently relabeled as B08 (index 7).
+            else ([1, 2, 3, 8] if in_channels == 4 and out_channels == 12 else None)
         )
         if mode == "linear":
             self.net = nn.Conv2d(in_channels, out_channels, kernel_size=1)

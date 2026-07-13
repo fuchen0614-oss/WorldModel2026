@@ -51,8 +51,8 @@ model:
     out_channels: 12
     hidden_channels: 32
     mode: linear
-    # EarthNet [blue, green, red, nir] -> SSL4EO [B02, B03, B04, B08].
-    source_to_canonical: [1, 2, 3, 7]
+    # EarthNet [blue, green, red, nir(B8A)] -> Stage1.5 [B02, B03, B04, B8A].
+    source_to_canonical: [1, 2, 3, 8]
 
   context_aggregator:
     type: ContextStateAggregator

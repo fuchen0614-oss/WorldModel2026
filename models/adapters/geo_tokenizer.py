@@ -26,7 +26,11 @@ class GeoTokenizer(nn.Module):
         self.patch_size = patch_size
         self.grid_size = img_size // patch_size
         self.proj = nn.Sequential(
-            nn.LayerNorm(in_channels),
+            # Do not normalize across the input channel axis here.  EarthNet's
+            # DEM input is single-channel, so LayerNorm(1) would turn every
+            # valid scalar into zero before the projection.  Dataset-level
+            # scaling/standardization belongs at the data boundary; this
+            # block only normalizes the learned embedding space.
             nn.Linear(in_channels, geo_dim),
             nn.GELU(),
             nn.LayerNorm(geo_dim),
