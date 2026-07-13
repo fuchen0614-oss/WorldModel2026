@@ -1,8 +1,8 @@
 """Stage 1.5: dual-ended acquisition conditioning and explicit state tokens.
 
 Canonical factorization:
-    state_t = Encoder(image_t, phi_t)
-    image_hat_t = AuxiliaryDecoder(state_features_t, phi_t)
+    state_t = StateProjector(Encoder(image_t, phi_t))
+    image_hat_t = AuxiliaryDecoder(StateToDecoder(state_t), phi_t)
 
 Only near-contemporaneous S1/S2 pairs are aligned.  Cross-season invariance and
 shuffle-phi invariance are intentionally absent because they erase real change
@@ -29,6 +29,7 @@ sys.path.insert(0, str(ROOT))
 
 from data.datasets.ssl4eo_dual import SSL4EODualConfig, create_ssl4eo_dual_dataset
 from models.decoders.dual_head_decoder import DualHeadDecoder
+from models.decoders.state_reconstruction_bridge import StateReconstructionBridge
 from models.encoders.multimodal_vit_encoder import MultiModalViTEncoder
 from models.encoders.multimodal_vit_encoder_film import MultiModalViTEncoderFiLM
 from models.encoders.pure_imaging_condition_encoder import PureImagingConditionEncoder
@@ -67,11 +68,20 @@ def create_models(config: dict):
     phi_encoder = PureImagingConditionEncoder(**phi_cfg)
     decoder = DualHeadDecoder(**dec_cfg)
     state_projector = SpatialStateProjector(**state_cfg)
+    bridge_config = model_cfg.get(
+        "state_decoder_bridge",
+        {
+            "state_dim": state_cfg["state_dim"],
+            "decoder_dim": dec_cfg["in_dim"],
+        },
+    )
+    bridge_cfg = {k: v for k, v in bridge_config.items() if k != "type"}
+    state_decoder_bridge = StateReconstructionBridge(**bridge_cfg)
     teacher_cfg = {k: enc_cfg[k] for k in (
         "img_size", "s1_channels", "s2_channels", "patch_size", "embed_dim",
         "depth", "num_heads", "mlp_ratio", "dropout")}
     teacher = MultiModalViTEncoder(**teacher_cfg)
-    return encoder, phi_encoder, decoder, state_projector, teacher
+    return encoder, phi_encoder, decoder, state_projector, state_decoder_bridge, teacher
 
 
 def load_stage1_checkpoint(encoder, decoder, teacher, checkpoint_path: str) -> dict:
@@ -137,11 +147,14 @@ def stage_for_step(step: int, config: dict) -> int:
     return 1 if step < freeze_new else (2 if step < partial else 3)
 
 
-def apply_training_stage(encoder, phi_encoder, decoder, state_projector, stage: int, film_start: int) -> None:
-    for module in (encoder, phi_encoder, decoder, state_projector):
+def apply_training_stage(
+    encoder, phi_encoder, decoder, state_projector, state_decoder_bridge, stage: int, film_start: int
+) -> None:
+    for module in (encoder, phi_encoder, decoder, state_projector, state_decoder_bridge):
         module.requires_grad_(False)
     phi_encoder.requires_grad_(True)
     state_projector.requires_grad_(True)
+    state_decoder_bridge.requires_grad_(True)
     for name, parameter in encoder.named_parameters():
         if ".film." in name:
             parameter.requires_grad_(True)
@@ -161,7 +174,12 @@ def build_optimizer(model: nn.ModuleDict, config: dict) -> optim.Optimizer:
     opt_cfg = config["optimizer"]
     new_params, base_params = [], []
     for name, parameter in model.named_parameters():
-        if name.startswith("phi_encoder.") or name.startswith("state_projector.") or ".film." in name:
+        if (
+            name.startswith("phi_encoder.")
+            or name.startswith("state_projector.")
+            or name.startswith("state_decoder_bridge.")
+            or ".film." in name
+        ):
             new_params.append(parameter)
         else:
             base_params.append(parameter)
@@ -189,8 +207,19 @@ def build_scheduler(optimizer, max_steps: int, warmup: int, config: dict):
         optimizer, [make_lambda(s, m) for s, m in zip(starts, minima)])
 
 
-def train_micro_step(batch, device, encoder, phi_encoder, decoder, state_projector, teacher,
-                     losses, config, optimizer_step: int):
+def train_micro_step(
+    batch,
+    device,
+    encoder,
+    phi_encoder,
+    decoder,
+    state_projector,
+    state_decoder_bridge,
+    teacher,
+    losses,
+    config,
+    optimizer_step: int,
+):
     s1 = batch["s1_image"].to(device, non_blocking=True)
     s2 = batch["s2_image"].to(device, non_blocking=True)
     phi_s1 = to_device(batch["s1_phi"], device)
@@ -207,15 +236,19 @@ def train_micro_step(batch, device, encoder, phi_encoder, decoder, state_project
         pe_s2 = phi_encoder(phi_s2)
         lat_s1, mask_s1, ids_s1 = encoder(s1, "S1", mask_ratio, phi_embed=pe_s1)
         lat_s2, mask_s2, ids_s2 = encoder(s2, "S2", mask_ratio, phi_embed=pe_s2)
-        rec_s1 = decoder(lat_s1, "S1", ids_s1, mask_s1, phi_embed=pe_s1)
-        rec_s2 = decoder(lat_s2, "S2", ids_s2, mask_s2, phi_embed=pe_s2)
+        state_s1 = state_projector(lat_s1)
+        state_s2 = state_projector(lat_s2)
+        rec_s1 = decoder(
+            state_decoder_bridge(state_s1), "S1", ids_s1, mask_s1, phi_embed=pe_s1
+        )
+        rec_s2 = decoder(
+            state_decoder_bridge(state_s2), "S2", ids_s2, mask_s2, phi_embed=pe_s2
+        )
         mae_s1 = masked_pixel_reconstruction_loss(rec_s1, s1, mask_s1, loss_type=recon_kind)
         mae_s2 = masked_pixel_reconstruction_loss(
             rec_s2, s2, mask_s2, quality_mask=s2_clear_pixel_mask(cloud), loss_type=recon_kind)
         mae = 0.5 * (mae_s1 + mae_s2)
 
-        state_s1 = state_projector(lat_s1)
-        state_s2 = state_projector(lat_s2)
         pooled_s1 = state_projector.pool(state_s1)
         pooled_s2 = state_projector.pool(state_s2)
         global_s1 = _all_gather_with_grad(pooled_s1)
@@ -247,13 +280,15 @@ def train_micro_step(batch, device, encoder, phi_encoder, decoder, state_project
     return total, logs
 
 
-def save_checkpoint(path: str, step: int, model, encoder, phi_encoder, decoder,
-                    state_projector, optimizer, config):
+def save_checkpoint(
+        path: str, step: int, model, encoder, phi_encoder, decoder,
+        state_projector, state_decoder_bridge, optimizer, config):
     states = {
         "encoder_state_dict": get_full_state_dict(encoder),
         "phi_encoder_state_dict": get_full_state_dict(phi_encoder),
         "decoder_state_dict": get_full_state_dict(decoder),
         "state_projector_state_dict": get_full_state_dict(state_projector),
+        "state_decoder_bridge_state_dict": get_full_state_dict(state_decoder_bridge),
         "optimizer_state_dict": get_full_optim_state_dict(model, optimizer),
     }
     if is_main_process():
@@ -287,13 +322,13 @@ def main():
     checkpoint_interval = args.checkpoint_interval or int(config.get("checkpoint_interval", 5000))
     device = torch.device(f"cuda:{local_rank}" if torch.cuda.is_available() else "cpu")
 
-    encoder, phi_encoder, decoder, state_projector, teacher = create_models(config)
+    encoder, phi_encoder, decoder, state_projector, state_decoder_bridge, teacher = create_models(config)
     source = config["resume_from"]
     if not os.path.exists(source):
         raise FileNotFoundError(f"required Stage1 checkpoint missing: {source}")
     load_info = load_stage1_checkpoint(encoder, decoder, teacher, source)
     log_main(f"strict Stage1 load OK: {load_info}")
-    for module in (encoder, phi_encoder, decoder, state_projector, teacher):
+    for module in (encoder, phi_encoder, decoder, state_projector, state_decoder_bridge, teacher):
         module.to(device)
 
     if distributed:
@@ -301,16 +336,21 @@ def main():
         phi_encoder = wrap_model_fsdp2(phi_encoder, "bf16")
         decoder = wrap_model_fsdp2(decoder, "bf16")
         state_projector = wrap_model_fsdp2(state_projector, "bf16")
+        state_decoder_bridge = wrap_model_fsdp2(state_decoder_bridge, "bf16")
     model = nn.ModuleDict({
         "encoder": encoder, "phi_encoder": phi_encoder,
         "decoder": decoder, "state_projector": state_projector,
+        "state_decoder_bridge": state_decoder_bridge,
     })
     optimizer = build_optimizer(model, config)
     scheduler = build_scheduler(
         optimizer, max_steps, int(config["training"].get("warmup_steps", 1000)), config)
     film_start = int(config["model"]["encoder"]["film_start_layer"])
     current_stage = stage_for_step(0, config)
-    apply_training_stage(encoder, phi_encoder, decoder, state_projector, current_stage, film_start)
+    apply_training_stage(
+        encoder, phi_encoder, decoder, state_projector, state_decoder_bridge,
+        current_stage, film_start,
+    )
 
     data_cfg = config["data"]
     dataset_cfg = SSL4EODualConfig(
@@ -335,7 +375,8 @@ def main():
         Path(config["log_dir"]).mkdir(parents=True, exist_ok=True)
         writer = SummaryWriter(config["log_dir"])
 
-    encoder.train(); phi_encoder.train(); decoder.train(); state_projector.train(); teacher.eval()
+    encoder.train(); phi_encoder.train(); decoder.train(); state_projector.train()
+    state_decoder_bridge.train(); teacher.eval()
     iterator = tqdm(loader, disable=not is_main_process(), desc="Stage1.5 dual-conditioned")
     optimizer.zero_grad(set_to_none=True)
     step = micro = 0
@@ -344,11 +385,14 @@ def main():
         wanted_stage = stage_for_step(step, config)
         if wanted_stage != current_stage:
             current_stage = wanted_stage
-            apply_training_stage(encoder, phi_encoder, decoder, state_projector, current_stage, film_start)
+            apply_training_stage(
+                encoder, phi_encoder, decoder, state_projector, state_decoder_bridge,
+                current_stage, film_start,
+            )
             log_main(f"entered training stage {current_stage} at optimizer step {step}")
         total, logs = train_micro_step(
             batch, device, encoder, phi_encoder, decoder, state_projector,
-            teacher, losses, config, step)
+            state_decoder_bridge, teacher, losses, config, step)
         (total / accum_steps).backward()
         for key, value in logs.items():
             log_accum[key] = log_accum.get(key, 0.0) + value / accum_steps
@@ -373,13 +417,15 @@ def main():
         if step % checkpoint_interval == 0:
             save_checkpoint(
                 os.path.join(config["checkpoint_dir"], f"checkpoint_step_{step}.pt"),
-                step, model, encoder, phi_encoder, decoder, state_projector, optimizer, config)
+                step, model, encoder, phi_encoder, decoder, state_projector,
+                state_decoder_bridge, optimizer, config)
         if step >= max_steps:
             break
 
     save_checkpoint(
         os.path.join(config["checkpoint_dir"], f"checkpoint_step_{step}.pt"),
-        step, model, encoder, phi_encoder, decoder, state_projector, optimizer, config)
+        step, model, encoder, phi_encoder, decoder, state_projector,
+        state_decoder_bridge, optimizer, config)
     if writer is not None:
         writer.close()
     cleanup_distributed()

@@ -4,6 +4,7 @@ import torch
 
 from data.datasets.ssl4eo_dual import collate_dual_conditioned_pair_fn
 from models.decoders.dual_head_decoder import DualHeadDecoder
+from models.decoders.state_reconstruction_bridge import StateReconstructionBridge
 from models.encoders.multimodal_vit_encoder import MultiModalViTEncoder
 from models.encoders.multimodal_vit_encoder_film import MultiModalViTEncoderFiLM
 from models.encoders.pure_imaging_condition_encoder import PureImagingConditionEncoder
@@ -64,6 +65,16 @@ def test_late_film_and_state_shape():
     assert projector(tokens).shape == (2, 16, 32)
 
 
+def test_state_reconstruction_bridge_shape_and_gradients():
+    bridge = StateReconstructionBridge(state_dim=32, decoder_dim=64)
+    states = torch.randn(2, 16, 32, requires_grad=True)
+    decoded = bridge(states)
+    assert decoded.shape == (2, 16, 64)
+    decoded.square().mean().backward()
+    assert torch.isfinite(states.grad).all()
+    assert any(parameter.grad is not None for parameter in bridge.parameters())
+
+
 def test_time_pair_collate():
     ns_day = 86_400_000_000_000
     rows = []
@@ -108,6 +119,7 @@ def test_end_to_end_micro_step():
         in_dim=64, decoder_embed_dim=32, depth=2, num_heads=4,
         patch_size=8, img_size=size, phi_dim=64)
     projector = SpatialStateProjector(in_dim=64, state_dim=32, hidden_dim=64)
+    bridge = StateReconstructionBridge(state_dim=32, decoder_dim=64)
     teacher = MultiModalViTEncoder(
         img_size=size, patch_size=8, embed_dim=64, depth=4, num_heads=4)
     teacher.load_state_dict({k: v for k, v in encoder.state_dict().items() if ".film." not in k}, strict=True)
@@ -124,9 +136,11 @@ def test_end_to_end_micro_step():
         "data": {"pair_max_days": 7.0},
         "training": {
             "mask_ratio": 0.75, "recon_loss": "l1",
-            "loss_weights": {"mae": 1.0, "alignment_start": 0.01,
-                             "alignment_end": 0.02, "nuisance_start": 0.0,
-                             "nuisance_end": 0.01, "anchor": 0.1,
+            # Isolate reconstruction here so the test proves gradients cross
+            # the explicit state bottleneck rather than only alignment loss.
+            "loss_weights": {"mae": 1.0, "alignment_start": 0.0,
+                             "alignment_end": 0.0, "nuisance_start": 0.0,
+                             "nuisance_end": 0.0, "anchor": 0.0,
                              "ramp_end_step": 10},
         },
     }
@@ -134,8 +148,16 @@ def test_end_to_end_micro_step():
               "nuisance": PhiCrossCovarianceLoss(),
               "anchor": __import__("models.losses.stage1_5_state", fromlist=["FeatureAnchorLoss"]).FeatureAnchorLoss()}
     total, logs = train_micro_step(batch, torch.device("cpu"), encoder, phi_encoder,
-                                   decoder, projector, teacher, losses, config, 0)
+                                   decoder, projector, bridge, teacher, losses, config, 0)
     total.backward()
     assert torch.isfinite(total)
     assert logs["pair_valid_rate"] == 0.75
     assert any(p.grad is not None for p in phi_encoder.parameters())
+    projector_grad = sum(
+        p.grad.abs().sum() for p in projector.parameters() if p.grad is not None
+    )
+    bridge_grad = sum(
+        p.grad.abs().sum() for p in bridge.parameters() if p.grad is not None
+    )
+    assert projector_grad > 0
+    assert bridge_grad > 0

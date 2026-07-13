@@ -34,6 +34,11 @@ model:
     state_dim: 256
     hidden_dim: 512
 
+  state_decoder_bridge:
+    type: StateReconstructionBridge
+    state_dim: 256
+    decoder_dim: 384
+
   decoder:
     type: DualHeadDecoder
     in_dim: 384

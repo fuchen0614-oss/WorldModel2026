@@ -1,7 +1,8 @@
 """
 双头解码器：分别重建 S1 和 S2。
 
-从共享编码器的 latent tokens 重建双模态图像。
+从 decoder-space latent tokens 重建双模态图像。Stage 1.5 中这些 token
+由显式 state bottleneck 经过 StateReconstructionBridge 投影得到。
 支持模态内 MAE 重建（S1→S1, S2→S2）。
 """
 
@@ -17,7 +18,7 @@ class DualHeadDecoder(nn.Module):
     双头解码器：S1 重建头 + S2 重建头。
 
     Args:
-        in_dim: 编码器输出维度
+        in_dim: decoder 输入 token 维度
         s1_channels: S1 输出通道数（2: VV/VH）
         s2_channels: S2 输出通道数（12: S2L2A bands）
         patch_size: patch 尺寸
@@ -92,7 +93,7 @@ class DualHeadDecoder(nn.Module):
         从 latent tokens 重建图像。
 
         Args:
-            x: [B, N_visible, in_dim] 编码器输出
+            x: [B, N_visible, in_dim] decoder-space tokens
             modality: 'S1' 或 'S2'（决定用哪个解码头）
             ids_restore: [B, N_total] 恢复索引
             mask: [B, N_total] 二值掩码
