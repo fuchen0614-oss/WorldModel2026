@@ -29,6 +29,7 @@ from data.datasets.earthnet2021 import (
 from train.train_stage2_earthnet import (
     create_stage2_model,
     load_config,
+    load_stage2_model_state,
     move_batch_to_device,
 )
 
@@ -41,7 +42,7 @@ def main() -> None:
     parser.add_argument(
         "--split",
         default="iid",
-        choices=["train", "val", "iid", "ood", "test"],
+        choices=["train", "val", "iid", "ood", "extreme", "seasonal", "test"],
     )
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--external-driver-root")
@@ -79,7 +80,8 @@ def main() -> None:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
     model = create_stage2_model(config, device)
-    model.load_state_dict(
+    load_stage2_model_state(
+        model,
         checkpoint.get("model_state_dict", checkpoint),
         strict=True,
     )

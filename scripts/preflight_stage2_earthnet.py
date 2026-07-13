@@ -22,7 +22,7 @@ from data.datasets.earthnet2021 import (
     _discover_npz_files,
     _load_external_drivers,
 )
-from train.train_stage2_earthnet import create_stage2_model
+from train.train_stage2_earthnet import create_stage2_model, load_stage2_model_state
 
 
 def _load_yaml(path: str) -> dict:
@@ -179,7 +179,7 @@ def _check_model(config: dict, resume_from: Optional[str]) -> Dict[str, Any]:
     model = create_stage2_model(config, torch.device("cpu"))
     if resume_from:
         checkpoint = torch.load(resume_from, map_location="cpu", weights_only=False)
-        model.load_state_dict(checkpoint["model_state_dict"], strict=True)
+        load_stage2_model_state(model, checkpoint["model_state_dict"], strict=True)
     total = sum(parameter.numel() for parameter in model.parameters())
     trainable = sum(
         parameter.numel() for parameter in model.parameters()

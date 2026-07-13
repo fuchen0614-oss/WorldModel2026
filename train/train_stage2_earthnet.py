@@ -214,6 +214,42 @@ def load_stage15_checkpoint(path: str, encoder, phi_encoder, state_projector) ->
         log_main(f"loaded {key} from {source}")
 
 
+def _upgrade_legacy_geo_tokenizer_state_dict(state_dict: dict) -> dict:
+    """Map older GeoTokenizer parameter names onto the current module layout.
+
+    Older Stage2 checkpoints used:
+        LayerNorm(1) -> Linear -> GELU -> LayerNorm(geo_dim)
+    The current GeoTokenizer removes the leading LayerNorm(1), so the learned
+    Linear/LayerNorm parameters shift from proj.{1,3} to proj.{0,2}.
+    """
+
+    remapped = dict(state_dict)
+    old_prefix = "geo_tokenizer.proj."
+    if f"{old_prefix}1.weight" not in remapped and f"{old_prefix}3.weight" not in remapped:
+        return remapped
+    if f"{old_prefix}0.weight" in remapped and tuple(remapped[f"{old_prefix}0.weight"].shape) == (1,):
+        remapped.pop(f"{old_prefix}0.weight", None)
+        remapped.pop(f"{old_prefix}0.bias", None)
+    if f"{old_prefix}1.weight" in remapped:
+        remapped[f"{old_prefix}0.weight"] = remapped.pop(f"{old_prefix}1.weight")
+    if f"{old_prefix}1.bias" in remapped:
+        remapped[f"{old_prefix}0.bias"] = remapped.pop(f"{old_prefix}1.bias")
+    if f"{old_prefix}3.weight" in remapped:
+        remapped[f"{old_prefix}2.weight"] = remapped.pop(f"{old_prefix}3.weight")
+    if f"{old_prefix}3.bias" in remapped:
+        remapped[f"{old_prefix}2.bias"] = remapped.pop(f"{old_prefix}3.bias")
+    return remapped
+
+
+def load_stage2_model_state(model: nn.Module, checkpoint_state: dict, strict: bool = True) -> None:
+    """Load a Stage2 checkpoint, including known backward-compatibility fixes."""
+
+    model.load_state_dict(
+        _upgrade_legacy_geo_tokenizer_state_dict(checkpoint_state),
+        strict=strict,
+    )
+
+
 def build_optimizer(model: nn.Module, config: dict) -> optim.Optimizer:
     opt_cfg = config["optimizer"]
     warmup_ids = {
@@ -659,7 +695,7 @@ def main():
     if resume_from:
         resume_checkpoint = torch.load(resume_from, map_location="cpu", weights_only=False)
         raw_model = model.module if isinstance(model, DDP) else model
-        raw_model.load_state_dict(resume_checkpoint["model_state_dict"], strict=True)
+        load_stage2_model_state(raw_model, resume_checkpoint["model_state_dict"], strict=True)
         optimizer.load_state_dict(resume_checkpoint["optimizer_state_dict"])
         scheduler.load_state_dict(resume_checkpoint["scheduler_state_dict"])
         optimizer_step = int(resume_checkpoint.get("global_step", 0))

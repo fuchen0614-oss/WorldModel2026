@@ -24,7 +24,12 @@ from data.datasets.earthnet2021 import EarthNet2021Config, EarthNet2021Dataset, 
 from eval.earthnet_standard_metrics import EarthNetScoreAccumulator
 from eval.forecast_metrics import ForecastMetricAccumulator
 from models.losses.earthnet_forecasting import EarthNetForecastLoss
-from train.train_stage2_earthnet import create_stage2_model, load_config, move_batch_to_device
+from train.train_stage2_earthnet import (
+    create_stage2_model,
+    load_config,
+    load_stage2_model_state,
+    move_batch_to_device,
+)
 
 
 def main():
@@ -69,7 +74,7 @@ def main():
     config["model"]["encoder"]["from_checkpoint"] = None
     model = create_stage2_model(config, device)
     state = checkpoint.get("model_state_dict", checkpoint)
-    model.load_state_dict(state, strict=True)
+    load_stage2_model_state(model, state, strict=True)
     model.eval()
 
     loss_fn = EarthNetForecastLoss.from_config(

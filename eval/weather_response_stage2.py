@@ -30,6 +30,7 @@ from data.earthnet_fields import compute_ndvi
 from train.train_stage2_earthnet import (
     create_stage2_model,
     load_config,
+    load_stage2_model_state,
     move_batch_to_device,
 )
 
@@ -85,7 +86,8 @@ def main() -> None:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
     model = create_stage2_model(config, device)
-    model.load_state_dict(
+    load_stage2_model_state(
+        model,
         checkpoint.get("model_state_dict", checkpoint),
         strict=True,
     )
