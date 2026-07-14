@@ -14,6 +14,32 @@ import torch
 import torch.nn.functional as F
 
 
+def ensure_earthnet_ssim_compat(en) -> None:
+    """Patch earthnet's SSIM dependency for newer scikit-image versions.
+
+    Newer ``skimage.metrics.structural_similarity`` requires ``data_range`` for
+    floating-point inputs. EarthNet's public scorer calls it without that
+    argument, so we inject a thin wrapper that defaults to the normalized
+    reflectance range used by this Stage2 pipeline.
+    """
+
+    metrics = getattr(en.parallel_score, "metrics", None)
+    if metrics is None:
+        return
+    structural_similarity = getattr(metrics, "structural_similarity", None)
+    if structural_similarity is None:
+        return
+    if getattr(structural_similarity, "_obsworld_patched", False):
+        return
+
+    def _wrapped_structural_similarity(*args, **kwargs):
+        kwargs.setdefault("data_range", 1.0)
+        return structural_similarity(*args, **kwargs)
+
+    _wrapped_structural_similarity._obsworld_patched = True
+    metrics.structural_similarity = _wrapped_structural_similarity
+
+
 class EarthNetScoreAccumulator:
     def __init__(self, eval_size: int = 128):
         try:
@@ -23,6 +49,7 @@ class EarthNetScoreAccumulator:
                 "Official EarthNet scoring requires the 'earthnet' package. "
                 "Install it with: pip install earthnet==0.3.9"
             ) from exc
+        ensure_earthnet_ssim_compat(en)
         self.calculator = en.parallel_score.CubeCalculator
         self.eval_size = int(eval_size)
         self.rows: List[Dict[str, float]] = []
@@ -116,4 +143,3 @@ def _harmonic_mean(values: Sequence[float]) -> float:
     if not valid:
         return float("nan")
     return min(1.0, len(valid) / sum(1.0 / (v + 1e-8) for v in valid))
-

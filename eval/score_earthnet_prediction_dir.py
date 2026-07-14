@@ -7,6 +7,8 @@ import argparse
 import json
 from pathlib import Path
 
+from eval.earthnet_standard_metrics import ensure_earthnet_ssim_compat
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -17,11 +19,13 @@ def main() -> None:
     args = parser.parse_args()
 
     try:
+        import earthnet as en
         from earthnet.parallel_score import EarthNetScore
     except ImportError as exc:
         raise ImportError(
             "Install the official scorer first: pip install earthnet==0.3.9"
         ) from exc
+    ensure_earthnet_ssim_compat(en)
 
     output = Path(args.output_dir)
     output.mkdir(parents=True, exist_ok=True)
