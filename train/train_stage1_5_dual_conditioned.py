@@ -40,7 +40,8 @@ from models.losses.stage1_5_state import (
 )
 from train.fsdp_utils import (
     barrier, cleanup_distributed, get_full_optim_state_dict, get_full_state_dict,
-    is_distributed, is_main_process, setup_distributed, wrap_model_fsdp2,
+    is_distributed, is_main_process, set_full_optim_state_dict, setup_distributed,
+    wrap_model_fsdp2,
 )
 
 
@@ -112,6 +113,47 @@ def load_stage1_checkpoint(encoder, decoder, teacher, checkpoint_path: str) -> d
         "new_encoder_tensors": len(info["new_params"]),
         "new_decoder_tensors": len(dec_result.missing_keys),
     }
+
+
+def load_stage15_checkpoint(
+    checkpoint_path: str,
+    encoder,
+    phi_encoder,
+    decoder,
+    state_projector,
+    state_decoder_bridge,
+) -> dict:
+    """Load a full Stage1.5 checkpoint before FSDP wrapping.
+
+    Stage1.5 checkpoints store separate full state dicts for every trainable
+    module. Loading them before FSDP wrapping keeps the resume path symmetric
+    with the existing Stage1 initialization path; the optimizer state is
+    restored after wrapping with ``set_full_optim_state_dict``.
+    """
+    checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+    required = {
+        "encoder_state_dict": encoder,
+        "phi_encoder_state_dict": phi_encoder,
+        "decoder_state_dict": decoder,
+        "state_projector_state_dict": state_projector,
+        "state_decoder_bridge_state_dict": state_decoder_bridge,
+    }
+    missing = [key for key in required if key not in checkpoint]
+    if missing:
+        raise KeyError(
+            f"Stage1.5 checkpoint {checkpoint_path} is missing sections: {missing}"
+        )
+    for key, module in required.items():
+        result = module.load_state_dict(checkpoint[key], strict=True)
+        if result.missing_keys or result.unexpected_keys:
+            raise RuntimeError(
+                f"Stage1.5 resume mismatch for {key}: "
+                f"missing={result.missing_keys[:5]}, "
+                f"unexpected={result.unexpected_keys[:5]}"
+            )
+    if "optimizer_state_dict" not in checkpoint:
+        raise KeyError(f"Stage1.5 checkpoint {checkpoint_path} has no optimizer state")
+    return checkpoint
 
 
 def _all_gather_with_grad(tensor: torch.Tensor) -> torch.Tensor:
@@ -282,7 +324,7 @@ def train_micro_step(
 
 def save_checkpoint(
         path: str, step: int, model, encoder, phi_encoder, decoder,
-        state_projector, state_decoder_bridge, optimizer, config):
+        state_projector, state_decoder_bridge, optimizer, scheduler, config):
     states = {
         "encoder_state_dict": get_full_state_dict(encoder),
         "phi_encoder_state_dict": get_full_state_dict(phi_encoder),
@@ -290,6 +332,7 @@ def save_checkpoint(
         "state_projector_state_dict": get_full_state_dict(state_projector),
         "state_decoder_bridge_state_dict": get_full_state_dict(state_decoder_bridge),
         "optimizer_state_dict": get_full_optim_state_dict(model, optimizer),
+        "scheduler_state_dict": scheduler.state_dict(),
     }
     if is_main_process():
         Path(path).parent.mkdir(parents=True, exist_ok=True)
@@ -306,6 +349,11 @@ def main():
     parser.add_argument("--batch-size", type=int, help="Per-rank override for smoke tests.")
     parser.add_argument("--num-workers", type=int, help="DataLoader worker override.")
     parser.add_argument("--accumulation-steps", type=int, help="Gradient accumulation override.")
+    parser.add_argument(
+        "--resume-stage15",
+        type=str,
+        help="Resume from a Stage1.5 checkpoint instead of restarting from Stage1.",
+    )
     args = parser.parse_args()
     rank, local_rank, world_size, distributed = setup_distributed()
     config = load_config(args.config)
@@ -328,6 +376,26 @@ def main():
         raise FileNotFoundError(f"required Stage1 checkpoint missing: {source}")
     load_info = load_stage1_checkpoint(encoder, decoder, teacher, source)
     log_main(f"strict Stage1 load OK: {load_info}")
+    resume_checkpoint = None
+    start_step = 0
+    if args.resume_stage15:
+        resume_checkpoint = load_stage15_checkpoint(
+            args.resume_stage15,
+            encoder,
+            phi_encoder,
+            decoder,
+            state_projector,
+            state_decoder_bridge,
+        )
+        start_step = int(resume_checkpoint.get("global_step", 0))
+        if start_step < 0 or start_step > max_steps:
+            raise ValueError(
+                f"Invalid Stage1.5 resume step {start_step} for max_steps={max_steps}"
+            )
+        log_main(
+            f"Stage1.5 resume load OK: path={args.resume_stage15}, "
+            f"global_step={start_step}"
+        )
     for module in (encoder, phi_encoder, decoder, state_projector, state_decoder_bridge, teacher):
         module.to(device)
 
@@ -345,12 +413,22 @@ def main():
     optimizer = build_optimizer(model, config)
     scheduler = build_scheduler(
         optimizer, max_steps, int(config["training"].get("warmup_steps", 1000)), config)
+    if resume_checkpoint is not None:
+        set_full_optim_state_dict(model, optimizer, resume_checkpoint["optimizer_state_dict"])
     film_start = int(config["model"]["encoder"]["film_start_layer"])
-    current_stage = stage_for_step(0, config)
+    current_stage = stage_for_step(start_step, config)
     apply_training_stage(
         encoder, phi_encoder, decoder, state_projector, state_decoder_bridge,
         current_stage, film_start,
     )
+    if resume_checkpoint is not None:
+        if "scheduler_state_dict" in resume_checkpoint:
+            scheduler.load_state_dict(resume_checkpoint["scheduler_state_dict"])
+        else:
+            # Older checkpoints did not save scheduler state. Reproduce the
+            # original cosine schedule at the resume step before continuing.
+            for _ in range(start_step):
+                scheduler.step()
 
     data_cfg = config["data"]
     dataset_cfg = SSL4EODualConfig(
@@ -379,7 +457,8 @@ def main():
     state_decoder_bridge.train(); teacher.eval()
     iterator = tqdm(loader, disable=not is_main_process(), desc="Stage1.5 dual-conditioned")
     optimizer.zero_grad(set_to_none=True)
-    step = micro = 0
+    step = start_step
+    micro = 0
     log_accum: Dict[str, float] = {}
     for batch in iterator:
         wanted_stage = stage_for_step(step, config)
@@ -418,14 +497,14 @@ def main():
             save_checkpoint(
                 os.path.join(config["checkpoint_dir"], f"checkpoint_step_{step}.pt"),
                 step, model, encoder, phi_encoder, decoder, state_projector,
-                state_decoder_bridge, optimizer, config)
+                state_decoder_bridge, optimizer, scheduler, config)
         if step >= max_steps:
             break
 
     save_checkpoint(
         os.path.join(config["checkpoint_dir"], f"checkpoint_step_{step}.pt"),
         step, model, encoder, phi_encoder, decoder, state_projector,
-        state_decoder_bridge, optimizer, config)
+        state_decoder_bridge, optimizer, scheduler, config)
     if writer is not None:
         writer.close()
     cleanup_distributed()
