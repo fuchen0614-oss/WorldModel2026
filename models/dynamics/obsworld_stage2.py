@@ -10,10 +10,15 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from data.earthnet_fields import make_neutral_s2_phi
+from data.stage2_contract import assert_model_batch_has_no_evaluation_fields
 
 
 class ObsWorldStage2Model(nn.Module):
-    """Stage2 wrapper: context observations -> state dynamics -> future images."""
+    """Matched Direct-DGH baseline retained for Stage2 protocol comparisons.
+
+    Every horizon starts from the same history state.  This is intentionally a
+    direct forecaster, not the later recursive ObsWorld rollout.
+    """
 
     def __init__(
         self,
@@ -30,10 +35,11 @@ class ObsWorldStage2Model(nn.Module):
         target_band_adapter: Optional[nn.Module] = None,
         max_h_days: float = 100.0,
         use_phi_encoder: bool = True,
-        compute_latent_targets: bool = True,
+        compute_latent_targets: bool = False,
         use_D: bool = True,
         use_G: bool = True,
         use_h: bool = True,
+        mode: str = "direct",
     ):
         super().__init__()
         self.band_adapter = band_adapter
@@ -66,6 +72,13 @@ class ObsWorldStage2Model(nn.Module):
         self.use_D = use_D
         self.use_G = use_G
         self.use_h = use_h
+        normalized_mode = str(mode).lower().replace("-", "_")
+        if normalized_mode not in {"direct", "matched_direct", "direct_dgh"}:
+            raise ValueError(
+                "ObsWorldStage2Model is the retained Direct-DGH baseline; "
+                f"unsupported mode={mode!r}"
+            )
+        self.dynamics_mode = "direct"
 
     def encode_observations(
         self,
@@ -94,8 +107,8 @@ class ObsWorldStage2Model(nn.Module):
         return states.reshape(b, t, states.shape[1], states.shape[2])
 
     def forward(self, batch: dict) -> dict:
+        assert_model_batch_has_no_evaluation_fields(batch)
         x_context = batch["x_context"]
-        x_target = batch["x_target"]
         context_mask = batch.get("context_mask")
         drivers = batch["D"]
         driver_mask = batch["D_mask"]
@@ -140,6 +153,12 @@ class ObsWorldStage2Model(nn.Module):
         }
 
         if self.compute_latent_targets:
+            if "x_target" not in batch or "target_mask" not in batch:
+                raise KeyError(
+                    "compute_latent_targets=True requires the explicit training "
+                    "target view; official evaluation fields remain forbidden"
+                )
+            x_target = batch["x_target"]
             with torch.no_grad():
                 # Keep context and target in the same evolving 4->12 band space
                 # while stopping the target branch from receiving gradients.
@@ -174,3 +193,7 @@ def _pixel_mask_to_token_mask(pixel_mask: torch.Tensor, num_tokens: int) -> torc
         output_size=(grid, grid),
     )
     return pooled.reshape(b, t, num_tokens).gt(0.05)
+
+
+# Explicit paper-facing name without breaking existing checkpoints/imports.
+MatchedDirectDGHModel = ObsWorldStage2Model

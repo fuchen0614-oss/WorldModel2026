@@ -15,7 +15,17 @@ from typing import Any, Iterable
 SPLITS = ("train", "iid", "ood", "extreme", "seasonal")
 S3_ENDPOINT = "https://s3.bgc-jena.mpg.de:9000"
 S3_PREFIX = "earthnet/earthnet2021x"
-REQUIRED_VARIABLES = (
+EOBS_VARIABLES = (
+    "eobs_fg",
+    "eobs_hu",
+    "eobs_pp",
+    "eobs_qq",
+    "eobs_rr",
+    "eobs_tg",
+    "eobs_tn",
+    "eobs_tx",
+)
+LEGACY_DGH_REQUIRED_VARIABLES = (
     "s2_B02",
     "s2_B03",
     "s2_B04",
@@ -26,12 +36,34 @@ REQUIRED_VARIABLES = (
     "eobs_rr",
     "eobs_tg",
 )
+GREENEARTHNET_REQUIRED_VARIABLES = (
+    "s2_B02",
+    "s2_B03",
+    "s2_B04",
+    "s2_B8A",
+    "s2_mask",
+    "s2_dlmask",
+    "s2_SCL",
+    *EOBS_VARIABLES,
+    "esawc_lc",
+    "geom_cls",
+    "cop_dem",
+)
 DEM_VARIABLES = ("nasa_dem", "alos_dem", "cop_dem")
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Check EarthNet2021x split coverage and NetCDF integrity."
+    )
+    parser.add_argument(
+        "--schema",
+        choices=("greenearthnet", "legacy-dgh"),
+        default="greenearthnet",
+        help=(
+            "greenearthnet requires all eight E-OBS fields and official "
+            "evaluation variables; legacy-dgh checks only the old 9-D path."
+        ),
     )
     parser.add_argument(
         "--root",
@@ -109,7 +141,11 @@ def discover_netcdf_files(split_root: Path) -> list[Path]:
     return files
 
 
-def audit_netcdf(path: Path, read_arrays: bool) -> dict[str, Any]:
+def audit_netcdf(
+    path: Path,
+    read_arrays: bool,
+    required_variables: tuple[str, ...],
+) -> dict[str, Any]:
     try:
         import numpy as np
         import xarray as xr
@@ -123,7 +159,7 @@ def audit_netcdf(path: Path, read_arrays: bool) -> dict[str, Any]:
     try:
         with xr.open_dataset(path, decode_times=False, cache=False) as cube:
             variables = set(cube.variables)
-            missing = sorted(set(REQUIRED_VARIABLES) - variables)
+            missing = sorted(set(required_variables) - variables)
             has_dem = any(name in variables for name in DEM_VARIABLES)
             sizes = {name: int(value) for name, value in cube.sizes.items()}
             problems: list[str] = []
@@ -137,7 +173,10 @@ def audit_netcdf(path: Path, read_arrays: bool) -> dict[str, Any]:
             if sizes.get("time", 0) < 150:
                 problems.append(f"time dimension shorter than 150: {sizes.get('time', 0)}")
             if read_arrays and not problems:
-                for name in (*REQUIRED_VARIABLES, next(v for v in DEM_VARIABLES if v in variables)):
+                names_to_read = list(required_variables)
+                if not any(name in names_to_read for name in DEM_VARIABLES):
+                    names_to_read.append(next(v for v in DEM_VARIABLES if v in variables))
+                for name in names_to_read:
                     values = cube[name].values
                     if values.size == 0:
                         problems.append(f"empty variable: {name}")
@@ -148,6 +187,7 @@ def audit_netcdf(path: Path, read_arrays: bool) -> dict[str, Any]:
                     "ok": not problems,
                     "sizes": sizes,
                     "missing_variables": missing,
+                    "eobs_variables": [name for name in EOBS_VARIABLES if name in variables],
                     "dem_variables": [name for name in DEM_VARIABLES if name in variables],
                     "problems": problems,
                 }
@@ -162,6 +202,7 @@ def local_split_report(
     split: str,
     scan_mode: str,
     max_files: int,
+    required_variables: tuple[str, ...],
 ) -> tuple[dict[str, Any], list[Path]]:
     split_root = dataset_root / split
     print(f"[audit] discovering local {split} files under {split_root}", flush=True)
@@ -182,7 +223,11 @@ def local_split_report(
             flush=True,
         )
         inspections.append(
-            audit_netcdf(path, read_arrays=(scan_mode == "full"))
+            audit_netcdf(
+                path,
+                read_arrays=(scan_mode == "full"),
+                required_variables=required_variables,
+            )
         )
     selected_sizes = {
         str(path): path.stat().st_size
@@ -307,11 +352,18 @@ def compare_with_remote(
 def main() -> int:
     args = parse_args()
     dataset_root = resolve_dataset_root(Path(args.root))
+    required_variables = (
+        GREENEARTHNET_REQUIRED_VARIABLES
+        if args.schema == "greenearthnet"
+        else LEGACY_DGH_REQUIRED_VARIABLES
+    )
     required = set(SPLITS if "all" in args.required_splits else args.required_splits)
     report: dict[str, Any] = {
         "dataset_root": str(dataset_root),
         "required_splits": sorted(required),
         "scan_mode": args.scan_mode,
+        "schema": args.schema,
+        "required_variables": list(required_variables),
         "remote_comparison_requested": args.compare_remote,
         "remote_size_comparison_requested": args.compare_sizes,
         "splits": {},
@@ -320,16 +372,21 @@ def main() -> int:
     failed = False
 
     for split in SPLITS:
+        split_scan_mode = args.scan_mode if split in required else "none"
         split_report, files = local_split_report(
             dataset_root,
             split,
-            args.scan_mode,
+            split_scan_mode,
             args.max_files_per_split,
+            required_variables,
         )
-        all_stems.extend(path.stem for path in files)
+        if split in required:
+            all_stems.extend(path.stem for path in files)
         if split in required and (not split_report["exists"] or not files):
             failed = True
-        if split_report["zero_byte_files"] or split_report["scan_failures"]:
+        if split in required and (
+            split_report["zero_byte_files"] or split_report["scan_failures"]
+        ):
             failed = True
         if args.compare_remote and split in required:
             try:

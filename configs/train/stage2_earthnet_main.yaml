@@ -2,8 +2,10 @@
 # Main experiment first: full model z_context + D + G + h -> future observations.
 
 model:
+  # This file is the retained matched Direct-DGH baseline, not recursive rollout.
+  mode: direct
   use_phi_encoder: true
-  compute_latent_targets: true
+  compute_latent_targets: false
   conditions:
     use_D: true
     use_G: true
@@ -139,6 +141,11 @@ data:
   validation_group: tile
   split_seed: 42
   use_train_holdout: true
+  # Formal runs pass an immutable train manifest and set require_manifest=true.
+  manifest_path: null
+  require_manifest: false
+  verify_manifest_sizes: false
+  verify_manifest_hashes: false
   # Set after running scripts/build_earthnet_dgh_stats.py.
   dgh_stats_path: null
   # EarthNet2021x contains humidity and radiation, so no ERA5 sidecar is needed.
@@ -197,9 +204,9 @@ loss:
   weights:
     obs: 1.0
     ndvi: 0.5
-    latent: 0.2
-    delta: 0.1
-    smooth: 0.02
+    latent: 0.0
+    delta: 0.0
+    smooth: 0.0
 
 optimizer:
   name: adamw

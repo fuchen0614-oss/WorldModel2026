@@ -266,6 +266,8 @@ def main() -> None:
     parser.add_argument("--data-root")
     parser.add_argument("--external-driver-root")
     parser.add_argument("--dgh-stats-path")
+    parser.add_argument("--manifest-path")
+    parser.add_argument("--require-manifest", action="store_true")
     parser.add_argument("--stage15-checkpoint")
     parser.add_argument("--resume-from")
     parser.add_argument("--split", default="train")
@@ -287,6 +289,10 @@ def main() -> None:
         config["data"]["external_driver_root"] = args.external_driver_root
     if args.dgh_stats_path:
         config["data"]["dgh_stats_path"] = args.dgh_stats_path
+    if args.manifest_path:
+        config["data"]["manifest_path"] = args.manifest_path
+    if args.require_manifest:
+        config["data"]["require_manifest"] = True
     if args.stage15_checkpoint:
         config["model"]["encoder"]["from_checkpoint"] = args.stage15_checkpoint
 

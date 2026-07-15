@@ -22,6 +22,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 
 from data.earthnet_fields import BandSpec, DriverSpec
+from data.earthnet_manifest import load_manifest_files
 
 
 HIGHRES_KEYS = ("highresdynamic", "highres_dynamic", "dynamic", "s2", "images", "x", "data")
@@ -41,6 +42,9 @@ class EarthNet2021Config:
         "test": ["test", "iid_test_split/context"],
         "iid": ["iid", "earthnet2021x/iid", "iid_test_split/context", "iid_test/context"],
         "ood": ["ood", "earthnet2021x/ood", "ood_test_split/context", "ood_test/context"],
+        "ood-t": ["earthnet2021x/ood/ood-t_chopped", "ood/ood-t_chopped", "ood-t_chopped"],
+        "ood-s": ["earthnet2021x/ood/ood-s_chopped", "ood/ood-s_chopped", "ood-s_chopped"],
+        "ood-st": ["earthnet2021x/ood/ood-st_chopped", "ood/ood-st_chopped", "ood-st_chopped"],
         "extreme": ["extreme", "earthnet2021x/extreme", "extreme_test_split/context", "extreme_test/context"],
         "seasonal": ["seasonal", "earthnet2021x/seasonal", "seasonal_test_split/context", "seasonal_test/context"],
     })
@@ -68,6 +72,10 @@ class EarthNet2021Config:
     validation_group: str = "tile"
     split_seed: int = 42
     use_train_holdout: bool = True
+    manifest_path: Optional[str] = None
+    require_manifest: bool = False
+    verify_manifest_sizes: bool = False
+    verify_manifest_hashes: bool = False
     driver_mean: Optional[List[float]] = None
     driver_std: Optional[List[float]] = None
     external_driver_root: Optional[str] = None
@@ -82,6 +90,7 @@ class EarthNet2021Config:
     @classmethod
     def from_config(cls, config: dict, split: Optional[str] = None) -> "EarthNet2021Config":
         data_cfg = dict(config)
+        requested_split = split or str(data_cfg.get("split", "train"))
         band_spec = BandSpec.from_config(data_cfg.get("band_spec"))
         driver_spec = DriverSpec.from_config(data_cfg.get("driver_spec"))
         stats = _load_stats(
@@ -89,9 +98,15 @@ class EarthNet2021Config:
             expected_feature_names=driver_spec.feature_names,
         )
         split_subdirs = data_cfg.get("split_subdirs")
+        manifest_path = data_cfg.get("manifest_path")
+        manifest_paths = data_cfg.get("manifest_paths") or {}
+        if manifest_paths:
+            manifest_path = manifest_paths.get(requested_split)
+            if manifest_path is None and requested_split == "val":
+                manifest_path = manifest_paths.get("train")
         return cls(
             root=str(data_cfg["root"]),
-            split=split or str(data_cfg.get("split", "train")),
+            split=requested_split,
             split_subdirs=split_subdirs if split_subdirs is not None else cls.__dataclass_fields__["split_subdirs"].default_factory(),
             data_format=str(data_cfg.get("data_format", "auto")).lower(),
             file_glob=str(data_cfg.get("file_glob", "**/*.npz")),
@@ -120,6 +135,10 @@ class EarthNet2021Config:
             validation_group=str(data_cfg.get("validation_group", "tile")),
             split_seed=int(data_cfg.get("split_seed", 42)),
             use_train_holdout=bool(data_cfg.get("use_train_holdout", True)),
+            manifest_path=str(manifest_path) if manifest_path else None,
+            require_manifest=bool(data_cfg.get("require_manifest", False)),
+            verify_manifest_sizes=bool(data_cfg.get("verify_manifest_sizes", False)),
+            verify_manifest_hashes=bool(data_cfg.get("verify_manifest_hashes", False)),
             driver_mean=stats.get("driver_mean"),
             driver_std=stats.get("driver_std"),
             external_driver_root=data_cfg.get("external_driver_root"),
@@ -521,13 +540,36 @@ def inspect_earthnet_root(
 
 def _discover_npz_files(config: EarthNet2021Config) -> List[Path]:
     root = Path(config.root)
-    candidates = []
-    for sub in config.split_subdirs.get(config.split, [config.split]):
-        p = root / sub
-        if p.exists():
-            candidates.append(p)
-    using_train_holdout = False
-    if not candidates and config.use_train_holdout and config.split in {"train", "val"}:
+    using_manifest = bool(config.manifest_path)
+    if using_manifest:
+        files = load_manifest_files(
+            config.manifest_path,
+            root,
+            expected_split=config.split,
+            verify_exists=True,
+            verify_sizes=config.verify_manifest_sizes,
+            verify_hashes=config.verify_manifest_hashes,
+        )
+        candidates = []
+    else:
+        if config.require_manifest:
+            raise ValueError(
+                f"split={config.split!r} requires an explicit manifest; "
+                "root fallback/glob discovery is disabled"
+            )
+        candidates = []
+        for sub in config.split_subdirs.get(config.split, [config.split]):
+            p = root / sub
+            if p.exists():
+                candidates.append(p)
+        files = []
+    using_train_holdout = using_manifest and config.split == "val"
+    if (
+        not using_manifest
+        and not candidates
+        and config.use_train_holdout
+        and config.split in {"train", "val"}
+    ):
         train_candidates = []
         for sub in config.split_subdirs.get("train", ["train"]):
             p = root / sub
@@ -536,9 +578,8 @@ def _discover_npz_files(config: EarthNet2021Config) -> List[Path]:
         if train_candidates:
             candidates = train_candidates
             using_train_holdout = True
-    if not candidates and root.exists():
+    if not using_manifest and not candidates and root.exists():
         candidates = [root]
-    files: List[Path] = []
     for base in candidates:
         files.extend(sorted(base.glob(config.file_glob)))
     # Keep deterministic order and remove duplicates from overlapping candidates.

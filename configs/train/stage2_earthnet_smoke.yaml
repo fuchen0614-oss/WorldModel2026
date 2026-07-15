@@ -1,6 +1,7 @@
 model:
+  mode: direct
   use_phi_encoder: true
-  compute_latent_targets: true
+  compute_latent_targets: false
   conditions:
     use_D: true
     use_G: true
@@ -117,6 +118,8 @@ data:
   validation_group: tile
   split_seed: 42
   use_train_holdout: false
+  manifest_path: null
+  require_manifest: false
   dgh_stats_path: null
   external_driver_root: null
   external_driver_required: true
@@ -165,9 +168,9 @@ loss:
   weights:
     obs: 1.0
     ndvi: 0.5
-    latent: 0.2
-    delta: 0.1
-    smooth: 0.02
+    latent: 0.0
+    delta: 0.0
+    smooth: 0.0
 
 optimizer:
   name: adamw

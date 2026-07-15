@@ -11,6 +11,7 @@ fi
 
 source "${_CONDA_SH}"
 conda activate "${_WORLD_MODEL_ROOT}/.conda/envs/WorldModel"
+export GH_CONFIG_DIR="${CONDA_PREFIX}/.gh"
 
 unset _CONDA_SH
 unset _WORLD_MODEL_ROOT

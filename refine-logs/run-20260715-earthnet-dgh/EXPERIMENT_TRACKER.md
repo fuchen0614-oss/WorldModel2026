@@ -4,10 +4,10 @@
 
 | ID | 阶段 | 实验 | 数据/协议 | Seeds | 关键指标 | Gate | 状态 | 备注 |
 |---|---|---|---|---:|---|---|---|---|
-| M0-01 | Protocol | official manifest audit | GreenEarthNet | - | file/hash/count | exact | TODO | 禁止 fallback scan |
-| M0-02 | Protocol | evaluator parity | OOD-t dev copy | - | six official metrics | parity | TODO | 先复现公开 baseline |
-| M0-03 | Data | official 24-D/5-day E-OBS + mask audit | Train/Val | - | 8 vars×mean/min/max; missingness/shape | exact | TODO | Train-only stats; raw daily 仅 appendix |
-| M0-04 | Fairness | Direct/rollout/main matching | Train/Val | - | same `E_D`; total params | <=10% params | TODO | 5/10/20d 共享变长 encoder |
+| M0-01 | Protocol | official manifest audit | GreenEarthNet | - | file/hash/count | exact | CODE_READY | 已实现不可变 manifest、路径/size/hash 校验和禁止 fallback；待真实数据生成 |
+| M0-02 | Protocol | evaluator parity | OOD-t dev copy | - | six official metrics | parity | SYNTHETIC_PARITY | 13 个逐像素字段和官方聚合顺序已对齐作者 commit；待真实 Persistence/Climatology parity |
+| M0-03 | Data | official 24-D/5-day E-OBS + mask audit | Train/Val | - | 8 vars×mean/min/max; missingness/shape | exact | CODE_READY | 审计已要求 all-8 E-OBS 与官方 mask/eval 字段；待训练机扫描决定 24-D/12-D |
+| M0-04 | Fairness | Direct/rollout/main matching | Train/Val | - | same `E_D`; total params | <=10% params | PARTIAL | Direct-DGH 已显式保留并锁为 direct；24-D `E_D` 与 rollout 参数匹配待字段定型后实现 |
 | M0-phi | Data | L1C/L2A pair audit | SSL4EO shards | - | key/time/file_id/clear support | exact | TODO | 先 20 shards |
 | M1-01 | Stage1.5 | 60k checkpoint re-eval | geographic holdout | 3 | pair/probe/future utility | stable | TODO | 不用旧 probe 数字 |
 | M1-02 | Stage1.5 | cross-observation repair | S1/S2 <=7d | 3 | cross decode + Stage2 skill | pass both | TODO | 不称纯 renderer pair |

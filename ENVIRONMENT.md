@@ -25,6 +25,18 @@ ENV="$PWD/.conda/envs/WorldModel"
 "$CONDA" run --prefix "$ENV" python -m pip install -r requirements.worldmodel.lock.txt
 ```
 
+GitHub CLI 也安装在此环境中：
+
+```bash
+source scripts/activate_worldmodel.sh
+gh --version
+gh auth status
+```
+
+`GH_CONFIG_DIR` 会自动指向 `.conda/envs/WorldModel/.gh`，因此 GitHub CLI
+的登录配置与令牌保存在项目虚拟环境内部，并由仓库根目录的 `.gitignore`
+排除，不会提交到 Git。环境首次创建后如未登录，执行 `gh auth login` 即可。
+
 说明：原环境前缀 `/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel`
 在当前节点不可见，所以无法执行二进制前缀克隆。当前方案精确固定 Python 与
 Python/CUDA 用户态包；glibc、驱动和少量 Conda 系统库由当前节点按平台解析。
@@ -45,6 +57,7 @@ Triton       3.7.0
 NumPy        2.4.6
 Xarray       2026.4.0
 EarthNet     0.3.9
+GitHub CLI   2.96.0
 GPU          8 x NVIDIA H200
 ```
 

@@ -29,6 +29,7 @@ from data.datasets.earthnet2021 import (
 from data.earthnet_fields import compute_ndvi
 from train.train_stage2_earthnet import (
     create_stage2_model,
+    forward_stage2_model,
     load_config,
     load_stage2_model_state,
     move_batch_to_device,
@@ -100,7 +101,7 @@ def main() -> None:
             if batch_index >= args.max_batches:
                 break
             batch = move_batch_to_device(batch, device)
-            base_pred = model(batch)["pred"]
+            base_pred = forward_stage2_model(model, batch)["pred"]
             for name, scenario in SCENARIOS.items():
                 changed = dict(batch)
                 changed["D"] = _apply_scenario(
@@ -109,7 +110,7 @@ def main() -> None:
                     data_cfg,
                     scenario,
                 )
-                scenario_pred = model(changed)["pred"]
+                scenario_pred = forward_stage2_model(model, changed)["pred"]
                 _accumulate_response(
                     sums,
                     counts,

@@ -34,6 +34,20 @@ STAGE2_FIELD_SPECS: Tuple[Stage2FieldSpec, ...] = (
     Stage2FieldSpec("h", "prediction horizon", True, "[B,Tt]", "days"),
     Stage2FieldSpec("x_target", "future optical target", False, "[B,Tt,C,H,W]", "reflectance"),
     Stage2FieldSpec("target_mask", "future target valid-pixel mask", False, "[B,Tt,H,W]", "binary"),
+    Stage2FieldSpec(
+        "official_eval_mask",
+        "official future evaluation clear-pixel mask",
+        False,
+        "[B,Tt,H,W]",
+        "binary; evaluation only",
+    ),
+    Stage2FieldSpec(
+        "official_eval_eligibility",
+        "official high-quality pixel eligibility",
+        False,
+        "[B,H,W]",
+        "binary; evaluation only",
+    ),
     # These fields are intentionally documented before they become required:
     # the current EarthNet loader folds calendar/weather-window information
     # into D, while Stage 1.5/rollout work will expose them explicitly.
@@ -53,6 +67,72 @@ REQUIRED_STAGE2_FIELDS = (
     "h",
 )
 
+MODEL_INPUT_FIELDS = REQUIRED_STAGE2_FIELDS
+OPTIONAL_MODEL_INPUT_FIELDS = (
+    "context_phi",
+    "calendar",
+    "delta_t",
+    "obs_age",
+    "weather_path",
+)
+TRAINING_SUPERVISION_FIELDS = ("x_target", "target_mask")
+EVALUATION_ONLY_FIELDS = ("official_eval_mask", "official_eval_eligibility")
+
+
+def model_input_view(
+    batch: Mapping[str, torch.Tensor],
+    *,
+    include_training_targets: bool = False,
+) -> dict[str, torch.Tensor]:
+    """Return the only fields permitted to cross the model boundary.
+
+    The default view contains inference-time information only.  A legacy
+    latent-target ablation may explicitly request training targets, but
+    evaluation-only masks are never forwarded under either mode.
+    """
+
+    missing = [name for name in MODEL_INPUT_FIELDS if name not in batch]
+    if missing:
+        raise KeyError(f"Stage2 model inputs are missing fields: {missing}")
+    names = [*MODEL_INPUT_FIELDS]
+    names.extend(name for name in OPTIONAL_MODEL_INPUT_FIELDS if name in batch)
+    if include_training_targets:
+        missing_targets = [
+            name for name in TRAINING_SUPERVISION_FIELDS if name not in batch
+        ]
+        if missing_targets:
+            raise KeyError(
+                f"Latent-target ablation is missing fields: {missing_targets}"
+            )
+        names.extend(TRAINING_SUPERVISION_FIELDS)
+    return {name: batch[name] for name in names}
+
+
+def training_supervision_view(
+    batch: Mapping[str, torch.Tensor],
+) -> dict[str, torch.Tensor]:
+    missing = [name for name in TRAINING_SUPERVISION_FIELDS if name not in batch]
+    if missing:
+        raise KeyError(f"Stage2 training supervision is missing fields: {missing}")
+    return {name: batch[name] for name in TRAINING_SUPERVISION_FIELDS}
+
+
+def evaluation_only_view(
+    batch: Mapping[str, torch.Tensor],
+) -> dict[str, torch.Tensor]:
+    return {name: batch[name] for name in EVALUATION_ONLY_FIELDS if name in batch}
+
+
+def assert_model_batch_has_no_evaluation_fields(
+    batch: Mapping[str, torch.Tensor],
+) -> None:
+    leaked = sorted(set(batch) & set(EVALUATION_ONLY_FIELDS))
+    if leaked:
+        raise ValueError(
+            "Evaluation-only fields reached the Stage2 model: "
+            f"{leaked}. Build the input with model_input_view()."
+        )
+
 
 def _require_tensor(batch: Mapping[str, torch.Tensor], name: str) -> torch.Tensor:
     if name not in batch:
@@ -67,6 +147,7 @@ def validate_stage2_batch(
     batch: Mapping[str, torch.Tensor],
     *,
     require_targets: bool = True,
+    require_evaluation: bool = False,
 ) -> None:
     """Validate shape-level invariants shared by Stage 2 loaders and models.
 
@@ -126,6 +207,20 @@ def validate_stage2_batch(
         if target_mask.shape != (b, target_steps, height, width):
             raise ValueError(
                 f"target_mask must have shape {(b, target_steps, height, width)}, got {tuple(target_mask.shape)}"
+            )
+
+    if require_evaluation:
+        official_mask = _require_tensor(batch, "official_eval_mask")
+        eligibility = _require_tensor(batch, "official_eval_eligibility")
+        if official_mask.shape != (b, target_steps, height, width):
+            raise ValueError(
+                "official_eval_mask must match future targets as [B,T,H,W], "
+                f"got {tuple(official_mask.shape)}"
+            )
+        if eligibility.shape != (b, height, width):
+            raise ValueError(
+                "official_eval_eligibility must have shape [B,H,W], "
+                f"got {tuple(eligibility.shape)}"
             )
 
 

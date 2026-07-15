@@ -26,6 +26,7 @@ from eval.forecast_metrics import ForecastMetricAccumulator
 from models.losses.earthnet_forecasting import EarthNetForecastLoss
 from train.train_stage2_earthnet import (
     create_stage2_model,
+    forward_stage2_model,
     load_config,
     load_stage2_model_state,
     move_batch_to_device,
@@ -40,6 +41,7 @@ def main():
     parser.add_argument("--data-root", type=str)
     parser.add_argument("--external-driver-root", type=str)
     parser.add_argument("--dgh-stats-path", type=str)
+    parser.add_argument("--manifest-path", type=str)
     parser.add_argument("--batch-size", type=int, default=2)
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--output", default=None)
@@ -53,6 +55,9 @@ def main():
         config["data"]["external_driver_root"] = args.external_driver_root
     if args.dgh_stats_path is not None:
         config["data"]["dgh_stats_path"] = args.dgh_stats_path
+    if args.manifest_path is not None:
+        config["data"]["manifest_path"] = args.manifest_path
+        config["data"]["require_manifest"] = True
     config["data"]["split"] = args.split
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -93,7 +98,7 @@ def main():
     with torch.no_grad():
         for batch in tqdm(loader, desc=f"eval {args.split}"):
             batch = move_batch_to_device(batch, device)
-            out = model(batch)
+            out = forward_stage2_model(model, batch)
             losses = loss_fn(
                 out["pred"],
                 batch["x_target"],

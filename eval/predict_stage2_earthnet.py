@@ -28,6 +28,7 @@ from data.datasets.earthnet2021 import (
 )
 from train.train_stage2_earthnet import (
     create_stage2_model,
+    forward_stage2_model,
     load_config,
     load_stage2_model_state,
     move_batch_to_device,
@@ -91,7 +92,7 @@ def main() -> None:
     with torch.no_grad():
         for batch in tqdm(loader, desc=f"predict EarthNet {args.split}"):
             batch = move_batch_to_device(batch, device)
-            pred = model(batch)["pred"].float().clamp(0, 1)
+            pred = forward_stage2_model(model, batch)["pred"].float().clamp(0, 1)
             pred = _resize_predictions(pred, args.output_size).cpu().numpy()
             for index, meta in enumerate(batch["meta"]):
                 cubename = meta["sample_id"]

@@ -45,6 +45,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from data.datasets.earthnet2021 import EarthNet2021Config, EarthNet2021Dataset, collate_earthnet2021
+from data.stage2_contract import model_input_view
 from models.adapters.earthnet_band_adapter import EarthNetInputAdapter
 from models.adapters.geo_tokenizer import GeoTokenizer
 from models.decoders.earthnet_observation_decoder import EarthNetObservationDecoder
@@ -75,6 +76,16 @@ def move_batch_to_device(batch: dict, device: torch.device) -> dict:
     for key, value in batch.items():
         out[key] = value.to(device, non_blocking=True) if torch.is_tensor(value) else value
     return out
+
+
+def forward_stage2_model(model: nn.Module, batch: dict) -> dict:
+    """Forward only the protocol-approved batch partition through the model."""
+
+    raw_model = model.module if isinstance(model, DDP) else model
+    include_targets = bool(getattr(raw_model, "compute_latent_targets", False))
+    return model(
+        model_input_view(batch, include_training_targets=include_targets)
+    )
 
 
 def create_stage2_model(config: dict, device: torch.device) -> ObsWorldStage2Model:
@@ -147,10 +158,11 @@ def create_stage2_model(config: dict, device: torch.device) -> ObsWorldStage2Mod
         decoder=decoder,
         max_h_days=float(config["data"].get("max_h_days", 100.0)),
         use_phi_encoder=bool(model_cfg.get("use_phi_encoder", True)),
-        compute_latent_targets=bool(model_cfg.get("compute_latent_targets", True)),
+        compute_latent_targets=bool(model_cfg.get("compute_latent_targets", False)),
         use_D=bool(conditions.get("use_D", True)),
         use_G=bool(conditions.get("use_G", True)),
         use_h=bool(conditions.get("use_h", True)),
+        mode=str(model_cfg.get("mode", "direct")),
     )
     warmup_frozen = []
     if bool(model_cfg["encoder"].get("freeze", True)):
@@ -431,7 +443,7 @@ def validate_stage2(
             else torch.autocast(device_type="cpu", enabled=False)
         )
         with amp:
-            out = model(batch)
+            out = forward_stage2_model(model, batch)
             losses = loss_fn(
                 out["pred"],
                 batch["x_target"],
@@ -522,6 +534,8 @@ def main():
     parser.add_argument("--data-root", type=str)
     parser.add_argument("--external-driver-root", type=str)
     parser.add_argument("--dgh-stats-path", type=str)
+    parser.add_argument("--manifest-path", type=str)
+    parser.add_argument("--require-manifest", action="store_true")
     parser.add_argument("--stage15-checkpoint", type=str)
     parser.add_argument("--checkpoint-dir", type=str)
     parser.add_argument("--log-dir", type=str)
@@ -548,6 +562,10 @@ def main():
         config["data"]["external_driver_root"] = args.external_driver_root
     if args.dgh_stats_path is not None:
         config["data"]["dgh_stats_path"] = args.dgh_stats_path
+    if args.manifest_path is not None:
+        config["data"]["manifest_path"] = args.manifest_path
+    if args.require_manifest:
+        config["data"]["require_manifest"] = True
     if args.stage15_checkpoint is not None:
         config["model"]["encoder"]["from_checkpoint"] = args.stage15_checkpoint
     if args.checkpoint_dir is not None:
@@ -741,7 +759,7 @@ def main():
             amp = torch.autocast(device_type="cuda", dtype=torch.bfloat16) if device.type == "cuda" else torch.autocast(device_type="cpu", enabled=False)
             with sync_context:
                 with amp:
-                    out = model(batch)
+                    out = forward_stage2_model(model, batch)
                     losses = loss_fn(
                         out["pred"],
                         batch["x_target"],

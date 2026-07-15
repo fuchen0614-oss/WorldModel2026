@@ -3,6 +3,7 @@ from pathlib import Path
 
 import torch
 import torch.nn as nn
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -39,6 +40,7 @@ def test_stage2_forward_and_backward():
         dynamics=StateDynamicsModule(latent_dim=16, dynamics_type="mlp", driver_dim=8, geo_dim=4, time_dim=8, hidden_dim=32),
         decoder=EarthNetObservationDecoder(in_dim=16, out_channels=4, patch_size=16, img_size=32, depth=1, num_heads=4, decoder_embed_dim=32),
         max_h_days=15,
+        compute_latent_targets=True,
     )
     batch = {
         "x_context": torch.rand(2, 2, 4, 32, 32),
@@ -52,6 +54,7 @@ def test_stage2_forward_and_backward():
         "h": torch.tensor([[5.0, 10.0, 15.0], [5.0, 10.0, 15.0]]),
     }
     out = model(batch)
+    assert model.dynamics_mode == "direct"
     assert out["pred"].shape == (2, 3, 4, 32, 32)
     assert out["z_pred"].shape[:3] == (2, 3, 4)
     loss_fn = EarthNetForecastLoss(red_index=2, nir_index=3)
@@ -74,6 +77,23 @@ def test_stage2_forward_and_backward():
         if parameter.requires_grad and parameter.grad is None
     ]
     assert not unused, f"Trainable parameters unused by Stage2 forward: {unused}"
+
+
+def test_direct_dgh_rejects_rollout_mode_until_separate_model_exists():
+    with pytest.raises(ValueError, match="Direct-DGH"):
+        ObsWorldStage2Model(
+            band_adapter=nn.Identity(),
+            encoder=nn.Identity(),
+            phi_encoder=None,
+            state_projector=nn.Identity(),
+            context_aggregator=nn.Identity(),
+            driver_encoder=nn.Identity(),
+            horizon_encoder=nn.Identity(),
+            geo_tokenizer=nn.Identity(),
+            dynamics=nn.Identity(),
+            decoder=nn.Identity(),
+            mode="rollout",
+        )
 
 
 def test_scheduler_respects_each_parameter_group_minimum():
