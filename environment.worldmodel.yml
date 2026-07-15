@@ -1,0 +1,8 @@
+name: WorldModel
+channels:
+  - defaults
+dependencies:
+  - python=3.11.15
+  - pip=26.1.1
+  - wheel=0.46.3
+  - packaging=26.0

@@ -33,6 +33,7 @@ build/
 venv/
 env/
 .venv/
+.conda/
 
 # ========== 系统和编辑器 ==========
 .DS_Store
