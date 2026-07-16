@@ -170,7 +170,7 @@ test -s artifacts/protocols/earthnet2021x_standard_v1/protocol.json && test -s a
 最后一条只有输出 `已完成` 才能进入统计步骤。成功后快速查看协议：
 
 ```bash
-python -m json.tool "$RUN_DIR/protocol.json"
+python -m json.tool artifacts/protocols/earthnet2021x_standard_v1/protocol.json
 ```
 
 预期要点：`primary_test_tracks` 是 `iid` 与 `ood`；`supplementary_test_tracks` 是 `extreme` 与 `seasonal`；`validation_tile_count` 是 8。
@@ -204,11 +204,11 @@ nice -n 10 python -u scripts/build_earthnet_conditioning_stats.py \
 32/64。日志每处理 100 个文件会更新一次，完成的唯一判据是：
 
 ```bash
-test -s "$RUN_DIR/conditioning_stats_v2_train_dev.json" && echo 统计完成 || echo 统计未完成
+test -s artifacts/protocols/earthnet2021x_standard_v1/conditioning_stats_v2_train_dev.json && echo 统计完成 || echo 统计未完成
 ```
 
 建议在独立 tmux 会话运行该步骤：`tmux new -s earthnet_stats`。执行中可通过
-`tail -n 30 "$RUN_DIR/conditioning_stats_v2_train_dev.log"` 观察已处理文件数。
+`tail -n 30 artifacts/protocols/earthnet2021x_standard_v1/conditioning_stats_v2_train_dev.log` 观察已处理文件数。
 
 统计完成后，先只做**无 GPU 训练的真实数据预检**。以下命令只读取清单中的 64 个
 `train_dev` cube，核对字段、统计量、mask（有效标记）和最终 DataLoader；`RUN_TRAIN=0`
@@ -300,6 +300,9 @@ bundle（小样本包）**。它从已冻结的 `train_dev/val_dev` 以确定性
 `formal_result_eligible=false`，绝不能报告为验证集、IID/OOD 或主实验结果：
 
 ```bash
+cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+DATA_ROOT=../TrainData/EarthNet2021/earthnet2021x
+RUN_DIR=artifacts/protocols/earthnet2021x_standard_v1
 SANITY_DIR="$RUN_DIR/sanity_32_20260716"  # 必须是新的、尚不存在的目录
 
 python scripts/build_stage2_sanity_bundle.py \
