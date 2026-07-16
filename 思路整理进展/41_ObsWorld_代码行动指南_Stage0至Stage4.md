@@ -19,6 +19,9 @@ related:
 ---
 
 > [!abstract] 执行总原则
+
+> **数据协议更新（2026-07-16）：**本篇是历史代码路线图。当前唯一数据/评测口径为服务器已有的 EarthNet2021x NetCDF 与 EarthNet2021 `train/iid/ood/extreme/seasonal`；冻结清单和正式接口以 [48：统一数据协议](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md) 及 47 为准。
+
 > 先证明每个字段和评测都可信，再重建不可旁路的状态接口；随后将 direct 和 rollout 作为两套严格配对的 Stage 2 运行进行比较；根据预先写定的门槛选择最终模型，而不是先将二者混合并从中挑最好数字。第一篇的必达终点是 RQ1–RQ4，不是同时实现同化、不确定性、精确几何和大模型。
 
 > [!warning] 本文档不授权直接重写
@@ -175,7 +178,7 @@ $$
 | data/datasets/earthnet2021.py | D 是累计量且混入 h/日期；context token 的有效时间不统一 | 返回 weather_path、calendar、delta_t、valid_mask、obs_age 等独立字段 | 打印单样本能逐项核对时间窗口和字段可用性 |
 | configs/train/stage2_earthnet_main.yaml | B8A 与 canonical band 映射、D feature 校验等有风险 | 写清 band mapping；将 require_all_driver_features 与消融配置解耦 | no-VPD/no-SRAD/no-precip 最小预跑成功 |
 | scripts/generate_stage2_ablation_configs.py | 生成配置会触发主配置的 feature 完整性检查 | 为消融同步修改检查规则，保存实际覆盖值 | 每个生成 yaml 可被训练脚本加载 |
-| eval/earthnet_standard_metrics.py 及评测入口 | EarthNet2021 与 GreenEarthNet 协议可能混用 | 按数据集拆开入口和结果目录 | persistence 与 climatology 的官方指标可复现 |
+| eval/earthnet_standard_metrics.py 及评测入口 | EarthNet2021 与 EarthNet2021x 协议可能混用 | 按数据集拆开入口和结果目录 | persistence 与 climatology 的官方指标可复现 |
 | 新增 tests 目录 | 目前缺少合同测试 | 加数据、mask、band、config、metric smoke tests | CI 或本地单命令小样本全通过 |
 
 ## 3.3 Stage 0 必做测试
@@ -186,7 +189,7 @@ $$
 - [ ] mask 测试：全云、部分云、零反射率三种输入不会被模型误当成同一种情况。
 - [ ] 未来泄漏测试：batch 中未来 quality/cloud 字段不被传入事实预测 forward。
 - [ ] 消融配置测试：所有 no-feature yaml 都能通过 preflight。
-- [ ] 指标测试：同一预测不能同时被错误送入 EarthNet2021 ENS 和 GreenEarthNet 新协议。
+- [ ] 指标测试：同一预测不能同时被错误送入 EarthNet2021 ENS 和 EarthNet2021x 新协议。
 
 ## 3.4 Stage 0 完成定义
 
@@ -360,7 +363,7 @@ $$
 
 | RQ | 应有评测入口 | 应有结果文件 |
 |---|---|---|
-| RQ1 | eval/eval_official_forecast.py | iid、ood-t、ood-s、ood-st 主表和 horizon csv |
+| RQ1 | `eval/eval_stage2_earthnet.py` | IID/OOD 主表，Extreme/Seasonal 补充表和 horizon CSV |
 | RQ2 | eval/eval_state_usefulness.py；eval_phi_leakage_probe_fixed.py | 产品交叉重建、probe、最终 checkpoint 报告 |
 | RQ3 | eval/eval_hidden_frame_replay.py；eval_rollout_diagnostics.py | 中间帧与终点误差、轨迹图、失败案例 |
 | RQ4 | eval/eval_driver_counterfactual_controls.py | true/no/calendar/shuffle/wrong-year D 表和 NDVI 曲线 |
@@ -412,7 +415,7 @@ output/runs/2026xxxx_stage4_fm_rollout_seed1
 
 为了公平：
 
-- 四组使用同一 EarthNet/GreenEarthNet 数据、同一 split、同一 band preprocessing；
+- 四组使用同一 EarthNet2021x 数据、同一 split、同一 band preprocessing；
 - Foundation encoder 的输出经统一 adapter 映射到相同 z 维度；
 - direct/rollout 的输入字段、decoder、训练预算匹配；
 - 报告可训练参数、总参数和是否冻结 Foundation encoder；

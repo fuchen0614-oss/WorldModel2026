@@ -7,6 +7,8 @@ status: "建议作为 30 号总纲的修订依据"
 
 # ObsWorld Stage2 与 AAAI 主实验决策审查
 
+> **数据协议更新（2026-07-16）：**本文保留为历史审查。当前执行数据为服务器已有的 EarthNet2021x NetCDF，且只采用 EarthNet2021 `train/iid/ood/extreme/seasonal`；请以 [48：统一数据协议](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md) 为准。
+
 ## 0. 总结结论
 
 我的最终判断是：
@@ -162,7 +164,7 @@ ObsWorld-G:
 | Persistence                         |                 否 |      - |      |      |      |      |       |           |      |
 | ConvLSTM / PredRNN / SimVP          |                 否 |        |      |      |      |      |       |           |      |
 | Earthformer                         |                 否 |        |      |      |      |      |       |           |      |
-| Contextformer / GreenEarthNet-style |               否/是 |        |      |      |      |      |       |           |      |
+| Contextformer-style |               否/是 |        |      |      |      |      |       |           |      |
 | EO-WM                               |                 否 |   387M |      |      |      |      |       |           |      |
 | ObsWorld-E                          |            SSL4EO |        |      |      |      |      |       |           |      |
 
@@ -220,9 +222,9 @@ h in {5, 10, 20, 30, 60, 100}
 
 EarthNet2021 的主实验是标准 train/test split 上的 future satellite forecasting。它有 IID、OOD、Extreme Summer、Seasonal Cycle 等 tracks；模型输入历史影像、DEM 和气象变量，输出未来 20 帧 Sentinel-2，并用 EarthNetScore 及分量指标评价。
 
-### 7.2 GreenEarthNet / Contextformer
+### 7.2 Contextformer（CVPR 2024）
 
-CVPR 2024 的 GreenEarthNet 工作主线也是 vegetation forecasting。它提出 GreenEarthNet 数据集和 Contextformer，在 GreenEarthNet 和 EarthNet2021 兼容设定下与 baselines 对比，并强调 meteorological time series 和 vegetation dynamics。
+Contextformer 是一个相关的气象条件植被预测基线；它的条件注入方式与消融设计可供借鉴，但其论文的数据划分不是本项目的执行协议。本项目只在服务器已有的 EarthNet2021x NetCDF 文件上，按 EarthNet2021 的 IID/OOD/Extreme/Seasonal 轨道组织实验。
 
 ### 7.3 EO-WM
 
@@ -299,14 +301,14 @@ DHR↑ 或 PDC↑
 
 可选设置：
 
-1. EarthNet OOD track。
-2. GreenEarthNet test split。
+1. EarthNet2021 OOD track。
+2. EarthNet2021 IID/Extreme/Seasonal 补充轨道。
 3. SSL4EO held-out climate/region seasonal-pair prediction。
 
 建议优先级：
 
 ```text
-EarthNet OOD > GreenEarthNet > SSL4EO seasonal pairs
+EarthNet2021 IID/OOD > EarthNet2021 Extreme/Seasonal > SSL4EO seasonal pairs
 ```
 
 因为前两者更接近标准 benchmark；SSL4EO seasonal pairs 更像自建泛化诊断。
@@ -351,7 +353,7 @@ Existing EO forecasting models can predict future pixels, but standard metrics d
 
 - EarthNet2021: https://arxiv.org/abs/2104.10066
 - EarthNet2021 CVPRW paper PDF: https://openaccess.thecvf.com/content/CVPR2021W/EarthVision/papers/Requena-Mesa_EarthNet2021_A_Large-Scale_Dataset_and_Challenge_for_Earth_Surface_Forecasting_CVPRW_2021_paper.pdf
-- GreenEarthNet / Contextformer, CVPR 2024: https://arxiv.org/abs/2303.16198
+- Contextformer, CVPR 2024: https://arxiv.org/abs/2303.16198
 - EO-WM, 2026: https://arxiv.org/abs/2606.27277
 - RS-WorldModel, 2026: https://arxiv.org/abs/2603.14941
 - Remote Sensing-Oriented World Model, 2025: https://arxiv.org/abs/2509.17808

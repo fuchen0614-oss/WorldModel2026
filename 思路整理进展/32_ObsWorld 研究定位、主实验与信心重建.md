@@ -7,6 +7,8 @@ status: "建议与 31 号文档配套阅读"
 
 # ObsWorld 研究定位、主实验与信心重建
 
+> **数据协议更新（2026-07-16）：**本文保留历史论证。当前唯一执行口径是服务器已有的 EarthNet2021x NetCDF 加 EarthNet2021 `train/iid/ood/extreme/seasonal` 协议；详情见 [48：统一数据协议](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md)。
+
 ## 0. 一句话结论
 
 ObsWorld 的创新不在“使用 SSL4EO 预训练再在 EarthNet 微调”这个训练范式本身，而在：
@@ -188,7 +190,7 @@ h = {5, 10, 20, 30, 60, 100}
 - Persistence / climatology
 - ConvLSTM / PredRNN / SimVP
 - Earthformer
-- Contextformer / GreenEarthNet-style
+- Contextformer-style
 - EO-WM
 
 ### 5.2 B 类：遥感基础模型
@@ -435,7 +437,7 @@ backbone feature + ObsWorld DGH Dynamics
 - EarthNet2021: https://arxiv.org/abs/2104.10066
 - EarthNet2021 CVPRW paper: https://openaccess.thecvf.com/content/CVPR2021W/EarthVision/papers/Requena-Mesa_EarthNet2021_A_Large-Scale_Dataset_and_Challenge_for_Earth_Surface_Forecasting_CVPRW_2021_paper.pdf
 - EO-WM: https://arxiv.org/abs/2606.27277
-- GreenEarthNet / Contextformer: https://arxiv.org/abs/2303.16198
+- Contextformer: https://arxiv.org/abs/2303.16198
 - Earthformer: https://arxiv.org/abs/2207.05833
 - SkySense: https://arxiv.org/abs/2312.10115
 - Prithvi-EO-2.0: https://arxiv.org/abs/2412.02732

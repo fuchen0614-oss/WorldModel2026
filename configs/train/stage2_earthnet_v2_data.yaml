@@ -9,7 +9,8 @@ data:
   root: /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
   split: train
   data_format: netcdf
-  stage2_protocol: greenearthnet_path_v2
+  dataset_protocol: earthnet2021_standard_v1
+  stage2_protocol: earthnet2021x_path_v2
   file_glob: "**/*.nc"
 
   # Frozen EarthNet2021x temporal alignment:
@@ -33,7 +34,10 @@ data:
   formal_dem_variable: cop_dem
   netcdf_dem_variables: [cop_dem]
 
-  # Supply a frozen train manifest and full v2 stats at invocation time.
+  # Supply a frozen role=train manifest and matching v2 stats at invocation
+  # time. `scripts/freeze_earthnet2021x_protocol.py` creates train_dev.json,
+  # val_dev.json, train_all.json, iid.json, ood.json, extreme.json, and
+  # seasonal.json without inferring unsupported sub-tracks.
   manifest_path: null
   require_manifest: true
   verify_manifest_sizes: false

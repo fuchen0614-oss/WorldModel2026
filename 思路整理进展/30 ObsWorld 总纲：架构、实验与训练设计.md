@@ -32,6 +32,8 @@ tags:
 
 # ObsWorld 总纲：架构、实验与训练设计
 
+> **数据协议更新（2026-07-16）：**本文是历史总纲。当前只使用服务器已有的 EarthNet2021x NetCDF，并统一采用 EarthNet2021 `train/iid/ood/extreme/seasonal` 协议；清单、验证集和主表以 [48：统一数据协议](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md) 为准。
+
   
 
 > [!abstract] 本文定位
@@ -743,7 +745,7 @@ assert len(set(train_grids) & set(test_grids)) == 0
 
 > [!note] EarthNet2021 版本
 
-> 本地是 **EarthNet2021x/GreenEarthNet** 版本（8 气象变量，1D 向量）。
+> 本地是 **EarthNet2021x** 版本（8 气象变量，1D 向量）。
 
 > 原始 EarthNet2021 只有 5 个气象变量且是空间张量。用法上气象是每时刻标量向量。
 
@@ -1340,7 +1342,7 @@ for D in D_scenarios:
 
 - EO-WM (2024)：扩散路线，参照非对手
 
-- GreenEarthNet/Contextformer (Benson CVPR 2024)：气象引导消融（FiLM>拼接）
+- Contextformer（CVPR 2024） (Benson CVPR 2024)：气象引导消融（FiLM>拼接）
 
 - SimVP (CVPR 2022)：简单 CNN baseline
 

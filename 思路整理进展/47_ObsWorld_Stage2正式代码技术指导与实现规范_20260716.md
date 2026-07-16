@@ -4,8 +4,10 @@
 > 文档性质：后续代码开发的直接依据；其中 Commit A 已实施，其余阶段仍是实现规范而非实验结果
 > 适用项目：`/root/nas/users/luzheng/workspace/ssh/czj/WorldModel2026`
 > 目标投稿：AAAI-27
-> 当前主数据：GreenEarthNet 协议下的 EarthNet2021x 文件
+> 当前主数据：服务器已有的 EarthNet2021x NetCDF 文件；采用 EarthNet2021 `train/iid/ood/extreme/seasonal` 协议
 > 当前主线：**从受成像条件影响的遥感观测中估计地表状态，在外生驱动、地理先验和时间跨度约束下推演未来状态，再把未来状态解码为可核验的未来卫星观测。**
+
+> **数据协议更新（2026-07-16）：**所有数据、清单、验证、主表和指标的唯一口径见 [`48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md`](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md)。本文件下文如与 48 冲突，一律以 48 为准。
 
 ---
 
@@ -48,7 +50,7 @@
 - partition consistency（时间分割一致性）已经有效；
 - Stage1.5 一定优于 Stage1；
 - ObsWorld 已经超过 Contextformer；
-- 本地物理目录 `iid/ood` 已经被严谨映射成论文中的 `Val/OOD-t/OOD-s/OOD-st`。
+- 本地物理目录之外存在额外、未经清单证明的测试轨道。
 
 这些都必须由后续代码、审计和实验来证明。
 
@@ -57,7 +59,7 @@
 本轮已完成 **Stage2-v2 data contract（Stage2-v2 数据契约）** 的代码边界，具体包括：
 
 - 新增 `data/earthnet_conditioning.py`，唯一固定 8 个 E-OBS（欧洲逐日气象）变量顺序、24-D 聚合顺序、部分缺失处理、`D_core12`（12 维紧凑消融）和 `cop_dem`（Copernicus 数字高程模型）标准化；
-- `data/datasets/earthnet2021.py` 新增 `greenearthnet_path_v2` 路径，输出 `D_path/C_path/delta_t_path/G`，保留旧 `legacy_direct9`（历史 9-D 直接预测）而不覆盖；
+- `data/datasets/earthnet2021.py` 新增 `earthnet2021x_path_v2` 路径，输出 `D_path/C_path/delta_t_path/G`，保留旧 `legacy_direct9`（历史 9-D 直接预测）而不覆盖；
 - `data/stage2_contract.py` 新增 v2 输入边界和检查：目标/官方评分字段不能进入模型，且 `h == cumsum(delta_t_path[:, 10:])`；
 - 新增 train manifest（训练数据清单）驱动的 `scripts/build_earthnet_conditioning_stats.py` 和 v2 `preflight`（训练前检查）分支；
 - 新增合成 NetCDF、统计量、preflight 和 legacy regression（旧路径回归）测试。
@@ -260,9 +262,9 @@ Stage2-0 数据契约与统计 ──> Stage2-D ──> Stage2-R ──> Stage2-
 | `models/decoders/earthnet_observation_decoder.py` | 状态 token 解码为 4 通道 RGBN | 复用结构，正式输出改为原生 128×128 |
 | `models/losses/earthnet_forecasting.py` | RGBN、NDVI 及可选 latent/delta/smooth 损失 | 保留基本损失，新增 partition 损失 |
 | `data/earthnet_manifest.py` | 确定性、可迁移的数据清单及摘要校验 | 复用，但先解决官方 track 映射 |
-| `eval/greenearthnet_protocol.py` | 独立实现官方 GreenEarthNet 指标与聚合 | 已完成，继续固定官方 commit |
-| `eval/export_greenearthnet_predictions.py` | 导出官方 NetCDF `ndvi_pred` | 复用并接入新模型工厂 |
-| `eval/eval_greenearthnet_official.py` | 按 manifest 评分并输出 Parquet/JSON/CSV | 已完成，扩充运行来源记录 |
+| `eval/earthnet_standard_metrics.py` | EarthNetScore（ENS）分量与聚合 | 复用，并以官方工具校验 |
+| `eval/predict_stage2_earthnet.py` | 导出预测与运行 provenance（来源记录） | 接入新模型工厂 |
+| `eval/eval_stage2_earthnet.py` | 按冻结 manifest 评分并输出 JSON/CSV | 扩充运行来源记录 |
 | `data/stage2_contract.py` | 模型输入、训练监督、评估专用 mask 隔离 | 思路正确，必须升级为 v2 形状 |
 
 ### 4.2 当前 Stage2 仍然只是 L0 原型
@@ -493,7 +495,7 @@ artifacts/stage2_earthnet2021x/conditioning_stats_v2_train.json
 ```json
 {
   "schema_version": 2,
-  "dataset": "greenearthnet/earthnet2021x",
+  "dataset": "earthnet2021x",
   "fit_split": "train",
   "manifest_sha256": "...",
   "num_files": 23816,
@@ -890,7 +892,7 @@ decoder:
   output_activation: sigmoid
 ```
 
-第一版固定 S2 RGBN 产品，不注入未来 `φ`，因为 GreenEarthNet 目标产品一致且缺少可靠成像几何。论文应写：
+第一版固定 Sentinel-2 RGBN 产品，不注入未来 `φ`，因为当前 EarthNet2021x 主实验的目标产品一致且缺少可靠成像几何。论文应写：
 
 > 当前 EarthNet 实验验证固定 Sentinel-2 产品空间中的未来观测形成；多传感器和显式未来成像条件渲染是 Stage3-E 扩展，不在当前结果中冒充已完成。
 
@@ -1125,54 +1127,43 @@ G 的作用通常比 D 弱，不要求为了证明世界模型强行制造大提
 
 ---
 
-## 10. 数据 split、manifest 和官方 track 的约束
+## 10. EarthNet2021x 数据、manifest（清单）和测试轨道约束
 
-### 10.1 物理下载目录不等于论文 track 名
+### 10.1 当前可用的正式轨道
 
-当前本地存在：
-
-```text
-train/
-iid/
-ood/
-extreme/
-seasonal/
-```
-
-GreenEarthNet 公开代码的训练配置又使用：
+服务器本地数据只有以下五个顶层目录，并且它们就是本项目的正式协议：
 
 ```text
-val_chopped
-ood-t_chopped
-ood-s_chopped
-ood-st_chopped
+train/       # 训练来源
+iid/         # 同分布主测试
+ood/         # 空间域外主测试
+extreme/     # 极端夏季补充测试
+seasonal/    # 长时程季节循环补充测试
 ```
 
-同时，公开下载接口把包命名为 `train/iid/ood/extreme/seasonal`。因此不能仅凭目录名把整个本地 `iid` 直接写成 OOD-t，也不能让代码找不到 `ood-t_chopped` 后退回数据根目录。
+禁止根据目录名猜测不存在的细分测试轨道，也禁止找不到指定目录时回退扫描数据根目录。当前数据的时间范围和文件数由冻结脚本写入 `inventory.json`，而不是靠口头描述。
 
-### 10.2 在正式主表前必须完成的 track 解析
+### 10.2 只读冻结脚本与输出
 
-新增只读脚本：
+新增脚本：
 
 ```text
-scripts/inspect_greenearthnet_track_mapping.py
+scripts/freeze_earthnet2021x_protocol.py
 ```
 
-它至少输出：
+它只读取文件路径、大小和文件名日期，不打开 NetCDF 阵列、不下载数据、不使用 GPU。它输出：
 
-- 每个物理目录的文件数、tile 数、日期范围；
-- 是否存在嵌套的 `*_chopped`；
-- 文件名与官方配置/公开权重预期 track 的匹配情况；
-- 不同候选 track 是否有重叠 sample id；
-- 建议生成的正式 manifest 名称；
-- 不能确定时明确 FAIL（失败），而不是猜测。
-
-在映射确认前可以运行：
-
-- `physical_iid` 开发评估；
-- `physical_ood` 开发评估。
-
-但论文表格只能写真实可证的名称。若最终只能确认物理 IID/OOD，就按 IID/OOD 报告，不冒充更细的 OOD-t/s/st。
+```text
+train_dev.json     # role=train，开发训练
+val_dev.json       # role=val，固定 train-tile 验证
+train_all.json     # role=train，最终固定预算重训
+iid.json           # 锁定主测试
+ood.json           # 锁定主测试
+extreme.json       # 锁定补充测试
+seasonal.json      # 锁定补充测试
+protocol.json      # tile 选择、seed、禁止测试集调参规则
+inventory.json     # 文件数、tile 数、日期范围
+```
 
 ### 10.3 两种 manifest 不要混淆
 
@@ -1182,27 +1173,23 @@ scripts/inspect_greenearthnet_track_mapping.py
 .manifests/earthnet2021x_train.json
 ```
 
-记录远程下载对象、远程路径和文件大小，服务于下载/同步。
+记录远程对象、远程路径和文件大小，服务于下载/同步。
 
-项目脚本生成的：
+项目冻结脚本生成的：
 
 ```text
-artifacts/.../manifests/train.json
+artifacts/protocols/earthnet2021x_standard_v1/train_dev.json
 ```
 
-记录正式实验使用的本地相对路径、sample id、大小和清单摘要，服务于可复现训练。
+记录本次正式训练使用的本地相对路径、sample id、大小、role（训练/验证用途）和摘要，服务于可复现训练。两者不能互相替代。
 
-两者都重要，但用途不同，不能用下载 manifest 直接替代实验 manifest。
+### 10.4 正式训练、验证与测试顺序
 
-### 10.4 正式训练和验证
-
-优先顺序：
-
-1. 如果本地能可靠解析官方 `val_chopped`，用完整 `train` 训练、`val_chopped` 选择 checkpoint；
-2. 如果没有可验证的 `val_chopped`，开发阶段使用当前按 tile 的确定性训练 holdout；
-3. holdout 的 tile 列表和文件列表写入独立 manifest；
-4. 不使用 IID/OOD 测试结果调学习率、训练步数或损失权重；
-5. 若最终为了性能用全部 train 重训，训练步数必须由开发验证预先冻结，不能再看测试集挑步数。
+1. `train_dev` 训练，`val_dev` 选择 checkpoint 和固定训练步数；
+2. IID/OOD/Extreme/Seasonal 从不参与调参；
+3. 开发决策冻结后，可以用 `train_all` 按固定预算重训；
+4. 主表报告 IID 与 OOD 的 EarthNetScore（ENS）及分量；
+5. Extreme 与 Seasonal 作为极端驱动与长时程世界模型证据。
 
 ---
 
@@ -1368,7 +1355,7 @@ no_G
 ```yaml
 protocol:
   schema_version: 2
-  dataset_protocol: greenearthnet
+  dataset_protocol: earthnet2021_standard_v1
   driver_protocol: full24
   eobs_variables: [fg, hu, pp, qq, rr, tg, tn, tx]
   eobs_aggregations: [mean, min, max]
@@ -1532,7 +1519,7 @@ Direct 和 rollout wrapper 不得复制两套 Stage1.5 编码代码。
 - 保持 legacy config 可运行；
 - 验证时始终运行完整 20 步，而不是当前课程长度。
 
-#### 修改 `eval/export_greenearthnet_predictions.py`
+#### 修改 `eval/predict_stage2_earthnet.py`
 
 - 从 checkpoint 中恢复准确模型 mode 和协议；
 - 默认拒绝 config/checkpoint mode 不一致；
@@ -1540,12 +1527,12 @@ Direct 和 rollout wrapper 不得复制两套 Stage1.5 编码代码。
 - summary 记录 checkpoint digest、manifest digest、stats digest、git commit；
 - 保持只把 model-input view 送入模型。
 
-#### 修改 `eval/eval_greenearthnet_official.py`
+#### 修改 `eval/eval_stage2_earthnet.py` 与 `eval/score_earthnet_prediction_dir.py`
 
-- 评分结果写入 target/prediction manifest 摘要；
+- 按冻结 manifest 评分并写入 target/prediction manifest 摘要；
+- 使用 EarthNetScore（ENS）与 MAD/OLS/EMD/SSIM 分量；
 - 记录模型运行来源；
-- 测试集评分不负责选择 best checkpoint；
-- 旧 EarthNet ENS 继续放在独立脚本，不能混入同一主表。
+- 测试集评分不负责选择 best checkpoint。
 
 ---
 
@@ -1624,7 +1611,7 @@ tests/test_stage2_v2_smoke.py
 新增：
 
 ```text
-tests/test_greenearthnet_export_v2.py
+tests/test_earthnet_export_v2.py
 ```
 
 最低用例：
@@ -2096,17 +2083,16 @@ Commit E：Formal export/evaluation/provenance
 
 ### 本项目内部
 
+- [48：EarthNet2021x 统一数据协议与主实验规范](./48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md)
 - [39：独立审查](./39_ObsWorld_AAAI叙事前沿文献公开数据与代码独立审查_完整汇总.md)
 - [45：AAAI-27 最终数据、DGH、叙事与主实验决策](./45_ObsWorld_AAAI27最终决策_数据DGH叙事与主实验_20260715.md)
 - [46：代码改造与并行执行路线](./46_ObsWorld_AAAI27代码改造与并行执行路线_20260715.md)
 
 ### 官方公开依据
 
-- [GreenEarthNet CVPR 2024 论文](https://openaccess.thecvf.com/content/CVPR2024/html/Benson_Multi-modal_Learning_for_Geospatial_Vegetation_Forecasting_CVPR_2024_paper.html)
-- [GreenEarthNet 官方代码与数据下载说明](https://github.com/vitusbenson/greenearthnet)
-- [EarthNet2021x 官方数据加载代码](https://github.com/earthnet2021/earthnet-models-pytorch/blob/main/earthnet_models_pytorch/data/en21x_data.py)
-- [Contextformer 官方模型代码](https://github.com/earthnet2021/earthnet-models-pytorch/blob/main/earthnet_models_pytorch/model/contextformer.py)
-- [Contextformer 6M 官方配置](https://github.com/vitusbenson/greenearthnet/blob/main/model_configs/contextformer/contextformer6M/seed%3D42.yaml)
+- [EarthNet2021 原论文与 EarthNetScore](https://openaccess.thecvf.com/content/CVPR2021W/EarthVision/papers/Requena-Mesa_EarthNet2021_A_Large-Scale_Dataset_and_Challenge_for_Earth_Surface_Forecasting_CVPRW_2021_paper.pdf)
+- [EarthNet Models PyTorch](https://github.com/earthnet2021/earthnet-models-pytorch)
+- [Contextformer 官方模型代码（相关工作与强基线参考）](https://github.com/earthnet2021/earthnet-models-pytorch/blob/main/earthnet_models_pytorch/model/contextformer.py)
 
 ---
 
@@ -2114,6 +2100,6 @@ Commit E：Formal export/evaluation/provenance
 
 后续代码开发不应把现有 Stage2 原型直接延长训练后就当成完成。真正需要完成的是：
 
-> 在保留 Stage1/1.5 和 DGH 投资的基础上，把旧 9-D 累计 Direct 原型升级为同一 24-D 五日驱动路径下的 matched Direct、共享五日 rollout 和可变步长 partition 三层系统；以固定 Copernicus DEM、独立日历/时间条件和严格 mask 隔离保证输入逻辑，以原生 128×128 RGBN 解码和官方 GreenEarthNet 指标保证结果可核验，以 D 干预和时间分割一致性证明它不是普通图像预测器。
+> 在保留 Stage1/1.5 和 DGH 投资的基础上，把旧 9-D 累计 Direct 原型升级为同一 24-D 五日驱动路径下的 matched Direct、共享五日 rollout 和可变步长 partition 三层系统；以固定 Copernicus DEM、独立日历/时间条件和严格 mask 隔离保证输入逻辑，以原生 128×128 RGBN 解码和 EarthNetScore 指标保证结果可核验，以 D 干预和时间分割一致性证明它不是普通图像预测器。
 
 这条路线没有放弃“模拟真实世界”的核心思想，也没有推翻已经完成的 Stage1.5。它做的是把“世界模型”从叙事词汇落实成可检查的代码属性和实验属性。

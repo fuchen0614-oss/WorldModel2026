@@ -15,6 +15,8 @@ tags:
 
 # DGH 字段详细设计与落实思路（终版）
 
+> **数据协议更新（2026-07-16）：**本文保留历史字段推理；当前 DGH 的数据来源、训练清单和实验划分以 [48：统一数据协议](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md) 与 47 为准。唯一执行数据为服务器已有的 EarthNet2021x NetCDF，评测采用 EarthNet2021 `train/iid/ood/extreme/seasonal`。
+
 > [!abstract] 本文定位
 > 本文是 ObsWorld 的 D（外生驱动）、G（地理先验）、h（预测跨度）三路条件的**最终字段设计**。
 > 每个字段都经过：物理机制论证、文献验证、数据可获取性核实、与主线契合度检验。
@@ -268,7 +270,7 @@ srad_norm = srad / max_observed
 | Robin et al. (2022) | 6 | ERA5 5+SMAP 1 |
 | EarthNet2021 original | 5 | 降水+气压+温度×3 |
 | EO-WM (2024) | 5+3 | 5 通道+3 累积胁迫 |
-| GreenEarthNet (2024) | 8 | E-OBS 全 8 变量 |
+| Contextformer（CVPR 2024） | 8 | E-OBS 全 8 变量 |
 | DeepExtremeCubes (2024) | 8~24 | 8 变量×min/max/mean |
 
 **结论**：
@@ -444,7 +446,7 @@ z_out = gamma * z_out + beta       # FiLM 调制
 | elevation | cop_dem | ✅ 自带 |
 
 > [!note] EarthNet2021 气象是 1D 向量
-> 实测：`eobs_*` 只有 (time,) 维度，是每时刻一个标量（GreenEarthNet 版本），非空间场。
+> 实测：`eobs_*` 只有 (time,) 维度，是每时刻一个标量（EarthNet2021x 版本），非空间场。
 > 这反而让 EarthNet2021 与 SSL4EO+ERA5 的 D 格式统一（都是"每时刻一个气象向量"）。
 
 ### 6.2 SSL4EO（ERA5 补充，正在下载）
@@ -838,7 +840,7 @@ class DGHEncoder:
 
 - **Presto (2 变量)** — 温度+降水。https://arxiv.org/abs/2304.14065
 - **EarthNet2021 (5 变量)** — 降水+气压+温度×3。https://arxiv.org/abs/2104.10066
-- **GreenEarthNet / Contextformer (8 变量)** — Benson et al. CVPR 2024。https://arxiv.org/abs/2303.16198
+- **EarthNet2021x / Contextformer (8 变量)** — Benson et al. CVPR 2024。https://arxiv.org/abs/2303.16198
 - **DeepExtremeCubes (8~24)** — 8 变量×min/max/mean。https://arxiv.org/abs/2406.18179
 - **可解释性研究 (2024)** — Integrated Gradients 变量重要性，regime-dependent。https://arxiv.org/abs/2410.01770
 - **Robin et al. Africa ConvLSTM (2022)** — 5 ERA5 + SMAP。https://arxiv.org/abs/2210.13648
@@ -846,7 +848,7 @@ class DGHEncoder:
 ## 附录 D：注入方式与消融文献
 
 - **FiLM, 2018** — 通用条件化层，用外部条件生成通道级调制参数，适合轻量注入。https://arxiv.org/abs/1709.07871
-- **Benson et al. CVPR 2024 / GreenEarthNet** — 附录 B 比较 CAT/FiLM/xAttn × early/latent 融合，可作为 FiLM 消融设计参照。https://arxiv.org/abs/2303.16198
+- **Benson et al. CVPR 2024 / EarthNet2021x** — 附录 B 比较 CAT/FiLM/xAttn × early/latent 融合，可作为 FiLM 消融设计参照。https://arxiv.org/abs/2303.16198
 - **DiffObs, 2024** — 说明地理/气象条件需要进入动力学建模，而非只作为后处理标签。https://arxiv.org/html/2404.06517v1
 
 ## 附录 D2：多跨度监督文献

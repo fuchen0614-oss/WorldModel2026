@@ -6,7 +6,7 @@ import pytest
 xr = pytest.importorskip("xarray")
 
 from scripts.audit_earthnet2021x import (
-    GREENEARTHNET_REQUIRED_VARIABLES,
+    EARTHNET2021X_STANDARD_REQUIRED_VARIABLES,
     audit_netcdf,
 )
 
@@ -16,7 +16,7 @@ def _write_cube(path, *, omit: str | None = None) -> None:
     dynamic = np.zeros((150, 2, 3), dtype=np.float32)
     static = np.zeros((2, 3), dtype=np.float32)
     variables = {}
-    for name in GREENEARTHNET_REQUIRED_VARIABLES:
+    for name in EARTHNET2021X_STANDARD_REQUIRED_VARIABLES:
         if name == omit:
             continue
         if name.startswith("eobs_"):
@@ -31,13 +31,13 @@ def _write_cube(path, *, omit: str | None = None) -> None:
     ).to_netcdf(path)
 
 
-def test_greenearthnet_audit_requires_all_eight_eobs_and_eval_fields(tmp_path):
+def test_earthnet2021x_audit_requires_all_eight_eobs_and_eval_fields(tmp_path):
     complete = tmp_path / "complete.nc"
     _write_cube(complete)
     report = audit_netcdf(
         complete,
         read_arrays=False,
-        required_variables=GREENEARTHNET_REQUIRED_VARIABLES,
+        required_variables=EARTHNET2021X_STANDARD_REQUIRED_VARIABLES,
     )
     assert report["ok"]
     assert len(report["eobs_variables"]) == 8
@@ -47,7 +47,7 @@ def test_greenearthnet_audit_requires_all_eight_eobs_and_eval_fields(tmp_path):
     report = audit_netcdf(
         incomplete,
         read_arrays=False,
-        required_variables=GREENEARTHNET_REQUIRED_VARIABLES,
+        required_variables=EARTHNET2021X_STANDARD_REQUIRED_VARIABLES,
     )
     assert not report["ok"]
     assert report["missing_variables"] == ["eobs_fg"]

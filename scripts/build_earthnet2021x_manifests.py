@@ -1,5 +1,10 @@
 #!/usr/bin/env python
-"""Build deterministic split manifests for formal GreenEarthNet runs."""
+"""Build deterministic manifests for physical EarthNet2021x splits.
+
+For a formal Stage2 development/final protocol, prefer
+``freeze_earthnet2021x_protocol.py``. This lower-level utility intentionally
+freezes only one or more physical directories.
+"""
 
 from __future__ import annotations
 
@@ -20,13 +25,13 @@ from data.earthnet_manifest import (  # noqa: E402
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Freeze exact EarthNet2021x files per physical split/official track."
+        description="Freeze exact EarthNet2021x files per physical split."
     )
     parser.add_argument("--root", required=True)
     parser.add_argument(
         "--splits",
         nargs="+",
-        default=["train", "iid", "ood-t"],
+        default=["train", "iid", "ood", "extreme", "seasonal"],
         choices=sorted(SPLIT_CANDIDATES),
     )
     parser.add_argument("--output-dir", required=True)

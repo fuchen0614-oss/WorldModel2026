@@ -1,5 +1,7 @@
 # 36 ObsWorld 主线定稿与实验方案
 
+> **数据协议更新（2026-07-16）：**本篇的世界模型叙事保留；数据和评测一律采用服务器已有的 EarthNet2021x NetCDF 与 EarthNet2021 `train/iid/ood/extreme/seasonal`，不再从旧数据方案取用划分或指标。现行规范见 [48：统一数据协议](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md)。
+
 > 文件定位：这是在 `33_ObsWorld AAAI最终叙事与实验闭环.md`、`34_ObsWorld主线定稿与实验方案_全量整合翻新版.md`、`35_ObsWorld方案关键问答与实现路线_全量整合翻新版.md` 之后形成的主线定稿版。  
 > 它不再追求全量归档，而是按照最终叙事和实验闭环重排，用作后续写作、实验实现和结果解释的主依据。
 
@@ -496,7 +498,7 @@ P2: ObsWorld-G joint training
 | ConvLSTM | temporal prediction |  | no |  |  |  |  |  |  |  |  |
 | SimVP / PredRNN | video prediction |  | no |  |  |  |  |  |  |  |  |
 | Earthformer | spatiotemporal transformer |  | task data |  |  |  |  |  |  |  |  |
-| Contextformer / GreenEarthNet | EO forecasting |  | task data |  |  |  |  |  |  |  |  |
+| Contextformer / EarthNet2021x | EO forecasting |  | task data |  |  |  |  |  |  |  |  |
 | EO-WM | large EO world/forecast model | large | yes |  |  |  |  |  |  |  | high |
 | ObsWorld-S | ours | ViT-S scale | SSL4EO |  |  |  |  |  |  |  | lower |
 | ObsWorld-M | ours optional | medium | SSL4EO |  |  |  |  |  |  |  |  |
@@ -986,4 +988,3 @@ ObsWorld-M scale-up
 4. 不要夸大 Stage1.5，诚实写“减少泄漏、改善一致性”。
 5. 不要把 G 写成强物理定律，写成地理背景调节。
 6. 结果略低于大模型可以接受，机制实验无效不可接受。
-

@@ -28,9 +28,9 @@ import numpy as np
 
 
 CONDITIONING_STATS_SCHEMA_VERSION = 2
-CONDITIONING_DATASET_ID = "greenearthnet/earthnet2021x"
+CONDITIONING_DATASET_ID = "earthnet2021x"
 V2_PROTOCOL_NAMES: tuple[str, ...] = (
-    "greenearthnet_path_v2",
+    "earthnet2021x_path_v2",
     "earthnet_path_v2",
     "path_v2",
 )
@@ -41,9 +41,9 @@ LEGACY_PROTOCOL_NAMES: tuple[str, ...] = (
     "direct9",
 )
 
-# This is the order used by the public GreenEarthNet loader.  Feature order is
-# aggregation-major below, so a weight trained for one order cannot be reused
-# with a variable-major implementation even though both have 24 dimensions.
+# Feature order is aggregation-major below, so a weight trained for one order
+# cannot be reused with a variable-major implementation even though both have
+# 24 dimensions. The order is frozen for the EarthNet2021x Stage2 contract.
 EOBS_VARIABLES: tuple[str, ...] = (
     "fg",
     "hu",

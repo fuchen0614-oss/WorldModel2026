@@ -36,7 +36,7 @@ LEGACY_DGH_REQUIRED_VARIABLES = (
     "eobs_rr",
     "eobs_tg",
 )
-GREENEARTHNET_REQUIRED_VARIABLES = (
+EARTHNET2021X_STANDARD_REQUIRED_VARIABLES = (
     "s2_B02",
     "s2_B03",
     "s2_B04",
@@ -58,11 +58,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--schema",
-        choices=("greenearthnet", "legacy-dgh"),
-        default="greenearthnet",
+        choices=("earthnet2021x-standard", "legacy-dgh"),
+        default="earthnet2021x-standard",
         help=(
-            "greenearthnet requires all eight E-OBS fields and official "
-            "evaluation variables; legacy-dgh checks only the old 9-D path."
+            "earthnet2021x-standard requires all eight E-OBS fields and "
+            "standard evaluation variables; legacy-dgh checks only the old "
+            "9-D path."
         ),
     )
     parser.add_argument(
@@ -353,8 +354,8 @@ def main() -> int:
     args = parse_args()
     dataset_root = resolve_dataset_root(Path(args.root))
     required_variables = (
-        GREENEARTHNET_REQUIRED_VARIABLES
-        if args.schema == "greenearthnet"
+        EARTHNET2021X_STANDARD_REQUIRED_VARIABLES
+        if args.schema == "earthnet2021x-standard"
         else LEGACY_DGH_REQUIRED_VARIABLES
     )
     required = set(SPLITS if "all" in args.required_splits else args.required_splits)

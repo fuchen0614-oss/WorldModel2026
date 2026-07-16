@@ -11,7 +11,7 @@ tags:
   - WorldModel
 created: 2026-07-13
 status: P1 字段设计冻结｜direct 与 rollout 共用
-scope: GreenEarthNet EarthNet2021x 主动力学任务
+scope: EarthNet2021x NetCDF 主动力学任务
 supersedes:
   - "[[27 DGH字段详细设计与落实思路（终版）]]"
 related:
@@ -21,6 +21,9 @@ related:
 ---
 
 > [!abstract] 最终结论
+
+> **数据协议更新（2026-07-16）：**DGH 的字段设计继续有效；数据身份、清单、验证集和测试划分以服务器已有 EarthNet2021x NetCDF 和 EarthNet2021 `train/iid/ood/extreme/seasonal` 为唯一口径，详见 [48：统一数据协议](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md)。
+
 > P1 的 DGH 不再是“若干累计特征加一个 h 向量”，而是一个具有明确物理角色和时间对齐方式的条件包：D 由 calendar 加四类逐 5 天外生天气组成，G 只保留经过修复的空间 DEM，H 在 direct 中是目标跨度、在 rollout 中是单步间隔。DGH 服务于状态转移 T；φ、mask、obs_age 属于观测过程，不属于 DGH。
 
 > [!important] 冻结范围
@@ -294,7 +297,7 @@ $$
 
 | 字段 | 是否加入 | 理由 |
 |---|---:|---|
-| 经纬度 | 否 | 容易成为空间记忆，在 OOD-s 中产生伪泛化 |
+| 经纬度 | 否 | 容易成为空间记忆，在 OOD 中产生伪泛化 |
 | 土壤类型、土地覆盖 | 否 | 增加外部数据、类别先验和缺失处理；首篇没有必要 |
 | 坡度、坡向 | 否 | 可由空间 DEM 在 GeoTokenizer 中学习局部导数；暂不手工堆派生量 |
 | 气候区标签 | 否 | 与 calendar 和天气强相关，解释困难 |
@@ -596,7 +599,7 @@ P1 中不再使用原先将 h、calendar、累计天气混在一起的 +D/+G/+H 
 | temperature_max_5d | 极端热浪诊断确有收益 | 热胁迫 |
 | climatology/anomaly | P1 已证明天气有效 | 将季节基线与异常天气区分 |
 | cumulative heat/water stress | rollout 稳定且想对标 EO-WM | 持续异常效应 |
-| soil/static attributes | G 无效或 OOD-s 是瓶颈 | 异质地表背景 |
+| soil/static attributes | G 无效或 OOD 是瓶颈 | 异质地表背景 |
 | location encoding | 严格空间 OOD 设计完成 | 全球迁移 |
 | forecast weather forcing | 完成事实 replay 后 | 部署可行性 |
 

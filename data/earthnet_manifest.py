@@ -1,4 +1,4 @@
-"""Deterministic manifests for GreenEarthNet / EarthNet2021x files.
+"""Deterministic manifests for the EarthNet2021x NetCDF release.
 
 The manifest is deliberately relocatable: file paths are relative to the
 ``earthnet2021x`` dataset root and the manifest digest does not include a
@@ -14,21 +14,26 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 
-MANIFEST_SCHEMA_VERSION = 1
-DATASET_ID = "greenearthnet/earthnet2021x"
+MANIFEST_SCHEMA_VERSION = 2
+DATASET_ID = "earthnet2021x"
+PROTOCOL_ID = "earthnet2021_standard_v1"
 
-# The EarthNet downloader exposes five physical packages.  GreenEarthNet's
-# official evaluation tracks are commonly nested inside ``iid`` and ``ood``.
+# This repository uses the EarthNet2021 evaluation family over the available
+# EarthNet2021x NetCDF release. The five directories below are therefore
+# first-class physical/experimental splits. Do not infer a finer temporal or
+# spatial OOD track from a directory name: such a track requires a separately
+# supplied, verified file list rather than a fallback glob.
 SPLIT_CANDIDATES: Mapping[str, Sequence[str]] = {
     "train": ("train",),
-    "iid": ("iid/iid_chopped", "iid_chopped", "iid"),
+    "iid": ("iid",),
     "ood": ("ood",),
-    "ood-t": ("ood/ood-t_chopped", "ood-t_chopped"),
-    "ood-s": ("ood/ood-s_chopped", "ood-s_chopped"),
-    "ood-st": ("ood/ood-st_chopped", "ood-st_chopped"),
     "extreme": ("extreme",),
     "seasonal": ("seasonal",),
 }
+
+# ``split`` may be an implementation-level name such as ``train-dev``; role
+# is the loader-facing semantic and must remain within this fixed protocol.
+VALID_MANIFEST_ROLES = frozenset({"train", "val", *SPLIT_CANDIDATES})
 
 
 def resolve_dataset_root(root: str | Path) -> Path:
@@ -63,8 +68,8 @@ def discover_split_files(
     if not candidates:
         return []
 
-    # Prefer the first (most specific) existing directory.  Including both a
-    # nested track and its parent would silently mix OOD-t/OOD-s/OOD-st.
+    # Each supported split maps to exactly one physical directory.  There is
+    # deliberately no root-level fallback and no guessed semantic sub-track.
     selected = candidates[0]
     return sorted(path.resolve() for path in selected.glob(pattern) if path.is_file())
 
@@ -78,13 +83,52 @@ def build_manifest(
 ) -> dict[str, Any]:
     """Build a deterministic JSON-serializable manifest."""
 
+    dataset_root = resolve_dataset_root(root)
+    files = discover_split_files(dataset_root, split, pattern=pattern)
+    return build_manifest_from_paths(
+        dataset_root,
+        split,
+        files,
+        hash_mode=hash_mode,
+        role=split,
+        source_splits=(split,),
+    )
+
+
+def build_manifest_from_paths(
+    root: str | Path,
+    split: str,
+    files: Iterable[Path],
+    *,
+    hash_mode: str = "none",
+    role: str | None = None,
+    source_splits: Sequence[str] | None = None,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Freeze an explicit subset of EarthNet2021x files.
+
+    ``split`` names the immutable experimental list (for example
+    ``"train-dev"``), while ``role`` states the loader-facing purpose
+    (``"train"`` or ``"val"``). ``source_splits`` preserves the physical
+    origin. This makes a development holdout auditable without presenting it
+    as an official test split.
+    """
+
     if hash_mode not in {"none", "sha256"}:
         raise ValueError("hash_mode must be 'none' or 'sha256'")
     dataset_root = resolve_dataset_root(root)
-    files = discover_split_files(dataset_root, split, pattern=pattern)
     records = []
+    seen_paths: set[str] = set()
     for path in files:
+        path = Path(path).resolve()
+        if path != dataset_root and dataset_root not in path.parents:
+            raise ValueError(f"Manifest file escapes dataset root: {path}")
+        if not path.is_file():
+            raise FileNotFoundError(f"Manifest file does not exist: {path}")
         relative = path.relative_to(dataset_root).as_posix()
+        if relative in seen_paths:
+            raise ValueError(f"Duplicate manifest file path: {relative}")
+        seen_paths.add(relative)
         record: dict[str, Any] = {
             "path": relative,
             "size_bytes": int(path.stat().st_size),
@@ -94,15 +138,40 @@ def build_manifest(
             record["sha256"] = sha256_file(path)
         records.append(record)
     records.sort(key=lambda item: item["path"])
-    return {
+    resolved_role = str(role or split)
+    if resolved_role not in VALID_MANIFEST_ROLES:
+        raise ValueError(
+            f"Unsupported EarthNet2021 manifest role {resolved_role!r}; expected one of "
+            f"{sorted(VALID_MANIFEST_ROLES)}"
+        )
+    resolved_sources = tuple(source_splits or (split,))
+    unknown_sources = sorted(set(resolved_sources).difference(SPLIT_CANDIDATES))
+    if unknown_sources:
+        raise ValueError(
+            "Unsupported EarthNet2021 source_splits: "
+            f"{unknown_sources}; expected a subset of {sorted(SPLIT_CANDIDATES)}"
+        )
+    manifest: dict[str, Any] = {
         "schema_version": MANIFEST_SCHEMA_VERSION,
         "dataset": DATASET_ID,
+        "protocol": PROTOCOL_ID,
         "split": split,
+        "role": resolved_role,
+        "source_splits": list(resolved_sources),
         "hash_mode": hash_mode,
         "num_files": len(records),
         "files": records,
         "files_sha256": records_digest(records),
     }
+    if metadata:
+        overlap = set(manifest).intersection(metadata)
+        if overlap:
+            raise ValueError(
+                "Manifest metadata cannot overwrite reserved keys: "
+                f"{sorted(overlap)}"
+            )
+        manifest.update(dict(metadata))
+    return manifest
 
 
 def write_manifest(manifest: Mapping[str, Any], path: str | Path) -> Path:
@@ -120,16 +189,12 @@ def load_manifest_files(
     dataset_root: str | Path,
     *,
     expected_split: str | None = None,
+    expected_protocol: str = PROTOCOL_ID,
     verify_exists: bool = True,
     verify_sizes: bool = False,
     verify_hashes: bool = False,
 ) -> list[Path]:
-    """Load and validate an immutable file list.
-
-    A validation dataset may intentionally reuse a ``train`` manifest before
-    the deterministic geographic holdout is applied, hence ``val`` accepts a
-    manifest whose declared split is ``train``.
-    """
+    """Load and validate an immutable file list."""
 
     source = Path(manifest_path)
     with source.open("r", encoding="utf-8") as handle:
@@ -143,14 +208,22 @@ def load_manifest_files(
         raise ValueError(
             f"Unexpected dataset in {source}: {manifest.get('dataset')!r}"
         )
-    declared_split = str(manifest.get("split", ""))
-    allowed_splits = {expected_split} if expected_split else set()
-    if expected_split == "val":
-        allowed_splits.add("train")
-    if expected_split and declared_split not in allowed_splits:
+    if manifest.get("protocol") != expected_protocol:
         raise ValueError(
-            f"Manifest split={declared_split!r} does not match "
-            f"requested split={expected_split!r}"
+            f"Unexpected manifest protocol in {source}: "
+            f"expected={expected_protocol!r}, got={manifest.get('protocol')!r}"
+        )
+    declared_split = str(manifest.get("split", ""))
+    declared_role = str(manifest.get("role", declared_split))
+    if declared_role not in VALID_MANIFEST_ROLES:
+        raise ValueError(
+            f"Unsupported manifest role in {source}: {declared_role!r}; expected one of "
+            f"{sorted(VALID_MANIFEST_ROLES)}"
+        )
+    if expected_split and declared_role != expected_split:
+        raise ValueError(
+            f"Manifest role={declared_role!r} (split={declared_split!r}) does not "
+            f"match requested split={expected_split!r}"
         )
 
     records = manifest.get("files")

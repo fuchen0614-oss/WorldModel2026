@@ -79,7 +79,7 @@ def test_earthnet2021x_v2_loader_emits_frozen_path_contract(tmp_path):
         root=str(tmp_path),
         split="train",
         data_format="netcdf",
-        stage2_protocol="greenearthnet_path_v2",
+        stage2_protocol="earthnet2021x_path_v2",
         file_glob="**/*.nc",
         model_img_size=16,
         context_img_size=16,
@@ -134,7 +134,7 @@ def test_v2_requires_cop_dem_even_if_a_legacy_dem_is_available(tmp_path):
         root=str(tmp_path),
         split="train",
         data_format="netcdf",
-        stage2_protocol="greenearthnet_path_v2",
+        stage2_protocol="earthnet2021x_path_v2",
         file_glob="**/*.nc",
         conditioning_stats=_identity_stats(),
         use_train_holdout=False,
@@ -142,3 +142,22 @@ def test_v2_requires_cop_dem_even_if_a_legacy_dem_is_available(tmp_path):
     )
     with pytest.raises(KeyError, match="cop_dem"):
         _ = EarthNet2021Dataset(config)[0]
+
+
+def test_v2_rejects_unsupported_split_instead_of_falling_back_to_dataset_root(tmp_path):
+    split_dir = tmp_path / "earthnet2021x" / "train" / "34TDP"
+    split_dir.mkdir(parents=True)
+    _write_cube(split_dir / "34TDP_2018-04-28_2018-09-24_000.nc")
+
+    config = EarthNet2021Config(
+        root=str(tmp_path),
+        split="ood-t",
+        data_format="netcdf",
+        stage2_protocol="earthnet2021x_path_v2",
+        file_glob="**/*.nc",
+        conditioning_stats=_identity_stats(),
+        use_train_holdout=False,
+        strict=True,
+    )
+    with pytest.raises(ValueError, match="does not support split"):
+        EarthNet2021Dataset(config)

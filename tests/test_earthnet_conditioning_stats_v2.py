@@ -113,7 +113,7 @@ def test_v2_preflight_accepts_matching_full_manifest_and_stats(tmp_path):
             "root": str(tmp_path),
             "split": "train",
             "data_format": "netcdf",
-            "stage2_protocol": "greenearthnet_path_v2",
+            "stage2_protocol": "earthnet2021x_path_v2",
             "file_glob": "**/*.nc",
             "context_frames": 10,
             "target_frames": 20,

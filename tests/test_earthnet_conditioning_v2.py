@@ -113,7 +113,7 @@ def test_v2_config_refuses_to_mislabel_legacy_dgh_stats_as_v2_stats():
         EarthNet2021Config.from_config(
             {
                 "root": "/unused",
-                "stage2_protocol": "greenearthnet_path_v2",
+                "stage2_protocol": "earthnet2021x_path_v2",
                 "dgh_stats_path": "/old/9d.json",
                 "strict": False,
             }

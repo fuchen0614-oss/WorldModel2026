@@ -6,7 +6,7 @@
     "train"
   ],
   "scan_mode": "metadata",
-  "schema": "greenearthnet",
+  "schema": "earthnet2021x-standard",
   "required_variables": [
     "s2_B02",
     "s2_B03",

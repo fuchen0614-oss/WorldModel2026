@@ -1,5 +1,7 @@
 # 18 ObsWorld 现状评估与后续训练路线决策文档
 
+> **数据协议更新（2026-07-16）：**本文保留历史推理；其中数据身份、测试划分和指标建议不再作为执行依据。当前只使用服务器已有的 EarthNet2021x NetCDF 数据，并采用 EarthNet2021 `train/iid/ood/extreme/seasonal` 协议；请以 [48：统一数据协议](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md) 和 47 为准。
+
 > 本文目的:在动手做 Stage 2 之前,把"我们现在到底是什么样子、问题在哪、flowchart 里每个元素怎么落地、phi 该补什么、1.5 怎么训"一次性讲清楚,供决策。**结论先行:基础扎实、方向成立,但目前训练出来、能拿出手的东西恰恰是最不 novel 的一柱(又一个 S1/S2 MAE encoder),三个差异化支柱都还是脚手架。下一步的核心不是急着冲动力学,而是用已有的 SSL4EO 数据把"可证伪的成像解耦 + phi 可控观测"这两块差异化证据做扎实——这是被严重低估的廉价高回报区。**
 
 本文与 07(主线定稿)、10(完整实验流程)、11(SSL4EO 数据处理)是延续关系:07/10/11 说"应该怎么做",本文说"现在做到哪了、哪里糊了、下一步具体怎么定"。第 6 节给出如何回填 10 和 11。
@@ -31,14 +33,14 @@
 
 调研 ~20 篇 CVPR/AAAI/arXiv 后,有一个关键修正必须写在最前面:
 
-- **EO-WM(arXiv 2606.27277, 2026.06)不是威胁。** 二手摘要一度把它读成"latent state + 观测分离 + 太阳角条件 + DEM",经我直接核对 arXiv 摘要,它实际是**一个 video-diffusion 的植被(NDVI)预测器,条件是气象 forcing**,既没有成像条件(phi)解耦,也没有显式成像无关 state latent,也没有 DEM。它属于 EarthNet2021 / GreenEarthNet / VegeDiff 这一脉。**这对我们是好消息。**
+- **EO-WM(arXiv 2606.27277, 2026.06)不是威胁。** 二手摘要一度把它读成"latent state + 观测分离 + 太阳角条件 + DEM",经我直接核对 arXiv 摘要,它实际是**一个 video-diffusion 的植被(NDVI)预测器,条件是气象 forcing**,既没有成像条件(phi)解耦,也没有显式成像无关 state latent,也没有 DEM。它属于 EarthNet2021 / EarthNet2021x / VegeDiff 这一脉。**这对我们是好消息。**
 
 真正占据我们部分地盘的是这两类:
 
 | 竞品                                              | 它做了什么                                                                       | 它*没*做 = 我们的缝隙                                               |
 | ----------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | **RS-WorldModel**(2026, 2B VLM)                 | 显式把成像元数据(太阳角/off-nadir/GSD/云)喂进模型,**明确动机就是"分离物理变化 vs 传感器变化"**,且做文本引导的未来场景预测 | 没有结构化 latent state,解耦是**语言 token 隐式**完成;无外生驱动 latent 动力学    |
-| **EarthNet / GreenEarthNet / VegeDiff / EO-WM** | "气象条件下预测未来 S2 像素",GreenEarthNet 有 learned cloud mask(隐式承认观测被污染)             | 直接预测像素,**无成像无关 state,无可控 phi_{t+h} 解码**——用 mask 处理云,而不是建模成像 |
+| **EarthNet2021 / EarthNet2021x / VegeDiff / EO-WM** | "气象条件下预测未来 S2 像素",EarthNet2021x 有 learned cloud mask(隐式承认观测被污染)             | 直接预测像素,**无成像无关 state,无可控 phi_{t+h} 解码**——用 mask 处理云,而不是建模成像 |
 | **DOFA**                                        | wavelength-conditioned 动态 embedding(条件化*编码器*)                               | 条件在编码端,不是*解码端按未来成像条件渲染*                                     |
 | **SkySense / CROMA / Prithvi / Galileo**        | S1+S2 多模态表征 backbone                                                        | 判别式,无 state/observation 分离,无动力学                             |
 

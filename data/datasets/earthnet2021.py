@@ -54,16 +54,13 @@ class EarthNet2021Config:
         "test": ["test", "iid_test_split/context"],
         "iid": ["iid", "earthnet2021x/iid", "iid_test_split/context", "iid_test/context"],
         "ood": ["ood", "earthnet2021x/ood", "ood_test_split/context", "ood_test/context"],
-        "ood-t": ["earthnet2021x/ood/ood-t_chopped", "ood/ood-t_chopped", "ood-t_chopped"],
-        "ood-s": ["earthnet2021x/ood/ood-s_chopped", "ood/ood-s_chopped", "ood-s_chopped"],
-        "ood-st": ["earthnet2021x/ood/ood-st_chopped", "ood/ood-st_chopped", "ood-st_chopped"],
         "extreme": ["extreme", "earthnet2021x/extreme", "extreme_test_split/context", "extreme_test/context"],
         "seasonal": ["seasonal", "earthnet2021x/seasonal", "seasonal_test_split/context", "seasonal_test/context"],
     })
     data_format: str = "auto"
     # ``legacy_direct9`` is intentionally the default so existing Direct-DGH
-    # jobs remain byte-for-byte compatible.  Formal world-model development
-    # explicitly chooses ``greenearthnet_path_v2``.
+    # jobs remain byte-for-byte compatible. Formal world-model development
+    # explicitly chooses ``earthnet2021x_path_v2``.
     stage2_protocol: str = "legacy_direct9"
     file_glob: str = "**/*.npz"
     context_frames: int = 10
@@ -122,7 +119,7 @@ class EarthNet2021Config:
         if not is_known_stage2_protocol(stage2_protocol):
             raise ValueError(
                 "Unknown data.stage2_protocol="
-                f"{stage2_protocol!r}; use legacy_direct9 or greenearthnet_path_v2"
+                f"{stage2_protocol!r}; use legacy_direct9 or earthnet2021x_path_v2"
             )
         require_conditioning_stats = bool(
             data_cfg.get(
@@ -134,12 +131,12 @@ class EarthNet2021Config:
         if is_stage2_v2_protocol(stage2_protocol):
             if data_cfg.get("dgh_stats_path"):
                 raise ValueError(
-                    "greenearthnet_path_v2 cannot use legacy dgh_stats_path; "
+                    "earthnet2021x_path_v2 cannot use legacy dgh_stats_path; "
                     "provide conditioning_stats_path built from the frozen train manifest"
                 )
             if data_cfg.get("disabled_driver_features"):
                 raise ValueError(
-                    "greenearthnet_path_v2 does not support legacy disabled_driver_features; "
+                    "earthnet2021x_path_v2 does not support legacy disabled_driver_features; "
                     "use the explicit full24/core12 model choice in Commit B"
                 )
             stats = {}
@@ -240,7 +237,7 @@ class EarthNet2021Dataset(Dataset):
         if not is_known_stage2_protocol(config.stage2_protocol):
             raise ValueError(
                 "Unknown stage2_protocol="
-                f"{config.stage2_protocol!r}; use legacy_direct9 or greenearthnet_path_v2"
+                f"{config.stage2_protocol!r}; use legacy_direct9 or earthnet2021x_path_v2"
             )
         self.files = _discover_npz_files(config)
         if not self.files:
@@ -263,7 +260,7 @@ class EarthNet2021Dataset(Dataset):
         else:
             if is_stage2_v2_protocol(self.config.stage2_protocol):
                 raise ValueError(
-                    "greenearthnet_path_v2 is defined only for EarthNet2021x "
+                    "earthnet2021x_path_v2 is defined only for EarthNet2021x "
                     "NetCDF minicubes; use legacy_direct9 for .npz data."
                 )
             with np.load(path, allow_pickle=True) as cube:
@@ -319,7 +316,7 @@ def parse_earthnet_npz(
 ) -> Dict[str, Any]:
     if is_stage2_v2_protocol(config.stage2_protocol):
         raise ValueError(
-            "greenearthnet_path_v2 requires NetCDF E-OBS fields and does not "
+            "earthnet2021x_path_v2 requires NetCDF E-OBS fields and does not "
             "silently reinterpret legacy .npz mesodynamic arrays."
         )
     high = _select_required_array(arrays, HIGHRES_KEYS, ndim=4)
@@ -456,7 +453,7 @@ def _parse_earthnet_netcdf_v2_cube(
     _validate_v2_temporal_config(config)
     if config.formal_dem_variable != "cop_dem":
         raise ValueError(
-            "greenearthnet_path_v2 freezes G to formal_dem_variable='cop_dem'; "
+            "earthnet2021x_path_v2 freezes G to formal_dem_variable='cop_dem'; "
             f"got {config.formal_dem_variable!r}"
         )
     required = (*s2_variables, "s2_mask", *EOBS_NETCDF_VARIABLES, "cop_dem")
@@ -524,7 +521,7 @@ def _validate_v2_temporal_config(config: EarthNet2021Config) -> None:
     ]
     if mismatches:
         raise ValueError(
-            "greenearthnet_path_v2 uses a frozen 150-day/30-token protocol; "
+            "earthnet2021x_path_v2 uses a frozen 150-day/30-token protocol; "
             + "; ".join(mismatches)
         )
 
@@ -866,6 +863,15 @@ def _discover_npz_files(config: EarthNet2021Config) -> List[Path]:
                 f"split={config.split!r} requires an explicit manifest; "
                 "root fallback/glob discovery is disabled"
             )
+        if (
+            is_stage2_v2_protocol(config.stage2_protocol)
+            and config.split not in config.split_subdirs
+        ):
+            raise ValueError(
+                "earthnet2021x_path_v2 does not support split="
+                f"{config.split!r}; use one of train/iid/ood/extreme/seasonal "
+                "or role=val for the deterministic development holdout."
+            )
         candidates = []
         for sub in config.split_subdirs.get(config.split, [config.split]):
             p = root / sub
@@ -888,6 +894,12 @@ def _discover_npz_files(config: EarthNet2021Config) -> List[Path]:
             candidates = train_candidates
             using_train_holdout = True
     if not using_manifest and not candidates and root.exists():
+        if is_stage2_v2_protocol(config.stage2_protocol):
+            raise FileNotFoundError(
+                "earthnet2021x_path_v2 found no directory for "
+                f"split={config.split!r} under {root}; refusing a root-level "
+                "fallback that could mix train and test files."
+            )
         candidates = [root]
     for base in candidates:
         files.extend(sorted(base.glob(config.file_glob)))

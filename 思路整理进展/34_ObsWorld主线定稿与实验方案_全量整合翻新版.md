@@ -1,5 +1,7 @@
 # 34 ObsWorld 主线定稿与实验方案（全量整合翻新版）
 
+> **数据协议更新（2026-07-16）：**本篇是历史整合稿。当前只使用服务器已有的 EarthNet2021x NetCDF，并按 EarthNet2021 `train/iid/ood/extreme/seasonal` 评测；清单冻结与主实验口径见 [48：统一数据协议](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md)。
+
 > 文件定位：这是 `output` 目录中 01-33 及辅助文档的整合版总纲。它不覆盖旧 07，而是把旧 07/08、DGH 系列、Stage1.5 评估、Stage2 主实验讨论和 AAAI 叙事闭环统一成一份可继续执行的权威工作稿。
 
 > 当前结论：本文主线应固定为 **ObsWorld: an Earth-observation world model for land-surface state dynamics**，即“面向遥感观测的陆表状态动力学世界模型”。它从带有成像条件的遥感观测中估计地表状态，并在外生驱动、地理背景和预测跨度条件下预测状态演化。EarthNet2021 标准预测是主实验观测协议，不是论文的全部目的；DGH 消融、weather-response 诊断、不确定性、地理一致性和下游迁移共同支撑世界模型叙事。
@@ -337,7 +339,7 @@ flowchart LR
 | CropHarvest | Stage4 | 农业/作物下游迁移 | 推荐 P0 |
 | Sen1Floods11 | Stage4 | 灾害/洪水迁移 | 推荐 P1 |
 | EarthNet+SSL4EO 联合 | 附录/扩展 | 泛化增强或跨域诊断 | 不作为首版主表默认 |
-| GreenEarthNet / OOD split | 可选扩展 | 跨区域或气候泛化 | 资源允许时加入 |
+| EarthNet2021x / OOD split | 可选扩展 | 跨区域或气候泛化 | 资源允许时加入 |
 
 ### 8.2 D：外生驱动
 

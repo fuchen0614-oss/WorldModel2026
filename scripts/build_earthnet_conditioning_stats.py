@@ -232,7 +232,7 @@ def _load_train_files(
     data.update(
         {
             "split": "train",
-            "stage2_protocol": "greenearthnet_path_v2",
+            "stage2_protocol": "earthnet2021x_path_v2",
             "data_format": "netcdf",
             "file_glob": "**/*.nc",
             "manifest_path": manifest_path,
@@ -252,9 +252,11 @@ def _load_train_files(
         raise FileNotFoundError("The supplied train manifest resolves to zero files")
     selected = all_files if max_files <= 0 else all_files[:max_files]
     manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
-    if manifest.get("split") != "train":
+    manifest_role = str(manifest.get("role", manifest.get("split", "")))
+    if manifest_role != "train":
         raise ValueError(
-            f"conditioning stats require a train manifest, got split={manifest.get('split')!r}"
+            "conditioning stats require a role='train' manifest, got "
+            f"role={manifest_role!r}, split={manifest.get('split')!r}"
         )
     digest = manifest.get("files_sha256")
     if not isinstance(digest, str) or not digest:

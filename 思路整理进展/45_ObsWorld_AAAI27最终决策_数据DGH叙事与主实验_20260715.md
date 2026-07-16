@@ -5,12 +5,14 @@
 > 范围：整理思路与实验，本轮**不修改训练代码、不中断正在运行的 Stage1.5**  
 > 继承关系：保留 43 的代码/协议审计和 44 的 EarthNet+DGH+世界模型主线；本文更正 44 中“默认需要换/重下数据”和“L1C/L2A product Gate 必须进主文”的过强暗示。
 
+> **数据协议更新（2026-07-16）：**本文关于数据集、验证、主表、指标和清单的旧表述，统一以 [`48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md`](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md) 为准。
+
 ---
 
 ## 0. 现在就可以拍板的七个结论
 
-1. **数据集不是非换不可，现在默认不重新下载。**现有主配置已写 `dataset: earthnet2021x` 和 `data_format: netcdf`，只是根目录叫 `EarthNet2021`。历史文档记录已下载约 119GB，这与 GreenEarthNet/EarthNet2021x 的 `train+iid+ood` 规模高度一致。先审计，只增量补缺失或损坏文件。
-2. **论文仍然是 EarthNet2021 主线。**准确写法是 `EarthNet2021 benchmark family` + `GreenEarthNet protocol over the EarthNet2021x release`，而不是改做一个无关数据集。
+1. **数据集不是非换不可，现在默认不重新下载。**现有主配置已写 `dataset: earthnet2021x` 和 `data_format: netcdf`，只是根目录叫 `EarthNet2021`。服务器已有 `train/iid/ood/extreme/seasonal` 五个完整物理划分；先审计与冻结清单，只增量补缺失或损坏文件。
+2. **论文仍然是 EarthNet2021 主线。**准确写法是 `EarthNet2021x NetCDF release under the EarthNet2021 train/IID/OOD/Extreme/Seasonal protocol`，而不是改做一个无关数据集。
 3. **DGH 保留，不改名，不推倒。**需要改的是 DGH 如何进入动力学：`D` 从终点累计摘要变为逐区间驱动路径，`G` 保持空间 DEM 背景，`H` 从 endpoint 编号升级为共享转移的 `Δt`。
 4. **不否定 Stage1/1.5 已有 `phi` 工作。**已有字段构建、条件自重建、S1/S2 近时对齐、nuisance loss 和泄漏 probe；现在需要的是修复验收逻辑并检验它是否提升 Stage2，不是默认重练。
 5. **L1C/L2A 不是 AAAI-27 必做项。**它是更干净的 product-conditioned observation 增强证据，但会引入新下载和新训练。当前主文使用现有 S1/S2 + Stage1/1.5 证据；L1C/L2A 放截稿后。
@@ -62,7 +64,7 @@
 有三层事实：
 
 1. 配置 [`configs/train/stage2_earthnet_main.yaml`](../configs/train/stage2_earthnet_main.yaml) 明确是 `dataset: earthnet2021x`、`data_format: netcdf`。
-2. 代码 [`data/datasets/earthnet2021.py`](../data/datasets/earthnet2021.py) 在该路径下要求 `s2_B02/B03/B04/B8A`、E-OBS 和 DEM 的 NetCDF 字段，这是 GreenEarthNet/EarthNet2021x 格式。
+2. 代码 [`data/datasets/earthnet2021.py`](../data/datasets/earthnet2021.py) 在该路径下要求 `s2_B02/B03/B04/B8A`、E-OBS 和 DEM 的 NetCDF 字段，这是当前 EarthNet2021x 格式。
 3. 27 号文档记录“EarthNet2021 已下载 119GB”。官方对象存储中 `train+iid+ood` 约 108.75GB，考虑目录、缓存、差异和统计方式，119GB 与此高度相符。
 
 所以当前决策不是“下载一个新数据集”，而是：
@@ -215,7 +217,7 @@ AAAI-27 官方日程是：
 
 正文只留：
 
-1. official GreenEarthNet/EarthNet2021x OOD-t 主表；
+1. EarthNet2021x 的 IID/OOD 主表；
 2. Stage1/Stage1.5 × partition 2×2；
 3. Direct/shared rollout/variable-step 动力学归因；
 4. D/G intervention；
@@ -293,7 +295,7 @@ AAAI-27 官方日程是：
         future state s1...s20
                 │  fixed S2-L2A observation model
                 ▼
-    future RGBN → deterministic NDVI → official evaluator
+    future RGBN → EarthNetScore evaluator（官方评分程序）
 ```
 
 主实验列表见本文第 7 节；每个实验都对应一个可被证伪的叙事环节：
@@ -310,8 +312,8 @@ AAAI-27 官方日程是：
 | 实验 | 为什么做 | 实际比较什么 | 理想现象 | 不理想时说明什么 |
 |---|---|---|---|---|
 | Persistence/Climatology（持续性/气候平均基线） | 排除任务太简单，确认模型不是只复制最后一帧或季节平均 | ObsWorld 与最简单规则 | ObsWorld 明显更好 | 模型没有学到足够未来变化 |
-| Contextformer（公开强基线） | 与前沿 EarthNet 方法建立同协议可比性 | 官方 OOD 指标和参数量 | 进入竞争带，长期项有优势 | 若全面落后，世界模型行为证据也难支撑主稿 |
-| Official OOD-t（官方时间分布外测试） | 检查模型能否预测训练时期之外的未来 | Val 用于选模型，OOD-t 只作最终测试 | OOD-t 仍稳定，不只在训练/Val 好 | 可能过拟合训练年份或季节 |
+| 强时空基线（可复现者） | 与前沿 EarthNet 方法建立同协议可比性 | IID/OOD ENS 和参数量 | 进入竞争带，长期项有优势 | 若全面落后，世界模型行为证据也难支撑主稿 |
+| IID/OOD（锁定主测试） | 同时检查同分布预测与空间泛化 | val_dev 选模型，IID/OOD 只作最终测试 | 两轨均稳定，不只在开发验证集好 | 可能过拟合训练地点或年份 |
 | Stage1/Stage1.5 × no-part/part 2×2 | 分开看观测状态预训练包和时间一致性约束是否有用 | 四个模型只改变 initializer（初始化器）和 partition loss（时间分割损失） | Stage1.5 与 part 至少各有稳定收益；二者一起最好 | 哪条轴无效，就把哪条降为辅助证据 |
 | Direct/shared-T5/ObsWorld | 判断收益来自直接预测、递归结构，还是 partition 约束 | 同一 D/C/G 和容量下比较三种动力学 | ObsWorld 不低于 Direct，且长期更稳 | rollout 太差说明当前转移还不足以支撑世界模型主张 |
 | Partition gap（时间切分差距） | 直接测量“十天一步”和“五天加五天”是否矛盾 | direct 与 composed（组合）结果的状态/像素差 | gap 至少明显下降，同时真实 RMSE 不恶化 | 只降 gap 却伤精度，说明模型只是“一致地错” |
@@ -327,7 +329,7 @@ AAAI-27 官方日程是：
 ```text
 GPU 线：当前 Stage1.5 继续跑 → 结束后验收 → Stage2 smoke → one-seed Gate → 三种子
 
-CPU/I/O 线：all-8 schema 审计 → official evaluator → 24-D 主协议或 12-D fallback stats → manifests/configs
+CPU/I/O 线：all-8 schema 审计 → EarthNetScore 评分闭环 → 24-D 主协议或 12-D fallback stats → manifests/configs
                                                      │
                                                      └─ 全部可与 Stage1.5 并行
 ```
@@ -381,33 +383,34 @@ CPU/I/O 线：all-8 schema 审计 → official evaluator → 24-D 主协议或 1
 
 ### 3.1 论文写法
 
-> **We study the EarthNet2021 benchmark family and use the GreenEarthNet protocol over the EarthNet2021x release for primary evaluation.**
+> **We evaluate ObsWorld on the EarthNet2021x NetCDF release under the EarthNet2021 train/IID/OOD/Extreme/Seasonal protocol.**
 
 中文：
 
-> **我们研究 EarthNet2021 基准系谱，并在 EarthNet2021x 数据发布上采用 GreenEarthNet 协议进行主评估。**
+> **我们在 EarthNet2021x 的 NetCDF 数据发布上，按照 EarthNet2021 的训练、IID、OOD、极端事件和季节循环协议评测 ObsWorld。**
 
-GreenEarthNet 不是 EarthNet2021 的一个小子集，而是保持训练位置与时空规格兼容的 complete remake/enhanced release。这个口径同时保留 EarthNet 主线和当前最可比的 Contextformer 协议。
+当前服务器数据的时间范围、文件数和目录结构证明它支持上述五条轨道；论文不写任何本地未拥有、未冻结的额外测试轨道。
 
 ### 3.2 当前所需数据
 
 | 数据 | AAAI-27 身份 | 是否重下 |
 |---|---|---|
 | EarthNet2021x `train` | Stage2 训练 | 否，先审计现有目录 |
-| `iid` | Val/official split 构建与调试 | 否，先审计 |
-| `ood` | OOD-t/s/st 主评估原始包 | 否，先审计 |
-| `extreme/seasonal` | 截稿后过程诊断 | 不下 |
+| `iid` | 锁定同分布主测试 | 否，先审计 |
+| `ood` | 锁定空间域外主测试 | 否，先审计 |
+| `extreme/seasonal` | 极端事件与长时程补充测试 | 已有，不重下 |
 | SSL4EO S1GRD/S2L2A | Stage1/1.5 | 已有，继续用 |
 | SSL4EO S2L1C | 可选 product Gate | AAAI-27 不下 |
 | 下游数据 | 可选附录 | AAAI-27 不新增 |
 
-### 3.3 为什么 GreenEarthNet protocol 更适合 DGH
+### 3.3 为什么 EarthNet2021x 协议足以支撑 DGH
 
 - 8 个 daily E-OBS 可构建真正的逐区间 `D path`；
 - DEM 是直接可用的空间 `G`；
 - 10 context + 20 future、五日规则间隔直接支持 `H/Δt`；
-- OOD-t/s/st 分开检验时间、空间与时空外推；
-- 官方云 mask 和 NDVI evaluator 比旧 ENS 更直接对准植被动力学。
+- IID/OOD 共同检验同分布预测与空间泛化；
+- Extreme/Seasonal 提供极端驱动和长时程状态演化证据；
+- EarthNetScore（ENS）同时检查像素误差、植被趋势、时间序列分布和空间结构。
 
 ---
 
@@ -463,7 +466,7 @@ x_hat_b = O_psi(s_b, phi_fixed_S2_L2A)
 
 同一 `T_theta` 训练 `Δt in {5,10,20 days}`，而正式推理用 20 个 5 日步。所有未来转移只索引 future-relative 的 `D_fut/C_fut`；第一步使用 `D_fut[0:1]`，不能误用完整 `D_path[0:1]`。
 
-GreenEarthNet 官方任务提供真实未来 E-OBS，因此这里属于 prescribed/oracle forcing：论文评估的是“给定未来外生驱动时的条件地表动力学”，不等同于包含未来天气预报误差的实时业务系统。
+EarthNet2021x 任务提供真实未来 E-OBS，因此这里属于 prescribed/oracle forcing（基准规定的真实未来外生驱动）：论文评估的是“给定未来外生驱动时的条件地表动力学”，不等同于包含未来天气预报误差的实时业务系统。
 
 ### 5.3 受控时间分割一致性
 
@@ -494,28 +497,28 @@ L_part     = sym(P(s10_direct), P(s10_comp))
 
 ## 6. AAAI-27 的主实验表和图
 
-### Table 1：Official OOD-t 主结果
+### Table 1：EarthNet2021x IID/OOD 主结果
 
 行：
 
 1. Persistence；
 2. Previous Year / Climatology；
-3. Contextformer 6M；
+3. 可复现的强时空基线（优先 Contextformer、PredRNN 或 SimVP；只能列入同协议重跑成功者）；
 4. 一个强 video/recurrent baseline（优先 PredRNN 或 SimVP）；
 5. matched Direct-DGH；
 6. shared `T5` rollout；
 7. ObsWorld。
 
-列：`R²↑ / RMSE↓ / NSE↑ / |bias|↓ / Outperformance↑ / first-25-day RMSE↓ / Params`。
+列：`IID ENS↑ / OOD ENS↑ / IID MAD/OLS/EMD/SSIM / OOD MAD/OLS/EMD/SSIM / Params`。主文空间不足时主表保留 ENS 与 Params，完整四分量放附录。
 
-主表使用未参与训练的 official OOD-t，不在训练集上比精度，也不需要换一个无关数据集才算主实验。
+主表使用未参与训练的 IID/OOD，不在训练集上比精度，也不需要换一个无关数据集才算主实验。
 
 ### Table 2A：观测状态 × 时间组合 2×2
 
 使用第 4.3 节四行，所有模型共享 Stage2 数据、D/C/G、预算、训练步数和 evaluator。报告：
 
-- official Val/OOD forecast；
-- long-horizon NDVI RMSE；
+- `val_dev`、IID/OOD 的预测分数；
+- long-horizon EarthNetScore 分量与派生 NDVI RMSE；
 - 10/20-day observation-space partition gap；
 - 两个主效应与交互效应。
 
@@ -558,9 +561,9 @@ plausible-shuffled D 必须交换不同 location/tile 样本的整条 `D_fut + D
 
 ### G0：协议合格（否则所有精度无效）
 
-- official manifest，不 fallback 扫描根目录；
-- official `ndvi_pred` NetCDF 格式与 evaluator；
-- 复现官方 Persistence 和 Climatology/Previous-Year 中至少两个；
+- 冻结 manifest，不 fallback 扫描根目录；
+- EarthNet 预测目录格式与官方 EarthNetScore 评分程序一致；
+- 复现官方 Persistence 和至少一个简单季节性/气候基线；
 - context input mask、training target mask、official evaluation eligibility 分开；
 - 所有 normalization/imputation 只用 Train。
 - all-8 主协议逐文件/抽样检查 `fg/hu/pp/qq/rr/tg/tn/tx`，并固定 `D_hist=0:10`、`D_fut=10:30`；
@@ -568,21 +571,11 @@ plausible-shuffled D 必须交换不同 location/tile 样本的整条 `D_fut + D
 
 ### G1：精度合格
 
-[GreenEarthNet/Contextformer](https://openaccess.thecvf.com/content/CVPR2024/papers/Benson_Multi-modal_Learning_for_Geospatial_Vegetation_Forecasting_CVPR_2024_paper.pdf) 公布的 Contextformer 6M 参考是：
+当前没有在同一 IID/OOD + ENS 协议下复现的强基线数字，因此禁止预填其他论文的数值门槛。首个 pilot 后，按下列规则冻结门槛：
 
-| 指标 | 公布参考 | 本项目最低竞争带 | 强 GO |
-|---|---:|---:|---:|
-| R² ↑ | 0.62 | ≥0.60 | ≥0.62 |
-| RMSE ↓ | 0.14 | ≤0.15 | ≤0.14 |
-| NSE ↑ | 0.09 | ≥0.07 | ≥0.09 |
-| `|bias|` ↓ | 0.09 | ≤0.10 | ≤0.09 |
-| Outperformance ↑ | 66.8% | ≥60% | ≥66.8% |
-| first-25-day RMSE ↓ | 0.08 | ≤0.09 | ≤0.08 |
-
-“最低竞争带”只用于冲刺时的项目决策，不替代统计检验。ObsWorld 还必须满足：
-
-- 对 matched Direct 的主指标非劣或显著更好；
-- 长时程/OOD 不能只靠前 25 天精度遮掩后期崩溃；
+- ObsWorld 必须在 IID、OOD 两条主轨道均优于 Persistence；
+- 对 matched Direct 的 OOD ENS 非劣，且至少一个长期 ENS 分量或长时程 NDVI 指标有稳定改善；
+- 只有完成同协议重跑的强基线才能进入数字主表；
 - 自有方法最终三种子，同时报 tile/location-cluster paired 95% CI。
 
 ### G2：时间动力学合格
@@ -595,7 +588,7 @@ upper95CI(forecast_full - forecast_noPart) <= delta_part
 upper95CI(longRMSE_full - longRMSE_Direct) <= delta_NI
 ```
 
-`delta_part` 和 `delta_NI` 在 locked OOD 前冻结为对应 reference NDVI RMSE 的 1% relative。工程期望：相对 no-part，partition gap 至少降低约 20%，且 60–100 日 RMSE 不恶化；如能改善 2%以上则是强信号。百分比是 pilot 调度线，最终结论用成对 CI。
+`delta_part` 和 `delta_NI` 在锁定 IID/OOD 前冻结为对应参考指标的 1% relative。工程期望：相对 no-part，partition gap 至少降低约 20%，且 60–100 日误差不恶化；如能改善 2%以上则是强信号。百分比是 pilot 调度线，最终结论用成对 CI。
 
 ### G3：DGH 使用合格
 
@@ -605,7 +598,7 @@ upper95CI(L_trueD - L_noD) < 0
 upper95CI(L_trueG - L_noG) < 0     # 若不成立，删除 G 增益主张
 ```
 
-如果 `D-core` 与 full 24-D 持平，这不是失败：可以得出“紧凑物理驱动已足够”的有价值结果。若 all-8 Gate 未通过，则所有主表明确标记 12-D fallback，并披露相对 Contextformer 的输入差异。
+如果 `D-core` 与 full 24-D 持平，这不是失败：可以得出“紧凑物理驱动已足够”的有价值结果。若 all-8 Gate 未通过，则所有主表明确标记 12-D fallback，并披露输入差异。
 
 ### G4：Stage1.5 合格
 
@@ -693,8 +686,8 @@ upper95CI(L_trueG - L_noG) < 0     # 若不成立，删除 G 增益主张
 ## 12. 外部依据
 
 - [EarthNet2021](https://arxiv.org/abs/2104.10066)
-- [GreenEarthNet / Contextformer, CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/papers/Benson_Multi-modal_Learning_for_Geospatial_Vegetation_Forecasting_CVPR_2024_paper.pdf)
-- [GreenEarthNet official repository and evaluator](https://github.com/vitusbenson/greenearthnet)
+- [Contextformer, CVPR 2024（相关工作与可复现基线来源）](https://openaccess.thecvf.com/content/CVPR2024/papers/Benson_Multi-modal_Learning_for_Geospatial_Vegetation_Forecasting_CVPR_2024_paper.pdf)
+- [EarthNet Models PyTorch](https://github.com/earthnet2021/earthnet-models-pytorch)
 - [EO-WM](https://arxiv.org/abs/2606.27277)
 - [Earth-o1](https://arxiv.org/abs/2605.06337)
 - [Intrinsic Differential Consistency](https://arxiv.org/abs/2605.08454)

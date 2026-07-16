@@ -7,6 +7,8 @@ status: "集中版建议稿：后续可作为论文实验与写作总依据"
 
 # ObsWorld AAAI 最终叙事与实验闭环
 
+> **数据协议更新（2026-07-16）：**本文的世界模型主线仍有效；数据、验证和评测则统一以服务器已有的 EarthNet2021x NetCDF 与 EarthNet2021 `train/iid/ood/extreme/seasonal` 为准，详见 [48：统一数据协议](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md)。
+
 ## 0. 先给结论
 
 我的判断是：**当前 ObsWorld 方向可以支撑 AAAI 级别叙事，但不能按“EarthNet2021 精度刷榜模型”来写。**
@@ -169,7 +171,7 @@ Existing EO forecasting methods optimize future visual similarity, but this does
 | ConvLSTM | temporal prediction | | no | | | | | | |
 | SimVP / PredRNN | video prediction | | no | | | | | | |
 | Earthformer | spatiotemporal transformer | | no | | | | | | |
-| Contextformer / GreenEarthNet | weather-guided vegetation forecasting | | no / task data | | | | | | |
+| Contextformer / EarthNet2021x | weather-guided vegetation forecasting | | no / task data | | | | | | |
 | EO-WM | diffusion world model | 387M | task data | | | | | | high |
 | ObsWorld-S | state dynamics | ViT-S + DGH | SSL4EO | | | | | | lower |
 
@@ -769,4 +771,3 @@ We organize experiments around the claims of ObsWorld. First, we evaluate standa
 如果这些条件基本满足，即使 EO-WM 在像素生成质量上更强，ObsWorld 仍然有清晰的 AAAI 价值：
 
 > **它提供的不是另一个更大的未来帧生成器，而是一套可诊断、可解释、可迁移的遥感地表状态动力学建模框架。**
-
