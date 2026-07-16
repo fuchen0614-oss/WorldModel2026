@@ -27,12 +27,16 @@ from .controlled_transition import ControlledTransition
 from .interval_driver_encoder import IntervalDriverEncoder
 from .obsworld_core import ObsWorldV2Core
 from .obsworld_direct_path import ObsWorldDirectPathModel
+from .obsworld_partition import ObsWorldPartitionModel
 from .obsworld_rollout import ObsWorldRolloutModel
 from .state_dynamics_module import StateDynamicsModule
 
 
 V2_DIRECT_MODES = frozenset({"direct_path", "direct_path_24d", "direct24"})
 V2_ROLLOUT_MODES = frozenset({"rollout", "rollout_t5", "rollout_t5_24d"})
+V2_PARTITION_MODES = frozenset(
+    {"obsworld_partition_24d", "rollout_partition", "partition"}
+)
 V2_DRIVER_PROTOCOLS = frozenset({"full24", "eobs24", "full_24"})
 
 
@@ -60,10 +64,11 @@ def create_obsworld_v2_model(
             f"got {family!r}"
         )
     mode = str(model_cfg.get("forecast_mode", "direct_path_24d")).lower()
-    if mode not in V2_DIRECT_MODES | V2_ROLLOUT_MODES:
+    if mode not in V2_DIRECT_MODES | V2_ROLLOUT_MODES | V2_PARTITION_MODES:
         raise ValueError(
-            "Stage2-v2 currently implements Direct24 and five-day open-loop "
-            f"rollout; unsupported forecast_mode={mode!r}"
+            "Stage2-v2 currently implements Direct24, five-day open-loop "
+            "rollout, and 10-day-vs-5+5 partition rollout; "
+            f"unsupported forecast_mode={mode!r}"
         )
     driver_protocol = str(model_cfg.get("driver_protocol", "full24")).lower()
     if driver_protocol not in V2_DRIVER_PROTOCOLS:
@@ -148,9 +153,12 @@ def create_obsworld_v2_model(
             "earthnet2021x_path_v2 freezes future_start_index=10 and "
             f"target_steps=20, got ({future_start_index}, {target_steps})"
         )
-    wrapper_cls = (
-        ObsWorldDirectPathModel if mode in V2_DIRECT_MODES else ObsWorldRolloutModel
-    )
+    if mode in V2_DIRECT_MODES:
+        wrapper_cls = ObsWorldDirectPathModel
+    elif mode in V2_ROLLOUT_MODES:
+        wrapper_cls = ObsWorldRolloutModel
+    else:
+        wrapper_cls = ObsWorldPartitionModel
     model = wrapper_cls(
         core=core,
         transition=transition,

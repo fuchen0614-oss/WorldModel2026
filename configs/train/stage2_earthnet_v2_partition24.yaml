@@ -1,0 +1,33 @@
+# ObsWorld formal main-method configuration: shared rollout plus
+# control-aware 10-day-vs-5+5-day partition consistency.  This inherits the
+# exact Direct24/Rollout data, initializer, transition, decoder, optimizer and
+# long-horizon curriculum; only the temporal-composability branch is added.
+
+_base_: stage2_earthnet_v2_rollout24.yaml
+
+model:
+  forecast_mode: obsworld_partition_24d
+
+training:
+  partition:
+    enabled: true
+    # The auxiliary branch starts from a detached rollout state.  The primary
+    # rollout RGBN/NDVI loss still trains the initializer end-to-end.
+    detach_partition_start: true
+    # First stabilize ordinary open-loop prediction, then linearly introduce
+    # the fixed partition objective.  This schedule is checkpointed exactly.
+    warmup_start_step: 5000
+    warmup_steps: 10000
+
+loss:
+  partition:
+    state: 0.10
+    observation: 0.10
+    ndvi: 0.05
+    # Applied to the average terminal supervision of direct and composed
+    # branches, so neither branch can satisfy consistency by becoming poor.
+    direct_endpoint: 0.50
+    endpoint_ndvi_weight: 0.50
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_partition24
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_partition24

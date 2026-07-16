@@ -270,6 +270,19 @@ Commit C 在完全相同的 shared core（共享核心）上新增了 `ObsWorldR
 
 这仍是 **Stage2-R**，不是完整主方法：尚未加入 variable-step 的直接/组合分支和 partition consistency 损失，故不能把当前 rollout 单独写成“可组合动力学已被证明”。
 
+### 0.6 实施状态更新（2026-07-16，Commit D：首版 partition consistency）
+
+Commit D 将第一版 **Stage2-P** 落为可训练代码，而不是只保留公式：
+
+- 新增 `ObsWorldPartitionModel`，它完全继承同一个五日 rollout（递推）和 `ControlledTransition`（受控转移），不增加另一套动力学网络；
+- 每个有效 minibatch（小批次）随机选择一个合法锚点 `j`，从当前预测状态 `s_j` 同时计算 `T(s_j,D[j:j+2])`（一次十日）与 `T(T(s_j,D[j]),D[j+1])`（五日加五日）。两条分支读取的是逐 token 完全相同的 `D/C/delta_t`（驱动/日历/时长）路径；
+- `detach_partition_start=true`（分割起点停止梯度）只切断辅助分支回到更早 rollout 的梯度；主 RGBN/NDVI rollout loss 仍端到端训练状态初始化器。因此它是控制显存和耦合的工程选择，不是 teacher forcing（教师强制）；
+- `PartitionConsistencyLoss` 采用无参数 `LayerNorm`（层归一化）和 symmetric stop-gradient（对称停止梯度）比较状态，同时比较 RGBN、NDVI，并让 direct 与 composed 两个端点都对同一个真实未来时刻负责。target（未来真值）只由 trainer（训练器）在模型 forward（前向）之后取出，不能进入转移器；
+- `stage2_earthnet_v2_partition24.yaml` 继承 rollout 配置，只增加 partition loss（时间分割损失）与明确的 warm-up（预热）：前 5k optimizer steps（优化器步）为 0，之后 10k 步线性升至固定权重。课程、partition 开关、损失权重均写入 checkpoint（检查点），续训时若被改变会拒绝继续；
+- 当前第一版固定为 **10 日 vs 5+5 日**。20 日 vs 10+10、20 日 vs 5+5+5+5 与不规则时间段仍是下一轮增强，不能在论文中写成已完成。
+
+因此现在的代码已经能训练 matched Direct、普通 rollout 和首版 partition 主方法；正式数值仍必须等待数据协议冻结、预检和 smoke run（冒烟训练）通过。
+
 ---
 
 ## 4. 当前代码审计：现在做到什么程度

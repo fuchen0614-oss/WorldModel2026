@@ -7,6 +7,7 @@ torch = pytest.importorskip("torch")
 
 from train.train_stage2_earthnet import (
     move_batch_to_device,
+    partition_supervision_for_output,
     select_v2_horizon_indices,
     stage2_supervision_for_output,
 )
@@ -49,3 +50,17 @@ def test_v2_supervision_is_sliced_only_after_model_output():
     supervision = stage2_supervision_for_output(batch, output)
     assert supervision["target"].flatten().tolist() == [0.0, 7.0, 19.0]
     assert supervision["horizons"].flatten().tolist() == [5.0, 40.0, 100.0]
+
+
+def test_partition_terminal_supervision_stays_outside_model_output():
+    batch = {
+        "x_target": torch.arange(20).view(1, 20, 1, 1, 1).float(),
+        "target_mask": torch.ones(1, 20, 1, 1),
+    }
+    terminal = partition_supervision_for_output(
+        batch,
+        {"endpoint_index": torch.tensor(11)},
+    )
+
+    assert terminal["endpoint_index"].tolist() == [11]
+    assert terminal["target"].flatten().tolist() == [11.0]

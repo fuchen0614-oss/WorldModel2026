@@ -54,6 +54,10 @@ from models.decoders.earthnet_observation_decoder import EarthNetObservationDeco
 from models.dynamics.context_state_aggregator import ContextStateAggregator
 from models.dynamics.condition_encoders import DriverEncoder, HorizonEncoder
 from models.dynamics.obsworld_factory import create_obsworld_v2_model
+from models.dynamics.partition_consistency import (
+    PartitionConsistencyLoss,
+    sample_two_step_partition_start,
+)
 from models.dynamics.obsworld_stage2 import ObsWorldStage2Model
 from models.dynamics.state_dynamics_module import StateDynamicsModule
 from models.encoders.multimodal_vit_encoder_film import MultiModalViTEncoderFiLM
@@ -64,7 +68,10 @@ from eval.forecast_metrics import ForecastMetricAccumulator
 from train.stage2_curriculum import (
     curriculum_checkpoint_state,
     current_rollout_length,
+    is_partition_forecast_mode,
     is_rollout_forecast_mode,
+    partition_loss_scale,
+    partition_training_settings,
 )
 from train.fsdp_utils import barrier, cleanup_distributed, is_main_process, setup_distributed
 
@@ -144,6 +151,8 @@ def forward_stage2_model(
     *,
     selected_steps: Optional[torch.Tensor] = None,
     max_rollout_steps: Optional[int] = None,
+    partition_start: Optional[int] = None,
+    detach_partition_start: bool = True,
 ) -> dict:
     """Forward only the protocol-approved batch partition through the model."""
 
@@ -152,10 +161,23 @@ def forward_stage2_model(
     inputs = model_input_view(batch, include_training_targets=include_targets)
     forecast_mode = getattr(raw_model, "forecast_mode", None)
     if forecast_mode == "direct_path_24d":
-        if max_rollout_steps is not None:
-            raise ValueError("Direct24 does not accept max_rollout_steps")
+        if max_rollout_steps is not None or partition_start is not None:
+            raise ValueError("Direct24 does not accept rollout or partition arguments")
         return model(inputs, selected_steps=selected_steps)
+    if is_partition_forecast_mode(forecast_mode):
+        return model(
+            inputs,
+            selected_steps=selected_steps,
+            max_rollout_steps=max_rollout_steps,
+            partition_start=partition_start,
+            detach_partition_start=detach_partition_start,
+        )
     if is_rollout_forecast_mode(forecast_mode):
+        if partition_start is not None:
+            raise ValueError(
+                "A plain rollout wrapper cannot receive a partition branch; "
+                "use forecast_mode=obsworld_partition_24d."
+            )
         return model(
             inputs,
             selected_steps=selected_steps,
@@ -578,6 +600,44 @@ def stage2_supervision_for_output(batch: dict, output: dict) -> dict[str, Option
     }
 
 
+def partition_supervision_for_output(batch: dict, partition: dict) -> dict[str, torch.Tensor]:
+    """Select the shared terminal target for a model-produced partition pair.
+
+    The model exposes only its chosen endpoint index.  This helper performs
+    all target/mask selection outside the model boundary, so the direct and
+    composed state transitions cannot inspect future RGBN observations.
+    """
+
+    for name in ("x_target", "target_mask"):
+        if name not in batch:
+            raise KeyError(f"Partition supervision requires batch field {name!r}")
+    if "endpoint_index" not in partition:
+        raise KeyError("Partition model output is missing endpoint_index")
+    target = batch["x_target"]
+    target_mask = batch["target_mask"]
+    endpoint_index = torch.as_tensor(
+        partition["endpoint_index"],
+        device=target.device,
+        dtype=torch.long,
+    )
+    if endpoint_index.numel() != 1:
+        raise ValueError(
+            "Partition endpoint_index must contain one shared minibatch endpoint, "
+            f"got shape {tuple(endpoint_index.shape)}"
+        )
+    endpoint_index = endpoint_index.reshape(1)
+    if int(endpoint_index.item()) < 0 or int(endpoint_index.item()) >= target.shape[1]:
+        raise ValueError(
+            "Partition endpoint_index lies outside x_target: "
+            f"endpoint={int(endpoint_index.item())}, target_steps={target.shape[1]}"
+        )
+    return {
+        "target": target.index_select(1, endpoint_index).squeeze(1),
+        "target_mask": target_mask.index_select(1, endpoint_index).squeeze(1),
+        "endpoint_index": endpoint_index,
+    }
+
+
 def save_checkpoint(
     path: str,
     step: int,
@@ -894,6 +954,7 @@ def main():
         # is also the explicit guard against accidentally enabling teacher
         # forcing under a rollout-named configuration.
         current_rollout_length(config, optimizer_step=0)
+        partition_training_settings(config)
         if bool(config["training"].get("require_dgh_stats", False)):
             raise ValueError(
                 "earthnet2021x_path_v2 must not require legacy DGH statistics; "
@@ -1038,7 +1099,13 @@ def main():
         saved_curriculum = resume_checkpoint.get("curriculum")
         if saved_curriculum is not None:
             expected_curriculum = curriculum_checkpoint_state(config, optimizer_step)
-            for name in ("forecast_mode", "rollout_length"):
+            for name in (
+                "forecast_mode",
+                "rollout_length",
+                "schedule",
+                "partition_schedule",
+                "partition_loss",
+            ):
                 if saved_curriculum.get(name) != expected_curriculum.get(name):
                     raise ValueError(
                         "Stage2 resume curriculum differs from the checkpoint: "
@@ -1052,6 +1119,16 @@ def main():
         red_index=data_cfg.band_spec.red_index,
         nir_index=data_cfg.band_spec.nir_index,
     ).to(device)
+    partition_loss_fn = (
+        PartitionConsistencyLoss.from_config(
+            config["loss"],
+            red_index=data_cfg.band_spec.red_index,
+            nir_index=data_cfg.band_spec.nir_index,
+        ).to(device)
+        if is_partition_forecast_mode(config.get("model", {}).get("forecast_mode"))
+        else None
+    )
+    partition_settings = partition_training_settings(config) if is_v2 else None
     writer = (
         SummaryWriter(config["log_dir"])
         if is_main_process() and SummaryWriter is not None
@@ -1077,9 +1154,14 @@ def main():
             batch = move_batch_to_device(batch, device)
             selected_steps = None
             max_rollout_steps = None
+            partition_start = None
+            partition_scale = 0.0
             if is_stage2_v2_batch(batch):
                 raw_model = model.module if isinstance(model, DDP) else model
                 rollout_mode = is_rollout_forecast_mode(
+                    getattr(raw_model, "forecast_mode", None)
+                )
+                partition_mode = is_partition_forecast_mode(
                     getattr(raw_model, "forecast_mode", None)
                 )
                 available_steps = (
@@ -1094,6 +1176,13 @@ def main():
                     device=device,
                     always_include_last=True,
                 )
+                if partition_mode:
+                    partition_scale = partition_loss_scale(config, optimizer_step)
+                    if partition_scale > 0.0:
+                        partition_start = sample_two_step_partition_start(
+                            available_steps,
+                            device=device,
+                        )
             else:
                 batch = select_horizons(batch, horizons_per_sample)
             should_update = (micro_step + 1) % accum_steps == 0
@@ -1110,6 +1199,12 @@ def main():
                         batch,
                         selected_steps=selected_steps,
                         max_rollout_steps=max_rollout_steps,
+                        partition_start=partition_start,
+                        detach_partition_start=bool(
+                            (partition_settings or {}).get(
+                                "detach_partition_start", True
+                            )
+                        ),
                     )
                     supervision = stage2_supervision_for_output(batch, out)
                     losses = loss_fn(
@@ -1122,6 +1217,37 @@ def main():
                         z_target_mask=out.get("z_target_mask"),
                         horizons=supervision["horizons"],
                     )
+                    if partition_start is not None:
+                        if partition_loss_fn is None:
+                            raise AssertionError(
+                                "A partition branch was sampled without a partition loss"
+                            )
+                        partition = out.get("partition")
+                        if not isinstance(partition, dict):
+                            raise KeyError(
+                                "obsworld_partition_24d forward did not return partition outputs"
+                            )
+                        terminal = partition_supervision_for_output(batch, partition)
+                        partition_losses = partition_loss_fn(
+                            z_direct=partition["z_direct"],
+                            z_composed=partition["z_composed"],
+                            pred_direct=partition["pred_direct"],
+                            pred_composed=partition["pred_composed"],
+                            target=terminal["target"],
+                            target_mask=terminal["target_mask"],
+                            state_mask=partition.get("state_valid_mask"),
+                        )
+                        for name, value in partition_losses.items():
+                            if name != "total":
+                                losses[f"partition_{name}"] = value
+                        losses["partition_unscaled_total"] = partition_losses["total"]
+                        losses["partition_scale"] = losses["total"].new_tensor(
+                            partition_scale
+                        )
+                        losses["partition_total"] = (
+                            partition_losses["total"] * partition_scale
+                        )
+                        losses["total"] = losses["total"] + losses["partition_total"]
                     loss = losses["total"] / accum_steps
                 if not torch.isfinite(loss):
                     components = {

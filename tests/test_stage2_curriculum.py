@@ -2,7 +2,13 @@ from __future__ import annotations
 
 import pytest
 
-from train.stage2_curriculum import current_rollout_length, rollout_length_for_step
+from train.stage2_curriculum import (
+    curriculum_checkpoint_state,
+    current_rollout_length,
+    partition_loss_scale,
+    partition_training_settings,
+    rollout_length_for_step,
+)
 
 
 SCHEDULE = [
@@ -42,3 +48,36 @@ def test_rollout_curriculum_rejects_teacher_forcing_and_nonmonotone_schedule():
             1,
             target_steps=20,
         )
+
+
+def test_partition_warmup_is_pure_and_requires_an_explicit_enabled_block():
+    config = {
+        "model": {"forecast_mode": "obsworld_partition_24d", "target_steps": 20},
+        "training": {
+            "open_loop": True,
+            "teacher_forcing_future_state": False,
+            "rollout_curriculum": SCHEDULE,
+            "partition": {
+                "enabled": True,
+                "detach_partition_start": True,
+                "warmup_start_step": 5,
+                "warmup_steps": 10,
+            },
+        },
+    }
+    assert partition_loss_scale(config, 0) == 0.0
+    assert partition_loss_scale(config, 5) == 0.0
+    assert partition_loss_scale(config, 10) == 0.5
+    assert partition_loss_scale(config, 15) == 1.0
+    assert partition_training_settings(config) == {
+        "detach_partition_start": True,
+        "warmup_start_step": 5,
+        "warmup_steps": 10,
+    }
+    checkpoint = curriculum_checkpoint_state(config, 15)
+    assert checkpoint["partition_loss_scale"] == 1.0
+    assert checkpoint["partition_schedule"]["detach_partition_start"] is True
+
+    config["training"]["partition"]["enabled"] = False
+    with pytest.raises(ValueError, match="enabled=true"):
+        partition_loss_scale(config, 5)

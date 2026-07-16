@@ -7,6 +7,7 @@ torch = pytest.importorskip("torch")
 
 from data.stage2_contract import model_input_view
 from models.dynamics.obsworld_factory import create_obsworld_v2_model
+from models.dynamics.partition_consistency import PartitionConsistencyLoss
 from models.losses.earthnet_forecasting import EarthNetForecastLoss
 
 
@@ -188,3 +189,48 @@ def test_factory_builds_shared_open_loop_rollout_wrapper():
     assert model.forecast_mode == "rollout_t5_24d"
     assert output["z_rollout"].shape == (1, 2, 4, 16)
     assert output["pred"].shape == (1, 2, 4, 16, 16)
+
+
+def test_factory_builds_partition_wrapper_without_new_dynamics_parameters():
+    config = _tiny_config()
+    config["model"]["forecast_mode"] = "obsworld_partition_24d"
+    model = create_obsworld_v2_model(config).eval()
+    output = model(
+        model_input_view(_batch()),
+        selected_steps=[0, 1],
+        max_rollout_steps=2,
+        partition_start=0,
+    )
+
+    assert model.forecast_mode == "obsworld_partition_24d"
+    assert output["partition"]["endpoint_index"].item() == 1
+    assert output["partition"]["pred_direct"].shape == (1, 4, 16, 16)
+    assert output["partition"]["pred_composed"].shape == (1, 4, 16, 16)
+
+
+def test_partition_branch_backpropagates_through_shared_transition_and_decoder():
+    config = _tiny_config()
+    config["model"]["forecast_mode"] = "obsworld_partition_24d"
+    model = create_obsworld_v2_model(config).train()
+    batch = _batch()
+    output = model(
+        model_input_view(batch),
+        selected_steps=[0, 1],
+        max_rollout_steps=2,
+        partition_start=0,
+    )
+    partition = output["partition"]
+    loss = PartitionConsistencyLoss(red_index=2, nir_index=3)(
+        z_direct=partition["z_direct"],
+        z_composed=partition["z_composed"],
+        pred_direct=partition["pred_direct"],
+        pred_composed=partition["pred_composed"],
+        target=batch["x_target"][:, 1],
+        target_mask=batch["target_mask"][:, 1],
+        state_mask=partition["state_valid_mask"],
+    )["total"]
+    loss.backward()
+
+    assert torch.isfinite(loss)
+    assert model.transition.state_dynamics.output_proj.weight.grad is not None
+    assert model.core.decoder.decoder.decoder_pred.weight.grad is not None
