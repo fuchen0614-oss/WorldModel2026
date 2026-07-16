@@ -55,6 +55,13 @@ STAGE2_FIELD_SPECS: Tuple[Stage2FieldSpec, ...] = (
     Stage2FieldSpec("delta_t", "step duration", True, "[B,Tt]", "days"),
     Stage2FieldSpec("obs_age", "age of each context observation", True, "[B,Tc]", "days"),
     Stage2FieldSpec("weather_path", "future weather/scenario path", True, "[B,Tt,K]", "driver units"),
+    # Frozen Stage2-v2 path protocol.  D_path covers the full 150-day cube;
+    # D_path[:, 10] is the first interval that evolves the final context state
+    # into the first future state.  It deliberately coexists with legacy D.
+    Stage2FieldSpec("D_path", "full 5-day E-OBS driver path", True, "[B,30,24]", "daily-zscore then 5-day aggregate"),
+    Stage2FieldSpec("C_path", "5-day midpoint calendar path", True, "[B,30,2]", "sin/cos day-of-year"),
+    Stage2FieldSpec("delta_t_path", "duration of each conditioning interval", True, "[B,30]", "days"),
+    Stage2FieldSpec("D_valid_day_count", "audit-only daily E-OBS count", False, "[B,30,8]", "days; not a model input"),
 )
 
 REQUIRED_STAGE2_FIELDS = (
@@ -79,6 +86,27 @@ TRAINING_SUPERVISION_FIELDS = ("x_target", "target_mask")
 EVALUATION_ONLY_FIELDS = ("official_eval_mask", "official_eval_eligibility")
 
 
+STAGE2_V2_REQUIRED_FIELDS = (
+    "x_context",
+    "context_mask",
+    "D_path",
+    "D_mask",
+    "C_path",
+    "delta_t_path",
+    "G",
+    "G_mask",
+    "h",
+)
+STAGE2_V2_MODEL_INPUT_FIELDS = STAGE2_V2_REQUIRED_FIELDS
+STAGE2_V2_AUDIT_ONLY_FIELDS = ("D_valid_day_count",)
+
+
+def is_stage2_v2_batch(batch: Mapping[str, torch.Tensor]) -> bool:
+    """Whether a batch selects the formal path-based contract."""
+
+    return "D_path" in batch
+
+
 def model_input_view(
     batch: Mapping[str, torch.Tensor],
     *,
@@ -90,6 +118,12 @@ def model_input_view(
     latent-target ablation may explicitly request training targets, but
     evaluation-only masks are never forwarded under either mode.
     """
+
+    if is_stage2_v2_batch(batch):
+        return stage2_v2_model_input_view(
+            batch,
+            include_training_targets=include_training_targets,
+        )
 
     missing = [name for name in MODEL_INPUT_FIELDS if name not in batch]
     if missing:
@@ -103,6 +137,29 @@ def model_input_view(
         if missing_targets:
             raise KeyError(
                 f"Latent-target ablation is missing fields: {missing_targets}"
+            )
+        names.extend(TRAINING_SUPERVISION_FIELDS)
+    return {name: batch[name] for name in names}
+
+
+def stage2_v2_model_input_view(
+    batch: Mapping[str, torch.Tensor],
+    *,
+    include_training_targets: bool = False,
+) -> dict[str, torch.Tensor]:
+    """Return only legal v2 model inputs, excluding targets and audit fields."""
+
+    missing = [name for name in STAGE2_V2_MODEL_INPUT_FIELDS if name not in batch]
+    if missing:
+        raise KeyError(f"Stage2-v2 model inputs are missing fields: {missing}")
+    names = [*STAGE2_V2_MODEL_INPUT_FIELDS]
+    if include_training_targets:
+        missing_targets = [
+            name for name in TRAINING_SUPERVISION_FIELDS if name not in batch
+        ]
+        if missing_targets:
+            raise KeyError(
+                f"Stage2-v2 latent-target ablation is missing fields: {missing_targets}"
             )
         names.extend(TRAINING_SUPERVISION_FIELDS)
     return {name: batch[name] for name in names}
@@ -156,6 +213,14 @@ def validate_stage2_batch(
     enforce that temporal dimensions cannot be accidentally confused with the
     horizon vector or driver trajectory.
     """
+
+    if is_stage2_v2_batch(batch):
+        validate_stage2_v2_batch(
+            batch,
+            require_targets=require_targets,
+            require_evaluation=require_evaluation,
+        )
+        return
 
     for name in REQUIRED_STAGE2_FIELDS:
         _require_tensor(batch, name)
@@ -221,6 +286,143 @@ def validate_stage2_batch(
             raise ValueError(
                 "official_eval_eligibility must have shape [B,H,W], "
                 f"got {tuple(eligibility.shape)}"
+            )
+
+
+def validate_stage2_v2_batch(
+    batch: Mapping[str, torch.Tensor],
+    *,
+    require_targets: bool = True,
+    require_evaluation: bool = False,
+) -> None:
+    """Validate the frozen 30-token Stage2-v2 data contract.
+
+    Unlike legacy Stage2, context, target, and geographic tensors are allowed
+    to have different spatial sizes.  That distinction is necessary for a
+    256x256 Stage1.5 context encoder and native 128x128 EarthNet targets/DEM.
+    """
+
+    for name in STAGE2_V2_REQUIRED_FIELDS:
+        _require_tensor(batch, name)
+
+    x_context = _require_tensor(batch, "x_context")
+    context_mask = _require_tensor(batch, "context_mask")
+    drivers = _require_tensor(batch, "D_path")
+    driver_mask = _require_tensor(batch, "D_mask")
+    calendar = _require_tensor(batch, "C_path")
+    delta_t = _require_tensor(batch, "delta_t_path")
+    geo = _require_tensor(batch, "G")
+    geo_mask = _require_tensor(batch, "G_mask")
+    horizon = _require_tensor(batch, "h")
+
+    if x_context.dim() != 5:
+        raise ValueError(
+            f"x_context must have shape [B,T,C,H,W], got {tuple(x_context.shape)}"
+        )
+    batch_size, context_steps, _, context_height, context_width = x_context.shape
+    if context_mask.shape != (batch_size, context_steps, context_height, context_width):
+        raise ValueError(
+            "context_mask must match x_context as [B,T,H,W], "
+            f"got {tuple(context_mask.shape)} for {tuple(x_context.shape)}"
+        )
+    if context_steps != 10:
+        raise ValueError(f"Stage2-v2 fixes Tc=10, got Tc={context_steps}")
+
+    if drivers.dim() != 3:
+        raise ValueError(
+            f"D_path must have shape [B,Td,Kd], got {tuple(drivers.shape)}"
+        )
+    if drivers.shape[0] != batch_size or drivers.shape[1:] != (30, 24):
+        raise ValueError(
+            "Stage2-v2 fixes D_path to [B,30,24], got "
+            f"{tuple(drivers.shape)}"
+        )
+    if driver_mask.shape != drivers.shape:
+        raise ValueError(
+            f"D_mask must match D_path, got {tuple(driver_mask.shape)} vs {tuple(drivers.shape)}"
+        )
+    if calendar.shape != (batch_size, 30, 2):
+        raise ValueError(
+            f"C_path must have shape [B,30,2], got {tuple(calendar.shape)}"
+        )
+    if delta_t.shape != (batch_size, 30):
+        raise ValueError(
+            f"delta_t_path must have shape [B,30], got {tuple(delta_t.shape)}"
+        )
+    if not torch.isfinite(drivers).all() or not torch.isfinite(calendar).all():
+        raise ValueError("Stage2-v2 D_path/C_path must be finite after loader normalization")
+    if not torch.isfinite(delta_t).all() or torch.any(delta_t <= 0):
+        raise ValueError("Stage2-v2 delta_t_path must be finite and strictly positive")
+    if not torch.all((driver_mask == 0) | (driver_mask == 1)):
+        raise ValueError("Stage2-v2 D_mask must be binary")
+
+    if horizon.shape != (batch_size, 20):
+        raise ValueError(f"Stage2-v2 h must have shape [B,20], got {tuple(horizon.shape)}")
+    expected_horizon = torch.cumsum(delta_t[:, context_steps:], dim=1)
+    if not torch.allclose(
+        horizon.to(dtype=expected_horizon.dtype), expected_horizon, atol=1e-4, rtol=1e-5
+    ):
+        raise ValueError(
+            "Stage2-v2 h must equal cumsum(delta_t_path[:, 10:]); this protects "
+            "the first-future-token alignment."
+        )
+
+    if geo.dim() != 4 or geo.shape[0] != batch_size or geo.shape[1] != 1:
+        raise ValueError(
+            "Stage2-v2 G must have shape [B,1,Hg,Wg], got "
+            f"{tuple(geo.shape)}"
+        )
+    if geo_mask.shape != geo.shape:
+        raise ValueError(f"G_mask must match G, got {tuple(geo_mask.shape)} vs {tuple(geo.shape)}")
+    if not torch.isfinite(geo).all():
+        raise ValueError("Stage2-v2 G must be finite after DEM normalization")
+
+    if "D_valid_day_count" in batch:
+        valid_day_count = _require_tensor(batch, "D_valid_day_count")
+        if valid_day_count.shape != (batch_size, 30, 8):
+            raise ValueError(
+                "D_valid_day_count must have shape [B,30,8], got "
+                f"{tuple(valid_day_count.shape)}"
+            )
+        if torch.any(valid_day_count < 0) or torch.any(valid_day_count > 5):
+            raise ValueError("D_valid_day_count must lie in [0,5]")
+
+    if require_targets:
+        x_target = _require_tensor(batch, "x_target")
+        target_mask = _require_tensor(batch, "target_mask")
+        if x_target.dim() != 5 or x_target.shape[:2] != (batch_size, 20):
+            raise ValueError(
+                "x_target must have shape [B,20,C,Ht,Wt], got "
+                f"{tuple(x_target.shape)}"
+            )
+        target_height, target_width = x_target.shape[-2:]
+        if target_mask.shape != (batch_size, 20, target_height, target_width):
+            raise ValueError(
+                "target_mask must match x_target as [B,20,Ht,Wt], got "
+                f"{tuple(target_mask.shape)}"
+            )
+        if geo.shape[-2:] != (target_height, target_width):
+            raise ValueError(
+                "Stage2-v2 G must use the target/native geometry, got "
+                f"G={tuple(geo.shape[-2:])}, target={tuple(x_target.shape[-2:])}"
+            )
+
+    if require_evaluation:
+        official_mask = _require_tensor(batch, "official_eval_mask")
+        eligibility = _require_tensor(batch, "official_eval_eligibility")
+        if not require_targets:
+            raise ValueError("Stage2-v2 evaluation validation also requires target geometry")
+        x_target = _require_tensor(batch, "x_target")
+        target_height, target_width = x_target.shape[-2:]
+        if official_mask.shape != (batch_size, 20, target_height, target_width):
+            raise ValueError(
+                "official_eval_mask must match v2 targets as [B,20,Ht,Wt], got "
+                f"{tuple(official_mask.shape)}"
+            )
+        if eligibility.shape != (batch_size, target_height, target_width):
+            raise ValueError(
+                "official_eval_eligibility must have shape [B,Ht,Wt], got "
+                f"{tuple(eligibility.shape)}"
             )
 
 

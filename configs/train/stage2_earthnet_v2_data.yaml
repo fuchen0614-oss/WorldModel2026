@@ -1,0 +1,63 @@
+# ObsWorld formal Stage2-v2 data contract only.
+#
+# This is intentionally not a runnable training configuration yet: Commit A
+# freezes data/normalization/provenance, while Commit B adds Direct24 and the
+# shared rollout model.  It is used by the v2 statistics and preflight scripts.
+
+data:
+  dataset: earthnet2021x
+  root: /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
+  split: train
+  data_format: netcdf
+  stage2_protocol: greenearthnet_path_v2
+  file_glob: "**/*.nc"
+
+  # Frozen EarthNet2021x temporal alignment:
+  # S2 = daily indices 4,9,...,149; 30 E-OBS windows cover days 0..149.
+  context_frames: 10
+  target_frames: 20
+  frame_interval_days: 5
+  netcdf_s2_offset_days: 4
+
+  # Context remains compatible with the Stage1.5 encoder.  Target and DEM use
+  # native EarthNet resolution; this is checked by validate_stage2_v2_batch().
+  model_img_size: 256
+  context_img_size: 256
+  eval_img_size: 128
+  target_img_size: 128
+  geo_img_size: 128
+  image_channels: 4
+  target_channels: 4
+
+  # Formal v2 deliberately forbids the legacy first-available DEM fallback.
+  formal_dem_variable: cop_dem
+  netcdf_dem_variables: [cop_dem]
+
+  # Supply a frozen train manifest and full v2 stats at invocation time.
+  manifest_path: null
+  require_manifest: true
+  verify_manifest_sizes: false
+  verify_manifest_hashes: false
+  use_train_holdout: false
+  conditioning_stats_path: null
+  require_conditioning_stats: true
+
+  normalize: true
+  strict: true
+  batch_size: 2
+  num_workers: 4
+  band_spec:
+    input_bands: [blue, green, red, nir]
+    target_bands: [blue, green, red, nir]
+    red_band: red
+    nir_band: nir
+    scale_factor: 10000.0
+    auto_scale: true
+
+training:
+  # These checks apply to data preflight.  They do not launch a model.
+  require_conditioning_stats: true
+  require_full_conditioning_stats: true
+  require_all_driver_features: true
+  min_driver_valid_fraction: 0.90
+  require_geo: true

@@ -21,6 +21,18 @@ import torch
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 
+from data.earthnet_conditioning import (
+    ConditioningStatsV2,
+    EOBS_NETCDF_VARIABLES,
+    EOBS_VARIABLES,
+    aggregate_eobs_path,
+    build_calendar_path,
+    build_delta_t_path,
+    is_known_stage2_protocol,
+    is_stage2_v2_protocol,
+    load_conditioning_stats_v2,
+    normalize_cop_dem,
+)
 from data.earthnet_fields import BandSpec, DriverSpec
 from data.earthnet_manifest import load_manifest_files
 
@@ -49,12 +61,21 @@ class EarthNet2021Config:
         "seasonal": ["seasonal", "earthnet2021x/seasonal", "seasonal_test_split/context", "seasonal_test/context"],
     })
     data_format: str = "auto"
+    # ``legacy_direct9`` is intentionally the default so existing Direct-DGH
+    # jobs remain byte-for-byte compatible.  Formal world-model development
+    # explicitly chooses ``greenearthnet_path_v2``.
+    stage2_protocol: str = "legacy_direct9"
     file_glob: str = "**/*.npz"
     context_frames: int = 10
     target_frames: int = 20
     frame_interval_days: int = 5
     model_img_size: int = 256
     eval_img_size: int = 128
+    # The old path uses ``model_img_size`` everywhere.  V2 separates the
+    # Stage1.5-compatible context size from native EarthNet target/DEM sizes.
+    context_img_size: Optional[int] = None
+    target_img_size: Optional[int] = None
+    geo_img_size: Optional[int] = None
     image_channels: int = 4
     target_channels: int = 4
     cloud_mask_channel: int = 6
@@ -67,6 +88,7 @@ class EarthNet2021Config:
     netcdf_dem_variables: List[str] = field(
         default_factory=lambda: ["nasa_dem", "alos_dem", "cop_dem"]
     )
+    formal_dem_variable: str = "cop_dem"
     netcdf_solar_scale: float = 0.0864
     validation_fraction: float = 0.1
     validation_group: str = "tile"
@@ -78,6 +100,9 @@ class EarthNet2021Config:
     verify_manifest_hashes: bool = False
     driver_mean: Optional[List[float]] = None
     driver_std: Optional[List[float]] = None
+    conditioning_stats_path: Optional[str] = None
+    conditioning_stats: Optional[ConditioningStatsV2] = None
+    require_conditioning_stats: bool = False
     external_driver_root: Optional[str] = None
     external_driver_required: bool = False
     disabled_driver_features: List[str] = field(default_factory=list)
@@ -93,10 +118,41 @@ class EarthNet2021Config:
         requested_split = split or str(data_cfg.get("split", "train"))
         band_spec = BandSpec.from_config(data_cfg.get("band_spec"))
         driver_spec = DriverSpec.from_config(data_cfg.get("driver_spec"))
-        stats = _load_stats(
-            data_cfg.get("dgh_stats_path"),
-            expected_feature_names=driver_spec.feature_names,
+        stage2_protocol = str(data_cfg.get("stage2_protocol", "legacy_direct9")).lower()
+        if not is_known_stage2_protocol(stage2_protocol):
+            raise ValueError(
+                "Unknown data.stage2_protocol="
+                f"{stage2_protocol!r}; use legacy_direct9 or greenearthnet_path_v2"
+            )
+        require_conditioning_stats = bool(
+            data_cfg.get(
+                "require_conditioning_stats",
+                is_stage2_v2_protocol(stage2_protocol)
+                and bool(data_cfg.get("strict", False)),
+            )
         )
+        if is_stage2_v2_protocol(stage2_protocol):
+            if data_cfg.get("dgh_stats_path"):
+                raise ValueError(
+                    "greenearthnet_path_v2 cannot use legacy dgh_stats_path; "
+                    "provide conditioning_stats_path built from the frozen train manifest"
+                )
+            if data_cfg.get("disabled_driver_features"):
+                raise ValueError(
+                    "greenearthnet_path_v2 does not support legacy disabled_driver_features; "
+                    "use the explicit full24/core12 model choice in Commit B"
+                )
+            stats = {}
+            conditioning_stats = load_conditioning_stats_v2(
+                data_cfg.get("conditioning_stats_path"),
+                require=require_conditioning_stats,
+            )
+        else:
+            stats = _load_stats(
+                data_cfg.get("dgh_stats_path"),
+                expected_feature_names=driver_spec.feature_names,
+            )
+            conditioning_stats = None
         split_subdirs = data_cfg.get("split_subdirs")
         manifest_path = data_cfg.get("manifest_path")
         manifest_paths = data_cfg.get("manifest_paths") or {}
@@ -109,12 +165,28 @@ class EarthNet2021Config:
             split=requested_split,
             split_subdirs=split_subdirs if split_subdirs is not None else cls.__dataclass_fields__["split_subdirs"].default_factory(),
             data_format=str(data_cfg.get("data_format", "auto")).lower(),
+            stage2_protocol=stage2_protocol,
             file_glob=str(data_cfg.get("file_glob", "**/*.npz")),
             context_frames=int(data_cfg.get("context_frames", 10)),
             target_frames=int(data_cfg.get("target_frames", 20)),
             frame_interval_days=int(data_cfg.get("frame_interval_days", 5)),
             model_img_size=int(data_cfg.get("model_img_size", 256)),
             eval_img_size=int(data_cfg.get("eval_img_size", 128)),
+            context_img_size=(
+                int(data_cfg["context_img_size"])
+                if data_cfg.get("context_img_size") is not None
+                else None
+            ),
+            target_img_size=(
+                int(data_cfg["target_img_size"])
+                if data_cfg.get("target_img_size") is not None
+                else None
+            ),
+            geo_img_size=(
+                int(data_cfg["geo_img_size"])
+                if data_cfg.get("geo_img_size") is not None
+                else None
+            ),
             image_channels=int(data_cfg.get("image_channels", band_spec.in_channels)),
             target_channels=int(data_cfg.get("target_channels", band_spec.out_channels)),
             cloud_mask_channel=int(data_cfg.get("cloud_mask_channel", 6)),
@@ -130,6 +202,7 @@ class EarthNet2021Config:
                     ["nasa_dem", "alos_dem", "cop_dem"],
                 )
             ),
+            formal_dem_variable=str(data_cfg.get("formal_dem_variable", "cop_dem")),
             netcdf_solar_scale=float(data_cfg.get("netcdf_solar_scale", 0.0864)),
             validation_fraction=float(data_cfg.get("validation_fraction", 0.1)),
             validation_group=str(data_cfg.get("validation_group", "tile")),
@@ -141,6 +214,13 @@ class EarthNet2021Config:
             verify_manifest_hashes=bool(data_cfg.get("verify_manifest_hashes", False)),
             driver_mean=stats.get("driver_mean"),
             driver_std=stats.get("driver_std"),
+            conditioning_stats_path=(
+                str(data_cfg["conditioning_stats_path"])
+                if data_cfg.get("conditioning_stats_path")
+                else None
+            ),
+            conditioning_stats=conditioning_stats,
+            require_conditioning_stats=require_conditioning_stats,
             external_driver_root=data_cfg.get("external_driver_root"),
             external_driver_required=bool(data_cfg.get("external_driver_required", False)),
             disabled_driver_features=list(data_cfg.get("disabled_driver_features", [])),
@@ -157,6 +237,11 @@ class EarthNet2021Dataset(Dataset):
 
     def __init__(self, config: EarthNet2021Config):
         self.config = config
+        if not is_known_stage2_protocol(config.stage2_protocol):
+            raise ValueError(
+                "Unknown stage2_protocol="
+                f"{config.stage2_protocol!r}; use legacy_direct9 or greenearthnet_path_v2"
+            )
         self.files = _discover_npz_files(config)
         if not self.files:
             raise FileNotFoundError(
@@ -176,6 +261,11 @@ class EarthNet2021Dataset(Dataset):
         if data_format == "netcdf":
             sample = parse_earthnet_netcdf(path, self.config)
         else:
+            if is_stage2_v2_protocol(self.config.stage2_protocol):
+                raise ValueError(
+                    "greenearthnet_path_v2 is defined only for EarthNet2021x "
+                    "NetCDF minicubes; use legacy_direct9 for .npz data."
+                )
             with np.load(path, allow_pickle=True) as cube:
                 arrays = {k: cube[k] for k in cube.files}
             external_drivers, external_channel_map = _load_external_drivers(path, self.config)
@@ -190,7 +280,12 @@ class EarthNet2021Dataset(Dataset):
             "path": str(path),
             "sample_id": _canonical_cubename(path.name),
             "split": self.config.split,
+            "stage2_protocol": self.config.stage2_protocol,
         }
+        if is_stage2_v2_protocol(self.config.stage2_protocol):
+            stats = self.config.conditioning_stats or ConditioningStatsV2.identity()
+            sample["meta"]["conditioning_stats_source"] = stats.source
+            sample["meta"]["conditioning_manifest_sha256"] = stats.manifest_sha256
         return sample
 
 
@@ -222,6 +317,11 @@ def parse_earthnet_npz(
     external_drivers: Optional[np.ndarray] = None,
     external_channel_map: Optional[Dict[str, int]] = None,
 ) -> Dict[str, Any]:
+    if is_stage2_v2_protocol(config.stage2_protocol):
+        raise ValueError(
+            "greenearthnet_path_v2 requires NetCDF E-OBS fields and does not "
+            "silently reinterpret legacy .npz mesodynamic arrays."
+        )
     high = _select_required_array(arrays, HIGHRES_KEYS, ndim=4)
     high_tchw = _to_tchw(high, prefer_spatial=True).astype(np.float32)
     if high_tchw.shape[1] < config.image_channels:
@@ -269,6 +369,13 @@ def parse_earthnet_netcdf(
     s2_variables = ("s2_B02", "s2_B03", "s2_B04", "s2_B8A")
     weather_variables = ("eobs_rr", "eobs_tg", "eobs_hu", "eobs_qq")
     with xr.open_dataset(path, cache=False) as cube:
+        if is_stage2_v2_protocol(config.stage2_protocol):
+            return _parse_earthnet_netcdf_v2_cube(
+                cube=cube,
+                path=path,
+                config=config,
+                s2_variables=s2_variables,
+            )
         missing = [
             name
             for name in (*s2_variables, "s2_mask", *weather_variables)
@@ -331,6 +438,196 @@ def parse_earthnet_netcdf(
         driver_spec=netcdf_driver_spec,
         driver_time_offset_days=config.netcdf_s2_offset_days,
     )
+
+
+def _parse_earthnet_netcdf_v2_cube(
+    cube: Any,
+    path: Path,
+    config: EarthNet2021Config,
+    s2_variables: Sequence[str],
+) -> Dict[str, Any]:
+    """Parse one NetCDF cube under the frozen formal v2 protocol.
+
+    This function is deliberately separate from the legacy NetCDF branch.
+    Sharing the old four-field weather extraction or first-available DEM logic
+    would make a v2 run look valid while violating its published data contract.
+    """
+
+    _validate_v2_temporal_config(config)
+    if config.formal_dem_variable != "cop_dem":
+        raise ValueError(
+            "greenearthnet_path_v2 freezes G to formal_dem_variable='cop_dem'; "
+            f"got {config.formal_dem_variable!r}"
+        )
+    required = (*s2_variables, "s2_mask", *EOBS_NETCDF_VARIABLES, "cop_dem")
+    missing = [name for name in required if name not in cube.variables]
+    if missing:
+        raise KeyError(f"{path}: v2 protocol requires EarthNet2021x variables {missing}")
+
+    indices = slice(
+        config.netcdf_s2_offset_days,
+        None,
+        config.frame_interval_days,
+    )
+    image = np.stack(
+        [_xarray_to_thw(cube[name], name)[indices] for name in s2_variables],
+        axis=1,
+    ).astype(np.float32)
+    raw_mask = _xarray_to_thw(cube["s2_mask"], "s2_mask")[indices]
+    clear_mask = (
+        np.isfinite(raw_mask)
+        & (raw_mask <= 0)
+        & np.all(np.isfinite(image), axis=1)
+    ).astype(np.float32)
+
+    daily_raw = np.stack(
+        [
+            _xarray_to_time(cube[f"eobs_{variable}"], f"eobs_{variable}")
+            for variable in EOBS_VARIABLES
+        ],
+        axis=1,
+    ).astype(np.float32)
+    stats = config.conditioning_stats or load_conditioning_stats_v2(
+        config.conditioning_stats_path,
+        require=(config.require_conditioning_stats or config.strict),
+    )
+    conditioning = aggregate_eobs_path(daily_raw, stats)
+
+    raw_dem = _xarray_to_hw(cube["cop_dem"], "cop_dem")[None].astype(np.float32)
+    elevation, geo_mask = normalize_cop_dem(raw_dem, stats)
+    start_date = _xarray_start_date(cube) or _parse_start_date(path.name)
+    if config.strict and start_date is None:
+        raise ValueError(f"{path}: formal v2 requires a parseable first observation date")
+
+    return _format_stage2_v2_sample(
+        image=image,
+        clear_mask=clear_mask,
+        conditioning=conditioning,
+        elevation=elevation,
+        geo_mask=geo_mask,
+        config=config,
+        start_date=start_date,
+    )
+
+
+def _validate_v2_temporal_config(config: EarthNet2021Config) -> None:
+    expected = {
+        "context_frames": 10,
+        "target_frames": 20,
+        "frame_interval_days": 5,
+        "netcdf_s2_offset_days": 4,
+    }
+    mismatches = [
+        f"{name}={getattr(config, name)!r} (expected {value})"
+        for name, value in expected.items()
+        if getattr(config, name) != value
+    ]
+    if mismatches:
+        raise ValueError(
+            "greenearthnet_path_v2 uses a frozen 150-day/30-token protocol; "
+            + "; ".join(mismatches)
+        )
+
+
+def _format_stage2_v2_sample(
+    image: np.ndarray,
+    clear_mask: np.ndarray,
+    conditioning: Any,
+    elevation: np.ndarray,
+    geo_mask: np.ndarray,
+    config: EarthNet2021Config,
+    start_date: Optional[date],
+) -> Dict[str, Any]:
+    """Format image/condition tensors whose different spatial sizes are valid."""
+
+    if config.normalize:
+        image = _normalize_reflectance(image, config.band_spec)
+    total_steps = config.context_frames + config.target_frames
+    original_frames = image.shape[0]
+    if original_frames < total_steps:
+        if config.strict:
+            raise ValueError(
+                f"Formal v2 needs {total_steps} S2 frames, found {original_frames}"
+            )
+        image = np.concatenate(
+            [image, np.repeat(image[-1:], total_steps - original_frames, axis=0)],
+            axis=0,
+        )
+        clear_mask = np.concatenate(
+            [
+                clear_mask,
+                np.zeros(
+                    (total_steps - original_frames, *clear_mask.shape[-2:]),
+                    dtype=np.float32,
+                ),
+            ],
+            axis=0,
+        )
+    elif original_frames > total_steps:
+        image = image[:total_steps]
+        clear_mask = clear_mask[:total_steps]
+
+    x_context = image[: config.context_frames]
+    x_target = image[
+        config.context_frames:total_steps,
+        : config.target_channels,
+    ]
+    context_mask = clear_mask[: config.context_frames].copy()
+    target_mask = clear_mask[config.context_frames:total_steps].copy()
+    if original_frames < config.context_frames:
+        context_mask[original_frames:] = 0.0
+    if original_frames < total_steps:
+        target_mask[max(0, original_frames - config.context_frames):] = 0.0
+
+    context_img_size = config.context_img_size or config.model_img_size
+    target_img_size = config.target_img_size or config.eval_img_size
+    geo_img_size = config.geo_img_size or config.eval_img_size
+    if min(context_img_size, target_img_size, geo_img_size) <= 0:
+        raise ValueError("Stage2-v2 image sizes must all be positive")
+
+    h = (
+        np.arange(1, config.target_frames + 1, dtype=np.float32)
+        * float(config.frame_interval_days)
+    )
+    calendar_path = build_calendar_path(
+        start_date,
+        num_steps=total_steps,
+        days_per_step=config.frame_interval_days,
+    )
+    delta_t_path = build_delta_t_path(
+        num_steps=total_steps,
+        days_per_step=config.frame_interval_days,
+    )
+
+    return {
+        "x_context": _resize_tchw(
+            torch.from_numpy(x_context), context_img_size, mode="bilinear"
+        ).float(),
+        "x_target": _resize_tchw(
+            torch.from_numpy(x_target), target_img_size, mode="bilinear"
+        ).float(),
+        "context_mask": _resize_thw(
+            torch.from_numpy(context_mask), context_img_size, mode="nearest"
+        ).float(),
+        "target_mask": _resize_thw(
+            torch.from_numpy(target_mask), target_img_size, mode="nearest"
+        ).float(),
+        "D_path": torch.from_numpy(conditioning.values).float(),
+        "D_mask": torch.from_numpy(conditioning.mask).float(),
+        # This is an audit field, not a model input.  It enables preflight and
+        # experiment provenance to distinguish partial from total loss of data.
+        "D_valid_day_count": torch.from_numpy(conditioning.valid_day_count).long(),
+        "C_path": torch.from_numpy(calendar_path).float(),
+        "delta_t_path": torch.from_numpy(delta_t_path).float(),
+        "G": _resize_chw(
+            torch.from_numpy(elevation), geo_img_size, mode="bilinear"
+        ).float(),
+        "G_mask": _resize_chw(
+            torch.from_numpy(geo_mask), geo_img_size, mode="nearest"
+        ).float(),
+        "h": torch.from_numpy(h).float(),
+        "start_date": start_date.isoformat() if start_date is not None else None,
+    }
 
 
 def _format_stage2_sample(
@@ -432,9 +729,21 @@ def _format_stage2_sample(
 
 
 def collate_earthnet2021(batch: List[Dict[str, Any]]) -> Dict[str, Any]:
-    tensor_keys = ["x_context", "x_target", "context_mask", "target_mask", "D", "D_mask", "G", "G_mask", "h"]
-    out = {key: torch.stack([sample[key] for sample in batch], dim=0) for key in tensor_keys}
-    out["meta"] = [sample["meta"] for sample in batch]
+    if not batch:
+        raise ValueError("Cannot collate an empty EarthNet batch")
+    tensor_keys = [key for key, value in batch[0].items() if torch.is_tensor(value)]
+    for index, sample in enumerate(batch[1:], start=1):
+        actual = [key for key, value in sample.items() if torch.is_tensor(value)]
+        if actual != tensor_keys:
+            raise ValueError(
+                "EarthNet batch mixes tensor contracts: "
+                f"sample 0 keys={tensor_keys}, sample {index} keys={actual}"
+            )
+    out = {
+        key: torch.stack([sample[key] for sample in batch], dim=0)
+        for key in tensor_keys
+    }
+    out["meta"] = [sample.get("meta", {}) for sample in batch]
     out["start_date"] = [sample.get("start_date") for sample in batch]
     return out
 
