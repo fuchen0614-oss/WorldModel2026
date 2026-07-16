@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import json
 
-from data.earthnet_manifest import load_manifest_files
+import pytest
+
+from data.earthnet_manifest import load_manifest_files, write_json_atomic
 from scripts.freeze_earthnet2021x_protocol import freeze_protocol
 
 
@@ -45,3 +47,35 @@ def test_freeze_protocol_creates_explicit_development_and_test_manifests(tmp_pat
     assert val_files
     assert not train_files.intersection(val_files)
     assert train_files.union(val_files) == all_files
+    assert not list(output.parent.glob(f".{output.name}.staging-*"))
+
+
+def test_freeze_protocol_never_overwrites_an_existing_evidence_directory(tmp_path):
+    root = tmp_path / "earthnet2021x"
+    for tile in ("31AAA", "32BBB"):
+        _touch_cube(root, "train", tile, "2018-05-01", "2018-09-27")
+    _touch_cube(root, "iid", "31AAA", "2019-05-01", "2019-09-27")
+    _touch_cube(root, "ood", "34DDD", "2019-05-01", "2019-09-27")
+    _touch_cube(root, "extreme", "35EEE", "2018-01-31", "2018-11-26")
+    _touch_cube(root, "seasonal", "34DDD", "2017-05-28", "2020-04-11")
+
+    output = tmp_path / "frozen"
+    freeze_protocol(root, output, val_tile_count=1, seed=7)
+    before = (output / "protocol.json").read_bytes()
+
+    with pytest.raises(FileExistsError, match="immutable evidence"):
+        freeze_protocol(root, output, val_tile_count=1, seed=8)
+
+    assert (output / "protocol.json").read_bytes() == before
+    assert not list(output.parent.glob(f".{output.name}.staging-*"))
+
+
+def test_atomic_json_writer_leaves_no_temporary_file(tmp_path):
+    output = tmp_path / "manifest.json"
+    write_json_atomic({"schema_version": 1, "value": "完整"}, output)
+
+    assert json.loads(output.read_text(encoding="utf-8")) == {
+        "schema_version": 1,
+        "value": "完整",
+    }
+    assert not list(tmp_path.glob(".manifest.json.*.tmp"))

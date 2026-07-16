@@ -113,6 +113,11 @@ nice -n 10 python scripts/freeze_earthnet2021x_protocol.py \
   --hash-mode none
 ```
 
+`RUN_DIR` 必须是**尚不存在的新目录**；不要提前 `mkdir -p "$RUN_DIR"`，也不要用同一目录
+重跑。冻结器会在私有暂存目录中完成所有 JSON 后再一次性发布，若同名目录已经存在会拒绝覆盖，
+以免一次中断或重跑把两次实验的 manifest（清单）混在一起。需要重新冻结时，换一个带日期/版本的
+新目录。
+
 成功后快速查看协议：
 
 ```bash

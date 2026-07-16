@@ -13,8 +13,11 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
+import shutil
 import sys
+import uuid
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -30,6 +33,7 @@ from data.earthnet_manifest import (  # noqa: E402
     discover_split_files,
     resolve_dataset_root,
     write_manifest,
+    write_json_atomic,
 )
 
 
@@ -126,9 +130,45 @@ def select_validation_tiles(tiles: Iterable[str], *, count: int, seed: int) -> l
     return sorted(sorted(candidates, key=key)[:count])
 
 
-def _write_json(path: Path, payload: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+def _new_staging_directory(output: Path) -> Path:
+    """Create an unpublished sibling directory for an immutable protocol run.
+
+    A formal manifest set is a single evidence object, not seven unrelated
+    JSON files.  Building it below a private sibling directory and renaming
+    that directory only after every file is durable prevents a cancelled job
+    from exposing a half-frozen protocol at the requested output path.
+    """
+
+    if output.exists():
+        raise FileExistsError(
+            "Refusing to overwrite an existing frozen-protocol directory: "
+            f"{output}. Manifests are immutable evidence; choose a new output "
+            "directory for a new freeze attempt."
+        )
+    output.parent.mkdir(parents=True, exist_ok=True)
+    staging = output.with_name(
+        f".{output.name}.staging-{os.getpid()}-{uuid.uuid4().hex}"
+    )
+    staging.mkdir()
+    return staging
+
+
+def _publish_staging_directory(staging: Path, output: Path) -> None:
+    """Atomically make a complete frozen protocol visible at ``output``."""
+
+    if output.exists():
+        raise FileExistsError(f"Refusing to replace existing output directory: {output}")
+    os.replace(staging, output)
+    try:
+        descriptor = os.open(output.parent, os.O_RDONLY)
+    except OSError:
+        return
+    try:
+        os.fsync(descriptor)
+    except OSError:
+        pass
+    finally:
+        os.close(descriptor)
 
 
 def freeze_protocol(
@@ -145,6 +185,35 @@ def freeze_protocol(
     output = Path(output_dir).expanduser().resolve()
     if not dataset_root.is_dir():
         raise FileNotFoundError(f"EarthNet2021x root does not exist: {dataset_root}")
+
+    staging = _new_staging_directory(output)
+    try:
+        return _freeze_protocol_into_staging(
+            dataset_root,
+            staging,
+            output,
+            val_tile_count=val_tile_count,
+            seed=seed,
+            hash_mode=hash_mode,
+        )
+    except Exception:
+        # Only the private, unpublished staging directory is removed.  The
+        # requested output either does not exist or is a pre-existing immutable
+        # run which we refused to touch above.
+        shutil.rmtree(staging, ignore_errors=True)
+        raise
+
+
+def _freeze_protocol_into_staging(
+    dataset_root: Path,
+    staging: Path,
+    output: Path,
+    *,
+    val_tile_count: int,
+    seed: int,
+    hash_mode: str,
+) -> dict[str, Any]:
+    """Build every artifact privately, then publish it as one directory."""
 
     physical = {
         split: build_manifest(dataset_root, split, hash_mode=hash_mode)
@@ -211,11 +280,12 @@ def freeze_protocol(
         "seasonal": physical["seasonal"],
     }
 
-    output.mkdir(parents=True, exist_ok=True)
     manifest_paths: dict[str, str] = {}
     for name, manifest in manifests.items():
-        path = write_manifest(manifest, output / f"{name}.json")
-        manifest_paths[name] = str(path)
+        path = write_manifest(manifest, staging / f"{name}.json")
+        # Returned paths describe the published directory, never the private
+        # staging location which disappears after the final rename.
+        manifest_paths[name] = str(output / path.name)
 
     protocol = {
         "schema_version": 1,
@@ -256,8 +326,11 @@ def freeze_protocol(
             }.items()
         },
     }
-    _write_json(output / "protocol.json", protocol)
-    _write_json(output / "inventory.json", inventory)
+    write_json_atomic(inventory, staging / "inventory.json")
+    # ``protocol.json`` is deliberately written last: it is the human and
+    # machine-readable declaration that the complete manifest set is ready.
+    write_json_atomic(protocol, staging / "protocol.json")
+    _publish_staging_directory(staging, output)
     return {
         "output_dir": str(output),
         "protocol_path": str(output / "protocol.json"),

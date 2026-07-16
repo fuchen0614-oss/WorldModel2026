@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
@@ -175,13 +176,50 @@ def build_manifest_from_paths(
 
 
 def write_manifest(manifest: Mapping[str, Any], path: str | Path) -> Path:
+    """Atomically persist a manifest so readers never see half JSON."""
+
+    return write_json_atomic(dict(manifest), path)
+
+
+def write_json_atomic(payload: Mapping[str, Any], path: str | Path) -> Path:
+    """Persist a JSON sidecar through fsync plus atomic replacement.
+
+    Dataset manifests are later treated as immutable experiment evidence.  A
+    plain ``write_text`` can leave a truncated file if a NAS job is cancelled
+    mid-write, so every standalone manifest/sidecar writer shares this small
+    dependency-free primitive instead.
+    """
+
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(
-        json.dumps(dict(manifest), indent=2, ensure_ascii=False) + "\n",
-        encoding="utf-8",
-    )
+    temporary = output.with_name(f".{output.name}.{os.getpid()}.tmp")
+    try:
+        with temporary.open("w", encoding="utf-8") as handle:
+            json.dump(dict(payload), handle, indent=2, ensure_ascii=False)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, output)
+        _fsync_directory(output.parent)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
     return output
+
+
+def _fsync_directory(path: Path) -> None:
+    """Best-effort directory fsync; network filesystems may not support it."""
+
+    try:
+        descriptor = os.open(path, os.O_RDONLY)
+    except OSError:
+        return
+    try:
+        os.fsync(descriptor)
+    except OSError:
+        pass
+    finally:
+        os.close(descriptor)
 
 
 def load_manifest_files(

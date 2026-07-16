@@ -94,6 +94,9 @@ nice -n 10 python scripts/freeze_earthnet2021x_protocol.py \
   --hash-mode none
 ```
 
+这里的 `$RUN_DIR/manifests` 必须尚不存在；脚本会先在同级私有暂存目录写完全部文件，再原子发布，
+并拒绝覆盖已冻结的证据目录。若需要新的协议版本，请改 `RUN_DIR` 名称，而不是删除或覆盖旧清单。
+
 这会生成 `train_dev.json`、`val_dev.json`、`train_all.json`、`iid.json`、`ood.json`、
 `extreme.json`、`seasonal.json`；它们就是后续 stats、训练、预测和评分的唯一文件来源。
 
