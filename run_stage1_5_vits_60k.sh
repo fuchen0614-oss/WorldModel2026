@@ -30,11 +30,11 @@ export PATH="$CONDA_PREFIX/bin:$PATH"
 
 # 配置文件
 CONFIG="configs/train/stage1_5_dual_conditioned_vits_60k.yaml"
-LOG="/tmp/train_stage1_5_60k.log"
+LOG="/tmp/train_stage1_5_60k2.log"
 
 # 创建必要目录
-mkdir -p checkpoints/stage1_5_dual_conditioned_vits_60k
-mkdir -p logs/stage1_5_dual_conditioned_vits_60k
+mkdir -p checkpoints/stage1_5_dual_conditioned_vits_60k2
+mkdir -p logs/stage1_5_dual_conditioned_vits_60k2
 
 echo "配置文件: $CONFIG"
 echo "日志文件: $LOG"
@@ -57,10 +57,10 @@ echo "时间: $(date)"
 echo "=========================================="
 echo ""
 echo "Checkpoint 位置:"
-echo "  checkpoints/stage1_5_dual_conditioned_vits_60k/"
+echo "  checkpoints/stage1_5_dual_conditioned_vits_60k2/"
 echo ""
 echo "TensorBoard 日志:"
-echo "  logs/stage1_5_dual_conditioned_vits_60k/"
+echo "  logs/stage1_5_dual_conditioned_vits_60k2/"
 echo ""
 echo "查看训练日志:"
 echo "  tail -f $LOG"
