@@ -258,6 +258,18 @@ Stage2-0 数据契约与统计 ──> Stage2-D ──> Stage2-R ──> Stage2-
 
 这一步**仍然没有**实现 rollout（递推）、partition consistency（时间分割一致性）、正式统计量、正式 Stage1.5 权重接入或任何主实验数值。它的作用是先建立一个与后续世界模型共享输入、状态初始化、转移和解码器的公平 Direct24 对照，而不是把 Direct24 包装成世界模型结论。
 
+### 0.5 实施状态更新（2026-07-16，Commit C：开放循环 rollout）
+
+Commit C 在完全相同的 shared core（共享核心）上新增了 `ObsWorldRolloutModel`：
+
+- 每一步只向 `ControlledTransition` 传递当前五日 `D/C/delta_t` token；下一步状态严格来自上一步**预测**状态；没有 teacher forcing（教师强制）或未来 target 回灌；
+- 返回当前课程长度的完整 `z_rollout`，同时只解码被抽样监督的端点，因而可以在不牺牲开放循环语义的情况下控制显存；
+- 新增 `train/stage2_curriculum.py`，把“2 → 4 → 8 → 12 → 20 步”的课程写成配置数据。它是 optimizer step（优化器步数）的纯函数，checkpoint（检查点）会显式记录当前长度；续训时若配置的模式或当前长度与检查点冲突会停止，而不是悄悄改变实验；
+- 新增 `stage2_earthnet_v2_rollout24.yaml`。它通过 `_base_` 继承 Direct24 配置，只覆盖预测方式、开放循环开关、课程和输出目录，以保证两者的输入、decoder（解码器）、优化器和数据协议确实配对；
+- 新增 rollout 因果性、课程、配置继承和 factory（模型工厂）测试。
+
+这仍是 **Stage2-R**，不是完整主方法：尚未加入 variable-step 的直接/组合分支和 partition consistency 损失，故不能把当前 rollout 单独写成“可组合动力学已被证明”。
+
 ---
 
 ## 4. 当前代码审计：现在做到什么程度

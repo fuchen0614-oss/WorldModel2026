@@ -177,3 +177,14 @@ def test_factory_rejects_nonformal_direct24_dimensions():
     config["model"]["decoder"]["patch_size"] = 4
     with pytest.raises(ValueError, match="token count"):
         create_obsworld_v2_model(config)
+
+
+def test_factory_builds_shared_open_loop_rollout_wrapper():
+    config = _tiny_config()
+    config["model"]["forecast_mode"] = "rollout_t5_24d"
+    model = create_obsworld_v2_model(config).eval()
+    output = model(model_input_view(_batch()), selected_steps=[0, 1], max_rollout_steps=2)
+
+    assert model.forecast_mode == "rollout_t5_24d"
+    assert output["z_rollout"].shape == (1, 2, 4, 16)
+    assert output["pred"].shape == (1, 2, 4, 16, 16)

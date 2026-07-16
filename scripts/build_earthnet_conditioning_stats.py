@@ -28,7 +28,6 @@ from pathlib import Path
 from typing import Any, Sequence
 
 import numpy as np
-import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -41,6 +40,7 @@ from data.datasets.earthnet2021 import (
     _xarray_to_time,
 )
 from data.earthnet_conditioning import EOBS_VARIABLES, conditioning_schema_dict
+from train.train_stage2_earthnet import load_config
 
 
 class _RunningMoments:
@@ -222,8 +222,7 @@ def _load_train_files(
     manifest_path: str,
     max_files: int,
 ) -> tuple[list[Path], int, dict[str, Any]]:
-    with Path(config_path).open("r", encoding="utf-8") as handle:
-        config = yaml.safe_load(handle)
+    config = load_config(config_path)
     if not isinstance(config, dict) or not isinstance(config.get("data"), dict):
         raise ValueError(f"{config_path} must contain a top-level data mapping")
     data = config["data"]

@@ -1,0 +1,21 @@
+# Matched open-loop rollout baseline for the formal Stage2-v2 protocol.
+# All unspecified fields inherit from Direct24 so inputs, state initializer,
+# controlled transition width, decoder, optimizer and evaluator remain matched.
+
+_base_: stage2_earthnet_v2_direct24.yaml
+
+model:
+  forecast_mode: rollout_t5_24d
+
+training:
+  open_loop: true
+  teacher_forcing_future_state: false
+  rollout_curriculum:
+    - {start_step: 0, length: 2}
+    - {start_step: 2000, length: 4}
+    - {start_step: 6000, length: 8}
+    - {start_step: 12000, length: 12}
+    - {start_step: 20000, length: 20}
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_rollout24
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_rollout24

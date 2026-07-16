@@ -56,7 +56,7 @@ class ObsWorldDirectPathModel(nn.Module):
 
         assert_model_batch_has_no_evaluation_fields(batch)
         validate_stage2_v2_batch(batch, require_targets=False)
-        requested = _normalize_selected_steps(
+        requested = normalize_selected_steps(
             selected_steps,
             total_steps=self.target_steps,
             device=batch["D_path"].device,
@@ -126,7 +126,7 @@ class ObsWorldDirectPathModel(nn.Module):
         }
 
 
-def _normalize_selected_steps(
+def normalize_selected_steps(
     selected_steps: Optional[Iterable[int] | torch.Tensor],
     *,
     total_steps: int,

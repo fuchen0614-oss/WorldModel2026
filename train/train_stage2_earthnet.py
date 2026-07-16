@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 from contextlib import nullcontext
 import math
 import os
@@ -60,6 +61,11 @@ from models.encoders.pure_imaging_condition_encoder import PureImagingConditionE
 from models.encoders.state_projection import SpatialStateProjector
 from models.losses.earthnet_forecasting import EarthNetForecastLoss
 from eval.forecast_metrics import ForecastMetricAccumulator
+from train.stage2_curriculum import (
+    curriculum_checkpoint_state,
+    current_rollout_length,
+    is_rollout_forecast_mode,
+)
 from train.fsdp_utils import barrier, cleanup_distributed, is_main_process, setup_distributed
 
 
@@ -69,8 +75,44 @@ def log_main(message: str) -> None:
 
 
 def load_config(path: str) -> dict:
-    with open(path, "r", encoding="utf-8") as handle:
-        return yaml.safe_load(handle)
+    """Load YAML, optionally deep-merging a nearby ``_base_`` configuration.
+
+    Stage2 variants differ mainly in forecast wrapper and training losses.  A
+    small explicit inheritance mechanism keeps Direct24/Rollout/Partition
+    configs matched rather than inviting a silent drift in decoder width or
+    data protocol.  Lists are intentionally replaced, not concatenated.
+    """
+
+    return _load_config_path(Path(path), ancestors=())
+
+
+def _load_config_path(path: Path, *, ancestors: tuple[Path, ...]) -> dict:
+    source = path.expanduser().resolve()
+    if source in ancestors:
+        chain = " -> ".join(str(item) for item in (*ancestors, source))
+        raise ValueError(f"Cyclic Stage2 config _base_ chain: {chain}")
+    with source.open("r", encoding="utf-8") as handle:
+        payload = yaml.safe_load(handle)
+    if not isinstance(payload, dict):
+        raise TypeError(f"Config {source} must be a top-level mapping")
+    base = payload.pop("_base_", None)
+    if base is None:
+        return payload
+    if not isinstance(base, str) or not base.strip():
+        raise TypeError(f"Config {source} _base_ must be a non-empty relative path")
+    base_path = (source.parent / base).resolve()
+    inherited = _load_config_path(base_path, ancestors=(*ancestors, source))
+    return _deep_merge_config(inherited, payload)
+
+
+def _deep_merge_config(base: dict, override: dict) -> dict:
+    result = copy.deepcopy(base)
+    for key, value in override.items():
+        if isinstance(value, dict) and isinstance(result.get(key), dict):
+            result[key] = _deep_merge_config(result[key], value)
+        else:
+            result[key] = copy.deepcopy(value)
+    return result
 
 
 def move_batch_to_device(batch: dict, device: torch.device) -> dict:
@@ -101,14 +143,24 @@ def forward_stage2_model(
     batch: dict,
     *,
     selected_steps: Optional[torch.Tensor] = None,
+    max_rollout_steps: Optional[int] = None,
 ) -> dict:
     """Forward only the protocol-approved batch partition through the model."""
 
     raw_model = model.module if isinstance(model, DDP) else model
     include_targets = bool(getattr(raw_model, "compute_latent_targets", False))
     inputs = model_input_view(batch, include_training_targets=include_targets)
-    if getattr(raw_model, "forecast_mode", None) == "direct_path_24d":
+    forecast_mode = getattr(raw_model, "forecast_mode", None)
+    if forecast_mode == "direct_path_24d":
+        if max_rollout_steps is not None:
+            raise ValueError("Direct24 does not accept max_rollout_steps")
         return model(inputs, selected_steps=selected_steps)
+    if is_rollout_forecast_mode(forecast_mode):
+        return model(
+            inputs,
+            selected_steps=selected_steps,
+            max_rollout_steps=max_rollout_steps,
+        )
     if selected_steps is not None:
         raise ValueError(
             "selected_steps is supported only by the Stage2-v2 Direct24 model; "
@@ -431,14 +483,18 @@ def select_v2_horizon_indices(
     horizons_per_sample: int,
     *,
     device: torch.device,
+    always_include_last: bool = False,
 ) -> Optional[torch.Tensor]:
     """Choose Direct24 supervision endpoints without mutating the v2 batch.
 
     Direct24 needs the complete ``D_path`` to construct each legal prefix;
     slicing the batch in the legacy way would lose the first-future alignment.
     We therefore ask the model to decode a subset and slice *only* the
-    supervision tensors afterwards.  Returning ``None`` means full 20-step
-    decoding, which is used by validation and by small smoke runs.
+    supervision tensors afterwards.  ``always_include_last`` reserves the
+    longest currently available endpoint (100 days once the curriculum reaches
+    20) for the formal long-range evidence. Returning ``None`` means decode
+    every currently available step, which is used by validation and early
+    short-rollout curriculum phases.
     """
 
     if target_steps <= 0:
@@ -459,11 +515,15 @@ def select_v2_horizon_indices(
         group_order = (groups[0], groups[2])
     else:
         group_order = groups
-    chosen: list[int] = []
+    chosen: list[int] = [target_steps - 1] if always_include_last else []
     for group in group_order:
         if len(chosen) >= horizons_per_sample or group.numel() == 0:
             continue
-        chosen.append(int(group[torch.randint(group.numel(), (1,), device=device)].item()))
+        candidates = [value for value in group.tolist() if int(value) not in chosen]
+        if candidates:
+            chosen.append(
+                int(candidates[torch.randint(len(candidates), (1,), device=device).item()])
+            )
 
     available = torch.tensor(
         [index for index in range(target_steps) if index not in chosen],
@@ -538,6 +598,7 @@ def save_checkpoint(
         "scheduler_state_dict": scheduler.state_dict(),
         "config": config,
         "best_validation": best_validation,
+        "curriculum": curriculum_checkpoint_state(config, step),
         "rng_state": {
             "python": random.getstate(),
             "numpy": np.random.get_state(),
@@ -829,6 +890,10 @@ def main():
     coverage = _log_driver_coverage(dataset, data_cfg)
     is_v2 = is_stage2_v2_protocol(data_cfg.stage2_protocol)
     if is_v2:
+        # Validate curriculum structure before allocating a large model.  This
+        # is also the explicit guard against accidentally enabling teacher
+        # forcing under a rollout-named configuration.
+        current_rollout_length(config, optimizer_step=0)
         if bool(config["training"].get("require_dgh_stats", False)):
             raise ValueError(
                 "earthnet2021x_path_v2 must not require legacy DGH statistics; "
@@ -970,6 +1035,17 @@ def main():
         if resume_checkpoint.get("best_validation"):
             best_validation = dict(resume_checkpoint["best_validation"])
         restore_rng_state(resume_checkpoint)
+        saved_curriculum = resume_checkpoint.get("curriculum")
+        if saved_curriculum is not None:
+            expected_curriculum = curriculum_checkpoint_state(config, optimizer_step)
+            for name in ("forecast_mode", "rollout_length"):
+                if saved_curriculum.get(name) != expected_curriculum.get(name):
+                    raise ValueError(
+                        "Stage2 resume curriculum differs from the checkpoint: "
+                        f"{name} saved={saved_curriculum.get(name)!r}, "
+                        f"configured={expected_curriculum.get(name)!r}. "
+                        "Do not resume a Direct/rollout run under a changed schedule."
+                    )
         log_main(f"resumed Stage2 from {resume_from} at optimizer_step={optimizer_step}")
     loss_fn = EarthNetForecastLoss.from_config(
         config["loss"],
@@ -1000,11 +1076,23 @@ def main():
         for batch in loader:
             batch = move_batch_to_device(batch, device)
             selected_steps = None
+            max_rollout_steps = None
             if is_stage2_v2_batch(batch):
+                raw_model = model.module if isinstance(model, DDP) else model
+                rollout_mode = is_rollout_forecast_mode(
+                    getattr(raw_model, "forecast_mode", None)
+                )
+                available_steps = (
+                    current_rollout_length(config, optimizer_step)
+                    if rollout_mode
+                    else batch["x_target"].shape[1]
+                )
+                max_rollout_steps = available_steps if rollout_mode else None
                 selected_steps = select_v2_horizon_indices(
-                    batch["x_target"].shape[1],
+                    available_steps,
                     horizons_per_sample,
                     device=device,
+                    always_include_last=True,
                 )
             else:
                 batch = select_horizons(batch, horizons_per_sample)
@@ -1021,6 +1109,7 @@ def main():
                         model,
                         batch,
                         selected_steps=selected_steps,
+                        max_rollout_steps=max_rollout_steps,
                     )
                     supervision = stage2_supervision_for_output(batch, out)
                     losses = loss_fn(
@@ -1086,6 +1175,18 @@ def main():
                             )
                         for name, value in log.items():
                             writer.add_scalar(f"train/{name}", value, optimizer_step)
+                        if "rollout_steps" in out:
+                            writer.add_scalar(
+                                "train/rollout_steps",
+                                float(out["rollout_steps"].detach().cpu()),
+                                optimizer_step,
+                            )
+                        if "state_delta_norm" in out:
+                            writer.add_scalar(
+                                "train/state_delta_norm",
+                                float(out["state_delta_norm"].detach().float().mean().cpu()),
+                                optimizer_step,
+                            )
 
                 if (
                     validation_interval > 0

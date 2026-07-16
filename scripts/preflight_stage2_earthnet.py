@@ -11,7 +11,6 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 import torch
-import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -31,14 +30,14 @@ from data.earthnet_conditioning import (
 from data.stage2_contract import validate_stage2_v2_batch
 from train.train_stage2_earthnet import (
     create_stage2_model,
+    load_config,
     load_stage2_model_state,
     require_stage15_initializer_if_formal,
 )
 
 
 def _load_yaml(path: str) -> dict:
-    with open(path, "r", encoding="utf-8") as handle:
-        return yaml.safe_load(handle)
+    return load_config(path)
 
 
 def _min_driver_valid_fraction(config: dict) -> float:

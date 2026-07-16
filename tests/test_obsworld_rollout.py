@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import pytest
 
+
 torch = pytest.importorskip("torch")
 nn = torch.nn
 
-from models.dynamics.obsworld_direct_path import ObsWorldDirectPathModel
+from models.dynamics.obsworld_rollout import ObsWorldRolloutModel
 
 
 class _TinyCore(nn.Module):
@@ -23,12 +24,11 @@ class _TinyCore(nn.Module):
 
     def decode_states(self, states):
         batch, steps = states.shape[:2]
-        # A deterministic decoder that exposes every endpoint state's first dim.
         value = states[..., 0].mean(dim=2).view(batch, steps, 1, 1, 1)
         return {"mean": value.expand(batch, steps, 4, 2, 2)}
 
 
-class _PrefixSumTransition(nn.Module):
+class _AdditiveTransition(nn.Module):
     def forward(
         self,
         state,
@@ -40,16 +40,13 @@ class _PrefixSumTransition(nn.Module):
         *,
         return_diagnostics=False,
     ):
+        assert d_segment.shape[1] == 1  # rollout must use local 5-day tokens
         delta = (d_segment * d_mask_segment).sum(dim=(1, 2)).view(-1, 1, 1)
         next_state = state + delta
         if not return_diagnostics:
             return next_state
         return {
             "state": next_state,
-            # ``delta`` is broadcast over state tokens as [B,1,1].  The
-            # production transition reports a vector diagnostic per sample,
-            # so flatten the two singleton axes before constructing the tiny
-            # stand-in summary.
             "driver_summary": delta.reshape(-1, 1).expand(-1, 3),
             "driver_observed_fraction": d_mask_segment.mean(dim=-1),
         }
@@ -70,31 +67,32 @@ def _batch() -> dict:
     }
 
 
-def test_direct_path_uses_only_prefix_weather_for_each_endpoint():
-    model = ObsWorldDirectPathModel(_TinyCore(), _PrefixSumTransition())
-    base = _batch()
-    changed = _batch()
-    # Future local index 7 is D_path index 17; it must not affect endpoints
-    # before index 7 and must affect that endpoint and all later endpoints.
-    changed["D_path"][:, 17, 0] = 3.0
-
-    first = model(base)
-    second = model(changed)
-
-    assert first["pred"].shape == (1, 20, 4, 2, 2)
-    assert torch.equal(first["step_indices"], torch.arange(20))
-    assert torch.allclose(first["pred"][:, :7], second["pred"][:, :7])
-    assert not torch.allclose(first["pred"][:, 7:], second["pred"][:, 7:])
-
-
-def test_direct_path_ignores_future_target_tensors_and_supports_subset_decoding():
-    model = ObsWorldDirectPathModel(_TinyCore(), _PrefixSumTransition())
+def test_rollout_reuses_predicted_state_and_is_causal_in_future_driver_order():
+    model = ObsWorldRolloutModel(_TinyCore(), _AdditiveTransition())
     batch = _batch()
-    base = model(batch, selected_steps=[0, 5, 19])
-    batch["x_target"] = torch.rand(1, 20, 4, 2, 2)
-    batch["target_mask"] = torch.zeros(1, 20, 2, 2)
-    with_targets = model(batch, selected_steps=[0, 5, 19])
+    # D_path index 12 is local future step 2.  It cannot affect rollout
+    # states at 5/10 days, but does affect every later recursive state.
+    batch["D_path"][:, 12, 0] = 2.0
 
-    assert torch.equal(base["step_indices"], torch.tensor([0, 5, 19]))
-    assert base["pred"].shape[1] == 3
-    assert torch.allclose(base["pred"], with_targets["pred"])
+    output = model(batch, selected_steps=[0, 1, 2, 4], max_rollout_steps=5)
+
+    assert output["z_rollout"].shape == (1, 5, 4, 3)
+    assert output["step_indices"].tolist() == [0, 1, 2, 4]
+    values = output["z_rollout"][0, :, 0, 0].tolist()
+    assert values == [0.0, 0.0, 2.0, 2.0, 2.0]
+    assert output["pred"].shape == (1, 4, 4, 2, 2)
+
+
+def test_short_rollout_default_decodes_only_active_curriculum_prefix():
+    model = ObsWorldRolloutModel(_TinyCore(), _AdditiveTransition())
+    output = model(_batch(), max_rollout_steps=2)
+
+    assert output["step_indices"].tolist() == [0, 1]
+    assert int(output["rollout_steps"]) == 2
+    assert output["pred"].shape[1] == 2
+
+
+def test_rollout_rejects_supervision_endpoint_beyond_curriculum_length():
+    model = ObsWorldRolloutModel(_TinyCore(), _AdditiveTransition())
+    with pytest.raises(ValueError, match="outside the active rollout"):
+        model(_batch(), selected_steps=[2], max_rollout_steps=2)
