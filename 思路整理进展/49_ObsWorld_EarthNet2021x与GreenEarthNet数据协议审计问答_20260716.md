@@ -1,22 +1,18 @@
-# 49. ObsWorld：EarthNet2021x 与 GreenEarthNet 数据协议审计问答
+# 49. ObsWorld：EarthNet2021x 数据协议定稿与 GreenEarthNet 历史审计问答
 
 > 日期：2026-07-16  
-> 状态：**当前数据协议仲裁文件。**它修正 43–48 中把“目录/发布名”和“论文评测协议”直接画等号的表述。模型的 DGH、世界模型叙事与 Stage1.5 投入不变；未通过本文件的审计闸门前，不启动长期 Stage2 正式训练，也不在论文中声称某一种官方协议。  
-> 代码对应：`scripts/audit_greenearthnet_layout.py`（只读审计，不下载、不改数据、不占 GPU）。
+> 状态：**历史审计说明，数据决策已定稿。**服务器 `EarthNet2021/earthnet2021x` 的 metadata audit（元数据审计）为 `PASS`：`train=23,816`、`iid=4,205`、`ood=4,202`、`extreme=3,972`、`seasonal=3,880`，并通过 8 个 E-OBS、`cop_dem` 与官方评分字段的抽样检查。当前 Stage2 固定只用这套 raw EarthNet2021x 数据和 EarthNet2021 standard 协议；GreenEarthNet 目录不下载、不合并、不作为本轮主表依据。
+> 代码对应：`scripts/audit_earthnet2021x.py`（当前只读审计）以及 `scripts/audit_greenearthnet_layout.py`（保留作未来独立扩展，不是当前闸门）。
 
 ---
 
 ## 一句话结论
 
-**现在不需要重新下载，也不需要立刻二选一。**服务器上的
-`EarthNet2021/earthnet2021x` 是当前唯一可靠的原始训练数据根；另一个
-`GreenEarthNet` 目录含有若干 `*_chopped`（切分后的）轨道。两者很可能属于同一
-EarthNet/GreenEarthNet 数据家族，但在字段、样本身份和官方验证轨道被机器审计前，
-**不能混用后直接称为“官方 GreenEarthNet”，也不能把 `earthnet2021x` 这个名字自动
-写成“原始 EarthNet2021 ENS 协议”。**
-
-后续 Stage2-v2 的数据接口、24-D DGH 路径、Direct24、rollout（递推）和 partition
-（时间分割一致性）可以继续开发；它们不依赖最终选择哪一个官方评估器。
+**不重新下载，也不再二选一。**当前主线固定为服务器已有的
+`EarthNet2021/earthnet2021x` raw release：`train` 训练、`val_dev` 开发选择、`iid/ood`
+主评测、`extreme/seasonal` 压力测试，并使用同一套 EarthNet2021 standard evaluator
+（官方评估器）。另一个 `GreenEarthNet` 目录及其 `*_chopped` 轨道不进入本轮训练、验证、
+预测导出或主表；以下涉及 Green 的问答只解释此前为何需要区分目录名称，不能覆盖这一最终决定。
 
 ## Q1：为什么会有 EarthNet2021、EarthNet2021x 和 GreenEarthNet 三个名字？
 
@@ -41,18 +37,20 @@ EarthNet/GreenEarthNet 数据家族，但在字段、样本身份和官方验证
 
 ## Q3：现在推荐用哪一套做主实验？
 
-**短期推荐：先固定原始训练根，先不把论文主评测协议写死。**
+**最终推荐：固定 raw EarthNet2021x，不换数据集。**
 
-1. **训练数据根不变**：继续使用
-   `/TrainData/EarthNet2021/earthnet2021x/train`。它已有完整训练规模，且当前
-   Stage2-v2 loader（加载器）正是为这类 150 天 NetCDF、8 个 E-OBS 字段和 `cop_dem`
-   写的；不需要重下。
-2. **主评测协议由审计决定**：
-   - 若 `GreenEarthNet` 中确有 `val_chopped`，且 train/val/`ood-t_chopped` 的字段、时间和样本身份都能通过审计：主文优先采用 **GreenEarthNet CVPR-2024**，主测试是 `ood-t_chopped`，使用现有的 Green NetCDF evaluator；这是与 Contextformer 等前沿工作最直接可比的方案。
-   - 若 `val_chopped` 确实缺失，或 raw/chopped 文件的 schema（字段结构）不兼容：不要硬拼。主文改用 **原始 EarthNet2021 ENS** 的 `iid/ood` 主表，`extreme/seasonal` 为补充；不得把 ENS 分数和 Green 分数放在同一张数字表里比较。
-3. **开发阶段仍可推进**：即使 Green 官方验证轨道暂缺，也可以只在 raw `train` 内做确定性 tile holdout（地图格留出）来验证 Direct24/rollout/partition 代码、小样本过拟合和 one-seed（单随机种子）方向。它是开发验证，不能伪称官方 `val_chopped`。
+1. **训练数据根**：继续使用
+   `/TrainData/EarthNet2021/earthnet2021x/train`。它已有完整训练规模，且 Stage2-v2
+   loader（加载器）正是为其 150 天 NetCDF、8 个 E-OBS 字段和 `cop_dem` 写的；不需要重下。
+2. **开发与选择**：由 frozen manifest（冻结清单）从 `train` 按 tile（地图格）划分
+   `train_dev/val_dev`；只有 `val_dev` 用于 best checkpoint（最佳检查点）选择和超参数判断。
+3. **论文主表**：`iid + ood`；**压力测试**：`extreme + seasonal`。训练、开发验证和测试
+   使用互不重叠的 manifest，EarthNetScore（ENS）与内部 RGBN/NDVI 指标均在同一口径下报告。
+4. **GreenEarthNet**：不作为本轮对照、测试或“更高版本数据集”的替换。以后若另起扩展，
+   必须有单独的数据根、manifest、训练运行和表格，不能与这套 ENS 数字混在一起。
 
-因此并不是“换数据集”。更准确的说法是：**同一 EarthNet 家族的现有数据已足够支持开发；只需用一次小型、只读审计把最终评测协议定准。**
+因此不是“退而求其次”，而是**使用已经完整、可审计、与现有 DGH/Stage1.5 完全匹配的
+EarthNet2021x raw release，把世界模型方法和实验论证先做扎实。**
 
 ## Q4：服务器上现在应运行什么？
 
@@ -64,44 +62,44 @@ git pull --ff-only origin main
 source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
 
 RAW_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021/earthnet2021x
-EVAL_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet
-REPORT=reports/greenearthnet_protocol/audit_layout_20260716.json
+REPORT=reports/earthnet_protocol/audit_metadata.json
 
-nice -n 10 python scripts/audit_greenearthnet_layout.py \
-  --raw-root "$RAW_ROOT" \
-  --eval-root "$EVAL_ROOT" \
-  --sample-schema \
-  --max-files-per-group 4 \
+nice -n 10 python scripts/audit_earthnet2021x.py \
+  --root "$RAW_ROOT" \
+  --required-splits train iid ood extreme seasonal \
+  --schema earthnet2021x-standard \
+  --scan-mode metadata \
+  --max-files-per-split 64 \
   --output "$REPORT"
 
 python - <<'PY'
 import json
 from pathlib import Path
-p = Path("reports/greenearthnet_protocol/audit_layout_20260716.json")
+p = Path("reports/earthnet_protocol/audit_metadata.json")
 r = json.loads(p.read_text())
-print(json.dumps(r["readiness"], indent=2, ensure_ascii=False))
+print(r["status"])
+print({name: item["num_files"] for name, item in r["splits"].items()})
 PY
 ```
 
-如果想把它作为“完整 Green 主协议”闸门再严格运行一次，只需追加
-`--strict-main`：
+随后冻结本轮所有清单（这一步只读取路径、文件名和大小）：
 
 ```bash
-nice -n 10 python scripts/audit_greenearthnet_layout.py \
-  --raw-root "$RAW_ROOT" \
-  --eval-root "$EVAL_ROOT" \
-  --sample-schema \
-  --max-files-per-group 4 \
-  --strict-main \
-  --output "$REPORT"
+RUN_DIR=artifacts/earthnet2021_standard
+nice -n 10 python scripts/freeze_earthnet2021x_protocol.py \
+  --root "$RAW_ROOT" \
+  --output-dir "$RUN_DIR/manifests" \
+  --val-tile-count 8 \
+  --seed 20260716 \
+  --hash-mode none
 ```
 
-此时返回码 `0` 才表示目录和抽样字段满足 Green 主协议的**最低布局条件**；返回码
-`2` 通常只是缺少 `val_chopped`，不是训练坏了，更不是要求立刻下载。报告会写明缺什么。
+这会生成 `train_dev.json`、`val_dev.json`、`train_all.json`、`iid.json`、`ood.json`、
+`extreme.json`、`seasonal.json`；它们就是后续 stats、训练、预测和评分的唯一文件来源。
 
 ## Q5：为什么不能把 raw `train` 和 `ood-t_chopped` 直接拼起来？
 
-**答：可以在审计通过后作为“两个数据根组成的同一协议”使用，但不能靠猜。**
+**答：本轮不这样做。**
 
 需要同时确认四件事：
 
@@ -110,25 +108,25 @@ nice -n 10 python scripts/audit_greenearthnet_layout.py \
 3. 两边的日期/坐标和样本命名没有错位，且不是把相同地点时间泄漏到 train 和 OOD；
 4. 正式 manifest（文件清单）能明确记录每个文件来自哪一个根，不能用递归 glob（全目录模糊扫描）偷偷混入其它目录。
 
-本次新增审计脚本先完成第 1–2 项的目录和抽样字段检查。第 3–4 项会在后续 Green manifest/导出评测提交中实现；在那之前，代码不会自动把两根数据合并。
+本项目代码会拒绝把两根数据自动合并；即使未来扩展，也必须重新训练并单独报告，不能把
+raw EarthNet 训练与 chopped 评分包装成同一主实验。
 
 ## Q6：这对 DGH、phi 和“模拟真实世界”叙事有什么影响？
 
 **几乎没有负面影响，反而让主张更准确。**
 
-- `D`：仍是 8 个 E-OBS 气象字段的 24-D 五日路径；这是在 raw NetCDF 上构建的，与最终采用 ENS 或 Green evaluator 无冲突。
+- `D`：仍是 8 个 E-OBS 气象字段的 24-D 五日路径；它直接建立在 raw NetCDF 上，并由 EarthNet2021 standard 指标核验。
 - `G`：仍固定 `cop_dem`；`C`（日历）和 `Δt`（真实五日步长）仍与 D 分离。
 - `phi`：固定 Sentinel-2 主任务不虚构未来太阳角/几何；Stage1.5 仍作为更好状态初始化的候选，而不是被丢弃。
 - 世界模型：真正需要证明的是**受驱动的开环状态递推、时间可组合性和可观测未来核验**。这三点由 Direct24、rollout 和 partition 对照来证明，不依赖把数据集改名。
 
 ## Q7：接下来代码工作按什么顺序？
 
-1. 完成当前只读数据审计与报告；不等待全量字段扫描才能写模型。
-2. 完成 Commit B：同一 24-D 路径条件下的 matched Direct24（公平直接预测对照）。
-3. 完成 Commit C：共享五日转移的 20 步开环 rollout（递推）。
-4. 完成 Commit D：10 天与 5+5 天的 partition consistency（时间分割一致性）约束。
-5. 审计确定最终评测协议后，再把 manifest、导出器、official evaluator（官方评估器）和主表统一到一个不可混用的配置中。
-6. 先跑 32–128 个 cube 的小样本过拟合和 one-seed Gate，方向成立才投入多随机种子正式训练。
+1. 完成当前 raw 数据清单冻结与完整 train-only conditioning stats（条件统计）。
+2. E-2：把 checkpoint、预测清单、EarthNetScore 结果绑定为不可混用的来源记录。
+3. 对 Direct24、rollout24、partition24 分别跑 32–128 个 cube 的小样本过拟合。
+4. 跑 one-seed Gate（单随机种子闸门）：Direct/rollout/partition 与 D 干预证据。
+5. 方向成立后再进行三随机种子主实验与置信区间。
 
 ## 相关来源与文件
 
@@ -137,4 +135,3 @@ nice -n 10 python scripts/audit_greenearthnet_layout.py \
 - [EarthNet2021 原论文](https://openaccess.thecvf.com/content/CVPR2021W/EarthVision/papers/Requena-Mesa_EarthNet2021_A_Large-Scale_Dataset_and_Challenge_for_Earth_Surface_Forecasting_CVPRW_2021_paper.pdf)：ENS 和原始 split 的背景。
 - `scripts/audit_greenearthnet_layout.py`：这次新增的可执行审计。
 - `47_ObsWorld_Stage2正式代码技术指导与实现规范_20260716.md`：后续 Direct24/rollout/partition 具体实现规范。
-

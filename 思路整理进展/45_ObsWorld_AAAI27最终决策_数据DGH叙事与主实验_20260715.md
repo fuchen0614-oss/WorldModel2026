@@ -5,14 +5,14 @@
 > 范围：整理思路与实验，本轮**不修改训练代码、不中断正在运行的 Stage1.5**  
 > 继承关系：保留 43 的代码/协议审计和 44 的 EarthNet+DGH+世界模型主线；本文更正 44 中“默认需要换/重下数据”和“L1C/L2A product Gate 必须进主文”的过强暗示。
 
-> **数据协议仲裁更新（2026-07-16）：**本文关于数据集、验证、主表、指标和清单的旧表述，统一以 [`49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md`](49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md) 为准。48 的“EarthNet2021 ENS”方案是审计无法组成 Green 官方轨道时的后备分支，不再是未经核验的唯一结论。
+> **数据协议最终更新（2026-07-16）：**本文的数据集、验证、主表、指标和清单统一固定为 raw EarthNet2021x 的 EarthNet2021 standard 协议：`train`、开发用 `val_dev`、主测试 `iid/ood`、补充压力测试 `extreme/seasonal`。48 现在是该固定协议的实施说明；GreenEarthNet 不进入本轮实验。
 
 ---
 
 ## 0. 现在就可以拍板的七个结论
 
 1. **数据集不是非换不可，现在默认不重新下载。**现有主配置已写 `dataset: earthnet2021x` 和 `data_format: netcdf`，只是根目录叫 `EarthNet2021`。服务器已有原始 `train/iid/ood/extreme/seasonal` release；先审计并冻结清单，只增量补缺失或损坏文件。
-2. **论文仍属于 EarthNet family（EarthNet 数据家族）主线。**`earthnet2021x` 同时也是 GreenEarthNet 的开发别名；正式论文表述必须等待 49 的 audit（审计）选择 ENS 分支或 GreenEarthNet CVPR-2024 分支，不能提前把两者写成同一协议。
+2. **论文固定属于 EarthNet2021x raw release 主线。**正式表述使用 EarthNet2021 standard 的 train/IID/OOD/Extreme/Seasonal 协议；不把本地另一个 GreenEarthNet 目录或 `*_chopped` 文件混入这一口径。
 3. **DGH 保留，不改名，不推倒。**需要改的是 DGH 如何进入动力学：`D` 从终点累计摘要变为逐区间驱动路径，`G` 保持空间 DEM 背景，`H` 从 endpoint 编号升级为共享转移的 `Δt`。
 4. **不否定 Stage1/1.5 已有 `phi` 工作。**已有字段构建、条件自重建、S1/S2 近时对齐、nuisance loss 和泄漏 probe；现在需要的是修复验收逻辑并检验它是否提升 Stage2，不是默认重练。
 5. **L1C/L2A 不是 AAAI-27 必做项。**它是更干净的 product-conditioned observation 增强证据，但会引入新下载和新训练。当前主文使用现有 S1/S2 + Stage1/1.5 证据；L1C/L2A 放截稿后。
@@ -379,9 +379,9 @@ CPU/I/O 线：all-8 schema 审计 → EarthNetScore 评分闭环 → 24-D 主协
 
 ---
 
-## 3. 数据集的候选口径与最终闸门
+## 3. 固定数据口径与执行闸门
 
-### 3.1 仅当 ENS 后备分支被选中时的论文写法
+### 3.1 论文写法
 
 > **We evaluate ObsWorld on the EarthNet2021x NetCDF release under the EarthNet2021 train/IID/OOD/Extreme/Seasonal protocol.**
 
@@ -389,16 +389,16 @@ CPU/I/O 线：all-8 schema 审计 → EarthNetScore 评分闭环 → 24-D 主协
 
 > **我们在 EarthNet2021x 的 NetCDF 数据发布上，按照 EarthNet2021 的训练、IID、OOD、极端事件和季节循环协议评测 ObsWorld。**
 
-当前服务器数据的时间范围、文件数和目录结构证明 raw release 支持上述五个物理目录；它**不单独证明**这就是最终论文评测协议。若 49 的 Green audit 通过，应改用 GreenEarthNet CVPR-2024 的写法和 evaluator；论文不写任何本地未拥有、未冻结的额外测试轨道。
+当前服务器 metadata audit 已对 raw release 的五个物理目录、8 个 E-OBS、`cop_dem` 和官方评分字段给出 `PASS`。论文不写任何本地未拥有、未冻结的额外测试轨道，也不混入 GreenEarthNet 的 chopped 文件。
 
 ### 3.2 当前所需数据
 
 | 数据 | AAAI-27 身份 | 是否重下 |
 |---|---|---|
 | EarthNet2021x `train` | Stage2 训练 | 否，先审计现有目录 |
-| `iid` | ENS 后备分支的同分布主测试 | 否，先审计 |
-| `ood` | ENS 后备分支的空间域外主测试 | 否，先审计 |
-| `extreme/seasonal` | ENS 后备分支的极端/长时程补充测试 | 已有，不重下 |
+| `iid` | 同分布主测试 | 否，已审计 |
+| `ood` | 空间域外主测试 | 否，已审计 |
+| `extreme/seasonal` | 极端/长时程补充测试 | 已有，不重下 |
 | SSL4EO S1GRD/S2L2A | Stage1/1.5 | 已有，继续用 |
 | SSL4EO S2L1C | 可选 product Gate | AAAI-27 不下 |
 | 下游数据 | 可选附录 | AAAI-27 不新增 |

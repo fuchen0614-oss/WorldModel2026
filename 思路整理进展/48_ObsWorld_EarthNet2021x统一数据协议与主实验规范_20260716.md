@@ -1,10 +1,10 @@
-# ObsWorld：EarthNet2021x raw 数据契约与 ENS 后备方案
+# ObsWorld：EarthNet2021x raw 数据契约与主实验规范
 
-> **状态：已被 49 的数据协议仲裁覆盖。**本文件仍准确记录 raw `EarthNet2021x` 目录、manifest（文件清单）和 ENS 后备路线；但它不再是“当前唯一的数据与评测口径”。`earthnet2021x` 也可指 GreenEarthNet 的开发/发布别名，因此最终主表、验证轨道和 evaluator（评估器）必须先通过 [`49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md`](49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md) 的审计闸门。
+> **状态：当前固定数据协议。**本文件定义本轮 raw `EarthNet2021x` 目录、manifest（文件清单）、开发验证和 EarthNet2021 standard evaluator（官方评估器）口径。GreenEarthNet 是独立的未来扩展，不影响本轮数据、代码或主表。
 
 ## 0. 一句话结论
 
-我们使用服务器已有的 **EarthNet2021x NetCDF raw 数据发布**。若 49 的 Green layout audit（布局审计）不能组成完整 Green 官方轨道，才采用下列 **EarthNet2021 ENS 后备协议**：
+我们使用服务器已有的 **EarthNet2021x NetCDF raw 数据发布**，并固定采用下列 **EarthNet2021 standard 协议**：
 
 ```text
 训练：train
@@ -15,7 +15,7 @@
 
 不换训练数据、不重新下载；但也不把尚未核验的细分轨道或错误 evaluator 写入论文。
 
-**只有在 49 选择 ENS 后备分支时**，论文中的准确表述才是：
+论文中的准确表述是：
 
 > **ObsWorld is evaluated on the EarthNet2021x NetCDF release under the EarthNet2021 train/IID/OOD/Extreme/Seasonal protocol.**
 
@@ -41,7 +41,7 @@
 | `extreme` | 3,972 | 2018 | 极端夏季、长跨度预测证据 |
 | `seasonal` | 3,880 | 2017–2020 | 多年季节循环、长时程证据 |
 
-该结构与 EarthNet2021 的四条测试轨道兼容。`EarthNet2021x` 同时也是 GreenEarthNet 的开发/发布别名；因此这个目录结构本身不足以决定论文实验名称或评测规则，最终以 49 的 layout/schema audit（目录/字段审计）为准。
+该结构与 EarthNet2021 的四条测试轨道兼容。当前 metadata audit 已确认本项目使用的 raw release 具备这五个目录和正式字段；论文实验名称与评测规则固定采用本文件的 EarthNet2021 standard 口径。
 
 ## 2. 世界模型叙事不变，实验语言更准确
 

@@ -23,6 +23,12 @@ sys.path.insert(0, str(ROOT))
 from data.datasets.earthnet2021 import EarthNet2021Config, EarthNet2021Dataset, collate_earthnet2021
 from eval.earthnet_standard_metrics import EarthNetScoreAccumulator
 from eval.forecast_metrics import ForecastMetricAccumulator
+from eval.stage2_evaluation_provenance import (
+    build_stage2_evaluation_provenance,
+    json_safe,
+    verify_checkpoint_contract,
+    write_evaluation_sidecar,
+)
 from models.losses.earthnet_forecasting import EarthNetForecastLoss
 from train.train_stage2_earthnet import (
     create_stage2_model,
@@ -48,6 +54,14 @@ def main():
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--output", default=None)
     parser.add_argument("--official-score", action="store_true")
+    parser.add_argument(
+        "--allow-checkpoint-contract-mismatch",
+        action="store_true",
+        help=(
+            "Allow an explicitly labeled legacy/compatibility evaluation when "
+            "the checkpoint config does not match the current Stage2 contract."
+        ),
+    )
     args = parser.parse_args()
 
     config = load_config(args.config)
@@ -66,8 +80,18 @@ def main():
             manifest_paths[args.split] = args.manifest_path
         config["data"]["require_manifest"] = True
     config["data"]["split"] = args.split
+    # A Stage2 checkpoint already contains the complete state initializer. The
+    # original Stage1.5 path is provenance, not an evaluation dependency.
+    config["model"]["encoder"]["from_checkpoint"] = None
+    config["model"]["compute_latent_targets"] = False
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
+    contract_verification = verify_checkpoint_contract(
+        checkpoint,
+        config,
+        allow_mismatch=args.allow_checkpoint_contract_mismatch,
+    )
     data_cfg = EarthNet2021Config.from_config(config["data"], split=args.split)
     dataset = EarthNet2021Dataset(data_cfg)
     loader = DataLoader(
@@ -80,10 +104,6 @@ def main():
         collate_fn=collate_earthnet2021,
     )
 
-    checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
-    # The Stage2 checkpoint is self-contained; do not require the original
-    # Stage1.5 checkpoint path to still exist during evaluation.
-    config["model"]["encoder"]["from_checkpoint"] = None
     model = create_stage2_model(config, device)
     state = checkpoint.get("model_state_dict", checkpoint)
     load_stage2_model_state(model, state, strict=True)
@@ -142,12 +162,44 @@ def main():
     metrics.update(forecast_metrics.compute())
     if official is not None:
         metrics.update(official.compute())
-    print(json.dumps(metrics, indent=2, ensure_ascii=False))
+    provenance = build_stage2_evaluation_provenance(
+        config,
+        checkpoint_path=args.checkpoint,
+        checkpoint=checkpoint,
+        split=args.split,
+        manifest_path=data_cfg.manifest_path,
+        conditioning_stats_path=data_cfg.conditioning_stats_path,
+        contract_verification=contract_verification,
+        evaluator="eval.eval_stage2_earthnet",
+        invocation={
+            "official_score": bool(args.official_score),
+            "batch_size": int(args.batch_size),
+            "num_workers": int(args.num_workers),
+        },
+        device=str(device),
+    )
+    result = json_safe({
+        "metrics": metrics,
+        "provenance": provenance,
+    })
+    console_summary = {
+        "metrics": result["metrics"],
+        "contract_verification": {
+            key: result["provenance"]["contract_verification"].get(key)
+            for key in (
+                "checked",
+                "matches",
+                "override_used",
+                "checkpoint_contract_sha256",
+                "runtime_contract_sha256",
+            )
+        },
+        "output": str(Path(args.output).expanduser().resolve()) if args.output else None,
+    }
+    print(json.dumps(console_summary, indent=2, ensure_ascii=False, allow_nan=False))
 
     if args.output is not None:
-        out_path = Path(args.output)
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        out_path.write_text(json.dumps(metrics, indent=2, ensure_ascii=False), encoding="utf-8")
+        write_evaluation_sidecar(args.output, result)
 
 
 if __name__ == "__main__":

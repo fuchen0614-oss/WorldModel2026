@@ -17,6 +17,7 @@ def test_rollout_config_inherits_matched_direct24_contract():
 
     assert rollout["model"]["forecast_mode"] == "rollout_t5_24d"
     assert rollout["data"] == direct["data"]
+    assert rollout["data"]["evaluation_protocol"] == "earthnet2021_standard_v1"
     assert rollout["model"]["decoder"] == direct["model"]["decoder"]
     assert rollout["training"]["rollout_curriculum"][-1]["length"] == 20
 
