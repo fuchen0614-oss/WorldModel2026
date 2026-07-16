@@ -1,13 +1,13 @@
 # 47. ObsWorld Stage2 正式代码技术指导与实现规范
 
 > 日期：2026-07-16
-> 文档性质：后续代码开发的直接依据；其中 Commit A 已实施，其余阶段仍是实现规范而非实验结果
+> 文档性质：后续代码开发的直接依据；A–D 和 E-1（可追溯训练）已实施并通过测试，仍不是论文实验结果
 > 适用项目：`/root/nas/users/luzheng/workspace/ssh/czj/WorldModel2026`
 > 目标投稿：AAAI-27
-> 当前训练数据：服务器已有的 EarthNet2021x raw NetCDF 文件；最终论文评测协议待 GreenEarthNet layout audit（目录与字段审计）冻结
+> 当前训练与评测数据：服务器已有的 EarthNet2021x raw NetCDF 文件；正式主线固定使用其 `train/iid/ood/extreme/seasonal` 划分，GreenEarthNet 目录不作为当前 Stage2 的前置条件或自动合并来源
 > 当前主线：**从受成像条件影响的遥感观测中估计地表状态，在外生驱动、地理先验和时间跨度约束下推演未来状态，再把未来状态解码为可核验的未来卫星观测。**
 
-> **数据协议仲裁更新（2026-07-16）：**所有数据、清单、验证、主表和指标的当前口径见 [`49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md`](49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md)。本文件的 Direct24/rollout/partition 实现针对 raw EarthNet2021x 数据契约；文中把 `iid/ood`、EarthNetScore 或 `ood-t_chopped` 写成唯一主协议之处，均须由 49 的审计闸门覆盖。
+> **数据协议更新（2026-07-16）：**本项目当前只使用已审计通过的 raw EarthNet2021x 数据根。`train` 用于拟合，`iid/ood` 是主评测，`extreme/seasonal` 是压力测试；同一张主表只使用这一套协议和对应官方评估器。项目保留 GreenEarthNet 目录审计工具，仅供日后独立扩展，绝不自动混入本轮训练/评测。
 
 ---
 
@@ -65,6 +65,28 @@
 - 新增合成 NetCDF、统计量、preflight 和 legacy regression（旧路径回归）测试。
 
 它**没有**完成 Direct24、共享 rollout（递推）、partition（一致性）模型或任何正式结果。因此，Commit A 可以安全地和正在运行的 Stage1.5 并行；只有将来启动正式 v2 训练前，才必须用完整 train manifest 生成 `conditioning_stats_v2_train.json` 并通过 preflight。
+
+### 0.4 实施状态更新（2026-07-16，Commit B–D 与 E-1）
+
+在 Commit A 之后，代码已经按本文件的最小依赖顺序实现了以下内容：
+
+- **Commit B / Direct24：**同一套 24-D 五日外生驱动、状态初始化器和观测解码器下的直接多时距预测对照；它保留旧 Direct-DGH，不把旧 9-D 对照误写成新主线的公平比较。
+- **Commit C / Rollout24：**共享五日状态转移的 20 步开放循环推演、由短到长的课程，以及每个 batch 都保留 100 天监督的 horizon（预测时距）采样。
+- **Commit D / Partition24：**同一共享转移下的 `10 天` 与 `5 天 + 5 天` 两条路径、终点观测监督和状态/像素一致性损失。它是主方法的“可组合演化”证据，而非额外的未来真值输入。
+- **Commit E-1 / 可追溯训练：**每个 Stage2 checkpoint（检查点）保存解析后的配置、训练状态、随机状态、数据位置和运行来源记录；保存操作使用临时文件、落盘同步和原子替换，避免中断留下半个权重文件。
+- **E-1 验证监控修正：**v2 的 context（历史观测）和 target（目标观测）本来就允许不同空间分辨率；persistence（最后有效历史观测）基线会先重采样到 target 网格。若 persistence 误差为零，relative skill（相对技能分数）写为 `NaN`（数学上未定义），不把它伪装成极大的负分。
+
+其中 E-1 已完成的可复现约束如下：
+
+1. `run_provenance.json`（运行来源记录）同时写入 checkpoint 和 log 目录，绑定配置摘要、训练/验证 manifest（文件清单）摘要、conditioning stats（条件标准化统计）摘要、Stage1.5 初始化权重、续训父 checkpoint、Git commit、Python/PyTorch/CUDA 环境和 world size（进程数）。
+2. 新 checkpoint 还保存 `data_position`（数据位置）：下一轮的 epoch（轮次）、下一批 batch（批次）编号、loader 长度、已处理 micro-step（微步）、world size、batch size（批大小）与梯度累积次数。
+3. 恢复训练时，程序验证上述数据形状；batch size、world size、loader 长度或梯度累积不同会立即报错，不能悄悄把“近似续训”说成精确恢复。旧 checkpoint 没有该字段时会明确警告并走非精确兼容路径。
+4. 非 DDP（单进程）训练使用由 `seed + epoch` 唯一决定的 shuffled sampler（打乱采样器）；每个 epoch 的 DataLoader worker seed（加载线程随机种子）也固定。因此重启不会因重新打乱而回放已训练 batch。
+5. `--stop-after-steps N` 可在第 `N` 个优化器步安全停下：它不修改原来的 `max_steps` 或学习率课程，适合测试“停下—恢复”是否与连续训练一致。
+
+验证证据（不是正式精度结果）：CPU 上构造 4 个字段完整的 NetCDF minicube，连续训练 4 步，与“训练 2 步 → 保存 → 新进程恢复 → 再训练 2 步”逐项比较；最终 model state、optimizer state、scheduler state（学习率调度器状态）和 data position 完全一致。相同试验还以 2 个 CPU DDP rank（分布式进程）执行，两个 rank 的 RNG state（随机状态）也完全一致，且没有 checkpoint barrier（检查点同步屏障）死锁；开启验证后 `checkpoint_best.pt` 也可正常保存。项目全套单元测试在该提交前为 `99 passed`。
+
+仍未完成的 E-2 是**正式预测导出和官方评估的来源检查**：评估器必须拒绝 checkpoint/配置/manifest 协议不一致，预测目录必须有可哈希的输出清单，测试集不得用于挑选最佳 checkpoint。这是下一项代码工作，不能因 E-1 已完成而宣称正式评测已经完成。
 
 ---
 
@@ -2002,16 +2024,17 @@ AAAI 正文建议最多突出两个方法论点。
 
 ### 训练
 
-- [ ] rollout curriculum；
-- [ ] stratified horizon supervision；
-- [ ] 100 天必选；
-- [ ] 主损失；
-- [ ] partition 四项损失；
-- [ ] 冻结/解冻；
-- [ ] 递归 move-to-device；
-- [ ] checkpoint provenance；
-- [ ] 精确 resume 测试；
-- [ ] 状态与 gap 日志。
+- [x] rollout curriculum（递推课程）；
+- [x] stratified horizon supervision（分层预测时距监督）；
+- [x] 100 天必选；
+- [x] 主损失；
+- [x] partition 四项损失；
+- [x] 冻结/解冻；
+- [x] 递归 move-to-device；
+- [x] checkpoint provenance（检查点来源记录）；
+- [x] 精确 resume（续训）测试；
+- [x] 状态与 gap（两路径差距）日志；
+- [ ] 真实数据的 32–128 cube overfit（小样本过拟合）和 one-seed Gate（单随机种子闸门）。
 
 ### 评估
 
@@ -2028,12 +2051,13 @@ AAAI 正文建议最多突出两个方法论点。
 
 ### 安全与可复现
 
-- [ ] target/eval mask 不进入模型；
-- [ ] 不使用测试集选 checkpoint；
+- [x] target/eval mask 不进入模型；
+- [ ] 不使用测试集选 checkpoint（E-2 将在评估入口强制）；
 - [ ] 不伪造 EarthNet `φ`；
 - [ ] 不把真值天气写成业务预报；
 - [ ] 不把 9-D vs 24-D 差异写成架构收益；
-- [ ] 每个正式结果可追溯到 git/config/data/stats/checkpoint。
+- [x] 训练 checkpoint 可追溯到 git/config/data/stats/checkpoint；
+- [ ] 预测目录与官方评分 JSON 的同等来源记录（E-2）。
 
 ---
 
@@ -2086,10 +2110,20 @@ Commit D：Partition full model
   - matched experiment configs
 ```
 
-第五次：
+第五次拆成两个小而可核验的提交：
 
 ```text
-Commit E：Formal export/evaluation/provenance
+Commit E-1：训练 provenance 与精确恢复（已完成）
+  - 原子 checkpoint 保存
+  - config/manifest/stats/Stage1.5/Git/runtime 来源记录
+  - RNG + deterministic sampler + data-position 恢复
+  - CPU 中断/恢复等价测试
+
+Commit E-2：正式 export/evaluation provenance（下一步）
+  - checkpoint/config/manifest 协议兼容性检查
+  - prediction manifest 与输出摘要
+  - 官方 evaluator 结果 JSON 的输入来源记录
+  - 测试集与 best-checkpoint 选择隔离
 ```
 
 这样每次出错都能定位，不会在一个巨大 commit 中同时混入数据、网络和评估问题。
@@ -2103,10 +2137,10 @@ Commit E：Formal export/evaluation/provenance
 1. 等当前 Stage1.5 自然结束，不中断；
 2. 记录最终 `state_bridge_60k` checkpoint 的真实文件名和 sha256；
 3. 全量审计继续后台运行，但不要让多个全盘 NAS 扫描同时争抢 I/O；
-4. Commit A 已完成；用 64 个真实样本生成 smoke stats-v2，仅做代码验证；
+4. A–D 和 E-1 已完成；用 64 个真实样本生成 smoke stats-v2，仅做代码验证；
 5. 合成测试通过后再生成完整 train stats-v2；
-6. 完成 Direct24 后先跑 32–128 cube overfit；
-7. 然后完成 rollout 和 partition；
+6. 完成 E-2 的预测导出/评分来源检查；
+7. 用 Direct24、rollout24、partition24 分别跑 32–128 cube overfit；
 8. 先跑单 seed 小规模 result-to-claim 闸门；
 9. 方向成立再投入 3-seed 正式训练。
 

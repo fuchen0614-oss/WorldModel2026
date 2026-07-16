@@ -6,6 +6,7 @@ from collections import defaultdict
 from typing import Dict
 
 import torch
+import torch.nn.functional as F
 
 from data.earthnet_fields import compute_ndvi
 
@@ -32,6 +33,17 @@ class ForecastMetricAccumulator:
             context[:, :, : target.shape[2]],
             context_mask,
         )
+        # Stage2-v2 deliberately uses Stage1.5-compatible context resolution
+        # (normally 256) and native EarthNet target/evaluation resolution
+        # (normally 128). Persistence is a monitoring baseline, not a reason
+        # to force both tensors to one resolution in the data contract.
+        if persistence_frame.shape[-2:] != target.shape[-2:]:
+            persistence_frame = F.interpolate(
+                persistence_frame,
+                size=target.shape[-2:],
+                mode="bilinear",
+                align_corners=False,
+            )
         persistence = persistence_frame[:, None].expand_as(target)
         persistence_error = (persistence.float() - target.float()).abs().mean(dim=2)
         ndvi_error = (
@@ -61,8 +73,14 @@ class ForecastMetricAccumulator:
             for name in sorted(self.sums)
         }
         if "MAE" in result and "persistence_MAE" in result:
-            result["skill_vs_persistence"] = 1.0 - (
-                result["MAE"] / max(result["persistence_MAE"], 1e-8)
+            # A perfectly static/synthetic validation subset can make the
+            # persistence error exactly zero. Its relative skill is then
+            # mathematically undefined, not an enormous negative number.
+            persistence_mae = result["persistence_MAE"]
+            result["skill_vs_persistence"] = (
+                1.0 - result["MAE"] / persistence_mae
+                if persistence_mae > 1e-8
+                else float("nan")
             )
         return result
 

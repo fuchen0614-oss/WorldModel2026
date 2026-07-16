@@ -14,6 +14,7 @@ from typing import Optional
 
 import numpy as np
 import torch
+import torch.distributed as dist
 import torch.nn as nn
 import torch.optim as optim
 import yaml
@@ -72,6 +73,17 @@ from train.stage2_curriculum import (
     is_rollout_forecast_mode,
     partition_loss_scale,
     partition_training_settings,
+)
+from train.stage2_checkpoint import (
+    EpochRandomSampler,
+    Stage2DataPosition,
+    next_data_position,
+    restore_data_position,
+)
+from train.stage2_provenance import (
+    atomic_torch_save,
+    build_stage2_run_provenance,
+    write_run_provenance,
 )
 from train.fsdp_utils import barrier, cleanup_distributed, is_main_process, setup_distributed
 
@@ -143,6 +155,40 @@ def _move_value_to_device(value, device: torch.device):
     if isinstance(value, tuple):
         return tuple(_move_value_to_device(item, device) for item in value)
     return value
+
+
+def build_stage2_train_loader(
+    dataset,
+    *,
+    sampler,
+    batch_size: int,
+    num_workers: int,
+    epoch: int,
+    process_seed: int,
+) -> DataLoader:
+    """Create one deterministic epoch loader without advancing global RNG.
+
+    The sampler's permutation is a pure ``seed + epoch`` function.  A fresh
+    DataLoader generator additionally fixes worker base seeds, so recreating
+    an epoch after a checkpoint does not perturb the RNG later used for
+    horizon/partition sampling.
+    """
+
+    if hasattr(sampler, "set_epoch"):
+        sampler.set_epoch(epoch)
+    loader_generator = torch.Generator()
+    loader_generator.manual_seed(int(process_seed) + int(epoch))
+    return DataLoader(
+        dataset,
+        batch_size=batch_size,
+        sampler=sampler,
+        shuffle=False,
+        num_workers=num_workers,
+        pin_memory=True,
+        drop_last=True,
+        collate_fn=collate_earthnet2021,
+        generator=loader_generator,
+    )
 
 
 def forward_stage2_model(
@@ -638,6 +684,36 @@ def partition_supervision_for_output(batch: dict, partition: dict) -> dict[str, 
     }
 
 
+def capture_rng_state() -> dict:
+    """Capture this process's stochastic state for an exact future restart."""
+
+    cuda_state = None
+    if torch.cuda.is_available():
+        device_index = torch.cuda.current_device()
+        cuda_state = {
+            "device_index": device_index,
+            "state": torch.cuda.get_rng_state(device_index),
+        }
+    return {
+        "python": random.getstate(),
+        "numpy": np.random.get_state(),
+        "torch": torch.get_rng_state(),
+        "cuda": cuda_state,
+    }
+
+
+def _gather_rng_states(local_state: dict) -> list[dict]:
+    """Gather one RNG state per DDP rank before rank zero writes a checkpoint."""
+
+    if not (dist.is_available() and dist.is_initialized()):
+        return [local_state]
+    states: list[object] = [None] * dist.get_world_size()
+    dist.all_gather_object(states, local_state)
+    if not all(isinstance(state, dict) for state in states):
+        raise RuntimeError("Failed to gather one valid RNG state from every DDP rank")
+    return list(states)  # type: ignore[return-value]
+
+
 def save_checkpoint(
     path: str,
     step: int,
@@ -646,11 +722,20 @@ def save_checkpoint(
     scheduler,
     config: dict,
     best_validation: Optional[dict] = None,
+    provenance: Optional[dict] = None,
+    data_position: Optional[Stage2DataPosition] = None,
 ) -> None:
+    # All ranks must enter this function for a DDP checkpoint.  The former
+    # rank-zero-only implementation restored rank zero's random stream on
+    # every worker after a restart, which is not an exact distributed resume.
+    local_rng_state = capture_rng_state()
+    rng_states_by_rank = _gather_rng_states(local_rng_state)
+    distributed_checkpoint = len(rng_states_by_rank) > 1
     if not is_main_process():
+        if distributed_checkpoint:
+            barrier()
         return
     raw_model = model.module if isinstance(model, DDP) else model
-    os.makedirs(os.path.dirname(path), exist_ok=True)
     payload = {
         "global_step": step,
         "model_state_dict": raw_model.state_dict(),
@@ -659,28 +744,76 @@ def save_checkpoint(
         "config": config,
         "best_validation": best_validation,
         "curriculum": curriculum_checkpoint_state(config, step),
-        "rng_state": {
-            "python": random.getstate(),
-            "numpy": np.random.get_state(),
-            "torch": torch.get_rng_state(),
-            "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
+        "provenance": provenance,
+        "data_position": data_position.as_dict() if data_position is not None else None,
+        # ``rng_state`` remains for compatibility with earlier single-process
+        # checkpoints. ``rng_states_by_rank`` is the exact DDP representation.
+        "rng_state": rng_states_by_rank[0],
+        "rng_states_by_rank": rng_states_by_rank,
+        "exact_resume": {
+            "schema_version": 1,
+            "rng_states_by_rank": len(rng_states_by_rank),
+            "data_position": data_position is not None,
         },
     }
-    temporary = f"{path}.tmp"
-    torch.save(payload, temporary)
-    os.replace(temporary, path)
+    atomic_torch_save(payload, path)
     log_main(f"checkpoint saved: {path}")
+    if distributed_checkpoint:
+        barrier()
 
 
-def restore_rng_state(checkpoint: dict) -> None:
-    state = checkpoint.get("rng_state")
+def restore_rng_state(
+    checkpoint: dict,
+    *,
+    rank: Optional[int] = None,
+    world_size: Optional[int] = None,
+) -> bool:
+    """Restore this rank's RNG state and return whether recovery is exact.
+
+    Old checkpoints carry only rank zero's RNG stream. They remain loadable on
+    one process, but a multi-rank continuation must be marked non-exact rather
+    than silently reusing rank zero's stream everywhere.
+    """
+
+    if rank is None:
+        rank = dist.get_rank() if dist.is_available() and dist.is_initialized() else 0
+    if world_size is None:
+        world_size = (
+            dist.get_world_size()
+            if dist.is_available() and dist.is_initialized()
+            else 1
+        )
+    states_by_rank = checkpoint.get("rng_states_by_rank")
+    if states_by_rank is not None:
+        if not isinstance(states_by_rank, list) or len(states_by_rank) != world_size:
+            raise ValueError(
+                "Exact Stage2 resume requires one saved RNG state per current "
+                f"DDP rank: checkpoint={len(states_by_rank) if isinstance(states_by_rank, list) else 'invalid'}, "
+                f"current={world_size}"
+            )
+        if not 0 <= rank < len(states_by_rank) or not isinstance(states_by_rank[rank], dict):
+            raise ValueError(f"Checkpoint has no valid RNG state for rank {rank}")
+        state = states_by_rank[rank]
+        exact = True
+    else:
+        state = checkpoint.get("rng_state")
+        exact = world_size == 1
     if not state:
-        return
+        return False
     random.setstate(state["python"])
     np.random.set_state(state["numpy"])
     torch.set_rng_state(state["torch"])
-    if torch.cuda.is_available() and state.get("cuda") is not None:
-        torch.cuda.set_rng_state_all(state["cuda"])
+    cuda_state = state.get("cuda")
+    if torch.cuda.is_available() and cuda_state is not None:
+        if isinstance(cuda_state, dict):
+            torch.cuda.set_rng_state(
+                cuda_state["state"],
+                device=int(cuda_state.get("device_index", torch.cuda.current_device())),
+            )
+        else:
+            # Compatibility with checkpoints written before per-rank states.
+            torch.cuda.set_rng_state_all(cuda_state)
+    return exact
 
 
 @torch.no_grad()
@@ -879,6 +1012,14 @@ def main():
     parser.add_argument("--validation-max-samples", type=int)
     parser.add_argument("--validation-max-batches", type=int)
     parser.add_argument("--resume-from", type=str)
+    parser.add_argument(
+        "--stop-after-steps",
+        type=int,
+        help=(
+            "Cleanly stop after this global optimizer step while preserving the "
+            "configured max_steps/schedule for a later exact resume."
+        ),
+    )
     parser.add_argument("--seed", type=int)
     args = parser.parse_args()
 
@@ -926,6 +1067,12 @@ def main():
         )
     checkpoint_interval = args.checkpoint_interval or int(config.get("checkpoint_interval", 5000))
     resume_from = args.resume_from or config.get("resume_from")
+    # Preserve this before a Stage2 resume clears the initializer from the
+    # live config.  The run provenance must still say which frozen Stage1.5
+    # state bridge started the original experiment whenever it is available.
+    stage15_checkpoint_for_provenance = config["model"]["encoder"].get(
+        "from_checkpoint"
+    )
     if resume_from:
         # A Stage2 checkpoint already contains the complete encoder. Resuming
         # must not depend on the original Stage1.5 file still being present.
@@ -944,6 +1091,15 @@ def main():
     max_steps = int(config["training"]["max_steps"])
     accum_steps = int(config["training"].get("gradient_accumulation_steps", 1))
     horizons_per_sample = int(config["training"].get("horizons_per_sample", 0))
+    stop_after_steps = args.stop_after_steps
+    if stop_after_steps is not None:
+        if stop_after_steps <= 0:
+            raise ValueError("--stop-after-steps must be positive")
+        if stop_after_steps > max_steps:
+            raise ValueError(
+                "--stop-after-steps cannot exceed the configured --max-steps: "
+                f"stop_after={stop_after_steps}, max_steps={max_steps}"
+            )
 
     data_cfg = EarthNet2021Config.from_config(config["data"], split=config["data"].get("split", "train"))
     dataset = EarthNet2021Dataset(data_cfg)
@@ -1004,16 +1160,26 @@ def main():
                 "Formal Stage2 training requires valid elevation G, but the "
                 "inspected EarthNet samples contain none."
             )
-    sampler = DistributedSampler(dataset, num_replicas=world_size, rank=rank, shuffle=True) if distributed else None
-    loader = DataLoader(
+    sampler = (
+        DistributedSampler(
+            dataset,
+            num_replicas=world_size,
+            rank=rank,
+            shuffle=True,
+            seed=seed,
+        )
+        if distributed
+        else EpochRandomSampler(dataset, seed=seed)
+    )
+    train_batch_size = int(config["data"]["batch_size"])
+    train_num_workers = int(config["data"].get("num_workers", 4))
+    loader = build_stage2_train_loader(
         dataset,
-        batch_size=int(config["data"]["batch_size"]),
         sampler=sampler,
-        shuffle=(sampler is None),
-        num_workers=int(config["data"].get("num_workers", 4)),
-        pin_memory=True,
-        drop_last=True,
-        collate_fn=collate_earthnet2021,
+        batch_size=train_batch_size,
+        num_workers=train_num_workers,
+        epoch=0,
+        process_seed=process_seed,
     )
     if len(loader) == 0:
         raise RuntimeError(
@@ -1086,6 +1252,9 @@ def main():
         "value": None,
         "step": None,
     }
+    resume_checkpoint = None
+    resume_data_position = None
+    resume_rng_is_exact = True
     if resume_from:
         resume_checkpoint = torch.load(resume_from, map_location="cpu", weights_only=False)
         raw_model = model.module if isinstance(model, DDP) else model
@@ -1095,7 +1264,19 @@ def main():
         optimizer_step = int(resume_checkpoint.get("global_step", 0))
         if resume_checkpoint.get("best_validation"):
             best_validation = dict(resume_checkpoint["best_validation"])
-        restore_rng_state(resume_checkpoint)
+        resume_rng_is_exact = restore_rng_state(
+            resume_checkpoint,
+            rank=rank,
+            world_size=world_size,
+        )
+        resume_data_position = restore_data_position(
+            resume_checkpoint.get("data_position"),
+            loader_length=len(loader),
+            world_size=world_size,
+            batch_size=train_batch_size,
+            accumulation_steps=accum_steps,
+            expected_micro_step=optimizer_step * accum_steps,
+        )
         saved_curriculum = resume_checkpoint.get("curriculum")
         if saved_curriculum is not None:
             expected_curriculum = curriculum_checkpoint_state(config, optimizer_step)
@@ -1113,6 +1294,22 @@ def main():
                         f"configured={expected_curriculum.get(name)!r}. "
                         "Do not resume a Direct/rollout run under a changed schedule."
                     )
+        if resume_data_position is None or not resume_rng_is_exact:
+            missing_parts = []
+            if resume_data_position is None:
+                missing_parts.append("data-position metadata")
+            if not resume_rng_is_exact:
+                missing_parts.append("one RNG state per DDP rank")
+            log_main(
+                "warning: resume checkpoint predates exact recovery metadata "
+                f"({', '.join(missing_parts)}); falling back where necessary and "
+                "not claiming bitwise recovery"
+            )
+        if stop_after_steps is not None and stop_after_steps <= optimizer_step:
+            raise ValueError(
+                "--stop-after-steps must be greater than the resumed global step: "
+                f"stop_after={stop_after_steps}, resumed_step={optimizer_step}"
+            )
         log_main(f"resumed Stage2 from {resume_from} at optimizer_step={optimizer_step}")
     loss_fn = EarthNetForecastLoss.from_config(
         config["loss"],
@@ -1129,6 +1326,36 @@ def main():
         else None
     )
     partition_settings = partition_training_settings(config) if is_v2 else None
+    run_provenance = None
+    if is_main_process():
+        run_provenance = build_stage2_run_provenance(
+            config,
+            train_manifest_path=data_cfg.manifest_path,
+            validation_manifest_path=(
+                validation_data_cfg.manifest_path
+                if validation_data_cfg is not None
+                else None
+            ),
+            conditioning_stats_path=data_cfg.conditioning_stats_path,
+            stage15_checkpoint_path=stage15_checkpoint_for_provenance,
+            resume_checkpoint_path=resume_from,
+            parent_provenance=(
+                resume_checkpoint.get("provenance") if resume_checkpoint else None
+            ),
+            device=device,
+            world_size=world_size,
+        )
+        provenance_paths = write_run_provenance(
+            run_provenance,
+            (
+                Path(config["checkpoint_dir"]) / "run_provenance.json",
+                Path(config["log_dir"]) / "run_provenance.json",
+            ),
+        )
+        log_main(
+            "Stage2 provenance written: "
+            + ", ".join(str(path) for path in provenance_paths)
+        )
     writer = (
         SummaryWriter(config["log_dir"])
         if is_main_process() and SummaryWriter is not None
@@ -1138,7 +1365,25 @@ def main():
         log_main("warning: tensorboard is not installed; scalar logging is disabled")
 
     micro_step = optimizer_step * accum_steps
-    epoch = 0
+    epoch = resume_data_position.epoch if resume_data_position is not None else 0
+    next_batch_index = (
+        resume_data_position.next_batch_index
+        if resume_data_position is not None
+        else 0
+    )
+    last_data_position = (
+        resume_data_position
+        if resume_data_position is not None
+        else Stage2DataPosition(
+            epoch=epoch,
+            next_batch_index=next_batch_index,
+            loader_length=len(loader),
+            micro_step=micro_step,
+            world_size=world_size,
+            batch_size=train_batch_size,
+            accumulation_steps=accum_steps,
+        )
+    )
     model.train()
     optimizer.zero_grad(set_to_none=True)
     progress = tqdm(
@@ -1147,10 +1392,20 @@ def main():
         disable=not is_main_process(),
         desc="Stage2 EarthNet",
     )
-    while optimizer_step < max_steps:
-        if sampler is not None:
-            sampler.set_epoch(epoch)
-        for batch in loader:
+    while optimizer_step < max_steps and (
+        stop_after_steps is None or optimizer_step < stop_after_steps
+    ):
+        epoch_loader = build_stage2_train_loader(
+            dataset,
+            sampler=sampler,
+            batch_size=train_batch_size,
+            num_workers=train_num_workers,
+            epoch=epoch,
+            process_seed=process_seed,
+        )
+        for batch_index, batch in enumerate(epoch_loader):
+            if batch_index < next_batch_index:
+                continue
             batch = move_batch_to_device(batch, device)
             selected_steps = None
             max_rollout_steps = None
@@ -1264,6 +1519,15 @@ def main():
                 loss.backward()
 
             micro_step += 1
+            last_data_position = next_data_position(
+                epoch=epoch,
+                completed_batch_index=batch_index,
+                loader_length=len(loader),
+                micro_step=micro_step,
+                world_size=world_size,
+                batch_size=train_batch_size,
+                accumulation_steps=accum_steps,
+            )
             if should_update:
                 suppress_backbone_warmup_gradients(
                     model,
@@ -1319,6 +1583,7 @@ def main():
                     and optimizer_step > 0
                     and optimizer_step % validation_interval == 0
                 ):
+                    save_best_checkpoint = False
                     barrier()
                     if is_main_process():
                         raw_model = model.module if isinstance(model, DDP) else model
@@ -1368,23 +1633,40 @@ def main():
                             best_validation.update(
                                 {"value": metric_value, "step": optimizer_step}
                             )
-                            save_checkpoint(
-                                os.path.join(
-                                    config["checkpoint_dir"],
-                                    "checkpoint_best.pt",
-                                ),
-                                optimizer_step,
-                                model,
-                                optimizer,
-                                scheduler,
-                                config,
-                                best_validation=best_validation,
-                            )
+                            save_best_checkpoint = True
                             log_main(
                                 f"new best {metric_name}={metric_value:.6f} "
                                 f"at step={optimizer_step}"
                             )
-                    barrier()
+                    if distributed:
+                        synchronized_validation = [
+                            dict(best_validation),
+                            save_best_checkpoint,
+                        ]
+                        dist.broadcast_object_list(synchronized_validation, src=0)
+                        best_validation = dict(synchronized_validation[0])
+                        save_best_checkpoint = bool(synchronized_validation[1])
+                    if save_best_checkpoint:
+                        # Every DDP rank participates so this checkpoint also
+                        # carries its own RNG stream and is safe to resume.
+                        save_checkpoint(
+                            os.path.join(
+                                config["checkpoint_dir"],
+                                "checkpoint_best.pt",
+                            ),
+                            optimizer_step,
+                            model,
+                            optimizer,
+                            scheduler,
+                            config,
+                            best_validation=best_validation,
+                            provenance=run_provenance,
+                            data_position=last_data_position,
+                        )
+                    else:
+                        # Match save_checkpoint's internal distributed barrier
+                        # when validation did not produce a new best model.
+                        barrier()
 
                 if optimizer_step > 0 and optimizer_step % checkpoint_interval == 0:
                     save_checkpoint(
@@ -1395,12 +1677,16 @@ def main():
                         scheduler,
                         config,
                         best_validation=best_validation,
+                        provenance=run_provenance,
+                        data_position=last_data_position,
                     )
-                    barrier()
 
-            if optimizer_step >= max_steps:
+            if optimizer_step >= max_steps or (
+                stop_after_steps is not None and optimizer_step >= stop_after_steps
+            ):
                 break
         epoch += 1
+        next_batch_index = 0
 
     if optimizer_step % checkpoint_interval != 0:
         save_checkpoint(
@@ -1411,6 +1697,14 @@ def main():
             scheduler,
             config,
             best_validation=best_validation,
+            provenance=run_provenance,
+            data_position=last_data_position,
+        )
+    if stop_after_steps is not None and optimizer_step == stop_after_steps:
+        log_main(
+            "Stage2 stopped cleanly at requested optimizer step "
+            f"{optimizer_step}; resume from its checkpoint with the same "
+            "--max-steps/configuration."
         )
     if writer is not None:
         writer.close()
