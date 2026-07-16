@@ -21,6 +21,7 @@ the resulting file for a formal run: its ``is_full_train`` field is false.
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ProcessPoolExecutor
 import json
 import subprocess
 import sys
@@ -109,6 +110,84 @@ def _read_v2_daily_and_dem(path: Path) -> tuple[np.ndarray, np.ndarray]:
     return daily[:150], dem
 
 
+def _summarize_conditioning_file(
+    path_text: str,
+) -> tuple[
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+    float,
+    float,
+    int,
+    np.ndarray,
+    np.ndarray,
+]:
+    """Read one cube and return mergeable sufficient statistics.
+
+    This function is deliberately module-level so it can run in a separate
+    process.  Returning only sums/counts keeps parent-process memory bounded
+    and makes the final reduction deterministic because the parent merges
+    records in manifest order.
+    """
+
+    path = Path(path_text)
+    if _infer_data_format(path, "auto") != "netcdf":
+        raise ValueError(
+            f"{path}: Stage2-v2 conditioning statistics only support NetCDF cubes"
+        )
+    daily, dem = _read_v2_daily_and_dem(path)
+    daily_values = np.asarray(daily, dtype=np.float64)
+    daily_valid = np.isfinite(daily_values)
+    geo_values = np.asarray(dem, dtype=np.float64).reshape(-1)
+    geo_valid = np.isfinite(geo_values)
+    window_valid = daily_valid.reshape(30, 5, len(EOBS_VARIABLES))
+    return (
+        np.where(daily_valid, daily_values, 0.0).sum(axis=0),
+        np.where(daily_valid, daily_values * daily_values, 0.0).sum(axis=0),
+        daily_valid.sum(axis=0).astype(np.int64),
+        float(np.where(geo_valid, geo_values, 0.0).sum()),
+        float(np.where(geo_valid, geo_values * geo_values, 0.0).sum()),
+        int(geo_valid.sum()),
+        window_valid.any(axis=1).sum(axis=0).astype(np.int64),
+        window_valid.all(axis=1).sum(axis=0).astype(np.int64),
+    )
+
+
+def _merge_conditioning_summary(
+    daily_moments: _RunningMoments,
+    geo_moments: _RunningMoments,
+    summary: tuple[
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        float,
+        float,
+        int,
+        np.ndarray,
+        np.ndarray,
+    ],
+) -> tuple[np.ndarray, np.ndarray]:
+    """Merge one file's sufficient statistics into the global accumulators."""
+
+    (
+        daily_sum,
+        daily_sum_sq,
+        daily_count,
+        geo_sum,
+        geo_sum_sq,
+        geo_count,
+        any_valid_window,
+        all_five_valid_window,
+    ) = summary
+    daily_moments.sum += daily_sum
+    daily_moments.sum_sq += daily_sum_sq
+    daily_moments.count += daily_count
+    geo_moments.sum[0] += geo_sum
+    geo_moments.sum_sq[0] += geo_sum_sq
+    geo_moments.count[0] += geo_count
+    return any_valid_window, all_five_valid_window
+
+
 def _git_commit() -> str:
     try:
         return subprocess.check_output(
@@ -129,6 +208,7 @@ def build_conditioning_stats(
     is_full_train: bool,
     created_by_git_commit: str | None = None,
     progress_every: int = 1000,
+    workers: int = 1,
 ) -> dict[str, Any]:
     """Compute the JSON payload used by :class:`ConditioningStatsV2`.
 
@@ -139,24 +219,48 @@ def build_conditioning_stats(
 
     if not files:
         raise ValueError("Cannot build Stage2-v2 conditioning statistics from zero files")
+    if workers < 1:
+        raise ValueError("workers must be at least 1")
     daily_moments = _RunningMoments(width=len(EOBS_VARIABLES))
     geo_moments = _RunningMoments(width=1)
     any_valid_window = np.zeros(len(EOBS_VARIABLES), dtype=np.int64)
     all_five_valid_window = np.zeros(len(EOBS_VARIABLES), dtype=np.int64)
 
-    for index, path in enumerate(files, start=1):
-        if _infer_data_format(path, "auto") != "netcdf":
-            raise ValueError(
-                f"{path}: Stage2-v2 conditioning statistics only support NetCDF cubes"
+    worker_count = min(int(workers), len(files))
+    path_texts = [str(path) for path in files]
+    if worker_count == 1:
+        summaries = map(_summarize_conditioning_file, path_texts)
+        executor = None
+    else:
+        # NetCDF/HDF5 handles are opened only inside child processes.  This is
+        # safer than threaded reads and gives bounded I/O concurrency on a
+        # network filesystem.  ``map`` preserves manifest order, so the parent
+        # reduction and output provenance remain deterministic.
+        chunk_size = max(1, len(files) // (worker_count * 8))
+        executor = ProcessPoolExecutor(max_workers=worker_count)
+        summaries = executor.map(
+            _summarize_conditioning_file,
+            path_texts,
+            chunksize=chunk_size,
+        )
+    try:
+        print(
+            f"conditioning stats start: files={len(files)}, workers={worker_count}",
+            flush=True,
+        )
+        for index, summary in enumerate(summaries, start=1):
+            file_any_valid, file_all_five_valid = _merge_conditioning_summary(
+                daily_moments,
+                geo_moments,
+                summary,
             )
-        daily, dem = _read_v2_daily_and_dem(path)
-        daily_moments.update_columns(daily)
-        geo_moments.update_flat(dem)
-        daily_valid = np.isfinite(daily).reshape(30, 5, len(EOBS_VARIABLES))
-        any_valid_window += daily_valid.any(axis=1).sum(axis=0)
-        all_five_valid_window += daily_valid.all(axis=1).sum(axis=0)
-        if progress_every > 0 and index % progress_every == 0:
-            print(f"conditioning stats processed {index}/{len(files)}", flush=True)
+            any_valid_window += file_any_valid
+            all_five_valid_window += file_all_five_valid
+            if progress_every > 0 and index % progress_every == 0:
+                print(f"conditioning stats processed {index}/{len(files)}", flush=True)
+    finally:
+        if executor is not None:
+            executor.shutdown(wait=True, cancel_futures=True)
 
     daily_mean, daily_std = daily_moments.mean_std()
     geo_mean, geo_std = geo_moments.mean_std()
@@ -281,10 +385,21 @@ def main() -> None:
         help="Reject a smoke subset and require every record in the train manifest.",
     )
     parser.add_argument("--progress-every", type=int, default=1000)
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=1,
+        help=(
+            "Number of NetCDF reader processes. Use a modest value (typically 8) "
+            "on shared storage; this is total preprocessing concurrency, not GPU count."
+        ),
+    )
     args = parser.parse_args()
 
     if args.max_files < 0:
         raise ValueError("--max-files must be non-negative")
+    if args.workers < 1:
+        raise ValueError("--workers must be at least 1")
     files, manifest_total, manifest = _load_train_files(
         args.config,
         data_root=args.data_root,
@@ -302,6 +417,7 @@ def main() -> None:
         manifest_path=str(Path(args.manifest_path).resolve()),
         is_full_train=is_full_train,
         progress_every=args.progress_every,
+        workers=args.workers,
     )
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)

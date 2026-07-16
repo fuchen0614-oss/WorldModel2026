@@ -98,6 +98,8 @@ def manifest_identity(
             "protocol": payload.get("protocol"),
             "split": payload.get("split"),
             "role": payload.get("role"),
+            "source_splits": payload.get("source_splits"),
+            "selection": payload.get("selection"),
             "num_files": payload.get("num_files"),
             "files_sha256": records_digest,
         }

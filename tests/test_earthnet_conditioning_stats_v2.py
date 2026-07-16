@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
+import sys
 
 import numpy as np
 import pytest
@@ -18,6 +19,7 @@ SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "build_earthnet_condi
 SPEC = importlib.util.spec_from_file_location("build_earthnet_conditioning_stats", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
+sys.modules[SPEC.name] = MODULE
 SPEC.loader.exec_module(MODULE)
 
 PREFLIGHT_SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "preflight_stage2_earthnet.py"
@@ -64,6 +66,56 @@ def test_stats_v2_records_train_manifest_provenance_and_validity(tmp_path):
     assert report["g_variable"] == "cop_dem"
     assert stats.num_files == 1
     assert stats.manifest_sha256 == "frozen-manifest-digest"
+
+
+def test_stats_v2_parallel_reduction_matches_single_process(tmp_path):
+    paths = []
+    for cube_index in range(3):
+        path = tmp_path / f"34TDP_2018-04-28_2018-09-24_{cube_index:03d}.nc"
+        time = np.arange(
+            np.datetime64("2018-04-28"),
+            np.datetime64("2018-04-28") + np.timedelta64(150, "D"),
+        )
+        fields = {
+            "cop_dem": (
+                ("lat", "lon"),
+                np.arange(16, dtype=np.float32).reshape(4, 4) + cube_index,
+            )
+        }
+        for index, name in enumerate(EOBS_VARIABLES):
+            values = np.arange(150, dtype=np.float32) + 10.0 * index + cube_index
+            if name == "fg" and cube_index == 1:
+                values[0] = np.nan
+            fields[f"eobs_{name}"] = (("time",), values)
+        xr.Dataset(
+            fields,
+            coords={"time": time, "lat": np.arange(4), "lon": np.arange(4)},
+        ).to_netcdf(path)
+        paths.append(path)
+
+    common = {
+        "manifest_sha256": "frozen-manifest-digest",
+        "manifest_path": "/immutable/train.json",
+        "is_full_train": True,
+        "created_by_git_commit": "test-commit",
+        "progress_every": 0,
+    }
+    serial = MODULE.build_conditioning_stats(paths, workers=1, **common)
+    parallel = MODULE.build_conditioning_stats(paths, workers=2, **common)
+
+    assert parallel["num_files"] == serial["num_files"]
+    assert parallel["daily_valid_count"] == serial["daily_valid_count"]
+    assert parallel["g_valid_count"] == serial["g_valid_count"]
+    assert parallel["daily_mean"] == pytest.approx(serial["daily_mean"])
+    assert parallel["daily_std"] == pytest.approx(serial["daily_std"])
+    assert parallel["g_mean"] == pytest.approx(serial["g_mean"])
+    assert parallel["g_std"] == pytest.approx(serial["g_std"])
+    assert parallel["window_any_valid_fraction"] == pytest.approx(
+        serial["window_any_valid_fraction"]
+    )
+    assert parallel["window_all_five_valid_fraction"] == pytest.approx(
+        serial["window_all_five_valid_fraction"]
+    )
 
 
 def test_v2_preflight_accepts_matching_full_manifest_and_stats(tmp_path):

@@ -55,6 +55,8 @@ def test_provenance_binds_config_manifests_stats_and_initializer_bytes(tmp_path)
                 "protocol": "earthnet2021_standard_v1",
                 "split": "train-dev",
                 "role": "train",
+                "source_splits": ["train"],
+                "selection": {"kind": "sanity_subset_not_formal", "seed": 19},
                 "num_files": 3,
                 "files_sha256": "train-record-digest",
             }
@@ -104,6 +106,7 @@ def test_provenance_binds_config_manifests_stats_and_initializer_bytes(tmp_path)
 
     assert provenance["resolved_config_sha256"] == canonical_json_sha256(config)
     assert provenance["train_manifest"]["files_sha256"] == "train-record-digest"
+    assert provenance["train_manifest"]["selection"]["kind"] == "sanity_subset_not_formal"
     assert provenance["validation_manifest"]["role"] == "val"
     assert provenance["conditioning_stats"]["manifest_sha256"] == "train-record-digest"
     assert provenance["stage15_initializer"]["sha256"] == sha256_file(initializer)

@@ -174,6 +174,35 @@ bash run_stage2_earthnet.sh
 只替换 `CONFIG` 为各自 YAML；它们继承同一数据、清单和统计量。最终 `train_all` 重训前必须用
 `train_all.json` **重新**计算一份对应的 conditioning stats，不能复用 `train_dev` 的统计文件。
 
+如果只想先验证真实字段、梯度和 checkpoint（检查点）链路，可以额外做一个 **32/128 cube sanity
+bundle（小样本包）**。它从已冻结的 `train_dev/val_dev` 以确定性 tile round-robin（按 tile 轮转）
+选择样本，写出新的带父清单摘要的 `train_sanity.json/val_sanity.json`；它被明确标记为
+`formal_result_eligible=false`，绝不能报告为验证集、IID/OOD 或主实验结果：
+
+```bash
+SANITY_DIR="$RUN_DIR/sanity_32_20260716"  # 必须是新的、尚不存在的目录
+
+python scripts/build_stage2_sanity_bundle.py \
+  --data-root "$DATA_ROOT" \
+  --train-manifest "$RUN_DIR/train_dev.json" \
+  --validation-manifest "$RUN_DIR/val_dev.json" \
+  --output-dir "$SANITY_DIR" \
+  --train-count 32 \
+  --validation-count 32 \
+  --seed 20260716 \
+  --hash-mode none
+
+python scripts/build_earthnet_conditioning_stats.py \
+  --config configs/train/stage2_earthnet_v2_data.yaml \
+  --data-root "$DATA_ROOT" \
+  --manifest-path "$SANITY_DIR/train_sanity.json" \
+  --output "$SANITY_DIR/conditioning_stats_v2_train_sanity.json" \
+  --require-full-train
+```
+
+这里的 “full train” 仅指 **完整读取该 32-cube 清单**，并不指完整 `train_dev`；脚本会把这一区别写入
+`bundle.json` 和 manifest 的 `selection` 字段。正式结果仍只能使用完整的 `train_dev` 或最终 `train_all`。
+
 ## 6. Stage2 的训练和评测顺序
 
 1. `train_dev.json → val_dev.json`：开发、过拟合小样本、选 checkpoint；
