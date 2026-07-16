@@ -12,7 +12,7 @@ import pytest
 xr = pytest.importorskip("xarray")
 
 from data.earthnet_conditioning import EOBS_VARIABLES, ConditioningStatsV2
-from data.earthnet_manifest import build_manifest, write_manifest
+from data.earthnet_manifest import build_manifest, records_digest, write_manifest
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "build_earthnet_conditioning_stats.py"
@@ -27,6 +27,52 @@ PREFLIGHT_SPEC = importlib.util.spec_from_file_location("preflight_stage2_earthn
 PREFLIGHT = importlib.util.module_from_spec(PREFLIGHT_SPEC)
 assert PREFLIGHT_SPEC.loader is not None
 PREFLIGHT_SPEC.loader.exec_module(PREFLIGHT)
+
+
+def test_load_train_files_uses_manifest_without_touching_dataset_files(tmp_path):
+    dataset_root = tmp_path / "earthnet2021x"
+    records = [
+        {
+            "path": "train/34TDP/34TDP_2018-04-28_2018-09-24_000.nc",
+            "size_bytes": 123,
+            "sample_id": "34TDP_2018-04-28_2018-09-24_000",
+        },
+        {
+            "path": "train/34TDP/34TDP_2018-05-03_2018-09-29_001.nc",
+            "size_bytes": 456,
+            "sample_id": "34TDP_2018-05-03_2018-09-29_001",
+        },
+    ]
+    manifest = {
+        "schema_version": 2,
+        "dataset": "earthnet2021x",
+        "protocol": "earthnet2021_standard_v1",
+        "split": "train-dev",
+        "role": "train",
+        "source_splits": ["train"],
+        "hash_mode": "none",
+        "num_files": len(records),
+        "files": records,
+        "files_sha256": records_digest(records),
+    }
+    manifest_path = tmp_path / "train_dev.json"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(
+        "data:\n  root: " + json.dumps(str(dataset_root)) + "\n",
+        encoding="utf-8",
+    )
+
+    files, total, loaded = MODULE._load_train_files(
+        str(config_path),
+        data_root=None,
+        manifest_path=str(manifest_path),
+        max_files=0,
+    )
+
+    assert total == 2
+    assert files == [dataset_root / record["path"] for record in records]
+    assert loaded["files_sha256"] == manifest["files_sha256"]
 
 
 def test_stats_v2_records_train_manifest_provenance_and_validity(tmp_path):

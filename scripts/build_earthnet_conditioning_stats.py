@@ -34,13 +34,18 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from data.datasets.earthnet2021 import (
-    EarthNet2021Config,
-    _discover_npz_files,
     _infer_data_format,
     _xarray_to_hw,
     _xarray_to_time,
 )
 from data.earthnet_conditioning import EOBS_VARIABLES, conditioning_schema_dict
+from data.earthnet_manifest import (
+    DATASET_ID,
+    MANIFEST_SCHEMA_VERSION,
+    PROTOCOL_ID,
+    records_digest,
+    resolve_dataset_root,
+)
 from train.train_stage2_earthnet import load_config
 
 
@@ -330,31 +335,36 @@ def _load_train_files(
     if not isinstance(config, dict) or not isinstance(config.get("data"), dict):
         raise ValueError(f"{config_path} must contain a top-level data mapping")
     data = config["data"]
-    if data_root:
-        data["root"] = data_root
-    data.update(
-        {
-            "split": "train",
-            "stage2_protocol": "earthnet2021x_path_v2",
-            "data_format": "netcdf",
-            "file_glob": "**/*.nc",
-            "manifest_path": manifest_path,
-            "manifest_paths": {},
-            "require_manifest": True,
-            # The formal manifest itself is the training population.  A local
-            # development holdout must not silently remove records from stats.
-            "use_train_holdout": False,
-            "conditioning_stats_path": None,
-            "require_conditioning_stats": False,
-            "strict": False,
-        }
-    )
-    data_cfg = EarthNet2021Config.from_config(data, split="train")
-    all_files = _discover_npz_files(data_cfg)
-    if not all_files:
-        raise FileNotFoundError("The supplied train manifest resolves to zero files")
-    selected = all_files if max_files <= 0 else all_files[:max_files]
-    manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+    root_text = data_root or data.get("root")
+    if not root_text:
+        raise ValueError("A data root is required via --data-root or config data.root")
+
+    dataset_root = resolve_dataset_root(root_text)
+    manifest_source = Path(manifest_path)
+    manifest = json.loads(manifest_source.read_text(encoding="utf-8"))
+    if int(manifest.get("schema_version", -1)) != MANIFEST_SCHEMA_VERSION:
+        raise ValueError(
+            f"Unsupported manifest schema in {manifest_source}: "
+            f"{manifest.get('schema_version')!r}"
+        )
+    if manifest.get("dataset") != DATASET_ID:
+        raise ValueError(
+            f"Unexpected dataset in {manifest_source}: {manifest.get('dataset')!r}"
+        )
+    if manifest.get("protocol") != PROTOCOL_ID:
+        raise ValueError(
+            f"Unexpected manifest protocol in {manifest_source}: "
+            f"expected={PROTOCOL_ID!r}, got={manifest.get('protocol')!r}"
+        )
+
+    records = manifest.get("files")
+    if not isinstance(records, list):
+        raise TypeError(f"Manifest {manifest_source} has no list-valued 'files' field")
+    if int(manifest.get("num_files", -1)) != len(records):
+        raise ValueError(f"Manifest {manifest_source} num_files does not match records")
+    if manifest.get("files_sha256") != records_digest(records):
+        raise ValueError(f"Manifest {manifest_source} record digest is invalid")
+
     manifest_role = str(manifest.get("role", manifest.get("split", "")))
     if manifest_role != "train":
         raise ValueError(
@@ -364,6 +374,36 @@ def _load_train_files(
     digest = manifest.get("files_sha256")
     if not isinstance(digest, str) or not digest:
         raise ValueError("train manifest has no valid files_sha256")
+
+    all_files: list[Path] = []
+    seen: set[str] = set()
+    for record in records:
+        if not isinstance(record, dict):
+            raise TypeError(f"Manifest {manifest_source} contains a non-object record")
+        relative_text = str(record.get("path", ""))
+        relative = Path(relative_text)
+        if not relative_text or relative.is_absolute() or ".." in relative.parts:
+            raise ValueError(
+                f"Unsafe manifest path in {manifest_source}: {relative_text!r}"
+            )
+        if relative_text in seen:
+            raise ValueError(
+                f"Duplicate manifest path in {manifest_source}: {relative_text}"
+            )
+        seen.add(relative_text)
+        all_files.append(dataset_root / relative)
+
+    if [str(record["path"]) for record in records] != sorted(seen):
+        raise ValueError(f"Manifest {manifest_source} records are not path-sorted")
+    if not all_files:
+        raise FileNotFoundError("The supplied train manifest contains zero files")
+
+    selected = all_files if max_files <= 0 else all_files[:max_files]
+    print(
+        "conditioning stats manifest loaded: "
+        f"files={len(all_files)}, selected={len(selected)}, root={dataset_root}",
+        flush=True,
+    )
     return selected, len(all_files), manifest
 
 
@@ -400,6 +440,7 @@ def main() -> None:
         raise ValueError("--max-files must be non-negative")
     if args.workers < 1:
         raise ValueError("--workers must be at least 1")
+    print(f"conditioning stats loading manifest: {args.manifest_path}", flush=True)
     files, manifest_total, manifest = _load_train_files(
         args.config,
         data_root=args.data_root,
