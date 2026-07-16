@@ -1,12 +1,11 @@
 # Experiment Plan
 
-> **2026-07-16 protocol gate.** This plan's GreenEarthNet-specific blocks are
-> activated only after `思路整理进展/49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md`
-> confirms a compatible raw-train + `val_chopped` + `ood-t_chopped` layout.
-> The existing `earthnet2021x` raw root remains the training source either
-> way. If that audit fails, this plan must be switched as one whole protocol
-> to the legacy EarthNet2021 ENS branch before any long run; never combine
-> Green metrics/tracks with ENS metrics/tracks.
+> **2026-07-16 final protocol.** This plan uses only the already audited raw
+> `EarthNet2021/earthnet2021x` release. `train_dev → val_dev` is the only
+> development/selection route; locked results use IID/OOD as the main table and
+> Extreme/Seasonal as supplementary stress tracks. EarthNetScore (ENS) is the
+> official endpoint. GreenEarthNet and `*_chopped` tracks are a separate future
+> extension and must never be mixed into this plan's data, metrics or tables.
 
 **Problem**: 将稀疏、云遮 Earth observation forecasting 建模为 observation-correctable world modeling：同一个 history-dependent belief 既能在给定外生 forcing 下开放循环推演 EO-observable Earth-surface evolution，也能在局部新观测到来后被可靠校正。  
 **Method Thesis**: shared prior transition 推进 world belief；learned observation model 解码未来 RGBN，NDVI 由 Red/NIR 确定性计算；真实 reveal 与 prior decoded prediction 经相同 observation mask/encoder 后形成 aligned residual，再由 visibility-safe update 校正 belief；reveal-time update 只由之后的 rollout loss 监督。  
@@ -34,8 +33,8 @@
 
 - **Main paper must prove**: RQ1 的 open-loop world rollout 地基成立；RQ2 证明局部新观测能校正 belief 并改善后续 rollout；RQ3 在强 online baselines 下隔离 innovation correction，并证明 `q/age` 必要或应被删除。
 - **Required support**: 两类检查都运行；true-weather/no-weather 是 driver utility 辅助证据，correct-time 优于 time-shuffled/wrong-year 是 time-alignment 关键证据；只作能力证据，不作新贡献或因果 claim。
-- **Appendix can support**: OOD-s/OOD-st 完整表、clear strata 全表、hard replacement、Stage1/Stage1.5 initialization、land-cover/season failure panels、RGBN diagnostics、Params/FLOPs。
-- **Experiments intentionally cut**: CropHarvest/Sen1Floods11 等无关下游、Foundation Model 2×2、LLM/VLM、diffusion/uncertainty、完整 EO-WM matched-pair benchmark、多传感器 Stage2、额外 benchmark。UniTS 只有能按同一 GreenEarthNet evaluator 重跑时才进数字表。
+- **Appendix can support**: Extreme/Seasonal 紧凑表、clear strata 全表、hard replacement、Stage1/Stage1.5 initialization、land-cover/season failure panels、RGBN diagnostics、Params/FLOPs。
+- **Experiments intentionally cut**: CropHarvest/Sen1Floods11 等无关下游、Foundation Model 2×2、LLM/VLM、diffusion/uncertainty、完整 EO-WM matched-pair benchmark、多传感器 Stage2、额外 benchmark。UniTS 只有能按同一 raw EarthNet2021x manifest、NPZ 导出和 EarthNetScore 重跑时才进数字表。
 
 ## Experiment Blocks
 
@@ -43,30 +42,30 @@
 
 - **Claim tested**: C0 的必要前提——final belief-state model 首先是可信的 100-day open-loop world forecaster。
 - **Why this block exists**: correction 不能弥补 open-loop 任务本身失败；官方协议对齐也是所有机制实验的地基。
-- **Dataset / split / task**: GreenEarthNet Train；官方 Val 选择配置/早停；锁定后 `ood-t_chopped` 为主测试；`ood-s_chopped`、`ood-st_chopped` 只作紧凑空间/时空泛化列。
+- **Dataset / split / task**: raw EarthNet2021x `train_dev` 训练；`val_dev` 选择配置/早停；锁定后 IID 与 OOD 为主测试；Extreme 与 Seasonal 仅作紧凑压力测试列。
 - **Compared systems**:
   - reference: persistence、climatology；
-  - strong direct: Contextformer 官方实现/权重，Direct-Seq matched control；
-  - strong recurrent: PredRNN 官方实现，final ObsWorld open-loop；
-  - UniTS 仅在代码发布且能生成同坐标/时间 `ndvi_pred` NetCDF 时加入。
+  - strong direct: Direct24 matched control；Contextformer 仅在相同 raw manifest/ENS 协议可复现时加入；
+  - strong recurrent: final ObsWorld open-loop；PredRNN 仅在相同协议可复现时加入；
+  - UniTS 仅在代码发布且能生成匹配的 EarthNet `highresdynamic` NPZ 时加入。
 - **Metrics**:
-  - decisive: official NDVI RMSE；secondary—R²、NSE、|bias|、climatology outperformance、RMSE first 25 days；
-  - secondary: horizon-wise RMSE/NSE、Params、FLOPs、wall time、RGBN MAE/SAM（不混入 official rank）。
+  - decisive: official EarthNetScore（ENS，越高越好）及 MAD/OLS/EMD/SSIM 分量；
+  - secondary: horizon-wise RGBN/NDVI MAE、Params、FLOPs、wall time；这些解释指标不混入 official rank。
 - **Setup details**:
   - context 10、future 20、五日步长；全部模型使用相同官方 supervision masks 和 24-channel five-day weather；
   - Direct 与 ObsWorld 相同 encoder/decoder initialization、20 targets、target density、data samples 和 tuning budget；
   - `H` 必须共同训练，不能冻结随机 decoder；`E` 初期冻结，若解冻则 matched variants 在相同步数/LR 解冻；
-  - 3 seeds；只用 Val 锁配置；OOD test 一次；按 tile/location cluster bootstrap，不把像素当独立样本。
-- **Success criterion**: 预注册 `Delta_open = RMSE_ObsWorld - RMSE_Direct`、`delta_NI=0.01`；paired tile-cluster bootstrap 的 one-sided upper 95% CI 必须 `<0.01`。Contextformer/PredRNN reproduction 还须在官方合理量级，避免 matched Direct 自身过弱。OOD-t 在 Val 锁定后只评一次。
+  - 3 seeds；只用 `val_dev` 锁配置；IID/OOD 各只测试一次；按 tile/location cluster bootstrap，不把像素当独立样本。
+- **Success criterion**: 预注册 `Delta_open = ENS_Direct - ENS_ObsWorld`、`delta_NI=0.01 ENS`；OOD 上 paired tile-cluster bootstrap 的 one-sided upper 95% CI 必须 `<0.01`，IID 不得发生事实性崩溃。外部方法如进入主表，必须在相同协议达到合理量级，避免 matched Direct 自身过弱。
 - **Failure interpretation**: 若稳定落后强基线且 protocol 无误，C0 的 unified world-model paper 不成立；可保留 direct task baseline，但不能靠 correction 或追加任务掩盖 open-loop collapse。
-- **Table / figure target**: Main Table 1 + horizon-wise degradation curve；OOD-s/st 与完整效率列放 Appendix。
+- **Table / figure target**: Main Table 1（IID/OOD ENS）+ horizon-wise degradation curve；Extreme/Seasonal 与完整效率列放 Appendix。
 - **Priority**: MUST-RUN
 
 ### RQ2 / Block 2: Partial-Observation Belief Correction
 
 - **Claim tested**: C1 的主体——explicit innovation + continuous clear support + age 是否比 generic filtering 和 pixel recurrent assimilation 更有用。
 - **Why this block exists**: no-update/hard replacement 是弱对照；只有击败强 generic/online baselines，才能把结果归因于所提机制。
-- **Dataset / split / task**: 同一 GreenEarthNet training cubes；Val 固定 protocol 开发；锁定后在所有 `ood-t_chopped` cubes 评估。
+- **Dataset / split / task**: 同一 raw EarthNet2021x `train_dev` cubes；`val_dev` 固定 protocol 开发；锁定后在 IID/OOD 的所有 cubes 评估。
 - **Compared systems**:
   - final ObsWorld with reveal disabled（同一模型的 no-update trajectory）；
   - capacity-matched VanillaFilter：获得同一个 `z_obs/z_pred/q/staleness` 与额外 encoder forward，但隐式融合；与 residual update 参数/FLOPs差 ≤5%；
@@ -96,15 +95,15 @@
 
 - **Claim tested**: C1 的最小机制是否确实需要 innovation、continuous `q` 和 age；同时检查结论不依赖未经证实的 Stage1.5 或 calendar shortcut。
 - **Why this block exists**: 既隔离组件必要性，也允许在证据不足时删除无用部件，保持方法简洁。
-- **Dataset / split / task**: 首先在 Train/Val 做 one-seed decision pilots；只把 Val 锁定后的 final deletion rows 在 OOD-t 评估。Stage1.5 行默认 Appendix；forcing-alignment 是 required supporting evidence。
+- **Dataset / split / task**: 首先在 `train_dev/val_dev` 做 one-seed decision pilots；只把 `val_dev` 锁定后的 final deletion rows 在 IID/OOD 评估。Stage1.5 行默认 Appendix；forcing-alignment 是 required supporting evidence。
 - **Compared systems**:
   - residual update full；w/o explicit residual（即 VanillaFilter）；w/o evidence-weighted staleness；binary token mask 替代 continuous `q`；
   - initialization appendix: Stage1/S2-only vs repaired Stage1.5，使用同一 Stage2；
   - forcing contract: independently trained true-weather/no-weather；同一 checkpoint correct-time/time-shuffled-or-wrong-year weather，后者必须支持 correct-time 更优。
 - **Metrics**: official/post-reveal metrics；q=0 identity/age 单元测试；predictive/semantic Stage1.5 gate；weather sanity 只看 forecast correctness，不把 output sensitivity 称因果。
 - **Setup details**:
-  - 如果 w/o-age 在 Val 与 full 等价，最终方法删除 age；如果 binary-q 等价，优先更简单版本；此选择在 OOD 前完成；
-  - Stage1.5 只有 predictive/semantic utility 与 Stage2 Val 都不降才显示，且永不升级为第二 claim；
+  - 如果 w/o-age 在 `val_dev` 与 full 等价，最终方法删除 age；如果 binary-q 等价，优先更简单版本；此选择在 IID/OOD 前完成；
+  - Stage1.5 只有 predictive/semantic utility 与 Stage2 `val_dev` 都不降才显示，且永不升级为第二 claim；
   - forcing sanity 不扩展成 EO-WM 式因果响应矩阵，也不称 counterfactual realism。
 - **Success criterion**: 至少 explicit innovation 相对 matched Vanilla 必须成立；age/q 只有有稳定增益才保留。至少一个严谨 forcing comparison 证明模型使用 time-aligned driver，否则删去 forcing-conditioned 强调。Stage1.5 负结果不影响主 claim。
 - **Failure interpretation**: deletion 不降即删组件；Stage1.5 gate 失败即用 Stage1/S2-only；天气不可区分即删除 driver-use 解释。
@@ -115,25 +114,25 @@
 
 | Milestone | Goal | Runs | Decision Gate | Cost | Risk |
 |---|---|---|---|---|---|
-| M0 Protocol | 锁死 split、mask、weather、export、evaluator | R001–R006 | explicit manifests；missing split hard fail；官方 climatology/persistence parity；NetCDF coords/time parity；availability/supervision 分路；unrevealed-mask invariance 与 q/staleness/reveal tests 全过 | CPU/data work + <0.1 run | 静默混 split、旧 ENS、future mask 泄漏 |
-| M1 Sanity/Baselines | 证明训练链与强基线可信 | R010–R014 | 8-cube overfit；Contextformer official score parity；PredRNN/Direct 收敛到合理量级 | 2–3 pilots | decoder/driver/input parity 错误 |
-| M2 Mechanism Pilot | 单 seed 检验 C1 是否值得继续 | R020–R023 | U 必须优于 Vanilla 与 PredRNN-online 的 Val aggregate；open-loop 不崩 | 3–4 pilots | innovation 无增量、BPTT 显存 |
-| M3 Simplify | 删除无用 age/q/Stage1.5 部件 | R030–R034 | 用 Val 选最小 final method并锁定；不看 OOD | 2–4 short/partial runs | scope creep、按 test 选模型 |
+| M0 Protocol | 锁死 split、mask、weather、export、evaluator | R001–R006 | explicit manifests；missing split hard fail；EarthNet NPZ/ENS/provenance 小样本闭环；availability/supervision 分路；unrevealed-mask invariance 与 q/staleness/reveal tests 全过 | CPU/data work + <0.1 run | 静默混 split、错误 ENS 输入、future mask 泄漏 |
+| M1 Sanity/Baselines | 证明训练链与 matched controls 可信 | R010–R014 | 32–128 cube overfit；Direct/Rollout/Partition 收敛与导出闭环；外部 baseline 仅在同协议可复现时加入 | 2–3 pilots | decoder/driver/input parity 错误 |
+| M2 Mechanism Pilot | 单 seed 检验 C1 是否值得继续 | R020–R023 | U 必须优于 Vanilla 与 PredRNN-online 的 `val_dev` aggregate；open-loop 不崩 | 3–4 pilots | innovation 无增量、BPTT 显存 |
+| M3 Simplify | 删除无用 age/q/Stage1.5 部件 | R030–R034 | 用 `val_dev` 选最小 final method并锁定；不看 IID/OOD | 2–4 short/partial runs | scope creep、按 test 选模型 |
 | M4 Confirm | 最终 systems 三种子与一次 OOD | R040–R049 | C1 CI 支持；否则按 stop rule 降级/停止 | 约 6–9 full runs，依 M2 gate | 方差大、效果只在晴朗层 |
 | M5 Polish | 紧凑 OOD/failure/appendix | R050–R054 | 只做不改变主结论的诊断 | 主要 inference + ≤2 trains | 为救叙事无限追加 |
 
 ## Compute and Data Budget
 
-- **Total estimated GPU-hours**: 项目本地 WorldModel 环境已复现并通过 H200 CUDA smoke 与 26 项正式测试，但训练吞吐仍未知。M1 每个系统先测 500–1000 updates 的 `sec/update`、peak memory、eval time；使用 `sec_per_update × updates × seeds / 3600 + 15% eval/checkpoint`。
-- **Full-run budget**: gate-driven 约 8–12 full-equivalent runs；M2 若失败，不运行三种子、OOD-s/st 或 appendix trains。
-- **Data preparation needs**: official GreenEarthNet folder/manifests；完整 8 E-OBS variables 的 mean/min/max 24 features及历史 context weather；official cloud/SCL/land-cover masks；NetCDF prediction template。
+- **Total estimated GPU-hours**: 项目本地 WorldModel 环境已复现，并已通过 106 项单元/合成集成测试；真实训练吞吐仍未知。M1 每个系统先测 500–1000 updates 的 `sec/update`、peak memory、eval time；使用 `sec_per_update × updates × seeds / 3600 + 15% eval/checkpoint`。
+- **Full-run budget**: gate-driven 约 8–12 full-equivalent runs；M2 若失败，不运行三种子、Extreme/Seasonal 或 appendix trains。
+- **Data preparation needs**: frozen raw EarthNet2021x manifests；完整 8 E-OBS variables 的 mean/min/max 24 features及历史 context weather；official cloud/SCL/land-cover masks；EarthNet `highresdynamic` NPZ prediction template。
 - **Human evaluation needs**: 无。qualitative 只做 failure diagnosis。
-- **Biggest bottleneck**: 当前 Stage2 是 direct-only；缺 `F/U` sequential context、online reveal schedule、official exporter/evaluator；Stage1.5/Stage2 本地无 checkpoint/results。
+- **Biggest bottleneck**: Direct24/Rollout24/Partition24、exporter 和 scorer provenance 已实现；仍缺真实 manifest/stats/preflight、真实小样本 overfit、online reveal/update 分支以及最终 Stage1.5 initializer。
 
 ## Risks and Mitigations
 
 - **Risk: official protocol 与当前代码不一致**  
-  **Mitigation**: M0 是硬 gate；`val_chopped/ood-*` manifest、官方 evaluator、NetCDF schema、mask/weather parity 未通过前不训练。
+  **Mitigation**: M0 是硬 gate；`train_dev/val_dev/iid/ood/extreme/seasonal` manifests、EarthNet NPZ scorer、NetCDF schema、mask/weather parity 未通过前不训练。
 - **Risk: proposed U 只是通用 filter 换名**  
   **Mitigation**: capacity-matched Vanilla 与 PredRNN-online 是 must-run；失败即缩 claim/停止。
 - **Risk: 极低 q 时 residual/update 仍过弱**  
@@ -152,7 +151,7 @@
 - [ ] Main Table 1 + horizon curve covers open-loop Earth-observation world rollout
 - [ ] Main Table 2 / Fig. 2 isolates online correction against VanillaFilter and PredRNN-online with paired gain-AUC
 - [ ] availability/supervision masks separated; `q=0` identity, staleness, reveal ordering, unrevealed-mask invariance tests specified
-- [ ] Innovation, q, age deletion decisions occur on Val before OOD
+- [ ] Innovation, q, age deletion decisions occur on `val_dev` before IID/OOD
 - [ ] Stage1.5 remains optional; forcing alignment is required support but not a parallel contribution
 - [ ] Strong baselines use matched weather, targets, supervision and tuning budget
 - [ ] Official split/evaluator/export/mask parity is proven before training
