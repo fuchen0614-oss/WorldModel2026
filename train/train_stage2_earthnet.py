@@ -48,6 +48,7 @@ sys.path.insert(0, str(ROOT))
 
 from data.datasets.earthnet2021 import EarthNet2021Config, EarthNet2021Dataset, collate_earthnet2021
 from data.earthnet_conditioning import FULL24_FEATURE_NAMES, is_stage2_v2_protocol
+from data.earthnet_physical_conditioning import PHYSICAL4_FEATURE_NAMES, PHYSICAL4_PROTOCOL
 from data.stage2_contract import is_stage2_v2_batch, model_input_view
 from models.adapters.earthnet_band_adapter import EarthNetInputAdapter
 from models.adapters.geo_tokenizer import GeoTokenizer
@@ -943,22 +944,24 @@ def _log_v2_driver_coverage(
     data_cfg: EarthNet2021Config,
     max_samples: int = 8,
 ) -> dict:
-    """Log formal 24-D path availability without reusing legacy DGH names."""
+    """Log the selected frozen path layout without scanning the full dataset."""
 
     count = min(len(dataset), max_samples)
     if count <= 0:
         raise RuntimeError("Cannot audit driver coverage of an empty Stage2-v2 dataset")
-    coverage = torch.zeros(len(FULL24_FEATURE_NAMES), dtype=torch.float64)
+    physical = data_cfg.driver_protocol == PHYSICAL4_PROTOCOL
+    driver_names = tuple(PHYSICAL4_FEATURE_NAMES if physical else FULL24_FEATURE_NAMES)
+    coverage = torch.zeros(len(driver_names), dtype=torch.float64)
     total = 0
     geo_valid = 0.0
     geo_total = 0
     for index in range(count):
         sample = dataset[index]
         driver_mask = sample["D_mask"].double()
-        if driver_mask.shape[-1] != len(FULL24_FEATURE_NAMES):
+        if driver_mask.shape[-1] != len(driver_names):
             raise ValueError(
-                "Stage2-v2 D_mask feature dimension differs from formal full24: "
-                f"got {driver_mask.shape[-1]}"
+                f"Stage2-v2 {data_cfg.driver_protocol} D_mask dimension differs from "
+                f"configured layout: got {driver_mask.shape[-1]}, expected {len(driver_names)}"
             )
         coverage += driver_mask.sum(dim=0)
         total += driver_mask.shape[0]
@@ -968,25 +971,22 @@ def _log_v2_driver_coverage(
     rates = coverage / max(total, 1)
     summary = ", ".join(
         f"{name}={rate:.3f}"
-        for name, rate in zip(FULL24_FEATURE_NAMES, rates.tolist())
+        for name, rate in zip(driver_names, rates.tolist())
     )
-    log_main(f"Stage2-v2 full24 D valid-rate over {count} samples: {summary}")
+    log_main(
+        f"Stage2-v2 {data_cfg.driver_protocol} D valid-rate over {count} samples: {summary}"
+    )
     geo_rate = geo_valid / max(geo_total, 1)
     log_main(f"Stage2-v2 cop_dem valid-rate over {count} samples: {geo_rate:.3f}")
     missing = [
-        name
-        for name, rate in zip(FULL24_FEATURE_NAMES, rates.tolist())
-        if rate == 0
+        name for name, rate in zip(driver_names, rates.tolist()) if rate == 0
     ]
     if missing:
         log_main(
-            "warning: these formal full24 features are absent in inspected "
+            f"warning: {data_cfg.driver_protocol} features absent in inspected "
             f"samples and will be mask-filled: {missing}"
         )
-    result = {
-        name: rate
-        for name, rate in zip(FULL24_FEATURE_NAMES, rates.tolist())
-    }
+    result = dict(zip(driver_names, rates.tolist()))
     result["__geo_elevation__"] = geo_rate
     return result
 
@@ -1120,13 +1120,21 @@ def main():
         if bool(config["training"].get("require_full_conditioning_stats", True)):
             stats = data_cfg.conditioning_stats
             if stats is None or stats.is_identity_smoke_stats:
+                stats_script = (
+                    "scripts/build_earthnet_physical_stats.py"
+                    if data_cfg.driver_protocol == PHYSICAL4_PROTOCOL
+                    else "scripts/build_earthnet_conditioning_stats.py"
+                )
                 raise RuntimeError(
                     "Formal Stage2-v2 training requires non-identity train-only "
-                    "conditioning statistics. Run "
-                    "scripts/build_earthnet_conditioning_stats.py on the frozen "
-                    "train manifest and pass --conditioning-stats-path."
+                    f"{data_cfg.driver_protocol} statistics. Run {stats_script} "
+                    "on the frozen train manifest and pass --conditioning-stats-path."
                 )
-        driver_names = FULL24_FEATURE_NAMES
+        driver_names = (
+            PHYSICAL4_FEATURE_NAMES
+            if data_cfg.driver_protocol == PHYSICAL4_PROTOCOL
+            else FULL24_FEATURE_NAMES
+        )
     else:
         if bool(config["training"].get("require_dgh_stats", True)):
             if not config["data"].get("dgh_stats_path"):

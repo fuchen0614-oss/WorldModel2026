@@ -28,6 +28,12 @@ from data.earthnet_conditioning import (
     FULL24_FEATURE_NAMES,
     is_stage2_v2_protocol,
 )
+from data.earthnet_physical_conditioning import (
+    PHYSICAL4_FEATURE_NAMES,
+    PHYSICAL4_PROTOCOL,
+    PHYSICAL4_RAW_VARIABLES,
+    PhysicalDGHStats,
+)
 from data.stage2_contract import validate_stage2_v2_batch
 from train.train_stage2_earthnet import (
     create_stage2_model,
@@ -187,18 +193,16 @@ def _scan_data_v2(
     all_files: List[Path],
     max_files: int,
 ) -> Dict[str, Any]:
-    """Scan formal path tensors without forwarding them into a model.
-
-    The result intentionally reports both any-valid and all-five-day weather
-    coverage.  The loader permits partial five-day windows (with a feature
-    mask), while the latter number remains useful evidence about data quality.
-    """
+    """Scan formal path tensors with protocol-specific coverage labels."""
 
     files = all_files if max_files <= 0 else all_files[:max_files]
     expected_windows = len(files) * 30
-    feature_valid_counts = np.zeros(len(FULL24_FEATURE_NAMES), dtype=np.int64)
-    daily_valid_counts = np.zeros(len(EOBS_VARIABLES), dtype=np.int64)
-    daily_all_five_counts = np.zeros(len(EOBS_VARIABLES), dtype=np.int64)
+    physical = data_cfg.driver_protocol == PHYSICAL4_PROTOCOL
+    feature_names = tuple(PHYSICAL4_FEATURE_NAMES if physical else FULL24_FEATURE_NAMES)
+    raw_names = tuple(PHYSICAL4_RAW_VARIABLES if physical else EOBS_VARIABLES)
+    feature_valid_counts = np.zeros(len(feature_names), dtype=np.int64)
+    daily_valid_counts = np.zeros(len(raw_names), dtype=np.int64)
+    daily_all_five_counts = np.zeros(len(raw_names), dtype=np.int64)
     geo_valid_pixels = 0
     geo_total_pixels = 0
     date_failures = 0
@@ -216,13 +220,15 @@ def _scan_data_v2(
                 for name, value in sample.items()
                 if torch.is_tensor(value)
             }
-            validate_stage2_v2_batch(tensor_batch, require_targets=True)
+            validate_stage2_v2_batch(
+                tensor_batch,
+                require_targets=True,
+                expected_driver_dim=len(feature_names),
+            )
             for name, value in sample.items():
                 if torch.is_tensor(value):
                     shape = str(tuple(value.shape))
-                    tensor_shapes[f"{name}:{shape}"] = tensor_shapes.get(
-                        f"{name}:{shape}", 0
-                    ) + 1
+                    tensor_shapes[f"{name}:{shape}"] = tensor_shapes.get(f"{name}:{shape}", 0) + 1
             if sample.get("start_date") is None:
                 date_failures += 1
             feature_valid_counts += (sample["D_mask"].numpy() > 0).sum(axis=0)
@@ -243,16 +249,9 @@ def _scan_data_v2(
 
     min_valid_fraction = _min_driver_valid_fraction(config)
     feature_valid_fraction = feature_valid_counts / max(expected_windows, 1)
-    missing = [
-        name
-        for name, count in zip(FULL24_FEATURE_NAMES, feature_valid_counts.tolist())
-        if count == 0
-    ]
+    missing = [name for name, count in zip(feature_names, feature_valid_counts.tolist()) if count == 0]
     low_coverage = [
-        name
-        for name, fraction in zip(
-            FULL24_FEATURE_NAMES, feature_valid_fraction.tolist()
-        )
+        name for name, fraction in zip(feature_names, feature_valid_fraction.tolist())
         if fraction < min_valid_fraction
     ]
     fatal_reasons = []
@@ -262,10 +261,10 @@ def _scan_data_v2(
         fatal_reasons.append(f"{date_failures} cubes have no parseable start date")
     if bool(config["training"].get("require_all_driver_features", True)):
         if missing:
-            fatal_reasons.append(f"missing v2 D_path features: {missing}")
+            fatal_reasons.append(f"missing {data_cfg.driver_protocol} D_path features: {missing}")
         if low_coverage:
             fatal_reasons.append(
-                "v2 D_path feature valid_fraction below "
+                f"{data_cfg.driver_protocol} D_path feature valid_fraction below "
                 f"{min_valid_fraction:.3f}: {low_coverage}"
             )
     if bool(config["training"].get("require_geo", True)) and zero_geo_files:
@@ -278,12 +277,13 @@ def _scan_data_v2(
     if data_cfg.conditioning_stats and data_cfg.conditioning_stats.is_identity_smoke_stats:
         fatal_reasons.append(
             "v2 loader is using identity smoke statistics instead of train-only "
-            "conditioning_stats_v2"
+            f"{data_cfg.driver_protocol} statistics"
         )
 
     return {
         "split": data_cfg.split,
         "stage2_protocol": data_cfg.stage2_protocol,
+        "driver_protocol": data_cfg.driver_protocol,
         "total_files_in_split": len(all_files),
         "scanned_files": len(files),
         "scan_is_full_split": len(files) == len(all_files),
@@ -291,24 +291,10 @@ def _scan_data_v2(
         "date_parse_failures": date_failures,
         "zero_valid_cop_dem_files": zero_geo_files,
         "cop_dem_valid_fraction": geo_valid_pixels / max(geo_total_pixels, 1),
-        "D_path_valid_count": dict(
-            zip(FULL24_FEATURE_NAMES, feature_valid_counts.tolist())
-        ),
-        "D_path_valid_fraction": dict(
-            zip(FULL24_FEATURE_NAMES, feature_valid_fraction.tolist())
-        ),
-        "window_any_valid_fraction": dict(
-            zip(
-                EOBS_VARIABLES,
-                (daily_valid_counts / max(expected_windows, 1)).tolist(),
-            )
-        ),
-        "window_all_five_valid_fraction": dict(
-            zip(
-                EOBS_VARIABLES,
-                (daily_all_five_counts / max(expected_windows, 1)).tolist(),
-            )
-        ),
+        "D_path_valid_count": dict(zip(feature_names, feature_valid_counts.tolist())),
+        "D_path_valid_fraction": dict(zip(feature_names, feature_valid_fraction.tolist())),
+        "window_any_valid_fraction": dict(zip(raw_names, (daily_valid_counts / max(expected_windows, 1)).tolist())),
+        "window_all_five_valid_fraction": dict(zip(raw_names, (daily_all_five_counts / max(expected_windows, 1)).tolist())),
         "missing_driver_features": missing,
         "low_coverage_driver_features": low_coverage,
         "min_driver_valid_fraction": min_valid_fraction,
@@ -346,6 +332,8 @@ def _check_model(config: dict, resume_from: Optional[str]) -> Dict[str, Any]:
 
 def _check_stats(config: dict) -> Dict[str, Any]:
     if is_stage2_v2_protocol(str(config["data"].get("stage2_protocol", ""))):
+        if str(config["data"].get("driver_protocol", "full24")).lower() in {PHYSICAL4_PROTOCOL, "physical4", "original_dgh", "original_physical_dgh"}:
+            return _check_physical4_stats(config)
         return _check_v2_stats(config)
     path = Path(config["data"]["dgh_stats_path"])
     with path.open("r", encoding="utf-8") as handle:
@@ -409,6 +397,76 @@ def _check_stats(config: dict) -> Dict[str, Any]:
         "feature_names": stats.get("feature_names"),
         "min_driver_valid_fraction": min_valid_fraction,
         "driver_valid_fraction": dict(zip(expected_names, valid_fraction)),
+        "driver_coverage_ok": True,
+    }
+
+
+def _check_physical4_stats(config: dict) -> Dict[str, Any]:
+    """Prove physical4 normalization belongs to the frozen train manifest."""
+
+    path_text = config["data"].get("conditioning_stats_path")
+    if not path_text:
+        raise ValueError("formal physical4 requires data.conditioning_stats_path")
+    path = Path(path_text)
+    stats = PhysicalDGHStats.from_file(path)
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    train_cfg = EarthNet2021Config.from_config(config["data"], split="train")
+    expected_files = len(_discover_npz_files(train_cfg))
+    errors = []
+    if train_cfg.use_train_holdout:
+        errors.append("physical4 train config must set use_train_holdout=false")
+    if not train_cfg.manifest_path:
+        errors.append("physical4 formal stats require an explicit train manifest")
+    else:
+        manifest = json.loads(Path(train_cfg.manifest_path).read_text(encoding="utf-8"))
+        if stats.manifest_sha256 != manifest.get("files_sha256"):
+            errors.append("physical4 stats manifest_sha256 does not match train manifest")
+    if stats.num_files != expected_files:
+        errors.append(f"stats num_files={stats.num_files}, train manifest resolves to {expected_files}")
+    if bool(config.get("training", {}).get("require_full_conditioning_stats", True)) and payload.get("is_full_train") is not True:
+        errors.append("physical4 stats are a smoke subset, not the full train manifest")
+    if payload.get("g_variable") != "cop_dem" or int(payload.get("g_valid_count", 0)) <= 0:
+        errors.append("physical4 stats contain no valid cop_dem statistics")
+    configured_solar_scale = float(train_cfg.netcdf_solar_scale)
+    stats_solar_scale = float(payload.get("netcdf_solar_scale", 0.0864))
+    if not np.isclose(configured_solar_scale, stats_solar_scale, rtol=0.0, atol=1e-12):
+        errors.append(
+            "physical4 qq conversion differs between config and stats: "
+            f"config={configured_solar_scale}, stats={stats_solar_scale}"
+        )
+    feature_names = list(PHYSICAL4_FEATURE_NAMES)
+    feature_counts = payload.get("feature_valid_count") or {}
+    feature_fraction = payload.get("feature_valid_fraction") or {}
+    min_valid_fraction = _min_driver_valid_fraction(config)
+    missing = [name for name in feature_names if int(feature_counts.get(name, 0)) <= 0]
+    low = [name for name in feature_names if float(feature_fraction.get(name, 0.0)) < min_valid_fraction]
+    if bool(config.get("training", {}).get("require_all_driver_features", True)):
+        if missing:
+            errors.append(f"physical4 stats prove missing D features: {missing}")
+        if low:
+            errors.append(f"physical4 feature_valid_fraction below {min_valid_fraction:.3f}: {low}")
+    raw_counts = payload.get("raw_daily_valid_count") or {}
+    raw_fraction = payload.get("window_any_valid_fraction") or {}
+    raw_missing = [name for name in PHYSICAL4_RAW_VARIABLES if int(raw_counts.get(name, 0)) <= 0]
+    raw_low = [name for name in PHYSICAL4_RAW_VARIABLES if float(raw_fraction.get(name, 0.0)) < min_valid_fraction]
+    if bool(config.get("training", {}).get("require_all_driver_features", True)) and (raw_missing or raw_low):
+        errors.append(f"physical4 raw weather coverage insufficient: missing={raw_missing}, low={raw_low}")
+    if errors:
+        raise ValueError("; ".join(errors))
+    return {
+        "path": str(path),
+        "fit_split": "train",
+        "driver_protocol": PHYSICAL4_PROTOCOL,
+        "num_files": stats.num_files,
+        "manifest_sha256": stats.manifest_sha256,
+        "feature_names": feature_names,
+        "g_variable": "cop_dem",
+        "is_full_train": bool(payload.get("is_full_train")),
+        "vpd_clip_value": float(payload["vpd_clip_value"]),
+        "netcdf_solar_scale": stats_solar_scale,
+        "min_driver_valid_fraction": min_valid_fraction,
+        "driver_valid_fraction": {name: float(feature_fraction[name]) for name in feature_names},
+        "window_any_valid_fraction": {name: float(raw_fraction[name]) for name in PHYSICAL4_RAW_VARIABLES},
         "driver_coverage_ok": True,
     }
 
@@ -554,6 +612,7 @@ def main() -> None:
         "config": str(Path(args.config).resolve()),
         "data_root": config["data"]["root"],
         "stage2_protocol": config["data"].get("stage2_protocol", "legacy_direct9"),
+        "driver_protocol": config["data"].get("driver_protocol", "full24"),
         "external_driver_root": config["data"].get("external_driver_root"),
         "dgh_stats_path": config["data"].get("dgh_stats_path"),
         "conditioning_stats_path": config["data"].get("conditioning_stats_path"),

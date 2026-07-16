@@ -15,6 +15,12 @@ import torch
 import torch.nn as nn
 
 from data.earthnet_conditioning import FULL24_FEATURE_NAMES
+from data.earthnet_physical_conditioning import PHYSICAL4_FEATURE_NAMES
+
+SUPPORTED_DRIVER_FEATURE_LAYOUTS = {
+    len(FULL24_FEATURE_NAMES): tuple(FULL24_FEATURE_NAMES),
+    len(PHYSICAL4_FEATURE_NAMES): tuple(PHYSICAL4_FEATURE_NAMES),
+}
 
 
 class IntervalDriverEncoder(nn.Module):
@@ -41,15 +47,17 @@ class IntervalDriverEncoder(nn.Module):
         feature_names: Sequence[str] = FULL24_FEATURE_NAMES,
     ):
         super().__init__()
-        if input_dim != len(FULL24_FEATURE_NAMES):
+        expected_names = SUPPORTED_DRIVER_FEATURE_LAYOUTS.get(int(input_dim))
+        if expected_names is None:
             raise ValueError(
-                "Formal IntervalDriverEncoder requires the frozen 24-D E-OBS "
-                f"layout, got input_dim={input_dim}"
+                "Formal IntervalDriverEncoder supports only full24 or physical4 "
+                f"layouts, got input_dim={input_dim}"
             )
-        if tuple(feature_names) != tuple(FULL24_FEATURE_NAMES):
+        if tuple(feature_names) != expected_names:
             raise ValueError(
                 "IntervalDriverEncoder feature_names differ from the frozen "
-                "Stage2-v2 FULL24_FEATURE_NAMES order"
+                f"layout for input_dim={input_dim}: expected={list(expected_names)}, "
+                f"got={list(feature_names)}"
             )
         if calendar_dim != 2:
             raise ValueError("Stage2-v2 calendar path must have exactly sin/cos dimensions")
@@ -120,8 +128,8 @@ class IntervalDriverEncoder(nn.Module):
         """Encode a segment with common length ``L`` across the batch.
 
         Args:
-            d_segment: normalized E-OBS values ``[B,L,24]``.
-            d_mask_segment: matching binary availability mask ``[B,L,24]``.
+            d_segment: normalized driver values ``[B,L,D]`` with D=24 or 4.
+            d_mask_segment: matching binary availability mask ``[B,L,D]``.
             calendar_segment: five-day calendar sin/cos ``[B,L,2]``.
             delta_t_segment: positive duration in days ``[B,L]``.
         """

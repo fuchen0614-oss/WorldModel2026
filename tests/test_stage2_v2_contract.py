@@ -62,3 +62,13 @@ def test_v2_model_view_excludes_targets_even_for_audit_rich_batch():
     assert "x_target" in view and "target_mask" in view
     assert "D_valid_day_count" not in view
     assert "official_eval_mask" not in view
+
+
+def test_v2_contract_accepts_physical4_layout_when_explicitly_expected():
+    batch = _v2_batch()
+    batch["D_path"] = torch.zeros(2, 30, 4)
+    batch["D_mask"] = torch.ones(2, 30, 4)
+    batch["D_valid_day_count"] = torch.full((2, 30, 4), 5, dtype=torch.long)
+    validate_stage2_v2_batch(batch, expected_driver_dim=4)
+    with pytest.raises(ValueError, match="configured driver encoder"):
+        validate_stage2_v2_batch(batch, expected_driver_dim=24)

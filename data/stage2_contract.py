@@ -58,10 +58,10 @@ STAGE2_FIELD_SPECS: Tuple[Stage2FieldSpec, ...] = (
     # Frozen Stage2-v2 path protocol.  D_path covers the full 150-day cube;
     # D_path[:, 10] is the first interval that evolves the final context state
     # into the first future state.  It deliberately coexists with legacy D.
-    Stage2FieldSpec("D_path", "full 5-day E-OBS driver path", True, "[B,30,24]", "daily-zscore then 5-day aggregate"),
+    Stage2FieldSpec("D_path", "full24 or physical4 five-day driver path", True, "[B,30,D], D∈{24,4}", "protocol-specific train-normalized aggregate"),
     Stage2FieldSpec("C_path", "5-day midpoint calendar path", True, "[B,30,2]", "sin/cos day-of-year"),
     Stage2FieldSpec("delta_t_path", "duration of each conditioning interval", True, "[B,30]", "days"),
-    Stage2FieldSpec("D_valid_day_count", "audit-only daily E-OBS count", False, "[B,30,8]", "days; not a model input"),
+    Stage2FieldSpec("D_valid_day_count", "audit-only raw weather valid-day count", False, "[B,30,8] or [B,30,4]", "days; not a model input"),
 )
 
 REQUIRED_STAGE2_FIELDS = (
@@ -99,6 +99,7 @@ STAGE2_V2_REQUIRED_FIELDS = (
 )
 STAGE2_V2_MODEL_INPUT_FIELDS = STAGE2_V2_REQUIRED_FIELDS
 STAGE2_V2_AUDIT_ONLY_FIELDS = ("D_valid_day_count",)
+STAGE2_V2_DRIVER_DIMS = (24, 4)
 
 
 def is_stage2_v2_batch(batch: Mapping[str, torch.Tensor]) -> bool:
@@ -294,6 +295,7 @@ def validate_stage2_v2_batch(
     *,
     require_targets: bool = True,
     require_evaluation: bool = False,
+    expected_driver_dim: Optional[int] = None,
 ) -> None:
     """Validate the frozen 30-token Stage2-v2 data contract.
 
@@ -332,10 +334,21 @@ def validate_stage2_v2_batch(
         raise ValueError(
             f"D_path must have shape [B,Td,Kd], got {tuple(drivers.shape)}"
         )
-    if drivers.shape[0] != batch_size or drivers.shape[1:] != (30, 24):
+    if drivers.shape[0] != batch_size or drivers.shape[1] != 30:
         raise ValueError(
-            "Stage2-v2 fixes D_path to [B,30,24], got "
+            "Stage2-v2 fixes D_path to [B,30,D] with 30 five-day tokens, got "
             f"{tuple(drivers.shape)}"
+        )
+    driver_dim = int(drivers.shape[2])
+    if driver_dim not in STAGE2_V2_DRIVER_DIMS:
+        raise ValueError(
+            "Stage2-v2 supports only the frozen full24 or physical4 D layouts, got "
+            f"D={driver_dim}"
+        )
+    if expected_driver_dim is not None and driver_dim != int(expected_driver_dim):
+        raise ValueError(
+            "D_path dimension does not match the configured driver encoder: "
+            f"batch={driver_dim}, expected={int(expected_driver_dim)}"
         )
     if driver_mask.shape != drivers.shape:
         raise ValueError(
@@ -379,10 +392,11 @@ def validate_stage2_v2_batch(
 
     if "D_valid_day_count" in batch:
         valid_day_count = _require_tensor(batch, "D_valid_day_count")
-        if valid_day_count.shape != (batch_size, 30, 8):
+        expected_audit_dim = 4 if driver_dim == 4 else 8
+        if valid_day_count.shape != (batch_size, 30, expected_audit_dim):
             raise ValueError(
-                "D_valid_day_count must have shape [B,30,8], got "
-                f"{tuple(valid_day_count.shape)}"
+                "D_valid_day_count must have the protocol raw-variable width, got "
+                f"{tuple(valid_day_count.shape)}; expected {expected_audit_dim} for D={driver_dim}"
             )
         if torch.any(valid_day_count < 0) or torch.any(valid_day_count > 5):
             raise ValueError("D_valid_day_count must lie in [0,5]")

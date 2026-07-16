@@ -1,0 +1,13 @@
+# Original physical DGH open-loop rollout. All shared model/data settings
+# inherit from the physical Direct configuration.
+_base_: stage2_earthnet_v2_direct_physical4.yaml
+
+model:
+  forecast_mode: rollout_t5_physical4
+
+training:
+  open_loop: true
+  teacher_forcing_future_state: false
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_rollout_physical4
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_rollout_physical4

@@ -125,10 +125,13 @@ def conditioning_stats_identity(
     identity.update(
         {
             "schema_version": payload.get("schema_version"),
+            "driver_protocol": payload.get("driver_protocol", "full24"),
+            "feature_names": payload.get("feature_names"),
             "manifest_sha256": payload.get("manifest_sha256"),
             "num_files": payload.get("num_files"),
             "is_full_train": payload.get("is_full_train"),
             "g_variable": payload.get("g_variable"),
+            "vpd_clip_value": payload.get("vpd_clip_value"),
         }
     )
     return identity
@@ -231,7 +234,8 @@ def build_stage2_run_provenance(
             "dataset_protocol": data.get("dataset_protocol"),
             "stage2_protocol": data.get("stage2_protocol"),
             "evaluation_protocol": data.get("evaluation_protocol"),
-            "driver_protocol": model.get("driver_protocol"),
+            "driver_protocol": model.get("driver_protocol", data.get("driver_protocol", "full24")),
+            "data_driver_protocol": data.get("driver_protocol", "full24"),
             "forecast_mode": model.get("forecast_mode"),
         },
         "training": {

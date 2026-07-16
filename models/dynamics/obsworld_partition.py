@@ -63,7 +63,14 @@ class ObsWorldPartitionModel(ObsWorldRolloutModel):
         """Return direct and composed endpoints for one legal 5+5 split."""
 
         assert_model_batch_has_no_evaluation_fields(batch)
-        validate_stage2_v2_batch(batch, require_targets=False)
+        validate_stage2_v2_batch(
+            batch, require_targets=False,
+            expected_driver_dim=getattr(
+                getattr(self.transition, "interval_driver_encoder", None),
+                "input_dim",
+                None,
+            ),
+        )
         start = _normalize_partition_start(partition_start)
         z_rollout = rollout_output["z_rollout"]
         active_steps = int(z_rollout.shape[1])

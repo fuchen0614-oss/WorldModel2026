@@ -1,0 +1,15 @@
+# Original physical DGH world-model path with partition consistency.
+_base_: stage2_earthnet_v2_rollout_physical4.yaml
+
+model:
+  forecast_mode: obsworld_partition_physical4
+
+training:
+  partition:
+    enabled: true
+    detach_partition_start: true
+    warmup_start_step: 5000
+    warmup_steps: 10000
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_partition_physical4
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_partition_physical4

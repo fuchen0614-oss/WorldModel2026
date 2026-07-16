@@ -1,0 +1,23 @@
+# Original physical DGH formal candidate. Additive to Direct24: only the
+# weather layout and the first driver projection change; C/G/delta-t/state,
+# decoder, loss, optimizer and Stage1.5 initializer remain inherited.
+_base_: stage2_earthnet_v2_direct24.yaml
+
+protocol:
+  driver_protocol: physical4_v1
+  physical_raw_variables: [rr, tg, hu, qq]
+  d_feature_names: [precip_sum_5d, temp_mean_5d, vpd_mean_5d, srad_sum_5d]
+
+model:
+  forecast_mode: direct_path_physical4
+  driver_protocol: physical4_v1
+  interval_driver_encoder:
+    input_dim: 4
+    feature_names: [precip_sum_5d, temp_mean_5d, vpd_mean_5d, srad_sum_5d]
+
+data:
+  driver_protocol: physical4_v1
+  conditioning_stats_path: null
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_direct_physical4
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_direct_physical4

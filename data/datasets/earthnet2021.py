@@ -33,6 +33,18 @@ from data.earthnet_conditioning import (
     load_conditioning_stats_v2,
     normalize_cop_dem,
 )
+from data.earthnet_physical_conditioning import (
+    PHYSICAL4_PROTOCOL,
+    PHYSICAL4_RAW_VARIABLES,
+    PHYSICAL4_DEFAULT_SOLAR_SCALE,
+    PhysicalDGHStats,
+    aggregate_physical_dgh_path,
+    canonicalize_physical4_daily,
+    is_physical4_protocol,
+    load_physical_dgh_stats,
+    normalize_physical_cop_dem,
+    transform_physical_dgh_path,
+)
 from data.earthnet_fields import BandSpec, DriverSpec
 from data.earthnet_manifest import load_manifest_files
 
@@ -62,6 +74,9 @@ class EarthNet2021Config:
     # jobs remain byte-for-byte compatible. Formal world-model development
     # explicitly chooses ``earthnet2021x_path_v2``.
     stage2_protocol: str = "legacy_direct9"
+    # V2 keeps the path contract shared while selecting either the complete
+    # E-OBS path or the original physical DGH weather bundle explicitly.
+    driver_protocol: str = "full24"
     file_glob: str = "**/*.npz"
     context_frames: int = 10
     target_frames: int = 20
@@ -86,7 +101,7 @@ class EarthNet2021Config:
         default_factory=lambda: ["nasa_dem", "alos_dem", "cop_dem"]
     )
     formal_dem_variable: str = "cop_dem"
-    netcdf_solar_scale: float = 0.0864
+    netcdf_solar_scale: float = PHYSICAL4_DEFAULT_SOLAR_SCALE
     validation_fraction: float = 0.1
     validation_group: str = "tile"
     split_seed: int = 42
@@ -99,7 +114,7 @@ class EarthNet2021Config:
     driver_mean: Optional[List[float]] = None
     driver_std: Optional[List[float]] = None
     conditioning_stats_path: Optional[str] = None
-    conditioning_stats: Optional[ConditioningStatsV2] = None
+    conditioning_stats: Optional[ConditioningStatsV2 | PhysicalDGHStats] = None
     require_conditioning_stats: bool = False
     external_driver_root: Optional[str] = None
     external_driver_required: bool = False
@@ -122,6 +137,18 @@ class EarthNet2021Config:
                 "Unknown data.stage2_protocol="
                 f"{stage2_protocol!r}; use legacy_direct9 or earthnet2021x_path_v2"
             )
+        driver_protocol = str(data_cfg.get("driver_protocol", "full24")).lower()
+        if is_physical4_protocol(driver_protocol):
+            driver_protocol = PHYSICAL4_PROTOCOL
+        elif driver_protocol in {"full24", "eobs24", "full_24"}:
+            driver_protocol = "full24"
+        else:
+            raise ValueError(
+                "Unknown data.driver_protocol="
+                f"{driver_protocol!r}; use full24 or physical4_v1"
+            )
+        if driver_protocol != "full24" and not is_stage2_v2_protocol(stage2_protocol):
+            raise ValueError("physical4_v1 is defined only for the NetCDF path protocol")
         require_conditioning_stats = bool(
             data_cfg.get(
                 "require_conditioning_stats",
@@ -138,13 +165,19 @@ class EarthNet2021Config:
             if data_cfg.get("disabled_driver_features"):
                 raise ValueError(
                     "earthnet2021x_path_v2 does not support legacy disabled_driver_features; "
-                    "use the explicit full24/core12 model choice in Commit B"
+                    "use an explicit driver_protocol rather than silent feature masking"
                 )
             stats = {}
-            conditioning_stats = load_conditioning_stats_v2(
-                data_cfg.get("conditioning_stats_path"),
-                require=require_conditioning_stats,
-            )
+            if driver_protocol == PHYSICAL4_PROTOCOL:
+                conditioning_stats = load_physical_dgh_stats(
+                    data_cfg.get("conditioning_stats_path"),
+                    require=require_conditioning_stats,
+                )
+            else:
+                conditioning_stats = load_conditioning_stats_v2(
+                    data_cfg.get("conditioning_stats_path"),
+                    require=require_conditioning_stats,
+                )
         else:
             stats = _load_stats(
                 data_cfg.get("dgh_stats_path"),
@@ -168,6 +201,7 @@ class EarthNet2021Config:
             split_subdirs=split_subdirs if split_subdirs is not None else cls.__dataclass_fields__["split_subdirs"].default_factory(),
             data_format=str(data_cfg.get("data_format", "auto")).lower(),
             stage2_protocol=stage2_protocol,
+            driver_protocol=driver_protocol,
             file_glob=str(data_cfg.get("file_glob", "**/*.npz")),
             context_frames=int(data_cfg.get("context_frames", 10)),
             target_frames=int(data_cfg.get("target_frames", 20)),
@@ -284,9 +318,16 @@ class EarthNet2021Dataset(Dataset):
             "sample_id": _canonical_cubename(path.name),
             "split": self.config.split,
             "stage2_protocol": self.config.stage2_protocol,
+            "driver_protocol": self.config.driver_protocol,
         }
         if is_stage2_v2_protocol(self.config.stage2_protocol):
-            stats = self.config.conditioning_stats or ConditioningStatsV2.identity()
+            stats = self.config.conditioning_stats
+            if stats is None:
+                stats = (
+                    PhysicalDGHStats.identity()
+                    if self.config.driver_protocol == PHYSICAL4_PROTOCOL
+                    else ConditioningStatsV2.identity()
+                )
             sample["meta"]["conditioning_stats_source"] = stats.source
             sample["meta"]["conditioning_manifest_sha256"] = stats.manifest_sha256
         return sample
@@ -462,6 +503,13 @@ def _parse_earthnet_netcdf_v2_cube(
             "earthnet2021x_path_v2 freezes G to formal_dem_variable='cop_dem'; "
             f"got {config.formal_dem_variable!r}"
         )
+    if config.driver_protocol == PHYSICAL4_PROTOCOL:
+        return _parse_earthnet_netcdf_physical4_cube(
+            cube=cube,
+            path=path,
+            config=config,
+            s2_variables=s2_variables,
+        )
     required = (*s2_variables, "s2_mask", *EOBS_NETCDF_VARIABLES, "cop_dem")
     missing = [name for name in required if name not in cube.variables]
     if missing:
@@ -501,6 +549,84 @@ def _parse_earthnet_netcdf_v2_cube(
     start_date = _xarray_start_date(cube) or _parse_start_date(path.name)
     if config.strict and start_date is None:
         raise ValueError(f"{path}: formal v2 requires a parseable first observation date")
+
+    return _format_stage2_v2_sample(
+        image=image,
+        clear_mask=clear_mask,
+        conditioning=conditioning,
+        elevation=elevation,
+        geo_mask=geo_mask,
+        config=config,
+        start_date=start_date,
+    )
+
+
+def _parse_earthnet_netcdf_physical4_cube(
+    cube: Any,
+    path: Path,
+    config: EarthNet2021Config,
+    s2_variables: Sequence[str],
+) -> Dict[str, Any]:
+    """Parse the original physical DGH weather bundle under the shared path."""
+
+    required = (*s2_variables, "s2_mask", *(f"eobs_{name}" for name in PHYSICAL4_RAW_VARIABLES), "cop_dem")
+    missing = [name for name in required if name not in cube.variables]
+    if missing:
+        raise KeyError(f"{path}: physical4 protocol requires EarthNet2021x variables {missing}")
+
+    indices = slice(
+        config.netcdf_s2_offset_days,
+        None,
+        config.frame_interval_days,
+    )
+    image = np.stack(
+        [_xarray_to_thw(cube[name], name)[indices] for name in s2_variables],
+        axis=1,
+    ).astype(np.float32)
+    raw_mask = _xarray_to_thw(cube["s2_mask"], "s2_mask")[indices]
+    clear_mask = (
+        np.isfinite(raw_mask)
+        & (raw_mask <= 0)
+        & np.all(np.isfinite(image), axis=1)
+    ).astype(np.float32)
+
+    stats = config.conditioning_stats or load_physical_dgh_stats(
+        config.conditioning_stats_path,
+        require=(config.require_conditioning_stats or config.strict),
+    )
+    configured_solar_scale = float(config.netcdf_solar_scale)
+    if not np.isfinite(configured_solar_scale) or configured_solar_scale <= 0:
+        raise ValueError(
+            f"{path}: netcdf_solar_scale must be positive and finite, "
+            f"got {configured_solar_scale}"
+        )
+    if not stats.is_identity_smoke_stats and not np.isclose(
+        configured_solar_scale, float(stats.netcdf_solar_scale), rtol=0.0, atol=1e-12
+    ):
+        raise ValueError(
+            f"{path}: config netcdf_solar_scale={configured_solar_scale} differs "
+            f"from physical4 stats={stats.netcdf_solar_scale}"
+        )
+    daily_raw = canonicalize_physical4_daily(
+        np.stack(
+            [
+                _xarray_to_time(cube["eobs_rr"], "eobs_rr"),
+                _xarray_to_time(cube["eobs_tg"], "eobs_tg"),
+                _xarray_to_time(cube["eobs_hu"], "eobs_hu"),
+                _xarray_to_time(cube["eobs_qq"], "eobs_qq"),
+            ],
+            axis=1,
+        ),
+        solar_scale=configured_solar_scale,
+    )
+    raw_path = aggregate_physical_dgh_path(daily_raw)
+    conditioning = transform_physical_dgh_path(raw_path, stats)
+
+    raw_dem = _xarray_to_hw(cube["cop_dem"], "cop_dem")[None].astype(np.float32)
+    elevation, geo_mask = normalize_physical_cop_dem(raw_dem, stats)
+    start_date = _xarray_start_date(cube) or _parse_start_date(path.name)
+    if config.strict and start_date is None:
+        raise ValueError(f"{path}: formal physical4 requires a parseable first observation date")
 
     return _format_stage2_v2_sample(
         image=image,

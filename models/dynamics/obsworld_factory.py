@@ -25,6 +25,8 @@ from .condition_encoders import HorizonEncoder
 from .context_state_aggregator import ContextStateAggregator
 from .controlled_transition import ControlledTransition
 from .interval_driver_encoder import IntervalDriverEncoder
+from data.earthnet_conditioning import FULL24_FEATURE_NAMES
+from data.earthnet_physical_conditioning import PHYSICAL4_FEATURE_NAMES, is_physical4_protocol
 from .obsworld_core import ObsWorldV2Core
 from .obsworld_direct_path import ObsWorldDirectPathModel
 from .obsworld_partition import ObsWorldPartitionModel
@@ -32,12 +34,16 @@ from .obsworld_rollout import ObsWorldRolloutModel
 from .state_dynamics_module import StateDynamicsModule
 
 
-V2_DIRECT_MODES = frozenset({"direct_path", "direct_path_24d", "direct24"})
-V2_ROLLOUT_MODES = frozenset({"rollout", "rollout_t5", "rollout_t5_24d"})
+V2_DIRECT_MODES = frozenset({
+    "direct_path", "direct_path_24d", "direct24", "direct_path_physical4",
+})
+V2_ROLLOUT_MODES = frozenset({
+    "rollout", "rollout_t5", "rollout_t5_24d", "rollout_t5_physical4",
+})
 V2_PARTITION_MODES = frozenset(
-    {"obsworld_partition_24d", "rollout_partition", "partition"}
+    {"obsworld_partition_24d", "obsworld_partition_physical4", "rollout_partition", "partition"}
 )
-V2_DRIVER_PROTOCOLS = frozenset({"full24", "eobs24", "full_24"})
+V2_DRIVER_PROTOCOLS = frozenset({"full24", "physical4_v1"})
 
 
 def create_obsworld_v2_model(
@@ -71,11 +77,24 @@ def create_obsworld_v2_model(
             f"unsupported forecast_mode={mode!r}"
         )
     driver_protocol = str(model_cfg.get("driver_protocol", "full24")).lower()
-    if driver_protocol not in V2_DRIVER_PROTOCOLS:
+    if is_physical4_protocol(driver_protocol):
+        driver_protocol = "physical4_v1"
+    elif driver_protocol in {"full24", "eobs24", "full_24"}:
+        driver_protocol = "full24"
+    else:
         raise ValueError(
-            "Commit B implements only the formal full24 driver path; "
-            f"got model.driver_protocol={driver_protocol!r}. CORE12 and "
-            "legacy9 remain later/legacy ablations rather than silent aliases."
+            "Stage2-v2 supports only the explicit full24 or physical4_v1 driver path; "
+            f"got model.driver_protocol={driver_protocol!r}."
+        )
+    data_driver_protocol = str(data_cfg.get("driver_protocol", "full24")).lower()
+    if is_physical4_protocol(data_driver_protocol):
+        data_driver_protocol = "physical4_v1"
+    elif data_driver_protocol in {"full24", "eobs24", "full_24"}:
+        data_driver_protocol = "full24"
+    if data_driver_protocol != driver_protocol:
+        raise ValueError(
+            "model.driver_protocol and data.driver_protocol must match: "
+            f"model={driver_protocol!r}, data={data_driver_protocol!r}"
         )
 
     encoder_cfg = _component_config(model_cfg, "encoder", excluded={
@@ -92,6 +111,11 @@ def create_obsworld_v2_model(
         "interval_driver_encoder",
         excluded={"type"},
     )
+    expected_driver_names = (
+        PHYSICAL4_FEATURE_NAMES if driver_protocol == "physical4_v1" else FULL24_FEATURE_NAMES
+    )
+    interval_cfg.setdefault("input_dim", len(expected_driver_names))
+    interval_cfg.setdefault("feature_names", list(expected_driver_names))
     horizon_cfg = _component_config(model_cfg, "horizon_encoder", excluded={"type"})
     dynamics_cfg = _component_config(model_cfg, "dynamics", excluded={"type"})
     decoder_cfg = _component_config(model_cfg, "decoder", excluded={"type"})

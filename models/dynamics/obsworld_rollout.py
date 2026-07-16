@@ -60,7 +60,14 @@ class ObsWorldRolloutModel(nn.Module):
         """
 
         assert_model_batch_has_no_evaluation_fields(batch)
-        validate_stage2_v2_batch(batch, require_targets=False)
+        validate_stage2_v2_batch(
+            batch, require_targets=False,
+            expected_driver_dim=getattr(
+                getattr(self.transition, "interval_driver_encoder", None),
+                "input_dim",
+                None,
+            ),
+        )
         rollout_steps = self._resolve_rollout_steps(max_rollout_steps)
         requested = normalize_selected_steps(
             selected_steps,

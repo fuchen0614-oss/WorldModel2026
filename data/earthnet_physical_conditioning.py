@@ -30,6 +30,12 @@ import numpy as np
 
 PHYSICAL4_PROTOCOL = "physical4_v1"
 PHYSICAL4_RAW_VARIABLES: tuple[str, ...] = ("rr", "tg", "hu", "qq")
+PHYSICAL4_RAW_UNITS: tuple[str, ...] = (
+    "mm_per_day",
+    "degC",
+    "relative_humidity_percent",
+    "MJ_per_m2_per_day",
+)
 PHYSICAL4_FEATURE_NAMES: tuple[str, ...] = (
     "precip_sum_5d",
     "temp_mean_5d",
@@ -37,6 +43,78 @@ PHYSICAL4_FEATURE_NAMES: tuple[str, ...] = (
     "srad_sum_5d",
 )
 PHYSICAL4_STATS_SCHEMA_VERSION = 1
+PHYSICAL4_DEFAULT_SOLAR_SCALE = 0.0864
+
+
+def is_physical4_protocol(name: str) -> bool:
+    """Return whether a driver protocol selects the original physical DGH."""
+
+    return str(name).strip().lower() in {
+        PHYSICAL4_PROTOCOL,
+        "physical4",
+        "original_dgh",
+        "original_physical_dgh",
+    }
+
+
+def canonicalize_physical4_daily(
+    raw_daily: np.ndarray,
+    *,
+    solar_scale: float = PHYSICAL4_DEFAULT_SOLAR_SCALE,
+) -> np.ndarray:
+    """Convert raw EarthNet E-OBS columns to the audited ``rr/tg/hu/qq`` units.
+
+    The input order is ``rr, tg, hu, qq`` exactly as stored in a NetCDF cube.
+    ``tg`` may be Celsius or Kelvin, ``hu`` may be percent or fraction, and
+    ``qq`` is the EarthNet daily mean irradiance in W/m².  The output is
+    millimetres/day, °C, relative-humidity percent, and MJ/m²/day.  Humidity
+    outside [0, 100] is rejected after the only explicit fraction conversion;
+    it is never silently clipped.
+    """
+
+    raw = np.asarray(raw_daily, dtype=np.float32)
+    if raw.ndim != 2 or raw.shape[1] != len(PHYSICAL4_RAW_VARIABLES):
+        raise ValueError(
+            "raw_daily must be [days,4] in rr/tg/hu/qq order, got "
+            f"{raw.shape}"
+        )
+    scale = float(solar_scale)
+    if not math.isfinite(scale) or scale <= 0:
+        raise ValueError(f"solar_scale must be positive and finite, got {solar_scale}")
+    output = raw.copy()
+    temperature = output[:, 1]
+    finite_temperature = temperature[np.isfinite(temperature)]
+    if finite_temperature.size and float(np.nanmedian(finite_temperature)) > 100.0:
+        output[:, 1] = temperature - 273.15
+    humidity = output[:, 2]
+    finite_humidity = humidity[np.isfinite(humidity)]
+    if finite_humidity.size and float(np.nanmax(finite_humidity)) <= 1.5:
+        output[:, 2] = humidity * 100.0
+    finite_humidity = output[:, 2][np.isfinite(output[:, 2])]
+    if np.any((finite_humidity < 0.0) | (finite_humidity > 100.0)):
+        raise ValueError(
+            "EarthNet eobs_hu must be a fraction in [0,1] or percent in [0,100]; "
+            "refusing to clip invalid humidity"
+        )
+    output[:, 3] *= scale
+    return output
+
+
+def load_physical_dgh_stats(
+    path: Optional[str | Path],
+    *,
+    require: bool = False,
+) -> "PhysicalDGHStats":
+    """Load train-only physical statistics or an explicit smoke identity."""
+
+    if path:
+        return PhysicalDGHStats.from_file(path)
+    if require:
+        raise ValueError(
+            "Formal physical4 requires data.conditioning_stats_path containing "
+            "train-only physical4 statistics."
+        )
+    return PhysicalDGHStats.identity()
 
 
 @dataclass(frozen=True)
@@ -55,6 +133,9 @@ class PhysicalDGHStats:
     feature_mean: np.ndarray
     feature_std: np.ndarray
     vpd_clip_value: float
+    g_mean: float = 0.0
+    g_std: float = 1.0
+    netcdf_solar_scale: float = PHYSICAL4_DEFAULT_SOLAR_SCALE
     source: str = "in_memory"
     manifest_sha256: Optional[str] = None
     num_files: Optional[int] = None
@@ -68,6 +149,8 @@ class PhysicalDGHStats:
             feature_mean=np.zeros(len(PHYSICAL4_FEATURE_NAMES), dtype=np.float32),
             feature_std=np.ones(len(PHYSICAL4_FEATURE_NAMES), dtype=np.float32),
             vpd_clip_value=1.0,
+            g_mean=0.0,
+            g_std=1.0,
             source="identity_smoke_stats",
             is_identity_smoke_stats=True,
         )
@@ -126,6 +209,24 @@ class PhysicalDGHStats:
         if not math.isfinite(clip) or clip <= 0:
             raise ValueError("physical4 vpd_clip_value must be positive and finite")
 
+        try:
+            g_mean = float(payload.get("g_mean", 0.0))
+            g_std = float(payload.get("g_std", 1.0))
+            netcdf_solar_scale = float(
+                payload.get("netcdf_solar_scale", PHYSICAL4_DEFAULT_SOLAR_SCALE)
+            )
+        except (TypeError, ValueError) as exc:
+            raise ValueError("physical4 stats contain invalid g/solar statistics") from exc
+        if not math.isfinite(g_mean) or not math.isfinite(g_std) or g_std <= 0:
+            raise ValueError("physical4 g_mean/g_std must be finite with g_std > 0")
+        if not math.isfinite(netcdf_solar_scale) or netcdf_solar_scale <= 0:
+            raise ValueError("physical4 netcdf_solar_scale must be positive and finite")
+        if payload.get("g_variable", "cop_dem") != "cop_dem":
+            raise ValueError(
+                "physical4 stats g_variable must be 'cop_dem', got "
+                f"{payload.get('g_variable')!r}"
+            )
+
         num_files = payload.get("num_files")
         if num_files is not None:
             num_files = int(num_files)
@@ -138,6 +239,9 @@ class PhysicalDGHStats:
             feature_mean=mean,
             feature_std=std,
             vpd_clip_value=clip,
+            g_mean=g_mean,
+            g_std=g_std,
+            netcdf_solar_scale=netcdf_solar_scale,
             source=source,
             manifest_sha256=manifest_sha256,
             num_files=num_files,
@@ -276,6 +380,20 @@ def transform_physical_dgh_path(
     )
 
 
+def normalize_physical_cop_dem(
+    raw_dem: np.ndarray,
+    stats: PhysicalDGHStats,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Normalize the fixed Copernicus DEM for the physical4 protocol."""
+
+    raw = np.asarray(raw_dem, dtype=np.float32)
+    mask = np.isfinite(raw).astype(np.float32)
+    values = np.zeros_like(raw, dtype=np.float32)
+    valid = mask > 0
+    values[valid] = (raw[valid] - float(stats.g_mean)) / float(stats.g_std)
+    return values, mask
+
+
 def physical4_schema_dict() -> dict[str, Any]:
     """Return the immutable protocol fields for provenance and stats files."""
 
@@ -284,6 +402,7 @@ def physical4_schema_dict() -> dict[str, Any]:
         "dataset": "earthnet2021x",
         "driver_protocol": PHYSICAL4_PROTOCOL,
         "raw_variable_order": list(PHYSICAL4_RAW_VARIABLES),
+        "raw_variable_units": list(PHYSICAL4_RAW_UNITS),
         "feature_names": list(PHYSICAL4_FEATURE_NAMES),
         "feature_transform": ["log1p", "identity", "clip_vpd", "log1p"],
         "missingness_policy": "all_five_days_required",

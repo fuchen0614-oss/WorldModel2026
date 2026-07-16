@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import copy
 import pytest
 
 
 torch = pytest.importorskip("torch")
 
 from data.stage2_contract import model_input_view
+from data.earthnet_physical_conditioning import PHYSICAL4_FEATURE_NAMES
 from models.dynamics.obsworld_factory import create_obsworld_v2_model
 from models.dynamics.partition_consistency import PartitionConsistencyLoss
 from models.losses.earthnet_forecasting import EarthNetForecastLoss
@@ -234,3 +236,27 @@ def test_partition_branch_backpropagates_through_shared_transition_and_decoder()
     assert torch.isfinite(loss)
     assert model.transition.state_dynamics.output_proj.weight.grad is not None
     assert model.core.decoder.decoder.decoder_pred.weight.grad is not None
+
+
+def test_factory_builds_physical4_direct_path_with_matching_batch():
+    config = copy.deepcopy(_tiny_config())
+    config["data"]["driver_protocol"] = "physical4_v1"
+    config["model"]["driver_protocol"] = "physical4_v1"
+    config["model"]["forecast_mode"] = "direct_path_physical4"
+    config["model"]["interval_driver_encoder"]["input_dim"] = 4
+    config["model"]["interval_driver_encoder"]["feature_names"] = list(PHYSICAL4_FEATURE_NAMES)
+    model = create_obsworld_v2_model(config).eval()
+    batch = _batch()
+    batch["D_path"] = torch.randn(1, 30, 4)
+    batch["D_mask"] = torch.ones(1, 30, 4)
+    output = model(model_input_view(batch), selected_steps=[0, 1])
+    assert output["pred"].shape == (1, 2, 4, 16, 16)
+
+
+def test_factory_rejects_physical4_batch_for_full24_encoder():
+    model = create_obsworld_v2_model(_tiny_config()).eval()
+    batch = _batch()
+    batch["D_path"] = torch.randn(1, 30, 4)
+    batch["D_mask"] = torch.ones(1, 30, 4)
+    with pytest.raises(ValueError, match="configured driver encoder"):
+        model(model_input_view(batch), selected_steps=[0])

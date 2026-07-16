@@ -5,9 +5,9 @@ from __future__ import annotations
 from typing import Any, Mapping, Sequence
 
 
-ROLLOUT_FORECAST_MODES = frozenset({"rollout", "rollout_t5", "rollout_t5_24d"})
+ROLLOUT_FORECAST_MODES = frozenset({"rollout", "rollout_t5", "rollout_t5_24d", "rollout_t5_physical4"})
 PARTITION_FORECAST_MODES = frozenset(
-    {"obsworld_partition_24d", "rollout_partition", "partition"}
+    {"obsworld_partition_24d", "obsworld_partition_physical4", "rollout_partition", "partition"}
 )
 
 
@@ -121,11 +121,11 @@ def partition_loss_scale(config: Mapping[str, Any], optimizer_step: int) -> floa
     raw = training.get("partition")
     if not isinstance(raw, Mapping):
         raise TypeError(
-            "obsworld_partition_24d requires a training.partition mapping"
+            "Stage2 partition mode requires a training.partition mapping"
         )
     if not bool(raw.get("enabled", False)):
         raise ValueError(
-            "obsworld_partition_24d requires training.partition.enabled=true; "
+            "Stage2 partition mode requires training.partition.enabled=true; "
             "do not silently run the main-method wrapper without its loss."
         )
     start = int(raw.get("warmup_start_step", 0))

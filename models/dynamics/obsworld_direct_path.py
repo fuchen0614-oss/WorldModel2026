@@ -55,7 +55,14 @@ class ObsWorldDirectPathModel(nn.Module):
         """
 
         assert_model_batch_has_no_evaluation_fields(batch)
-        validate_stage2_v2_batch(batch, require_targets=False)
+        validate_stage2_v2_batch(
+            batch, require_targets=False,
+            expected_driver_dim=getattr(
+                getattr(self.transition, "interval_driver_encoder", None),
+                "input_dim",
+                None,
+            ),
+        )
         requested = normalize_selected_steps(
             selected_steps,
             total_steps=self.target_steps,

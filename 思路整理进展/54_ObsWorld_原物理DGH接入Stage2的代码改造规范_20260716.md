@@ -10,7 +10,7 @@ tags:
   - 代码改造
   - 向后兼容
 created: 2026-07-16
-status: 实现规划冻结｜尚未修改代码｜full24 可先运行
+status: physical4_v1 已实现｜full24 保持兼容｜执行命令见 55
 related:
   - "[[47_ObsWorld_Stage2正式代码技术指导与实现规范_20260716]]"
   - "[[51_ObsWorld_DGH字段构造与使用规范_20260716]]"
@@ -21,6 +21,9 @@ related:
 
 > [!abstract] 本文档解决什么问题
 > 当前 Stage2-v2 的 full24 Direct/Rollout/Partition 路径已经代码就绪。后续需要把原物理 DGH 接入同一套世界模型，但必须采用 additive change（新增式改造）：新增协议、配置和统计文件，**绝不覆盖或悄悄改变 full24 的字段、归一化、训练逻辑、checkpoint 或输出目录。**
+
+> [!note] 实现状态更新（2026-07-16）
+> 本文原先的改造规划已经落实。`physical4_v1` 已接入数据加载、统计、模型工厂、preflight 和 Direct/Rollout/Partition 配置；请用 [[55_ObsWorld_原版DGH正式训练代码完成与训前命令指南_20260716]] 执行，不再把本文中的“尚未修改代码”理解为当前状态。
 
 > [!important] 当前操作结论
 > 可以先运行现有 full24。后续 physical4 代码合并不会影响已经启动的远端进程；但训练服务器在该进程结束前不要执行 `git pull`、不要重启 DataLoader/作业，也不要用新代码恢复旧进程。任何后续恢复必须使用与 checkpoint 记录的 commit、resolved config（解析后的完整配置）、driver protocol（驱动协议）和 stats SHA 完全匹配的代码与产物。
@@ -371,7 +374,7 @@ REQUIRE_MANIFEST=1 \
 bash run_stage2_earthnet.sh
 ```
 
-这是后续实现完成后的命令骨架，不表示 physical4 当前已经能运行。当前可运行的是 full24 配置。
+这是后续实现完成后的命令骨架，不表示 physical4 当前已经能运行。当前 full24 与 physical4 配置都已具备代码级运行路径；正式 physical4 训练仍必须先生成与 train manifest 绑定的统计量并通过 preflight。
 
 ---
 
