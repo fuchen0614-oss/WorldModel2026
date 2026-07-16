@@ -50,6 +50,42 @@ def test_freeze_protocol_creates_explicit_development_and_test_manifests(tmp_pat
     assert not list(output.parent.glob(f".{output.name}.staging-*"))
 
 
+def test_parallel_freeze_is_byte_identical_to_single_worker(tmp_path):
+    root = tmp_path / "earthnet2021x"
+    for tile in ("31AAA", "32BBB", "33CCC"):
+        for year in ("2018", "2019", "2020"):
+            _touch_cube(root, "train", tile, f"{year}-05-01", f"{year}-09-27")
+    _touch_cube(root, "iid", "31AAA", "2019-05-01", "2019-09-27")
+    _touch_cube(root, "ood", "34DDD", "2019-05-01", "2019-09-27")
+    _touch_cube(root, "extreme", "35EEE", "2018-01-31", "2018-11-26")
+    _touch_cube(root, "seasonal", "34DDD", "2017-05-28", "2020-04-11")
+
+    serial_output = tmp_path / "serial"
+    parallel_output = tmp_path / "parallel"
+    freeze_protocol(
+        root,
+        serial_output,
+        val_tile_count=1,
+        seed=7,
+        workers=1,
+        progress_every=0,
+    )
+    freeze_protocol(
+        root,
+        parallel_output,
+        val_tile_count=1,
+        seed=7,
+        workers=2,
+        progress_every=0,
+    )
+
+    serial_files = sorted(path.name for path in serial_output.glob("*.json"))
+    parallel_files = sorted(path.name for path in parallel_output.glob("*.json"))
+    assert parallel_files == serial_files
+    for filename in serial_files:
+        assert (parallel_output / filename).read_bytes() == (serial_output / filename).read_bytes()
+
+
 def test_freeze_protocol_never_overwrites_an_existing_evidence_directory(tmp_path):
     root = tmp_path / "earthnet2021x"
     for tile in ("31AAA", "32BBB"):
@@ -67,6 +103,18 @@ def test_freeze_protocol_never_overwrites_an_existing_evidence_directory(tmp_pat
         freeze_protocol(root, output, val_tile_count=1, seed=8)
 
     assert (output / "protocol.json").read_bytes() == before
+    assert not list(output.parent.glob(f".{output.name}.staging-*"))
+
+
+def test_freeze_protocol_rejects_an_unknown_hash_mode_before_writing(tmp_path):
+    root = tmp_path / "earthnet2021x"
+    root.mkdir()
+    output = tmp_path / "frozen"
+
+    with pytest.raises(ValueError, match="hash_mode"):
+        freeze_protocol(root, output, hash_mode="invalid")
+
+    assert not output.exists()
     assert not list(output.parent.glob(f".{output.name}.staging-*"))
 
 

@@ -88,29 +88,62 @@ artifacts/protocols/earthnet2021x_standard_v1/
 
 这一步只读取目录、文件大小和文件名中的日期，**不打开全部 NetCDF 内容、不使用 GPU、不下载数据**，可以与正在运行的 Stage1.5 并行。
 
-先拉取包含本规范和脚本的最新代码：
+### 4.1 先检查工作区，再拉取最新脚本
+
+以下命令均在 `WorldModel2026` 根目录执行。先确认本机没有未提交改动；若 `git status --short`
+有输出，先不要执行 `git pull`、不要 `git stash` 或覆盖文件，保留改动并单独处理。空输出后再拉取：
 
 ```bash
 cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+git status --short
 git pull --ff-only origin main
+git rev-parse --short HEAD
 source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
 ```
 
-然后冻结清单：
+本规范对应的快速冻结器会显示 `[freeze] <split>: discovered ...` 与
+`[freeze] <split>: metadata 已完成/总数`，并给出当前读取速率、已耗时和 ETA。`--workers 8` 只增加共享存储的**元数据读取线程**，
+不占 GPU；共享 NAS 上先用 8，不能直接设成 32 或 64，以免对文件系统造成更多排队。
+
+### 4.2 若此前启动过无输出的旧冻结任务，先安全停止它
+
+旧版本没有进度输出，且在所有 JSON 完成前都不会发布 `RUN_DIR`；因此看不到
+`artifacts/protocols/earthnet2021x_standard_v1` **不等于成功，也不等于失败**。升级代码并确认
+旧 PID 仍存在后，使用 `SIGINT` 正常终止；不要使用 `kill -9`，也不要在旧进程仍在时启动第二个冻结器：
+
+```bash
+pgrep -af 'freeze_earthnet2021x_protocol.py'
+kill -INT <旧冻结PID>
+ps -p <旧冻结PID> -o pid,etime,stat,wchan:32,%cpu,cmd
+```
+
+若 30 秒后该 PID 还存在，才改用 `kill -TERM <旧冻结PID>`；确认 `ps -p <旧冻结PID>` 没有输出后，
+再按下一节重新启动。旧任务可能遗留 `.earthnet2021x_standard_v1.staging-*` 私有目录；不要把它当成
+结果目录，也不需要手动删除它，新任务会创建自己的私有暂存目录。
+
+### 4.3 冻结正式 EarthNet2021x 清单
+
+以下变量使用相对短路径，避免终端显示换行时误把一个路径拆成两条命令。请整体粘贴；反斜杠 `\`
+表示下一行仍是同一条 Python 命令。
 
 ```bash
 cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
 source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
 
-DATA_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021/earthnet2021x
-RUN_DIR="$PWD/artifacts/protocols/earthnet2021x_standard_v1"
+DATA_ROOT=../TrainData/EarthNet2021/earthnet2021x
+RUN_DIR=artifacts/protocols/earthnet2021x_standard_v1
+mkdir -p logs
+set -euo pipefail
 
-nice -n 10 python scripts/freeze_earthnet2021x_protocol.py \
+nice -n 10 python -u scripts/freeze_earthnet2021x_protocol.py \
   --root "$DATA_ROOT" \
   --output-dir "$RUN_DIR" \
   --val-tile-count 8 \
   --seed 20260716 \
-  --hash-mode none
+  --hash-mode none \
+  --workers 8 \
+  --progress-every 1000 \
+  2>&1 | tee logs/earthnet2021x_freeze.log
 ```
 
 `RUN_DIR` 必须是**尚不存在的新目录**；不要提前 `mkdir -p "$RUN_DIR"`，也不要用同一目录
@@ -118,7 +151,23 @@ nice -n 10 python scripts/freeze_earthnet2021x_protocol.py \
 以免一次中断或重跑把两次实验的 manifest（清单）混在一起。需要重新冻结时，换一个带日期/版本的
 新目录。
 
-成功后快速查看协议：
+为避免 SSH 断开，建议先创建 tmux 会话再执行上面的冻结块：
+
+```bash
+tmux new -s earthnet_freeze
+```
+
+执行中按 `Ctrl-b` 后按 `d` 可退出而不停止；之后用 `tmux attach -t earthnet_freeze` 回到会话。
+另一个终端可用以下命令查看进度和完成状态：
+
+```bash
+cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+pgrep -af 'freeze_earthnet2021x_protocol.py'
+tail -n 30 logs/earthnet2021x_freeze.log
+test -s artifacts/protocols/earthnet2021x_standard_v1/protocol.json && test -s artifacts/protocols/earthnet2021x_standard_v1/train_dev.json && echo 已完成 || echo 尚未完成
+```
+
+最后一条只有输出 `已完成` 才能进入统计步骤。成功后快速查看协议：
 
 ```bash
 python -m json.tool "$RUN_DIR/protocol.json"
@@ -134,18 +183,32 @@ python -m json.tool "$RUN_DIR/protocol.json"
 cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
 source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
 
-DATA_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021/earthnet2021x
-RUN_DIR="$PWD/artifacts/protocols/earthnet2021x_standard_v1"
+DATA_ROOT=../TrainData/EarthNet2021/earthnet2021x
+RUN_DIR=artifacts/protocols/earthnet2021x_standard_v1
+set -euo pipefail
 
-nice -n 10 python scripts/build_earthnet_conditioning_stats.py \
+nice -n 10 python -u scripts/build_earthnet_conditioning_stats.py \
   --config configs/train/stage2_earthnet_v2_data.yaml \
   --data-root "$DATA_ROOT" \
   --manifest-path "$RUN_DIR/train_dev.json" \
   --output "$RUN_DIR/conditioning_stats_v2_train_dev.json" \
-  --require-full-train
+  --require-full-train \
+  --workers 8 \
+  --progress-every 100 \
+  2>&1 | tee "$RUN_DIR/conditioning_stats_v2_train_dev.log"
 ```
 
-这第二条命令会实际读取全部训练 NetCDF，用于计算八个 E-OBS 字段和 `cop_dem` 的统计量；它比冻结清单慢，建议在 Stage1.5 结束或磁盘 I/O 空闲时运行。
+这第二条命令会实际读取完整 `train_dev` NetCDF，用于计算八个 E-OBS 字段和 `cop_dem` 的统计量；
+它比冻结清单慢。这里的 `--workers 8` 是**总共 8 个 NetCDF 读取进程**，不是每张 GPU 8 个进程，
+也不使用 GPU。共享 NAS 上从 8 开始，只有确认 I/O 仍有余量时才小幅调到 12 或 16；不要直接设成
+32/64。日志每处理 100 个文件会更新一次，完成的唯一判据是：
+
+```bash
+test -s "$RUN_DIR/conditioning_stats_v2_train_dev.json" && echo 统计完成 || echo 统计未完成
+```
+
+建议在独立 tmux 会话运行该步骤：`tmux new -s earthnet_stats`。执行中可通过
+`tail -n 30 "$RUN_DIR/conditioning_stats_v2_train_dev.log"` 观察已处理文件数。
 
 统计完成后，先只做**无 GPU 训练的真实数据预检**。以下命令只读取清单中的 64 个
 `train_dev` cube，核对字段、统计量、mask（有效标记）和最终 DataLoader；`RUN_TRAIN=0`
@@ -155,8 +218,9 @@ nice -n 10 python scripts/build_earthnet_conditioning_stats.py \
 cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
 source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
 
-DATA_PARENT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
-RUN_DIR="$PWD/artifacts/protocols/earthnet2021x_standard_v1"
+DATA_PARENT=../TrainData/EarthNet2021
+RUN_DIR=artifacts/protocols/earthnet2021x_standard_v1
+set -euo pipefail
 
 CONFIG=configs/train/stage2_earthnet_v2_direct24.yaml \
 DATA_ROOT="$DATA_PARENT" \
@@ -165,7 +229,7 @@ VALIDATION_MANIFEST_PATH="$RUN_DIR/val_dev.json" \
 CONDITIONING_STATS_PATH="$RUN_DIR/conditioning_stats_v2_train_dev.json" \
 PREFLIGHT=1 PREFLIGHT_CHECK_MODEL=0 RUN_TRAIN=0 \
 PREFLIGHT_OUTPUT="$RUN_DIR/preflight_train_dev.json" \
-bash run_stage2_earthnet.sh
+bash run_stage2_earthnet.sh 2>&1 | tee "$RUN_DIR/preflight_train_dev.log"
 ```
 
 确认这份报告的 `ok` 为 `true`，并且最终 Stage1.5 的 `state_bridge` checkpoint（状态桥接权重）
@@ -173,6 +237,62 @@ bash run_stage2_earthnet.sh
 `STAGE15_CHECKPOINT=/真实/最终/checkpoint.pt` 启动 Direct24。Rollout24 和 Partition24
 只替换 `CONFIG` 为各自 YAML；它们继承同一数据、清单和统计量。最终 `train_all` 重训前必须用
 `train_all.json` **重新**计算一份对应的 conditioning stats，不能复用 `train_dev` 的统计文件。
+
+### 5.1 正式 Stage2 启动命令（先 Direct24，再 Rollout24，再 Partition24）
+
+先确认八张 GPU 确实空闲或已明确分配给自己；出现其他用户的进程时，**绝不能停止它们**。正式训练的
+推荐起点是 `GPUS=8 NUM_WORKERS=4`：`NUM_WORKERS` 是每个 DDP rank 的 DataLoader worker 数，
+因此总共是 `8 × 4 = 32` 个读取进程。不要把它设置成 32 或 64（那会变成 256 或 512 个进程）。
+如果日志和 `nvidia-smi` 表明 GPU 长期低利用率、而 CPU/NAS 仍有余量，再依次试 6（总计 48）和
+8（总计 64），并在所有正式对照实验中固定同一数值。
+
+```bash
+cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+nvidia-smi
+ls -lh checkpoints/stage1_5_dual_conditioned_vits_state_bridge_60k/checkpoint_step_*.pt
+tmux new -s stage2_direct24
+```
+
+在新 tmux 会话中，先将下一块中唯一需要人工替换的 `STAGE15_CKPT` 设为上一步确认的最终
+Stage1.5 checkpoint，再整体执行：
+
+```bash
+source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
+DATA_PARENT=../TrainData/EarthNet2021
+RUN_DIR=artifacts/protocols/earthnet2021x_standard_v1
+STAGE15_CKPT=/绝对路径/到/确认过的/stage1_5/checkpoint_step_*.pt
+test -s "$STAGE15_CKPT" || { echo "Stage1.5 checkpoint 不存在" >&2; exit 1; }
+mkdir -p logs
+set -euo pipefail
+
+CONFIG=configs/train/stage2_earthnet_v2_direct24.yaml \
+DATA_ROOT="$DATA_PARENT" \
+MANIFEST_PATH="$RUN_DIR/train_dev.json" \
+VALIDATION_MANIFEST_PATH="$RUN_DIR/val_dev.json" \
+CONDITIONING_STATS_PATH="$RUN_DIR/conditioning_stats_v2_train_dev.json" \
+STAGE15_CHECKPOINT="$STAGE15_CKPT" \
+GPUS=8 NUM_WORKERS=4 BATCH_SIZE=2 MAX_STEPS=50000 \
+PREFLIGHT=1 PREFLIGHT_CHECK_MODEL=1 RUN_TRAIN=1 \
+bash run_stage2_earthnet.sh 2>&1 | tee logs/stage2_direct24.log
+```
+
+`test -s` 没有报错才会继续；请把示例中的 `checkpoint_step_*.pt` 替换成一个实际文件名。
+它能防止把文档中的占位路径误传入正式训练。Direct24 通过完整开发验证后，
+分别把 `CONFIG` 改为 `configs/train/stage2_earthnet_v2_rollout24.yaml` 和
+`configs/train/stage2_earthnet_v2_partition24.yaml` 启动匹配的两个对照/主模型，不改变数据根、清单、
+统计量、Stage1.5 checkpoint、GPU 数或 DataLoader worker 数。
+
+运行中：`tail -n 50 logs/stage2_direct24.log` 看训练和验证日志；按 `Ctrl-b`、`d` 脱离 tmux；
+`tmux attach -t stage2_direct24` 回到训练。需要安全停止时，优先在该 tmux 前台按 `Ctrl-c`；如果只能
+从另一个终端处理，先确认主 `torchrun` PID 后再发送 SIGINT：
+
+```bash
+pgrep -af 'train_stage2_earthnet.py'
+kill -INT <确认过的torchrun主PID>
+```
+
+等待 checkpoint 写完后才关闭会话。恢复时使用同一配置和同一清单，并额外传入
+`RESUME_FROM=/绝对路径/到/stage2/checkpoint_step_实际步数.pt`；不要从不匹配的数据协议或不同模型配置恢复。
 
 如果只想先验证真实字段、梯度和 checkpoint（检查点）链路，可以额外做一个 **32/128 cube sanity
 bundle（小样本包）**。它从已冻结的 `train_dev/val_dev` 以确定性 tile round-robin（按 tile 轮转）
@@ -221,6 +341,10 @@ python scripts/build_earthnet_conditioning_stats.py \
 - 不能用 IID/OOD 结果调学习率、选择 epoch 或决定损失权重；
 - 不能用测试集参与 D/G 标准化；
 - 不能把当前固定 Sentinel-2 主实验夸大为“任意未来成像条件可控渲染”。
+- 不能把 `TrainData/GreenEarthNet`、`*_chopped`、`ood-t/ood-s/ood-st` 或旧 `refine-logs/`
+  的历史草稿带入本轮数据、训练命令、主表、图注或结论；它们只属于未来独立扩展。
+- 不能为本规范重新运行 GreenEarthNet/S3 下载器；当前正式数据根只能是
+  `TrainData/EarthNet2021/earthnet2021x`。
 
 ## 8. 本规范对应的代码命名
 

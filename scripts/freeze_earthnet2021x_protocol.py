@@ -11,27 +11,30 @@ JSON manifests plus a deterministic train-only development holdout.
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
 import json
 import os
 import re
 import shutil
+import stat
 import sys
+import time
 import uuid
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Mapping
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from data.earthnet_manifest import (  # noqa: E402
     DATASET_ID,
+    MANIFEST_SCHEMA_VERSION,
     PROTOCOL_ID,
     SPLIT_CANDIDATES,
-    build_manifest,
-    build_manifest_from_paths,
-    discover_split_files,
+    records_digest,
     resolve_dataset_root,
+    sha256_file,
     write_manifest,
     write_json_atomic,
 )
@@ -74,6 +77,21 @@ def parse_args() -> argparse.Namespace:
         choices=("none", "sha256"),
         default="none",
         help="sha256 is strongest but slow on network storage; none records file sizes.",
+    )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=8,
+        help=(
+            "Concurrent metadata readers. Use a modest value on shared storage; "
+            "this task does not use GPUs."
+        ),
+    )
+    parser.add_argument(
+        "--progress-every",
+        type=int,
+        default=1000,
+        help="Print metadata-record progress every N files; 0 disables periodic updates.",
     )
     return parser.parse_args()
 
@@ -130,6 +148,195 @@ def select_validation_tiles(tiles: Iterable[str], *, count: int, seed: int) -> l
     return sorted(sorted(candidates, key=key)[:count])
 
 
+def _discover_split_files_fast(dataset_root: Path, split: str) -> list[Path]:
+    """Find one explicit physical split without per-file ``Path.resolve`` calls.
+
+    ``Path.resolve`` performs additional filesystem lookups for every cube.  On
+    the shared EarthNet mount that dominates freeze time, while every path
+    discovered below is already rooted under an explicitly selected split.
+    """
+
+    if split not in SPLIT_CANDIDATES:
+        raise ValueError(
+            f"Unknown EarthNet split {split!r}; expected one of "
+            f"{sorted(SPLIT_CANDIDATES)}"
+        )
+    candidates = [
+        dataset_root / relative
+        for relative in SPLIT_CANDIDATES[split]
+        if (dataset_root / relative).is_dir()
+    ]
+    if not candidates:
+        return []
+    selected = candidates[0]
+    paths: list[Path] = []
+    for directory, subdirectories, filenames in os.walk(selected):
+        subdirectories.sort()
+        for filename in sorted(filenames):
+            if filename.endswith(".nc"):
+                paths.append(Path(directory) / filename)
+    paths.sort(key=lambda path: path.relative_to(dataset_root).as_posix())
+    return paths
+
+
+def _manifest_record(
+    path: Path,
+    *,
+    dataset_root: Path,
+    hash_mode: str,
+) -> dict[str, Any] | None:
+    """Create one manifest record with one file-status lookup."""
+
+    file_status = path.stat()
+    if not stat.S_ISREG(file_status.st_mode):
+        return None
+    record: dict[str, Any] = {
+        "path": path.relative_to(dataset_root).as_posix(),
+        "size_bytes": int(file_status.st_size),
+        "sample_id": path.stem,
+    }
+    if hash_mode == "sha256":
+        record["sha256"] = sha256_file(path)
+    return record
+
+
+def _format_duration(seconds: float) -> str:
+    """Format an elapsed/estimated duration compactly for progress logs."""
+
+    total_seconds = max(0, int(seconds))
+    hours, remainder = divmod(total_seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    if hours:
+        return f"{hours}h{minutes:02d}m{seconds:02d}s"
+    if minutes:
+        return f"{minutes}m{seconds:02d}s"
+    return f"{seconds}s"
+
+
+def _print_metadata_progress(
+    split: str,
+    completed: int,
+    total: int,
+    *,
+    started_at: float,
+) -> None:
+    """Print rate and ETA so a long NAS scan remains observable."""
+
+    elapsed = max(time.monotonic() - started_at, 1e-6)
+    rate = completed / elapsed
+    remaining = max(total - completed, 0)
+    eta = remaining / rate if rate > 0 else 0.0
+    print(
+        f"[freeze] {split}: metadata {completed}/{total} "
+        f"({completed / max(total, 1):.1%}, {rate:.1f} files/s, "
+        f"elapsed {_format_duration(elapsed)}, ETA {_format_duration(eta)})",
+        flush=True,
+    )
+
+
+def _manifest_from_records(
+    *,
+    split: str,
+    records: Iterable[Mapping[str, Any]],
+    hash_mode: str,
+    role: str,
+    source_splits: tuple[str, ...],
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build an immutable manifest from previously verified file records."""
+
+    frozen_records = [dict(record) for record in records]
+    frozen_records.sort(key=lambda record: str(record["path"]))
+    manifest: dict[str, Any] = {
+        "schema_version": MANIFEST_SCHEMA_VERSION,
+        "dataset": DATASET_ID,
+        "protocol": PROTOCOL_ID,
+        "split": split,
+        "role": role,
+        "source_splits": list(source_splits),
+        "hash_mode": hash_mode,
+        "num_files": len(frozen_records),
+        "files": frozen_records,
+        "files_sha256": records_digest(frozen_records),
+    }
+    if metadata:
+        overlap = set(manifest).intersection(metadata)
+        if overlap:
+            raise ValueError(
+                "Manifest metadata cannot overwrite reserved keys: "
+                f"{sorted(overlap)}"
+            )
+        manifest.update(dict(metadata))
+    return manifest
+
+
+def _build_physical_manifest(
+    dataset_root: Path,
+    split: str,
+    *,
+    hash_mode: str,
+    workers: int,
+    progress_every: int,
+) -> dict[str, Any]:
+    """Freeze one physical split with bounded metadata concurrency and progress."""
+
+    started_at = time.monotonic()
+    paths = _discover_split_files_fast(dataset_root, split)
+    worker_count = min(max(int(workers), 1), max(len(paths), 1))
+    print(
+        f"[freeze] {split}: discovered {len(paths)} NetCDF files "
+        f"(workers={worker_count})",
+        flush=True,
+    )
+    records: list[dict[str, Any]] = []
+    if worker_count == 1:
+        for index, path in enumerate(paths, start=1):
+            record = _manifest_record(path, dataset_root=dataset_root, hash_mode=hash_mode)
+            if record is not None:
+                records.append(record)
+            if progress_every > 0 and index % progress_every == 0:
+                _print_metadata_progress(
+                    split,
+                    index,
+                    len(paths),
+                    started_at=started_at,
+                )
+    else:
+        with ThreadPoolExecutor(max_workers=worker_count) as executor:
+            futures = [
+                executor.submit(
+                    _manifest_record,
+                    path,
+                    dataset_root=dataset_root,
+                    hash_mode=hash_mode,
+                )
+                for path in paths
+            ]
+            for index, future in enumerate(as_completed(futures), start=1):
+                record = future.result()
+                if record is not None:
+                    records.append(record)
+                if progress_every > 0 and index % progress_every == 0:
+                    _print_metadata_progress(
+                        split,
+                        index,
+                        len(paths),
+                        started_at=started_at,
+                    )
+    print(
+        f"[freeze] {split}: froze {len(records)} records "
+        f"in {_format_duration(time.monotonic() - started_at)}",
+        flush=True,
+    )
+    return _manifest_from_records(
+        split=split,
+        records=records,
+        hash_mode=hash_mode,
+        role=split,
+        source_splits=(split,),
+    )
+
+
 def _new_staging_directory(output: Path) -> Path:
     """Create an unpublished sibling directory for an immutable protocol run.
 
@@ -178,6 +385,8 @@ def freeze_protocol(
     val_tile_count: int = 8,
     seed: int = 20260716,
     hash_mode: str = "none",
+    workers: int = 1,
+    progress_every: int = 1000,
 ) -> dict[str, Any]:
     """Create all EarthNet2021x-standard manifests and provenance metadata."""
 
@@ -185,8 +394,20 @@ def freeze_protocol(
     output = Path(output_dir).expanduser().resolve()
     if not dataset_root.is_dir():
         raise FileNotFoundError(f"EarthNet2021x root does not exist: {dataset_root}")
+    if workers < 1:
+        raise ValueError("workers must be at least 1")
+    if progress_every < 0:
+        raise ValueError("progress_every must be non-negative")
+    if hash_mode not in {"none", "sha256"}:
+        raise ValueError("hash_mode must be 'none' or 'sha256'")
 
     staging = _new_staging_directory(output)
+    print(
+        f"[freeze] start: root={dataset_root}, output={output}, "
+        f"workers={workers}, hash_mode={hash_mode}",
+        flush=True,
+    )
+    print(f"[freeze] private staging directory: {staging}", flush=True)
     try:
         return _freeze_protocol_into_staging(
             dataset_root,
@@ -195,8 +416,10 @@ def freeze_protocol(
             val_tile_count=val_tile_count,
             seed=seed,
             hash_mode=hash_mode,
+            workers=workers,
+            progress_every=progress_every,
         )
-    except Exception:
+    except BaseException:
         # Only the private, unpublished staging directory is removed.  The
         # requested output either does not exist or is a pre-existing immutable
         # run which we refused to touch above.
@@ -212,42 +435,52 @@ def _freeze_protocol_into_staging(
     val_tile_count: int,
     seed: int,
     hash_mode: str,
+    workers: int,
+    progress_every: int,
 ) -> dict[str, Any]:
     """Build every artifact privately, then publish it as one directory."""
 
     physical = {
-        split: build_manifest(dataset_root, split, hash_mode=hash_mode)
+        split: _build_physical_manifest(
+            dataset_root,
+            split,
+            hash_mode=hash_mode,
+            workers=workers,
+            progress_every=progress_every,
+        )
         for split in PHYSICAL_SPLITS
     }
     inventory = {split: summarize_manifest(manifest) for split, manifest in physical.items()}
 
-    train_files = discover_split_files(dataset_root, "train")
     train_tiles = inventory["train"]["tiles"]
     val_tiles = select_validation_tiles(train_tiles, count=val_tile_count, seed=seed)
     val_tile_set = set(val_tiles)
-    dev_train_files = [
-        path for path in train_files if _sample_metadata(path.stem)[0] not in val_tile_set
+    train_records = physical["train"]["files"]
+    dev_train_records = [
+        record
+        for record in train_records
+        if _sample_metadata(str(record["sample_id"]))[0] not in val_tile_set
     ]
-    dev_val_files = [
-        path for path in train_files if _sample_metadata(path.stem)[0] in val_tile_set
+    dev_val_records = [
+        record
+        for record in train_records
+        if _sample_metadata(str(record["sample_id"]))[0] in val_tile_set
     ]
-    if not dev_train_files or not dev_val_files:
+    if not dev_train_records or not dev_val_records:
         raise AssertionError("Deterministic train/validation tile split produced an empty list")
 
     manifests: dict[str, dict[str, Any]] = {
-        "train_all": build_manifest_from_paths(
-            dataset_root,
-            "train-all",
-            train_files,
+        "train_all": _manifest_from_records(
+            split="train-all",
+            records=train_records,
             hash_mode=hash_mode,
             role="train",
             source_splits=("train",),
             metadata={"selection": {"kind": "all_train_tiles"}},
         ),
-        "train_dev": build_manifest_from_paths(
-            dataset_root,
-            "train-dev",
-            dev_train_files,
+        "train_dev": _manifest_from_records(
+            split="train-dev",
+            records=dev_train_records,
             hash_mode=hash_mode,
             role="train",
             source_splits=("train",),
@@ -259,10 +492,9 @@ def _freeze_protocol_into_staging(
                 }
             },
         ),
-        "val_dev": build_manifest_from_paths(
-            dataset_root,
-            "val-dev",
-            dev_val_files,
+        "val_dev": _manifest_from_records(
+            split="val-dev",
+            records=dev_val_records,
             hash_mode=hash_mode,
             role="val",
             source_splits=("train",),
@@ -348,6 +580,8 @@ def main() -> int:
         val_tile_count=args.val_tile_count,
         seed=args.seed,
         hash_mode=args.hash_mode,
+        workers=args.workers,
+        progress_every=args.progress_every,
     )
     print(json.dumps(result, indent=2, ensure_ascii=False))
     return 0
