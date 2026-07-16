@@ -21,6 +21,7 @@ from data.datasets.earthnet2021 import (
     _discover_npz_files,
     _load_external_drivers,
 )
+from data.earthnet_manifest import write_json_atomic
 from data.earthnet_conditioning import (
     ConditioningStatsV2,
     EOBS_VARIABLES,
@@ -603,9 +604,7 @@ def main() -> None:
     text = json.dumps(report, indent=2, ensure_ascii=False)
     print(text)
     if args.output:
-        output = Path(args.output)
-        output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_text(text + "\n", encoding="utf-8")
+        write_json_atomic(report, args.output)
     if fatal:
         raise SystemExit(2)
 

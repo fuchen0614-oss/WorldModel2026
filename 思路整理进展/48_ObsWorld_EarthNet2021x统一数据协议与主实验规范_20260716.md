@@ -147,6 +147,33 @@ nice -n 10 python scripts/build_earthnet_conditioning_stats.py \
 
 这第二条命令会实际读取全部训练 NetCDF，用于计算八个 E-OBS 字段和 `cop_dem` 的统计量；它比冻结清单慢，建议在 Stage1.5 结束或磁盘 I/O 空闲时运行。
 
+统计完成后，先只做**无 GPU 训练的真实数据预检**。以下命令只读取清单中的 64 个
+`train_dev` cube，核对字段、统计量、mask（有效标记）和最终 DataLoader；`RUN_TRAIN=0`
+保证它不会启动训练：
+
+```bash
+cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
+
+DATA_PARENT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
+RUN_DIR="$PWD/artifacts/protocols/earthnet2021x_standard_v1"
+
+CONFIG=configs/train/stage2_earthnet_v2_direct24.yaml \
+DATA_ROOT="$DATA_PARENT" \
+MANIFEST_PATH="$RUN_DIR/train_dev.json" \
+VALIDATION_MANIFEST_PATH="$RUN_DIR/val_dev.json" \
+CONDITIONING_STATS_PATH="$RUN_DIR/conditioning_stats_v2_train_dev.json" \
+PREFLIGHT=1 PREFLIGHT_CHECK_MODEL=0 RUN_TRAIN=0 \
+PREFLIGHT_OUTPUT="$RUN_DIR/preflight_train_dev.json" \
+bash run_stage2_earthnet.sh
+```
+
+确认这份报告的 `ok` 为 `true`，并且最终 Stage1.5 的 `state_bridge` checkpoint（状态桥接权重）
+已冻结后，才把 `PREFLIGHT_CHECK_MODEL=1`、`RUN_TRAIN=1`，再传入
+`STAGE15_CHECKPOINT=/真实/最终/checkpoint.pt` 启动 Direct24。Rollout24 和 Partition24
+只替换 `CONFIG` 为各自 YAML；它们继承同一数据、清单和统计量。最终 `train_all` 重训前必须用
+`train_all.json` **重新**计算一份对应的 conditioning stats，不能复用 `train_dev` 的统计文件。
+
 ## 6. Stage2 的训练和评测顺序
 
 1. `train_dev.json → val_dev.json`：开发、过拟合小样本、选 checkpoint；
