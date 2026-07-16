@@ -30,6 +30,7 @@ from train.train_stage2_earthnet import (
     load_config,
     load_stage2_model_state,
     move_batch_to_device,
+    stage2_supervision_for_output,
 )
 
 
@@ -41,6 +42,7 @@ def main():
     parser.add_argument("--data-root", type=str)
     parser.add_argument("--external-driver-root", type=str)
     parser.add_argument("--dgh-stats-path", type=str)
+    parser.add_argument("--conditioning-stats-path", type=str)
     parser.add_argument("--manifest-path", type=str)
     parser.add_argument("--batch-size", type=int, default=2)
     parser.add_argument("--num-workers", type=int, default=4)
@@ -55,8 +57,13 @@ def main():
         config["data"]["external_driver_root"] = args.external_driver_root
     if args.dgh_stats_path is not None:
         config["data"]["dgh_stats_path"] = args.dgh_stats_path
+    if args.conditioning_stats_path is not None:
+        config["data"]["conditioning_stats_path"] = args.conditioning_stats_path
     if args.manifest_path is not None:
         config["data"]["manifest_path"] = args.manifest_path
+        manifest_paths = config["data"].get("manifest_paths")
+        if isinstance(manifest_paths, dict):
+            manifest_paths[args.split] = args.manifest_path
         config["data"]["require_manifest"] = True
     config["data"]["split"] = args.split
 
@@ -99,15 +106,16 @@ def main():
         for batch in tqdm(loader, desc=f"eval {args.split}"):
             batch = move_batch_to_device(batch, device)
             out = forward_stage2_model(model, batch)
+            supervision = stage2_supervision_for_output(batch, out)
             losses = loss_fn(
                 out["pred"],
-                batch["x_target"],
-                batch.get("target_mask"),
+                supervision["target"],
+                supervision["target_mask"],
                 z_pred=out.get("z_pred"),
                 z_target=out.get("z_target"),
                 z_context=out.get("z_context"),
                 z_target_mask=out.get("z_target_mask"),
-                horizons=batch.get("h"),
+                horizons=supervision["horizons"],
             )
             bs = batch["x_target"].shape[0]
             count += bs
@@ -115,17 +123,17 @@ def main():
                 sums[key] = sums.get(key, 0.0) + float(value.detach().cpu()) * bs
             forecast_metrics.update(
                 out["pred"],
-                batch["x_target"],
-                batch["target_mask"],
-                batch["h"],
+                supervision["target"],
+                supervision["target_mask"],
+                supervision["horizons"],
                 batch["x_context"],
                 batch["context_mask"],
             )
             if official is not None:
                 official.update(
                     out["pred"],
-                    batch["x_target"],
-                    batch["target_mask"],
+                    supervision["target"],
+                    supervision["target_mask"],
                     [item["sample_id"] for item in batch["meta"]],
                 )
 

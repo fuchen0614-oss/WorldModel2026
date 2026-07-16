@@ -48,6 +48,8 @@ def main() -> None:
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--external-driver-root")
     parser.add_argument("--dgh-stats-path")
+    parser.add_argument("--conditioning-stats-path")
+    parser.add_argument("--manifest-path")
     parser.add_argument("--batch-size", type=int, default=2)
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--output-size", type=int, default=128)
@@ -63,6 +65,14 @@ def main() -> None:
         config["data"]["external_driver_root"] = args.external_driver_root
     if args.dgh_stats_path:
         config["data"]["dgh_stats_path"] = args.dgh_stats_path
+    if args.conditioning_stats_path:
+        config["data"]["conditioning_stats_path"] = args.conditioning_stats_path
+    if args.manifest_path:
+        config["data"]["manifest_path"] = args.manifest_path
+        manifest_paths = config["data"].get("manifest_paths")
+        if isinstance(manifest_paths, dict):
+            manifest_paths[args.split] = args.manifest_path
+        config["data"]["require_manifest"] = True
     config["model"]["encoder"]["from_checkpoint"] = None
     config["model"]["compute_latent_targets"] = False
 

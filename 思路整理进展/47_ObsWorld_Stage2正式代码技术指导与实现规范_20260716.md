@@ -244,6 +244,20 @@ Stage2-0 数据契约与统计 ──> Stage2-D ──> Stage2-R ──> Stage2-
 - 本地 split 与官方 track 的映射得到确认；
 - 所有 Stage2-v2 测试通过。
 
+### 0.4 实施状态更新（2026-07-16，Commit B：Direct24）
+
+本项目现已实现、但尚未声称得到实验结果的代码边界如下：
+
+- 新增 `IntervalDriverEncoder`（区间驱动编码器）：统一消费任意长度的 `D/C/delta_t` 路径，支持 `L=1/2/4/...`；全缺失天气时仍保留日历和时长；
+- 新增 `ControlledTransition`（受控状态转移）：把上述编码器、`HorizonEncoder` 和原有 `StateDynamicsModule` 组合为唯一的可变步长转移接口；
+- 新增 `ObsWorldV2Core`（共享核心）与 `ObsWorldDirectPathModel`（Direct24 包装器）：每个未来端点从同一个历史状态 `s0` 出发，只看从第一个未来五日段开始的天气前缀；不接收任何未来像素、目标 mask 或官方评分字段；
+- `ContextStateAggregator`（上下文状态聚合器）现可处理连续 clear coverage（清晰像素占比），但旧 Direct-DGH 的默认行为保持兼容；正式 v2 才启用“完全不可观测 token 置零”；
+- `train/train_stage2_earthnet.py` 已能按 `stage2_protocol=earthnet2021x_path_v2` 选择新工厂，在训练时只解码分层抽样的端点、在验证时解码完整 20 步，并在模型边界之外再对齐监督 target；
+- 新增 `stage2_earthnet_v2_direct24.yaml`（正式配对 Direct 配置）和 `stage2_earthnet_v2_smoke.yaml`（非正式小样本冒烟配置）；
+- preflight（训练前检查）、预测和普通 split 评估入口已经能接受 v2 的 conditioning stats（条件统计量）与 split-specific manifest（按划分清单）。
+
+这一步**仍然没有**实现 rollout（递推）、partition consistency（时间分割一致性）、正式统计量、正式 Stage1.5 权重接入或任何主实验数值。它的作用是先建立一个与后续世界模型共享输入、状态初始化、转移和解码器的公平 Direct24 对照，而不是把 Direct24 包装成世界模型结论。
+
 ---
 
 ## 4. 当前代码审计：现在做到什么程度

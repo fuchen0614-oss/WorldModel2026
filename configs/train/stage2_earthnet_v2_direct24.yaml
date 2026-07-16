@@ -1,0 +1,245 @@
+# ObsWorld Stage2-v2 matched Direct24 configuration.
+#
+# This is the paper-facing *direct* control, not the final recursive world
+# model.  Every future endpoint starts from the same history state s0, but it
+# receives the same full 24-D E-OBS prefix, calendar path, elapsed time and
+# geographic prior that Stage2-R/Stage2-P will use.  It is therefore the fair
+# answer to: "does recurrence/composability help beyond stronger inputs?"
+#
+# Formal-run placeholders are intentionally null.  Pass or set immutable
+# manifest/statistics/Stage1.5 checkpoint paths only after the real server
+# layout audit has frozen their provenance.
+
+protocol:
+  schema_version: 2
+  dataset_protocol: earthnet2021x_raw_v2
+  evaluation_protocol: pending_layout_audit
+  driver_protocol: full24
+  eobs_variables: [fg, hu, pp, qq, rr, tg, tn, tx]
+  eobs_aggregations: [mean, min, max]
+  dem_variable: cop_dem
+
+model:
+  family: obsworld_stage2_v2
+  forecast_mode: direct_path_24d
+  driver_protocol: full24
+  future_start_index: 10
+  target_steps: 20
+  # A formal main result must inherit the frozen Stage1.5 state initializer.
+  # The trainer rejects a null value unless resuming a Stage2 checkpoint.
+  require_stage15_checkpoint: true
+  use_phi_encoder: true
+  residual_scale_init: 1.0
+  conditions:
+    use_D: true
+    use_G: true
+    use_h: true
+
+  encoder:
+    type: MultiModalViTEncoderFiLM
+    from_checkpoint: null
+    freeze: true
+    unfreeze_at_step: 5000
+    unfreeze_last_blocks: 2
+    unfreeze_state_projector: true
+    img_size: 256
+    s1_channels: 2
+    s2_channels: 12
+    patch_size: 16
+    embed_dim: 384
+    depth: 12
+    num_heads: 6
+    mlp_ratio: 4.0
+    dropout: 0.0
+    phi_dim: 384
+    use_film: true
+    use_cross_attention: false
+    film_start_layer: 8
+
+  phi_encoder:
+    type: PureImagingConditionEncoder
+    embed_dim: 384
+    sun_dim: 64
+    sar_geom_dim: 64
+    dropout: 0.0
+    condition_dropout: 0.0
+    use_sar_geometry: true
+
+  state_projector:
+    type: SpatialStateProjector
+    in_dim: 384
+    state_dim: 256
+    hidden_dim: 512
+
+  band_adapter:
+    type: EarthNetInputAdapter
+    in_channels: 4
+    out_channels: 12
+    hidden_channels: 32
+    mode: linear
+    # EarthNet [blue, green, red, nir(B8A)] -> Stage1.5 [B02, B03, B04, B8A].
+    source_to_canonical: [1, 2, 3, 8]
+
+  context_aggregator:
+    type: ContextStateAggregator
+    state_dim: 256
+    hidden_dim: 256
+    dropout: 0.0
+    max_context_frames: 10
+    min_token_clear_fraction: 0.25
+    zero_unobserved_tokens: true
+
+  interval_driver_encoder:
+    type: IntervalDriverEncoder
+    input_dim: 24
+    calendar_dim: 2
+    token_dim: 64
+    hidden_dim: 128
+    out_dim: 32
+    num_layers: 2
+    num_heads: 4
+    dropout: 0.0
+    max_segment_length: 20
+
+  horizon_encoder:
+    type: HorizonEncoder
+    out_dim: 16
+    hidden_dim: 32
+    max_h_days: 100.0
+
+  # 128/8 and 256/16 both make a 16x16 token grid, so G is spatially aligned
+  # with the Stage1.5 state without upsampling native EarthNet DEM.
+  geo_tokenizer:
+    type: GeoTokenizer
+    in_channels: 1
+    geo_dim: 16
+    img_size: 128
+    patch_size: 8
+
+  dynamics:
+    type: StateDynamicsModule
+    latent_dim: 256
+    dynamics_type: transformer
+    driver_dim: 32
+    geo_dim: 16
+    time_dim: 16
+    hidden_dim: 256
+    num_layers: 2
+    num_heads: 4
+    dropout: 0.0
+
+  decoder:
+    type: EarthNetObservationDecoder
+    in_dim: 256
+    out_channels: 4
+    img_size: 128
+    patch_size: 8
+    depth: 3
+    num_heads: 4
+    decoder_embed_dim: 192
+    mlp_ratio: 4.0
+    dropout: 0.0
+    decoder_mode: transformer
+    predict_logvar: false
+    output_activation: sigmoid
+
+data:
+  dataset: earthnet2021x
+  root: /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
+  split: train
+  data_format: netcdf
+  dataset_protocol: earthnet2021x_raw_v2
+  evaluation_protocol: pending_layout_audit
+  stage2_protocol: earthnet2021x_path_v2
+  file_glob: "**/*.nc"
+
+  context_frames: 10
+  target_frames: 20
+  frame_interval_days: 5
+  netcdf_s2_offset_days: 4
+  model_img_size: 256
+  context_img_size: 256
+  eval_img_size: 128
+  target_img_size: 128
+  geo_img_size: 128
+  image_channels: 4
+  target_channels: 4
+  formal_dem_variable: cop_dem
+  netcdf_dem_variables: [cop_dem]
+
+  # Once `freeze_earthnet2021x_protocol.py` has run, set train to train_dev
+  # and val to val_dev.  Never replace these by IID/OOD test manifests.
+  manifest_path: null
+  manifest_paths:
+    train: null
+    val: null
+  require_manifest: true
+  verify_manifest_sizes: false
+  verify_manifest_hashes: false
+  use_train_holdout: false
+  conditioning_stats_path: null
+  require_conditioning_stats: true
+
+  normalize: true
+  strict: true
+  batch_size: 2
+  num_workers: 4
+  band_spec:
+    input_bands: [blue, green, red, nir]
+    target_bands: [blue, green, red, nir]
+    red_band: red
+    nir_band: nir
+    scale_factor: 10000.0
+    auto_scale: true
+
+training:
+  seed: 42
+  open_loop: false
+  teacher_forcing_future_state: false
+  max_steps: 50000
+  warmup_steps: 2000
+  gradient_accumulation_steps: 1
+  # Direct24 does not recurse, but matching its six horizon samples to later
+  # rollout training gives all main models the same decoder supervision budget.
+  horizons_per_sample: 6
+  grad_clip: 1.0
+  require_dgh_stats: false
+  require_conditioning_stats: true
+  require_full_conditioning_stats: true
+  require_all_driver_features: true
+  min_driver_valid_fraction: 0.90
+  require_geo: true
+
+validation:
+  split: val
+  interval: 1000
+  batch_size: 2
+  num_workers: 4
+  max_samples: 512
+  max_batches: 0
+  primary_metric: MAE
+  mode: min
+
+loss:
+  obs_loss: huber
+  weights:
+    obs: 1.0
+    ndvi: 0.5
+    latent: 0.0
+    delta: 0.0
+    smooth: 0.0
+
+optimizer:
+  name: adamw
+  lr: 0.0001
+  backbone_lr: 0.00001
+  min_lr: 0.000001
+  backbone_min_lr: 0.000001
+  weight_decay: 0.05
+  betas: [0.9, 0.95]
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_direct24
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_direct24
+resume_from: null
+checkpoint_interval: 5000
+log_interval: 50

@@ -45,12 +45,14 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from data.datasets.earthnet2021 import EarthNet2021Config, EarthNet2021Dataset, collate_earthnet2021
-from data.stage2_contract import model_input_view
+from data.earthnet_conditioning import FULL24_FEATURE_NAMES, is_stage2_v2_protocol
+from data.stage2_contract import is_stage2_v2_batch, model_input_view
 from models.adapters.earthnet_band_adapter import EarthNetInputAdapter
 from models.adapters.geo_tokenizer import GeoTokenizer
 from models.decoders.earthnet_observation_decoder import EarthNetObservationDecoder
 from models.dynamics.context_state_aggregator import ContextStateAggregator
 from models.dynamics.condition_encoders import DriverEncoder, HorizonEncoder
+from models.dynamics.obsworld_factory import create_obsworld_v2_model
 from models.dynamics.obsworld_stage2 import ObsWorldStage2Model
 from models.dynamics.state_dynamics_module import StateDynamicsModule
 from models.encoders.multimodal_vit_encoder_film import MultiModalViTEncoderFiLM
@@ -72,23 +74,52 @@ def load_config(path: str) -> dict:
 
 
 def move_batch_to_device(batch: dict, device: torch.device) -> dict:
-    out = {}
-    for key, value in batch.items():
-        out[key] = value.to(device, non_blocking=True) if torch.is_tensor(value) else value
-    return out
+    """Move tensor leaves recursively while leaving metadata on the CPU.
+
+    The current EarthNet batch is shallow, but formal Stage2 deliberately
+    leaves room for a future nested acquisition-condition dictionary.  Moving
+    only top-level values would then fail late with a CPU/GPU device mismatch.
+    """
+
+    return _move_value_to_device(batch, device)
 
 
-def forward_stage2_model(model: nn.Module, batch: dict) -> dict:
+def _move_value_to_device(value, device: torch.device):
+    if torch.is_tensor(value):
+        return value.to(device, non_blocking=True)
+    if isinstance(value, dict):
+        return {key: _move_value_to_device(item, device) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_move_value_to_device(item, device) for item in value]
+    if isinstance(value, tuple):
+        return tuple(_move_value_to_device(item, device) for item in value)
+    return value
+
+
+def forward_stage2_model(
+    model: nn.Module,
+    batch: dict,
+    *,
+    selected_steps: Optional[torch.Tensor] = None,
+) -> dict:
     """Forward only the protocol-approved batch partition through the model."""
 
     raw_model = model.module if isinstance(model, DDP) else model
     include_targets = bool(getattr(raw_model, "compute_latent_targets", False))
-    return model(
-        model_input_view(batch, include_training_targets=include_targets)
-    )
+    inputs = model_input_view(batch, include_training_targets=include_targets)
+    if getattr(raw_model, "forecast_mode", None) == "direct_path_24d":
+        return model(inputs, selected_steps=selected_steps)
+    if selected_steps is not None:
+        raise ValueError(
+            "selected_steps is supported only by the Stage2-v2 Direct24 model; "
+            "legacy Direct-DGH must use select_horizons()."
+        )
+    return model(inputs)
 
 
-def create_stage2_model(config: dict, device: torch.device) -> ObsWorldStage2Model:
+def create_stage2_model(config: dict, device: torch.device) -> nn.Module:
+    if is_stage2_v2_protocol(config.get("data", {}).get("stage2_protocol", "")):
+        return create_obsworld_v2_model(config, device)
     model_cfg = config["model"]
     enc_cfg = {k: v for k, v in model_cfg["encoder"].items()
                if k not in {
@@ -178,6 +209,31 @@ def create_stage2_model(config: dict, device: torch.device) -> ObsWorldStage2Mod
             warmup_frozen.extend(state_projector.parameters())
     object.__setattr__(model, "_warmup_frozen_parameters", list(warmup_frozen))
     return model.to(device)
+
+
+def require_stage15_initializer_if_formal(config: dict, *, resume_from: Optional[str]) -> None:
+    """Reject an accidental random-initializer formal v2 experiment.
+
+    A synthetic smoke config may set ``require_stage15_checkpoint=false``.
+    Paper-facing v2 configs set it true and must either name the frozen
+    Stage1.5 checkpoint or resume an already complete Stage2 checkpoint.
+    """
+
+    if not is_stage2_v2_protocol(config.get("data", {}).get("stage2_protocol", "")):
+        return
+    if resume_from:
+        return
+    model_cfg = config.get("model", {})
+    if not bool(model_cfg.get("require_stage15_checkpoint", False)):
+        return
+    checkpoint = model_cfg.get("encoder", {}).get("from_checkpoint")
+    if not checkpoint:
+        raise RuntimeError(
+            "Formal Stage2-v2 requires the frozen Stage1.5 state-bridge "
+            "checkpoint. Pass --stage15-checkpoint <checkpoint_step_*.pt> "
+            "or set model.encoder.from_checkpoint; a random initializer is "
+            "allowed only in an explicitly marked smoke config."
+        )
 
 
 def _validate_stage2_dimensions(
@@ -370,6 +426,98 @@ def select_horizons(batch: dict, horizons_per_sample: int) -> dict:
     return batch
 
 
+def select_v2_horizon_indices(
+    target_steps: int,
+    horizons_per_sample: int,
+    *,
+    device: torch.device,
+) -> Optional[torch.Tensor]:
+    """Choose Direct24 supervision endpoints without mutating the v2 batch.
+
+    Direct24 needs the complete ``D_path`` to construct each legal prefix;
+    slicing the batch in the legacy way would lose the first-future alignment.
+    We therefore ask the model to decode a subset and slice *only* the
+    supervision tensors afterwards.  Returning ``None`` means full 20-step
+    decoding, which is used by validation and by small smoke runs.
+    """
+
+    if target_steps <= 0:
+        raise ValueError(f"target_steps must be positive, got {target_steps}")
+    if horizons_per_sample <= 0 or horizons_per_sample >= target_steps:
+        return None
+
+    # For the normal six-endpoint schedule choose short, mid, and long
+    # horizons first, then fill the remainder uniformly without replacement.
+    groups = (
+        torch.arange(0, max(1, target_steps // 3), device=device),
+        torch.arange(max(1, target_steps // 3), max(2, 2 * target_steps // 3), device=device),
+        torch.arange(max(2, 2 * target_steps // 3), target_steps, device=device),
+    )
+    if horizons_per_sample == 1:
+        group_order = (groups[2],)
+    elif horizons_per_sample == 2:
+        group_order = (groups[0], groups[2])
+    else:
+        group_order = groups
+    chosen: list[int] = []
+    for group in group_order:
+        if len(chosen) >= horizons_per_sample or group.numel() == 0:
+            continue
+        chosen.append(int(group[torch.randint(group.numel(), (1,), device=device)].item()))
+
+    available = torch.tensor(
+        [index for index in range(target_steps) if index not in chosen],
+        device=device,
+        dtype=torch.long,
+    )
+    if len(chosen) < horizons_per_sample:
+        order = torch.randperm(available.numel(), device=device)
+        chosen.extend(
+            int(value)
+            for value in available[order[: horizons_per_sample - len(chosen)]].tolist()
+        )
+    return torch.tensor(sorted(chosen), dtype=torch.long, device=device)
+
+
+def stage2_supervision_for_output(batch: dict, output: dict) -> dict[str, Optional[torch.Tensor]]:
+    """Align target tensors with a possibly sparse Direct24 model output.
+
+    This is deliberately outside the model boundary: target pixels remain
+    training supervision and cannot influence a Direct24 state prediction.
+    """
+
+    if "x_target" not in batch:
+        raise KeyError("Stage2 training/validation batch is missing x_target")
+    target = batch["x_target"]
+    target_mask = batch.get("target_mask")
+    horizons = batch.get("h")
+    steps = output.get("step_indices")
+    if steps is not None:
+        steps = torch.as_tensor(steps, dtype=torch.long, device=target.device)
+        if steps.dim() != 1 or steps.numel() == 0:
+            raise ValueError("Direct24 output step_indices must be a non-empty [K] tensor")
+        if torch.any(steps < 0) or torch.any(steps >= target.shape[1]):
+            raise ValueError(
+                "Direct24 output step_indices do not index the batch target horizon: "
+                f"steps={steps.tolist()}, target_steps={target.shape[1]}"
+            )
+        target = target.index_select(1, steps)
+        if target_mask is not None:
+            target_mask = target_mask.index_select(1, steps)
+        if horizons is not None:
+            horizons = horizons.index_select(1, steps)
+    if output["pred"].shape[:2] != target.shape[:2]:
+        raise ValueError(
+            "Stage2 output/target temporal shape mismatch: "
+            f"pred={tuple(output['pred'].shape[:2])}, target={tuple(target.shape[:2])}"
+        )
+    return {
+        "target": target,
+        "target_mask": target_mask,
+        "horizons": horizons,
+    }
+
+
 def save_checkpoint(
     path: str,
     step: int,
@@ -444,15 +592,16 @@ def validate_stage2(
         )
         with amp:
             out = forward_stage2_model(model, batch)
+            supervision = stage2_supervision_for_output(batch, out)
             losses = loss_fn(
                 out["pred"],
-                batch["x_target"],
-                batch.get("target_mask"),
+                supervision["target"],
+                supervision["target_mask"],
                 z_pred=out.get("z_pred"),
                 z_target=out.get("z_target"),
                 z_context=out.get("z_context"),
                 z_target_mask=out.get("z_target_mask"),
-                horizons=batch.get("h"),
+                horizons=supervision["horizons"],
             )
         batch_size = int(batch["x_context"].shape[0])
         sample_count += batch_size
@@ -462,9 +611,9 @@ def validate_stage2(
             )
         metrics.update(
             out["pred"],
-            batch["x_target"],
-            batch["target_mask"],
-            batch["h"],
+            supervision["target"],
+            supervision["target_mask"],
+            supervision["horizons"],
             batch["x_context"],
             batch["context_mask"],
         )
@@ -482,6 +631,16 @@ def validate_stage2(
 
 
 def _log_driver_coverage(
+    dataset: EarthNet2021Dataset,
+    data_cfg: EarthNet2021Config,
+    max_samples: int = 8,
+) -> dict:
+    if is_stage2_v2_protocol(data_cfg.stage2_protocol):
+        return _log_v2_driver_coverage(dataset, data_cfg, max_samples=max_samples)
+    return _log_legacy_driver_coverage(dataset, data_cfg, max_samples=max_samples)
+
+
+def _log_legacy_driver_coverage(
     dataset: EarthNet2021Dataset,
     data_cfg: EarthNet2021Config,
     max_samples: int = 8,
@@ -525,6 +684,59 @@ def _log_driver_coverage(
     return result
 
 
+def _log_v2_driver_coverage(
+    dataset: EarthNet2021Dataset,
+    data_cfg: EarthNet2021Config,
+    max_samples: int = 8,
+) -> dict:
+    """Log formal 24-D path availability without reusing legacy DGH names."""
+
+    count = min(len(dataset), max_samples)
+    if count <= 0:
+        raise RuntimeError("Cannot audit driver coverage of an empty Stage2-v2 dataset")
+    coverage = torch.zeros(len(FULL24_FEATURE_NAMES), dtype=torch.float64)
+    total = 0
+    geo_valid = 0.0
+    geo_total = 0
+    for index in range(count):
+        sample = dataset[index]
+        driver_mask = sample["D_mask"].double()
+        if driver_mask.shape[-1] != len(FULL24_FEATURE_NAMES):
+            raise ValueError(
+                "Stage2-v2 D_mask feature dimension differs from formal full24: "
+                f"got {driver_mask.shape[-1]}"
+            )
+        coverage += driver_mask.sum(dim=0)
+        total += driver_mask.shape[0]
+        geo_mask = sample["G_mask"].double()
+        geo_valid += float(geo_mask.sum())
+        geo_total += geo_mask.numel()
+    rates = coverage / max(total, 1)
+    summary = ", ".join(
+        f"{name}={rate:.3f}"
+        for name, rate in zip(FULL24_FEATURE_NAMES, rates.tolist())
+    )
+    log_main(f"Stage2-v2 full24 D valid-rate over {count} samples: {summary}")
+    geo_rate = geo_valid / max(geo_total, 1)
+    log_main(f"Stage2-v2 cop_dem valid-rate over {count} samples: {geo_rate:.3f}")
+    missing = [
+        name
+        for name, rate in zip(FULL24_FEATURE_NAMES, rates.tolist())
+        if rate == 0
+    ]
+    if missing:
+        log_main(
+            "warning: these formal full24 features are absent in inspected "
+            f"samples and will be mask-filled: {missing}"
+        )
+    result = {
+        name: rate
+        for name, rate in zip(FULL24_FEATURE_NAMES, rates.tolist())
+    }
+    result["__geo_elevation__"] = geo_rate
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
@@ -534,7 +746,9 @@ def main():
     parser.add_argument("--data-root", type=str)
     parser.add_argument("--external-driver-root", type=str)
     parser.add_argument("--dgh-stats-path", type=str)
+    parser.add_argument("--conditioning-stats-path", type=str)
     parser.add_argument("--manifest-path", type=str)
+    parser.add_argument("--validation-manifest-path", type=str)
     parser.add_argument("--require-manifest", action="store_true")
     parser.add_argument("--stage15-checkpoint", type=str)
     parser.add_argument("--checkpoint-dir", type=str)
@@ -562,8 +776,15 @@ def main():
         config["data"]["external_driver_root"] = args.external_driver_root
     if args.dgh_stats_path is not None:
         config["data"]["dgh_stats_path"] = args.dgh_stats_path
+    if args.conditioning_stats_path is not None:
+        config["data"]["conditioning_stats_path"] = args.conditioning_stats_path
     if args.manifest_path is not None:
         config["data"]["manifest_path"] = args.manifest_path
+        manifest_paths = config["data"].get("manifest_paths")
+        if isinstance(manifest_paths, dict):
+            manifest_paths[str(config["data"].get("split", "train"))] = args.manifest_path
+    if args.validation_manifest_path is not None:
+        config["data"].setdefault("manifest_paths", {})["val"] = args.validation_manifest_path
     if args.require_manifest:
         config["data"]["require_manifest"] = True
     if args.stage15_checkpoint is not None:
@@ -588,6 +809,7 @@ def main():
         # A Stage2 checkpoint already contains the complete encoder. Resuming
         # must not depend on the original Stage1.5 file still being present.
         config["model"]["encoder"]["from_checkpoint"] = None
+    require_stage15_initializer_if_formal(config, resume_from=resume_from)
     seed = int(args.seed if args.seed is not None else config["training"].get("seed", 42))
     process_seed = seed + rank
     random.seed(process_seed)
@@ -605,22 +827,50 @@ def main():
     data_cfg = EarthNet2021Config.from_config(config["data"], split=config["data"].get("split", "train"))
     dataset = EarthNet2021Dataset(data_cfg)
     coverage = _log_driver_coverage(dataset, data_cfg)
-    if bool(config["training"].get("require_dgh_stats", True)):
-        if not config["data"].get("dgh_stats_path"):
-            raise RuntimeError(
-                "Formal Stage2 training requires train-only D normalization stats. "
-                "Run scripts/build_earthnet_dgh_stats.py and pass --dgh-stats-path."
+    is_v2 = is_stage2_v2_protocol(data_cfg.stage2_protocol)
+    if is_v2:
+        if bool(config["training"].get("require_dgh_stats", False)):
+            raise ValueError(
+                "earthnet2021x_path_v2 must not require legacy DGH statistics; "
+                "use data.conditioning_stats_path and "
+                "scripts/build_earthnet_conditioning_stats.py instead."
             )
+        if bool(config["training"].get("require_full_conditioning_stats", True)):
+            stats = data_cfg.conditioning_stats
+            if stats is None or stats.is_identity_smoke_stats:
+                raise RuntimeError(
+                    "Formal Stage2-v2 training requires non-identity train-only "
+                    "conditioning statistics. Run "
+                    "scripts/build_earthnet_conditioning_stats.py on the frozen "
+                    "train manifest and pass --conditioning-stats-path."
+                )
+        driver_names = FULL24_FEATURE_NAMES
+    else:
+        if bool(config["training"].get("require_dgh_stats", True)):
+            if not config["data"].get("dgh_stats_path"):
+                raise RuntimeError(
+                    "Formal Stage2 training requires train-only D normalization stats. "
+                    "Run scripts/build_earthnet_dgh_stats.py and pass --dgh-stats-path."
+                )
+        driver_names = tuple(data_cfg.driver_spec.feature_names)
     if bool(config["training"].get("require_all_driver_features", True)):
-        absent = [
-            name
-            for name in data_cfg.driver_spec.feature_names
-            if coverage[name] == 0
-        ]
+        absent = [name for name in driver_names if coverage[name] == 0]
         if absent:
             raise RuntimeError(
                 "Formal Stage2 training is missing configured D features: "
-                f"{absent}. Provide complete external driver sidecars."
+                f"{absent}. Provide a complete driver source or correct the data protocol."
+            )
+    minimum_driver_coverage = float(config["training"].get("min_driver_valid_fraction", 0.0))
+    if minimum_driver_coverage > 0:
+        low_coverage = [
+            f"{name}={coverage[name]:.3f}"
+            for name in driver_names
+            if coverage[name] < minimum_driver_coverage
+        ]
+        if low_coverage:
+            raise RuntimeError(
+                "Stage2 driver valid-rate falls below "
+                f"min_driver_valid_fraction={minimum_driver_coverage:.3f}: {low_coverage}"
             )
     if bool(config["training"].get("require_geo", True)):
         if coverage["__geo_elevation__"] == 0:
@@ -749,7 +999,15 @@ def main():
             sampler.set_epoch(epoch)
         for batch in loader:
             batch = move_batch_to_device(batch, device)
-            batch = select_horizons(batch, horizons_per_sample)
+            selected_steps = None
+            if is_stage2_v2_batch(batch):
+                selected_steps = select_v2_horizon_indices(
+                    batch["x_target"].shape[1],
+                    horizons_per_sample,
+                    device=device,
+                )
+            else:
+                batch = select_horizons(batch, horizons_per_sample)
             should_update = (micro_step + 1) % accum_steps == 0
             sync_context = (
                 nullcontext()
@@ -759,16 +1017,21 @@ def main():
             amp = torch.autocast(device_type="cuda", dtype=torch.bfloat16) if device.type == "cuda" else torch.autocast(device_type="cpu", enabled=False)
             with sync_context:
                 with amp:
-                    out = forward_stage2_model(model, batch)
+                    out = forward_stage2_model(
+                        model,
+                        batch,
+                        selected_steps=selected_steps,
+                    )
+                    supervision = stage2_supervision_for_output(batch, out)
                     losses = loss_fn(
                         out["pred"],
-                        batch["x_target"],
-                        batch.get("target_mask"),
+                        supervision["target"],
+                        supervision["target_mask"],
                         z_pred=out.get("z_pred"),
                         z_target=out.get("z_target"),
                         z_context=out.get("z_context"),
                         z_target_mask=out.get("z_target_mask"),
-                        horizons=batch.get("h"),
+                        horizons=supervision["horizons"],
                     )
                     loss = losses["total"] / accum_steps
                 if not torch.isfinite(loss):

@@ -154,9 +154,13 @@ class EarthNet2021Config:
         manifest_path = data_cfg.get("manifest_path")
         manifest_paths = data_cfg.get("manifest_paths") or {}
         if manifest_paths:
-            manifest_path = manifest_paths.get(requested_split)
-            if manifest_path is None and requested_split == "val":
-                manifest_path = manifest_paths.get("train")
+            if not isinstance(manifest_paths, dict):
+                raise TypeError("data.manifest_paths must be a mapping from split to path")
+            # An explicit null is meaningful: formal configs use it to say
+            # that no role-specific manifest has been frozen yet.  In
+            # particular, val must never fall back to the train manifest.
+            if requested_split in manifest_paths:
+                manifest_path = manifest_paths[requested_split]
         return cls(
             root=str(data_cfg["root"]),
             split=requested_split,

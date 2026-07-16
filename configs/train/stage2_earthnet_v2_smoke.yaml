@@ -1,0 +1,195 @@
+# CPU/GPU smoke configuration for the formal Stage2-v2 Direct24 code path.
+# It is deliberately non-formal: no Stage1.5 checkpoint, no immutable
+# manifest, and identity conditioning statistics are permitted only to prove
+# that a tiny local NetCDF sample can forward/backward/save/resume.
+
+protocol:
+  schema_version: 2
+  dataset_protocol: smoke_only
+  driver_protocol: full24
+  dem_variable: cop_dem
+
+model:
+  family: obsworld_stage2_v2
+  forecast_mode: direct_path_24d
+  driver_protocol: full24
+  future_start_index: 10
+  target_steps: 20
+  require_stage15_checkpoint: false
+  use_phi_encoder: true
+  conditions: {use_D: true, use_G: true, use_h: true}
+  encoder:
+    type: MultiModalViTEncoderFiLM
+    from_checkpoint: null
+    freeze: false
+    unfreeze_at_step: 0
+    unfreeze_last_blocks: 0
+    unfreeze_state_projector: false
+    img_size: 32
+    s1_channels: 2
+    s2_channels: 12
+    patch_size: 16
+    embed_dim: 32
+    depth: 1
+    num_heads: 4
+    mlp_ratio: 2.0
+    dropout: 0.0
+    phi_dim: 32
+    use_film: true
+    use_cross_attention: false
+    film_start_layer: 0
+  phi_encoder:
+    type: PureImagingConditionEncoder
+    embed_dim: 32
+    sun_dim: 8
+    sar_geom_dim: 8
+    dropout: 0.0
+    condition_dropout: 0.0
+    use_sar_geometry: true
+  state_projector:
+    type: SpatialStateProjector
+    in_dim: 32
+    state_dim: 16
+    hidden_dim: 32
+  band_adapter:
+    type: EarthNetInputAdapter
+    in_channels: 4
+    out_channels: 12
+    hidden_channels: 16
+    mode: linear
+    source_to_canonical: [1, 2, 3, 8]
+  context_aggregator:
+    type: ContextStateAggregator
+    state_dim: 16
+    hidden_dim: 32
+    dropout: 0.0
+    max_context_frames: 10
+    min_token_clear_fraction: 0.25
+    zero_unobserved_tokens: true
+  interval_driver_encoder:
+    type: IntervalDriverEncoder
+    input_dim: 24
+    calendar_dim: 2
+    token_dim: 16
+    hidden_dim: 32
+    out_dim: 8
+    num_layers: 1
+    num_heads: 4
+    dropout: 0.0
+    max_segment_length: 20
+  horizon_encoder:
+    type: HorizonEncoder
+    out_dim: 8
+    hidden_dim: 16
+    max_h_days: 100.0
+  geo_tokenizer:
+    type: GeoTokenizer
+    in_channels: 1
+    geo_dim: 4
+    img_size: 16
+    patch_size: 8
+  dynamics:
+    type: StateDynamicsModule
+    latent_dim: 16
+    dynamics_type: mlp
+    driver_dim: 8
+    geo_dim: 4
+    time_dim: 8
+    hidden_dim: 32
+    num_layers: 1
+    num_heads: 4
+    dropout: 0.0
+  decoder:
+    type: EarthNetObservationDecoder
+    in_dim: 16
+    out_channels: 4
+    img_size: 16
+    patch_size: 8
+    depth: 1
+    num_heads: 4
+    decoder_embed_dim: 32
+    mlp_ratio: 2.0
+    dropout: 0.0
+    decoder_mode: transformer
+    predict_logvar: false
+    output_activation: sigmoid
+
+data:
+  dataset: earthnet2021x_smoke
+  root: /tmp/obsworld_earthnet_v2_smoke
+  split: train
+  data_format: netcdf
+  stage2_protocol: earthnet2021x_path_v2
+  file_glob: "**/*.nc"
+  context_frames: 10
+  target_frames: 20
+  frame_interval_days: 5
+  netcdf_s2_offset_days: 4
+  model_img_size: 32
+  context_img_size: 32
+  eval_img_size: 16
+  target_img_size: 16
+  geo_img_size: 16
+  image_channels: 4
+  target_channels: 4
+  formal_dem_variable: cop_dem
+  netcdf_dem_variables: [cop_dem]
+  manifest_path: null
+  require_manifest: false
+  use_train_holdout: false
+  conditioning_stats_path: null
+  require_conditioning_stats: false
+  normalize: true
+  strict: false
+  batch_size: 1
+  num_workers: 0
+  band_spec:
+    input_bands: [blue, green, red, nir]
+    target_bands: [blue, green, red, nir]
+    red_band: red
+    nir_band: nir
+    scale_factor: 10000.0
+    auto_scale: true
+
+training:
+  seed: 42
+  max_steps: 2
+  warmup_steps: 1
+  gradient_accumulation_steps: 1
+  horizons_per_sample: 3
+  grad_clip: 1.0
+  require_dgh_stats: false
+  require_conditioning_stats: false
+  require_full_conditioning_stats: false
+  require_all_driver_features: false
+  min_driver_valid_fraction: 0.0
+  require_geo: true
+
+validation:
+  split: val
+  interval: 0
+  batch_size: 1
+  num_workers: 0
+  max_samples: 0
+  max_batches: 1
+  primary_metric: loss/total
+  mode: min
+
+loss:
+  obs_loss: huber
+  weights: {obs: 1.0, ndvi: 0.5, latent: 0.0, delta: 0.0, smooth: 0.0}
+
+optimizer:
+  name: adamw
+  lr: 0.0001
+  backbone_lr: 0.00001
+  min_lr: 0.000001
+  backbone_min_lr: 0.000001
+  weight_decay: 0.05
+  betas: [0.9, 0.95]
+
+checkpoint_dir: outputs/stage2_earthnet_v2_smoke/checkpoints
+log_dir: outputs/stage2_earthnet_v2_smoke/logs
+resume_from: null
+checkpoint_interval: 1
+log_interval: 1
