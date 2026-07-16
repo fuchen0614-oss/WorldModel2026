@@ -15,8 +15,8 @@
 | R002 | M0 | score/export integrity | EarthNet NPZ export → EarthNetScore → provenance | tiny real subset, then iid/ood | checkpoint contract; SHA-256 manifest; score sidecar; scorer succeeds | MUST | CODE_READY | E-2 已用合成 NetCDF 实跑；不等于正式主表 |
 | R003 | M0 | conditioning/preflight | 24-D E-OBS + `cop_dem` train-only stats | train_dev | full stats provenance; v2 contract; no missing/low-coverage driver | MUST | CODE_READY | 必须先在真实数据完成 full preflight |
 | R004 | M0 | mask and target audit | input/view, loss mask, official scoring fields | train_dev/val_dev | target/eval fields cannot enter model; coverage/stats report | MUST | TODO | 现有静态测试通过；需要真实样本审计 |
-| R005 | M0 | state unit tests | future observation availability/update contract | synthetic | q=0 identity; predict-before-update; partial-support recursion | MUST | PENDING_IMPLEMENTATION | 属于 observation-correction 分支，当前 A–D 尚未实现 |
-| R006 | M0 | future-mask leakage | all online/update systems | synthetic | changing unrevealed supervision masks changes no model state/prediction | MUST | PENDING_IMPLEMENTATION | 先有 update model，后做此 test |
+| R005 | M0 | state unit tests | future observation availability/update contract | synthetic | q=0 identity; predict-before-update; partial-support recursion | MUST | CODE_READY | `models/dynamics/observation_correction.py`；单元测试已通过，尚未接入正式 trainer |
+| R006 | M0 | future-mask leakage | all online/update systems | synthetic | changing unrevealed supervision masks changes no model state/prediction | MUST | CODE_READY | `ObservationCorrectionRollout` 已做 reveal gate；测试覆盖未 reveal 特征/mask 变化不改状态 |
 | R010 | M1 | tiny overfit | Direct24, Rollout24, Partition24 | 32 then 128 `train_dev` cubes | loss decreases; finite aligned RGBN/NDVI; checkpoint/resume works | MUST | TODO | Stage2-v2 core 已实现 |
 | R011 | M1 | factual direct control | matched Direct24 | `val_dev` | ENS export/sanity + masked internal horizon curve | MUST | TODO | 这是当前最先应跑的正式模型对照 |
 | R012 | M1 | world rollout pilot | Rollout24 no future observation | `val_dev` | open-loop curve; no factual collapse vs Direct24 | MUST | TODO | 使用相同 D/G/H、初始化、解码器预算 |

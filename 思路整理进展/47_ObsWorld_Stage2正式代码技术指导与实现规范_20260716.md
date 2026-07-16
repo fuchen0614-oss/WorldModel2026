@@ -89,6 +89,17 @@
 
 E-2 的验证同样不是精度结果：同一批临时 NetCDF minicube 已实际跑通“checkpoint 契约核验 → 原子 NPZ 导出 → 文件清单/哈希核验 → `earthnet==0.3.9` 的 EarthNetScore（ENS）评分 → `score_provenance.json`”。如果把 Direct checkpoint 伪装成 rollout 配置，程序会在读取数据前拒绝；如果预测目录多出旧 `.npz` 或某个文件被改写，评分也会拒绝。全套单元测试当前为 **106 passed**（另有 11 个第三方二进制/Transformer 警告）。这证明了证据链可运行，**不等于**真实 EarthNet 主实验已经完成；模型选择仍必须只在冻结的 `val_dev` 上做，不能由工具替代研究者的试验纪律。
 
+### 0.7 实施状态更新（2026-07-16，Commit F：再观测校正契约）
+
+新增 `models/dynamics/observation_correction.py`，但暂不接入正式 Stage2 trainer。它把后续世界模型主张中最容易出错的状态机先固定为可测试的接口：
+
+- 每一步先由 transition（状态转移）产生 `prior state（更新前预测状态）`，再决定是否消费新观测；
+- `q_obs=0` 或 `reveal=0` 时，使用结构化 `where` 保证 posterior（更新后状态）与 prior **逐元素完全相等**；
+- `0<q_obs<1` 时只按 token 的可见支持更新，并按相同支持连续重置 staleness（陈旧度）；
+- 未 reveal 的未来观测特征和 mask 即使被替换，也不会改变状态、最终状态或陈旧度轨迹。
+
+当前只证明了这个 CPU/synthetic（合成）契约，**没有**声称 correction 已在 EarthNet 上训练、优于 VanillaFilter/PredRNN-online，或者已经形成正式主实验结果。下一步仍需把该模块和共享 `ControlledTransition`、EarthNet observation encoder/decoder 接到专门的 online trainer，再按 R020–R023 的 gate（闸门）跑 `val_dev`；在此之前，Direct24/Rollout24/Partition24 的真实数据 preflight 和 32-cube sanity 仍是优先事项。
+
 ---
 
 ## 1. 小白先读：Stage2 到底要做什么，为什么这样做
