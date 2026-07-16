@@ -9,7 +9,11 @@ data:
   root: /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
   split: train
   data_format: netcdf
-  dataset_protocol: earthnet2021_standard_v1
+  # This identifies only the raw NetCDF contract. It deliberately does not
+  # select a paper evaluator: the GreenEarthNet-vs-ENS decision is blocked on
+  # scripts/audit_greenearthnet_layout.py and document 49.
+  dataset_protocol: earthnet2021x_raw_v2
+  evaluation_protocol: pending_layout_audit
   stage2_protocol: earthnet2021x_path_v2
   file_glob: "**/*.nc"
 

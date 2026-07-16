@@ -1,5 +1,13 @@
 # Experiment Plan
 
+> **2026-07-16 protocol gate.** This plan's GreenEarthNet-specific blocks are
+> activated only after `思路整理进展/49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md`
+> confirms a compatible raw-train + `val_chopped` + `ood-t_chopped` layout.
+> The existing `earthnet2021x` raw root remains the training source either
+> way. If that audit fails, this plan must be switched as one whole protocol
+> to the legacy EarthNet2021 ENS branch before any long run; never combine
+> Green metrics/tracks with ENS metrics/tracks.
+
 **Problem**: 将稀疏、云遮 Earth observation forecasting 建模为 observation-correctable world modeling：同一个 history-dependent belief 既能在给定外生 forcing 下开放循环推演 EO-observable Earth-surface evolution，也能在局部新观测到来后被可靠校正。  
 **Method Thesis**: shared prior transition 推进 world belief；learned observation model 解码未来 RGBN，NDVI 由 Red/NIR 确定性计算；真实 reveal 与 prior decoded prediction 经相同 observation mask/encoder 后形成 aligned residual，再由 visibility-safe update 校正 belief；reveal-time update 只由之后的 rollout loss 监督。  
 **Date**: 2026-07-15

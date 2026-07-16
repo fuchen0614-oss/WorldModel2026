@@ -1,16 +1,14 @@
 # ObsWorld：EarthNet2021x、DGH 与世界模型主线重整
 
-> **2026-07-16 修订版。**数据、清单和运行命令以 [`48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md`](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md) 为唯一依据。本文件只说明：为什么现有 EarthNet2021x 数据、DGH 和 ObsWorld 世界模型叙事可以且应该继续保留。
+> **2026-07-16 协议仲裁更新。**数据、清单和运行命令以 [`49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md`](49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md) 为准；48 中的 ENS 路线改为审计失败时的备选方案。本文件只说明：为什么现有 EarthNet2021x raw data、DGH 和 ObsWorld 世界模型叙事可以且应该继续保留。
 
 ## 1. 当前数据结论
 
-不换数据集。服务器已有的 EarthNet2021x NetCDF 数据按以下协议使用：
+不换训练数据。服务器已有的 EarthNet2021x NetCDF 数据按以下**raw（原始发布）目录**使用：
 
 ```text
 train      → 训练来源
-iid + ood  → 主实验
-extreme    → 极端事件补充证据
-seasonal   → 长时程补充证据
+iid/ood/extreme/seasonal → 原始发布目录；最终论文轨道须经 49 审计决定
 ```
 
 它的价值不是“普通视频预测数据”，而是：历史 Sentinel-2 观测、未来真实 E-OBS 气象驱动、DEM 和多种时间跨度测试共同构成了一个可验证的地表演化问题。
@@ -30,7 +28,7 @@ seasonal   → 长时程补充证据
 - 正确 DGH 驱动优于去掉或错配驱动；
 - 十天一步与五天加五天得到相容的状态和观测；
 - 递推模型在长时程、极端或季节循环轨道中不退化为单纯复制最后一帧；
-- 预测最终回到真实未来 RGBN 观测并由 EarthNetScore 检验。
+- 预测最终回到真实未来 RGBN 观测，并由审计后冻结的 ENS 或 GreenEarthNet 官方评估器检验，绝不混用。
 
 ## 3. DGH 为什么保留、怎样升级
 
@@ -85,9 +83,9 @@ x_future = O(s_future, phi_fixed_S2)
 
 ## 6. 主实验怎样支撑世界模型叙事
 
-### 主表：IID 与 OOD
+### 主表：由审计冻结的 OOD 轨道
 
-比较 Persistence、简单气候基线、可复现强时空基线、matched Direct-DGH、shared T5 和 ObsWorld。主指标为 ENS，并报告 MAD/OLS/EMD/SSIM 分量。
+比较 Persistence、简单气候基线、可复现强时空基线、matched Direct-DGH、shared T5 和 ObsWorld。若通过 Green 审计，主指标为官方 NDVI 指标且主轨为 `ood-t_chopped`；否则使用 ENS 的 IID/OOD 主表。两套指标不混写。
 
 - IID：证明在同一任务分布中具有基础预测能力；
 - OOD：证明在新空间地点仍有泛化能力；

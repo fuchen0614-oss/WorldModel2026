@@ -4,10 +4,10 @@
 > 文档性质：后续代码开发的直接依据；其中 Commit A 已实施，其余阶段仍是实现规范而非实验结果
 > 适用项目：`/root/nas/users/luzheng/workspace/ssh/czj/WorldModel2026`
 > 目标投稿：AAAI-27
-> 当前主数据：服务器已有的 EarthNet2021x NetCDF 文件；采用 EarthNet2021 `train/iid/ood/extreme/seasonal` 协议
+> 当前训练数据：服务器已有的 EarthNet2021x raw NetCDF 文件；最终论文评测协议待 GreenEarthNet layout audit（目录与字段审计）冻结
 > 当前主线：**从受成像条件影响的遥感观测中估计地表状态，在外生驱动、地理先验和时间跨度约束下推演未来状态，再把未来状态解码为可核验的未来卫星观测。**
 
-> **数据协议更新（2026-07-16）：**所有数据、清单、验证、主表和指标的唯一口径见 [`48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md`](48_ObsWorld_EarthNet2021x统一数据协议与主实验规范_20260716.md)。本文件下文如与 48 冲突，一律以 48 为准。
+> **数据协议仲裁更新（2026-07-16）：**所有数据、清单、验证、主表和指标的当前口径见 [`49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md`](49_ObsWorld_EarthNet2021x与GreenEarthNet数据协议审计问答_20260716.md)。本文件的 Direct24/rollout/partition 实现针对 raw EarthNet2021x 数据契约；文中把 `iid/ood`、EarthNetScore 或 `ood-t_chopped` 写成唯一主协议之处，均须由 49 的审计闸门覆盖。
 
 ---
 
@@ -2100,6 +2100,6 @@ Commit E：Formal export/evaluation/provenance
 
 后续代码开发不应把现有 Stage2 原型直接延长训练后就当成完成。真正需要完成的是：
 
-> 在保留 Stage1/1.5 和 DGH 投资的基础上，把旧 9-D 累计 Direct 原型升级为同一 24-D 五日驱动路径下的 matched Direct、共享五日 rollout 和可变步长 partition 三层系统；以固定 Copernicus DEM、独立日历/时间条件和严格 mask 隔离保证输入逻辑，以原生 128×128 RGBN 解码和 EarthNetScore 指标保证结果可核验，以 D 干预和时间分割一致性证明它不是普通图像预测器。
+> 在保留 Stage1/1.5 和 DGH 投资的基础上，把旧 9-D 累计 Direct 原型升级为同一 24-D 五日驱动路径下的 matched Direct、共享五日 rollout 和可变步长 partition 三层系统；以固定 Copernicus DEM、独立日历/时间条件和严格 mask 隔离保证输入逻辑，以原生 128×128 RGBN 解码和 49 审计后冻结的官方指标保证结果可核验，以 D 干预和时间分割一致性证明它不是普通图像预测器。
 
 这条路线没有放弃“模拟真实世界”的核心思想，也没有推翻已经完成的 Stage1.5。它做的是把“世界模型”从叙事词汇落实成可检查的代码属性和实验属性。
