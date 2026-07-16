@@ -542,6 +542,9 @@ def main() -> None:
             manifest_paths[str(config["data"].get("split", "train"))] = args.manifest_path
     if args.validation_manifest_path:
         config["data"].setdefault("manifest_paths", {})["val"] = args.validation_manifest_path
+    # Preflight opens the selected sample files directly. Avoid a slow startup
+    # pass that checks every record in a large frozen manifest on shared storage.
+    config["data"]["verify_manifest_exists"] = False
     if args.require_manifest:
         config["data"]["require_manifest"] = True
     if args.stage15_checkpoint:

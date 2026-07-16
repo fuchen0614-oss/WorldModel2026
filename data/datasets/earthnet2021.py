@@ -93,6 +93,7 @@ class EarthNet2021Config:
     use_train_holdout: bool = True
     manifest_path: Optional[str] = None
     require_manifest: bool = False
+    verify_manifest_exists: bool = True
     verify_manifest_sizes: bool = False
     verify_manifest_hashes: bool = False
     driver_mean: Optional[List[float]] = None
@@ -211,6 +212,7 @@ class EarthNet2021Config:
             use_train_holdout=bool(data_cfg.get("use_train_holdout", True)),
             manifest_path=str(manifest_path) if manifest_path else None,
             require_manifest=bool(data_cfg.get("require_manifest", False)),
+            verify_manifest_exists=bool(data_cfg.get("verify_manifest_exists", True)),
             verify_manifest_sizes=bool(data_cfg.get("verify_manifest_sizes", False)),
             verify_manifest_hashes=bool(data_cfg.get("verify_manifest_hashes", False)),
             driver_mean=stats.get("driver_mean"),
@@ -856,7 +858,7 @@ def _discover_npz_files(config: EarthNet2021Config) -> List[Path]:
             config.manifest_path,
             root,
             expected_split=config.split,
-            verify_exists=True,
+            verify_exists=config.verify_manifest_exists,
             verify_sizes=config.verify_manifest_sizes,
             verify_hashes=config.verify_manifest_hashes,
         )
