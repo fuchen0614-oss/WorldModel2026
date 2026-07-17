@@ -15,6 +15,61 @@ import torch
 from torch.utils.data import Sampler
 
 
+def parse_epoch_checkpoint_steps(config: Mapping[str, Any]) -> dict[int, str]:
+    """Validate configured named checkpoints keyed by optimizer step.
+
+    Stage2 uses optimizer steps as its canonical progress unit.  A formal
+    EarthNet run may additionally request a small number of human-readable
+    epoch tags (for example ``epoch100``), without saving a checkpoint at
+    every epoch.  The returned mapping is deliberately independent of the
+    dataset and can therefore be tested before a trainer is launched.
+    """
+
+    entries = config.get("epoch_checkpoint_steps", [])
+    if entries is None:
+        return {}
+    if not isinstance(entries, (list, tuple)):
+        raise TypeError("epoch_checkpoint_steps must be a list of mappings")
+
+    result: dict[int, str] = {}
+    for entry in entries:
+        if not isinstance(entry, Mapping):
+            raise TypeError("each epoch_checkpoint_steps entry must be a mapping")
+        if "step" not in entry or "tag" not in entry:
+            raise ValueError("each epoch checkpoint entry requires step and tag")
+        step = int(entry["step"])
+        tag = str(entry["tag"]).strip()
+        if step <= 0:
+            raise ValueError(f"epoch checkpoint step must be positive, got {step}")
+        # Tags become filenames; keep them portable and shell-safe.
+        if not tag or not tag.replace("_", "").isalnum():
+            raise ValueError(f"invalid epoch checkpoint tag: {tag!r}")
+        previous = result.get(step)
+        if previous is not None and previous != tag:
+            raise ValueError(
+                f"duplicate epoch checkpoint step {step}: {previous!r} vs {tag!r}"
+            )
+        result[step] = tag
+    return result
+
+
+def parse_epoch_checkpoint_epochs(config: Mapping[str, Any]) -> tuple[int, ...]:
+    """Return unique positive epoch numbers for dynamic checkpoint tagging."""
+
+    entries = config.get("epoch_checkpoint_epochs", [])
+    if entries is None:
+        return ()
+    if not isinstance(entries, (list, tuple)):
+        raise TypeError("epoch_checkpoint_epochs must be a list of integers")
+    epochs = tuple(sorted({int(entry) for entry in entries}))
+    if any(epoch <= 0 for epoch in epochs):
+        raise ValueError(
+            "epoch checkpoint numbers must be positive, got "
+            f"{epochs!r}"
+        )
+    return epochs
+
+
 class EpochRandomSampler(Sampler[int]):
     """A deterministic permutation defined only by ``seed`` and ``epoch``."""
 

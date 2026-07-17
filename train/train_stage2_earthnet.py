@@ -79,6 +79,8 @@ from train.stage2_checkpoint import (
     EpochRandomSampler,
     Stage2DataPosition,
     next_data_position,
+    parse_epoch_checkpoint_epochs,
+    parse_epoch_checkpoint_steps,
     restore_data_position,
 )
 from train.stage2_provenance import (
@@ -1066,6 +1068,13 @@ def main():
             args.validation_max_batches
         )
     checkpoint_interval = args.checkpoint_interval or int(config.get("checkpoint_interval", 5000))
+    epoch_checkpoint_steps = parse_epoch_checkpoint_steps(config)
+    epoch_checkpoint_epochs = parse_epoch_checkpoint_epochs(config)
+    if epoch_checkpoint_steps and epoch_checkpoint_epochs:
+        raise ValueError(
+            "Configure either epoch_checkpoint_steps or "
+            "epoch_checkpoint_epochs, not both."
+        )
     resume_from = args.resume_from or config.get("resume_from")
     # Preserve this before a Stage2 resume clears the initializer from the
     # live config.  The run provenance must still say which frozen Stage1.5
@@ -1194,6 +1203,19 @@ def main():
             f"Stage2 DataLoader has zero batches: samples={len(dataset)}, "
             f"batch_size={config['data']['batch_size']}, drop_last=True"
         )
+    if epoch_checkpoint_epochs:
+        if len(loader) % accum_steps != 0:
+            raise ValueError(
+                "epoch_checkpoint_epochs requires loader length divisible by "
+                "gradient_accumulation_steps so named checkpoints land on "
+                "unambiguous optimizer-step boundaries: "
+                f"loader_length={len(loader)}, accumulation_steps={accum_steps}"
+            )
+        steps_per_epoch = len(loader) // accum_steps
+        epoch_checkpoint_steps = {
+            epoch * steps_per_epoch: f"epoch{epoch}"
+            for epoch in epoch_checkpoint_epochs
+        }
     log_main(f"EarthNet samples: {len(dataset)}; batch={config['data']['batch_size']}; distributed={distributed}")
 
     validation_cfg = config.get("validation", {})
@@ -1245,6 +1267,11 @@ def main():
         f"Stage2 parameters: total={total_params / 1e6:.2f}M, "
         f"trainable={trainable_params / 1e6:.2f}M"
     )
+    if is_main_process() and epoch_checkpoint_steps:
+        tags = ", ".join(
+            f"{tag}@step{step}" for step, tag in sorted(epoch_checkpoint_steps.items())
+        )
+        log_main(f"named epoch checkpoints: {tags}")
     if distributed:
         model = DDP(
             model,
@@ -1679,6 +1706,23 @@ def main():
                 if optimizer_step > 0 and optimizer_step % checkpoint_interval == 0:
                     save_checkpoint(
                         os.path.join(config["checkpoint_dir"], f"checkpoint_step_{optimizer_step}.pt"),
+                        optimizer_step,
+                        model,
+                        optimizer,
+                        scheduler,
+                        config,
+                        best_validation=best_validation,
+                        provenance=run_provenance,
+                        data_position=last_data_position,
+                    )
+
+                named_tag = epoch_checkpoint_steps.get(optimizer_step)
+                if named_tag is not None:
+                    save_checkpoint(
+                        os.path.join(
+                            config["checkpoint_dir"],
+                            f"checkpoint_{named_tag}_step_{optimizer_step}.pt",
+                        ),
                         optimizer_step,
                         model,
                         optimizer,

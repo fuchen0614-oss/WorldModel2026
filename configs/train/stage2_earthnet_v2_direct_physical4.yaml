@@ -18,6 +18,20 @@ model:
 data:
   driver_protocol: physical4_v1
   conditioning_stats_path: null
+  # Eight H200s × 8 samples/GPU = global batch 64.  The frozen train_dev
+  # manifest has 22,847 episodes, which gives 357 optimizer steps/epoch.
+  batch_size: 8
+  num_workers: 4
+
+training:
+  # 357 steps/epoch × 200 EarthNet train epochs.
+  max_steps: 71400
 
 checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_direct_physical4
 log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_direct_physical4
+checkpoint_interval: 5000
+
+# Keep only the paper-facing milestone copies in addition to ordinary
+# step checkpoints.  The trainer converts these epochs using the actual
+# loader length, so changing per-GPU batch does not mislabel the files.
+epoch_checkpoint_epochs: [100, 150, 200]
