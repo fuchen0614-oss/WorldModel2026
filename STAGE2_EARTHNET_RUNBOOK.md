@@ -1,234 +1,205 @@
-# ObsWorld Stage2 EarthNet2021x 服务器执行手册
+# ObsWorld Stage2 EarthNet2021x 执行手册
 
-## 1. 已确认的数据协议
+> 当前正式主线：服务器已有的 raw `EarthNet2021x` NetCDF + 原版物理 DGH
+> `physical4_v1`。本手册中的 `Direct physical4` 是首个主实验；`Rollout` 和
+> `Partition` 在 Direct 链路稳定后使用同一份数据协议。旧的 `legacy_direct9`
+> 和完整 `full24` 保留为独立兼容/对照，不得与本手册的统计文件混用。
 
-- 主训练数据为 EarthNet2021x 的 `train` 划分，文件格式为 NetCDF (`.nc`)。
-- 输入 10 帧历史 S2，预测未来 20 帧，对应 `h=5,10,...,100` 天。
-- S2 使用 `B02/B03/B04/B8A`，即蓝、绿、红、窄近红外四通道。
-- EarthNet2021x 的 S2 帧位于逐日序列第 `4,9,...,149` 天；天气窗口已同步校正 4 天偏移。
-- `D` 使用目标日期、降水、温度、VPD、太阳辐射。VPD 由 `eobs_tg + eobs_hu` 推导，太阳辐射来自 `eobs_qq`。
-- `G` 使用高程，按 `nasa_dem -> alos_dem -> cop_dem` 顺序回退。
-- EarthNet2021x 已包含构造当前 D/G 所需的字段，主路线不需要 ERA5 sidecar。
-- 未来天气按给定天气情景（oracle/scenario forcing）使用，用于检验条件动力学；不能表述为无需天气预报的部署预测。
+详细设计说明见：
+`思路整理进展/55_ObsWorld_原版DGH正式训练代码完成与训前命令指南_20260716.md`。
 
-## 2. 数据完整性
+## 1. 固定协议
 
-完整 EarthNet2021x 包含：
+- 数据根：`/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021/earthnet2021x`。
+- 训练开发清单：`train_dev.json`；验证清单：`val_dev.json`。
+- 最终固定训练可使用 `train_all.json`，但必须重新拟合 train-only 统计量。
+- 主评测清单：`iid.json`、`ood.json`；压力测试：`extreme.json`、`seasonal.json`。
+- 每个样本使用 10 帧上下文，预测未来 20 帧（`h=5,10,...,100` 天）。
+- `D_path` 为 `[30,4]`：
+  `precip_sum_5d`、`temp_mean_5d`、`vpd_mean_5d`、`srad_sum_5d`。
+- `C_path` 为独立的年周期编码 `[30,2]`；`G` 为 `cop_dem`；`h` 和
+  `delta_t_path` 的接口不变。
+- VPD 由 `eobs_tg` 和 `eobs_hu` 推导，辐射由 `eobs_qq` 换算；缺失日由
+  `D_mask` 显式标记，不能静默填成有效天气。
 
-```text
-earthnet2021x/
-  train/
-  iid/
-  ood/
-  extreme/
-  seasonal/
-```
+Stage1.5 不需要修改。Stage2 的 physical4 配置、统计文件、checkpoint（检查点）
+和日志目录彼此隔离，避免改变已经完成的 Stage1.5 训练逻辑。
 
-当前只有 `train` 时可以先训练，并从 train 按地理 tile 固定划分内部验证集；但最终 IID/OOD/极端/季节实验仍需下载其余划分。
-
-检查 train 是否与官方 S3 清单逐文件一致：
-
-```bash
-python scripts/audit_earthnet2021x.py \
-  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-  --required-splits train \
-  --scan-mode metadata \
-  --max-files-per-split 50 \
-  --compare-remote \
-  --output logs/earthnet2021x_audit_train.json
-```
-
-检查最终五个划分是否齐全：
-
-```bash
-python scripts/audit_earthnet2021x.py \
-  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-  --required-splits all \
-  --scan-mode metadata \
-  --max-files-per-split 20 \
-  --compare-remote \
-  --output logs/earthnet2021x_audit_all.json
-```
-
-不加 `--compare-remote` 只能验证本地结构与抽样文件可读，不能证明远端文件一个不少。
-默认远端检查比较相对路径，不会在共享盘上逐个读取 2 万多个文件的大小；只有确实需要
-字节级核对时才增加 `--compare-sizes`，该选项可能运行很久。
-
-若审计报告给出损坏文件，先检查远端大小与本地可读性，再显式修复：
-
-```bash
-python scripts/repair_earthnet2021x_file.py \
-  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-  --split train \
-  --relative-path '<tile>/<cubename>.nc'
-
-python scripts/repair_earthnet2021x_file.py \
-  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-  --split train \
-  --relative-path '<tile>/<cubename>.nc' \
-  --repair
-```
-
-修复工具先下载到 `.part` 并验证 NetCDF，成功后才原子替换原文件。
-
-不要使用仅以“文件大于 50KB”为完整标准的旧下载脚本。它会把截断但仍大于
-50KB 的文件误判为正常，并且直接写最终 `.nc`，强制终止时会留下损坏文件。
-
-使用安全增量同步器检查 train，首次需要从官方 S3 构建带字节数的清单：
-
-```bash
-python scripts/sync_earthnet2021x.py \
-  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-  --split train \
-  --dry-run \
-  --report logs/earthnet2021x_train_sync_plan.json
-```
-
-确认缺失和大小不一致数量后进行补齐：
-
-```bash
-python scripts/sync_earthnet2021x.py \
-  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-  --split train \
-  --workers 8 \
-  --report logs/earthnet2021x_train_sync.json
-```
-
-同一脚本依次用于下载 `iid`、`ood`、`extreme`、`seasonal`。它会跳过远端大小
-一致的现有文件；新文件先写入 `.part`，核对大小并验证 NetCDF 后才原子替换，
-因而中断后可以安全重跑。不要同时启动多个 split，也不要再用 `kill -9`。
-
-剩余四个测试 split 可以用一个包装脚本顺序完成：
-
-```bash
-DATA_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-WORKERS=8 MANIFEST_WORKERS=4 \
-bash scripts/sync_remaining_earthnet2021x.sh
-```
-
-包装脚本按 `iid -> ood -> extreme -> seasonal` 顺序同步；每个 split 内默认使用
-8 个下载线程，完成后自动再做一次只读验收。中途停止后重复同一命令即可续传。
-
-下载缺少的官方划分，例如：
-
-```bash
-python -c "import earthnet; earthnet.download(dataset='earthnet2021x', split='iid', save_directory='/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021')"
-python -c "import earthnet; earthnet.download(dataset='earthnet2021x', split='ood', save_directory='/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021')"
-python -c "import earthnet; earthnet.download(dataset='earthnet2021x', split='extreme', save_directory='/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021')"
-python -c "import earthnet; earthnet.download(dataset='earthnet2021x', split='seasonal', save_directory='/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021')"
-```
-
-## 3. 环境与测试
+## 2. 环境和变量
 
 ```bash
 cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
 source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
-pip install -r requirements.txt
+git pull --ff-only origin main
 
-python -m pytest -q \
-  tests/test_earthnet_loader.py \
-  tests/test_earthnet2021x_loader.py \
-  tests/test_stage2_components.py \
-  tests/test_era5_sidecars.py
+export DATA_PARENT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
+export CONFIG=configs/train/stage2_earthnet_v2_direct_physical4.yaml
+export RUN_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048
+export STATS="$RUN_DIR/conditioning_stats_physical4_v1_train_dev.json"
+export TRAIN_MANIFEST="$RUN_DIR/train_dev.json"
+export VAL_MANIFEST="$RUN_DIR/val_dev.json"
+export STAGE15_CHECKPOINT=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage1_5_dual_conditioned_vits_state_bridge_60k/checkpoint_step_60000.pt
 ```
 
-`tests/conftest.py` 已处理项目导入路径，不再需要手动设置 `PYTHONPATH`。
+如果重新冻结了协议目录，只需把 `RUN_DIR` 改成新的完整绝对路径；不要把路径
+拆成两行，否则 shell（命令解释器）会把后半段当成新命令。
 
-## 4. 真实样本检查
+## 3. 数据协议冻结和统计量
+
+这两步已经完成时不必重复运行。新数据版本必须重新执行：
 
 ```bash
-python scripts/inspect_earthnet2021.py \
-  --config configs/train/stage2_earthnet_main.yaml \
-  --root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-  --split train \
-  --max-files 1 \
-  --try-loader
+mkdir -p artifacts/protocols logs
+
+python -u scripts/freeze_earthnet2021x_protocol.py \
+  --root "$DATA_PARENT/earthnet2021x" \
+  --output-dir "artifacts/protocols/earthnet2021x_physical4_v1_$(date +%Y%m%d_%H%M%S)" \
+  --val-tile-count 8 --seed 20260716 --hash-mode none \
+  --workers 8 --progress-every 1000 \
+  2>&1 | tee logs/earthnet_physical4_freeze.log
 ```
 
-应得到：
-
-```text
-x_context = [10, 4, 256, 256]
-x_target  = [20, 4, 256, 256]
-D         = [20, 9]
-G         = [1, 256, 256]
-h         = [20]
-```
-
-九个 D 特征的 `driver_valid_rate` 均应为 `1.0`。
-
-## 5. 构建 train-only 统计量
-
-归一化统计只能由 train 构建，不能混入测试划分：
+先做少量 smoke（冒烟）统计只用于检查字段，不能用于正式训练：
 
 ```bash
-mkdir -p artifacts/stage2_earthnet2021x
-
-python scripts/build_earthnet_dgh_stats.py \
-  --config configs/train/stage2_earthnet_main.yaml \
-  --data-root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-  --output artifacts/stage2_earthnet2021x/dgh_stats_train.json \
-  --require-complete
+python -u scripts/build_earthnet_physical_stats.py \
+  --config "$CONFIG" --data-root "$DATA_PARENT" \
+  --manifest-path "$TRAIN_MANIFEST" \
+  --output "$RUN_DIR/physical4_stats_smoke16.json" \
+  --max-files 16 --workers 2 --progress-every 4
 ```
 
-## 6. 正式训练前检查
+正式统计必须覆盖完整 `train_dev.json`：
 
 ```bash
-python scripts/preflight_stage2_earthnet.py \
-  --config configs/train/stage2_earthnet_main.yaml \
-  --data-root /csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-  --dgh-stats-path artifacts/stage2_earthnet2021x/dgh_stats_train.json \
-  --stage15-checkpoint checkpoints/stage1_5_dual_conditioned_vits_60k/checkpoint_step_60000.pt \
-  --max-files 64 \
-  --check-model \
-  --output artifacts/stage2_earthnet2021x/preflight_train.json
+nice -n 10 python -u scripts/build_earthnet_physical_stats.py \
+  --config "$CONFIG" --data-root "$DATA_PARENT" \
+  --manifest-path "$TRAIN_MANIFEST" \
+  --output "$STATS" --require-full-train \
+  --workers 4 --progress-every 100 \
+  2>&1 | tee "$RUN_DIR/physical4_stats_train_dev.log"
+test -s "$STATS" && echo "physical4 stats ready"
 ```
 
-确认报告为 `"ok": true` 后再启动训练。先做 2 step 真实数据冒烟：
+统计过程读取 NetCDF（网络数据文件）但不占 GPU；共享 NAS（网络存储）拥堵时把
+`--workers` 降到 2，不要为了速度盲目开几十个进程。
+
+## 4. 训练前 preflight（预检）
+
+### 4.1 数据预检
 
 ```bash
-DGH_STATS_PATH=artifacts/stage2_earthnet2021x/dgh_stats_train.json \
-STAGE15_CHECKPOINT=checkpoints/stage1_5_dual_conditioned_vits_60k/checkpoint_step_60000.pt \
-DATA_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-MAX_STEPS=2 BATCH_SIZE=1 NUM_WORKERS=0 GPUS=1 PREFLIGHT=1 \
-CHECKPOINT_DIR=checkpoints/stage2_earthnet2021x_smoke \
-LOG_DIR=logs/stage2_earthnet2021x_smoke \
+CONFIG="$CONFIG" DATA_ROOT="$DATA_PARENT" \
+CONDITIONING_STATS_PATH="$STATS" \
+MANIFEST_PATH="$TRAIN_MANIFEST" \
+VALIDATION_MANIFEST_PATH="$VAL_MANIFEST" \
+REQUIRE_MANIFEST=1 PREFLIGHT=1 PREFLIGHT_MAX_FILES=16 \
+PREFLIGHT_CHECK_MODEL=0 RUN_TRAIN=0 \
+PREFLIGHT_OUTPUT="$RUN_DIR/preflight_data16.json" \
 bash run_stage2_earthnet.sh
 ```
 
-## 7. 正式训练
+报告必须满足：`ok=true`、`fatal_reasons=[]`、`driver_protocol=physical4_v1`，
+且 `D_path` 为 `[30,4]`。`PREFLIGHT_MAX_FILES=16` 只控制抽查样本数，不会把
+正式训练清单缩小为 16 个文件。
 
-单卡：
+### 4.2 Stage1.5 模型预检
 
 ```bash
-DGH_STATS_PATH=artifacts/stage2_earthnet2021x/dgh_stats_train.json \
-STAGE15_CHECKPOINT=checkpoints/stage1_5_dual_conditioned_vits_60k/checkpoint_step_60000.pt \
-DATA_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-GPUS=1 BATCH_SIZE=2 NUM_WORKERS=4 PREFLIGHT=1 \
+CONFIG="$CONFIG" DATA_ROOT="$DATA_PARENT" \
+CONDITIONING_STATS_PATH="$STATS" \
+MANIFEST_PATH="$TRAIN_MANIFEST" \
+VALIDATION_MANIFEST_PATH="$VAL_MANIFEST" \
+STAGE15_CHECKPOINT="$STAGE15_CHECKPOINT" \
+REQUIRE_MANIFEST=1 PREFLIGHT=1 PREFLIGHT_MAX_FILES=16 \
+PREFLIGHT_CHECK_MODEL=1 RUN_TRAIN=0 \
+PREFLIGHT_OUTPUT="$RUN_DIR/preflight_model16.json" \
 bash run_stage2_earthnet.sh
 ```
 
-多卡时只修改 `GPUS` 和按显存调整单卡 `BATCH_SIZE`：
+这一步会加载 Stage1.5 的 `encoder_state_dict`、`phi_encoder_state_dict` 和
+`state_projector_state_dict`，并验证 physical4 的模型维度。只有 `ok=true` 才能
+启动 GPU 训练。
+
+## 5. 首个主实验：Direct physical4
 
 ```bash
-GPUS=8 BATCH_SIZE=2 NUM_WORKERS=4 ...
+CONFIG=configs/train/stage2_earthnet_v2_direct_physical4.yaml \
+DATA_ROOT="$DATA_PARENT" \
+CONDITIONING_STATS_PATH="$STATS" \
+MANIFEST_PATH="$TRAIN_MANIFEST" \
+VALIDATION_MANIFEST_PATH="$VAL_MANIFEST" \
+STAGE15_CHECKPOINT="$STAGE15_CHECKPOINT" \
+CHECKPOINT_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_direct_physical4 \
+LOG_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_direct_physical4 \
+REQUIRE_MANIFEST=1 PREFLIGHT=1 PREFLIGHT_MAX_FILES=16 \
+PREFLIGHT_CHECK_MODEL=1 RUN_TRAIN=1 \
+GPUS=1 BATCH_SIZE=2 NUM_WORKERS=4 MAX_STEPS=50000 \
+bash run_stage2_earthnet.sh 2>&1 | tee "$RUN_DIR/stage2_direct_physical4.log"
 ```
 
-断点续训使用 Stage2 checkpoint，不再依赖原 Stage1.5 文件：
+训练输出中应出现：
+
+- `Stage2-v2 physical4_v1` 或等价的解析配置信息；
+- `EarthNet samples: 22847`；
+- `Stage2 provenance written`；
+- 周期性的 `loss/total`、`obs`、`NDVI` 和 validation（验证集）指标；
+- `checkpoint_step_*.pt` 与 `checkpoint_best.pt`。
+
+如果正式训练只想先做真实数据短跑，可将 `MAX_STEPS=2`、`BATCH_SIZE=1`、
+`NUM_WORKERS=0`，但该结果只能作为链路 smoke，不可作为论文结果。
+
+## 6. 训练后的评测顺序
+
+先用 `val_dev` 选择 checkpoint；`iid`、`ood`、`extreme`、`seasonal` 只在选择
+完成后评测。预测与评分必须使用同一份配置、同一份 physical4 stats 和对应清单。
 
 ```bash
-RESUME_FROM=checkpoints/stage2_earthnet_main/checkpoint_step_10000.pt \
-DGH_STATS_PATH=artifacts/stage2_earthnet2021x/dgh_stats_train.json \
-DATA_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-GPUS=1 BATCH_SIZE=2 NUM_WORKERS=4 \
-bash run_stage2_earthnet.sh
+export STAGE2_CHECKPOINT=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_direct_physical4/checkpoint_best.pt
+
+python -u eval/eval_stage2_earthnet.py \
+  --config "$CONFIG" --checkpoint "$STAGE2_CHECKPOINT" \
+  --split val --data-root "$DATA_PARENT" \
+  --conditioning-stats-path "$STATS" \
+  --manifest-path "$VAL_MANIFEST" \
+  --batch-size 2 --num-workers 4 \
+  --output "$RUN_DIR/eval_val_direct_physical4.json"
 ```
 
-## 8. 首轮反馈应保留
+正式测试时将 `--split` 和 manifest 替换为 `iid.json`、`ood.json` 等对应文件，
+并使用新的输出目录。`eval/predict_stage2_earthnet.py` 会写出带来源记录的
+`prediction_manifest.json`；`eval/score_earthnet_prediction_dir.py` 要求该清单与
+预测文件完全一致，防止混入其他 checkpoint 的结果。
 
-- 数据审计 JSON；
-- 真实样本的变量范围、张量形状和九个 D 特征有效率；
-- preflight JSON；
-- 2 step 冒烟训练完整日志；
-- GPU 显存、单 step 耗时及各项 loss；
-- 正式训练前 100 到 500 step 的 loss 曲线。
+## 7. 后续 World Model 变体
+
+Direct 数据链路稳定后，保持 `DATA_ROOT`、`STATS`、`TRAIN_MANIFEST`、
+`VAL_MANIFEST` 和 Stage1.5 初始化完全相同，仅切换配置和输出目录：
+
+```bash
+CONFIG=configs/train/stage2_earthnet_v2_rollout_physical4.yaml \
+CHECKPOINT_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_rollout_physical4 \
+LOG_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_rollout_physical4 \
+... bash run_stage2_earthnet.sh
+
+CONFIG=configs/train/stage2_earthnet_v2_partition_physical4.yaml \
+CHECKPOINT_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_partition_physical4 \
+LOG_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_partition_physical4 \
+... bash run_stage2_earthnet.sh
+```
+
+这里的 `...` 只表示复用上一条命令中的数据、统计量、清单、checkpoint 和
+`REQUIRE_MANIFEST/PREFLIGHT` 参数，实际执行时应展开为完整环境变量；不要把
+省略号直接交给 shell。
+
+## 8. 禁止事项和证据保留
+
+- 不把旧 `dgh_stats_train.json`、full24 stats 或 legacy checkpoint 传给 physical4。
+- 不在 `iid/ood` 上调参或挑 checkpoint。
+- 不使用 `train_all` 的统计量配 `train_dev` 训练，反之亦然。
+- 不修改 Stage1.5 代码、权重或训练脚本来适配 Stage2。
+- 保留 audit JSON、协议 `protocol.json`、所有 manifest、stats JSON、两个 preflight
+  JSON、Stage2 `run_provenance.json`、训练日志和评测 sidecar（来源记录）。
+
+出现错误时，先查看对应 JSON 的 `fatal_reasons` 和日志末尾，不要跳过 preflight
+或用旧统计量强行启动。
