@@ -6,6 +6,8 @@ import shutil
 import subprocess
 import time
 
+from data.earthnet_manifest import build_manifest_from_paths, write_manifest
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CLEANUP = ROOT / "scripts" / "cleanup_stage2_earthnet_local_staged.sh"
@@ -69,6 +71,9 @@ def test_launcher_exposes_lifecycle_cleanup_guards():
     assert "cleanup_stage2_earthnet_local_staged.sh" in text
     assert "LOCAL_STAGE_ROOT must be below /tmp" in text
     assert "launcher initialized" in text
+    assert "LOCAL_STAGE_CLEANUP" in text
+    assert "LOCAL_STAGE_DATA_SCOPE" in text
+    assert "reusing verified local staging copy" in text
 
 
 def _fake_earthnet_source(tmp_path: Path) -> Path:
@@ -89,7 +94,8 @@ def _fake_runner(tmp_path: Path) -> Path:
         "test -d \"${DATA_ROOT}/earthnet2021x/train\"\n"
         "printf '%s\\n' \"${DATA_ROOT}\" > \"${CAPTURE_FILE}\"\n"
         "touch \"${RUNNER_STARTED}\"\n"
-        "sleep \"${FAKE_SLEEP_SECONDS:-0}\"\n",
+        "sleep \"${FAKE_SLEEP_SECONDS:-0}\"\n"
+        "exit \"${FAKE_RUNNER_EXIT:-0}\"\n",
         encoding="utf-8",
     )
     runner.chmod(0o755)
@@ -249,4 +255,223 @@ def test_launcher_cleans_after_term_during_rsync_staging(tmp_path):
             process.kill()
             process.communicate(timeout=10)
         shutil.rmtree(stage_root, ignore_errors=True)
+        Path(f"{stage_root}.lock").unlink(missing_ok=True)
+
+
+def test_launcher_manual_mode_retains_verified_stage_after_success(tmp_path):
+    stage_root = Path("/tmp") / f"obsworld_stage2_manual_keep_{tmp_path.name}"
+    runner = _fake_runner(tmp_path)
+    environment = _launcher_environment(tmp_path, stage_root, runner)
+    environment["LOCAL_STAGE_CLEANUP"] = "manual"
+    try:
+        subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        assert stage_root.exists()
+        assert (stage_root / MARKER_NAME).is_file()
+        assert (stage_root / ".obsworld_stage2_local_stage_metadata.env").is_file()
+        lifecycle = (tmp_path / "logs" / "local_stage_lifecycle.log").read_text(
+            encoding="utf-8"
+        )
+        assert "retaining local staging data" in lifecycle
+        assert "manual cleanup command" in lifecycle
+    finally:
+        subprocess.run(
+            ["bash", str(CLEANUP), "--stage-root", str(stage_root), "--force"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        Path(f"{stage_root}.lock").unlink(missing_ok=True)
+
+
+def test_launcher_manual_mode_retains_verified_stage_after_runner_failure(tmp_path):
+    stage_root = Path("/tmp") / f"obsworld_stage2_manual_failure_{tmp_path.name}"
+    runner = _fake_runner(tmp_path)
+    environment = _launcher_environment(tmp_path, stage_root, runner)
+    environment["LOCAL_STAGE_CLEANUP"] = "manual"
+    environment["FAKE_RUNNER_EXIT"] = "17"
+    try:
+        completed = subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        assert completed.returncode == 17
+        assert stage_root.exists()
+        assert (stage_root / ".obsworld_stage2_local_stage_metadata.env").is_file()
+        lifecycle = (tmp_path / "logs" / "local_stage_lifecycle.log").read_text(
+            encoding="utf-8"
+        )
+        assert "training exited with rc=17; local data retained" in lifecycle
+    finally:
+        subprocess.run(
+            ["bash", str(CLEANUP), "--stage-root", str(stage_root), "--force"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        Path(f"{stage_root}.lock").unlink(missing_ok=True)
+
+
+def test_launcher_manual_mode_reuses_matching_verified_stage(tmp_path):
+    stage_root = Path("/tmp") / f"obsworld_stage2_manual_reuse_{tmp_path.name}"
+    runner = _fake_runner(tmp_path)
+    environment = _launcher_environment(tmp_path, stage_root, runner)
+    environment["LOCAL_STAGE_CLEANUP"] = "manual"
+    try:
+        subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        environment["RUN_ID"] = "pytest-local-stage-reuse"
+        environment["CHECKPOINT_DIR"] = str(tmp_path / "checkpoints_reuse")
+        environment["LOG_DIR"] = str(tmp_path / "logs_reuse")
+        environment["RSYNC_BIN"] = "/bin/false"
+        subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        lifecycle = (tmp_path / "logs_reuse" / "local_stage_lifecycle.log").read_text(
+            encoding="utf-8"
+        )
+        assert "reusing verified local staging copy" in lifecycle
+        assert stage_root.exists()
+    finally:
+        subprocess.run(
+            ["bash", str(CLEANUP), "--stage-root", str(stage_root), "--force"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        Path(f"{stage_root}.lock").unlink(missing_ok=True)
+
+
+def test_launcher_auto_mode_reuses_manual_cache_then_cleans_after_success(tmp_path):
+    """A retained retry cache must not force a second rsync before a final run."""
+    stage_root = Path("/tmp") / f"obsworld_stage2_auto_reuse_{tmp_path.name}"
+    runner = _fake_runner(tmp_path)
+    environment = _launcher_environment(tmp_path, stage_root, runner)
+    environment["LOCAL_STAGE_CLEANUP"] = "manual"
+    try:
+        subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        assert stage_root.exists()
+
+        # A final auto-cleanup launch reuses the verified cache even though its
+        # cleanup policy differs.  /bin/false proves that rsync was not called.
+        environment["RUN_ID"] = "pytest-local-stage-auto-reuse"
+        environment["CHECKPOINT_DIR"] = str(tmp_path / "checkpoints_auto_reuse")
+        environment["LOG_DIR"] = str(tmp_path / "logs_auto_reuse")
+        environment["LOCAL_STAGE_CLEANUP"] = "auto"
+        environment["RSYNC_BIN"] = "/bin/false"
+        subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        lifecycle = (tmp_path / "logs_auto_reuse" / "local_stage_lifecycle.log").read_text(
+            encoding="utf-8"
+        )
+        assert "reusing verified local staging copy" in lifecycle
+        assert "cleanup SUCCESS" in lifecycle
+        assert not stage_root.exists()
+    finally:
+        shutil.rmtree(stage_root, ignore_errors=True)
+        Path(f"{stage_root}.lock").unlink(missing_ok=True)
+
+
+def test_launcher_train_val_scope_stages_only_manifest_union(tmp_path):
+    stage_root = Path("/tmp") / f"obsworld_stage2_train_val_scope_{tmp_path.name}"
+    runner = _fake_runner(tmp_path)
+    environment = _launcher_environment(tmp_path, stage_root, runner)
+    source_parent = Path(environment["SOURCE_DATA_ROOT"])
+    dataset = source_parent / "earthnet2021x"
+    train_cube = dataset / "train" / "tile" / "train.nc"
+    validation_cube = dataset / "iid" / "tile" / "iid.nc"
+    write_manifest(
+        build_manifest_from_paths(
+            dataset,
+            "train-dev",
+            [train_cube],
+            role="train",
+            source_splits=("train",),
+        ),
+        environment["MANIFEST_PATH"],
+    )
+    write_manifest(
+        build_manifest_from_paths(
+            dataset,
+            "val-dev",
+            [validation_cube],
+            role="val",
+            source_splits=("iid",),
+        ),
+        environment["VALIDATION_MANIFEST_PATH"],
+    )
+    environment["LOCAL_STAGE_CLEANUP"] = "manual"
+    environment["LOCAL_STAGE_DATA_SCOPE"] = "train_val"
+    try:
+        subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        staged_dataset = stage_root / "EarthNet2021" / "earthnet2021x"
+        staged_cubes = sorted(staged_dataset.rglob("*.nc"))
+        assert staged_cubes == [
+            staged_dataset / "iid" / "tile" / "iid.nc",
+            staged_dataset / "train" / "tile" / "train.nc",
+        ]
+        assert not (staged_dataset / "ood").exists()
+        summary = (tmp_path / "logs" / "local_stage_plan.json").read_text(encoding="utf-8")
+        assert '"num_files": 2' in summary
+    finally:
+        subprocess.run(
+            ["bash", str(CLEANUP), "--stage-root", str(stage_root), "--force"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
         Path(f"{stage_root}.lock").unlink(missing_ok=True)

@@ -3,8 +3,9 @@
 #
 # This script deliberately accepts only a marked directory below /tmp.  It
 # never removes the shared EarthNet source under /csy-mix02.  The Stage2 local
-# launcher calls it automatically; this standalone entry point is the recovery
-# path after an untrappable event such as `kill -9` or a node restart.
+# launcher calls it automatically in LOCAL_STAGE_CLEANUP=auto mode; this is
+# also the explicit cleanup command for a LOCAL_STAGE_CLEANUP=manual cache or
+# after an untrappable event such as `kill -9` or a node restart.
 
 set -euo pipefail
 

@@ -3,14 +3,17 @@
 #
 # Only the copy below LOCAL_STAGE_ROOT is temporary.  Checkpoints, TensorBoard
 # events, provenance and logs remain in the shared project directory.  The
-# EXIT/INT/TERM/HUP traps remove the local copy after success, failure, or a
-# normal user interruption.  See the Stage2 guide for the one manual recovery
-# command needed after an untrappable kill -9 or a node reboot.
+# default ``LOCAL_STAGE_CLEANUP=auto`` removes the local copy after success,
+# failure, or a normal interruption.  ``manual`` is an explicit debugging
+# cache mode: a fully verified copy is retained and may be reused by the next
+# launcher invocation with the same source/manifests.
 
 set -Eeuo pipefail
 
 MARKER_NAME=".obsworld_stage2_local_stage_v1"
 MARKER_SCHEMA="schema=obsworld-stage2-local-stage-v1"
+STAGE_METADATA_NAME=".obsworld_stage2_local_stage_metadata.env"
+STAGE_METADATA_SCHEMA="schema=obsworld-stage2-local-stage-metadata-v1"
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 
 die() {
@@ -38,6 +41,15 @@ count_netcdf_files() {
   find "$1" -type f -name '*.nc' -printf '.' | wc -c | tr -d '[:space:]'
 }
 
+count_file_list_entries() {
+  "${PYTHON_BIN}" - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+print(Path(sys.argv[1]).read_bytes().count(b"\0"))
+PY
+}
+
 RUN_ID="${RUN_ID:-stage2_physical4_8gpu_b64_200ep_local_$(date +%Y%m%d_%H%M%S)}"
 SOURCE_DATA_ROOT="${SOURCE_DATA_ROOT:-/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021}"
 LOCAL_STAGE_ROOT="${LOCAL_STAGE_ROOT:-/tmp/${USER:-unknown}_obsworld_stage2_earthnet2021x}"
@@ -55,6 +67,7 @@ esac
 LOCAL_DATA_ROOT="${LOCAL_STAGE_ROOT}/EarthNet2021"
 LOCAL_DATASET_ROOT="${LOCAL_DATA_ROOT}/earthnet2021x"
 MARKER_PATH="${LOCAL_STAGE_ROOT}/${MARKER_NAME}"
+STAGE_METADATA_PATH="${LOCAL_STAGE_ROOT}/${STAGE_METADATA_NAME}"
 LOCK_PATH="${LOCAL_STAGE_ROOT}.lock"
 
 CONFIG="${CONFIG:-configs/train/stage2_earthnet_v2_direct_physical4.yaml}"
@@ -70,7 +83,10 @@ PREFLIGHT_MAX_FILES="${PREFLIGHT_MAX_FILES:-16}"
 PREFLIGHT_CHECK_MODEL="${PREFLIGHT_CHECK_MODEL:-1}"
 REQUIRE_MANIFEST="${REQUIRE_MANIFEST:-1}"
 RUN_TRAIN="${RUN_TRAIN:-1}"
-MIN_LOCAL_FREE_GB="${MIN_LOCAL_FREE_GB:-140}"
+MIN_LOCAL_FREE_GB="${MIN_LOCAL_FREE_GB:-250}"
+LOCAL_STAGE_CLEANUP="${LOCAL_STAGE_CLEANUP:-auto}"
+LOCAL_STAGE_DATA_SCOPE="${LOCAL_STAGE_DATA_SCOPE:-all}"
+PYTHON_BIN="${PYTHON_BIN:-python}"
 
 CHECKPOINT_DIR="${CHECKPOINT_DIR:-${PROJECT_ROOT}/checkpoints/${RUN_ID}}"
 LOG_DIR="${LOG_DIR:-${PROJECT_ROOT}/logs/${RUN_ID}}"
@@ -80,6 +96,8 @@ LIFECYCLE_RECORD="${LOG_DIR}/local_stage_run.env"
 PREFLIGHT_OUTPUT="${PREFLIGHT_OUTPUT:-${LOG_DIR}/preflight_local_stage.json}"
 STAGE2_RUNNER="${STAGE2_RUNNER:-${PROJECT_ROOT}/run_stage2_earthnet.sh}"
 RSYNC_BIN="${RSYNC_BIN:-rsync}"
+STAGE_FILE_LIST="${LOG_DIR}/local_stage_files.nul"
+STAGE_PLAN_SUMMARY="${LOG_DIR}/local_stage_plan.json"
 
 mkdir -p "${CHECKPOINT_DIR}" "${LOG_DIR}"
 
@@ -91,6 +109,7 @@ log() {
 # NAS that scan can take noticeable time, and users should not have to infer
 # whether the nohup launcher actually started.
 log "launcher initialized: run_id=${RUN_ID}; source=${SOURCE_DATA_ROOT}; local_stage=${LOCAL_STAGE_ROOT}"
+log "local stage policy: cleanup=${LOCAL_STAGE_CLEANUP}; data_scope=${LOCAL_STAGE_DATA_SCOPE}"
 
 require_file() {
   local label="$1"
@@ -98,7 +117,22 @@ require_file() {
   [[ -s "${path}" ]] || die "${label} is missing or empty: ${path}"
 }
 
-for command in flock setsid realpath; do
+case "${LOCAL_STAGE_CLEANUP}" in
+  auto|manual)
+    ;;
+  *)
+    die "LOCAL_STAGE_CLEANUP must be auto or manual, got: ${LOCAL_STAGE_CLEANUP}"
+    ;;
+esac
+case "${LOCAL_STAGE_DATA_SCOPE}" in
+  all|train_val)
+    ;;
+  *)
+    die "LOCAL_STAGE_DATA_SCOPE must be all or train_val, got: ${LOCAL_STAGE_DATA_SCOPE}"
+    ;;
+esac
+
+for command in flock setsid realpath sha256sum sort "${PYTHON_BIN}"; do
   command -v "${command}" >/dev/null 2>&1 || die "required command is unavailable: ${command}"
 done
 if [[ "${RSYNC_BIN}" == */* ]]; then
@@ -110,10 +144,12 @@ fi
 SOURCE_DATASET_ROOT="$(resolve_earthnet_dataset_root "${SOURCE_DATA_ROOT}")"
 log "validating shared source, frozen artifacts and local disk before staging"
 [[ -d "${SOURCE_DATASET_ROOT}" ]] || die "shared EarthNet source not found: ${SOURCE_DATASET_ROOT}"
-for split in train iid ood extreme seasonal; do
-  [[ -d "${SOURCE_DATASET_ROOT}/${split}" ]] \
-    || die "shared EarthNet source lacks required split directory: ${split}"
-done
+if [[ "${LOCAL_STAGE_DATA_SCOPE}" == "all" ]]; then
+  for split in train iid ood extreme seasonal; do
+    [[ -d "${SOURCE_DATASET_ROOT}/${split}" ]] \
+      || die "shared EarthNet source lacks required split directory: ${split}"
+  done
+fi
 
 require_file "conditioning stats" "${CONDITIONING_STATS_PATH:-}"
 require_file "train manifest" "${MANIFEST_PATH:-}"
@@ -126,22 +162,100 @@ if [[ "${RUN_TRAIN}" != "1" ]]; then
   die "RUN_TRAIN must remain 1 in this lifecycle launcher; use run_stage2_earthnet.sh for preflight-only work"
 fi
 
-available_kb="$(df -Pk "$(dirname "${LOCAL_STAGE_ROOT}")" | awk 'NR == 2 {print $4}')"
-required_kb=$((MIN_LOCAL_FREE_GB * 1024 * 1024))
-[[ "${available_kb}" =~ ^[0-9]+$ ]] || die "could not determine free space for ${LOCAL_STAGE_ROOT}"
-if (( available_kb < required_kb )); then
-  die "local disk has only $((available_kb / 1024 / 1024))G free; need at least ${MIN_LOCAL_FREE_GB}G"
-fi
-
 exec 9>"${LOCK_PATH}"
 flock -n 9 || die "another Stage2 local staging launcher already owns: ${LOCAL_STAGE_ROOT}"
 
 STAGE_CREATED=0
+STAGE_REUSED=0
 STAGING_PID=""
 TRAIN_PID=""
+PLANNED_NC_FILES=""
+STAGE_FILE_LIST_SHA256=""
+TRAIN_MANIFEST_SHA256=""
+VALIDATION_MANIFEST_SHA256=""
+
+ensure_local_free_space() {
+  local available_kb required_kb
+  available_kb="$(df -Pk "$(dirname "${LOCAL_STAGE_ROOT}")" | awk 'NR == 2 {print $4}')"
+  required_kb=$((MIN_LOCAL_FREE_GB * 1024 * 1024))
+  [[ "${available_kb}" =~ ^[0-9]+$ ]] || die "could not determine free space for ${LOCAL_STAGE_ROOT}"
+  if (( available_kb < required_kb )); then
+    die "local disk has only $((available_kb / 1024 / 1024))G free; need at least ${MIN_LOCAL_FREE_GB}G"
+  fi
+}
+
+build_stage_file_plan() {
+  rm -f -- "${STAGE_FILE_LIST}" "${STAGE_PLAN_SUMMARY}"
+  if [[ "${LOCAL_STAGE_DATA_SCOPE}" == "all" ]]; then
+    log "building complete NetCDF staging list from the shared source"
+    find "${SOURCE_DATASET_ROOT}" -type f -name '*.nc' -printf '%P\0' \
+      | LC_ALL=C sort -z -u > "${STAGE_FILE_LIST}"
+  else
+    log "building train+val manifest-only staging list"
+    "${PYTHON_BIN}" "${PROJECT_ROOT}/scripts/build_stage2_local_stage_file_list.py" \
+      --dataset-root "${SOURCE_DATASET_ROOT}" \
+      --train-manifest "${MANIFEST_PATH}" \
+      --validation-manifest "${VALIDATION_MANIFEST_PATH}" \
+      --output "${STAGE_FILE_LIST}" \
+      --summary "${STAGE_PLAN_SUMMARY}"
+  fi
+  PLANNED_NC_FILES="$(count_file_list_entries "${STAGE_FILE_LIST}")"
+  [[ "${PLANNED_NC_FILES}" =~ ^[0-9]+$ && "${PLANNED_NC_FILES}" -gt 0 ]] \
+    || die "local staging plan contains no NetCDF files"
+  STAGE_FILE_LIST_SHA256="$(sha256sum "${STAGE_FILE_LIST}" | awk '{print $1}')"
+  TRAIN_MANIFEST_SHA256="$(sha256sum "${MANIFEST_PATH}" | awk '{print $1}')"
+  VALIDATION_MANIFEST_SHA256="$(sha256sum "${VALIDATION_MANIFEST_PATH}" | awk '{print $1}')"
+  log "staging plan ready: scope=${LOCAL_STAGE_DATA_SCOPE}; planned_nc_files=${PLANNED_NC_FILES}; file_list_sha256=${STAGE_FILE_LIST_SHA256}"
+}
+
+verify_local_stage_files() {
+  local local_count relative
+  [[ -d "${LOCAL_DATASET_ROOT}" ]] || return 1
+  local_count="$(count_netcdf_files "${LOCAL_DATASET_ROOT}")"
+  if [[ "${local_count}" != "${PLANNED_NC_FILES}" ]]; then
+    log "local stage file-count mismatch: expected=${PLANNED_NC_FILES}; actual=${local_count}"
+    return 1
+  fi
+  while IFS= read -r -d '' relative; do
+    if [[ ! -f "${LOCAL_DATASET_ROOT}/${relative}" ]]; then
+      log "local stage is missing planned NetCDF file: ${relative}"
+      return 1
+    fi
+  done < "${STAGE_FILE_LIST}"
+  return 0
+}
+
+write_stage_metadata() {
+  {
+    printf '%s\n' "${STAGE_METADATA_SCHEMA}"
+    printf 'source_dataset_root=%s\n' "${SOURCE_DATASET_ROOT}"
+    printf 'local_stage_data_scope=%s\n' "${LOCAL_STAGE_DATA_SCOPE}"
+    printf 'planned_netcdf_files=%s\n' "${PLANNED_NC_FILES}"
+    printf 'file_list_sha256=%s\n' "${STAGE_FILE_LIST_SHA256}"
+    printf 'train_manifest_sha256=%s\n' "${TRAIN_MANIFEST_SHA256}"
+    printf 'validation_manifest_sha256=%s\n' "${VALIDATION_MANIFEST_SHA256}"
+  } > "${STAGE_METADATA_PATH}"
+}
+
+stage_metadata_matches_plan() {
+  [[ -f "${MARKER_PATH}" && -f "${STAGE_METADATA_PATH}" ]] || return 1
+  grep -Fqx "${MARKER_SCHEMA}" "${MARKER_PATH}" \
+    && grep -Fqx "${STAGE_METADATA_SCHEMA}" "${STAGE_METADATA_PATH}" \
+    && grep -Fqx "source_dataset_root=${SOURCE_DATASET_ROOT}" "${STAGE_METADATA_PATH}" \
+    && grep -Fqx "local_stage_data_scope=${LOCAL_STAGE_DATA_SCOPE}" "${STAGE_METADATA_PATH}" \
+    && grep -Fqx "planned_netcdf_files=${PLANNED_NC_FILES}" "${STAGE_METADATA_PATH}" \
+    && grep -Fqx "file_list_sha256=${STAGE_FILE_LIST_SHA256}" "${STAGE_METADATA_PATH}" \
+    && grep -Fqx "train_manifest_sha256=${TRAIN_MANIFEST_SHA256}" "${STAGE_METADATA_PATH}" \
+    && grep -Fqx "validation_manifest_sha256=${VALIDATION_MANIFEST_SHA256}" "${STAGE_METADATA_PATH}"
+}
 
 cleanup_staging() {
   if [[ "${STAGE_CREATED}" != "1" || ! -e "${LOCAL_STAGE_ROOT}" ]]; then
+    return 0
+  fi
+  if [[ "${LOCAL_STAGE_CLEANUP}" == "manual" ]]; then
+    log "LOCAL_STAGE_CLEANUP=manual; retaining local staging data: ${LOCAL_STAGE_ROOT}"
+    log "manual cleanup command: bash ${PROJECT_ROOT}/scripts/cleanup_stage2_earthnet_local_staged.sh --stage-root ${LOCAL_STAGE_ROOT} --force"
     return 0
   fi
   log "cleanup begins: ${LOCAL_STAGE_ROOT}"
@@ -189,7 +303,11 @@ terminate_training_group() {
 on_signal() {
   local signal_name="$1"
   local exit_code="$2"
-  log "received ${signal_name}; stopping training and cleaning local data"
+  if [[ "${LOCAL_STAGE_CLEANUP}" == "manual" ]]; then
+    log "received ${signal_name}; stopping processes and retaining local data by explicit manual policy"
+  else
+    log "received ${signal_name}; stopping training and cleaning local data"
+  fi
   terminate_training_group
   terminate_staging_group
   exit "${exit_code}"
@@ -214,54 +332,60 @@ trap 'on_signal INT 130' INT
 trap 'on_signal TERM 143' TERM
 trap 'on_signal HUP 129' HUP
 
+build_stage_file_plan
+
 if [[ -e "${LOCAL_STAGE_ROOT}" ]]; then
-  if [[ -f "${MARKER_PATH}" ]] && grep -Fqx "${MARKER_SCHEMA}" "${MARKER_PATH}"; then
-    log "removing a stale marked local staging copy before this run"
+  if [[ ! -f "${MARKER_PATH}" ]] || ! grep -Fqx "${MARKER_SCHEMA}" "${MARKER_PATH}"; then
+    die "existing LOCAL_STAGE_ROOT is unmarked; refusing to overwrite it: ${LOCAL_STAGE_ROOT}"
+  fi
+  if stage_metadata_matches_plan && verify_local_stage_files; then
+    STAGE_CREATED=1
+    STAGE_REUSED=1
+    log "reusing verified local staging copy: ${LOCAL_STAGE_ROOT}; planned_nc_files=${PLANNED_NC_FILES}"
+  else
+    log "existing local staging copy is not reusable for this verified plan; removing it before staging"
     bash "${PROJECT_ROOT}/scripts/cleanup_stage2_earthnet_local_staged.sh" \
       --stage-root "${LOCAL_STAGE_ROOT}" --force --lock-held
-  else
-    die "existing LOCAL_STAGE_ROOT is unmarked; refusing to overwrite it: ${LOCAL_STAGE_ROOT}"
   fi
 fi
 
-mkdir -p "${LOCAL_STAGE_ROOT}" "${LOCAL_DATA_ROOT}"
-{
-  printf '%s\n' "${MARKER_SCHEMA}"
-  printf 'run_id=%s\n' "${RUN_ID}"
-  printf 'created_at=%s\n' "$(date --iso-8601=seconds)"
-  printf 'source_dataset_root=%s\n' "${SOURCE_DATASET_ROOT}"
-  printf 'local_dataset_root=%s\n' "${LOCAL_DATASET_ROOT}"
-  printf 'automatic_cleanup=on_exit_int_term_hup\n'
-} > "${MARKER_PATH}"
-STAGE_CREATED=1
+if [[ "${STAGE_REUSED}" != "1" ]]; then
+  ensure_local_free_space
+  mkdir -p "${LOCAL_STAGE_ROOT}" "${LOCAL_DATA_ROOT}"
+  {
+    printf '%s\n' "${MARKER_SCHEMA}"
+    printf 'run_id=%s\n' "${RUN_ID}"
+    printf 'created_at=%s\n' "$(date --iso-8601=seconds)"
+    printf 'source_dataset_root=%s\n' "${SOURCE_DATASET_ROOT}"
+    printf 'local_dataset_root=%s\n' "${LOCAL_DATASET_ROOT}"
+    printf 'local_stage_cleanup=%s\n' "${LOCAL_STAGE_CLEANUP}"
+    printf 'local_stage_data_scope=%s\n' "${LOCAL_STAGE_DATA_SCOPE}"
+  } > "${MARKER_PATH}"
+  STAGE_CREATED=1
 
-log "counting shared-source NetCDF files before rsync; this one-time metadata scan may take a short while"
-source_count="$(count_netcdf_files "${SOURCE_DATASET_ROOT}")"
-[[ "${source_count}" =~ ^[0-9]+$ && "${source_count}" -gt 0 ]] \
-  || die "shared EarthNet source contains no NetCDF files: ${SOURCE_DATASET_ROOT}"
+  log "local staging starts: source=${SOURCE_DATASET_ROOT}; target=${LOCAL_DATASET_ROOT}; planned_nc_files=${PLANNED_NC_FILES}"
+  if [[ "${LOCAL_STAGE_CLEANUP}" == "manual" ]]; then
+    log "manual cache mode: a fully verified copy remains after this run for an explicit retry"
+  else
+    log "auto cleanup mode: any normal interruption removes the temporary copy by design"
+  fi
+  setsid "${RSYNC_BIN}" -aH --partial --append-verify --info=progress2 --from0 \
+    --files-from="${STAGE_FILE_LIST}" -- \
+    "${SOURCE_DATASET_ROOT}/" "${LOCAL_DATASET_ROOT}/" &
+  STAGING_PID="$!"
+  log "rsync staging process-group leader PID=${STAGING_PID}"
+  if wait "${STAGING_PID}"; then
+    STAGING_PID=""
+  else
+    staging_rc=$?
+    STAGING_PID=""
+    die "rsync staging failed with rc=${staging_rc}"
+  fi
 
-log "local staging starts: source=${SOURCE_DATASET_ROOT}; target=${LOCAL_DATASET_ROOT}; source_nc_files=${source_count}"
-log "rsync is resumable only while this launcher remains alive; any normal interruption removes the temporary copy by design"
-setsid "${RSYNC_BIN}" -aH --partial --append-verify --info=progress2 -- \
-  "${SOURCE_DATASET_ROOT}/" "${LOCAL_DATASET_ROOT}/" &
-STAGING_PID="$!"
-log "rsync staging process-group leader PID=${STAGING_PID}"
-if wait "${STAGING_PID}"; then
-  STAGING_PID=""
-else
-  staging_rc=$?
-  STAGING_PID=""
-  die "rsync staging failed with rc=${staging_rc}"
+  verify_local_stage_files \
+    || die "local staging verification failed for ${PLANNED_NC_FILES} planned NetCDF files"
+  write_stage_metadata
 fi
-
-local_count="$(count_netcdf_files "${LOCAL_DATASET_ROOT}")"
-if [[ "${local_count}" != "${source_count}" ]]; then
-  die "NetCDF file-count mismatch after staging: source=${source_count}, local=${local_count}"
-fi
-for split in train iid ood extreme seasonal; do
-  [[ -d "${LOCAL_DATASET_ROOT}/${split}" ]] \
-    || die "local staging is missing split directory after rsync: ${split}"
-done
 
 cat > "${LIFECYCLE_RECORD}" <<EOF
 schema=obsworld-stage2-local-stage-run-v1
@@ -270,13 +394,16 @@ source_dataset_root=${SOURCE_DATASET_ROOT}
 local_stage_root=${LOCAL_STAGE_ROOT}
 local_data_root=${LOCAL_DATA_ROOT}
 local_dataset_root=${LOCAL_DATASET_ROOT}
-source_nc_files=${source_count}
-local_nc_files=${local_count}
-automatic_cleanup=EXIT,INT,TERM,HUP
+local_stage_cleanup=${LOCAL_STAGE_CLEANUP}
+local_stage_data_scope=${LOCAL_STAGE_DATA_SCOPE}
+stage_reused=${STAGE_REUSED}
+planned_netcdf_files=${PLANNED_NC_FILES}
+file_list_sha256=${STAGE_FILE_LIST_SHA256}
+automatic_cleanup=$([[ "${LOCAL_STAGE_CLEANUP}" == "auto" ]] && printf 'EXIT,INT,TERM,HUP' || printf 'disabled_manual_mode')
 manual_recovery_cleanup=bash ${PROJECT_ROOT}/scripts/cleanup_stage2_earthnet_local_staged.sh --stage-root ${LOCAL_STAGE_ROOT} --force
 EOF
 
-log "local staging verified: ${local_count} NetCDF files; formal preflight/training will now use DATA_ROOT=${LOCAL_DATA_ROOT}"
+log "local staging verified: ${PLANNED_NC_FILES} planned NetCDF files; formal preflight/training will now use DATA_ROOT=${LOCAL_DATA_ROOT}"
 
 export DATA_ROOT="${LOCAL_DATA_ROOT}"
 export CONFIG MAX_STEPS BATCH_SIZE NUM_WORKERS PREFETCH_FACTOR PERSISTENT_WORKERS LOG_INTERVAL GPUS
@@ -293,10 +420,18 @@ log "training process-group leader PID=${TRAIN_PID}"
 
 if wait "${TRAIN_PID}"; then
   TRAIN_PID=""
-  log "training finished successfully; automatic cleanup follows"
+  if [[ "${LOCAL_STAGE_CLEANUP}" == "manual" ]]; then
+    log "training finished successfully; local data retained by explicit manual policy"
+  else
+    log "training finished successfully; automatic cleanup follows"
+  fi
 else
   train_rc=$?
   TRAIN_PID=""
-  log "training exited with rc=${train_rc}; automatic cleanup follows"
+  if [[ "${LOCAL_STAGE_CLEANUP}" == "manual" ]]; then
+    log "training exited with rc=${train_rc}; local data retained by explicit manual policy"
+  else
+    log "training exited with rc=${train_rc}; automatic cleanup follows"
+  fi
   exit "${train_rc}"
 fi
