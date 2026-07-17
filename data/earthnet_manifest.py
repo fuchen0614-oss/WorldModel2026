@@ -283,7 +283,15 @@ def load_manifest_files(
         if relative_text in seen:
             raise ValueError(f"Duplicate manifest path in {source}: {relative_text}")
         seen.add(relative_text)
-        path = (root / relative).resolve()
+        # ``Path.resolve`` performs a filesystem lookup for every record on
+        # some shared NAS mounts.  Preflight deliberately sets
+        # ``verify_exists=False`` and only needs a safe, relocatable path; in
+        # that mode the manifest's already-validated relative path can be
+        # joined directly.  Resolve only when an existence/size/hash check
+        # actually needs filesystem evidence.
+        path = (root / relative).resolve() if (
+            verify_exists or verify_sizes or verify_hashes
+        ) else (root / relative)
         if path != root and root not in path.parents:
             raise ValueError(f"Manifest path escapes dataset root: {relative_text}")
         if verify_exists and not path.is_file():
