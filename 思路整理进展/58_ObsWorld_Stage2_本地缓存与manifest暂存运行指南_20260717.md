@@ -14,6 +14,8 @@
 |  | `manual` | 正常结束、训练报错或可捕获中断后保留经过校验的本地缓存；需要显式执行清理命令。适合首次正式启动与 OOM 后快速重试。 |
 | `LOCAL_STAGE_DATA_SCOPE` | `all`（默认） | 暂存 `earthnet2021x` 下所有 NetCDF；适用于后续全 split 评测。 |
 |  | `train_val` | 只暂存冻结 `train_dev.json` 与 `val_dev.json` 的去重并集。当前 Stage2 训练和 validation monitor 足够，启动复制量显著更小。 |
+| `REQUIRE_EMPTY_GPUS` | `0`（默认） | 不额外限制 GPU 进程。 |
+|  | `1` | 在暂存开始前和真正训练开始前都检查 `nvidia-smi`；只要已有 compute 进程就拒绝启动，避免因为外部显存占用而 OOM。 |
 
 默认值保持旧行为：`auto + all`。
 
@@ -38,6 +40,7 @@ reusing verified local staging copy: ...
 ```bash
 LOCAL_STAGE_CLEANUP=manual
 LOCAL_STAGE_DATA_SCOPE=train_val
+REQUIRE_EMPTY_GPUS=1
 ```
 
 这样第一次拷贝后，任何可捕获失败都不必重复复制。模型训练成功、关键 checkpoint 和结果已确认后，再手动清理。这是比“失败即删除、重新拷贝数小时”更稳的选择。
@@ -65,6 +68,8 @@ watch -n 2 nvidia-smi
 ```
 
 确认外部进程没有抢占显存。若日志出现 `CUDA out of memory`，先确认 `nvidia-smi` 的进程列表；本项目此前的 B64 OOM 是另一进程已经占掉约 108 GiB 显存，不能据此判断 B64 本身不适合 H200。
+
+推荐启动命令启用 `REQUIRE_EMPTY_GPUS=1`：它会在复制前和训练前自动做上述检查。若集群调度器有合法的常驻 compute 进程，才应在理解影响后显式设置为 `0`。
 
 ## 5. 手动清理与空间核验
 

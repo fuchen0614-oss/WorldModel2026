@@ -86,6 +86,7 @@ RUN_TRAIN="${RUN_TRAIN:-1}"
 MIN_LOCAL_FREE_GB="${MIN_LOCAL_FREE_GB:-250}"
 LOCAL_STAGE_CLEANUP="${LOCAL_STAGE_CLEANUP:-auto}"
 LOCAL_STAGE_DATA_SCOPE="${LOCAL_STAGE_DATA_SCOPE:-all}"
+REQUIRE_EMPTY_GPUS="${REQUIRE_EMPTY_GPUS:-0}"
 PYTHON_BIN="${PYTHON_BIN:-python}"
 
 CHECKPOINT_DIR="${CHECKPOINT_DIR:-${PROJECT_ROOT}/checkpoints/${RUN_ID}}"
@@ -110,6 +111,7 @@ log() {
 # whether the nohup launcher actually started.
 log "launcher initialized: run_id=${RUN_ID}; source=${SOURCE_DATA_ROOT}; local_stage=${LOCAL_STAGE_ROOT}"
 log "local stage policy: cleanup=${LOCAL_STAGE_CLEANUP}; data_scope=${LOCAL_STAGE_DATA_SCOPE}"
+log "GPU availability policy: require_empty_gpus=${REQUIRE_EMPTY_GPUS}"
 
 require_file() {
   local label="$1"
@@ -129,6 +131,13 @@ case "${LOCAL_STAGE_DATA_SCOPE}" in
     ;;
   *)
     die "LOCAL_STAGE_DATA_SCOPE must be all or train_val, got: ${LOCAL_STAGE_DATA_SCOPE}"
+    ;;
+esac
+case "${REQUIRE_EMPTY_GPUS}" in
+  0|1)
+    ;;
+  *)
+    die "REQUIRE_EMPTY_GPUS must be 0 or 1, got: ${REQUIRE_EMPTY_GPUS}"
     ;;
 esac
 
@@ -182,6 +191,19 @@ ensure_local_free_space() {
   if (( available_kb < required_kb )); then
     die "local disk has only $((available_kb / 1024 / 1024))G free; need at least ${MIN_LOCAL_FREE_GB}G"
   fi
+}
+
+assert_gpus_are_empty() {
+  [[ "${REQUIRE_EMPTY_GPUS}" == "1" ]] || return 0
+  command -v nvidia-smi >/dev/null 2>&1 || die "REQUIRE_EMPTY_GPUS=1 requires nvidia-smi"
+  local active_processes
+  active_processes="$(nvidia-smi --query-compute-apps=pid,used_memory \
+    --format=csv,noheader,nounits 2>/dev/null || true)"
+  if [[ -n "${active_processes//[[:space:]]/}" ]]; then
+    echo "${active_processes}" >&2
+    die "GPU compute processes already exist; refusing to start. Wait for clean GPUs or set REQUIRE_EMPTY_GPUS=0 explicitly"
+  fi
+  log "GPU availability check passed: no compute processes detected"
 }
 
 build_stage_file_plan() {
@@ -333,6 +355,7 @@ trap 'on_signal TERM 143' TERM
 trap 'on_signal HUP 129' HUP
 
 build_stage_file_plan
+assert_gpus_are_empty
 
 if [[ -e "${LOCAL_STAGE_ROOT}" ]]; then
   if [[ ! -f "${MARKER_PATH}" ]] || ! grep -Fqx "${MARKER_SCHEMA}" "${MARKER_PATH}"; then
@@ -413,6 +436,7 @@ export HDF5_USE_FILE_LOCKING="${HDF5_USE_FILE_LOCKING:-FALSE}"
 export TORCH_NCCL_ASYNC_ERROR_HANDLING="${TORCH_NCCL_ASYNC_ERROR_HANDLING:-1}"
 
 cd "${PROJECT_ROOT}"
+assert_gpus_are_empty
 log "training starts in a dedicated process group; training log=${TRAIN_LOG}"
 setsid bash "${STAGE2_RUNNER}" > "${TRAIN_LOG}" 2>&1 &
 TRAIN_PID="$!"

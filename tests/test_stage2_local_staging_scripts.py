@@ -73,6 +73,8 @@ def test_launcher_exposes_lifecycle_cleanup_guards():
     assert "launcher initialized" in text
     assert "LOCAL_STAGE_CLEANUP" in text
     assert "LOCAL_STAGE_DATA_SCOPE" in text
+    assert "REQUIRE_EMPTY_GPUS" in text
+    assert "assert_gpus_are_empty" in text
     assert "reusing verified local staging copy" in text
 
 
