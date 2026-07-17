@@ -18,18 +18,44 @@ model:
 data:
   driver_protocol: physical4_v1
   conditioning_stats_path: null
-  # Eight H200s × 8 samples/GPU = global batch 64.  The frozen train_dev
-  # manifest has 22,847 episodes, which gives 357 optimizer steps/epoch.
-  batch_size: 8
-  num_workers: 4
+  # Formal H200 route: 8 GPUs × 64 samples/GPU = global batch 512.  DDP pads
+  # each rank to 2,856 episodes, and drop_last therefore gives 44 updates per
+  # EarthNet epoch (8,800 updates for 200 epochs).
+  batch_size: 64
+  # 8 GPUs × 8 workers = 64 NetCDF readers, below the 192 CPU cores of the
+  # formal node. One prefetched batch bounds NAS and host-RAM pressure.
+  num_workers: 8
+  prefetch_factor: 1
+  persistent_workers: true
+  # Keep native 128² context in workers, then perform the pre-existing
+  # bilinear/nearest resize batch-wise after H2D transfer. Model input stays
+  # 10 × 4 × 256 × 256; only the data-pipeline location changes.
+  defer_context_resize_to_device: true
 
 training:
-  # 357 steps/epoch × 200 EarthNet train epochs.
-  max_steps: 71400
+  # 44 steps/epoch × 200 EarthNet train epochs.
+  max_steps: 8800
+
+validation:
+  # Validation runs on rank zero while the other ranks wait. It has no
+  # gradient state, so a moderate larger batch substantially shortens each
+  # 512-minicube validation without changing the metric population.
+  batch_size: 8
+  num_workers: 4
+  prefetch_factor: 1
+  persistent_workers: true
+
+performance:
+  # Conservative hardware optimizations; none changes the EarthNet/DGH
+  # protocol, loss, model topology, or bf16 training precision.
+  allow_tf32: true
+  cudnn_benchmark: true
+  float32_matmul_precision: high
 
 checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_direct_physical4
 log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_direct_physical4
-checkpoint_interval: 5000
+checkpoint_interval: 1000
+log_interval: 50
 
 # Keep only the paper-facing milestone copies in addition to ordinary
 # step checkpoints.  The trainer converts these epochs using the actual

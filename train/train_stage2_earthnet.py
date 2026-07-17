@@ -5,12 +5,14 @@ from __future__ import annotations
 import argparse
 import copy
 from contextlib import nullcontext
+from dataclasses import dataclass, field
 import math
 import os
 import random
 import sys
+import time
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 import numpy as np
 import torch
@@ -46,7 +48,12 @@ except ImportError:
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from data.datasets.earthnet2021 import EarthNet2021Config, EarthNet2021Dataset, collate_earthnet2021
+from data.datasets.earthnet2021 import (
+    EarthNet2021Config,
+    EarthNet2021Dataset,
+    collate_earthnet2021,
+    resize_stage2_v2_context_on_device,
+)
 from data.earthnet_conditioning import FULL24_FEATURE_NAMES, is_stage2_v2_protocol
 from data.earthnet_physical_conditioning import PHYSICAL4_FEATURE_NAMES, PHYSICAL4_PROTOCOL
 from data.stage2_contract import is_stage2_v2_batch, model_input_view
@@ -160,6 +167,153 @@ def _move_value_to_device(value, device: torch.device):
     return value
 
 
+def prepare_stage2_batch_for_model(
+    batch: dict,
+    data_cfg: EarthNet2021Config,
+) -> dict:
+    """Apply GPU-side, protocol-preserving input preparation when requested."""
+
+    if (
+        is_stage2_v2_protocol(data_cfg.stage2_protocol)
+        and data_cfg.defer_context_resize_to_device
+    ):
+        return resize_stage2_v2_context_on_device(
+            batch,
+            context_img_size=int(data_cfg.context_img_size or data_cfg.model_img_size),
+        )
+    return batch
+
+
+@dataclass
+class Stage2PerformanceWindow:
+    """Low-overhead timing window emitted only at the logging interval.
+
+    ``data_wait_s`` is host wall time spent waiting for the next DataLoader
+    batch.  CUDA events separately measure H2D transfer, optional GPU-side
+    input preparation, and forward/backward/optimizer execution.  Event
+    completion is synchronized only when the window is reported, not per
+    optimizer step.
+    """
+
+    start_time: float = field(default_factory=time.perf_counter)
+    data_wait_s: float = 0.0
+    local_sample_count: int = 0
+    optimizer_updates: int = 0
+    transfer_events: list[tuple[Any, Any]] = field(default_factory=list)
+    input_events: list[tuple[Any, Any]] = field(default_factory=list)
+    compute_events: list[tuple[Any, Any]] = field(default_factory=list)
+
+    def add_cuda_events(
+        self,
+        *,
+        transfer: Optional[tuple[Any, Any]],
+        input_prepare: Optional[tuple[Any, Any]],
+        compute: Optional[tuple[Any, Any]],
+    ) -> None:
+        if transfer is not None:
+            self.transfer_events.append(transfer)
+        if input_prepare is not None:
+            self.input_events.append(input_prepare)
+        if compute is not None:
+            self.compute_events.append(compute)
+
+    @staticmethod
+    def _event_seconds(events: list[tuple[Any, Any]]) -> float:
+        return sum(start.elapsed_time(end) for start, end in events) / 1000.0
+
+    def summarize(self, *, device: torch.device, world_size: int) -> dict[str, float]:
+        """Return global slowest-rank timing and global sample throughput."""
+
+        wall_time_s = time.perf_counter() - self.start_time
+        if device.type == "cuda":
+            # [PROFILE] Resolve all events together at the reporting cadence.
+            torch.cuda.synchronize(device)
+            transfer_time_s = self._event_seconds(self.transfer_events)
+            input_time_s = self._event_seconds(self.input_events)
+            compute_time_s = self._event_seconds(self.compute_events)
+        else:
+            transfer_time_s = 0.0
+            input_time_s = 0.0
+            compute_time_s = 0.0
+
+        timings = torch.tensor(
+            [
+                self.data_wait_s,
+                transfer_time_s,
+                input_time_s,
+                compute_time_s,
+                wall_time_s,
+            ],
+            dtype=torch.float64,
+            device=device,
+        )
+        samples = torch.tensor(
+            float(self.local_sample_count), dtype=torch.float64, device=device
+        )
+        if dist.is_available() and dist.is_initialized():
+            # DDP step rate is dictated by the slowest rank, while samples are
+            # the sum across ranks.
+            dist.all_reduce(timings, op=dist.ReduceOp.MAX)
+            dist.all_reduce(samples, op=dist.ReduceOp.SUM)
+
+        updates = max(self.optimizer_updates, 1)
+        data_s, transfer_s, input_s, compute_s, wall_s = timings.detach().cpu().tolist()
+        global_samples = float(samples.item())
+        return {
+            "data_wait_s_per_update": data_s / updates,
+            "h2d_s_per_update": transfer_s / updates,
+            "gpu_input_s_per_update": input_s / updates,
+            "gpu_compute_s_per_update": compute_s / updates,
+            "wall_s_per_update": wall_s / updates,
+            "global_samples_per_s": global_samples / max(wall_s, 1e-12),
+        }
+
+
+def format_stage2_training_progress(
+    *,
+    step: int,
+    max_steps: int,
+    epoch: int,
+    losses: dict[str, float],
+    learning_rates: list[float],
+    performance: dict[str, float],
+) -> str:
+    """Render one concise, grep-friendly Stage2 progress line."""
+
+    def loss_value(name: str) -> str:
+        value = losses.get(name)
+        return "n/a" if value is None else f"{value:.5f}"
+
+    return (
+        f"train step={step}/{max_steps} epoch={epoch + 1} "
+        f"loss={loss_value('total')} obs={loss_value('obs')} ndvi={loss_value('ndvi')} "
+        f"lr={learning_rates[0]:.3e} "
+        f"data={performance['data_wait_s_per_update']:.3f}s "
+        f"h2d={performance['h2d_s_per_update']:.3f}s "
+        f"gpu_input={performance['gpu_input_s_per_update']:.3f}s "
+        f"gpu_compute={performance['gpu_compute_s_per_update']:.3f}s "
+        f"wall={performance['wall_s_per_update']:.3f}s "
+        f"throughput={performance['global_samples_per_s']:.1f} samples/s"
+    )
+
+
+def reduce_stage2_loss_scalars(losses: dict[str, torch.Tensor]) -> dict[str, float]:
+    """Average scalar losses across DDP ranks only at log time."""
+
+    names = sorted(
+        name
+        for name, value in losses.items()
+        if torch.is_tensor(value) and value.numel() == 1
+    )
+    if not names:
+        return {}
+    values = torch.stack([losses[name].detach().float() for name in names])
+    if dist.is_available() and dist.is_initialized():
+        dist.all_reduce(values, op=dist.ReduceOp.SUM)
+        values /= dist.get_world_size()
+    return dict(zip(names, values.detach().cpu().tolist()))
+
+
 def build_stage2_train_loader(
     dataset,
     *,
@@ -168,29 +322,44 @@ def build_stage2_train_loader(
     num_workers: int,
     epoch: int,
     process_seed: int,
+    prefetch_factor: int = 2,
+    persistent_workers: bool = True,
 ) -> DataLoader:
-    """Create one deterministic epoch loader without advancing global RNG.
+    """Create a deterministic Stage2 loader without advancing global RNG.
 
-    The sampler's permutation is a pure ``seed + epoch`` function.  A fresh
-    DataLoader generator additionally fixes worker base seeds, so recreating
-    an epoch after a checkpoint does not perturb the RNG later used for
-    horizon/partition sampling.
+    The sampler's permutation is a pure ``seed + epoch`` function.  It is
+    updated by the outer training loop, while keeping worker processes alive
+    across epochs avoids repeated xarray imports and NetCDF-worker startup.
+    EarthNet Stage2 has no stochastic worker-side augmentation, so persistent
+    workers do not alter the frozen data order or resume semantics.
     """
 
     if hasattr(sampler, "set_epoch"):
         sampler.set_epoch(epoch)
+    if num_workers < 0:
+        raise ValueError(f"num_workers must be non-negative, got {num_workers}")
+    if prefetch_factor <= 0:
+        raise ValueError(f"prefetch_factor must be positive, got {prefetch_factor}")
     loader_generator = torch.Generator()
-    loader_generator.manual_seed(int(process_seed) + int(epoch))
+    loader_generator.manual_seed(int(process_seed))
+    loader_kwargs = {
+        "batch_size": batch_size,
+        "sampler": sampler,
+        "shuffle": False,
+        "num_workers": num_workers,
+        "pin_memory": True,
+        "drop_last": True,
+        "collate_fn": collate_earthnet2021,
+        "generator": loader_generator,
+    }
+    if num_workers > 0:
+        # One prefetched B64 batch per worker is intentionally conservative:
+        # it overlaps NetCDF decoding without multiplying NAS/RAM pressure.
+        loader_kwargs["persistent_workers"] = bool(persistent_workers)
+        loader_kwargs["prefetch_factor"] = int(prefetch_factor)
     return DataLoader(
         dataset,
-        batch_size=batch_size,
-        sampler=sampler,
-        shuffle=False,
-        num_workers=num_workers,
-        pin_memory=True,
-        drop_last=True,
-        collate_fn=collate_earthnet2021,
-        generator=loader_generator,
+        **loader_kwargs,
     )
 
 
@@ -842,6 +1011,7 @@ def validate_stage2(
         if max_batches > 0 and batch_index >= max_batches:
             break
         batch = move_batch_to_device(batch, device)
+        batch = prepare_stage2_batch_for_model(batch, data_cfg)
         amp = (
             torch.autocast(device_type="cuda", dtype=torch.bfloat16)
             if device.type == "cuda"
@@ -885,6 +1055,35 @@ def validate_stage2(
     result.update(metrics.compute())
     result["num_samples"] = sample_count
     return result
+
+
+def configure_stage2_runtime_performance(config: dict, device: torch.device) -> None:
+    """Set conservative GPU runtime knobs that preserve numerical protocol."""
+
+    if device.type != "cuda":
+        return
+    performance_cfg = config.get("performance", {})
+    allow_tf32 = bool(performance_cfg.get("allow_tf32", True))
+    cudnn_benchmark = bool(performance_cfg.get("cudnn_benchmark", True))
+    matmul_precision = str(
+        performance_cfg.get("float32_matmul_precision", "high")
+    ).lower()
+    if matmul_precision not in {"highest", "high", "medium"}:
+        raise ValueError(
+            "performance.float32_matmul_precision must be one of "
+            f"highest/high/medium, got {matmul_precision!r}"
+        )
+    torch.backends.cuda.matmul.allow_tf32 = allow_tf32
+    if hasattr(torch.backends.cudnn, "allow_tf32"):
+        torch.backends.cudnn.allow_tf32 = allow_tf32
+    torch.backends.cudnn.benchmark = cudnn_benchmark
+    if hasattr(torch, "set_float32_matmul_precision"):
+        torch.set_float32_matmul_precision(matmul_precision)
+    log_main(
+        "Stage2 runtime: "
+        f"tf32={allow_tf32}, cudnn_benchmark={cudnn_benchmark}, "
+        f"float32_matmul_precision={matmul_precision}"
+    )
 
 
 def _log_driver_coverage(
@@ -999,6 +1198,18 @@ def main():
     parser.add_argument("--max-steps", type=int)
     parser.add_argument("--batch-size", type=int)
     parser.add_argument("--num-workers", type=int)
+    parser.add_argument("--prefetch-factor", type=int)
+    parser.add_argument(
+        "--persistent-workers",
+        type=int,
+        choices=(0, 1),
+        help="Override DataLoader persistent_workers (1=true, 0=false).",
+    )
+    parser.add_argument(
+        "--log-interval",
+        type=int,
+        help="Optimizer updates between stdout/TensorBoard loss and timing reports.",
+    )
     parser.add_argument("--data-root", type=str)
     parser.add_argument("--external-driver-root", type=str)
     parser.add_argument("--dgh-stats-path", type=str)
@@ -1034,6 +1245,12 @@ def main():
         config["data"]["batch_size"] = args.batch_size
     if args.num_workers is not None:
         config["data"]["num_workers"] = args.num_workers
+    if args.prefetch_factor is not None:
+        config["data"]["prefetch_factor"] = args.prefetch_factor
+    if args.persistent_workers is not None:
+        config["data"]["persistent_workers"] = bool(args.persistent_workers)
+    if args.log_interval is not None:
+        config["log_interval"] = args.log_interval
     if args.data_root is not None:
         config["data"]["root"] = args.data_root
     if args.external_driver_root is not None:
@@ -1096,10 +1313,13 @@ def main():
         torch.cuda.manual_seed_all(process_seed)
     log_main(f"Stage2 random seed: {seed}")
 
-    torch.backends.cuda.matmul.allow_tf32 = True
+    configure_stage2_runtime_performance(config, device)
     max_steps = int(config["training"]["max_steps"])
     accum_steps = int(config["training"].get("gradient_accumulation_steps", 1))
     horizons_per_sample = int(config["training"].get("horizons_per_sample", 0))
+    log_interval = int(config.get("log_interval", 50))
+    if log_interval <= 0:
+        raise ValueError(f"log_interval must be positive, got {log_interval}")
     stop_after_steps = args.stop_after_steps
     if stop_after_steps is not None:
         if stop_after_steps <= 0:
@@ -1190,6 +1410,8 @@ def main():
     )
     train_batch_size = int(config["data"]["batch_size"])
     train_num_workers = int(config["data"].get("num_workers", 4))
+    train_prefetch_factor = int(config["data"].get("prefetch_factor", 2))
+    train_persistent_workers = bool(config["data"].get("persistent_workers", True))
     loader = build_stage2_train_loader(
         dataset,
         sampler=sampler,
@@ -1197,6 +1419,8 @@ def main():
         num_workers=train_num_workers,
         epoch=0,
         process_seed=process_seed,
+        prefetch_factor=train_prefetch_factor,
+        persistent_workers=train_persistent_workers,
     )
     if len(loader) == 0:
         raise RuntimeError(
@@ -1216,7 +1440,13 @@ def main():
             epoch * steps_per_epoch: f"epoch{epoch}"
             for epoch in epoch_checkpoint_epochs
         }
-    log_main(f"EarthNet samples: {len(dataset)}; batch={config['data']['batch_size']}; distributed={distributed}")
+    log_main(
+        f"EarthNet samples: {len(dataset)}; batch={config['data']['batch_size']}; "
+        f"distributed={distributed}; workers={train_num_workers}; "
+        f"persistent_workers={train_persistent_workers and train_num_workers > 0}; "
+        f"prefetch_factor={train_prefetch_factor if train_num_workers > 0 else 'n/a'}; "
+        f"defer_context_resize_to_device={data_cfg.defer_context_resize_to_device}"
+    )
 
     validation_cfg = config.get("validation", {})
     validation_interval = int(validation_cfg.get("interval", 0))
@@ -1240,18 +1470,35 @@ def main():
                 dtype=np.int64,
             ).tolist()
             validation_dataset = Subset(validation_dataset, indices)
-        validation_loader = DataLoader(
-            validation_dataset,
-            batch_size=int(
+        validation_num_workers = int(
+            validation_cfg.get("num_workers", config["data"].get("num_workers", 4))
+        )
+        validation_loader_kwargs = {
+            "batch_size": int(
                 validation_cfg.get("batch_size", config["data"]["batch_size"])
             ),
-            shuffle=False,
-            num_workers=int(
-                validation_cfg.get("num_workers", config["data"].get("num_workers", 4))
-            ),
-            pin_memory=True,
-            drop_last=False,
-            collate_fn=collate_earthnet2021,
+            "shuffle": False,
+            "num_workers": validation_num_workers,
+            "pin_memory": True,
+            "drop_last": False,
+            "collate_fn": collate_earthnet2021,
+        }
+        if validation_num_workers > 0:
+            validation_loader_kwargs["persistent_workers"] = bool(
+                validation_cfg.get(
+                    "persistent_workers",
+                    config["data"].get("persistent_workers", True),
+                )
+            )
+            validation_loader_kwargs["prefetch_factor"] = int(
+                validation_cfg.get(
+                    "prefetch_factor",
+                    config["data"].get("prefetch_factor", 2),
+                )
+            )
+        validation_loader = DataLoader(
+            validation_dataset,
+            **validation_loader_kwargs,
         )
         log_main(
             f"EarthNet validation monitor samples: {len(validation_dataset)}; "
@@ -1427,21 +1674,47 @@ def main():
         disable=not is_main_process(),
         desc="Stage2 EarthNet",
     )
+    # [PROFILE] The window is reduced only every ``log_interval`` updates, so
+    # its timing events do not force a per-step CUDA synchronization.
+    performance_window = Stage2PerformanceWindow()
     while optimizer_step < max_steps and (
         stop_after_steps is None or optimizer_step < stop_after_steps
     ):
-        epoch_loader = build_stage2_train_loader(
-            dataset,
-            sampler=sampler,
-            batch_size=train_batch_size,
-            num_workers=train_num_workers,
-            epoch=epoch,
-            process_seed=process_seed,
-        )
+        if hasattr(sampler, "set_epoch"):
+            sampler.set_epoch(epoch)
+        # Reuse the worker pool across epochs.  The sampler still provides the
+        # deterministic epoch-specific permutation and the loader's iterator
+        # resets its index queues for each new epoch.
+        epoch_loader = loader
+        batch_request_time = time.perf_counter()
         for batch_index, batch in enumerate(epoch_loader):
+            batch_arrival_time = time.perf_counter()
             if batch_index < next_batch_index:
+                batch_request_time = time.perf_counter()
                 continue
+            performance_window.data_wait_s += batch_arrival_time - batch_request_time
+
+            transfer_events = None
+            input_events = None
+            compute_events = None
+            if device.type == "cuda":
+                transfer_start = torch.cuda.Event(enable_timing=True)
+                transfer_end = torch.cuda.Event(enable_timing=True)
+                input_start = torch.cuda.Event(enable_timing=True)
+                input_end = torch.cuda.Event(enable_timing=True)
+                compute_start = torch.cuda.Event(enable_timing=True)
+                compute_end = torch.cuda.Event(enable_timing=True)
+                transfer_start.record()
             batch = move_batch_to_device(batch, device)
+            if device.type == "cuda":
+                transfer_end.record()
+                input_start.record()
+            batch = prepare_stage2_batch_for_model(batch, data_cfg)
+            if device.type == "cuda":
+                input_end.record()
+                compute_start.record()
+                transfer_events = (transfer_start, transfer_end)
+                input_events = (input_start, input_end)
             selected_steps = None
             max_rollout_steps = None
             partition_start = None
@@ -1554,6 +1827,7 @@ def main():
                 loss.backward()
 
             micro_step += 1
+            performance_window.local_sample_count += int(batch["x_context"].shape[0])
             last_data_position = next_data_position(
                 epoch=epoch,
                 completed_batch_index=batch_index,
@@ -1579,13 +1853,43 @@ def main():
                 optimizer.step()
                 scheduler.step()
                 optimizer.zero_grad(set_to_none=True)
+                if device.type == "cuda":
+                    compute_end.record()
+                    compute_events = (compute_start, compute_end)
+                performance_window.add_cuda_events(
+                    transfer=transfer_events,
+                    input_prepare=input_events,
+                    compute=compute_events,
+                )
                 optimizer_step += 1
+                performance_window.optimizer_updates += 1
                 progress.update(1)
 
-                if is_main_process() and optimizer_step % int(config.get("log_interval", 50)) == 0:
+                if optimizer_step % log_interval == 0:
                     learning_rates = scheduler.get_last_lr()
-                    log = {k: float(v.detach().cpu()) for k, v in losses.items()}
-                    progress.set_postfix({"loss": f"{log['total']:.4f}", "obs": f"{log['obs']:.4f}", "ndvi": f"{log['ndvi']:.4f}"})
+                    log = reduce_stage2_loss_scalars(losses)
+                    performance = performance_window.summarize(
+                        device=device,
+                        world_size=world_size,
+                    )
+                    if is_main_process():
+                        progress.set_postfix(
+                            {
+                                "loss": f"{log.get('total', float('nan')):.4f}",
+                                "obs": f"{log.get('obs', float('nan')):.4f}",
+                                "ndvi": f"{log.get('ndvi', float('nan')):.4f}",
+                            }
+                        )
+                        log_main(
+                            format_stage2_training_progress(
+                                step=optimizer_step,
+                                max_steps=max_steps,
+                                epoch=epoch,
+                                losses=log,
+                                learning_rates=learning_rates,
+                                performance=performance,
+                            )
+                        )
                     if writer is not None:
                         writer.add_scalar(
                             "train/lr_new_modules",
@@ -1600,6 +1904,10 @@ def main():
                             )
                         for name, value in log.items():
                             writer.add_scalar(f"train/{name}", value, optimizer_step)
+                        for name, value in performance.items():
+                            writer.add_scalar(
+                                f"performance/{name}", value, optimizer_step
+                            )
                         if "rollout_steps" in out:
                             writer.add_scalar(
                                 "train/rollout_steps",
@@ -1613,6 +1921,17 @@ def main():
                                 optimizer_step,
                             )
 
+            if not should_update:
+                if device.type == "cuda":
+                    compute_end.record()
+                    compute_events = (compute_start, compute_end)
+                performance_window.add_cuda_events(
+                    transfer=transfer_events,
+                    input_prepare=input_events,
+                    compute=compute_events,
+                )
+
+            if should_update:
                 if (
                     validation_interval > 0
                     and optimizer_step > 0
@@ -1732,6 +2051,28 @@ def main():
                         provenance=run_provenance,
                         data_position=last_data_position,
                     )
+
+            if should_update and (
+                optimizer_step % log_interval == 0
+                or (
+                    validation_interval > 0
+                    and optimizer_step > 0
+                    and optimizer_step % validation_interval == 0
+                )
+                or (
+                    optimizer_step > 0
+                    and optimizer_step % checkpoint_interval == 0
+                )
+                or optimizer_step in epoch_checkpoint_steps
+            ):
+                # Do not let rank-zero validation or checkpoint serialization
+                # contaminate the next training-window throughput estimate.
+                performance_window = Stage2PerformanceWindow()
+
+            # The next ``for`` iteration obtains a new batch only after this
+            # point, so checkpoint/validation work is not misreported as data
+            # waiting time in the performance trace.
+            batch_request_time = time.perf_counter()
 
             if optimizer_step >= max_steps or (
                 stop_after_steps is not None and optimizer_step >= stop_after_steps

@@ -88,6 +88,11 @@ class EarthNet2021Config:
     context_img_size: Optional[int] = None
     target_img_size: Optional[int] = None
     geo_img_size: Optional[int] = None
+    # Stage2-v2 may keep the native 128x128 context in DataLoader workers and
+    # perform the required 256x256 Stage1.5-compatible resize after the batch
+    # reaches the GPU. This avoids repeatedly enlarging every context cube on
+    # the CPU and cuts host-to-device context traffic by roughly fourfold.
+    defer_context_resize_to_device: bool = False
     image_channels: int = 4
     target_channels: int = 4
     cloud_mask_channel: int = 6
@@ -222,6 +227,9 @@ class EarthNet2021Config:
                 int(data_cfg["geo_img_size"])
                 if data_cfg.get("geo_img_size") is not None
                 else None
+            ),
+            defer_context_resize_to_device=bool(
+                data_cfg.get("defer_context_resize_to_device", False)
             ),
             image_channels=int(data_cfg.get("image_channels", band_spec.in_channels)),
             target_channels=int(data_cfg.get("target_channels", band_spec.out_channels)),
@@ -412,7 +420,15 @@ def parse_earthnet_netcdf(
 
     s2_variables = ("s2_B02", "s2_B03", "s2_B04", "s2_B8A")
     weather_variables = ("eobs_rr", "eobs_tg", "eobs_hu", "eobs_qq")
-    with xr.open_dataset(path, cache=False) as cube:
+    # All formal EarthNet2021x filenames contain the first S2 observation
+    # date. Avoiding CF time-coordinate decoding removes a repeated xarray
+    # setup cost for every minicube without changing pixel/weather decoding.
+    # ``mask_and_scale`` remains enabled so reflectance and E-OBS semantics do
+    # not change.
+    open_kwargs = {"cache": False}
+    if is_stage2_v2_protocol(config.stage2_protocol):
+        open_kwargs["decode_times"] = False
+    with xr.open_dataset(path, **open_kwargs) as cube:
         if is_stage2_v2_protocol(config.stage2_protocol):
             return _parse_earthnet_netcdf_v2_cube(
                 cube=cube,
@@ -521,10 +537,13 @@ def _parse_earthnet_netcdf_v2_cube(
         config.frame_interval_days,
     )
     image = np.stack(
-        [_xarray_to_thw(cube[name], name)[indices] for name in s2_variables],
+        [
+            _xarray_time_slice_to_thw(cube[name], name, indices)
+            for name in s2_variables
+        ],
         axis=1,
     ).astype(np.float32)
-    raw_mask = _xarray_to_thw(cube["s2_mask"], "s2_mask")[indices]
+    raw_mask = _xarray_time_slice_to_thw(cube["s2_mask"], "s2_mask", indices)
     clear_mask = (
         np.isfinite(raw_mask)
         & (raw_mask <= 0)
@@ -546,7 +565,7 @@ def _parse_earthnet_netcdf_v2_cube(
 
     raw_dem = _xarray_to_hw(cube["cop_dem"], "cop_dem")[None].astype(np.float32)
     elevation, geo_mask = normalize_cop_dem(raw_dem, stats)
-    start_date = _xarray_start_date(cube) or _parse_start_date(path.name)
+    start_date = _parse_start_date(path.name) or _xarray_start_date(cube)
     if config.strict and start_date is None:
         raise ValueError(f"{path}: formal v2 requires a parseable first observation date")
 
@@ -580,10 +599,13 @@ def _parse_earthnet_netcdf_physical4_cube(
         config.frame_interval_days,
     )
     image = np.stack(
-        [_xarray_to_thw(cube[name], name)[indices] for name in s2_variables],
+        [
+            _xarray_time_slice_to_thw(cube[name], name, indices)
+            for name in s2_variables
+        ],
         axis=1,
     ).astype(np.float32)
-    raw_mask = _xarray_to_thw(cube["s2_mask"], "s2_mask")[indices]
+    raw_mask = _xarray_time_slice_to_thw(cube["s2_mask"], "s2_mask", indices)
     clear_mask = (
         np.isfinite(raw_mask)
         & (raw_mask <= 0)
@@ -624,7 +646,7 @@ def _parse_earthnet_netcdf_physical4_cube(
 
     raw_dem = _xarray_to_hw(cube["cop_dem"], "cop_dem")[None].astype(np.float32)
     elevation, geo_mask = normalize_physical_cop_dem(raw_dem, stats)
-    start_date = _xarray_start_date(cube) or _parse_start_date(path.name)
+    start_date = _parse_start_date(path.name) or _xarray_start_date(cube)
     if config.strict and start_date is None:
         raise ValueError(f"{path}: formal physical4 requires a parseable first observation date")
 
@@ -728,16 +750,22 @@ def _format_stage2_v2_sample(
         days_per_step=config.frame_interval_days,
     )
 
+    context_tensor = torch.from_numpy(x_context)
+    context_mask_tensor = torch.from_numpy(context_mask)
+    if not config.defer_context_resize_to_device:
+        context_tensor = _resize_tchw(
+            context_tensor, context_img_size, mode="bilinear"
+        )
+        context_mask_tensor = _resize_thw(
+            context_mask_tensor, context_img_size, mode="nearest"
+        )
+
     return {
-        "x_context": _resize_tchw(
-            torch.from_numpy(x_context), context_img_size, mode="bilinear"
-        ).float(),
+        "x_context": context_tensor.float(),
         "x_target": _resize_tchw(
             torch.from_numpy(x_target), target_img_size, mode="bilinear"
         ).float(),
-        "context_mask": _resize_thw(
-            torch.from_numpy(context_mask), context_img_size, mode="nearest"
-        ).float(),
+        "context_mask": context_mask_tensor.float(),
         "target_mask": _resize_thw(
             torch.from_numpy(target_mask), target_img_size, mode="nearest"
         ).float(),
@@ -1446,6 +1474,57 @@ def _resize_tchw(x: torch.Tensor, size: int, mode: str) -> torch.Tensor:
     return F.interpolate(x, size=(size, size), mode=mode, align_corners=False if mode == "bilinear" else None)
 
 
+def resize_stage2_v2_context_on_device(
+    batch: Dict[str, Any],
+    *,
+    context_img_size: int,
+) -> Dict[str, Any]:
+    """Materialize deferred Stage2-v2 context resizing on the current device.
+
+    The data contract permits context and target geometry to differ. When
+    ``data.defer_context_resize_to_device`` is enabled, workers return the
+    native context raster and this function restores the 256x256 encoder input
+    only after a non-blocking transfer to the GPU. The operation is batch-wise,
+    so it is much cheaper than one CPU resize per minicube and preserves the
+    existing bilinear/nearest semantics.
+    """
+
+    size = int(context_img_size)
+    if size <= 0:
+        raise ValueError(f"context_img_size must be positive, got {size}")
+    x_context = batch.get("x_context")
+    context_mask = batch.get("context_mask")
+    if not torch.is_tensor(x_context) or not torch.is_tensor(context_mask):
+        raise TypeError("deferred Stage2-v2 context resize requires tensor x_context/context_mask")
+    if x_context.dim() != 5:
+        raise ValueError(
+            "deferred Stage2-v2 x_context must have shape [B,T,C,H,W], got "
+            f"{tuple(x_context.shape)}"
+        )
+    batch_size, time_steps, channels, height, width = x_context.shape
+    if context_mask.shape != (batch_size, time_steps, height, width):
+        raise ValueError(
+            "deferred Stage2-v2 context_mask must match x_context, got "
+            f"{tuple(context_mask.shape)} for {tuple(x_context.shape)}"
+        )
+    if (height, width) == (size, size):
+        return batch
+
+    output = dict(batch)
+    output["x_context"] = F.interpolate(
+        x_context.reshape(batch_size * time_steps, channels, height, width),
+        size=(size, size),
+        mode="bilinear",
+        align_corners=False,
+    ).reshape(batch_size, time_steps, channels, size, size)
+    output["context_mask"] = F.interpolate(
+        context_mask.reshape(batch_size * time_steps, 1, height, width),
+        size=(size, size),
+        mode="nearest",
+    ).reshape(batch_size, time_steps, size, size)
+    return output
+
+
 def _resize_thw(x: torch.Tensor, size: int, mode: str) -> torch.Tensor:
     y = x.unsqueeze(1)
     if y.shape[-1] == size and y.shape[-2] == size:
@@ -1640,6 +1719,24 @@ def _xarray_to_thw(array: Any, name: str) -> np.ndarray:
         array.transpose("time", "lat", "lon").values,
         dtype=np.float32,
     )
+
+
+def _xarray_time_slice_to_thw(
+    array: Any,
+    name: str,
+    time_indexer: slice | Sequence[int] | np.ndarray,
+) -> np.ndarray:
+    """Read only requested NetCDF time slices before materializing values.
+
+    Formal EarthNet2021x uses the regular S2 sequence ``4, 9, ..., 149``.
+    Applying ``isel`` before ``.values`` is important on the shared training
+    filesystem: it prevents xarray/netCDF from decoding all 150 optical
+    rasters just to discard four fifths of them afterwards.
+    """
+
+    if "time" not in array.dims:
+        raise ValueError(f"{name}: expected a time dimension, got {array.dims}")
+    return _xarray_to_thw(array.isel(time=time_indexer), name)
 
 
 def _xarray_to_time(array: Any, name: str) -> np.ndarray:

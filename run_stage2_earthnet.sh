@@ -8,6 +8,9 @@ DATA_ROOT="${DATA_ROOT:-/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021}"
 MAX_STEPS="${MAX_STEPS:-50000}"
 BATCH_SIZE="${BATCH_SIZE:-2}"
 NUM_WORKERS="${NUM_WORKERS:-4}"
+PREFETCH_FACTOR="${PREFETCH_FACTOR:-1}"
+PERSISTENT_WORKERS="${PERSISTENT_WORKERS:-1}"
+LOG_INTERVAL="${LOG_INTERVAL:-50}"
 GPUS="${GPUS:-1}"
 DGH_STATS_PATH="${DGH_STATS_PATH:-}"
 CONDITIONING_STATS_PATH="${CONDITIONING_STATS_PATH:-}"
@@ -28,13 +31,25 @@ RUN_TRAIN="${RUN_TRAIN:-1}"
 PYTHON_BIN="${PYTHON_BIN:-python}"
 TORCHRUN_BIN="${TORCHRUN_BIN:-torchrun}"
 
-for FLAG_NAME in PREFLIGHT REQUIRE_MANIFEST PREFLIGHT_CHECK_MODEL RUN_TRAIN; do
+for FLAG_NAME in PREFLIGHT REQUIRE_MANIFEST PREFLIGHT_CHECK_MODEL RUN_TRAIN PERSISTENT_WORKERS; do
   FLAG_VALUE="${!FLAG_NAME}"
   if [[ "${FLAG_VALUE}" != "0" && "${FLAG_VALUE}" != "1" ]]; then
     echo "${FLAG_NAME} must be 0 or 1, got ${FLAG_VALUE}" >&2
     exit 2
   fi
 done
+if [[ "${NUM_WORKERS}" -lt 0 ]]; then
+  echo "NUM_WORKERS must be non-negative, got ${NUM_WORKERS}" >&2
+  exit 2
+fi
+if [[ "${PREFETCH_FACTOR}" -le 0 ]]; then
+  echo "PREFETCH_FACTOR must be positive, got ${PREFETCH_FACTOR}" >&2
+  exit 2
+fi
+if [[ "${LOG_INTERVAL}" -le 0 ]]; then
+  echo "LOG_INTERVAL must be positive, got ${LOG_INTERVAL}" >&2
+  exit 2
+fi
 
 echo "=== ObsWorld Stage2 EarthNet Training ==="
 echo "CONFIG=${CONFIG}"
@@ -42,6 +57,9 @@ echo "DATA_ROOT=${DATA_ROOT}"
 echo "MAX_STEPS=${MAX_STEPS}"
 echo "BATCH_SIZE=${BATCH_SIZE}"
 echo "NUM_WORKERS=${NUM_WORKERS}"
+echo "PREFETCH_FACTOR=${PREFETCH_FACTOR}"
+echo "PERSISTENT_WORKERS=${PERSISTENT_WORKERS}"
+echo "LOG_INTERVAL=${LOG_INTERVAL}"
 echo "GPUS=${GPUS}"
 echo "DGH_STATS_PATH=${DGH_STATS_PATH:-<config>}"
 echo "CONDITIONING_STATS_PATH=${CONDITIONING_STATS_PATH:-<config>}"
@@ -140,6 +158,9 @@ if [[ "${GPUS}" -gt 1 ]]; then
     --max-steps "${MAX_STEPS}" \
     --batch-size "${BATCH_SIZE}" \
     --num-workers "${NUM_WORKERS}" \
+    --prefetch-factor "${PREFETCH_FACTOR}" \
+    --persistent-workers "${PERSISTENT_WORKERS}" \
+    --log-interval "${LOG_INTERVAL}" \
     "${EXTRA_ARGS[@]}"
 else
   "${PYTHON_BIN}" train/train_stage2_earthnet.py \
@@ -148,5 +169,8 @@ else
     --max-steps "${MAX_STEPS}" \
     --batch-size "${BATCH_SIZE}" \
     --num-workers "${NUM_WORKERS}" \
+    --prefetch-factor "${PREFETCH_FACTOR}" \
+    --persistent-workers "${PERSISTENT_WORKERS}" \
+    --log-interval "${LOG_INTERVAL}" \
     "${EXTRA_ARGS[@]}"
 fi

@@ -20,6 +20,7 @@ from data.datasets.earthnet2021 import (
     EarthNet2021Dataset,
     _discover_npz_files,
     _load_external_drivers,
+    resize_stage2_v2_context_on_device,
 )
 from data.earthnet_manifest import write_json_atomic
 from data.earthnet_conditioning import (
@@ -210,6 +211,7 @@ def _scan_data_v2(
     issues: List[dict] = []
     issue_count = 0
     tensor_shapes: Dict[str, int] = {}
+    model_tensor_shapes: Dict[str, int] = {}
     dataset = EarthNet2021Dataset(data_cfg)
 
     for index, path in enumerate(files, start=1):
@@ -229,6 +231,18 @@ def _scan_data_v2(
                 if torch.is_tensor(value):
                     shape = str(tuple(value.shape))
                     tensor_shapes[f"{name}:{shape}"] = tensor_shapes.get(f"{name}:{shape}", 0) + 1
+            model_batch = resize_stage2_v2_context_on_device(
+                tensor_batch,
+                context_img_size=int(
+                    data_cfg.context_img_size or data_cfg.model_img_size
+                ),
+            ) if data_cfg.defer_context_resize_to_device else tensor_batch
+            for name in ("x_context", "context_mask"):
+                value = model_batch[name]
+                shape = str(tuple(value.shape))
+                model_tensor_shapes[f"{name}:{shape}"] = (
+                    model_tensor_shapes.get(f"{name}:{shape}", 0) + 1
+                )
             if sample.get("start_date") is None:
                 date_failures += 1
             feature_valid_counts += (sample["D_mask"].numpy() > 0).sum(axis=0)
@@ -288,6 +302,7 @@ def _scan_data_v2(
         "scanned_files": len(files),
         "scan_is_full_split": len(files) == len(all_files),
         "tensor_shapes": tensor_shapes,
+        "model_input_tensor_shapes": model_tensor_shapes,
         "date_parse_failures": date_failures,
         "zero_valid_cop_dem_files": zero_geo_files,
         "cop_dem_valid_fraction": geo_valid_pixels / max(geo_total_pixels, 1),

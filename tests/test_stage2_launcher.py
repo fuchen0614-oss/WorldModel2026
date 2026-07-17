@@ -44,6 +44,9 @@ def test_launcher_propagates_formal_v2_artifacts_to_preflight_and_training(tmp_p
             "MAX_STEPS": "7",
             "BATCH_SIZE": "3",
             "NUM_WORKERS": "0",
+            "PREFETCH_FACTOR": "1",
+            "PERSISTENT_WORKERS": "0",
+            "LOG_INTERVAL": "13",
             "GPUS": "1",
             "PREFLIGHT": "1",
             "PREFLIGHT_MAX_FILES": "11",
@@ -95,6 +98,9 @@ def test_launcher_propagates_formal_v2_artifacts_to_preflight_and_training(tmp_p
         ("--resume-from", "/checkpoints/resume.pt"),
         ("--checkpoint-dir", "/runs/checkpoints"),
         ("--log-dir", "/runs/logs"),
+        ("--prefetch-factor", "1"),
+        ("--persistent-workers", "0"),
+        ("--log-interval", "13"),
     ):
         assert training[training.index(flag) + 1] == value
     assert "--require-manifest" in training

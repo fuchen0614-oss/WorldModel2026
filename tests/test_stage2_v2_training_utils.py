@@ -5,9 +5,13 @@ import pytest
 
 torch = pytest.importorskip("torch")
 
+from data.datasets.earthnet2021 import EarthNet2021Config
 from train.train_stage2_earthnet import (
+    Stage2PerformanceWindow,
+    format_stage2_training_progress,
     move_batch_to_device,
     partition_supervision_for_output,
+    prepare_stage2_batch_for_model,
     select_v2_horizon_indices,
     stage2_supervision_for_output,
 )
@@ -64,3 +68,41 @@ def test_partition_terminal_supervision_stays_outside_model_output():
 
     assert terminal["endpoint_index"].tolist() == [11]
     assert terminal["target"].flatten().tolist() == [11.0]
+
+
+def test_stage2_progress_line_reports_losses_and_pipeline_timing():
+    window = Stage2PerformanceWindow(data_wait_s=1.0, local_sample_count=16, optimizer_updates=2)
+    performance = window.summarize(device=torch.device("cpu"), world_size=1)
+    line = format_stage2_training_progress(
+        step=20,
+        max_steps=100,
+        epoch=3,
+        losses={"total": 1.25, "obs": 1.0, "ndvi": 0.5},
+        learning_rates=[1e-4],
+        performance=performance,
+    )
+
+    assert "train step=20/100 epoch=4" in line
+    assert "loss=1.25000" in line
+    assert "data=0.500s" in line
+    assert "throughput=" in line
+
+
+def test_trainer_prepares_deferred_context_at_model_geometry():
+    data_cfg = EarthNet2021Config(
+        root=".",
+        stage2_protocol="earthnet2021x_path_v2",
+        model_img_size=16,
+        context_img_size=16,
+        defer_context_resize_to_device=True,
+    )
+    raw_batch = {
+        "x_context": torch.ones(2, 10, 4, 8, 8),
+        "context_mask": torch.ones(2, 10, 8, 8),
+    }
+
+    prepared = prepare_stage2_batch_for_model(raw_batch, data_cfg)
+
+    assert tuple(prepared["x_context"].shape) == (2, 10, 4, 16, 16)
+    assert tuple(prepared["context_mask"].shape) == (2, 10, 16, 16)
+    assert tuple(raw_batch["x_context"].shape) == (2, 10, 4, 8, 8)

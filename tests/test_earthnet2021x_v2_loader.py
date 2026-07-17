@@ -12,7 +12,9 @@ xr = pytest.importorskip("xarray")
 from data.datasets.earthnet2021 import (
     EarthNet2021Config,
     EarthNet2021Dataset,
+    _xarray_time_slice_to_thw,
     collate_earthnet2021,
+    resize_stage2_v2_context_on_device,
 )
 from data.earthnet_conditioning import (
     CONDITIONING_DATASET_ID,
@@ -161,3 +163,52 @@ def test_v2_rejects_unsupported_split_instead_of_falling_back_to_dataset_root(tm
     )
     with pytest.raises(ValueError, match="does not support split"):
         EarthNet2021Dataset(config)
+
+
+def test_v2_optical_reader_slices_time_before_materializing_values():
+    source = xr.DataArray(
+        np.arange(150 * 2 * 3, dtype=np.float32).reshape(150, 2, 3),
+        dims=("time", "lat", "lon"),
+    )
+
+    selected = _xarray_time_slice_to_thw(source, "synthetic_s2", slice(4, None, 5))
+
+    assert selected.shape == (30, 2, 3)
+    assert np.array_equal(selected, source.values[4::5])
+
+
+def test_v2_can_defer_context_resize_until_after_batch_transfer(tmp_path):
+    split_dir = tmp_path / "earthnet2021x" / "train" / "34TDP"
+    split_dir.mkdir(parents=True)
+    _write_cube(split_dir / "34TDP_2018-04-28_2018-09-24_000.nc")
+
+    config = EarthNet2021Config(
+        root=str(tmp_path),
+        split="train",
+        data_format="netcdf",
+        stage2_protocol="earthnet2021x_path_v2",
+        file_glob="**/*.nc",
+        model_img_size=16,
+        context_img_size=16,
+        eval_img_size=8,
+        target_img_size=8,
+        geo_img_size=8,
+        defer_context_resize_to_device=True,
+        conditioning_stats=_identity_stats(),
+        use_train_holdout=False,
+        strict=True,
+    )
+    raw_batch = collate_earthnet2021([EarthNet2021Dataset(config)[0]])
+    assert tuple(raw_batch["x_context"].shape) == (1, 10, 4, 8, 8)
+    assert tuple(raw_batch["context_mask"].shape) == (1, 10, 8, 8)
+
+    model_batch = resize_stage2_v2_context_on_device(
+        raw_batch,
+        context_img_size=16,
+    )
+    validate_stage2_v2_batch(model_batch)
+    assert tuple(model_batch["x_context"].shape) == (1, 10, 4, 16, 16)
+    assert tuple(model_batch["context_mask"].shape) == (1, 10, 16, 16)
+    assert tuple(model_batch["x_target"].shape) == (1, 20, 4, 8, 8)
+    # The raw worker output stays native; the model-ready view is a copy.
+    assert tuple(raw_batch["x_context"].shape) == (1, 10, 4, 8, 8)
