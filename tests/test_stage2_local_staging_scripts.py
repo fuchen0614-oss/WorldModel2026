@@ -68,6 +68,7 @@ def test_launcher_exposes_lifecycle_cleanup_guards():
     assert "trap 'on_signal HUP 129' HUP" in text
     assert "cleanup_stage2_earthnet_local_staged.sh" in text
     assert "LOCAL_STAGE_ROOT must be below /tmp" in text
+    assert "launcher initialized" in text
 
 
 def _fake_earthnet_source(tmp_path: Path) -> Path:

@@ -87,6 +87,11 @@ log() {
   printf '[stage2-local] %s %s\n' "$(date '+%F %T')" "$*" | tee -a "${LIFECYCLE_LOG}"
 }
 
+# Write a visible heartbeat before any source-side metadata scan.  On a shared
+# NAS that scan can take noticeable time, and users should not have to infer
+# whether the nohup launcher actually started.
+log "launcher initialized: run_id=${RUN_ID}; source=${SOURCE_DATA_ROOT}; local_stage=${LOCAL_STAGE_ROOT}"
+
 require_file() {
   local label="$1"
   local path="$2"
@@ -103,6 +108,7 @@ else
 fi
 
 SOURCE_DATASET_ROOT="$(resolve_earthnet_dataset_root "${SOURCE_DATA_ROOT}")"
+log "validating shared source, frozen artifacts and local disk before staging"
 [[ -d "${SOURCE_DATASET_ROOT}" ]] || die "shared EarthNet source not found: ${SOURCE_DATASET_ROOT}"
 for split in train iid ood extreme seasonal; do
   [[ -d "${SOURCE_DATASET_ROOT}/${split}" ]] \
@@ -229,6 +235,7 @@ mkdir -p "${LOCAL_STAGE_ROOT}" "${LOCAL_DATA_ROOT}"
 } > "${MARKER_PATH}"
 STAGE_CREATED=1
 
+log "counting shared-source NetCDF files before rsync; this one-time metadata scan may take a short while"
 source_count="$(count_netcdf_files "${SOURCE_DATASET_ROOT}")"
 [[ "${source_count}" =~ ^[0-9]+$ && "${source_count}" -gt 0 ]] \
   || die "shared EarthNet source contains no NetCDF files: ${SOURCE_DATASET_ROOT}"
