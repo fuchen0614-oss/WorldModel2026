@@ -103,44 +103,109 @@ find "$SMOKE_CKPT_DIR" -maxdepth 1 -type f -printf '%f\t%s bytes\n' | sort
 watch -n 2 nvidia-smi
 ```
 
-若速度日志中的 `data` 明显大于 `gpu_compute`，先只把 `NUM_WORKERS` 从 8 提到
-12 重跑这一段 100 step 冒烟，并比较 `throughput`；不要同时改变 batch 和 worker，
-否则无法知道提升来自哪里。`PREFETCH_FACTOR` 保持 1，避免 8 卡在共享盘上预取过多
-大 batch。若 `gpu_compute` 才是主要部分，B64 已经是合理的正式 batch，不要因为显存
-有余就直接改成 B128：B128 会把 200 epoch 的优化器更新数减半，属于训练方案变化。
+若速度日志中的 `data` 明显大于 `gpu_compute`，不要盲目继续增加 worker：8 卡 × 8
+worker 已经有 64 个 NetCDF 读取进程，继续增加可能反而压慢共享 NAS。当前正式 B64
+测速已经观察到 `data` 明显占时，因此主实验应采用下面的**本机盘暂存路线**。它不改变
+模型、DGH、冻结清单或统计量，只改变“从哪里读取同一份 NetCDF 文件”。
 
-如果 `data` 仍远大于 `gpu_compute`，说明共享 NAS 已是主瓶颈；此时再考虑把
-`earthnet2021x/` 无损复制到本机高速盘后重新指向 `DATA_ROOT`。不要在未看性能日志
-前盲目复制 100GB 数据，也不要修改已冻结的 manifest、统计量或 DGH 字段。
+## 5. 正式训练前：EarthNet 本机盘暂存与自动清理
 
-## 5. 正式 200 epoch 主实验命令
+### 5.1 为什么这样做
 
-冒烟测试通过后执行：
+服务器上的 `/tmp` 是本机 `/dev/sda3` 的 ext4 磁盘，当前有约 354GB 可用；完整
+EarthNet2021x 约 106GB，空间足够。暂存启动器会把共享盘的
+`earthnet2021x/` 无损复制到：
+
+```text
+/tmp/$USER_obsworld_stage2_earthnet2021x/EarthNet2021/earthnet2021x/
+```
+
+训练时 `DATA_ROOT` 自动指向上述本地 `EarthNet2021/`；原始共享盘
+`/csy-mix02/.../TrainData/EarthNet2021/` **绝不会被删除或改写**。清单使用相对路径，
+所以不需要重建 protocol、manifest 或 `physical4` 统计量。
+
+这个机制与 Stage1 的 staged data（暂存数据）思路相同，但这是 EarthNet NetCDF 专用
+版本。Stage1.5 的 60k 配置本身仍是直接读 SSL4EO 共享盘，不能直接复用其旧脚本。
+
+### 5.2 自动删除保证与边界
+
+使用 `scripts/run_stage2_earthnet_local_staged.sh` 后：
+
+1. 数据复制成功后才启动 preflight（训练前检查）和训练。
+2. 训练正常结束、报错、`Ctrl-C`（INT）、`kill -TERM`（TERM）或终端关闭（HUP）时，
+   启动器会先终止 Stage2 的完整进程组，再自动调用安全清理脚本删除 `/tmp` 副本。
+3. checkpoint、TensorBoard、训练日志、provenance（运行来源记录）始终保留在
+   `/csy-mix02/.../WorldModel2026/`，不会随数据副本删除。
+4. 若发生 `kill -9`、机器断电或节点被系统回收，shell 无法执行 trap（退出钩子）；此时
+   临时目录会带有专用 marker（标记文件），可用下面的单条恢复命令安全删除。清理脚本
+   只允许删除带 marker 的 `/tmp/...` 目录，且若训练启动器仍在运行会拒绝清理。
+
+不要直接 `rm -rf /tmp/...`，始终使用安全清理脚本：
 
 ```bash
+bash scripts/cleanup_stage2_earthnet_local_staged.sh \
+  --stage-root /tmp/${USER}_obsworld_stage2_earthnet2021x --force
+```
+
+### 5.3 一次性正式启动命令
+
+先停止旧的共享盘正式 run（若仍存在）；当前只跑了很少 step 时，不建议保留它的
+checkpoint 续训。然后在服务器上执行以下命令。`nohup`（退出终端后继续运行）包住的是
+**带自动清理逻辑的启动器**，而不是裸训练命令。
+
+```bash
+cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
+
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export HDF5_USE_FILE_LOCKING=FALSE
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 
-export CHECKPOINT_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_physical4_8gpu_b64_200ep_v2
-export LOG_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_physical4_8gpu_b64_200ep_v2
+export RUN_ID=stage2_physical4_8gpu_b64_200ep_local_$(date +%Y%m%d_%H%M%S)
+export SOURCE_DATA_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
+export LOCAL_STAGE_ROOT=/tmp/${USER}_obsworld_stage2_earthnet2021x
+
+export RUN_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048
+export CONDITIONING_STATS_PATH=$RUN_DIR/conditioning_stats_physical4_v1_train_dev.json
+export MANIFEST_PATH=$RUN_DIR/train_dev.json
+export VALIDATION_MANIFEST_PATH=$RUN_DIR/val_dev.json
+export STAGE15_CHECKPOINT=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage1_5_dual_conditioned_vits_state_bridge_60k/checkpoint_step_60000.pt
+
+export CONFIG=configs/train/stage2_earthnet_v2_direct_physical4.yaml
+export MAX_STEPS=8800 BATCH_SIZE=64 NUM_WORKERS=8 PREFETCH_FACTOR=1
+export PERSISTENT_WORKERS=1 LOG_INTERVAL=50 GPUS=8
+export REQUIRE_MANIFEST=1 PREFLIGHT=1 PREFLIGHT_MAX_FILES=16
+export PREFLIGHT_CHECK_MODEL=1 RUN_TRAIN=1
+
+export CHECKPOINT_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/$RUN_ID
+export LOG_DIR=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/$RUN_ID
 mkdir -p "$CHECKPOINT_DIR" "$LOG_DIR"
 
-CONFIG=configs/train/stage2_earthnet_v2_direct_physical4.yaml \
-DATA_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021 \
-MAX_STEPS=8800 BATCH_SIZE=64 NUM_WORKERS=8 PREFETCH_FACTOR=1 \
-PERSISTENT_WORKERS=1 LOG_INTERVAL=50 GPUS=8 \
-CONDITIONING_STATS_PATH="$STATS" \
-MANIFEST_PATH="$TRAIN_MANIFEST" \
-VALIDATION_MANIFEST_PATH="$VAL_MANIFEST" \
-STAGE15_CHECKPOINT="$STAGE15_CHECKPOINT" \
-CHECKPOINT_DIR="$CHECKPOINT_DIR" LOG_DIR="$LOG_DIR" \
-REQUIRE_MANIFEST=1 PREFLIGHT=1 PREFLIGHT_MAX_FILES=16 \
-PREFLIGHT_CHECK_MODEL=1 RUN_TRAIN=1 \
-PREFLIGHT_OUTPUT="$RUN_DIR/preflight_formal_b64.json" \
-bash run_stage2_earthnet.sh 2>&1 | tee "$LOG_DIR/train_200epoch.log"
+nohup bash scripts/run_stage2_earthnet_local_staged.sh \
+  > "$LOG_DIR/launcher.log" 2>&1 &
+echo $! | tee "$LOG_DIR/launcher.pid"
+```
+
+复制大约 106GB，会先花一段时间；`launcher.log` 显示复制和自动清理生命周期，真正的
+训练指标写入 `train_200epoch.log`。分别查看：
+
+```bash
+tail -f "$LOG_DIR/local_stage_lifecycle.log"
+tail -f "$LOG_DIR/train_200epoch.log"
+```
+
+若需要主动停止，优先对启动器 PID 发送 `TERM`，不要先用 `kill -9`：
+
+```bash
+kill -TERM "$(cat "$LOG_DIR/launcher.pid")"
+```
+
+然后等待 `local_stage_lifecycle.log` 出现 `cleanup SUCCESS`，并确认：
+
+```bash
+test ! -e "$LOCAL_STAGE_ROOT" && echo "local staged data removed"
 ```
 
 ## 6. 训练完成后的核对
