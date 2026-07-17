@@ -193,6 +193,35 @@ def test_factory_builds_shared_open_loop_rollout_wrapper():
     assert output["pred"].shape == (1, 2, 4, 16, 16)
 
 
+def test_factory_builds_causal_observation_correction_wrapper():
+    config = _tiny_config()
+    config["model"]["forecast_mode"] = "rollout_t5_24d_correction"
+    config["model"]["observation_correction"] = {
+        "strategy": "u",
+        "hidden_dim": 8,
+        "staleness_scale_days": 100.0,
+    }
+    model = create_obsworld_v2_model(config).eval()
+    batch = _batch()
+    corrections = {
+        "observations": batch["x_target"],
+        "observation_mask": batch["target_mask"],
+        "reveal_mask": torch.zeros(1, 20),
+    }
+    corrections["reveal_mask"][:, 2] = 1.0
+    output = model(
+        model_input_view(batch),
+        selected_steps=list(range(4)),
+        max_rollout_steps=4,
+        correction_inputs=corrections,
+    )
+    assert model.forecast_mode == "rollout_t5_24d_correction"
+    assert output["pred"].shape == (1, 4, 4, 16, 16)
+    assert output["correction_effective_q"].shape == (1, 4, 4)
+    assert torch.allclose(output["z_rollout"][:, 0], output["z_posterior"][:, 0])
+    assert float(output["correction_effective_q"][:, 2].max()) > 0.0
+
+
 def test_factory_builds_partition_wrapper_without_new_dynamics_parameters():
     config = _tiny_config()
     config["model"]["forecast_mode"] = "obsworld_partition_24d"

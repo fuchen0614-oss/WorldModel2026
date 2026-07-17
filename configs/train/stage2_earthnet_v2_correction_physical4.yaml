@@ -1,0 +1,28 @@
+# Conditional Observation Correction U run.
+# This configuration is deliberately separate from the frozen no-update
+# Rollout-P4 checkpoint.  It keeps the same physical4 data/model contract,
+# uses full 20-step open-loop forecasts, and samples the pre-reveal/one-reveal
+# schedule in train/observation_correction_schedule.py.
+_base_: stage2_earthnet_v2_rollout_physical4_h200_200ep.yaml
+
+model:
+  forecast_mode: rollout_t5_physical4_correction
+  observation_correction:
+    strategy: u
+    hidden_dim: 128
+    staleness_scale_days: 100.0
+
+training:
+  open_loop: true
+  teacher_forcing_future_state: false
+  horizons_per_sample: 0
+  observation_correction:
+    reveal_probability: 0.5
+    supervise_all_horizons: true
+  # U is not introduced before a full-20 Rollout-P4 is available.  The
+  # first run is intentionally full-length so pre/post-reveal windows are not
+  # confounded with rollout-length curriculum.
+  rollout_curriculum: null
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_correction_physical4
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_correction_physical4

@@ -5,7 +5,23 @@ from __future__ import annotations
 from typing import Any, Mapping, Sequence
 
 
-ROLLOUT_FORECAST_MODES = frozenset({"rollout", "rollout_t5", "rollout_t5_24d", "rollout_t5_physical4"})
+ROLLOUT_FORECAST_MODES = frozenset({
+    "rollout",
+    "rollout_t5",
+    "rollout_t5_24d",
+    "rollout_t5_physical4",
+    # Observation-correction modes keep the same open-loop transition
+    # contract.  The correction is an optional post-prediction update and
+    # must never turn the underlying rollout into teacher forcing.
+    "rollout_t5_24d_correction",
+    "rollout_t5_physical4_correction",
+})
+DIRECT_FORECAST_MODES = frozenset({
+    "direct_path",
+    "direct_path_24d",
+    "direct24",
+    "direct_path_physical4",
+})
 PARTITION_FORECAST_MODES = frozenset(
     {"obsworld_partition_24d", "obsworld_partition_physical4", "rollout_partition", "partition"}
 )
@@ -13,6 +29,19 @@ PARTITION_FORECAST_MODES = frozenset(
 
 def is_rollout_forecast_mode(mode: object) -> bool:
     return str(mode).strip().lower() in ROLLOUT_FORECAST_MODES | PARTITION_FORECAST_MODES
+
+
+def is_observation_correction_mode(mode: object) -> bool:
+    """Return whether a model uses the optional visibility-safe U update."""
+
+    return str(mode).strip().lower() in {
+        "rollout_t5_24d_correction",
+        "rollout_t5_physical4_correction",
+    }
+
+
+def is_direct_forecast_mode(mode: object) -> bool:
+    return str(mode).strip().lower() in DIRECT_FORECAST_MODES
 
 
 def is_partition_forecast_mode(mode: object) -> bool:
@@ -165,6 +194,7 @@ def curriculum_checkpoint_state(config: Mapping[str, Any], optimizer_step: int) 
     """Small explicit provenance block stored alongside each Stage2 checkpoint."""
 
     model = config.get("model", {})
+    mode = str(model.get("forecast_mode", model.get("mode", "direct")))
     partition_settings = partition_training_settings(config)
     raw_partition_loss = config.get("loss", {}).get("partition", {})
     if raw_partition_loss is None:
@@ -172,10 +202,13 @@ def curriculum_checkpoint_state(config: Mapping[str, Any], optimizer_step: int) 
     if partition_settings is not None and not isinstance(raw_partition_loss, Mapping):
         raise TypeError("loss.partition must be a mapping for obsworld_partition_24d")
     return {
-        "forecast_mode": str(model.get("forecast_mode", model.get("mode", "direct"))),
+        "forecast_mode": mode,
+        "observation_correction": dict(model.get("observation_correction", {}))
+        if is_observation_correction_mode(mode)
+        else None,
         "optimizer_step": int(optimizer_step),
         "rollout_length": current_rollout_length(config, optimizer_step),
-        "schedule": list(config.get("training", {}).get("rollout_curriculum", [])),
+        "schedule": list(config.get("training", {}).get("rollout_curriculum") or []),
         "partition_schedule": partition_settings,
         "partition_loss_scale": partition_loss_scale(config, optimizer_step),
         "partition_loss": dict(raw_partition_loss) if partition_settings is not None else None,

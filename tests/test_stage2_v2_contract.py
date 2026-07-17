@@ -6,6 +6,7 @@ import torch
 from data.stage2_contract import (
     assert_model_batch_has_no_evaluation_fields,
     model_input_view,
+    observation_correction_view,
     validate_stage2_batch,
     validate_stage2_v2_batch,
 )
@@ -72,3 +73,21 @@ def test_v2_contract_accepts_physical4_layout_when_explicitly_expected():
     validate_stage2_v2_batch(batch, expected_driver_dim=4)
     with pytest.raises(ValueError, match="configured driver encoder"):
         validate_stage2_v2_batch(batch, expected_driver_dim=24)
+
+
+def test_observation_correction_view_is_explicit_and_not_part_of_model_view():
+    values = observation_correction_view(
+        {
+            "observations": torch.zeros(2, 20, 4, 8, 8),
+            "observation_mask": torch.ones(2, 20, 8, 8),
+            "reveal_mask": torch.zeros(2, 20),
+        }
+    )
+    assert set(values) == {"observations", "observation_mask", "reveal_mask"}
+    with pytest.raises(KeyError, match="missing fields"):
+        observation_correction_view(
+            {
+                "observations": torch.zeros(2, 20, 4, 8, 8),
+                "observation_mask": torch.ones(2, 20, 8, 8),
+            }
+        )

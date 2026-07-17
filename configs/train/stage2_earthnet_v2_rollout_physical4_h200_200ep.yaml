@@ -1,0 +1,29 @@
+# Matched physical4 open-loop rollout for the formal 8×H200 route.
+#
+# Direct-P4 and this file share the complete data/model/loss contract.  The
+# only deliberate change is recursive state propagation plus an explicit
+# 200-epoch curriculum.  At 8 GPUs × 64 samples/GPU the frozen train split
+# has 44 optimizer updates per epoch, hence 8,800 updates for 200 epochs.
+_base_: stage2_earthnet_v2_direct_physical4.yaml
+
+model:
+  forecast_mode: rollout_t5_physical4
+
+training:
+  open_loop: true
+  teacher_forcing_future_state: false
+  # Provisional H200 schedule: each transition length is trained long enough
+  # to settle before the next one, and full 20-step rollout is active for the
+  # final 40 epochs.  This is a reproducible starting point, not a claim that
+  # the schedule is globally optimal; compare against the frozen Direct-P4
+  # checkpoint before promoting it to a paper result.
+  rollout_curriculum:
+    - {start_step: 0, length: 2}
+    - {start_step: 1760, length: 4}
+    - {start_step: 3520, length: 8}
+    - {start_step: 5280, length: 12}
+    - {start_step: 7040, length: 20}
+  max_steps: 8800
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_rollout_physical4_h200_200ep
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_rollout_physical4_h200_200ep

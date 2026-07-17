@@ -34,6 +34,29 @@ def test_partition_config_inherits_the_identical_rollout_contract():
     assert partition["training"]["partition"]["enabled"] is True
 
 
+def test_physical4_h200_rollout_and_correction_configs_are_explicitly_matched():
+    root = Path(__file__).resolve().parents[1]
+    direct = load_config(root / "configs/train/stage2_earthnet_v2_direct_physical4.yaml")
+    rollout = load_config(
+        root / "configs/train/stage2_earthnet_v2_rollout_physical4_h200_200ep.yaml"
+    )
+    correction = load_config(
+        root / "configs/train/stage2_earthnet_v2_correction_physical4.yaml"
+    )
+    vanilla = load_config(
+        root / "configs/train/stage2_earthnet_v2_vanilla_filter_physical4.yaml"
+    )
+    assert rollout["data"] == direct["data"]
+    assert rollout["model"]["forecast_mode"] == "rollout_t5_physical4"
+    assert rollout["training"]["rollout_curriculum"][-1]["length"] == 20
+    assert correction["data"] == direct["data"]
+    assert correction["model"]["forecast_mode"] == "rollout_t5_physical4_correction"
+    assert correction["model"]["observation_correction"]["strategy"] == "u"
+    assert vanilla["data"] == direct["data"]
+    assert vanilla["model"]["observation_correction"]["strategy"] == "vanilla_filter"
+    assert vanilla["model"]["observation_correction"]["hidden_dim"] == 128
+
+
 def test_config_inheritance_rejects_cycles(tmp_path):
     first = tmp_path / "first.yaml"
     second = tmp_path / "second.yaml"

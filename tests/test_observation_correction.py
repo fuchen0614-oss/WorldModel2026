@@ -5,6 +5,7 @@ import torch
 from models.dynamics.observation_correction import (
     ObservationCorrectionCell,
     ObservationCorrectionRollout,
+    VanillaFilterCell,
     update_staleness,
 )
 
@@ -88,3 +89,13 @@ def test_unrevealed_future_features_and_masks_cannot_change_rollout():
     assert torch.equal(first["age_posteriors"], second["age_posteriors"])
     assert torch.equal(first["final_state"], second["final_state"])
 
+
+def test_vanilla_filter_has_exact_no_update_at_zero_support():
+    torch.manual_seed(4)
+    cell = VanillaFilterCell(state_dim=5, feature_dim=3, hidden_dim=7)
+    state = torch.randn(2, 4, 5)
+    residual = torch.randn(2, 4, 3)
+    age = torch.ones(2, 4)
+    output = cell(state, residual, torch.zeros(2, 4), age)
+    assert torch.equal(output["state"], state)
+    assert torch.equal(output["effective_q"], torch.zeros(2, 4))

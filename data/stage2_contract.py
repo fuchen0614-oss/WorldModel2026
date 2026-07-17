@@ -62,6 +62,13 @@ STAGE2_FIELD_SPECS: Tuple[Stage2FieldSpec, ...] = (
     Stage2FieldSpec("C_path", "5-day midpoint calendar path", True, "[B,30,2]", "sin/cos day-of-year"),
     Stage2FieldSpec("delta_t_path", "duration of each conditioning interval", True, "[B,30]", "days"),
     Stage2FieldSpec("D_valid_day_count", "audit-only raw weather valid-day count", False, "[B,30,8] or [B,30,4]", "days; not a model input"),
+    # Observation-correction inputs are deliberately separate from the normal
+    # model view.  During training/evaluation they are generated from an
+    # explicit reveal schedule; unrevealed future targets must never enter the
+    # Direct/Rollout state machine.
+    Stage2FieldSpec("observations", "revealed future optical observation", False, "[B,T,C,H,W]", "reflectance; correction-only"),
+    Stage2FieldSpec("observation_mask", "revealed clear-pixel support", False, "[B,T,H,W]", "binary; correction-only"),
+    Stage2FieldSpec("reveal_mask", "future acquisition reveal schedule", False, "[B,T]", "binary; correction-only"),
 )
 
 REQUIRED_STAGE2_FIELDS = (
@@ -84,6 +91,7 @@ OPTIONAL_MODEL_INPUT_FIELDS = (
 )
 TRAINING_SUPERVISION_FIELDS = ("x_target", "target_mask")
 EVALUATION_ONLY_FIELDS = ("official_eval_mask", "official_eval_eligibility")
+OBSERVATION_CORRECTION_FIELDS = ("observations", "observation_mask", "reveal_mask")
 
 
 STAGE2_V2_REQUIRED_FIELDS = (
@@ -173,6 +181,42 @@ def training_supervision_view(
     if missing:
         raise KeyError(f"Stage2 training supervision is missing fields: {missing}")
     return {name: batch[name] for name in TRAINING_SUPERVISION_FIELDS}
+
+
+def observation_correction_view(
+    batch: Mapping[str, torch.Tensor],
+) -> dict[str, torch.Tensor]:
+    """Return only explicitly revealed observations for the U update.
+
+    This helper is intentionally opt-in.  ``model_input_view`` never includes
+    these fields, which keeps the no-update Direct/Rollout paths causally
+    identical even when a loader batch carries future supervision tensors.
+    """
+
+    missing = [name for name in OBSERVATION_CORRECTION_FIELDS if name not in batch]
+    if missing:
+        raise KeyError(f"Observation-correction inputs are missing fields: {missing}")
+    observations = batch["observations"]
+    observation_mask = batch["observation_mask"]
+    reveal_mask = batch["reveal_mask"]
+    if not isinstance(observations, torch.Tensor) or observations.dim() != 5:
+        raise ValueError("observations must be a tensor with shape [B,T,C,H,W]")
+    if not isinstance(observation_mask, torch.Tensor) or observation_mask.shape != (
+        observations.shape[0], observations.shape[1], observations.shape[-2], observations.shape[-1]
+    ):
+        raise ValueError("observation_mask must match observations as [B,T,H,W]")
+    if not isinstance(reveal_mask, torch.Tensor) or reveal_mask.shape not in {
+        (observations.shape[0], observations.shape[1]),
+        (observations.shape[0], observations.shape[1], 1),
+    }:
+        raise ValueError("reveal_mask must be [B,T] or [B,T,1]")
+    if not torch.isfinite(reveal_mask).all() or (reveal_mask < 0).any() or (reveal_mask > 1).any():
+        raise ValueError("reveal_mask must lie in [0,1]")
+    return {
+        "observations": observations,
+        "observation_mask": observation_mask,
+        "reveal_mask": reveal_mask.reshape(observations.shape[0], observations.shape[1]),
+    }
 
 
 def evaluation_only_view(

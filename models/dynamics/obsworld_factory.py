@@ -31,6 +31,7 @@ from .obsworld_core import ObsWorldV2Core
 from .obsworld_direct_path import ObsWorldDirectPathModel
 from .obsworld_partition import ObsWorldPartitionModel
 from .obsworld_rollout import ObsWorldRolloutModel
+from .obsworld_correction import ObsWorldCorrectionModel
 from .state_dynamics_module import StateDynamicsModule
 
 
@@ -39,6 +40,10 @@ V2_DIRECT_MODES = frozenset({
 })
 V2_ROLLOUT_MODES = frozenset({
     "rollout", "rollout_t5", "rollout_t5_24d", "rollout_t5_physical4",
+})
+V2_CORRECTION_MODES = frozenset({
+    "rollout_t5_24d_correction",
+    "rollout_t5_physical4_correction",
 })
 V2_PARTITION_MODES = frozenset(
     {"obsworld_partition_24d", "obsworld_partition_physical4", "rollout_partition", "partition"}
@@ -70,10 +75,11 @@ def create_obsworld_v2_model(
             f"got {family!r}"
         )
     mode = str(model_cfg.get("forecast_mode", "direct_path_24d")).lower()
-    if mode not in V2_DIRECT_MODES | V2_ROLLOUT_MODES | V2_PARTITION_MODES:
+    if mode not in V2_DIRECT_MODES | V2_ROLLOUT_MODES | V2_CORRECTION_MODES | V2_PARTITION_MODES:
         raise ValueError(
             "Stage2-v2 currently implements Direct24, five-day open-loop "
-            "rollout, and 10-day-vs-5+5 partition rollout; "
+            "rollout, observation-correction rollout, and 10-day-vs-5+5 "
+            "partition rollout; "
             f"unsupported forecast_mode={mode!r}"
         )
     driver_protocol = str(model_cfg.get("driver_protocol", "full24")).lower()
@@ -181,6 +187,22 @@ def create_obsworld_v2_model(
         wrapper_cls = ObsWorldDirectPathModel
     elif mode in V2_ROLLOUT_MODES:
         wrapper_cls = ObsWorldRolloutModel
+    elif mode in V2_CORRECTION_MODES:
+        correction_cfg = model_cfg.get("observation_correction", {})
+        if not isinstance(correction_cfg, dict):
+            raise TypeError("model.observation_correction must be a mapping")
+        model = ObsWorldCorrectionModel(
+            core=core,
+            transition=transition,
+            forecast_mode=mode,
+            future_start_index=future_start_index,
+            target_steps=target_steps,
+            strategy=str(correction_cfg.get("strategy", "u")),
+            correction_hidden_dim=int(correction_cfg.get("hidden_dim", 128)),
+            staleness_scale_days=float(correction_cfg.get("staleness_scale_days", 100.0)),
+        )
+        _configure_v2_freezing(model, model_cfg)
+        return model.to(device)
     else:
         wrapper_cls = ObsWorldPartitionModel
     model = wrapper_cls(

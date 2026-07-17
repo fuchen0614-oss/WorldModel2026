@@ -77,11 +77,14 @@ from eval.forecast_metrics import ForecastMetricAccumulator
 from train.stage2_curriculum import (
     curriculum_checkpoint_state,
     current_rollout_length,
+    is_direct_forecast_mode,
     is_partition_forecast_mode,
+    is_observation_correction_mode,
     is_rollout_forecast_mode,
     partition_loss_scale,
     partition_training_settings,
 )
+from train.observation_correction_schedule import build_observation_correction_inputs
 from train.stage2_checkpoint import (
     EpochRandomSampler,
     Stage2DataPosition,
@@ -371,6 +374,7 @@ def forward_stage2_model(
     max_rollout_steps: Optional[int] = None,
     partition_start: Optional[int] = None,
     detach_partition_start: bool = True,
+    correction_inputs: Optional[dict[str, torch.Tensor]] = None,
 ) -> dict:
     """Forward only the protocol-approved batch partition through the model."""
 
@@ -378,7 +382,7 @@ def forward_stage2_model(
     include_targets = bool(getattr(raw_model, "compute_latent_targets", False))
     inputs = model_input_view(batch, include_training_targets=include_targets)
     forecast_mode = getattr(raw_model, "forecast_mode", None)
-    if forecast_mode == "direct_path_24d":
+    if is_direct_forecast_mode(forecast_mode):
         if max_rollout_steps is not None or partition_start is not None:
             raise ValueError("Direct24 does not accept rollout or partition arguments")
         return model(inputs, selected_steps=selected_steps)
@@ -389,6 +393,15 @@ def forward_stage2_model(
             max_rollout_steps=max_rollout_steps,
             partition_start=partition_start,
             detach_partition_start=detach_partition_start,
+        )
+    if is_observation_correction_mode(forecast_mode):
+        if partition_start is not None:
+            raise ValueError("Observation correction cannot be combined with a partition branch")
+        return model(
+            inputs,
+            selected_steps=selected_steps,
+            max_rollout_steps=max_rollout_steps,
+            correction_inputs=correction_inputs,
         )
     if is_rollout_forecast_mode(forecast_mode):
         if partition_start is not None:
@@ -996,8 +1009,17 @@ def validate_stage2(
     data_cfg: EarthNet2021Config,
     device: torch.device,
     max_batches: int = 0,
+    correction_config: Optional[dict] = None,
+    correction_seed: int = 42,
 ) -> dict:
-    """Run deterministic held-out validation on the main process."""
+    """Run deterministic held-out validation on the main process.
+
+    Observation-correction models use the same fixed reveal contract as the
+    training/evaluation helpers.  Keeping this schedule here matters because
+    ``checkpoint_best.pt`` must compare U checkpoints under a deterministic
+    U protocol, rather than silently selecting them with the no-reveal path.
+    Direct and plain Rollout models retain the original validation path.
+    """
 
     was_training = model.training
     model.eval()
@@ -1007,6 +1029,16 @@ def validate_stage2(
         red_index=data_cfg.band_spec.red_index,
         nir_index=data_cfg.band_spec.nir_index,
     )
+    raw_model = model.module if isinstance(model, DDP) else model
+    correction_mode = is_observation_correction_mode(
+        getattr(raw_model, "forecast_mode", None)
+    )
+    correction_generator = (
+        torch.Generator(device="cpu").manual_seed(int(correction_seed))
+        if correction_mode
+        else None
+    )
+    correction_config = correction_config or {}
     for batch_index, batch in enumerate(loader):
         if max_batches > 0 and batch_index >= max_batches:
             break
@@ -1017,8 +1049,22 @@ def validate_stage2(
             if device.type == "cuda"
             else torch.autocast(device_type="cpu", enabled=False)
         )
+        correction_inputs = None
+        if correction_mode:
+            correction_inputs = build_observation_correction_inputs(
+                batch,
+                rollout_steps=batch["x_target"].shape[1],
+                generator=correction_generator,
+                reveal_probability=float(
+                    correction_config.get("reveal_probability", 0.5)
+                ),
+            )
         with amp:
-            out = forward_stage2_model(model, batch)
+            out = forward_stage2_model(
+                model,
+                batch,
+                correction_inputs=correction_inputs,
+            )
             supervision = stage2_supervision_for_output(batch, out)
             losses = loss_fn(
                 out["pred"],
@@ -1564,6 +1610,7 @@ def main():
             expected_curriculum = curriculum_checkpoint_state(config, optimizer_step)
             for name in (
                 "forecast_mode",
+                "observation_correction",
                 "rollout_length",
                 "schedule",
                 "partition_schedule",
@@ -1718,9 +1765,13 @@ def main():
             selected_steps = None
             max_rollout_steps = None
             partition_start = None
+            correction_inputs = None
             partition_scale = 0.0
             if is_stage2_v2_batch(batch):
                 raw_model = model.module if isinstance(model, DDP) else model
+                correction_mode = is_observation_correction_mode(
+                    getattr(raw_model, "forecast_mode", None)
+                )
                 rollout_mode = is_rollout_forecast_mode(
                     getattr(raw_model, "forecast_mode", None)
                 )
@@ -1733,12 +1784,30 @@ def main():
                     else batch["x_target"].shape[1]
                 )
                 max_rollout_steps = available_steps if rollout_mode else None
-                selected_steps = select_v2_horizon_indices(
-                    available_steps,
-                    horizons_per_sample,
-                    device=device,
-                    always_include_last=True,
+                correction_cfg = config.get("training", {}).get(
+                    "observation_correction", {}
                 )
+                supervise_all = correction_mode and bool(
+                    correction_cfg.get("supervise_all_horizons", True)
+                )
+                selected_steps = (
+                    None
+                    if supervise_all
+                    else select_v2_horizon_indices(
+                        available_steps,
+                        horizons_per_sample,
+                        device=device,
+                        always_include_last=True,
+                    )
+                )
+                if correction_mode:
+                    correction_inputs = build_observation_correction_inputs(
+                        batch,
+                        rollout_steps=available_steps,
+                        reveal_probability=float(
+                            correction_cfg.get("reveal_probability", 0.5)
+                        ),
+                    )
                 if partition_mode:
                     partition_scale = partition_loss_scale(config, optimizer_step)
                     if partition_scale > 0.0:
@@ -1768,6 +1837,7 @@ def main():
                                 "detach_partition_start", True
                             )
                         ),
+                        correction_inputs=correction_inputs,
                     )
                     supervision = stage2_supervision_for_output(batch, out)
                     losses = loss_fn(
@@ -1948,6 +2018,10 @@ def main():
                             validation_data_cfg,
                             device,
                             max_batches=int(validation_cfg.get("max_batches", 0)),
+                            correction_config=config.get("training", {}).get(
+                                "observation_correction", {}
+                            ),
+                            correction_seed=seed,
                         )
                         metric_name = best_validation["metric"]
                         if metric_name not in validation_metrics:

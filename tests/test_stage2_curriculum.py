@@ -8,6 +8,7 @@ from train.stage2_curriculum import (
     partition_loss_scale,
     partition_training_settings,
     rollout_length_for_step,
+    is_direct_forecast_mode,
 )
 
 
@@ -101,3 +102,27 @@ def test_physical4_rollout_and_partition_modes_use_same_curriculum():
     }
     assert partition_loss_scale(partition, 1) == 0.0
     assert partition_loss_scale(partition, 3) == 0.5
+
+
+def test_physical4_direct_mode_uses_the_direct_dispatch_path():
+    assert is_direct_forecast_mode("direct_path_physical4")
+
+
+def test_observation_correction_checkpoint_state_accepts_full20_null_schedule():
+    config = {
+        "model": {
+            "forecast_mode": "rollout_t5_physical4_correction",
+            "target_steps": 20,
+            "observation_correction": {"strategy": "u", "hidden_dim": 128},
+        },
+        "training": {
+            "open_loop": True,
+            "teacher_forcing_future_state": False,
+            "rollout_curriculum": None,
+        },
+    }
+    checkpoint = curriculum_checkpoint_state(config, 0)
+    assert checkpoint["forecast_mode"] == "rollout_t5_physical4_correction"
+    assert checkpoint["rollout_length"] == 20
+    assert checkpoint["schedule"] == []
+    assert checkpoint["observation_correction"]["strategy"] == "u"

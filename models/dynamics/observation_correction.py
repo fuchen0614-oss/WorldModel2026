@@ -196,6 +196,86 @@ class ObservationCorrectionCell(nn.Module):
         }
 
 
+class VanillaFilterCell(nn.Module):
+    """Capacity-matched additive filter baseline for the U ablation.
+
+    This intentionally has no learned visibility gate.  It receives the same
+    state/residual/support/staleness inputs as :class:`ObservationCorrectionCell`
+    and applies a single learned update scaled by ``effective_q``.  The
+    wrapper can therefore evaluate ``vanilla_filter`` without changing the
+    data contract.  Its parameter count is reported by the caller rather than
+    silently presented as a trained scientific baseline.
+    """
+
+    def __init__(self, *, state_dim: int, feature_dim: int, hidden_dim: int = 128) -> None:
+        super().__init__()
+        if state_dim <= 0 or feature_dim <= 0 or hidden_dim <= 0:
+            raise ValueError("state_dim, feature_dim and hidden_dim must be positive")
+        self.state_dim = int(state_dim)
+        self.feature_dim = int(feature_dim)
+        self.hidden_dim = int(hidden_dim)
+        self.state_norm = nn.LayerNorm(self.state_dim)
+        self.update = nn.Sequential(
+            nn.Linear(self.state_dim + self.feature_dim + 2, hidden_dim),
+            nn.GELU(),
+            nn.Linear(hidden_dim, self.state_dim),
+        )
+
+    def forward(
+        self,
+        state_prior: torch.Tensor,
+        residual: torch.Tensor,
+        q_obs: torch.Tensor,
+        staleness_prior: torch.Tensor,
+        reveal: Optional[torch.Tensor] = None,
+    ) -> dict[str, torch.Tensor]:
+        if state_prior.dim() != 3:
+            raise ValueError(f"state_prior must be [B,N,D], got {tuple(state_prior.shape)}")
+        batch, tokens, state_dim = state_prior.shape
+        if state_dim != self.state_dim:
+            raise ValueError(f"state_prior last dim must be {self.state_dim}, got {state_dim}")
+        if residual.shape != (batch, tokens, self.feature_dim):
+            raise ValueError(
+                "residual must be [B,N,feature_dim], got "
+                f"{tuple(residual.shape)} for B={batch}, N={tokens}, F={self.feature_dim}"
+            )
+        if staleness_prior.shape != (batch, tokens):
+            raise ValueError(f"staleness_prior must be [B,N], got {tuple(staleness_prior.shape)}")
+        q = _token_scalar(q_obs, batch=batch, tokens=tokens, name="q_obs")
+        _validate_finite_range(q, name="q_obs")
+        if reveal is None:
+            reveal_tokens = torch.ones_like(q)
+        else:
+            reveal_tokens = _token_scalar(
+                reveal.to(device=state_prior.device, dtype=state_prior.dtype),
+                batch=batch,
+                tokens=tokens,
+                name="reveal",
+            )
+            _validate_finite_range(reveal_tokens, name="reveal")
+        effective_q = q * reveal_tokens
+        clean_residual = torch.nan_to_num(residual, nan=0.0, posinf=0.0, neginf=0.0)
+        clean_staleness = torch.nan_to_num(staleness_prior, nan=0.0, posinf=0.0, neginf=0.0)
+        features = torch.cat(
+            [
+                self.state_norm(state_prior),
+                clean_residual,
+                effective_q.unsqueeze(-1),
+                clean_staleness.unsqueeze(-1),
+            ],
+            dim=-1,
+        )
+        delta = self.update(features)
+        candidate = state_prior + effective_q.unsqueeze(-1) * delta
+        posterior = torch.where(effective_q.unsqueeze(-1) > 0, candidate, state_prior)
+        return {
+            "state": posterior,
+            "gate": torch.ones_like(effective_q).unsqueeze(-1),
+            "delta": delta,
+            "effective_q": effective_q,
+        }
+
+
 class ObservationCorrectionRollout(nn.Module):
     """Predict then optionally correct a sequence of belief states.
 
@@ -311,4 +391,3 @@ class ObservationCorrectionRollout(nn.Module):
             "effective_q": torch.stack(effective_qs, dim=1),
             "gate": torch.stack(gates, dim=1),
         }
-

@@ -1,0 +1,14 @@
+# Capacity-matched additive filter ablation for the U comparison.
+# Train this separately from U; Restart and No-update are inference-only
+# strategies evaluated from the selected U checkpoint.
+_base_: stage2_earthnet_v2_correction_physical4.yaml
+
+model:
+  forecast_mode: rollout_t5_physical4_correction
+  observation_correction:
+    strategy: vanilla_filter
+    hidden_dim: 128
+    staleness_scale_days: 100.0
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_vanilla_filter_physical4
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_vanilla_filter_physical4
