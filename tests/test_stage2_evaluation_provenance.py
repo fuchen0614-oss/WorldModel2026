@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from pathlib import Path
 
 import pytest
@@ -79,6 +80,37 @@ def test_contract_rejects_changed_forecast_mode_without_explicit_override():
     )
     assert overridden["override_used"]
     assert not overridden["matches"]
+
+
+def test_contract_rejects_physical_dgh_field_order_drift():
+    checkpoint_config = _config()
+    checkpoint_config["protocol"].update(
+        {
+            "driver_protocol": "physical4_v1",
+            "physical_raw_variables": ["rr", "tg", "hu", "qq"],
+            "d_feature_names": [
+                "precip_sum_5d",
+                "temp_mean_5d",
+                "vpd_mean_5d",
+                "srad_sum_5d",
+            ],
+        }
+    )
+    checkpoint_config["data"]["driver_protocol"] = "physical4_v1"
+    checkpoint_config["model"]["driver_protocol"] = "physical4_v1"
+    runtime_config = copy.deepcopy(checkpoint_config)
+    runtime_config["protocol"]["d_feature_names"] = [
+        "temp_mean_5d",
+        "precip_sum_5d",
+        "vpd_mean_5d",
+        "srad_sum_5d",
+    ]
+
+    with pytest.raises(ValueError, match="d_feature_names"):
+        verify_checkpoint_contract(
+            {"config": checkpoint_config},
+            runtime_config,
+        )
 
 
 def test_prediction_record_digest_is_stable_and_tracks_content(tmp_path):

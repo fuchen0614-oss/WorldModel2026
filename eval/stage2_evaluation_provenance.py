@@ -34,6 +34,7 @@ _DATA_CONTRACT_KEYS = (
     "dataset_protocol",
     "evaluation_protocol",
     "stage2_protocol",
+    "driver_protocol",
     "file_glob",
     "context_frames",
     "target_frames",
@@ -101,6 +102,30 @@ def stage2_evaluation_contract(config: Mapping[str, Any]) -> dict[str, Any]:
             "dataset_protocol": data.get("dataset_protocol"),
             "stage2_protocol": data.get("stage2_protocol"),
             "evaluation_protocol": data.get("evaluation_protocol"),
+            # Keep the physical DGH schema in the checkpoint/evaluator
+            # contract.  The model's input dimension alone cannot detect a
+            # permutation of four equally sized weather fields.
+            "driver_protocol": protocol.get(
+                "driver_protocol",
+                model.get("driver_protocol", data.get("driver_protocol")),
+            )
+            if isinstance(protocol, Mapping)
+            else model.get("driver_protocol", data.get("driver_protocol")),
+            "physical_raw_variables": protocol.get("physical_raw_variables")
+            if isinstance(protocol, Mapping)
+            else None,
+            "d_feature_names": protocol.get("d_feature_names")
+            if isinstance(protocol, Mapping)
+            else None,
+            "eobs_variables": protocol.get("eobs_variables")
+            if isinstance(protocol, Mapping)
+            else None,
+            "eobs_aggregations": protocol.get("eobs_aggregations")
+            if isinstance(protocol, Mapping)
+            else None,
+            "dem_variable": protocol.get("dem_variable")
+            if isinstance(protocol, Mapping)
+            else None,
         },
         "data": {
             key: copy.deepcopy(data[key])
