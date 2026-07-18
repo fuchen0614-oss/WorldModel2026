@@ -42,6 +42,7 @@ from train.train_stage2_earthnet import (
     load_config,
     load_stage2_model_state,
     move_batch_to_device,
+    prepare_stage2_batch_for_model,
 )
 
 
@@ -166,6 +167,10 @@ def main() -> None:
     with torch.no_grad():
         for batch in tqdm(loader, desc=f"predict EarthNet {args.split}"):
             batch = move_batch_to_device(batch, device)
+            # Mirror the trainer: when defer_context_resize_to_device is set the
+            # loader returns native context rasters, so restore the encoder input
+            # size on-device before the model, exactly as training/validation do.
+            batch = prepare_stage2_batch_for_model(batch, data_cfg)
             pred = forward_stage2_model(model, batch)["pred"].float().clamp(0, 1)
             if pred.shape[1] != target_steps:
                 raise RuntimeError(

@@ -36,6 +36,7 @@ from train.train_stage2_earthnet import (
     load_config,
     load_stage2_model_state,
     move_batch_to_device,
+    prepare_stage2_batch_for_model,
     stage2_supervision_for_output,
 )
 
@@ -125,6 +126,9 @@ def main():
     with torch.no_grad():
         for batch in tqdm(loader, desc=f"eval {args.split}"):
             batch = move_batch_to_device(batch, device)
+            # Match training/validation: restore the deferred context resize on
+            # device before the model (no-op unless defer_context_resize_to_device).
+            batch = prepare_stage2_batch_for_model(batch, data_cfg)
             out = forward_stage2_model(model, batch)
             supervision = stage2_supervision_for_output(batch, out)
             losses = loss_fn(

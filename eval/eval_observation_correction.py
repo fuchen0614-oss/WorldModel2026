@@ -30,6 +30,7 @@ from train.train_stage2_earthnet import (
     load_config,
     load_stage2_model_state,
     move_batch_to_device,
+    prepare_stage2_batch_for_model,
     stage2_supervision_for_output,
 )
 
@@ -92,6 +93,9 @@ def evaluate_strategy(
     extra_sums: dict[str, float] = {}
     for batch_index, batch in enumerate(loader):
         batch = move_batch_to_device(batch, device)
+        # Restore the deferred context resize on device before the model, just
+        # as the trainer does prior to build_observation_correction_inputs.
+        batch = prepare_stage2_batch_for_model(batch, data_cfg)
         generator = torch.Generator(device="cpu").manual_seed(seed + batch_index)
         correction = build_observation_correction_inputs(
             batch,
