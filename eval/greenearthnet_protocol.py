@@ -15,6 +15,12 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
+from eval.table1_artifact_contract import (
+    PREDICTION_GRID_CLIMATOLOGY_DAILY,
+    PREDICTION_GRID_FIVE_DAILY_20,
+    VALID_PREDICTION_GRIDS,
+)
+
 
 OFFICIAL_REPOSITORY = "https://github.com/vitusbenson/greenearthnet"
 OFFICIAL_EVALUATOR_COMMIT = "a0329636631371a4aaa9a95c75ed0a37d27b8c4f"
@@ -50,11 +56,47 @@ def expected_prediction_times(
     return sampled.isel(time=slice(context_steps, required))
 
 
+def expected_climatology_prediction_times(target: xr.Dataset) -> xr.DataArray:
+    """Return the exact public Climatology output grid.
+
+    The public GreenEarthNet ``model_pixelwise/climatology.py`` selects
+    ``targ.time.isel(time=slice(50, None))``.  This daily grid is intentionally
+    distinct from the 20 five-daily timestamps produced by Persistence and
+    learned predictors.  Keep the asymmetry explicit rather than silently
+    resampling one baseline to another grid.
+    """
+
+    if "time" not in target.coords:
+        raise ValueError("GreenEarthNet target has no time coordinate")
+    if int(target.sizes.get("time", 0)) <= 50:
+        raise ValueError(
+            "Official Climatology requires target timestamps from positional index 50"
+        )
+    return target.time.isel(time=slice(50, None))
+
+
+def expected_prediction_times_for_grid(
+    target: xr.Dataset,
+    prediction_grid: str,
+) -> xr.DataArray:
+    """Return the only permitted target timestamps for a declared public grid."""
+
+    if prediction_grid == PREDICTION_GRID_FIVE_DAILY_20:
+        return expected_prediction_times(target)
+    if prediction_grid == PREDICTION_GRID_CLIMATOLOGY_DAILY:
+        return expected_climatology_prediction_times(target)
+    raise ValueError(
+        f"Unsupported GreenEarthNet prediction grid {prediction_grid!r}; "
+        f"expected one of {sorted(VALID_PREDICTION_GRIDS)}"
+    )
+
+
 def validate_prediction_dataset(
     target: xr.Dataset,
     prediction: xr.Dataset,
     *,
     prediction_name: str = PREDICTION_VARIABLE,
+    prediction_grid: str = PREDICTION_GRID_FIVE_DAILY_20,
 ) -> None:
     """Reject malformed or temporally misaligned prediction files."""
 
@@ -65,7 +107,7 @@ def validate_prediction_dataset(
         raise ValueError(
             f"{prediction_name} must use dims ('time','lat','lon'), got {array.dims}"
         )
-    expected = expected_prediction_times(target)
+    expected = expected_prediction_times_for_grid(target, prediction_grid)
     if array.sizes.get("time") != expected.size:
         raise ValueError(
             f"Prediction has {array.sizes.get('time')} target steps; "
@@ -107,13 +149,19 @@ def compute_pixel_metrics(
     prediction: xr.Dataset,
     *,
     prediction_name: str = PREDICTION_VARIABLE,
+    prediction_grid: str = PREDICTION_GRID_FIVE_DAILY_20,
     subset_hq: bool = True,
     validate: bool = True,
 ) -> pd.DataFrame:
     """Compute official per-pixel metrics for one minicube."""
 
     if validate:
-        validate_prediction_dataset(target, prediction, prediction_name=prediction_name)
+        validate_prediction_dataset(
+            target,
+            prediction,
+            prediction_name=prediction_name,
+            prediction_grid=prediction_grid,
+        )
     for name in ("esawc_lc", "geom_cls", "cop_dem"):
         if name not in target:
             raise KeyError(f"Target is missing official evaluator variable {name!r}")
@@ -172,6 +220,7 @@ def score_cube_paths(
     prediction_path: str | Path,
     *,
     prediction_name: str = PREDICTION_VARIABLE,
+    prediction_grid: str = PREDICTION_GRID_FIVE_DAILY_20,
 ) -> pd.DataFrame:
     target_path = Path(target_path)
     prediction_path = Path(prediction_path)
@@ -180,6 +229,7 @@ def score_cube_paths(
             target,
             prediction,
             prediction_name=prediction_name,
+            prediction_grid=prediction_grid,
         ).reset_index()
     frame["id"] = target_path.stem
     frame["season"] = target_path.parent.stem

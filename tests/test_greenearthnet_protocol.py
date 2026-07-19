@@ -6,7 +6,9 @@ import pytest
 xr = pytest.importorskip("xarray")
 
 from eval.greenearthnet_protocol import (
+    PREDICTION_GRID_CLIMATOLOGY_DAILY,
     compute_pixel_metrics,
+    expected_climatology_prediction_times,
     expected_prediction_times,
     make_prediction_dataset,
     summarize_score_parquets,
@@ -105,3 +107,25 @@ def test_streaming_parquet_aggregation_matches_in_memory(tmp_path):
     actual = summarize_score_parquets(tmp_path)
     for key in ("nse", "rmse", "R2", "biasabs", "rmse_0_5"):
         assert actual[key] == pytest.approx(expected[key], rel=1e-7, abs=1e-7)
+
+
+
+def test_public_climatology_daily_grid_is_explicit_and_valid():
+    target = _target_cube()
+    times = expected_climatology_prediction_times(target)
+    assert times.size == 100
+    prediction = xr.Dataset(
+        {"ndvi_pred": (("time", "lat", "lon"), target_ndvi(target).sel(time=times).values)},
+        coords={"time": times, "lat": target.lat, "lon": target.lon},
+    )
+    validate_prediction_dataset(
+        target,
+        prediction,
+        prediction_grid=PREDICTION_GRID_CLIMATOLOGY_DAILY,
+    )
+    frame = compute_pixel_metrics(
+        target,
+        prediction,
+        prediction_grid=PREDICTION_GRID_CLIMATOLOGY_DAILY,
+    )
+    assert not frame.empty

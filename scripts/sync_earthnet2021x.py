@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass
@@ -34,6 +35,10 @@ REQUIRED_VARIABLES = (
     "eobs_rr",
     "eobs_tg",
 )
+
+# HDF5/netCDF4 has non-reentrant global state; a single process-wide lock keeps
+# concurrent worker downloads while serializing NetCDF validation opens.
+_HDF5_VALIDATE_LOCK = threading.Lock()
 
 
 @dataclass(frozen=True)
@@ -259,13 +264,17 @@ def plan_sync(
 def validate_netcdf(path: Path) -> None:
     import xarray as xr
 
-    with xr.open_dataset(path, decode_times=False, cache=False) as cube:
-        missing = sorted(set(REQUIRED_VARIABLES) - set(cube.variables))
-        if missing:
-            raise ValueError(f"missing variables: {missing}")
-        for dimension in ("time", "lat", "lon"):
-            if int(cube.sizes.get(dimension, 0)) <= 0:
-                raise ValueError(f"missing or empty dimension: {dimension}")
+    # HDF5/netCDF4 is not thread-safe: concurrent opens from the worker pool
+    # corrupt the library's global state and crash the process (SIGSEGV/SIGABRT).
+    # Serialize validation so downloads stay parallel but opens never overlap.
+    with _HDF5_VALIDATE_LOCK:
+        with xr.open_dataset(path, decode_times=False, cache=False) as cube:
+            missing = sorted(set(REQUIRED_VARIABLES) - set(cube.variables))
+            if missing:
+                raise ValueError(f"missing variables: {missing}")
+            for dimension in ("time", "lat", "lon"):
+                if int(cube.sizes.get(dimension, 0)) <= 0:
+                    raise ValueError(f"missing or empty dimension: {dimension}")
 
 
 def download_chunk(

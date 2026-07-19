@@ -35,7 +35,12 @@ from data.datasets.earthnet2021 import (  # noqa: E402
     EarthNet2021Dataset,
     collate_earthnet2021,
 )
-from eval.greenearthnet_protocol import make_prediction_dataset  # noqa: E402
+from data.earthnet_manifest import PROTOCOL_ID, manifest_protocol_spec  # noqa: E402
+from eval.earthnet_table1 import source_manifest_identity  # noqa: E402
+from eval.greenearthnet_protocol import (  # noqa: E402
+    PREDICTION_GRID_FIVE_DAILY_20,
+    make_prediction_dataset,
+)
 from eval.stage2_evaluation_provenance import (  # noqa: E402
     build_stage2_evaluation_provenance,
     output_file_record,
@@ -59,6 +64,14 @@ def main() -> int:
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--data-root", required=True)
     parser.add_argument("--manifest", required=True)
+    parser.add_argument(
+        "--manifest-protocol",
+        default=PROTOCOL_ID,
+        help=(
+            "Frozen manifest protocol. Use greenearthnet_cvpr2024_chopped_v1 "
+            "only with an explicit chopped-track manifest."
+        ),
+    )
     parser.add_argument(
         "--split",
         required=True,
@@ -92,6 +105,7 @@ def main() -> int:
         help="Allow an explicitly labeled legacy/compatibility export.",
     )
     args = parser.parse_args()
+    manifest_protocol_spec(args.manifest_protocol)
 
     config = load_config(args.config)
     config["data"].update(
@@ -99,6 +113,7 @@ def main() -> int:
             "root": args.data_root,
             "split": args.split,
             "manifest_path": args.manifest,
+            "manifest_protocol": args.manifest_protocol,
             "require_manifest": True,
             "strict": True,
         }
@@ -120,6 +135,7 @@ def main() -> int:
 
     data_cfg = EarthNet2021Config.from_config(config["data"], split=args.split)
     dataset = EarthNet2021Dataset(data_cfg)
+    source_manifest = source_manifest_identity(args.manifest)
     loader = DataLoader(
         dataset,
         batch_size=args.batch_size,
@@ -153,6 +169,9 @@ def main() -> int:
         dataset_size=len(dataset),
         hash_mode=args.hash_mode,
         runtime_contract_sha256=contract_verification["runtime_contract_sha256"],
+        manifest_protocol=args.manifest_protocol,
+        source_manifest=source_manifest,
+        prediction_grid=PREDICTION_GRID_FIVE_DAILY_20,
         overwrite=args.overwrite,
     )
 
@@ -233,6 +252,9 @@ def main() -> int:
         "format": "greenearthnet_ndvi_netcdf",
         "output_dir": str(output_root),
         "split": args.split,
+        "manifest_protocol": args.manifest_protocol,
+        "source_manifest": source_manifest,
+        "prediction_grid": PREDICTION_GRID_FIVE_DAILY_20,
         "prediction_steps": target_steps,
         "hash_mode": args.hash_mode,
         "num_predictions": len(output_records),
@@ -277,6 +299,9 @@ def _validate_existing_output_directory(
     dataset_size: int,
     hash_mode: str,
     runtime_contract_sha256: str,
+    manifest_protocol: str,
+    source_manifest: Mapping[str, Any],
+    prediction_grid: str,
     overwrite: bool,
 ) -> None:
     """Forbid silently mixing GreenEarthNet exports from different checkpoints/runs."""
@@ -293,6 +318,21 @@ def _validate_existing_output_directory(
             "use a fresh output directory or --overwrite after inspecting it."
         )
     manifest = _load_json_object(manifest_path)
+    if manifest.get("manifest_protocol", PROTOCOL_ID) != manifest_protocol:
+        raise ValueError(
+            "Existing prediction manifest uses a different manifest protocol; "
+            "use a separate output directory."
+        )
+    if manifest.get("source_manifest") != dict(source_manifest):
+        raise ValueError(
+            "Existing prediction manifest belongs to a different frozen source "
+            "manifest; use a separate output directory."
+        )
+    if manifest.get("prediction_grid") != prediction_grid:
+        raise ValueError(
+            "Existing prediction manifest uses a different public target-time grid; "
+            "use a separate output directory."
+        )
     provenance = manifest.get("provenance")
     if not isinstance(provenance, Mapping):
         raise ValueError("Existing prediction manifest has no valid provenance object")

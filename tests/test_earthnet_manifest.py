@@ -7,6 +7,9 @@ import pytest
 from data.earthnet_manifest import (
     DATASET_ID,
     PROTOCOL_ID,
+    GREENEARTHNET_CHOPPED_DATASET_ID,
+    GREENEARTHNET_CHOPPED_PROTOCOL_ID,
+    build_greenearthnet_chopped_manifest,
     build_manifest,
     build_manifest_from_paths,
     load_manifest_files,
@@ -66,3 +69,30 @@ def test_manifest_rejects_path_traversal(tmp_path):
     path = write_manifest(manifest, tmp_path / "bad.json")
     with pytest.raises(ValueError, match="digest"):
         load_manifest_files(path, root, expected_split="train")
+
+
+def test_greenearthnet_chopped_manifest_cannot_be_relabelled_as_raw(tmp_path):
+    root = tmp_path / "GreenEarthNet"
+    cube = root / "ood-t_chopped" / "32ABC" / "cube.nc"
+    _touch(cube, b"target")
+    manifest = build_greenearthnet_chopped_manifest(root, "ood-t_chopped")
+    assert manifest["dataset"] == GREENEARTHNET_CHOPPED_DATASET_ID
+    assert manifest["protocol"] == GREENEARTHNET_CHOPPED_PROTOCOL_ID
+    assert manifest["role"] == "ood-t_chopped"
+    path = write_manifest(manifest, tmp_path / "manifests" / "oodt.json")
+    assert load_manifest_files(
+        path,
+        root,
+        expected_protocol=GREENEARTHNET_CHOPPED_PROTOCOL_ID,
+        expected_split="ood-t_chopped",
+    ) == [cube.resolve()]
+
+    manifest["source_splits"] = ["val_chopped"]
+    invalid = write_manifest(manifest, tmp_path / "manifests" / "invalid.json")
+    with pytest.raises(ValueError, match="source_splits"):
+        load_manifest_files(
+            invalid,
+            root,
+            expected_protocol=GREENEARTHNET_CHOPPED_PROTOCOL_ID,
+            expected_split="ood-t_chopped",
+        )

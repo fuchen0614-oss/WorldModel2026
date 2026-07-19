@@ -18,13 +18,15 @@ sys.path.insert(0, str(ROOT))
 from data.earthnet_manifest import load_manifest_files  # noqa: E402
 from eval.greenearthnet_protocol import (  # noqa: E402
     OFFICIAL_EVALUATOR_COMMIT,
+    PREDICTION_GRID_FIVE_DAILY_20,
+    VALID_PREDICTION_GRIDS,
     score_cube_paths,
     summarize_score_parquets,
 )
 
 
-def _score_pair(pair: tuple[str, str]) -> pd.DataFrame:
-    return score_cube_paths(pair[0], pair[1])
+def _score_pair(pair: tuple[str, str, str]) -> pd.DataFrame:
+    return score_cube_paths(pair[0], pair[1], prediction_grid=pair[2])
 
 
 def _target_files(args: argparse.Namespace) -> list[Path]:
@@ -56,9 +58,15 @@ def score_directory(
     score_dir: Path,
     *,
     workers: int,
+    prediction_grid: str = PREDICTION_GRID_FIVE_DAILY_20,
 ) -> dict[str, object]:
     if not targets:
         raise ValueError("No target NetCDF files were selected")
+    if prediction_grid not in VALID_PREDICTION_GRIDS:
+        raise ValueError(
+            f"Unsupported prediction grid {prediction_grid!r}; "
+            f"expected one of {sorted(VALID_PREDICTION_GRIDS)}"
+        )
     pairs = [(path, _prediction_path(prediction_dir, path)) for path in targets]
     missing = [str(prediction) for _, prediction in pairs if not prediction.is_file()]
     if missing:
@@ -67,10 +75,10 @@ def score_directory(
         )
 
     score_dir.mkdir(parents=True, exist_ok=True)
-    pairs_by_region: dict[str, list[tuple[str, str]]] = {}
+    pairs_by_region: dict[str, list[tuple[str, str, str]]] = {}
     for target, prediction in pairs:
         pairs_by_region.setdefault(target.parent.name, []).append(
-            (str(target), str(prediction))
+            (str(target), str(prediction), prediction_grid)
         )
     eligible_pixels = 0
     output_paths = []
@@ -113,6 +121,12 @@ def main() -> int:
     parser.add_argument("--allow-discovery", action="store_true")
     parser.add_argument("--workers", type=int, default=1)
     parser.add_argument(
+        "--prediction-grid",
+        default=PREDICTION_GRID_FIVE_DAILY_20,
+        choices=sorted(VALID_PREDICTION_GRIDS),
+        help="Declared public target-time grid used by the prediction tree.",
+    )
+    parser.add_argument(
         "--comparison-score-dir",
         help="Parquet score directory for climatology/previous-year outperformance.",
     )
@@ -128,12 +142,14 @@ def main() -> int:
         Path(args.prediction_dir),
         score_dir,
         workers=workers,
+        prediction_grid=args.prediction_grid,
     )
 
     metrics = summarize_score_parquets(score_dir, args.comparison_score_dir)
     result = {
         "protocol": "GreenEarthNet CVPR 2024",
         "official_evaluator_commit": OFFICIAL_EVALUATOR_COMMIT,
+        "prediction_grid": args.prediction_grid,
         "num_target_files": len(targets),
         "num_eligible_pixels": score_summary["num_eligible_pixels"],
         "metrics": metrics,

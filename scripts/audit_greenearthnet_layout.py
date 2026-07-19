@@ -173,7 +173,11 @@ def group_report(root: Path, name: str) -> tuple[dict[str, Any], list[Path]]:
     )
 
 
-def inspect_schema(paths: Iterable[Path]) -> dict[str, Any]:
+def inspect_schema(
+    paths: Iterable[Path],
+    *,
+    require_stage2_temporal: bool,
+) -> dict[str, Any]:
     """Inspect fields/dimensions while keeping all data arrays lazy."""
 
     try:
@@ -203,9 +207,10 @@ def inspect_schema(paths: Iterable[Path]) -> dict[str, Any]:
                 for dimension in ("time", "lat", "lon"):
                     if sizes.get(dimension, 0) <= 0:
                         problems.append(f"missing or empty dimension: {dimension}")
-                if sizes.get("time", 0) < 150:
+                if require_stage2_temporal and sizes.get("time", 0) < 150:
                     problems.append(
-                        f"time dimension is shorter than the 150-day protocol: {sizes.get('time', 0)}"
+                        "time dimension is shorter than the 150-day Stage2 input contract: "
+                        f"{sizes.get('time', 0)}"
                     )
                 result.update(
                     {
@@ -221,6 +226,11 @@ def inspect_schema(paths: Iterable[Path]) -> dict[str, Any]:
     return {
         "available": True,
         "ok": bool(samples) and all(sample.get("ok", False) for sample in samples),
+        "temporal_requirement": (
+            "at_least_150_daily_steps_for_stage2_input"
+            if require_stage2_temporal
+            else "positive_time_dimension_only; Stage2 compatibility is checked by the formal preflight"
+        ),
         "samples": samples,
     }
 
@@ -275,7 +285,10 @@ def audit_layout(
             },
         }
         for name, paths in inspected.items():
-            schema["groups"][name] = inspect_schema(paths)
+            schema["groups"][name] = inspect_schema(
+                paths,
+                require_stage2_temporal=(name == "train"),
+            )
     schema_ready = (
         not sample_schema
         or all(group.get("ok", False) for group in schema["groups"].values())

@@ -19,6 +19,23 @@ MANIFEST_SCHEMA_VERSION = 2
 DATASET_ID = "earthnet2021x"
 PROTOCOL_ID = "earthnet2021_standard_v1"
 
+# GreenEarthNet keeps the public chopped tracks in a separate tree from the
+# raw EarthNet2021x release. It is tempting to encode ``ood-t_chopped`` as
+# the raw ``ood`` role, but doing so would make a result look comparable while
+# actually changing its target population. Keep an explicit schema/role
+# family instead. The Stage2 loader can consume it only when a caller passes
+# ``data.manifest_protocol`` deliberately; ordinary train/IID/OOD runs retain
+# the raw defaults below.
+GREENEARTHNET_CHOPPED_DATASET_ID = "greenearthnet_chopped"
+GREENEARTHNET_CHOPPED_PROTOCOL_ID = "greenearthnet_cvpr2024_chopped_v1"
+GREENEARTHNET_CHOPPED_TRACKS: tuple[str, ...] = (
+    "val_chopped",
+    "iid_chopped",
+    "ood-t_chopped",
+    "ood-s_chopped",
+    "ood-st_chopped",
+)
+
 # This repository uses the EarthNet2021 evaluation family over the available
 # EarthNet2021x NetCDF release. The five directories below are therefore
 # first-class physical/experimental splits. Do not infer a finer temporal or
@@ -35,6 +52,43 @@ SPLIT_CANDIDATES: Mapping[str, Sequence[str]] = {
 # ``split`` may be an implementation-level name such as ``train-dev``; role
 # is the loader-facing semantic and must remain within this fixed protocol.
 VALID_MANIFEST_ROLES = frozenset({"train", "val", *SPLIT_CANDIDATES})
+
+
+def manifest_protocol_spec(protocol: str) -> dict[str, object]:
+    """Return the immutable dataset/role contract for a supported manifest.
+
+    This is intentionally closed rather than accepting arbitrary strings: a
+    typo such as ``ood_t`` must fail before a prediction export reads data.
+    """
+
+    if protocol == PROTOCOL_ID:
+        return {
+            "dataset": DATASET_ID,
+            "roles": VALID_MANIFEST_ROLES,
+            "source_splits": frozenset(SPLIT_CANDIDATES),
+            "resolve_nested_earthnet_root": True,
+        }
+    if protocol == GREENEARTHNET_CHOPPED_PROTOCOL_ID:
+        tracks = frozenset(GREENEARTHNET_CHOPPED_TRACKS)
+        return {
+            "dataset": GREENEARTHNET_CHOPPED_DATASET_ID,
+            "roles": tracks,
+            "source_splits": tracks,
+            "resolve_nested_earthnet_root": False,
+        }
+    raise ValueError(
+        f"Unsupported manifest protocol {protocol!r}; expected one of "
+        f"{[PROTOCOL_ID, GREENEARTHNET_CHOPPED_PROTOCOL_ID]}"
+    )
+
+
+def resolve_manifest_root(root: str | Path, *, protocol: str = PROTOCOL_ID) -> Path:
+    """Resolve a dataset root without conflating raw and chopped layouts."""
+
+    spec = manifest_protocol_spec(protocol)
+    if bool(spec["resolve_nested_earthnet_root"]):
+        return resolve_dataset_root(root)
+    return Path(root).expanduser().resolve()
 
 
 def resolve_dataset_root(root: str | Path) -> Path:
@@ -175,6 +229,82 @@ def build_manifest_from_paths(
     return manifest
 
 
+def build_greenearthnet_chopped_manifest(
+    root: str | Path,
+    track: str,
+    *,
+    hash_mode: str = "sha256",
+    pattern: str = "**/*.nc",
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Freeze exactly one explicit GreenEarthNet chopped track.
+
+    Unlike the raw EarthNet builder, this never interprets a chopped track as
+    a raw IID/OOD split and never discovers files from the evaluation root.
+    """
+
+    if track not in GREENEARTHNET_CHOPPED_TRACKS:
+        raise ValueError(
+            f"Unknown GreenEarthNet chopped track {track!r}; expected one of "
+            f"{list(GREENEARTHNET_CHOPPED_TRACKS)}"
+        )
+    if hash_mode not in {"none", "sha256"}:
+        raise ValueError("hash_mode must be 'none' or 'sha256'")
+    evaluation_root = resolve_manifest_root(
+        root,
+        protocol=GREENEARTHNET_CHOPPED_PROTOCOL_ID,
+    )
+    track_root = evaluation_root / track
+    if not track_root.is_dir():
+        raise FileNotFoundError(f"GreenEarthNet chopped track is missing: {track_root}")
+    files = sorted(path.resolve() for path in track_root.glob(pattern) if path.is_file())
+    if not files:
+        raise FileNotFoundError(f"GreenEarthNet chopped track is empty: {track_root}")
+
+    records: list[dict[str, Any]] = []
+    seen_paths: set[str] = set()
+    for path in files:
+        if path != evaluation_root and evaluation_root not in path.parents:
+            raise ValueError(f"Manifest file escapes evaluation root: {path}")
+        if path != track_root and track_root not in path.parents:
+            raise ValueError(f"Manifest file escapes requested chopped track: {path}")
+        relative = path.relative_to(evaluation_root).as_posix()
+        if relative in seen_paths:
+            raise ValueError(f"Duplicate manifest file path: {relative}")
+        seen_paths.add(relative)
+        record: dict[str, Any] = {
+            "path": relative,
+            "size_bytes": int(path.stat().st_size),
+            "sample_id": path.stem,
+        }
+        if hash_mode == "sha256":
+            record["sha256"] = sha256_file(path)
+        records.append(record)
+    records.sort(key=lambda item: item["path"])
+    manifest: dict[str, Any] = {
+        "schema_version": MANIFEST_SCHEMA_VERSION,
+        "dataset": GREENEARTHNET_CHOPPED_DATASET_ID,
+        "protocol": GREENEARTHNET_CHOPPED_PROTOCOL_ID,
+        "split": track,
+        "role": track,
+        "source_splits": [track],
+        "hash_mode": hash_mode,
+        "num_files": len(records),
+        "files": records,
+        "files_sha256": records_digest(records),
+    }
+    if metadata:
+        overlap = set(manifest).intersection(metadata)
+        if overlap:
+            raise ValueError(
+                "Manifest metadata cannot overwrite reserved keys: "
+                f"{sorted(overlap)}"
+            )
+        manifest.update(dict(metadata))
+
+    return manifest
+
+
 def write_manifest(manifest: Mapping[str, Any], path: str | Path) -> Path:
     """Atomically persist a manifest so readers never see half JSON."""
 
@@ -237,14 +367,18 @@ def load_manifest_files(
     source = Path(manifest_path)
     with source.open("r", encoding="utf-8") as handle:
         manifest = json.load(handle)
+    spec = manifest_protocol_spec(expected_protocol)
+    expected_dataset = str(spec["dataset"])
+    valid_roles = frozenset(spec["roles"])
     if int(manifest.get("schema_version", -1)) != MANIFEST_SCHEMA_VERSION:
         raise ValueError(
             f"Unsupported manifest schema in {source}: "
             f"{manifest.get('schema_version')!r}"
         )
-    if manifest.get("dataset") != DATASET_ID:
+    if manifest.get("dataset") != expected_dataset:
         raise ValueError(
-            f"Unexpected dataset in {source}: {manifest.get('dataset')!r}"
+            f"Unexpected dataset in {source}: expected={expected_dataset!r}, "
+            f"got={manifest.get('dataset')!r}"
         )
     if manifest.get("protocol") != expected_protocol:
         raise ValueError(
@@ -253,16 +387,37 @@ def load_manifest_files(
         )
     declared_split = str(manifest.get("split", ""))
     declared_role = str(manifest.get("role", declared_split))
-    if declared_role not in VALID_MANIFEST_ROLES:
+    if declared_role not in valid_roles:
         raise ValueError(
             f"Unsupported manifest role in {source}: {declared_role!r}; expected one of "
-            f"{sorted(VALID_MANIFEST_ROLES)}"
+            f"{sorted(valid_roles)}"
         )
     if expected_split and declared_role != expected_split:
         raise ValueError(
             f"Manifest role={declared_role!r} (split={declared_split!r}) does not "
             f"match requested split={expected_split!r}"
         )
+    declared_sources = manifest.get("source_splits")
+    if not isinstance(declared_sources, list) or not declared_sources:
+        raise ValueError(f"Manifest {source} has no nonempty source_splits list")
+    allowed_sources = frozenset(spec["source_splits"])
+    invalid_sources = sorted(
+        str(item) for item in declared_sources if str(item) not in allowed_sources
+    )
+    if invalid_sources:
+        raise ValueError(
+            f"Unsupported manifest source_splits in {source}: {invalid_sources}; "
+            f"expected a subset of {sorted(allowed_sources)}"
+        )
+
+    if expected_protocol == GREENEARTHNET_CHOPPED_PROTOCOL_ID:
+        if declared_split != declared_role or declared_sources != [declared_role]:
+            raise ValueError(
+                "GreenEarthNet chopped manifest split/role/source_splits must all "
+                "refer to the same exact track; got "
+                f"split={declared_split!r}, role={declared_role!r}, "
+                f"source_splits={declared_sources!r}"
+            )
 
     records = manifest.get("files")
     if not isinstance(records, list):
@@ -272,7 +427,7 @@ def load_manifest_files(
     if manifest.get("files_sha256") != records_digest(records):
         raise ValueError(f"Manifest {source} record digest is invalid")
 
-    root = resolve_dataset_root(dataset_root)
+    root = resolve_manifest_root(dataset_root, protocol=expected_protocol)
     paths: list[Path] = []
     seen: set[str] = set()
     for record in records:
