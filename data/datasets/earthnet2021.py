@@ -596,6 +596,16 @@ def _parse_earthnet_netcdf_physical4_cube(
 ) -> Dict[str, Any]:
     """Parse the original physical DGH weather bundle under the shared path."""
 
+    # GreenEarthNet CVPR-2024 "chopped" evaluation cubes drop the raw
+    # ``s2_mask`` but keep the deep-learning cloud mask ``s2_dlmask`` (0 == clear),
+    # which reproduces the raw ``s2_mask == 0`` clear pixels at ~95.6% agreement.
+    # When ``s2_mask`` is absent, derive the model-input clear mask from
+    # ``s2_dlmask`` so a raw-EarthNet2021x-trained model can be evaluated on the
+    # chopped tracks unchanged. Raw cubes keep their own ``s2_mask`` -> this is a
+    # strict no-op there (training and raw IID/OOD evaluation are unaffected).
+    if "s2_mask" not in cube.variables and "s2_dlmask" in cube.variables:
+        cube = cube.assign(s2_mask=cube["s2_dlmask"])
+
     required = (*s2_variables, "s2_mask", *(f"eobs_{name}" for name in PHYSICAL4_RAW_VARIABLES), "cop_dem")
     missing = [name for name in required if name not in cube.variables]
     if missing:
@@ -1809,6 +1819,21 @@ def _xarray_start_date(cube: Any) -> Optional[date]:
     if "time" not in cube.coords or cube.sizes.get("time", 0) == 0:
         return None
     value = cube["time"].values[0]
+    # decode_times=False leaves a numeric offset with a CF "days since <epoch>"
+    # unit (the GreenEarthNet chopped cubes store days since 1950-01-01, and
+    # their filenames carry no date). Decode it directly to the calendar date.
+    if np.issubdtype(np.asarray(value).dtype, np.number):
+        units = str(cube["time"].attrs.get("units", ""))
+        epoch = re.search(r"days since (\d{4})-(\d{2})-(\d{2})", units)
+        if epoch and np.isfinite(value):
+            from datetime import timedelta
+
+            try:
+                return date(*(int(part) for part in epoch.groups())) + timedelta(
+                    days=int(value)
+                )
+            except (ValueError, OverflowError):
+                return None
     try:
         converted = np.datetime64(value, "D").astype(object)
         if isinstance(converted, date):

@@ -23,7 +23,19 @@ ENDPOINT = "https://s3.bgc-jena.mpg.de:9000"
 REGION = "thuringia"
 DATASET = "earthnet2021x"
 REMOTE_ROOT = f"earthnet/{DATASET}"
-SPLITS = ("train", "iid", "ood", "extreme", "seasonal")
+SPLITS = (
+    "train",
+    "iid",
+    "ood",
+    "extreme",
+    "seasonal",
+    # GreenEarthNet CVPR-2024 chopped evaluation tracks (same S3 prefix).
+    "iid_chopped",
+    "val_chopped",
+    "ood-t_chopped",
+    "ood-s_chopped",
+    "ood-st_chopped",
+)
 REQUIRED_VARIABLES = (
     "s2_B02",
     "s2_B03",
