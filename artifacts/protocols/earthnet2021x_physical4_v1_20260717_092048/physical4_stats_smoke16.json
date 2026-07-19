@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "dataset": "earthnet2021x",
+  "driver_protocol": "physical4_v1",
+  "raw_variable_order": [
+    "rr",
+    "tg",
+    "hu",
+    "qq"
+  ],
+  "raw_variable_units": [
+    "mm_per_day",
+    "degC",
+    "relative_humidity_percent",
+    "MJ_per_m2_per_day"
+  ],
+  "feature_names": [
+    "precip_sum_5d",
+    "temp_mean_5d",
+    "vpd_mean_5d",
+    "srad_sum_5d"
+  ],
+  "feature_transform": [
+    "log1p",
+    "identity",
+    "clip_vpd",
+    "log1p"
+  ],
+  "missingness_policy": "all_five_days_required",
+  "vpd_formula_version": "tetens_17.27_237.3_kpa_rh_percent_v1",
+  "g_variable": "cop_dem",
+  "fit_split": "train",
+  "manifest_sha256": "c2cf69d7f57f302c2a4e8b6c7453c537031f56ae7c4ccf1d8ae6e988fff53147",
+  "manifest_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/train_dev.json",
+  "num_files": 16,
+  "is_full_train": false,
+  "feature_mean": {
+    "precip_sum_5d": 0.4398684874176979,
+    "temp_mean_5d": 20.987916642427443,
+    "vpd_mean_5d": 1.0164492319027583,
+    "srad_sum_5d": 4.565147730708122
+  },
+  "feature_std": {
+    "precip_sum_5d": 0.946955555228641,
+    "temp_mean_5d": 3.5368211223318298,
+    "vpd_mean_5d": 0.3742685979076191,
+    "srad_sum_5d": 0.3329498005235773
+  },
+  "feature_valid_count": {
+    "precip_sum_5d": 480,
+    "temp_mean_5d": 480,
+    "vpd_mean_5d": 480,
+    "srad_sum_5d": 480
+  },
+  "feature_valid_fraction": {
+    "precip_sum_5d": 1.0,
+    "temp_mean_5d": 1.0,
+    "vpd_mean_5d": 1.0,
+    "srad_sum_5d": 1.0
+  },
+  "raw_daily_valid_count": {
+    "rr": 2400,
+    "tg": 2400,
+    "hu": 2400,
+    "qq": 2400
+  },
+  "raw_daily_valid_fraction": {
+    "rr": 1.0,
+    "tg": 1.0,
+    "hu": 1.0,
+    "qq": 1.0
+  },
+  "window_any_valid_fraction": {
+    "rr": 1.0,
+    "tg": 1.0,
+    "hu": 1.0,
+    "qq": 1.0
+  },
+  "window_all_five_valid_fraction": {
+    "rr": 1.0,
+    "tg": 1.0,
+    "hu": 1.0,
+    "qq": 1.0
+  },
+  "vpd_window_all_five_valid_fraction": 1.0,
+  "vpd_valid_count": 2400,
+  "vpd_clip_quantile": 0.995,
+  "vpd_clip_value": 2.305816173553467,
+  "vpd_clip_policy": "train_quantile",
+  "netcdf_solar_scale": 0.0864,
+  "g_mean": 161.5159090062043,
+  "g_std": 77.53075070114252,
+  "g_valid_count": 262144,
+  "created_by_git_commit": "4536c745ba05f2518a822fc90b5c168cde5a450d"
+}

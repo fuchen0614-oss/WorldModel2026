@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "dataset": "earthnet2021x",
+  "driver_protocol": "physical4_v1",
+  "raw_variable_order": [
+    "rr",
+    "tg",
+    "hu",
+    "qq"
+  ],
+  "raw_variable_units": [
+    "mm_per_day",
+    "degC",
+    "relative_humidity_percent",
+    "MJ_per_m2_per_day"
+  ],
+  "feature_names": [
+    "precip_sum_5d",
+    "temp_mean_5d",
+    "vpd_mean_5d",
+    "srad_sum_5d"
+  ],
+  "feature_transform": [
+    "log1p",
+    "identity",
+    "clip_vpd",
+    "log1p"
+  ],
+  "missingness_policy": "all_five_days_required",
+  "vpd_formula_version": "tetens_17.27_237.3_kpa_rh_percent_v1",
+  "g_variable": "cop_dem",
+  "fit_split": "train",
+  "manifest_sha256": "c2cf69d7f57f302c2a4e8b6c7453c537031f56ae7c4ccf1d8ae6e988fff53147",
+  "manifest_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/train_dev.json",
+  "num_files": 22847,
+  "is_full_train": true,
+  "feature_mean": {
+    "precip_sum_5d": 1.197658342730204,
+    "temp_mean_5d": 16.015374653739958,
+    "vpd_mean_5d": 0.6657994948857368,
+    "srad_sum_5d": 4.302961747283447
+  },
+  "feature_std": {
+    "precip_sum_5d": 1.3129966656828036,
+    "temp_mean_5d": 6.103643723968248,
+    "vpd_mean_5d": 0.48210932239024173,
+    "srad_sum_5d": 0.48672098174697054
+  },
+  "feature_valid_count": {
+    "precip_sum_5d": 654228,
+    "temp_mean_5d": 669960,
+    "vpd_mean_5d": 631890,
+    "srad_sum_5d": 651563
+  },
+  "feature_valid_fraction": {
+    "precip_sum_5d": 0.9545060620650414,
+    "temp_mean_5d": 0.9774587473191229,
+    "vpd_mean_5d": 0.9219153499365343,
+    "srad_sum_5d": 0.9506178783501845
+  },
+  "raw_daily_valid_count": {
+    "rr": 3271276,
+    "tg": 3349800,
+    "hu": 3161822,
+    "qq": 3262220
+  },
+  "raw_daily_valid_fraction": {
+    "rr": 0.9545457463416057,
+    "tg": 0.9774587473191229,
+    "hu": 0.9226074904072016,
+    "qq": 0.9519032403962592
+  },
+  "window_any_valid_fraction": {
+    "rr": 0.9545673392567952,
+    "tg": 0.9774587473191229,
+    "hu": 0.9229628981193738,
+    "qq": 0.9530003939248042
+  },
+  "window_all_five_valid_fraction": {
+    "rr": 0.9545060620650414,
+    "tg": 0.9774587473191229,
+    "hu": 0.9219153499365343,
+    "qq": 0.9506178783501845
+  },
+  "vpd_window_all_five_valid_fraction": 0.9219153499365343,
+  "vpd_valid_count": 3161822,
+  "vpd_clip_quantile": 0.995,
+  "vpd_clip_value": 2.7215497493743896,
+  "vpd_clip_policy": "train_quantile",
+  "netcdf_solar_scale": 0.0864,
+  "g_mean": 309.9577511260067,
+  "g_std": 278.1806965076695,
+  "g_valid_count": 374324276,
+  "created_by_git_commit": "4536c745ba05f2518a822fc90b5c168cde5a450d"
+}

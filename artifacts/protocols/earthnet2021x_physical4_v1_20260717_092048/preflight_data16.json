@@ -1,0 +1,153 @@
+{
+  "config": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/configs/train/stage2_earthnet_v2_direct_physical4.yaml",
+  "data_root": "/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021",
+  "stage2_protocol": "earthnet2021x_path_v2",
+  "driver_protocol": "physical4_v1",
+  "external_driver_root": null,
+  "dgh_stats_path": null,
+  "conditioning_stats_path": "artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/conditioning_stats_physical4_v1_train_dev.json",
+  "data": {
+    "split": "train",
+    "stage2_protocol": "earthnet2021x_path_v2",
+    "driver_protocol": "physical4_v1",
+    "total_files_in_split": 22847,
+    "scanned_files": 16,
+    "scan_is_full_split": false,
+    "tensor_shapes": {
+      "x_context:(10, 4, 256, 256)": 16,
+      "x_target:(20, 4, 128, 128)": 16,
+      "context_mask:(10, 256, 256)": 16,
+      "target_mask:(20, 128, 128)": 16,
+      "D_path:(30, 4)": 16,
+      "D_mask:(30, 4)": 16,
+      "D_valid_day_count:(30, 4)": 16,
+      "C_path:(30, 2)": 16,
+      "delta_t_path:(30,)": 16,
+      "G:(1, 128, 128)": 16,
+      "G_mask:(1, 128, 128)": 16,
+      "h:(20,)": 16
+    },
+    "date_parse_failures": 0,
+    "zero_valid_cop_dem_files": 0,
+    "cop_dem_valid_fraction": 1.0,
+    "D_path_valid_count": {
+      "precip_sum_5d": 480,
+      "temp_mean_5d": 480,
+      "vpd_mean_5d": 480,
+      "srad_sum_5d": 480
+    },
+    "D_path_valid_fraction": {
+      "precip_sum_5d": 1.0,
+      "temp_mean_5d": 1.0,
+      "vpd_mean_5d": 1.0,
+      "srad_sum_5d": 1.0
+    },
+    "window_any_valid_fraction": {
+      "rr": 1.0,
+      "tg": 1.0,
+      "hu": 1.0,
+      "qq": 1.0
+    },
+    "window_all_five_valid_fraction": {
+      "rr": 1.0,
+      "tg": 1.0,
+      "hu": 1.0,
+      "qq": 1.0
+    },
+    "missing_driver_features": [],
+    "low_coverage_driver_features": [],
+    "min_driver_valid_fraction": 0.9,
+    "issue_count": 0,
+    "sample_issues": [],
+    "fatal_reasons": []
+  },
+  "stats": {
+    "path": "artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/conditioning_stats_physical4_v1_train_dev.json",
+    "fit_split": "train",
+    "driver_protocol": "physical4_v1",
+    "num_files": 22847,
+    "manifest_sha256": "c2cf69d7f57f302c2a4e8b6c7453c537031f56ae7c4ccf1d8ae6e988fff53147",
+    "feature_names": [
+      "precip_sum_5d",
+      "temp_mean_5d",
+      "vpd_mean_5d",
+      "srad_sum_5d"
+    ],
+    "g_variable": "cop_dem",
+    "is_full_train": true,
+    "vpd_clip_value": 2.7215497493743896,
+    "netcdf_solar_scale": 0.0864,
+    "min_driver_valid_fraction": 0.9,
+    "driver_valid_fraction": {
+      "precip_sum_5d": 0.9545060620650414,
+      "temp_mean_5d": 0.9774587473191229,
+      "vpd_mean_5d": 0.9219153499365343,
+      "srad_sum_5d": 0.9506178783501845
+    },
+    "window_any_valid_fraction": {
+      "rr": 0.9545673392567952,
+      "tg": 0.9774587473191229,
+      "hu": 0.9229628981193738,
+      "qq": 0.9530003939248042
+    },
+    "driver_coverage_ok": true
+  },
+  "sample_shapes": {
+    "x_context": [
+      10,
+      4,
+      256,
+      256
+    ],
+    "x_target": [
+      20,
+      4,
+      128,
+      128
+    ],
+    "context_mask": [
+      10,
+      256,
+      256
+    ],
+    "target_mask": [
+      20,
+      128,
+      128
+    ],
+    "D_path": [
+      30,
+      4
+    ],
+    "D_mask": [
+      30,
+      4
+    ],
+    "D_valid_day_count": [
+      30,
+      4
+    ],
+    "C_path": [
+      30,
+      2
+    ],
+    "delta_t_path": [
+      30
+    ],
+    "G": [
+      1,
+      128,
+      128
+    ],
+    "G_mask": [
+      1,
+      128,
+      128
+    ],
+    "h": [
+      20
+    ]
+  },
+  "ok": true,
+  "fatal_reasons": []
+}

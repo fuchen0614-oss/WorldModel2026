@@ -1,0 +1,19 @@
+{
+  "config": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/configs/train/stage2_earthnet_v2_direct_physical4.yaml",
+  "data_root": "/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021",
+  "stage2_protocol": "earthnet2021x_path_v2",
+  "driver_protocol": "physical4_v1",
+  "external_driver_root": null,
+  "dgh_stats_path": null,
+  "conditioning_stats_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/artifacts/protocols//conditioning_stats_physical4_v1_train_dev.json",
+  "model": {
+    "checkpoint_kind": "stage1.5",
+    "checkpoint_compatible": true,
+    "total_parameters": 28170535,
+    "trainable_parameters": 8145423
+  },
+  "ok": false,
+  "fatal_reasons": [
+    "data preflight failed: FileNotFoundError: physical4 stats not found: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/artifacts/protocols/conditioning_stats_physical4_v1_train_dev.json"
+  ]
+}

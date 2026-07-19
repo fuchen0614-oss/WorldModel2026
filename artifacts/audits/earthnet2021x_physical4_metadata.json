@@ -1,0 +1,120 @@
+{
+  "dataset_root": "/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021/earthnet2021x",
+  "required_splits": [
+    "extreme",
+    "iid",
+    "ood",
+    "seasonal",
+    "train"
+  ],
+  "scan_mode": "metadata",
+  "schema": "earthnet2021x-standard",
+  "required_variables": [
+    "s2_B02",
+    "s2_B03",
+    "s2_B04",
+    "s2_B8A",
+    "s2_mask",
+    "s2_dlmask",
+    "s2_SCL",
+    "eobs_fg",
+    "eobs_hu",
+    "eobs_pp",
+    "eobs_qq",
+    "eobs_rr",
+    "eobs_tg",
+    "eobs_tn",
+    "eobs_tx",
+    "esawc_lc",
+    "geom_cls",
+    "cop_dem"
+  ],
+  "remote_comparison_requested": false,
+  "remote_size_comparison_requested": false,
+  "splits": {
+    "train": {
+      "directory": "/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021/earthnet2021x/train",
+      "exists": true,
+      "num_files": 23816,
+      "num_regions": 85,
+      "files_per_region": {
+        "min": 1,
+        "median": 135.0,
+        "max": 2344
+      },
+      "total_bytes": null,
+      "size_scope": "selected_files_only",
+      "zero_byte_files": [],
+      "scanned_files": 4,
+      "scan_failures": []
+    },
+    "iid": {
+      "directory": "/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021/earthnet2021x/iid",
+      "exists": true,
+      "num_files": 4205,
+      "num_regions": 82,
+      "files_per_region": {
+        "min": 2,
+        "median": 24.0,
+        "max": 397
+      },
+      "total_bytes": null,
+      "size_scope": "selected_files_only",
+      "zero_byte_files": [],
+      "scanned_files": 4,
+      "scan_failures": []
+    },
+    "ood": {
+      "directory": "/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021/earthnet2021x/ood",
+      "exists": true,
+      "num_files": 4202,
+      "num_regions": 15,
+      "files_per_region": {
+        "min": 11,
+        "median": 196.0,
+        "max": 645
+      },
+      "total_bytes": null,
+      "size_scope": "selected_files_only",
+      "zero_byte_files": [],
+      "scanned_files": 4,
+      "scan_failures": []
+    },
+    "extreme": {
+      "directory": "/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021/earthnet2021x/extreme",
+      "exists": true,
+      "num_files": 3972,
+      "num_regions": 4,
+      "files_per_region": {
+        "min": 670,
+        "median": 1045.0,
+        "max": 1212
+      },
+      "total_bytes": null,
+      "size_scope": "selected_files_only",
+      "zero_byte_files": [],
+      "scanned_files": 4,
+      "scan_failures": []
+    },
+    "seasonal": {
+      "directory": "/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021/earthnet2021x/seasonal",
+      "exists": true,
+      "num_files": 3880,
+      "num_regions": 15,
+      "files_per_region": {
+        "min": 20,
+        "median": 293.0,
+        "max": 299
+      },
+      "total_bytes": null,
+      "size_scope": "selected_files_only",
+      "zero_byte_files": [],
+      "scanned_files": 4,
+      "scan_failures": []
+    }
+  },
+  "duplicate_minicube_ids_count": 0,
+  "duplicate_minicube_ids_preview": [],
+  "status": "PASS",
+  "meaning": "All requested checks passed."
+}
