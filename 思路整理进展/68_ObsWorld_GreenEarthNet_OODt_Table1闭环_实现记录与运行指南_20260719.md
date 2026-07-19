@@ -10,6 +10,13 @@
 
 项目此前已经有不少评估代码：完整 `val_dev` 选 checkpoint、raw EarthNet2021x 的 RGBN/ENS 诊断、NDVI 转换与评分。此次补的是**另一条明确的、论文主表专用的 GreenEarthNet CVPR-2024 `ood-t_chopped` 闭环**，不是重新造评估器，也不是重新训练 Direct-P4。
 
+目标服务器已经确认存在以下正式评估资产，因此**不需要再次下载 GreenEarthNet**：
+
+```text
+/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/ood-t_chopped
+/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/iidx
+```
+
 正式主表路径是：
 
 ```text
@@ -23,6 +30,34 @@
 ```
 
 任何 raw EarthNet2021x IID/OOD + ENS 结果仍可保留为内部诊断/补充材料，但不能和本节 OOD-t chopped 主表混写成同一协议。
+
+### 0.1 训练数据、选模数据和最终测试数据的关系
+
+[GreenEarthNet 官方仓库](https://github.com/vitusbenson/greenearthnet)也使用 `earthnet2021x` / `en21x` 作为开发期标识；[CVPR-2024 论文](https://openaccess.thecvf.com/content/CVPR2024/html/Benson_Multi-modal_Learning_for_Geospatial_Vegetation_Forecasting_CVPR_2024_paper.html)明确写明 GreenEarthNet 与 EarthNet2021 保持相同训练地点和时空尺寸，并在 Table 2 中评估了直接复用 EarthNet2021 权重的模型。因此，本文在现有 EarthNet2021x raw train 上训练、到 GreenEarthNet OOD-t 做冻结测试，是有官方先例的兼容/迁移评测，而不是随意用 benchmark B 挑结果。
+
+但这不等于训练发布完全相同：GreenEarthNet 引入了改进的云 mask 和新的植被评估；当前也没有另存一份 Green `train/` 与 raw train 做逐文件 hash 对齐。因此准确表述必须是“训练规模与地点/时空协议兼容，最终测试口径相同”，而不是“和 Contextformer 使用逐字节相同的训练文件”。正式数据流是：
+
+```text
+EarthNet2021x raw train：23,816（规模与官方 Green Train 一致）
+  ├─ train_dev 22,847：梯度更新
+  └─ val_dev      969：完整验证、选择 checkpoint_best.pt
+                              ↓
+ood-t_chopped：独立的 2021–2022 temporal-OOD 最终测试
+
+iidx：仅供官方 Climatology 构造，不用于 Direct/Rollout 训练
+```
+
+因此：
+
+1. `train_dev` 决定模型学到了什么；
+2. `val_dev` 只在预先固定的候选 checkpoint 中选一个，不进入最终主表；
+3. checkpoint 冻结后才打开 `ood-t_chopped` 做一次正式 Table 1 测试；
+4. Direct、Rollout、Persistence、Climatology 必须复用同一个 frozen OOD-t manifest、mask 和 scorer；
+5. 公共方法使用 Benson et al., CVPR 2024 Table 2 的同轨道报告值，属于 benchmark-level 同测试协议比较；其中重新在 GreenEarthNet 训练的公开行与本文不具备完全相同的训练条件，不能写成严格受控对照；
+6. Direct 与 Rollout 使用相同 raw train、内部 split、初始化、预算和 scorer，是更严格的 paired comparison；
+7. 本项目从 23,816 个 raw train 中留出 969 个样本做内部选模，实际梯度训练量为 22,847；这是一项偏保守且必须披露的差异，不构成测试泄漏。
+
+模型输入前 10 个五日 context，输出后 20 个五日预测点（100 天）。`ood-t_chopped` 提供最终目标与 mask；`iidx` 只用于 Climatology。已有 `val_dev` MAE 是选模诊断，不能直接填入 OOD-t Table 1。
 
 ---
 
@@ -55,13 +90,12 @@
 
 ### 仍然缺少的真实实验产物
 
-- GreenEarthNet OOD-t chopped 的 frozen manifest（由目标服务器真实目录冻结）；
+- GreenEarthNet OOD-t chopped 的 frozen manifest（数据已存在，仍需由目标服务器真实目录冻结）；
 - Direct-P4 checkpoint 的正式 OOD-t prediction + score；
 - Rollout-P4 训练结束、完整 `val_dev` 选 checkpoint 后的正式 OOD-t prediction + score；
 - 同一 manifest 上 Persistence / Climatology score；
 - 用独立 checkout 的公开 GreenEarthNet evaluator 对每个本地 score 做数值 parity；
-- 用独立 checkout 的公开 Persistence / Climatology 实现分别产生 reference score，确认本地 deterministic baseline 的构造也一致；
-- 外部公开方法的可引用数值与准确 citation（若要放入正文主表）。
+- 用独立 checkout 的公开 Persistence / Climatology 实现分别产生 reference score，确认本地 deterministic baseline 的构造也一致；公开方法行及来源已经冻结进代码，不再是缺项。
 
 所以：**当前 Direct-P4 的完整 `val_dev` 结果只能证明选模完成，不是 Table 1 OOD-t 数值。**
 
@@ -69,7 +103,7 @@
 
 ## 2. 路径确认：先审计，绝不猜目录
 
-在实际服务器的 WorldModel2026 根目录执行。`RAW_ROOT` 是 raw EarthNet2021x 训练根；`GREEN_EVAL_ROOT` 是包含 `val_chopped/`、`ood-t_chopped/`（以及通常 `iidx/`）的 GreenEarthNet 根。两者可能不同。
+在实际服务器的 WorldModel2026 根目录执行。`RAW_ROOT` 是 raw EarthNet2021x 训练根；`GREEN_EVAL_ROOT` 是 GreenEarthNet 评估根。本次 Table 1 必需的是其中的 `ood-t_chopped/` 与 `iidx/`；它不要求为了评估重新下载 Green `train/` 或 `val_chopped/`。
 
 ```bash
 cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
@@ -77,7 +111,7 @@ source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
 
 export P=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026
 export RAW_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
-export GREEN_EVAL_ROOT=/需要替换为实际含ood-t_chopped的目录
+export GREEN_EVAL_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet
 export EVAL_ROOT=$P/evaluations/greenearthnet_oodt_$(date +%Y%m%d_%H%M%S)
 mkdir -p "$EVAL_ROOT"
 
@@ -89,7 +123,147 @@ python scripts/audit_greenearthnet_layout.py \
   --strict-main
 ```
 
-只有 audit 明确显示 `ood-t_chopped` 非空、抽样 schema 通过后，才继续。目录不对时停在这里修路径，不允许以 raw `ood` 替代。
+只有 audit 明确显示 `ood-t_chopped` 非空、抽样 schema 通过后，才继续。目录不对时停在这里修路径，不允许以 raw `ood` 替代。`--strict-main` 还会要求完整主布局中的 `train/` 与 `val_chopped/`；如果服务器仅保留了本次 Table 1 必需的 `ood-t_chopped/` 和 `iidx/`，可去掉该参数，后续 frozen-manifest strict preflight 仍会严格检查本次实际使用的 OOD-t 文件。
+
+---
+
+## 2.1 当前服务器：Direct-P4 一键后台正式评估
+
+下面是一段可以整体复制的 evaluation-only 命令。它不会训练、不会修改 checkpoint，也不会删除 `EarthNet2021`、`GreenEarthNet` 或本地训练缓存。默认使用 GPU 0；启动前会检查该卡显存占用，若超过 500 MiB 只打印错误并拒绝启动，不会用 `exit 1` 杀掉当前 VS Code 终端。
+
+```bash
+cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+source /csy-opt/cog8/zjliu17/miniconda3/bin/activate WorldModel
+
+git pull --ff-only origin main
+
+export P=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+export RAW_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/EarthNet2021
+export GREEN_EVAL_ROOT=/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet
+export CONDITIONING_STATS_PATH=$P/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/conditioning_stats_physical4_v1_train_dev.json
+export DIRECT_CHECKPOINT=$P/checkpoints/stage2_physical4_8gpu_b64_200ep_trainvalcache_20260717_165126/checkpoint_best.pt
+
+# 改成一张当前空闲的卡；单卡即可，评估不需要重新占 8 卡。
+export EVAL_GPU=0
+export CUDA_VISIBLE_DEVICES=$EVAL_GPU
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export HDF5_USE_FILE_LOCKING=FALSE
+export PYTHONPATH=$P:${PYTHONPATH:-}
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
+export RUN_ID=table1_greenearthnet_oodt_direct_$(date +%Y%m%d_%H%M%S)
+export EVAL_ROOT=$P/evaluations/$RUN_ID
+export OODT_MANIFEST=$EVAL_ROOT/greenearthnet_oodt_chopped_manifest.json
+
+export CONFIG=configs/train/stage2_earthnet_v2_direct_physical4.yaml
+export CHECKPOINT=$DIRECT_CHECKPOINT
+export METHOD_ID=direct-p4
+export METHOD_LABEL=Direct-P4
+export METHOD_KIND=paired-direct
+export METHOD_PARAMS_MILLIONS=28.17
+export METHOD_SEED=42
+
+export RUN_PREFLIGHT=1
+export RUN_BASELINES=1
+export RUN_MODEL=1
+export RUN_ASSEMBLE=1
+export MODEL_BATCH_SIZE=16
+export MODEL_NUM_WORKERS=8
+export SCORE_WORKERS=8
+export HASH_MODE=sha256
+export VERIFY_MANIFEST_SIZES=0
+export CLIMATOLOGY_FULL_CUBE_ROOT=$GREEN_EVAL_ROOT/iidx
+
+mkdir -p "$EVAL_ROOT"
+
+launch_ready=1
+for required_path in \
+  "$GREEN_EVAL_ROOT/ood-t_chopped" \
+  "$GREEN_EVAL_ROOT/iidx" \
+  "$DIRECT_CHECKPOINT" \
+  "$CONDITIONING_STATS_PATH"
+do
+  if [[ -e "$required_path" ]]; then
+    echo "OK: $required_path"
+  else
+    echo "MISSING: $required_path"
+    launch_ready=0
+  fi
+done
+
+gpu_used_mib=$(nvidia-smi -i "$EVAL_GPU" --query-gpu=memory.used --format=csv,noheader,nounits | head -1 | tr -d ' ')
+echo "GPU $EVAL_GPU memory.used=${gpu_used_mib} MiB"
+if [[ ! "$gpu_used_mib" =~ ^[0-9]+$ ]] || (( gpu_used_mib > 500 )); then
+  echo "GPU $EVAL_GPU 不是空闲卡；请修改 EVAL_GPU 后重新执行。"
+  launch_ready=0
+fi
+
+if [[ "$launch_ready" == 1 ]]; then
+  nohup bash -c '
+    set -euo pipefail
+    cd "$P"
+
+    python scripts/audit_greenearthnet_layout.py \
+      --raw-root "$RAW_ROOT" \
+      --eval-root "$GREEN_EVAL_ROOT" \
+      --sample-schema \
+      --output "$EVAL_ROOT/layout_audit.json"
+
+    python scripts/freeze_greenearthnet_chopped_protocol.py \
+      --eval-root "$GREEN_EVAL_ROOT" \
+      --track ood-t_chopped \
+      --output "$OODT_MANIFEST" \
+      --hash-mode sha256 \
+      --audit-report "$EVAL_ROOT/layout_audit.json"
+
+    bash scripts/run_stage2_table1_greenearthnet_oodt.sh
+  ' > "$EVAL_ROOT/table1_eval.log" 2>&1 &
+
+  echo $! | tee "$EVAL_ROOT/table1_eval.pid"
+  echo "RUN_ID=$RUN_ID"
+  echo "EVAL_ROOT=$EVAL_ROOT"
+  echo "LOG=$EVAL_ROOT/table1_eval.log"
+else
+  echo "正式评估未启动；修正上面的 MISSING/GPU 提示后重试。"
+fi
+```
+
+新终端中查看进度时，把下方 `RUN_ID` 替换为启动命令打印的真实值：
+
+```bash
+cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+export P=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+export RUN_ID=table1_greenearthnet_oodt_direct_实际时间戳
+export EVAL_ROOT=$P/evaluations/$RUN_ID
+
+ps -p "$(cat "$EVAL_ROOT/table1_eval.pid")" -o pid,etime,stat,%cpu,%mem,cmd
+tail --retry -F "$EVAL_ROOT/table1_eval.log"
+```
+
+日志前半段长时间处于 manifest SHA256、Climatology 或 Persistence 的 CPU/I/O 阶段时，GPU 为空是正常的；进入 `export_greenearthnet_predictions.py` 后才会使用 GPU。另一个窗口可执行：
+
+```bash
+watch -n 2 nvidia-smi
+```
+
+完成后直接读取：
+
+```bash
+cat "$EVAL_ROOT/table1_oodt_chopped/table1_oodt_chopped.md"
+python -m json.tool "$EVAL_ROOT/direct-p4/oodt_chopped/score/metrics_en21x.json"
+```
+
+核心产物是：
+
+```text
+$EVAL_ROOT/greenearthnet_oodt_chopped_manifest.json
+$EVAL_ROOT/baselines_oodt_chopped/{climatology,persistence}/score/metrics_en21x.json
+$EVAL_ROOT/direct-p4/oodt_chopped/score/metrics_en21x.json
+$EVAL_ROOT/table1_oodt_chopped/table1_oodt_chopped.{md,csv,json}
+```
+
+首次本地评分完成后，Table 1 会包含公开论文参考行、本地 Persistence/Climatology 和真实 Direct-P4 行；在独立官方 evaluator/reference parity 尚未补齐时，bundle 会诚实标为 `provisional`，但 Direct-P4 的 OOD-t 本地正式数值已经可以读取和分析。
 
 ---
 
@@ -121,11 +295,11 @@ python scripts/preflight_greenearthnet_oodt_table1.py \
 
 ## 4. Direct-P4：不重训，只评估
 
-先把 `DIRECT_CHECKPOINT` 替换成 Direct-P4 完整 `val_dev` 选择出的 `checkpoint_best.pt` 的真实路径。
+Direct-P4 已完成完整 `val_dev` 选模，正式 checkpoint 路径如下；不需要重新训练：
 
 ```bash
 export CONFIG=configs/train/stage2_earthnet_v2_direct_physical4.yaml
-export DIRECT_CHECKPOINT=/实际/Direct-P4/checkpoint_best.pt
+export DIRECT_CHECKPOINT=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_physical4_8gpu_b64_200ep_trainvalcache_20260717_165126/checkpoint_best.pt
 export CONDITIONING_STATS_PATH=$P/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/conditioning_stats_physical4_v1_train_dev.json
 
 export CHECKPOINT=$DIRECT_CHECKPOINT
@@ -139,7 +313,7 @@ export RUN_PREFLIGHT=1
 export RUN_BASELINES=1
 export RUN_MODEL=1
 export RUN_ASSEMBLE=1
-export MODEL_BATCH_SIZE=8
+export MODEL_BATCH_SIZE=16
 export MODEL_NUM_WORKERS=8
 export SCORE_WORKERS=8
 export HASH_MODE=sha256
