@@ -49,4 +49,9 @@ env/
 *.h5
 *.hdf5
 
+# 正式评估只跟踪小型汇总 CSV；预测 NetCDF 仍禁止进入 Git。
+!evaluations/**/metrics_en21x.csv
+!evaluations/**/table1_oodt_chopped.csv
+evaluations/**/predictions/
+
 /output/

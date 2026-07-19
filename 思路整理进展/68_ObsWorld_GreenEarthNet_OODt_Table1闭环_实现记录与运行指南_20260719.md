@@ -152,7 +152,7 @@ export HDF5_USE_FILE_LOCKING=FALSE
 export PYTHONPATH=$P:${PYTHONPATH:-}
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
-export RUN_ID=table1_greenearthnet_oodt_direct_$(date +%Y%m%d_%H%M%S)
+export RUN_ID=table1_greenearthnet_oodt_direct_p4_s42_best_$(date +%Y%m%d_%H%M%S)
 export EVAL_ROOT=$P/evaluations/$RUN_ID
 export OODT_MANIFEST=$EVAL_ROOT/greenearthnet_oodt_chopped_manifest.json
 
@@ -234,7 +234,7 @@ fi
 ```bash
 cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
 export P=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026
-export RUN_ID=table1_greenearthnet_oodt_direct_实际时间戳
+export RUN_ID=table1_greenearthnet_oodt_direct_p4_s42_best_实际时间戳
 export EVAL_ROOT=$P/evaluations/$RUN_ID
 
 ps -p "$(cat "$EVAL_ROOT/table1_eval.pid")" -o pid,etime,stat,%cpu,%mem,cmd
@@ -264,6 +264,53 @@ $EVAL_ROOT/table1_oodt_chopped/table1_oodt_chopped.{md,csv,json}
 ```
 
 首次本地评分完成后，Table 1 会包含公开论文参考行、本地 Persistence/Climatology 和真实 Direct-P4 行；在独立官方 evaluator/reference parity 尚未补齐时，bundle 会诚实标为 `provisional`，但 Direct-P4 的 OOD-t 本地正式数值已经可以读取和分析。
+
+### 2.2 结果命名与安全上传到 GitHub
+
+运行目录采用：
+
+```text
+table1_greenearthnet_oodt_direct_p4_s42_best_<timestamp>
+```
+
+它已经明确编码 `Table 1 / GreenEarthNet / OOD-t / Direct-P4 / seed 42 / best checkpoint`，比不透明的 `Dxxxx` 更容易审计。目录内部还有 `direct-p4/oodt_chopped/`；`prediction_manifest.json`、`score_provenance.json` 和 Table bundle 会进一步记录 checkpoint 绝对路径、checkpoint SHA256、target manifest hash、protocol 与 track。Rollout 使用对应的 `table1_greenearthnet_oodt_rollout_p4_s42_best_<timestamp>`，不与 Direct 混目录。
+
+仓库原本全局忽略 `*.csv`。当前 `.gitignore` 已只对白名单文件 `metrics_en21x.csv` 和 `table1_oodt_chopped.csv` 开放；同时显式忽略 `evaluations/**/predictions/`。因此可以上传小型指标、表格和 provenance，但绝不能执行 `git add evaluations/` 把可再生成的 NetCDF 预测整体加入 Git。
+
+评估完成后，在服务器执行下面命令。它只加入 manifest、预检、score 和表格，不加入预测 NetCDF、checkpoint、日志或原始数据：
+
+```bash
+cd /csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+
+export P=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026
+export EVAL_ROOT=$(ls -dt "$P"/evaluations/table1_greenearthnet_oodt_direct_p4_s42_best_* | head -1)
+
+echo "EVAL_ROOT=$EVAL_ROOT"
+
+git add -- \
+  "$EVAL_ROOT/layout_audit.json" \
+  "$EVAL_ROOT/greenearthnet_oodt_chopped_manifest.json" \
+  "$EVAL_ROOT/preflight_oodt_chopped.json" \
+  "$EVAL_ROOT/baselines_oodt_chopped/climatology/score" \
+  "$EVAL_ROOT/baselines_oodt_chopped/persistence/score" \
+  "$EVAL_ROOT/direct-p4/oodt_chopped/score" \
+  "$EVAL_ROOT/table1_oodt_chopped"
+
+echo "以下大文件若出现则停止，不要 commit："
+find "$EVAL_ROOT" -type f -size +95M -print
+
+git diff --cached --name-only
+git diff --cached --stat
+```
+
+确认 staged 列表中没有 `.nc`、checkpoint 或日志后，再提交：
+
+```bash
+git commit -m "Add Direct-P4 GreenEarthNet OOD-t Table 1 results"
+git push origin main
+```
+
+上传完成后，另一台机器或本工作区执行 `git pull --ff-only origin main`，即可直接读取 Markdown/CSV/JSON 数值。预测 `.nc` 不需要上传：表格、score 与 provenance 已足够复核和更新论文；若以后确需逐文件复算，则在原实验服务器使用保留的 predictions。
 
 ---
 
