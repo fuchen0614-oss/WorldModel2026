@@ -24,7 +24,11 @@ import json
 import os
 import sys
 import time
+import warnings
 from pathlib import Path
+
+# benign DDP perf hint from the PVT conv grad layout — floods the log, mute it
+warnings.filterwarnings("ignore", message=".*Grad strides do not match.*")
 
 import torch
 import torch.distributed as dist
