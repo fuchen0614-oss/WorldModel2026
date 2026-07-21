@@ -34,7 +34,19 @@
 - **B4 前置 = Stage1.8**(SSL4EO L1C/L2A φ 因子化,**小,~450 步,从 ImageNet-PVT init,无 Stage1.5**——旧 Stage1.5 是 ViT-S 12波段,与 PVT 不兼容,不用)。
 - **代码**:一套 config 驱动的可扩展模型/loss/训练(强基线可恢复)。
 - **并行**:B0 占 GPU 训练时,**CPU 后台建 Stage1.8 的 L1C/L2A 成对 manifest**(不抢 GPU)。
-- **batch/epoch**:每卡 batch 待测 H200 上限(8→16→32→?);**epoch 标准 50(matched,B0/B4 一致)**。注:doc 的"8800step=200ep"是 **global 512=每卡64** 口径,Contextformer+PVT 未必塞得下,**以 epoch 为准**。
+- **batch/epoch**:每卡 batch 待测 H200 上限(8→16→32→?);**epoch 标准 50(matched,B0/B4 一致)**。
+
+### 3.1 各阶段 step/epoch 预算
+| 阶段 | 数据 | N | 每卡 batch | global | steps/epoch | epoch | 总 steps |
+|---|---|---:|---:|---:|---:|---:|---:|
+| **B0/B4 主训** | GreenEarthNet train | 23816 | **8**(待测加大) | 64 | 372 | **50** | **18600** |
+| — 若每卡16 | 同上 | 23816 | 16 | 128 | 186 | 50 | 9300 |
+| — 若每卡32 | 同上 | 23816 | 32 | 256 | 93 | 50 | 4650 |
+| **Stage1.8 φ因子化** | SSL4EO L1C/L2A 成对子集 | ~4000 | 32 | 256 | 15 | 30 | **~450** |
+| B0 当前(管线验证) | GreenEarthNet train | 23816 | 8 | 64 | 372 | 40 | 14880 |
+
+> `steps/epoch = N / global_batch`(drop_last);`总 steps = epoch × steps/epoch`。doc 的"8800=200ep"是 **global512(每卡64)** 口径,Contextformer+PVT 未必塞得下,**以 epoch 为准,batch 待 OOM 实测后 B0/B4 统一**。
+
 
 ## 4. 待办
 - [ ] config 驱动骨架:state_projector + `ControlledTransition` T + latent-future loss + φ/O_product;λ 开关
