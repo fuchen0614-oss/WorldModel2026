@@ -55,3 +55,8 @@ env/
 evaluations/**/predictions/
 
 /output/
+
+# plan-b: vendored official code (clone on demand) + local scratch
+third_party/
+_downloads/
+*.ckpt
