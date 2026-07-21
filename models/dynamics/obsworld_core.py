@@ -122,6 +122,9 @@ class ObsWorldV2Core(nn.Module):
             "state_valid_mask": state_valid_mask,
             "context_token_coverage": coverage,
             "context_states": context_states,
+            # Per-pixel last cloud-free reflectance, used as an optional decoder
+            # baseline for residual prediction (Plan A). Never touches the state.
+            "last_valid_rgbn": last_valid_pixels(x_context, context_mask),
         }
 
     def encode_geo(
@@ -142,19 +145,62 @@ class ObsWorldV2Core(nn.Module):
             )
         return tokens
 
-    def decode_states(self, states: torch.Tensor) -> dict[str, torch.Tensor]:
-        """Decode one state or a time sequence without changing its order."""
+    def decode_states(
+        self,
+        states: torch.Tensor,
+        baseline: Optional[torch.Tensor] = None,
+    ) -> dict[str, torch.Tensor]:
+        """Decode one state or a time sequence without changing its order.
+
+        ``baseline`` (``[B,C,H,W]``) enables residual decoding: it is broadcast
+        over any step dimension and added inside the decoder. ``None`` keeps the
+        original absolute-decode behaviour, so existing models are unaffected.
+        """
 
         if states.dim() == 3:
-            return self.decoder(states)
+            if baseline is None:
+                return self.decoder(states)
+            return self.decoder(states, baseline=baseline)
         if states.dim() != 4:
             raise ValueError(f"states must be [B,N,D] or [B,T,N,D], got {tuple(states.shape)}")
         batch, steps, tokens, dim = states.shape
-        decoded = self.decoder(states.reshape(batch * steps, tokens, dim))
+        flat = states.reshape(batch * steps, tokens, dim)
+        if baseline is None:
+            decoded = self.decoder(flat)
+        else:
+            flat_baseline = (
+                baseline.unsqueeze(1)
+                .expand(batch, steps, *baseline.shape[1:])
+                .reshape(batch * steps, *baseline.shape[1:])
+            )
+            decoded = self.decoder(flat, baseline=flat_baseline)
         out: dict[str, torch.Tensor] = {}
         for name, value in decoded.items():
             out[name] = value.reshape(batch, steps, *value.shape[1:])
         return out
+
+
+def last_valid_pixels(x_context: torch.Tensor, context_mask: torch.Tensor) -> torch.Tensor:
+    """Per-pixel most-recent cloud-free reflectance over the context frames.
+
+    ``x_context`` is ``[B,T,C,H,W]`` and ``context_mask`` is ``[B,T,H,W]`` with 1
+    = clear.  For each pixel the latest clear frame is selected; pixels never
+    clear fall back to the temporal mean.  Returns ``[B,C,H,W]`` (a persistence
+    baseline for residual decoding; it never enters the latent state).
+    """
+
+    if x_context.dim() != 5:
+        raise ValueError(f"x_context must be [B,T,C,H,W], got {tuple(x_context.shape)}")
+    batch, frames, channels, height, width = x_context.shape
+    mask = context_mask.to(dtype=x_context.dtype)  # [B,T,H,W]
+    ramp = torch.arange(1, frames + 1, device=x_context.device, dtype=x_context.dtype)
+    score = mask * ramp.view(1, frames, 1, 1)  # latest clear frame -> largest score
+    last_idx = score.argmax(dim=1)  # [B,H,W]
+    has_valid = mask.sum(dim=1) > 0  # [B,H,W]
+    gather_idx = last_idx.view(batch, 1, 1, height, width).expand(batch, 1, channels, height, width)
+    latest = torch.gather(x_context, 1, gather_idx).squeeze(1)  # [B,C,H,W]
+    mean_ctx = x_context.mean(dim=1)  # [B,C,H,W]
+    return torch.where(has_valid.unsqueeze(1), latest, mean_ctx)
 
 
 def pixel_mask_to_token_coverage(pixel_mask: torch.Tensor, num_tokens: int) -> torch.Tensor:

@@ -1,0 +1,8 @@
+# Plan A · Stage2-v3 REAL TRAINING config (physical4).
+# Same as plan_a_stage2v3_vits.yaml but ENFORCES the Stage1.5 pretrained
+# initializer (require_stage15_checkpoint=true), so a real run cannot silently
+# start from random weights. Pass STAGE15_CHECKPOINT when launching.
+_base_: plan_a_stage2v3_vits.yaml
+
+model:
+  require_stage15_checkpoint: true

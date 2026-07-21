@@ -117,7 +117,7 @@ class ObsWorldDirectPathModel(nn.Module):
             state_delta_norms.append((state - state0).norm(dim=-1).mean(dim=-1))
 
         states = torch.stack(endpoint_states, dim=1)
-        decoded = self.core.decode_states(states)
+        decoded = self.core.decode_states(states, baseline=initialized.get("last_valid_rgbn"))
         return {
             "pred": decoded["mean"],
             "z_pred": states,
