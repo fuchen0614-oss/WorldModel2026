@@ -25,6 +25,7 @@ import os
 import sys
 import time
 import warnings
+from contextlib import nullcontext
 from pathlib import Path
 
 # benign DDP perf hint from the PVT conv grad layout — floods the log, mute it
@@ -129,6 +130,10 @@ def main():
     ap.add_argument("--bf16", action="store_true",
                     help="opt-in bf16 autocast (default fp32; this model + bf16 is unstable, "
                          "and fp32 matches the official/parity setup)")
+    # --- ObsWorld state contract (B1-B4). Default off = B0. ---
+    ap.add_argument("--use-state", action="store_true", help="B1+: add state projector")
+    ap.add_argument("--use-latent-future", action="store_true", help="B2+: latent-future consistency")
+    ap.add_argument("--lambda-dyn", type=float, default=0.0, help="weight of latent-future loss")
     args = ap.parse_args()
 
     # DDP init
@@ -143,9 +148,19 @@ def main():
     if rank0():
         out.mkdir(parents=True, exist_ok=True)
 
-    # Model (base contextformer6M) + optional official warm-start
+    # Model (base contextformer6M) + optional official warm-start + optional contract
     hp = contextformer6m_hparams(pvt_pretrained=(args.init_ckpt == ""))
-    model = PVTContextformerQ(hp).to(dev)
+    contract_cfg = None
+    if args.use_state or args.use_latent_future or args.lambda_dyn > 0:
+        contract_cfg = {
+            "use_state": args.use_state or args.use_latent_future,
+            "use_latent_future": args.use_latent_future or args.lambda_dyn > 0,
+        }
+    model = PVTContextformerQ(hp, contract_cfg=contract_cfg).to(dev)
+    use_contract = contract_cfg is not None
+    from types import SimpleNamespace
+    lambdas = SimpleNamespace(dyn=args.lambda_dyn)
+    log(f"contract: {contract_cfg}  lambda_dyn={args.lambda_dyn}")
     if args.init_ckpt:
         miss, unexp = load_official_ckpt(model.core, args.init_ckpt, strict=True)
         log(f"warm-start {args.init_ckpt}: missing={len(miss)} unexpected={len(unexp)}")
@@ -195,13 +210,18 @@ def main():
         for batch in train_loader:
             data = to_device(batch, dev)
             opt.zero_grad(set_to_none=True)
-            if use_bf16:
-                with torch.autocast("cuda", dtype=torch.bfloat16):
+            ctx = torch.autocast("cuda", dtype=torch.bfloat16) if use_bf16 else nullcontext()
+            with ctx:
+                if use_contract:
+                    preds, contract = model(data, with_contract=True, lambdas=lambdas)
+                else:
                     preds = model(data)
-                    loss, logs = loss_fn(preds.float(), data)
-            else:
-                preds = model(data)
-                loss, logs = loss_fn(preds, data)
+                    contract = None
+            preds_l = preds.float() if use_bf16 else preds
+            loss, logs = loss_fn(preds_l, data)
+            if contract is not None:
+                loss = loss + (contract["total"].float() if use_bf16 else contract["total"])
+                logs.update({k: v for k, v in contract["logs"].items()})
             if not torch.isfinite(loss):
                 log(f"WARN non-finite loss at step {step}; skipping")
                 opt.zero_grad(set_to_none=True)

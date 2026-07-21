@@ -94,13 +94,26 @@ class PVTContextformerQ(nn.Module):
       state the contract will operate on.
     """
 
-    def __init__(self, hparams: Optional[SimpleNamespace] = None):
+    def __init__(self, hparams: Optional[SimpleNamespace] = None, contract_cfg: Optional[dict] = None):
         super().__init__()
         self.hparams = hparams if hparams is not None else contextformer6m_hparams()
         self.core = ContextFormer(self.hparams)
         self._z: Optional[torch.Tensor] = None
         # tap the last transformer block's output (== `x` fed to `head`)
         self.core.blocks[-1].register_forward_hook(self._capture_z)
+        # optional ObsWorld state contract (B1-B4). None -> pure Contextformer (B0).
+        self.contract = None
+        if contract_cfg is not None:
+            from models.dynamics.plan_b_state_contract import PlanBStateContract
+            self.contract = PlanBStateContract(
+                feat_dim=self.hparams.n_hidden,
+                state_dim=int(contract_cfg.get("state_dim", 256)),
+                driver_dim=self.hparams.n_weather,
+                context_len=self.hparams.context_length,
+                target_len=self.hparams.target_length,
+                use_state=bool(contract_cfg.get("use_state", True)),
+                use_latent_future=bool(contract_cfg.get("use_latent_future", True)),
+            )
 
     def _capture_z(self, module, inputs, output):
         self._z = output
@@ -137,8 +150,13 @@ class PVTContextformerQ(nn.Module):
             return obj
         return cls.from_official(ckpt_path, hparams=hparams, strict=strict)
 
-    def forward(self, data, pred_start: int = 0, preds_length: Optional[int] = None):
+    def forward(self, data, pred_start: int = 0, preds_length: Optional[int] = None,
+                with_contract: bool = False, lambdas=None):
         preds, aux = self.core(data, pred_start=pred_start, preds_length=preds_length)
+        if with_contract and self.contract is not None:
+            # contract loss computed INSIDE forward so its params sync under DDP
+            contract = self.contract.loss(self._z, data, lambdas)
+            return preds, contract
         return preds
 
     def encode(self, data, pred_start: int = 0, preds_length: Optional[int] = None):
