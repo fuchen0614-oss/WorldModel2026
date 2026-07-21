@@ -42,7 +42,9 @@ def make_fake_cube(path, T=150, H=128, W=128, seed=0):
             "eobs_fg": tv(), "eobs_hu": tv(), "eobs_pp": tv(), "eobs_qq": tv(),
             "eobs_rr": tv(), "eobs_tg": tv(), "eobs_tn": tv(), "eobs_tx": tv(),
             "nasa_dem": hw(), "alos_dem": hw(), "cop_dem": hw(),
-            "esawc_lc": hw(), "geom_cls": hw(),
+            "esawc_lc": (("lat", "lon"),
+                         rng.integers(10, 41, (H, W)).astype("float32")),  # veg codes 10-40
+            "geom_cls": hw(),
         },
         coords={"time": np.arange(T), "lat": np.arange(H), "lon": np.arange(W)},
     )

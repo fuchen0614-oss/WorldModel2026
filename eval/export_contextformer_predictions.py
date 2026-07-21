@@ -108,7 +108,7 @@ def main() -> int:
         num_workers=args.num_workers, collate_fn=collate, pin_memory=(dev == "cuda"),
     )
 
-    model = PVTContextformerQ.from_official(args.ckpt, strict=True).to(dev).eval()
+    model = PVTContextformerQ.from_checkpoint(args.ckpt, strict=True).to(dev).eval()
     print(f"[model] loaded {args.ckpt}  params={model.num_params()/1e6:.2f}M  device={dev}")
 
     written = skipped = 0

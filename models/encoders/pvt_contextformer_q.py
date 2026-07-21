@@ -119,6 +119,24 @@ class PVTContextformerQ(nn.Module):
         obj._load_report = {"missing": missing, "unexpected": unexpected}
         return obj
 
+    @classmethod
+    def from_checkpoint(
+        cls,
+        ckpt_path: str,
+        hparams: Optional[SimpleNamespace] = None,
+        strict: bool = True,
+    ) -> "PVTContextformerQ":
+        """Auto-detect and load either an OFFICIAL Lightning ckpt (`model.`-prefixed
+        state_dict) or one of OUR B0/B1-B4 checkpoints (`core_state_dict`)."""
+        ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
+        if isinstance(ckpt, dict) and "core_state_dict" in ckpt:
+            hp = hparams or contextformer6m_hparams(pvt_pretrained=False)
+            obj = cls(hp)
+            miss, unexp = obj.core.load_state_dict(ckpt["core_state_dict"], strict=strict)
+            obj._load_report = {"missing": list(miss), "unexpected": list(unexp)}
+            return obj
+        return cls.from_official(ckpt_path, hparams=hparams, strict=strict)
+
     def forward(self, data, pred_start: int = 0, preds_length: Optional[int] = None):
         preds, aux = self.core(data, pred_start=pred_start, preds_length=preds_length)
         return preds
