@@ -122,14 +122,16 @@ def main():
     ap.add_argument("--log-interval", type=int, default=50)
     ap.add_argument("--val-interval", type=int, default=1000)
     ap.add_argument("--ckpt-interval", type=int, default=2000)
-    ap.add_argument("--no-bf16", action="store_true")
+    ap.add_argument("--bf16", action="store_true",
+                    help="opt-in bf16 autocast (default fp32; this model + bf16 is unstable, "
+                         "and fp32 matches the official/parity setup)")
     args = ap.parse_args()
 
     # DDP init
     local_rank = int(os.environ.get("LOCAL_RANK", 0))
     world = int(os.environ.get("WORLD_SIZE", 1))
     if world > 1:
-        dist.init_process_group("nccl")
+        dist.init_process_group("nccl", device_id=torch.device("cuda", local_rank))
         torch.cuda.set_device(local_rank)
     dev = torch.device("cuda", local_rank) if torch.cuda.is_available() else torch.device("cpu")
 
@@ -171,7 +173,7 @@ def main():
                             weight_decay=args.weight_decay)
     sched = torch.optim.lr_scheduler.MultiStepLR(opt, milestones=args.milestones, gamma=args.gamma) \
         if args.milestones else None
-    use_bf16 = (not args.no_bf16) and dev.type == "cuda"
+    use_bf16 = args.bf16 and dev.type == "cuda"
 
     steps_per_epoch = max(len(train_loader), 1)
     total_steps = args.max_steps if args.max_steps > 0 else args.max_epochs * steps_per_epoch
