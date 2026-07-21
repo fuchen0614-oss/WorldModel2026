@@ -26,7 +26,10 @@ mkdir -p "$OUTPUT_DIR"
 echo "GPUS=$GPUS PER_GPU_BATCH=$PER_GPU_BATCH MAX_EPOCHS=$MAX_EPOCHS MAX_STEPS=$MAX_STEPS LR=$LR"
 echo "DATA_GEN=$DATA_GEN INIT_CKPT=$INIT_CKPT OUTPUT_DIR=$OUTPUT_DIR"
 
-torchrun --standalone --nproc_per_node="$GPUS" -m train.train_plan_b_contextformer \
+# Use the active python's torch.distributed.run (robust; no torchrun-on-PATH needed).
+# Set PYTHON=/path/to/env/bin/python to override if the env is not activated.
+PYTHON="${PYTHON:-python}"
+"$PYTHON" -m torch.distributed.run --standalone --nproc_per_node="$GPUS" -m train.train_plan_b_contextformer \
   --train-dir "$DATA_GEN/train" --val-dir "$DATA_GEN/val_chopped" \
   --init-ckpt "$INIT_CKPT" --output-dir "$OUTPUT_DIR" \
   --per-gpu-batch "$PER_GPU_BATCH" --max-epochs "$MAX_EPOCHS" --max-steps "$MAX_STEPS" \
