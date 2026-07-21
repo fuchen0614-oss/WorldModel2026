@@ -57,11 +57,11 @@
 
 你尚未完成的是：
 
-- 用冻结 checkpoint 在公开论文主测试轨道 OOD-t chopped 上只做推理和评分；
-- 因此尚无可以填入 Table 1 本文行的 R²、RMSE、NSE、绝对 bias、Outperformance、RMSE25；
-- Rollout-P4 尚未完成正式训练、验证选模和公开主测试。
+- Rollout-P4 的正式训练、验证选模和主测试；
+- raw EarthNet2021x 五划分上的完整 Direct/Rollout 正式结果汇总；
+- **如果决定把 Contextformer 论文 Table 2 的已发表数字与本文放进同一张横向可比表**，还需要额外取得 GreenEarthNet `ood-t_chopped` 目标，并让冻结的 Direct/Rollout checkpoint 仅做推理和评分。
 
-外部模型不需要重训。Contextformer、PredRNN、SimVP、Earthformer 等已发表数值可以直接引用；需要补跑的是我们自己的 Direct/Rollout 推理和评分，而不是别人的训练。
+这里必须区分两件事：`OOD-t chopped` 不是当前 raw 五划分训练成立的前提，而是“直接使用 Contextformer 已发表数字作同表比较”的附加评测轨道。外部模型不需要重训；但若没有这个额外测试集，外部数字只能作为相关工作参考，不能伪装成与本文 raw IID/OOD 完全同协议的主表结果。
 
 ---
 
@@ -328,6 +328,20 @@ U 的基础代码虽已接通，但还没有正式训练与主结果。它不是
 | VegSim（预印本 2026） | 气象情景下的潜在植被状态 | 从稀疏 NDVI 与天气初始化状态，用 GRU 递推并输出 NDVI 分位数 | 是概念最近邻；但其观测是 minicube 平均 NDVI 标量，当前不生成地块内部完整 RGBN 空间轨迹 |
 | ObsWorld（本文） | 由卫星历史约束、可预测未来观测的空间地表状态 | 16×16 空间状态，physical4 驱动的共享五日 F，20 步开放循环，逐步 RGBN 解码，Direct 配对检验 | 目标是把高分辨率 EO 预测与显式、可诊断的空间状态过程连接起来 |
 
+## 4.1 最短定位卡：到底与别人差在哪里
+
+用三个层次记忆即可：
+
+1. **输出层**：普通视频预测和 Contextformer 重点是“未来输出准不准”；VegSim 主要输出 minicube 平均 NDVI 轨迹；ObsWorld 输出完整空间 RGBN，并可派生 NDVI。
+2. **过程层**：ObsWorld 明确保存 `z0 → z1 → … → z20`，并在每五天复用同一个受外生驱动控制的状态转移，而不是只把未来 20 帧作为一个整体结果生成。
+3. **证据层**：ObsWorld 具有输入、初始化、解码器和预算尽量匹配的 Direct-P4 对照，专门检验“共享递推状态过程”是否比“非递推多时距预测”更有用。
+
+因此本文最稳的定位不是“第一个地球世界模型”，而是：
+
+> **研究高分辨率、多光谱地表预测能否由一个可重复组合、受外生驱动控制、并能逐步回到可观测空间的短步预测状态过程构成。**
+
+这个定位能否成立取决于实验，而不是模型命名：Rollout 若不能在长时距/OOD 上相对 Direct 获益，或正确驱动与错误驱动没有差异，就必须收缩主张。
+
 ---
 
 # 5. 必须认真面对的三个最近邻
@@ -372,7 +386,7 @@ ObsWorld 能够与 VegSim 切开的地方是：
 
 - Rollout-P4 相对 Direct-P4 的长时距证据；
 - 空间预测与地块内部异质性的可视化/分层指标；
-- true/no/shuffled/time-shifted weather 的响应检验；
+- true D（正确驱动）/ no D（无驱动）/ shuffled D（打乱驱动）/ time-shifted D（时间错位驱动）的响应检验；
 - Stage1.5 初始化消融；
 - 参数量与计算量，说明不是简单扩大模型。
 
@@ -523,10 +537,27 @@ Table 1 只能证明：
 | 模型具有基本预测技能 | OOD-t Table 1 | 接近或超过强公开基线 | 若差距过大，先修预测，不能靠 world model 名称弥补 |
 | 共享状态递推有用 | Rollout-P4 vs Direct-P4 | 总体更好，或总体非劣且长时距/OOD 更稳 | 若明显更差，只能称结构探索，不能称有效状态动力学 |
 | 误差没有快速累积 | 5–100 天 Figure 2 | Rollout 曲线不在早期迅速发散 | 若发散，修 curriculum/transition |
-| 天气不是装饰 | true/no/shuffled/time-shifted D | 正确天气最好，错位天气显著变差 | 若无差异，不能把外生驱动作为贡献 |
+| 天气不是装饰 | true D（正确）/ no D（无）/ shuffled D（跨样本打乱）/ time-shifted D（时间错位） | 正确天气最好，错位天气显著变差 | 若无差异，不能把外生驱动作为贡献 |
 | 空间状态确有意义 | 空间误差图、局部异质性样本、RGBN/NDVI | 能保留地块内部差异和局部变化 | 若只能预测均值，无法与 VegSim 拉开 |
 | Stage1.5 有用 | Stage1-init vs Stage1.5-init | 最终预测、收敛或 OOD 至少一项稳定改善 | 若无收益，Stage1.5 降为工程预训练，不列核心贡献 |
 | U 有用 | day25/day50 reveal | 胜过强在线更新基线 | 未完成时不进入标题、摘要和主表 |
+
+### 7.2.1 `true / no / shuffled / time-shifted driver` 到底是什么
+
+这里的 `D` 是 driver（外生驱动），当前 physical4 指降水、温度、VPD 和太阳辐射。
+
+| 名称 | 中文直译 | 实际给模型什么 | 主要回答什么 |
+|---|---|---|---|
+| true D | 正确驱动 | 当前样本、当前未来时段的真实 physical4 序列 | 正常预测性能 |
+| no D | 无驱动/中性驱动 | 将标准化后的驱动置为中性值，或训练一个不使用驱动的配对模型 | 天气信息整体是否有用 |
+| shuffled D | 打乱驱动 | 驱动数值本身仍来自真实数据，但把 A 样本的天气交给 B 样本；建议在相近季节内按固定 seed 打乱 | 模型是否依赖“这条天气与这个样本正确配对”，而不只是利用天气分布或季节捷径 |
+| time-shifted D | 时间错位驱动 | 保持同一地点/样本，但把天气向前后平移，或换成同地点错误年份 | 模型是否利用天气发生的正确时间，而不只是地点气候背景 |
+
+最便宜的第一轮做法是固定同一个已经训练好的 checkpoint，只在推理时分别输入 true、shuffled 和 time-shifted D；这不训练新模型。若正确驱动明显最好，说明预测确实依赖驱动与样本/时间的匹配。`no D` 若要形成更强的“天气提高了可学习预测能力”结论，最好再训练一个真正不接收天气的配对模型；仅在推理时把天气置零只能证明敏感性。
+
+注意，本文的 shuffled D（打乱驱动）是“交换天气序列”，**不是**打乱 RGB/NDVI 图像像素，也不是 Contextformer 论文用于检验空间结构的 spatial pixel shuffling（空间像素打乱）。
+
+这些实验是 **driver-use diagnostic（驱动使用诊断）**，不是因果效应实验。它最多支持“模型使用了正确对齐的天气信息”，不能直接写成“改变天气就会因果地改变真实地表”。当前仓库文档中已有实验契约，但 `shuffled D / time-shifted D` 的正式扰动算子和结果仍未完成，不能在论文中写成已有结论。
 
 ## 7.3 最关键的说服句
 
@@ -632,22 +663,42 @@ epoch200 的 NDVI-MAE 略低，但不能看完结果后把预先规定的 RGBN-M
 | Persistence/Climatology 的本地 Outperf 支持 | 尚需同协议生成/核验 | 非学习基线，不训练 |
 | Rollout-P4 | 未完成 | 需要训练本文主模型 |
 
-## 9.2 EarthNet2021x 与论文名称的准确说明
+## 9.2 raw EarthNet2021x、GreenEarthNet 与 OOD-t 的准确关系
 
-Contextformer 官方仓库明确写明：
+你的理解是对的：**`OOD-t` 是 GreenEarthNet 的时间分布外测试名称，不是 raw EarthNet2021x 五划分中 `ood` 的别名。**
 
-- 论文中数据集名称是 GreenEarthNet；
-- 代码开发阶段还使用 earthnet2021x 和 en21x 名称；
-- 论文推理示例使用 ood-t_chopped。
+官方 EarthNet Toolkit 0.3.11 明确把两组入口分开：
 
-因此：
+| 下载入口 | 官方 split |
+|---|---|
+| `dataset="earthnet2021x"` | `train / iid / ood / extreme / seasonal` |
+| `dataset="greenearthnet"` | `train / val_chopped / iid_chopped / ood-t_chopped / ood-s_chopped / ood-st_chopped` |
 
-- 我们仍可把训练数据称为 raw EarthNet2021x；
-- 引用 Contextformer 数值时必须在表注中说明公开 OOD-t chopped 协议；
-- raw ood 与 ood-t_chopped 不能当成同一个目录；
-- 想把我们的行与公开数值放在同一主表，必须让我们自己的 checkpoint 在 ood-t_chopped 上同协议评分。
+二者容易混淆，是因为：
 
-这不是要求重训 Direct，也不是把项目改成另一个训练数据集；它是在训练完成后增加一个公开可比测试轨道。
+- GreenEarthNet 官方仓库说明，开发期曾使用 `earthnet2021x`、`en21x` 名称；
+- 官方下载器底层仍从同一个 `earthnet/earthnet2021x/...` S3 家族读取文件；
+- GreenEarthNet 复用了 EarthNet2021 的训练地点、10→20 时空尺寸，并升级了云掩膜、天气和植被评价协议。
+
+但“同一家族”不等于“同一个测试目录”：
+
+- 你当前可见目录只有 raw `train / iid / ood / extreme / seasonal`；本地核查没有 `ood-t_chopped`；
+- 你的 raw `train` 有 23,816 个文件，与 Contextformer 论文报告的 GreenEarthNet Train 数量一致；正式 Stage2 又从中冻结为 `train_dev=22,847`、`val_dev=969`；
+- 你的 raw IID/OOD 文件年份主要是 2017–2020；论文 OOD-t 是与 Val 相同地点上的 2021–2022 时间外推测试；
+- `chopped` 是官方代码中的固定评测窗口目录名，不能把 raw `ood` 改名后代替。
+
+所以“用现有 Direct checkpoint 在相同 OOD-t chopped 协议上推理”的准确含义是：
+
+> **不重新训练 Direct；另行下载缺失的 GreenEarthNet `ood-t_chopped` 测试目标，把它当作一场额外考试，让现有 checkpoint 读取其前 10 帧并预测后 20 帧，再用与 Contextformer Table 2 相同的 mask 和指标评分。**
+
+它只表示“同一测试协议”，不表示本文与 Contextformer 的训练/验证过程完全相同。本文使用内部 `train_dev/val_dev`，这一差异必须在实验设置中披露。
+
+实验设计有两条合法路线：
+
+1. **需要直接使用 Contextformer Table 2 已发表数值（推荐用于强横向比较）**：额外取得 `ood-t_chopped`，只评估本文 checkpoint；外部方法不重训。
+2. **坚持只使用当前 raw 五划分**：把 raw IID/OOD/extreme/seasonal 作为本文主表；Contextformer Table 2 数值只能放在相关工作或“非同协议参考”区域，不能与本文数字并排宣称胜负。
+
+因此 OOD-t 不是 ObsWorld 方法成立的必要条件；它是我们想直接借用 Contextformer 已发表精度、又保持公平比较时必须支付的一次额外评测成本。
 
 ---
 
@@ -677,32 +728,23 @@ Contextformer 官方仓库明确写明：
 
 Direct 的训练已经结束。
 
-### 步骤 B：打通 OOD-t chopped 数据与 manifest
+### 步骤 B（仅在选择公开横向比较轨道时）：准备 OOD-t chopped 数据
 
-当前机器已有 raw train/iid/ood/extreme/seasonal，但公开 Contextformer 主表使用 ood-t_chopped。
+当前机器已有 raw `train/iid/ood/extreme/seasonal`，但公开 Contextformer Table 2 使用 GreenEarthNet `ood-t_chopped`。
+
+当前仓库已经完成独立 `greenearthnet_cvpr2024_chopped_v1` 的 manifest、预检、预测导出、评分和表格脚本；这里不再缺 split/manifest 代码。当前真正缺少的是服务器上的 `ood-t_chopped` 数据目录及实际评分产物。
 
 需要：
 
-1. 只下载 ood-t_chopped，不下载或重训外部模型；
-2. 给当前 manifest/loader 增加显式 chopped split 支持；
-3. 冻结该清单、样本数和 hash；
-4. 确认预测导出器与官方 mask/target 约定一致。
+1. 仅下载 GreenEarthNet `ood-t_chopped` 评测数据，不下载或重训外部模型；
+2. 审计目录，冻结该清单、样本数和 hash；
+3. 用现有 Direct checkpoint 做小规模 smoke test（冒烟测试），再做全量推理；
+4. 核对本地 scorer 与公开 evaluator 的数值一致性；
+5. 如需 Outperformance（超越气候态比例），还要取得/核验同一目标人口上的官方 Climatology 参考。
 
-当前代码在这一点仍有 split/manifest 缺口，所以现在不应给服务器直接运行一个假装完整的正式评分命令。下一轮应先把该代码契约修好并测试，再给一键命令。
+详细运行契约见 [[68_ObsWorld_GreenEarthNet_OODt_Table1闭环_实现记录与运行指南_20260719]]。raw IID/OOD 评分仍用于本文自身的五划分诊断，但不能冒充 OOD-t 数值。
 
-> [!NOTE]
-> **对 2026-07-19 新增评估代码的复核结果：不是“整套评估都没实现”。**
->
-> 当前代码已经具备以下组成部分：
->
-> - `eval/earthnet_table1.py` 与 `eval/export_earthnet_score_targets.py`：把 raw NetCDF 目标转换为 EarthNetScore 所需格式，并记录来源信息；
-> - `eval/export_earthnet_table1_baseline.py`：可在 raw IID/OOD 等划分上导出 Persistence（持久性）与 Climatology（气候态）基线；
-> - `eval/stage2_result_statistics.py`：可计算逐时距统计和按 tile（瓦片）聚类的配对 bootstrap（自助法置信区间）；
-> - `eval/export_greenearthnet_predictions.py` 与 `eval/eval_greenearthnet_official.py`：已经提供预测导出和官方评分器的基本骨架。
->
-> 真正尚未闭合的不是“所有评估代码”，而是：`ood-t_chopped` 的显式 split/manifest 角色、数据加载器对该轨道的端到端支持、一次小规模导出—评分 smoke test（冒烟测试）与官方结果 parity check（一致性核验），以及该轨道上用于 Outperformance（超越率）的 Climatology 分数。换句话说，下一步应补齐这一小段协议桥接，**不需要推倒重写评估系统，也不需要重训 Direct 或外部方法**。现有 raw IID/OOD 评分仍可作为本文内部诊断或补充实验，但不能冒充公开论文 Table 1 的 `OOD-t chopped` 数值。
-
-### 步骤 C：Direct 只做正式推理与评分
+### 步骤 C（若选择 OOD-t 横向比较）：Direct 只做正式推理与评分
 
 使用已经选中的 checkpoint_best.pt：
 
@@ -723,7 +765,7 @@ Rollout 使用与 Direct 相同：
 - 200 epoch 等价预算；
 - 8,800 updates；
 - checkpoint 候选与选择规则；
-- OOD-t evaluator。
+- OOD-t evaluator（仅公开横向比较轨道）。
 
 然后补：
 
@@ -741,13 +783,13 @@ Rollout 使用与 Direct 相同：
 - Rollout-P4；
 - Persistence/Climatology；
 - Figure 2；
-- true/no/shuffled/time-shifted D 中至少核心三项。
+- true D（正确驱动）/ no D（无驱动）/ shuffled D（打乱驱动）/ time-shifted D（时间错位驱动）中至少核心三项。
 
 完成后再决定是否补 3 seed。不要在此之前开启 full24 与 U 大训练。
 
 ## 10.3 你本人现在需要记住的最简单版本
 
-> **Direct 已经训练完，不动；外部模型不重跑；下一步先让代码支持 OOD-t 正式测试，同时训练 Rollout。最后只把我们两个 checkpoint 放到同一公开 evaluator 上评分。**
+> **Direct 已经训练完，不动；外部模型不重跑；主模型优先完成 Rollout。若要直接采用 Contextformer 的已发表表格数值，再额外下载 OOD-t chopped，并把 Direct/Rollout 两个 checkpoint 放到该公开测试轨道上评分；若不下载，就坚持 raw 五划分主表且不做同表胜负比较。**
 
 ---
 
@@ -799,11 +841,11 @@ Rollout 使用与 Direct 相同：
 
 建议紧凑包含：
 
-- Direct + true D；
-- Rollout + true D；
-- Rollout + no D；
-- Rollout + shuffled D；
-- Rollout + time-shifted D；
+- Direct + true D（正确驱动）；
+- Rollout + true D（正确驱动）；
+- Rollout + no D（无驱动）；
+- Rollout + shuffled D（打乱驱动）；
+- Rollout + time-shifted D（时间错位驱动）；
 - 可选 Stage1-init vs Stage1.5-init。
 
 逻辑意义：
@@ -850,7 +892,7 @@ Rollout 使用与 Direct 相同：
 
 1. Direct 和 Rollout 都有公开同协议可信分数；
 2. Rollout 相对 Direct 更好，或总体非劣且长时距/OOD 更稳；
-3. 正确天气显著优于 no/shuffled/time-shifted weather；
+3. true D（正确驱动）显著优于 no D（无驱动）、shuffled D（打乱驱动）与 time-shifted D（时间错位驱动）；
 4. 空间 RGBN 结果展示出地块内部结构，而不是只预测平均季节曲线；
 5. Stage1.5 至少在预测、收敛或 OOD 中有一项稳定效用；
 6. 文中不夸大真实状态、因果、不确定性和 φ。
@@ -965,6 +1007,7 @@ Rollout 使用与 Direct 相同：
 - Earthformer, NeurIPS 2022：[NeurIPS proceedings](https://proceedings.neurips.cc/paper_files/paper/2022/hash/a2affd71d15e8fedffe18d0219f4837a-Abstract-Conference.html)
 - Contextformer / Multi-modal Learning for Geospatial Vegetation Forecasting, CVPR 2024：[CVF Open Access](https://openaccess.thecvf.com/content/CVPR2024/html/Benson_Multi-modal_Learning_for_Geospatial_Vegetation_Forecasting_CVPR_2024_paper.html)
 - Contextformer official code and protocol：[official GitHub](https://github.com/vitusbenson/greenearthnet)
+- EarthNet Toolkit 0.3.11 的 EarthNet2021x/GreenEarthNet split 定义：[PyPI](https://pypi.org/project/earthnet/)
 - TerraMind, ICCV 2025：[paper](https://arxiv.org/abs/2504.11171)
 
 ## 截至 2026-07-19 的预印本/新近公开工作
@@ -980,7 +1023,7 @@ Rollout 使用与 Direct 相同：
 
 # 17. 本文件的冻结结论
 
-> **现在的 ObsWorld 不是“恢复绝对真实世界”的模型，而是“由真实卫星观测约束、在外生驱动下逐步推进、并能逐步回到完整 RGBN 观测接受检验的空间预测状态模型”。它与普通预测器的区别要由 Direct vs Rollout、长时距曲线和驱动负对照证明；它与 VegSim 的区别要由空间 RGBN 状态和局部异质性证明；它与 EO-WM 的区别在于显式共享短步状态过程而非概率视频扩散。Direct-P4 已经完成训练与 val_dev 选模，现有准确数值已全部记录；外部主表数值可以直接引用，不需复现。下一步只需打通 OOD-t chopped 同协议评分、完成 Rollout-P4，并形成第一套 Direct/Rollout 公平主实验。**
+> **现在的 ObsWorld 不是“恢复绝对真实世界”的模型，而是“由真实卫星观测约束、在外生驱动下逐步推进、并能逐步回到完整 RGBN 观测接受检验的空间预测状态模型”。它与普通预测器的区别要由 Direct vs Rollout、长时距曲线和驱动负对照证明；它与 VegSim 的区别要由空间 RGBN 状态和局部异质性证明；它与 EO-WM 的区别在于显式共享短步状态过程而非概率视频扩散。Direct-P4 已经完成训练与 val_dev 选模，现有准确数值已全部记录；外部已发表数值可以引用但必须标明测试协议。当前优先完成 Rollout-P4；只有选择与 Contextformer Table 2 直接同表比较时，才额外准备 GreenEarthNet OOD-t chopped 并对现有 checkpoint 做 evaluation-only（仅评估）评分。**
 
 
 ---

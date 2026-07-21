@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "candidate_protocol": "greenearthnet_cvpr2024_v1",
+  "audited_at_utc": "2026-07-19T13:42:35.127275+00:00",
+  "raw_root": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x",
+  "evaluation_root": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x",
+  "raw_release_groups": {
+    "train": {
+      "directory": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x/train",
+      "exists": true,
+      "is_symlink": false,
+      "num_netcdf_files": 23816,
+      "num_regions": 85,
+      "files_per_region": {
+        "min": 1,
+        "max": 2344
+      },
+      "first_relative_path": "29SND/29SND_2017-06-10_2017-11-06_2105_2233_2873_3001_32_112_44_124.nc"
+    },
+    "iid": {
+      "directory": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x/iid",
+      "exists": true,
+      "is_symlink": false,
+      "num_netcdf_files": 4205,
+      "num_regions": 82,
+      "files_per_region": {
+        "min": 2,
+        "max": 397
+      },
+      "first_relative_path": "29SND/29SND_2017-06-20_2017-11-16_1977_2105_1721_1849_30_110_26_106.nc"
+    },
+    "ood": {
+      "directory": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x/ood",
+      "exists": true,
+      "is_symlink": false,
+      "num_netcdf_files": 4202,
+      "num_regions": 15,
+      "files_per_region": {
+        "min": 11,
+        "max": 645
+      },
+      "first_relative_path": "29SQC/29SQC_2017-07-02_2017-11-28_2105_2233_569_697_32_112_8_88.nc"
+    },
+    "extreme": {
+      "directory": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x/extreme",
+      "exists": true,
+      "is_symlink": false,
+      "num_netcdf_files": 3972,
+      "num_regions": 4,
+      "files_per_region": {
+        "min": 670,
+        "max": 1212
+      },
+      "first_relative_path": "32UMC/32UMC_2018-01-31_2018-11-26_1081_1209_1209_1337_16_96_18_98.nc"
+    },
+    "seasonal": {
+      "directory": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x/seasonal",
+      "exists": true,
+      "is_symlink": false,
+      "num_netcdf_files": 3880,
+      "num_regions": 15,
+      "files_per_region": {
+        "min": 20,
+        "max": 299
+      },
+      "first_relative_path": "29SQC/29SQC_2017-05-28_2020-04-11_1465_1593_313_441_22_102_4_84.nc"
+    }
+  },
+  "greenearthnet_track_groups": {
+    "val_chopped": {
+      "directory": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x/val_chopped",
+      "exists": false,
+      "is_symlink": false,
+      "num_netcdf_files": 0,
+      "num_regions": 0,
+      "files_per_region": {
+        "min": 0,
+        "max": 0
+      },
+      "first_relative_path": null
+    },
+    "iid_chopped": {
+      "directory": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x/iid_chopped",
+      "exists": false,
+      "is_symlink": false,
+      "num_netcdf_files": 0,
+      "num_regions": 0,
+      "files_per_region": {
+        "min": 0,
+        "max": 0
+      },
+      "first_relative_path": null
+    },
+    "ood-t_chopped": {
+      "directory": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x/ood-t_chopped",
+      "exists": true,
+      "is_symlink": false,
+      "num_netcdf_files": 1904,
+      "num_regions": 8,
+      "files_per_region": {
+        "min": 238,
+        "max": 238
+      },
+      "first_relative_path": "JAS21/minicube_0_29SND_39.29_-8.56.nc"
+    },
+    "ood-s_chopped": {
+      "directory": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x/ood-s_chopped",
+      "exists": false,
+      "is_symlink": false,
+      "num_netcdf_files": 0,
+      "num_regions": 0,
+      "files_per_region": {
+        "min": 0,
+        "max": 0
+      },
+      "first_relative_path": null
+    },
+    "ood-st_chopped": {
+      "directory": "/root/nas/users/luzheng/workspace/ssh/czj/TrainData/EarthNet2021/earthnet2021x/ood-st_chopped",
+      "exists": false,
+      "is_symlink": false,
+      "num_netcdf_files": 0,
+      "num_regions": 0,
+      "files_per_region": {
+        "min": 0,
+        "max": 0
+      },
+      "first_relative_path": null
+    }
+  },
+  "readiness": {
+    "raw_train_available": true,
+    "official_validation_available": false,
+    "official_ood_t_available": true,
+    "layout_ready_for_greenearthnet_main": false,
+    "schema_ready_for_greenearthnet_main": true,
+    "missing_main_requirements": [
+      "eval-root/val_chopped"
+    ],
+    "recommendation": "Training data and the OOD-t test track exist, but the official GreenEarthNet validation track is missing or empty. Do not label a run as the full official GreenEarthNet protocol; use a documented train-only development holdout only for code pilots."
+  },
+  "schema_audit": {
+    "requested": false,
+    "groups": {}
+  },
+  "notes": [
+    "File counts are inventory evidence only; they do not prove split provenance.",
+    "The script never merges raw/chopped roots and never falls back to a root-wide glob.",
+    "A legacy EarthNet2021 ENS experiment and the GreenEarthNet CVPR-2024 evaluator are mutually exclusive paper protocols."
+  ]
+}

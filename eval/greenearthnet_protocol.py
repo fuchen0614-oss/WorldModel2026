@@ -300,13 +300,13 @@ def summarize_score_parquets(
             "rmse_0_5", "rmse_5_10", "rmse_10_15", "rmse_15_20",
         ]
         cube_landcover_frames.append(
-            frame.groupby(["id", "landcover"], as_index=False)[columns].mean()
+            frame.groupby(["season", "id", "landcover"], as_index=False)[columns].mean()
         )
     cube_landcover = pd.concat(cube_landcover_frames, ignore_index=True)
-    # IDs are official minicube IDs and should be globally unique.  Fail rather
-    # than silently reweight if a malformed tree repeats one across regions.
-    if cube_landcover.duplicated(["id", "landcover"]).any():
-        raise ValueError("Duplicate id/landcover groups across score Parquets")
+    # A minicube is uniquely (season, id): chopped tracks legitimately repeat a
+    # stem across season-year regions. Fail only on a true duplicate of that key.
+    if cube_landcover.duplicated(["season", "id", "landcover"]).any():
+        raise ValueError("Duplicate season/id/landcover groups across score Parquets")
 
     by_landcover = cube_landcover.groupby("landcover").mean(numeric_only=True)
     result: dict[str, float] = {
