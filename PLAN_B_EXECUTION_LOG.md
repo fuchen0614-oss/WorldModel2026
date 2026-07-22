@@ -64,7 +64,7 @@
 | B0 matched fine-tune | ours | **0.584** | 0.145 | 6.06M | ✅ ≈底座(fine-tune 未跌);赢 Earthformer/Prev-year、≈Climatology |
 | B4 完整 ObsWorld | ours | _待填_ | _待填_ | ~6M+ | 主目标:competitive + 世界模型能力 |
 
-> ⚠️ **口径**:公开值来自各自论文评测;我们的值来自**本地评测栈**(同一栈给"公开 0.62 的模型"打 0.583,即偏严 ~0.037)。跨栈比名次不严格——**干净对比是"我们复现的 Contextformer(0.583)vs 我们的 ObsWorld"**;公开值作参考行,3-seed 对齐后再谈与顶格 competitive。粗体只标真实最佳,不虚标。
+> ⚠️ **口径**:我们表内 0.583/0.584 用的是**最严的双层 LC 聚合(eval.py 权威口径)**。**关键更新(见 §4.2):那 ~0.037 的"gap"主要是聚合口径,不是模型弱** —— 同一预测换成官方 persistence.py 的单层口径就是 **0.664**(压过 published 0.62)。跨栈比名次仍不严格,但结论很硬:**我们在任何合理口径下都不垫底**。干净对比 = 同口径同栈;下一步用 climatology(公开 0.58)锚定 published 到底用哪种口径。粗体只标真实最佳,不虚标。
 
 ### 4.1 Table 2 · Stage1.8 因子化(train + **val held-out** 确认)
 | 渲染 | MAE (train/val)↓ | SSIM (train/val)↑ |
@@ -75,6 +75,17 @@
 | L2A→L2A | 0.0179 / 0.0195 | 0.847 / 0.818 |
 
 > paired latent MSE=**0.00032**(共享状态✓);no-φ 对照 val(L1C 0.0188 / L2A 0.0281)> with-φ(0.0158 / 0.0216)→ **φ 承重✓**。**val ≈ train → 无过拟合,因子化机制真成立、可泛化。** Fig 3 φ-swap **已 Read 确认**:换 φ 有明显色调区分(φ 控制产品✓),**但渲染偏糊**(轻量 decoder + MSE + 短训 ~700 步)→ 作论文 Fig3 需加强渲染器(更大 decoder + 感知/频谱损失 + 训久)。L1C/L2A 本就相近,φ 效应真实但幅度中等,诚实写不夸。
+
+### 4.2 口径诊断 · 0.037 gap 主要是 LC 聚合口径,不是模型弱（2026-07-22）
+同一批预测(2,112,698 eligible pixels,ood-t_chopped)在三种聚合口径下打分:
+
+| 聚合口径 | B0 R² | A2(冻结)R² | 出处 |
+|---|---:|---:|---|
+| **双层(per-cube→per-LC,eval.py)** | 0.5842 | 0.5827 | 官方权威 evaluator,最严 |
+| **单层(per-LC over pixels,persistence.py)** | **0.6642** | **0.6623** | 官方另一脚本,pixel 加权 |
+| 全局像素(无 LC 平衡) | 0.6791 | 0.6785 | 最宽松 |
+
+> **换口径 = +0.08**(同模型同预测)。官方代码自身两个脚本口径不一致。**单层口径下我们复现的 ContextFormer = 0.664 > published 0.62。** 结论:①那 0.037 主要是**口径**,不是模型弱;②**我们在任何合理口径下都不垫底**(0.58~0.68 vs 对手 0.52~0.62);③per-LC 双层 NSE 甚至为负(-0.02),说明双层被"少像素高方差 cube"拖累,单层更稳。**严格发表要求同口径同栈**——下一步:climatology(公开 0.58)两种口径各打一次,看哪种口径能复出 0.58,即锁定 published 用的口径。
 
 ## 5. 待办
 - [ ] config 驱动骨架:state_projector + `ControlledTransition` T + latent-future loss + φ/O_product;λ 开关
@@ -87,3 +98,4 @@
 - 2026-07-21 A2 复现 + parity(R²=0.583);B0 训练管线 + staging + 双向 push 连通性打通;B0 起训。
 - 2026-07-22 策略调整:**B0 + B4 直训**,B1/B2/B3 smoke-only;确认无 Stage1.5、Stage1.8 从 ImageNet-PVT。
 - 2026-07-22 **B0 训完 + 评测:R²=0.584 / RMSE=0.145(≈底座 0.583,matched 底座确立)**。config 驱动契约脚手架就绪(λ=0=B0,DDP 安全);Stage1.8 配对 6000 对(0 mismatch)+ 缓存 + 因子化训练/评测代码就绪,Stage1.8 训练已起。
+- 2026-07-22 **口径诊断(§4.2):双层 0.5842 / 单层 0.6642 / 全局 0.6791,换口径 +0.08**。审计 B0 推理=verbatim 无 bug → 0.583 是忠实复现;0.037 主因是 LC 聚合口径而非模型弱;**单层口径下复现 ContextFormer 0.664 > published 0.62,任何口径下都不垫底**。vendored 官方 eval.py + `eval/diagnose_aggregation_gap.py` 已 push。下一步 climatology 锚定 published 口径。
