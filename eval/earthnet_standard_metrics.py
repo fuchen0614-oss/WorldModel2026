@@ -53,6 +53,12 @@ class EarthNetScoreAccumulator:
         self.calculator = en.parallel_score.CubeCalculator
         self.eval_size = int(eval_size)
         self.rows: List[Dict[str, float]] = []
+        # Track the observed clear/valid fraction of the target mask. If a future
+        # data change flips mask polarity (clear_mask should be 1==valid), this
+        # jumps to ~0 or ~1 and is visibly wrong -- a guard the synthetic parity
+        # test cannot provide because it never exercises the real dataset path.
+        self._valid_sum = 0.0
+        self._valid_count = 0
 
     def update(
         self,
@@ -68,6 +74,8 @@ class EarthNetScoreAccumulator:
         pred_np = preds.cpu().numpy()
         target_np = targets.cpu().numpy()
         mask_np = masks.cpu().numpy()
+        self._valid_sum += float(mask_np.sum())
+        self._valid_count += int(mask_np.size)
         for i, name in enumerate(names):
             pred = np.transpose(pred_np[i], (2, 3, 1, 0))  # [H,W,C,T]
             target = np.transpose(target_np[i], (2, 3, 1, 0))
@@ -96,6 +104,7 @@ class EarthNetScoreAccumulator:
             dtype=np.float64,
         )
         mean_scores = np.nanmean(scores, axis=0)
+        finite_counts = np.isfinite(scores).sum(axis=0)
         return {
             "ENS": _harmonic_mean(mean_scores.tolist()),
             "MAD": float(mean_scores[0]),
@@ -103,7 +112,41 @@ class EarthNetScoreAccumulator:
             "EMD": float(mean_scores[2]),
             "SSIM": float(mean_scores[3]),
             "num_scored_cubes": len(self.rows),
+            # How many cubes actually contributed a finite value to each subscore.
+            # Subscores are a nanmean, so a split where many cubes are fully masked
+            # (e.g. SSIM=None when every frame is >30% clouded) is averaged over
+            # fewer cubes than num_scored_cubes -- surface that instead of hiding it.
+            "num_finite_MAD": int(finite_counts[0]),
+            "num_finite_OLS": int(finite_counts[1]),
+            "num_finite_EMD": int(finite_counts[2]),
+            "num_finite_SSIM": int(finite_counts[3]),
+            "mask_valid_fraction": self._valid_sum / max(self._valid_count, 1),
         }
+
+    def per_cube(self) -> List[Dict[str, float]]:
+        """Per-cube subscores + per-cube ENS (harmonic mean of the four).
+
+        Needed for downstream uncertainty estimates: paired bootstrap CIs and
+        significance tests (e.g. Rollout vs Direct, ours vs persistence) operate
+        over these per-cube ENS values. ``compute()`` only returns the aggregate,
+        so without this the eval cannot express confidence intervals. Non-finite
+        subscores are emitted as ``None`` so the JSON stays ``allow_nan=False`` safe.
+        """
+        out: List[Dict[str, float]] = []
+        for row in self.rows:
+            comps = np.asarray(
+                [row["MAD"], row["OLS"], row["EMD"], row["SSIM"]], dtype=np.float64
+            )
+            ens = _harmonic_mean(comps.tolist())
+            out.append({
+                "name": row["name"],
+                "MAD": _json_num(comps[0]),
+                "OLS": _json_num(comps[1]),
+                "EMD": _json_num(comps[2]),
+                "SSIM": _json_num(comps[3]),
+                "ENS": _json_num(ens),
+            })
+        return out
 
 
 def _resize_video(x: torch.Tensor, size: int, mode: str) -> torch.Tensor:
@@ -143,3 +186,29 @@ def _harmonic_mean(values: Sequence[float]) -> float:
     if not valid:
         return float("nan")
     return min(1.0, len(valid) / sum(1.0 / (v + 1e-8) for v in valid))
+
+
+def _json_num(value) -> float | None:
+    """Convert a possibly-NaN/None subscore into a JSON-serializable value."""
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        return None
+    return v if np.isfinite(v) else None
+
+
+# Official EarthNet2021 temporal protocol per split (context -> target frames).
+# Source: Requena-Mesa et al., EarthNet2021 (CVPRW'21). iid/ood predict 20 from
+# 10; the stress splits use longer horizons. This project's earthnet2021x cubes
+# are frozen to a 30-token (10+20) layout, so extreme/seasonal evaluated here are
+# 10->20 TRUNCATED DIAGNOSTICS, not the official 20->40 / 70->140 protocol. The
+# eval records the actual vs official protocol so downstream never conflates them.
+OFFICIAL_EARTHNET2021_PROTOCOL = {
+    "train": {"context": 10, "target": 20},
+    "val": {"context": 10, "target": 20},
+    "val_dev": {"context": 10, "target": 20},
+    "iid": {"context": 10, "target": 20},
+    "ood": {"context": 10, "target": 20},
+    "extreme": {"context": 20, "target": 40},
+    "seasonal": {"context": 70, "target": 140},
+}

@@ -29,6 +29,7 @@ from data.datasets.earthnet2021 import (
     EarthNet2021Dataset,
     collate_earthnet2021,
 )
+from eval.earthnet_standard_metrics import OFFICIAL_EARTHNET2021_PROTOCOL
 from eval.stage2_evaluation_provenance import (
     build_stage2_evaluation_provenance,
     output_file_record,
@@ -226,6 +227,13 @@ def main() -> None:
         "split": args.split,
         "output_size": int(args.output_size),
         "prediction_steps": target_steps,
+        # Temporal protocol self-description so the manuscript scoring path
+        # (predict -> score_table1 -> assemble) inherits the same truncation
+        # flag the inline --official-score path carries. extreme/seasonal on the
+        # frozen 30-token earthnet2021x layout are 10->20 truncated diagnostics.
+        "context_frames": int(data_cfg.context_frames),
+        "target_frames": int(data_cfg.target_frames),
+        **_protocol_flags(args.split, data_cfg),
         "hash_mode": args.hash_mode,
         "num_predictions": len(output_records),
         "files": output_records,
@@ -237,6 +245,23 @@ def main() -> None:
     print(f"predictions={output_root}")
     print(f"num_cubes={len(output_records)}")
     print(f"prediction_manifest={manifest_path}")
+
+
+def _protocol_flags(split: str, data_cfg: EarthNet2021Config) -> dict[str, int | bool]:
+    """Official-vs-actual temporal protocol flags for the prediction manifest."""
+    proto = OFFICIAL_EARTHNET2021_PROTOCOL.get(split)
+    if proto is None:
+        return {}
+    match = (
+        int(data_cfg.context_frames) == proto["context"]
+        and int(data_cfg.target_frames) == proto["target"]
+    )
+    return {
+        "official_protocol_context": int(proto["context"]),
+        "official_protocol_target": int(proto["target"]),
+        "official_protocol_match": bool(match),
+        "is_truncated_diagnostic": bool(not match),
+    }
 
 
 def _atomic_save_prediction(path: Path, highresdynamic: np.ndarray) -> None:

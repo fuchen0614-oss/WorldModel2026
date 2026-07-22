@@ -243,6 +243,13 @@ def _row_from_args(args: argparse.Namespace) -> dict[str, Any]:
             getattr(args, f"{name}_target_manifest"),
             getattr(args, f"{name}_target_parity_report"),
         )
+        if target.get("split") != name:
+            raise ValueError(
+                f"Table 1 {name!r} slot was given a target manifest for split "
+                f"{target.get('split')!r}. Official iid/ood rows must not be fed a "
+                "mislabeled or truncated-diagnostic split (extreme/seasonal on the "
+                "frozen 30-token layout are 10->20 diagnostics, not official protocol)."
+            )
         ens = _load_ens(
             getattr(args, f"{name}_ens_score"),
             getattr(args, f"{name}_ens_provenance"),

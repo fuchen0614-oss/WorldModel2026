@@ -171,6 +171,23 @@ python -u eval/eval_stage2_earthnet.py \
 `prediction_manifest.json`；`eval/score_earthnet_prediction_dir.py` 要求该清单与
 预测文件完全一致，防止混入其他 checkpoint 的结果。
 
+### 6.1 官方 ENS 评测的完整性字段（新结果必看）
+
+`--official-score` 的输出现在自描述评测口径，正式跑新结果时按下面用：
+
+- **`--per-cube-output <path>`**：落盘每个 cube 的 `MAD/OLS/EMD/SSIM/ENS`（非有限值写 `null`）。
+  **算配对 bootstrap CI / Rollout-vs-Direct / ours-vs-persistence 显著性时必须带上**，否则只有点估计。
+- 输出 `metrics` 里新增：
+  - `eval_context_frames` / `eval_target_frames`：本次实际用的帧协议。
+  - `official_protocol_match` / `is_truncated_diagnostic`：与官方 EarthNet2021 协议
+    （iid/ood 10→20、extreme 20→40、seasonal 70→140）是否一致。**extreme/seasonal 在
+    冻结的 30-token earthnet2021x 上必为 `is_truncated_diagnostic: true`**——下游不得把它当官方值混入 iid/ood 表。
+  - `num_finite_{MAD,OLS,EMD,SSIM}`：各子分实际参与平均的 cube 数（全遮挡 cube 的 SSIM 会被官方打分器判为无效），用于识别"某分量被少数 cube 平均"的情况。
+- **打分器一致性回归**：`.conda/envs/WorldModel/bin/python eval/parity_inline_vs_official_ens.py`
+  必须 `PARITY OK`（退出码 0）。改动 `eval/earthnet_standard_metrics.py` 后务必重跑——它保证 inline 累加器与官方 `EarthNetScore.get_ENS` 数值一致（当前 max 分量差 4e-4）。
+- **mask 极性守卫**：`metrics.mask_valid_fraction` 是目标 mask 的 clear/有效像素占比。正常 iid/ood 应在合理区间（例如 0.6–0.95）；若某次跌到 ~0 或跳到 ~1，多半是 `clear_mask` 极性被改坏（应为 1==有效），需排查再采信该次 ENS。
+- **手稿路径协议贯通**：`eval/predict_stage2_earthnet.py` 的 `prediction_manifest.json` 现在带 `context_frames/target_frames` 与 `is_truncated_diagnostic`；`eval/assemble_stage2_table1.py` 在装 iid/ood 行时会**拒绝**被喂入非对应或截断诊断（extreme/seasonal）的 split，防止把 10→20 诊断值混进官方主表。
+
 ## 7. 后续 World Model 变体
 
 Direct 数据链路稳定后，保持 `DATA_ROOT`、`STATS`、`TRAIN_MANIFEST`、
