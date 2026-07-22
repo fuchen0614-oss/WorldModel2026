@@ -47,6 +47,18 @@
 
 > `steps/epoch = N / global_batch`(drop_last);`总 steps = epoch × steps/epoch`。doc 的"8800=200ep"是 **global512(每卡64)** 口径,Contextformer+PVT 未必塞得下,**以 epoch 为准,batch 待 OOM 实测后 B0/B4 统一**。
 
+### 3.2 B4 方法型闭环 + 硬约束(2026-07-22)
+**叙事(方法闭环)**:观点 = 植被预测应建模为**观测感知的预测态世界模型**(存在产品不变潜状态 z,在已知驱动=天气下演化,观测由 z 经 φ 渲染)→ 拆开"世界是什么(状态动力学)"与"如何观测(φ 渲染)"→ 既提升 **temporal-OOD** 预测,又获得可控/可因子化观测生成。模型 = **一个 shared-z 世界模型**;尺子 = 精度(同栈 OOD-t)+ 能力(Table2/3、Fig3);论证 = 消融 B0→B4 证明世界模型组件**既提升精度又独有能力**。
+
+**硬约束(用户,不可让步)**:B4(权重充分微调后)**必须 > B0**;做不到相对自身基线提升的方案**不选**(**不要求胜 SOTA,只要求胜自身基线**)。
+
+**必须坦白的风险**:当前 contract 作为 loss ≈0(teacher-student cosine 0.9996,梯度≈0 → 不改精度)。要满足硬约束,B4 的精度提升**必须另有来源**:
+1. **SSL4EO φ-因子化 + 掩码预训练 共享编码器**(主杠杆:更多数据 + 物理有意义 pretext → 比 ImageNet init 更好 → 尤其利好 temporal-OOD)。
+2. **非平凡动力学 aux**:latent-future 改成"用转移 T 从 context z **预测** future z"的真预测(有真实 gap),而非当前平凡项。
+3. **预测主路径保持强基线可恢复**(forecasting-primary + 世界模型作 accuracy-relevant aux/init),使世界模型"**只能帮、不能崩**"。
+
+**诚实**:近饱和 benchmark + 强基线上,提升**不保证**;预训练是最靠谱的一枪;哪怕 **+0.01~0.02** 的真实提升也验证观点并满足硬约束。
+
 
 ## 4. 精度对比表（GreenEarthNet OOD-t · 我们 vs SOTA，标注年份）
 | 方法 | 年份/来源 | R²↑ | RMSE↓ | 参数 | 备注 |
@@ -99,3 +111,4 @@
 - 2026-07-22 策略调整:**B0 + B4 直训**,B1/B2/B3 smoke-only;确认无 Stage1.5、Stage1.8 从 ImageNet-PVT。
 - 2026-07-22 **B0 训完 + 评测:R²=0.584 / RMSE=0.145(≈底座 0.583,matched 底座确立)**。config 驱动契约脚手架就绪(λ=0=B0,DDP 安全);Stage1.8 配对 6000 对(0 mismatch)+ 缓存 + 因子化训练/评测代码就绪,Stage1.8 训练已起。
 - 2026-07-22 **口径诊断(§4.2):双层 0.5842 / 单层 0.6642 / 全局 0.6791,换口径 +0.08**。审计 B0 推理=verbatim 无 bug → 0.583 是忠实复现;0.037 主因是 LC 聚合口径而非模型弱;**单层口径下复现 ContextFormer 0.664 > published 0.62,任何口径下都不垫底**。vendored 官方 eval.py + `eval/diagnose_aggregation_gap.py` 已 push。下一步 climatology 锚定 published 口径。
+- 2026-07-22 **策略敲定(§3.2):B4=方法型闭环(观点→模型→尺子→论证);硬约束 B4>B0(否则不选,不要求胜 SOTA)**。坦白 contract-as-loss≈0 → 精度提升须来自 SSL4EO 预训练 + 非平凡动力学 aux + 可恢复主路径。本地已确认 8×Blackwell GPU + ContextFormer 官方 ckpt 在手,可本地 CPU 冒烟;②前沿基线(SimVP/Earthformer)确认可行(emp 代码 + Zenodo 权重 `10793870`)。下一步:搭 B4(一个 shared-z 模型)+ 本地冒烟。
