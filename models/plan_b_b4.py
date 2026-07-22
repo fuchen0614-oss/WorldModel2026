@@ -180,7 +180,9 @@ class ObsWorldB4(nn.Module):
         if lam_vic > 0:
             var_t, cov_t = self.vicreg_loss(s)
             logs["vic_var"], logs["vic_cov"] = var_t.detach(), cov_t.detach()
-            total = total + lam_vic * (var_t + cov_t)
+            # VICReg standard weighting (var coeff 25, cov coeff 1): otherwise the
+            # covariance magnitude drowns the variance term and z keeps collapsing.
+            total = total + lam_vic * (25.0 * var_t + cov_t)
         logs["contract_total"] = total.detach()
         return preds, {"total": total, "logs": logs}
 
