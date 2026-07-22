@@ -1,0 +1,73 @@
+# Plan A · S1b — WORLD-MODEL EVIDENCE run (paper Table 3), branch plan-a-vits.
+# ---------------------------------------------------------------------------
+# STATUS: DRAFT / INERT. Writing this file does not launch anything. Do NOT
+# launch until (a) S1a epoch100 (step ~4400) val confirms residual+finetune
+# lifts accuracy, and (b) explicit go-ahead. See 思路整理进展/77 and /74.
+#
+# WHAT IT DOES: keep the S1a Plan A recipe (ViT-S Stage1.5 initializer +
+# physical4 driver + end-to-end fine-tune) but switch the forecast head from
+# Direct to the 10-day-vs-5+5 PARTITION rollout, so the SHARED
+# ControlledTransition is trained (via PartitionConsistencyLoss) to be a
+# compositional Markov sufficient statistic:
+#     z(s0 --10d-->)  ==  z(s0 --5d--> --5d-->)   over the identical D/C/dt path.
+# This supplies Table 3 world-model evidence:
+#   (i)   composed-consistency gap  (state_gap small);
+#   (ii)  endpoint accuracy of BOTH branches (w_endpoint keeps them supervised
+#         to the true target, so a low gap cannot be won by a constant state);
+#   (iii) a trained state that the later frozen-readout / state-reuse
+#         experiments consume.
+#
+# HONESTY / SCOPE (do not blur — this is the whole reason the narrative held):
+# ObsWorldPartitionModel subclasses the RECURSIVE rollout; its *headline*
+# multi-step rollout accuracy is BELOW the Direct S1a model by construction
+# (error accumulation). This run is NOT an accuracy/SOTA entry. Table 1
+# (accuracy vs published SOTA) stays the S1a Direct model. Never report this
+# run's recursive-rollout headline as the method's accuracy.
+#
+# DESIGN DECISIONS (documented; revisit doc 77):
+#  - decoder.residual=false here. The partition branch decodes with no baseline
+#    anyway (models/dynamics/obsworld_partition.py: decode_states without
+#    baseline), and the residual head is an S1a *accuracy* lever orthogonal to
+#    the state compositionality this run demonstrates. Keep the run fully
+#    absolute-decode for a clean, single-semantics comparison.
+#  - Fresh from Stage1.5 (not resume-from-S1a) by default: a clean, isolated
+#    run. Resume-from-S1a-best is a documented faster alternative (Direct and
+#    Partition share the same core/transition/decoder submodule names, so the
+#    state_dict is compatible) — see doc 77 for that variant.
+# ---------------------------------------------------------------------------
+_base_: plan_a_stage2v3_vits_train.yaml
+
+model:
+  forecast_mode: obsworld_partition_physical4
+  decoder:
+    residual: false
+
+training:
+  # Rollout wrappers require open-loop; the curriculum forbids teacher forcing
+  # (the next state must be the previous prediction).
+  open_loop: true
+  teacher_forcing_future_state: false
+  # Non-decreasing lengths, must start at optimizer step 0. Grow the open-loop
+  # horizon so early optimization is not dominated by 20-step error stacking.
+  rollout_curriculum:
+    - {start_step: 0,    length: 5}
+    - {start_step: 1500, length: 10}
+    - {start_step: 4000, length: 20}
+  partition:
+    enabled: true
+    # Let the rollout state stabilize before pulling the two control paths
+    # together, then ramp the fixed consistency weights linearly to 1.0.
+    warmup_start_step: 1500
+    warmup_steps: 1500
+    detach_partition_start: true
+
+loss:
+  # Fixed, non-learnable consistency weights (PartitionConsistencyLoss).
+  # w_endpoint (direct_endpoint) = 0.50 keeps BOTH direct and composed endpoints
+  # supervised to the true target; state/observation/ndvi tie the two paths.
+  partition:
+    state: 0.10
+    observation: 0.10
+    ndvi: 0.05
+    direct_endpoint: 0.50
+    endpoint_ndvi_weight: 0.50
