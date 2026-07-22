@@ -48,7 +48,25 @@
 > `steps/epoch = N / global_batch`(drop_last);`总 steps = epoch × steps/epoch`。doc 的"8800=200ep"是 **global512(每卡64)** 口径,Contextformer+PVT 未必塞得下,**以 epoch 为准,batch 待 OOM 实测后 B0/B4 统一**。
 
 
-## 4. 待办
+## 4. 精度对比表（GreenEarthNet OOD-t · 我们 vs SOTA，标注年份）
+| 方法 | 年份/来源 | R²↑ | RMSE↓ | 参数 | 备注 |
+|---|---|---:|---:|---:|---|
+| Persistence | 基线 | 0.00 | 0.23 | 0 | 公开 Benson CVPR24 T2 |
+| Previous-year | 基线 | 0.56 | 0.20 | 0 | 公开 |
+| Climatology | 基线 | 0.58 | 0.18 | 0 | 公开 |
+| Earthformer | **NeurIPS 2022** | 0.52 | 0.16 | 60.6M | 公开 |
+| SimVP | **CVPR 2022** | 0.60 | 0.15 | 6.6M | 公开 |
+| PredRNN | **NeurIPS 2017** | 0.62 | 0.15 | 1.4M | 公开 |
+| **Contextformer** | **CVPR 2024** | **0.62** | **0.14** | 6.1M | 公开 SOTA(本方案底座) |
+| — 以下为我们（本地评测栈） — | | | | | |
+| 旧 Direct-P4 | ours 诊断 | 0.524 | 0.178 | 28M | 弃用底座 |
+| **复现 Contextformer**(seed42,冻结) | ours 复现 | **0.583** | 0.143 | 6.06M | A2 parity |
+| B0 matched fine-tune | ours | _待填_ | _待填_ | 6.06M | 评测中 |
+| B4 完整 ObsWorld | ours | _待填_ | _待填_ | ~6M+ | 主目标:competitive + 世界模型能力 |
+
+> ⚠️ **口径**:公开值来自各自论文评测;我们的值来自**本地评测栈**(同一栈给"公开 0.62 的模型"打 0.583,即偏严 ~0.037)。跨栈比名次不严格——**干净对比是"我们复现的 Contextformer(0.583)vs 我们的 ObsWorld"**;公开值作参考行,3-seed 对齐后再谈与顶格 competitive。粗体只标真实最佳,不虚标。
+
+## 5. 待办
 - [ ] config 驱动骨架:state_projector + `ControlledTransition` T + latent-future loss + φ/O_product;λ 开关
 - [ ] Stage1.8:CPU prep(L1C/L2A 成对 manifest)+ 小预训练(φ 因子化)
 - [ ] B0 训完评测(R² vs 底座 0.583)
