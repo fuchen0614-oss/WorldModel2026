@@ -36,9 +36,9 @@ def make_fake_cube(path, T=150, H=128, W=128, seed=0):
         {
             "s2_B02": tvu(), "s2_B03": tvu(), "s2_B04": tvu(), "s2_B8A": tvu(),
             "s2_dlmask": (("time", "lat", "lon"),
-                          rng.integers(0, 2, (T, H, W)).astype("float32")),
+                          (rng.random((T, H, W)) < 0.03).astype("float32")),   # ~3% flagged (sparse, realistic)
             "s2_SCL": (("time", "lat", "lon"),
-                       rng.integers(0, 12, (T, H, W)).astype("float32")),
+                       rng.choice([4, 5, 6], (T, H, W)).astype("float32")),     # mostly clear/vegetation
             "eobs_fg": tv(), "eobs_hu": tv(), "eobs_pp": tv(), "eobs_qq": tv(),
             "eobs_rr": tv(), "eobs_tg": tv(), "eobs_tn": tv(), "eobs_tx": tv(),
             "nasa_dem": hw(), "alos_dem": hw(), "cop_dem": hw(),

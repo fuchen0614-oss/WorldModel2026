@@ -154,8 +154,20 @@ class PVTContextformerQ(nn.Module):
                 with_contract: bool = False, lambdas=None):
         preds, aux = self.core(data, pred_start=pred_start, preds_length=preds_length)
         if with_contract and self.contract is not None:
-            # contract loss computed INSIDE forward so its params sync under DDP
-            contract = self.contract.loss(self._z, data, lambdas)
+            z_student = self._z
+            # teacher pass: ALL frames visible (privileged, sees the real future),
+            # stop-grad target for latent-future consistency. No BN in the core, so
+            # toggling eval/train mid-forward is safe.
+            was_training = self.core.training
+            self.core.eval()
+            with torch.no_grad():
+                T = self.hparams.context_length + self.hparams.target_length
+                self.core(data, pred_start=T, preds_length=0)
+                z_teacher = self._z.detach()
+            if was_training:
+                self.core.train()
+            self._z = z_student
+            contract = self.contract.loss(z_student, z_teacher, data, lambdas)
             return preds, contract
         return preds
 
