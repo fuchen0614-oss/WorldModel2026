@@ -2,6 +2,10 @@
 
 > 写于 2026-07-22（侦察子代理产出 + 我复核数据事实）。**用途**：S1a `checkpoint_best.pt` 一出，照此评测。命令来自代码 file:line，但**多处 env 路径需在训练/评测服务器端二次核验**（本机 `/csy-mix02` 未挂载，见 doc 79）——**跑前先 audit，别信 doc 里的老路径字符串**。
 
+> 🔴 **数据根修正（2026-07-22，实跑后确认，来自 Plan B memory）**：GreenEarthNet **chopped 评测 track（含 `ood-t_chopped`）在 `/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet`**，**不在** `earthnet2021x`！`earthnet2021x` 只是**原始** en21x（iid/ood/train，给官方 ENS 诊断用）。所以 §2 的 `GREEN_EVAL_ROOT` 应设为 `/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet`。`iidx`（climatology）尚未下载 → 先 `RUN_BASELINES=0`。
+
+> 🔴 **s2_mask 假警报修复（2026-07-22 实跑验证，方案 A/B 通用）**：GreenEarthNet chopped cubes 用 `s2_dlmask`+`s2_SCL`（不是 `s2_mask`）。**真实 export（`EarthNet2021Dataset` 有 `s2_mask→s2_dlmask` 回退，`earthnet2021.py:606`）+ score（`greenearthnet_protocol.py:131` 用 s2_dlmask）都 OK**；只有 `--strict` preflight（`earthnet_table1.py:138` 无回退）会 `stage2_direct_export_ready:false` 挡住整条流水线。**修复：跑评测时加 `RUN_PREFLIGHT=0`** 跳过这个过严的门即可正常出 R²/RMSE。（彻底修可给 `earthnet_table1.py` 加同款 2 行回退。）
+
 ---
 
 ## 0. 铁律：两套评分器，永不同表（doc 74:36 红线）

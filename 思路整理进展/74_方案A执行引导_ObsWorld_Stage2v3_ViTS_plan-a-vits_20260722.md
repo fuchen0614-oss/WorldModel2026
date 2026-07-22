@@ -289,3 +289,49 @@ python eval/eval_stage2_earthnet.py --config configs/train/plan_a_stage2v3_vits.
 1. S1b 走选项 A（partition 就绪）还是 B（Direct 加 compose 辅助，需签字，最强"合一"故事）？A 先行 B 后补？
 2. S1b 全新冷启还是 resume-from-S1a-best？S1a/S1b 是否平分 H200 并行？
 3. Table 2 走 A/B/C？（A 需授权改摘要一句。）
+
+---
+
+## S1a 训练完成 + 实跑校准（2026-07-22 更新）
+
+**S1a 训练 = 完成（200 epoch / 8800 step，约 5h40m）。** best checkpoint 见下：
+| 项 | 值 |
+|---|---|
+| best val | **step 7000**：MAE(RGBN)=**0.03403**，NDVI_MAE=**0.10065**，skill_vs_persistence=**0.16581** |
+| 轨迹 | skill 0.090→0.119→0.130→0.166 单调向好；step7000 见顶、8000 略回落；无过拟合塌陷 |
+| checkpoints（server） | `/csy-mix02/cog8/zjliu17/Agent/checkpoints... = /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/plan_a_s1a/`：`checkpoint_best.pt`(step7000, 320M) + `checkpoint_epoch{100,150,200}_step_{4400,6600,8800}.pt` + `run_provenance.json` + `logs/plan_a_s1a/train_200epoch.log` |
+| ⚠️ 关键 | 这些是**内部 val 诊断（MAE/NDVI-MAE/skill），不是论文 R²/RMSE**。R²/RMSE 需另跑 GreenEarthNet ood-t 评测，对标 anchor **0.5243** |
+
+**实跑校准（踩坑修正，回访必看）：**
+- 🔴 **GreenEarthNet chopped 评测根 = `/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet`**（含 `ood-t_chopped`），**不是** `earthnet2021x`（那是 raw en21x iid/ood，给 ENS 诊断）。doc 80 已加修正 banner。
+- 🔴 **L1C/L2A 未丢**：服务器 `SSL4EO-S12-v1.1/train` 有 S2L1C+S2L2A → Table 2 真做可行（doc 79 已加修正 banner）。doc 79/81 里"数据没了"作废。
+- env：server conda 在 `/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel`，直接 `conda activate WorldModel`（提示符 `(WorldModel)` 即已激活）；评测/训练**一律全 8 卡、不设 CUDA_VISIBLE_DEVICES**。
+- 命令必须在**同一 shell** 跑完（换 shell 会丢 `$WM`/`$GREEN_EVAL_ROOT` → mkdir /evaluations 无权限、scripts 找不到）。
+
+**当前挂起、等用户返回的进度（2 项）：**
+1. **权重上传**是否完成（4×checkpoint + provenance + log → release `plan-a-s1a`）。
+2. **ood-t 评测的 R²/RMSE**（`metrics_en21x.json`）——这是定结果句档位的门。
+
+**下一步门禁**：R²/RMSE 出来 → 对标 0.5243/G2=0.62 定 76 结果句 A/B/C 档 → 再决定 Table 3 后验 gap 脚本 / previous-year 基线 / Table 2 是否真做。
+
+---
+
+## ✅ ood-t R²/RMSE 出炉（2026-07-22，门已过一半）
+
+**S1a GreenEarthNet ood-t_chopped 官方评测**（1904 cubes，evaluator commit a0329636，`RUN_PREFLIGHT=0` + 手动打分跳过 climatology comparison）：
+
+| 指标 | S1a | 匹配 Direct-P4 锚点 | G2 门 |
+|---|---|---|---|
+| **NDVI R²** | **0.5472** | 0.5243 | >0.62 |
+| RMSE | 0.1795 | 0.1778 | <0.14 |
+| NSE | −0.452 | −0.415 | — |
+| rmse25 | **0.1130** | 0.1255 | — |
+| 分类 R² | forest 0.519 / shrub 0.569 / grass 0.543 / crop 0.559 | — | — |
+| 分档 RMSE | 0-5:0.113, 5-10:0.152, 10-15:0.183, 15-20:0.198 | — | — |
+
+- **结论**：R² 抬 +0.023、rmse25 明显改善，但仍 **tier B/C**（远未到 SOTA 门）。→ **结果句走 C 档，不写 SOTA**；论文头条改为"可组合转移的可证伪接口研究"（doc 81 策略枢轴）。
+- **待办（诚实性）**：锚点 0.5243 来自旧 harness（/root/nas 数据），需在**本次同一 harness**下重评 Direct-P4 才能声称"improvement"（R²涨 RMSE平的不一致=harness 轻微不同的信号）。
+- 产物：`evaluations/table1_oodt_plan_a_s1a_best/plan-a-s1a/oodt_chopped/score/`（metrics_en21x.{json,csv} + score_provenance.json + 8 个 region parquet）。
+- **踩坑**：orchestrator 打分步无条件要 climatology comparison provenance → `RUN_BASELINES=0` 时崩；修复=**手动跑 `score_table1_greenearthnet.py` 不带 `--comparison-score-dir`**（`_comparison_provenance` 第274行 `if not score_dir: return None` 优雅跳过）。已补进 doc 80。
+
+**下一步**：跑 `eval/measure_composition_gap.py`（Table 3 世界模型证据）+ 重评 Direct-P4 锚点 + previous-year 基线。
