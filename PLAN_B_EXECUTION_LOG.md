@@ -61,7 +61,7 @@
 | — 以下为我们（本地评测栈） — | | | | | |
 | 旧 Direct-P4 | ours 诊断 | 0.524 | 0.178 | 28M | 弃用底座 |
 | **复现 Contextformer**(seed42,冻结) | ours 复现 | **0.583** | 0.143 | 6.06M | A2 parity |
-| B0 matched fine-tune | ours | _待填_ | _待填_ | 6.06M | 评测中 |
+| B0 matched fine-tune | ours | **0.584** | 0.145 | 6.06M | ✅ ≈底座(fine-tune 未跌);赢 Earthformer/Prev-year、≈Climatology |
 | B4 完整 ObsWorld | ours | _待填_ | _待填_ | ~6M+ | 主目标:competitive + 世界模型能力 |
 
 > ⚠️ **口径**:公开值来自各自论文评测;我们的值来自**本地评测栈**(同一栈给"公开 0.62 的模型"打 0.583,即偏严 ~0.037)。跨栈比名次不严格——**干净对比是"我们复现的 Contextformer(0.583)vs 我们的 ObsWorld"**;公开值作参考行,3-seed 对齐后再谈与顶格 competitive。粗体只标真实最佳,不虚标。
@@ -76,3 +76,4 @@
 ## 执行记录
 - 2026-07-21 A2 复现 + parity(R²=0.583);B0 训练管线 + staging + 双向 push 连通性打通;B0 起训。
 - 2026-07-22 策略调整:**B0 + B4 直训**,B1/B2/B3 smoke-only;确认无 Stage1.5、Stage1.8 从 ImageNet-PVT。
+- 2026-07-22 **B0 训完 + 评测:R²=0.584 / RMSE=0.145(≈底座 0.583,matched 底座确立)**。config 驱动契约脚手架就绪(λ=0=B0,DDP 安全);Stage1.8 配对 6000 对(0 mismatch)+ 缓存 + 因子化训练/评测代码就绪,Stage1.8 训练已起。
