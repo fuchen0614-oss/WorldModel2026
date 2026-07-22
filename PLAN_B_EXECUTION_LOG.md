@@ -66,6 +66,16 @@
 
 > ⚠️ **口径**:公开值来自各自论文评测;我们的值来自**本地评测栈**(同一栈给"公开 0.62 的模型"打 0.583,即偏严 ~0.037)。跨栈比名次不严格——**干净对比是"我们复现的 Contextformer(0.583)vs 我们的 ObsWorld"**;公开值作参考行,3-seed 对齐后再谈与顶格 competitive。粗体只标真实最佳,不虚标。
 
+### 4.1 Table 2 · Stage1.8 因子化（初步,**train-data**,val 待补）
+| 渲染 | MAE↓ | RMSE↓ | SAM↓ | SSIM↑ |
+|---|---:|---:|---:|---:|
+| L1C→L1C | 0.0147 | 0.021 | 0.065 | 0.902 |
+| L1C→L2A(cross) | 0.0198 | 0.030 | 0.095 | 0.835 |
+| L2A→L1C(cross) | 0.0173 | 0.026 | 0.074 | 0.899 |
+| L2A→L2A | 0.0179 | 0.027 | 0.092 | 0.847 |
+
+> paired latent MSE=**0.00032**(共享状态✓);no-φ 对照 MAE(L1C 0.0183 / L2A 0.0264)> with-φ(0.0147 / 0.0198)→ **φ 承重✓**。⚠️ 此为 **train-data**(过拟合高估风险),正式 Table 2 用 **val** held-out;L1C/L2A 本就相近,φ 效应真实但幅度中等(MAE 改善 ~25–33%),诚实写不夸;Fig 3 φ-swap 待 Read 图确认视觉区分。
+
 ## 5. 待办
 - [ ] config 驱动骨架:state_projector + `ControlledTransition` T + latent-future loss + φ/O_product;λ 开关
 - [ ] Stage1.8:CPU prep(L1C/L2A 成对 manifest)+ 小预训练(φ 因子化)
