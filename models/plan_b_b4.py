@@ -143,6 +143,26 @@ class ObsWorldB4(nn.Module):
         true_fut = s[:, fut].detach()
         return F.mse_loss(pred_fut, true_fut)
 
+    @staticmethod
+    def vicreg_loss(s: torch.Tensor, gamma: float = 1.0, eps: float = 1e-4):
+        """VICReg anti-collapse on the state: variance hinge + covariance decorrelation.
+
+        This is the fix for the contract≈0 pathology: the earlier teacher-student
+        latent-future was ~0 because the state COLLAPSED (cos≈0.9996). Forcing each
+        state dim to keep variance (≥gamma) and decorrelating dims keeps z from
+        degenerating, so the transition must model REAL dynamics and the JEPA
+        latent-future becomes a genuine learning signal.
+        """
+        x = s.reshape(-1, s.shape[-1])
+        n, d = x.shape
+        std = torch.sqrt(x.var(dim=0) + eps)
+        var_term = F.relu(gamma - std).mean()
+        xc = x - x.mean(dim=0, keepdim=True)
+        cov = (xc.T @ xc) / max(n - 1, 1)
+        off = cov - torch.diag(torch.diagonal(cov))
+        cov_term = off.pow(2).sum() / d
+        return var_term, cov_term
+
     def forward(self, data, pred_start=None, preds_length=None, lambdas: Optional[SimpleNamespace] = None):
         preds, z = self.forecast(data, pred_start, preds_length)   # z: (b_patch, T, n_hidden)
         if lambdas is None:
@@ -156,6 +176,11 @@ class ObsWorldB4(nn.Module):
             l_dyn = self.latent_future_loss(s, driver)
             logs["latent_future"] = l_dyn.detach()
             total = total + lam_dyn * l_dyn
+        lam_vic = float(getattr(lambdas, "vic", 0.0))
+        if lam_vic > 0:
+            var_t, cov_t = self.vicreg_loss(s)
+            logs["vic_var"], logs["vic_cov"] = var_t.detach(), cov_t.detach()
+            total = total + lam_vic * (var_t + cov_t)
         logs["contract_total"] = total.detach()
         return preds, {"total": total, "logs": logs}
 
