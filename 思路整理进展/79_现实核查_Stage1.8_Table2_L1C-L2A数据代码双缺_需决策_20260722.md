@@ -5,6 +5,8 @@
 
 > 🔴 **重大修正（2026-07-22，来自 Plan B 共享 memory）**：本文"L1C/L2A 数据没了"是**本地机 `/csy-mix02` 未挂载的假象**。**服务器上 `SSL4EO-S12-v1.1/train` 同时有 `S2L1C` 和 `S2L2A`（+S1GRD/DEM/LULC/NDVI/S2RGB）→ 真·L1C/L2A 因子化在服务器上可行**（下面的"选项 B 放期刊版"结论作废）。仍缺的是**因子化代码**（loader/loss/renderer/eval 全需新写）+ 一个小 Stage2v3 训练/评测。故 Table 2 现在是"数据已备、代码待写"，不是"数据没了"。等 S1a 的 R²/RMSE 出来后一并重排优先级。
 
+> 🟢 **再次修正（2026-07-22 晚，服务器实测）：本文整篇"Table 2 阻断"彻底作废。Plan B 已建成并训完 Stage1.8（L1C/L2A 因子化）**——`WorldModel2026-planb/checkpoints/plan_b_stage1_8/checkpoint_last.pt` + 全套代码（`models/stage1_8_factorizer.py`、`train/train_stage1_8_factorize.py`、`eval/eval_stage1_8_factorize.py`、`scripts/train_stage1_8.sh`）+ 评测目录 `evaluations/plan_b_stage1_8`。**代码不缺、数据不缺、已训完。** 观测因子化(Table 2 / EO-WM matched-pair)可直接复用 Plan B 这套。见 doc 82 战略。
+
 ---
 
 ## 1. 核实到的硬事实（both 子代理 + 我亲手 bash 复核）
