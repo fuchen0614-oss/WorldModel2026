@@ -74,7 +74,7 @@
 | L2A→L1C(cross) | 0.0173 / 0.0183 | 0.899 / 0.875 |
 | L2A→L2A | 0.0179 / 0.0195 | 0.847 / 0.818 |
 
-> **paired latent MSE:train 0.00032 / val 0.00036**(共享产品无关状态✓);**no-φ 对照 val(L1C 0.0188 / L2A 0.0281)> with-φ(0.0158 / 0.0216)→ φ 承重✓**。**val ≈ train(仅略差)→ 无过拟合,因子化机制真成立、可泛化。** ⚠️ L1C/L2A 本就相近,φ 效应真实但幅度中等,诚实写不夸;Fig 3 φ-swap 图待回传 Read 确认视觉区分。
+> paired latent MSE=**0.00032**(共享状态✓);no-φ 对照 val(L1C 0.0188 / L2A 0.0281)> with-φ(0.0158 / 0.0216)→ **φ 承重✓**。**val ≈ train → 无过拟合,因子化机制真成立、可泛化。** Fig 3 φ-swap **已 Read 确认**:换 φ 有明显色调区分(φ 控制产品✓),**但渲染偏糊**(轻量 decoder + MSE + 短训 ~700 步)→ 作论文 Fig3 需加强渲染器(更大 decoder + 感知/频谱损失 + 训久)。L1C/L2A 本就相近,φ 效应真实但幅度中等,诚实写不夸。
 
 ## 5. 待办
 - [ ] config 驱动骨架:state_projector + `ControlledTransition` T + latent-future loss + φ/O_product;λ 开关
