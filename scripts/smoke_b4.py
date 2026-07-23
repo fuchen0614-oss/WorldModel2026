@@ -1,19 +1,27 @@
-"""plan-b-pvt · local CPU smoke for B4 = ObsWorldB4 (no data / no GPU / no xarray).
+"""plan-b-pvt · TerraState (B4) stage-1.5 CPU synthetic smoke — 13 checks.
 
-Verifies the load-bearing contracts before we spend a single GPU-hour:
-  1. forecast forward runs, shape (B, target, 1, H, W), finite;
-  2. STRONG-BASELINE-RECOVERABLE: B4's forecast == a bare ContextFormer (B0) with
-     the same weights, byte-for-byte -> the world model does not perturb B0;
-  3. lambdas=0  -> contract loss is EXACTLY 0 (recoverable);
-  4. lambdas.dyn>0 -> a NON-trivial finite latent-future loss (real dynamics), and
-     the returned preds are unchanged (design A: aux never touches the forecast);
-  5. PhiRenderer O(s, φ) forward shape + φ FiLM is identity at init;
-  6. report params + world-model overhead vs B0.
+CPU-only (CUDA_VISIBLE_DEVICES=""), no data, no training. Extends the stage-1
+wiring checks with the stage-1.5 corrections: composed PREDICTION (not just latent),
+B0-protocol MASKED losses, and a T-only weather-intervention interface.
 
-Run:
-  /mnt/data/public_tools/miniconda3/envs/fastwam-vjepa/bin/python scripts/smoke_b4.py
+  1  init full B4 prediction == B0 (gate zero-init, bit-exact);
+  2  future satellite truth does NOT change z_t;
+  3a future weather does NOT change z_t; 3b but DOES change T's future state;
+  4  direct vs composed are two different computation paths;
+  5  masked residual/endpoint gradient reaches WeatherEncoder, T, O_δ (anti-starvation);
+  6  non-zero gate: cutting T changes the final prediction (load-bearing);
+  7  save/load b4_state_dict -> byte-identical predictions;
+  8  full24 dims + future time slice correct;
+  9  no local GPU used;
+  10 composed state DECODES to a real prediction (≠B0 when gate>0) + endpoint supervised;
+  11 masked NDVI loss ignores cloudy pixels (same protocol as B0);
+  12 T-only intervention: B0 fixed across matched/null/shuffled, output changes;
+  13 exporter load_b4 rebuilds from contract_cfg (round-trip) and REFUSES core-only.
+
+Run: CUDA_VISIBLE_DEVICES="" <fastwam-vjepa python> scripts/smoke_b4.py
 """
 import sys
+import tempfile
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -25,94 +33,173 @@ if str(ROOT) not in sys.path:
 
 from models.encoders.pvt_contextformer_q import PVTContextformerQ, contextformer6m_hparams  # noqa: E402
 from models.plan_b_b4 import ObsWorldB4  # noqa: E402
+from eval.export_b4_predictions import load_b4  # noqa: E402
 
 
-def fake_data(B=1, T=30, H=128, W=128):
-    torch.manual_seed(0)
+def fake_data(B=2, T=30, H=128, W=128, seed=0):
+    g = torch.Generator().manual_seed(seed)
+    dyn = torch.randn(B, T, 5, H, W, generator=g)
+    dyn[:, :, 0] = torch.tanh(dyn[:, :, 0])                       # NDVI channel 0 in (-1,1)
     return {
-        "dynamic": [torch.randn(B, T, 5, H, W), torch.randn(B, T, 24)],
-        "dynamic_mask": [(torch.rand(B, T, 1, H, W) < 0.05).float()],
-        "static": [torch.randn(B, 5, H, W)],
+        "dynamic": [dyn, torch.randn(B, T, 24, generator=g)],
+        "dynamic_mask": [(torch.rand(B, T, 1, H, W, generator=g) < 0.05).float()],
+        "static": [torch.randn(B, 5, H, W, generator=g)],
+        "landcover": torch.randint(10, 41, (B, 1, H, W), generator=g).float(),
     }
 
 
 def main():
-    print("=" * 72)
-    print("B4 (ObsWorldB4) local CPU smoke")
-    print("=" * 72)
     hp = contextformer6m_hparams(pvt_pretrained=False)
     cl, tl = hp.context_length, hp.target_length
+    model = ObsWorldB4(hp, contract_cfg={"state_dim": 256, "freeze_b0": True}).eval()
     data = fake_data()
-
-    model = ObsWorldB4(hp, contract_cfg={"state_dim": 256, "n_products": 2}).eval()
-
     checks = []
 
-    # 1. forecast shape + finite
+    # 1. init B4 == B0
     with torch.no_grad():
-        preds = model(data, pred_start=cl, preds_length=tl)
-    ok_shape = tuple(preds.shape) == (1, tl, 1, 128, 128) and torch.isfinite(preds).all().item()
-    checks.append(("forecast shape (1,20,1,128,128) + finite", ok_shape, tuple(preds.shape)))
-
-    # 2. strong-baseline-recoverable: == bare ContextFormer (B0) with same weights
-    b0 = PVTContextformerQ(hp).eval()
-    b0.load_state_dict(model.q.state_dict())
-    with torch.no_grad():
+        preds = model.forecast(data)
+        b0 = PVTContextformerQ(hp).eval(); b0.load_state_dict(model.q.state_dict())
         preds_b0 = b0(data, pred_start=cl, preds_length=tl)
-    max_abs = (preds - preds_b0).abs().max().item()
-    checks.append(("B4 forecast == B0 (max|Δ|<1e-5)", max_abs < 1e-5, f"max|Δ|={max_abs:.2e}"))
+    d1 = (preds - preds_b0).abs().max().item()
+    checks.append(("init B4 forecast == B0 (gate=0, bit-exact)", d1 == 0.0, f"max|Δ|={d1:.2e}"))
 
-    # 3. lambdas=0 -> total loss exactly 0
+    # 2. future satellite truth does not change z_t
     with torch.no_grad():
-        preds0, aux0 = model(data, pred_start=cl, preds_length=tl, lambdas=SimpleNamespace(dyn=0.0))
-    z0 = float(aux0["total"].item())
-    checks.append(("lambdas.dyn=0 -> total loss == 0", z0 == 0.0, f"total={z0}"))
+        _, z_t = model._b0_and_state(data)
+        d_fut = fake_data(seed=1)
+        d_fut["dynamic"][0][:, :cl] = data["dynamic"][0][:, :cl]
+        d_fut["dynamic"][1] = data["dynamic"][1]; d_fut["static"] = data["static"]
+        d_fut["dynamic_mask"][0][:, :cl] = data["dynamic_mask"][0][:, :cl]
+        _, z_t2 = model._b0_and_state(d_fut)
+    d2 = (z_t - z_t2).abs().max().item()
+    checks.append(("future satellite truth does NOT change z_t", d2 == 0.0, f"max|Δ|={d2:.2e}"))
 
-    # 4. lambdas.dyn>0 & vic>0 -> non-trivial finite JEPA latent-future + VICReg; preds unchanged
-    preds1, aux1 = model(data, pred_start=cl, preds_length=tl, lambdas=SimpleNamespace(dyn=1.0, vic=1.0))
-    lf = float(aux1["logs"]["latent_future"].item())
-    ok_dyn = torch.isfinite(aux1["total"]).item() and lf > 0.0
-    checks.append(("dyn=1 -> JEPA latent_future>0 & finite", ok_dyn, f"latent_future={lf:.4e}"))
-    vv, vc = float(aux1["logs"]["vic_var"].item()), float(aux1["logs"]["vic_cov"].item())
-    ok_vic = vv >= 0.0 and vc >= 0.0 and vv < 1e3 and vc < 1e3
-    checks.append(("vic=1 -> VICReg var+cov finite (anti-collapse)", ok_vic, f"var={vv:.3f} cov={vc:.3f}"))
+    # 3. future weather: z_t unchanged, T future state changes
     with torch.no_grad():
-        same_preds = torch.allclose(preds, preds1, atol=1e-6)
-    checks.append(("aux does NOT change forecast (design A)", same_preds, f"allclose={same_preds}"))
-    # gradient actually flows into the transition (JEPA) AND the projector (VICReg). NB: the
-    # transition's last layer is zero-init (identity start), which blocks grad to earlier
-    # layers on step 0 — so check the WHOLE module, not net[0].
-    aux1["total"].backward()
-    tg = [p.grad for p in model.transition.parameters() if p.grad is not None]
-    pg = [p.grad for p in model.projector.parameters() if p.grad is not None]
-    tsum = sum(g.abs().sum().item() for g in tg)
-    psum = sum(g.abs().sum().item() for g in pg)
-    ok_grad = (len(tg) > 0 and tsum > 0 and all(torch.isfinite(g).all() for g in tg)
-               and len(pg) > 0 and psum > 0 and all(torch.isfinite(g).all() for g in pg))
-    checks.append(("grad -> transition (JEPA) & projector (VICReg)", ok_grad,
-                   f"|g|transition={tsum:.2e} projector={psum:.2e}"))
+        w2 = data["dynamic"][1].clone(); w2[:, cl:] = torch.randn_like(w2[:, cl:])
+        d_w = {"dynamic": [data["dynamic"][0], w2], "dynamic_mask": data["dynamic_mask"],
+               "static": data["static"], "landcover": data["landcover"]}
+        _, z_t_w = model._b0_and_state(d_w)
+        geo, uf = model._geo_weather(data); _, uf_w = model._geo_weather(d_w)
+        zdir, zdir_w = model.direct_state(z_t, uf, geo, tl), model.direct_state(z_t, uf_w, geo, tl)
+    checks.append(("future weather does NOT change z_t", (z_t - z_t_w).abs().max().item() == 0.0,
+                   f"max|Δ|={(z_t - z_t_w).abs().max().item():.2e}"))
+    checks.append(("future weather DOES change T future state", (zdir - zdir_w).abs().max().item() > 1e-6,
+                   f"max|Δ|={(zdir - zdir_w).abs().max().item():.2e}"))
 
-    # 5. renderer shape + φ identity at init
-    s = torch.randn(4, 256)
+    # 4. direct vs composed different paths
     with torch.no_grad():
-        o0 = model.renderer(s, torch.zeros(4, dtype=torch.long))
-        o1 = model.renderer(s, torch.ones(4, dtype=torch.long))
-    ok_render = tuple(o0.shape) == (4, 4) and torch.allclose(o0, o1)  # φ FiLM zero-init -> identical
-    checks.append(("renderer shape (4,4) + φ identity at init", ok_render, f"shape={tuple(o0.shape)}"))
+        d4 = (model.direct_state(z_t, uf, geo, 10) - model.composed_state(z_t, uf, geo, 4, 6)).abs().max().item()
+    checks.append(("direct(10) != composed(4,6) (non-trivial)", d4 > 1e-6, f"max|Δ|={d4:.2e}"))
 
-    # 6. params + overhead
-    p_b0 = sum(p.numel() for p in model.q.parameters())
-    p_b4 = model.num_params()
-    print("-" * 72)
-    print(f"params: B0 backbone={p_b0/1e6:.2f}M | B4 total={p_b4/1e6:.2f}M | "
-          f"world-model overhead=+{(p_b4-p_b0)/1e6:.2f}M")
-    print("-" * 72)
+    # 8. full24 dims + future slice
+    ok8 = (data["dynamic"][1].shape[-1] == 24 and model.driver_dim == 24 and tuple(uf.shape) == (2, tl, 24)
+           and tuple(model._direct_residual(z_t, uf, geo, 2, 128, 128).shape) == (2, tl, 1, 128, 128))
+    checks.append(("full24 dims + future slice (B,20,24)&resid", ok8, f"uf={tuple(uf.shape)}"))
+
+    # 11. masked NDVI loss ignores cloudy pixels (same protocol as B0)
+    with torch.no_grad():
+        p = torch.randn(2, tl, 1, 128, 128)
+        la, _ = model.ndvi_loss(p, data)
+        p2 = p.clone(); cloudy = (data["dynamic_mask"][0][:, cl:cl + tl] >= 1.0)
+        p2[cloudy] = p2[cloudy] + 5.0
+        lb, _ = model.ndvi_loss(p2, data)
+    checks.append(("masked loss ignores cloudy pixels (B0 protocol)", abs(la.item() - lb.item()) < 1e-6,
+                   f"Δloss={abs(la.item() - lb.item()):.2e}"))
+
+    # 5 + 10. masked losses -> gradient to WeatherEncoder/T/O_δ; composed endpoint supervised
+    lam = SimpleNamespace(fore=1.0, resid=1.0, cmp=1.0, con=1.0, vic=1.0)
+    _, aux = model(data, lambdas=lam)
+    aux["total"].backward()
+    def gnorm(mod):
+        gs = [p.grad for p in mod.parameters() if p.grad is not None]
+        return (sum(g.abs().sum().item() for g in gs), all(torch.isfinite(g).all() for g in gs)) if gs else (0.0, False)
+    (gw, fw), (gt, ft), (go, fo) = gnorm(model.weather_enc), gnorm(model.transition), gnorm(model.o_delta)
+    checks.append(("masked grad reaches WeatherEncoder & T & O_δ", gw > 0 and gt > 0 and go > 0 and fw and ft and fo,
+                   f"|g| we={gw:.2e} T={gt:.2e} Oδ={go:.2e}"))
+    ok10a = "cmp_ep" in aux["logs"] and "con" in aux["logs"] and torch.isfinite(aux["logs"]["cmp_ep"])
+    with torch.no_grad():
+        model.gate.data.fill_(1.0)
+        pb0, z_tg = model._b0_and_state(data); geo_g, uf_g = model._geo_weather(data)
+        yc = model.composed_prediction(pb0, z_tg, uf_g, geo_g, 10, 10, 2, 128, 128)
+        ok10b = (yc - pb0[:, 19]).abs().max().item() > 1e-6      # composed decode contributes (gate>0)
+        model.gate.data.fill_(0.0)
+    checks.append(("composed DECODES to prediction (≠B0) + endpoint supervised", bool(ok10a and ok10b),
+                   f"cmp_ep={float(aux['logs'].get('cmp_ep', -1)):.4f} Δcmp={(yc - pb0[:, 19]).abs().max().item():.2e}"))
+
+    # 6. non-zero gate: cutting T changes the forecast (load-bearing)
+    with torch.no_grad():
+        model.gate.data.fill_(1.0)
+        preds_T = model.forecast(data)
+        ws, bs = model.transition.net[-1].weight.data.clone(), model.transition.net[-1].bias.data.clone()
+        model.transition.net[-1].weight.data.zero_(); model.transition.net[-1].bias.data.zero_()  # T -> identity
+        preds_noT = model.forecast(data)
+        model.transition.net[-1].weight.data.copy_(ws); model.transition.net[-1].bias.data.copy_(bs)
+        model.gate.data.fill_(0.0)
+    d6 = (preds_T - preds_noT).abs().max().item()
+    checks.append(("gate>0: cutting T changes forecast (load-bearing)", d6 > 1e-6, f"max|Δ|={d6:.2e}"))
+
+    # 12. T-only weather intervention: B0 fixed, output changes
+    with torch.no_grad():
+        model.gate.data.fill_(1.0)
+        b0m, ym = model.forecast_weather(data, "matched")
+        b0n, yn = model.forecast_weather(data, "mean")        # climatological (normalized-zero) forcing
+        b0s, ys = model.forecast_weather(data, "shuffled")
+        model.gate.data.fill_(0.0)
+    b0_fixed = (b0m - b0n).abs().max().item() == 0.0 and (b0m - b0s).abs().max().item() == 0.0
+    mean_moved = (ym - yn).abs().max().item() > 1e-6          # climatological forcing moves output
+    shuf_moved = (ym - ys).abs().max().item() > 1e-6          # roll -> deterministic non-identity shuffle
+    checks.append(("T-only: B0 fixed, mean+shuffled change output", b0_fixed and mean_moved and shuf_moved,
+                   f"B0Δ={(b0m - b0n).abs().max().item():.0e} meanΔ={(ym - yn).abs().max().item():.2e} "
+                   f"shufΔ={(ym - ys).abs().max().item():.2e}"))
+
+    # 14. parameterizable multi-partition composition interface
+    with torch.no_grad():
+        model.gate.data.fill_(1.0)
+        parts = model.composed_predictions(data, partitions=[(3, 7), (4, 6), (5, 5)])
+        ok14 = (set(parts.keys()) == {(3, 7), (4, 6), (5, 5)}
+                and all(tuple(v[0].shape) == (2, 1, 128, 128) and tuple(v[1].shape) == (2, 1, 128, 128)
+                        for v in parts.values())
+                and (parts[(3, 7)][0] - parts[(3, 7)][1]).abs().max().item() > 1e-6)
+        model.gate.data.fill_(0.0)
+    checks.append(("multi-partition composed_predictions interface", bool(ok14),
+                   f"parts={sorted(parts.keys())}"))
+
+    # 7 + 13. checkpoint round-trip via exporter load_b4; refuse core-only
+    with torch.no_grad():
+        model.gate.data.fill_(0.5)
+        with tempfile.TemporaryDirectory() as td:
+            p = Path(td) / "b4.pt"
+            torch.save({"b4_state_dict": model.state_dict(),
+                        "contract_cfg": {"state_dim": 256, "freeze_b0": True}}, p)
+            m2 = load_b4(str(p), "cpu")
+            d7 = (model.forecast(data) - m2.forecast(data)).abs().max().item()
+            core_p = Path(td) / "core.pt"
+            torch.save({"core_state_dict": model.q.core.state_dict()}, core_p)
+            refused = False
+            try:
+                load_b4(str(core_p), "cpu")
+            except ValueError:
+                refused = True
+        model.gate.data.fill_(0.0)
+    checks.append(("b4 round-trip identical + exporter refuses core-only", d7 == 0.0 and refused,
+                   f"max|Δ|={d7:.2e} refused={refused}"))
+
+    # 9. no local GPU
+    checks.append(("CPU-only (no local GPU)", (not torch.cuda.is_available())
+                   and all(not p.is_cuda for p in model.parameters()), f"cuda={torch.cuda.is_available()}"))
+
+    p_b0, p_b4 = sum(p.numel() for p in model.q.parameters()), model.num_params()
+    print("=" * 78)
+    print(f"params: B0={p_b0/1e6:.2f}M  B4={p_b4/1e6:.2f}M  branch(+)={(p_b4-p_b0)/1e6:.2f}M  "
+          f"trainable={sum(p.numel() for p in model.trainable_parameters())/1e6:.2f}M")
+    print("-" * 78)
     allok = True
     for name, ok, detail in checks:
         allok &= bool(ok)
-        print(f"[{'PASS' if ok else 'FAIL'}] {name:<44} {detail}")
-    print("-" * 72)
-    print(f"RESULT: {'ALL PASS' if allok else 'FAIL'}")
+        print(f"[{'PASS' if ok else 'FAIL'}] {name:<52} {detail}")
+    print("-" * 78)
+    print(f"RESULT: {'ALL PASS' if allok else 'FAIL'}  ({sum(c[1] for c in checks)}/{len(checks)})")
     sys.exit(0 if allok else 1)
 
 

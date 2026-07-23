@@ -1,21 +1,17 @@
-"""plan-b-pvt · local GPU TRAINING smoke for ObsWorldB4 (GPU 4-7 only, synthetic).
+"""plan-b-pvt · TerraState (B4) synthetic TRAINING smoke on the CURRENT protocol.
 
-Verifies B4 actually TRAINS on the local Blackwell (sm_120) cards before we ship a
-full run to the server: forward+backward+optimizer step run, the JEPA+VICReg aux is
-wired into the loss and flows gradients, nothing goes NaN, and the surrogate loss
-moves. Uses a surrogate forecast loss (MSE) — the real MaskedL2NDVILoss is unchanged
-from B0 (already validated) and needs real data, so it runs on the server.
+Validates one training step of the NEW model/trainer API (masked fore/resid/cmp/con/vic
+losses, landcover, context-only state, multi-partition composition) WITHOUT real data.
+Device-agnostic: uses CPU when no GPU is visible — run this round with
+CUDA_VISIBLE_DEVICES="" so it stays CPU-only.
 
-MUST be launched pinned to GPU 4-7 (plan-B's local test cards):
-  CUDA_VISIBLE_DEVICES=4,5,6,7 <fastwam-vjepa python> scripts/smoke_b4_train.py
-Local = test only; full training goes to the server 8×H200.
+  CUDA_VISIBLE_DEVICES="" <fastwam-vjepa python> scripts/smoke_b4_train.py
 """
 import sys
 from pathlib import Path
 from types import SimpleNamespace
 
 import torch
-import torch.nn.functional as F
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -25,67 +21,61 @@ from models.encoders.pvt_contextformer_q import contextformer6m_hparams  # noqa:
 from models.plan_b_b4 import ObsWorldB4  # noqa: E402
 
 
-def fake_batch(dev, B=2, T=30, H=128, W=128):
+def fake_batch(dev, B=2, T=30, H=128, W=128, seed=0):
+    g = torch.Generator().manual_seed(seed)
+    dyn = torch.randn(B, T, 5, H, W, generator=g); dyn[:, :, 0] = torch.tanh(dyn[:, :, 0])
     return {
-        "dynamic": [torch.randn(B, T, 5, H, W, device=dev), torch.randn(B, T, 24, device=dev)],
-        "dynamic_mask": [(torch.rand(B, T, 1, H, W, device=dev) < 0.05).float()],
-        "static": [torch.randn(B, 5, H, W, device=dev)],
+        "dynamic": [dyn.to(dev), torch.randn(B, T, 24, generator=g).to(dev)],
+        "dynamic_mask": [(torch.rand(B, T, 1, H, W, generator=g) < 0.05).float().to(dev)],
+        "static": [torch.randn(B, 5, H, W, generator=g).to(dev)],
+        "landcover": torch.randint(10, 41, (B, 1, H, W), generator=g).float().to(dev),
     }
 
 
 def main():
-    if not torch.cuda.is_available():
-        print("no CUDA visible — this smoke must run on GPU 4-7"); sys.exit(1)
-    dev = torch.device("cuda", 0)  # physical GPU 4 under CUDA_VISIBLE_DEVICES=4,5,6,7
-    print("=" * 72)
-    print(f"B4 local GPU training smoke on: {torch.cuda.get_device_name(0)}")
-    print("=" * 72)
+    dev = torch.device("cuda", 0) if torch.cuda.is_available() else torch.device("cpu")
+    name = torch.cuda.get_device_name(0) if dev.type == "cuda" else "CPU"
+    print("=" * 74); print(f"B4 TerraState training smoke on: {name}"); print("=" * 74)
 
     hp = contextformer6m_hparams(pvt_pretrained=False)
-    model = ObsWorldB4(hp, contract_cfg={"state_dim": 256, "n_products": 2}).to(dev).train()
-    opt = torch.optim.AdamW(model.parameters(), lr=1e-4)
-    lambdas = SimpleNamespace(dyn=1.0, vic=1.0)
+    model = ObsWorldB4(hp, contract_cfg={"state_dim": 256, "freeze_b0": True,
+                                         "partitions": [(3, 7), (4, 6), (5, 5), (10, 10)]}).to(dev).train()
+    opt = torch.optim.AdamW(model.trainable_parameters(), lr=1e-3)
+    lam = SimpleNamespace(fore=1.0, resid=1.0, cmp=1.0, con=1.0, vic=0.05)  # vic 0.05: audit-balanced
     data = fake_batch(dev)
 
-    # snapshot backbone weights to confirm the forecast backbone actually updates
-    w0 = model.q.core.blocks[-1].mlp.fc2.weight.detach().clone()
-
+    w0 = model.o_delta.weight.detach().clone()
+    q0 = next(iter(model.q.parameters())).detach().clone()
     losses = []
     for step in range(6):
         opt.zero_grad(set_to_none=True)
-        preds, aux = model(data, lambdas=lambdas)          # (B,30,1,H,W) full-seq + aux
-        target = torch.zeros_like(preds)                    # surrogate forecast target
-        floss = F.mse_loss(preds, target)
-        loss = floss + aux["total"]
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+        preds, aux = model(data, lambdas=lam)
+        loss = aux["total"]; loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.trainable_parameters(), 1.0)
         opt.step()
         lg = aux["logs"]
-        print(f"[step {step}] loss={loss.item():.5f} forecast={floss.item():.5f} "
-              f"latent_future={float(lg['latent_future']):.5f} "
-              f"vic_var={float(lg['vic_var']):.4f} vic_cov={float(lg['vic_cov']):.4f}")
+        gn = lambda m: sum(p.grad.norm().item() ** 2 for p in m.parameters() if p.grad is not None) ** 0.5
+        print(f"[step {step}] loss={loss.item():.5f} fore={float(lg['fore']):.4f} resid={float(lg['resid']):.4f} "
+              f"cmp={float(lg.get('cmp_ep', 0)):.4f} vic={float(lg['vic_var']):.3f} gate={float(lg['gate']):.2e} "
+              f"| grad we={gn(model.weather_enc):.1e} T={gn(model.transition):.1e} Oδ={gn(model.o_delta):.1e}")
         losses.append(loss.item())
 
-    # checks
     finite = all(torch.isfinite(torch.tensor(l)) for l in losses)
     moved = abs(losses[-1] - losses[0]) > 1e-6
-    backbone_updated = (model.q.core.blocks[-1].mlp.fc2.weight.detach() - w0).abs().sum().item() > 0
+    branch_updated = (model.o_delta.weight.detach() - w0).abs().sum().item() > 0
+    b0_frozen = (next(iter(model.q.parameters())).detach() - q0).abs().sum().item() == 0
+    _, aux0 = model(data, lambdas=SimpleNamespace(fore=0., resid=0., cmp=0., con=0., vic=0.))
+    recoverable = float(aux0["total"].item()) == 0.0
 
-    # recoverable training step: dyn=vic=0 -> aux total exactly 0
-    _, aux0 = model(data, lambdas=SimpleNamespace(dyn=0.0, vic=0.0))
-    aux0_zero = float(aux0["total"].item()) == 0.0
-
-    print("-" * 72)
-    for name, ok in [
-        ("6 steps ran, all losses finite", finite),
-        ("loss moved (training has effect)", moved),
-        ("forecast backbone weights updated", backbone_updated),
-        ("lambdas=0 -> aux total == 0 (recoverable)", aux0_zero),
-    ]:
-        print(f"[{'PASS' if ok else 'FAIL'}] {name}")
-    allok = finite and moved and backbone_updated and aux0_zero
-    print("-" * 72)
-    print(f"RESULT: {'ALL PASS' if allok else 'FAIL'}")
+    print("-" * 74)
+    checks = [("6 steps finite", finite), ("loss moved", moved),
+              ("branch (O_δ) updated", branch_updated), ("B0 frozen (unchanged)", b0_frozen),
+              ("lambdas=0 -> aux total==0 (recoverable)", recoverable),
+              ("CPU-only this round", dev.type == "cpu")]
+    for nm, ok in checks:
+        print(f"[{'PASS' if ok else 'FAIL'}] {nm}")
+    allok = all(ok for _, ok in checks[:5])   # device line is informational
+    print("-" * 74); print(f"RESULT: {'ALL PASS' if allok else 'FAIL'}  (device={dev.type})")
     sys.exit(0 if allok else 1)
 
 
