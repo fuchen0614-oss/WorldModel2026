@@ -44,13 +44,22 @@ class ObsWorldV2Core(nn.Module):
         self.decoder = decoder
         self.use_phi_encoder = bool(use_phi_encoder)
         # Optional A' NDVI residual head O_ndvi(zh): decodes a bounded NDVI delta
-        # on a history-only last-valid-NDVI baseline. The zero-initialised scale
-        # makes the initial prediction exactly persistence, and every future
-        # correction is read from the transitioned state zh (no history bypass).
+        # on a history-only last-valid-NDVI baseline. The scale is initialised
+        # SMALL BUT NON-ZERO so the untrained prediction is near-persistence yet
+        # every NDVI-head weight receives gradient from step 1. A zero init makes
+        # d(loss)/d(head) == 0 (tanh(0*r) has zero slope in the head), which is
+        # fine on one GPU but crashes DDP (find_unused_parameters=False) because
+        # the whole head is an unused parameter. Every correction is still read
+        # from the transitioned state zh (no history bypass).
         self.ndvi_head = ndvi_head
         self.ndvi_residual_scale = (
-            nn.Parameter(torch.zeros(())) if ndvi_head is not None else None
+            nn.Parameter(torch.full((), 0.1)) if ndvi_head is not None else None
         )
+        if self.ndvi_head is not None and hasattr(self.ndvi_head, "mask_token"):
+            # Mirror EarthNetObservationDecoder: the MAE mask token is never used
+            # in full-sequence decoding, so it would be an unused parameter and
+            # crash DDP (find_unused_parameters=False). Freeze it.
+            self.ndvi_head.mask_token.requires_grad_(False)
 
         # The EarthNet main task has no compatible per-frame acquisition
         # metadata.  This fixed neutral reference preserves Stage1.5 encoder

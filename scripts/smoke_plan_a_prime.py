@@ -123,7 +123,10 @@ def main() -> None:
           ndvi_pred is not None and tuple(ndvi_pred.shape) == (2, 3, 1, 16, 16) and torch.isfinite(ndvi_pred).all(),
           f"shape={None if ndvi_pred is None else tuple(ndvi_pred.shape)}")
 
-    # 2 initial residual == persistence (zero-init scale)
+    # 2 initial prediction is NEAR persistence (small nonzero scale). The scale
+    # is intentionally small-but-nonzero (~0.1) so the head trains from step 1
+    # and DDP does not see it as an unused parameter; the deviation from
+    # persistence is bounded by |tanh(scale*residual)| and stays small.
     raw = model
     last_rgbn = raw.core.initialize_state(mv)["last_valid_rgbn"]
     red, nir = last_rgbn[:, 2], last_rgbn[:, 3]
@@ -131,9 +134,10 @@ def main() -> None:
     base_resized = torch.nn.functional.interpolate(base, size=(16, 16), mode="bilinear", align_corners=False)
     persistence = base_resized.unsqueeze(1).expand(2, 3, 1, 16, 16)
     scale0 = float(raw.core.ndvi_residual_scale.detach())
-    check("2 initial residual == persistence (scale==0)",
-          abs(scale0) < 1e-9 and torch.allclose(ndvi_pred, persistence, atol=1e-5),
-          f"scale={scale0:.2e} max|diff|={float((ndvi_pred - persistence).abs().max()):.2e}")
+    dev = float((ndvi_pred - persistence).abs().max())
+    check("2 initial pred near persistence (scale small nonzero)",
+          0.0 < abs(scale0) <= 0.2 and dev <= float(torch.tanh(torch.tensor(abs(scale0))) + 1e-4),
+          f"scale={scale0:.3f} max|diff|={dev:.3e} (bound=tanh(scale)={float(torch.tanh(torch.tensor(abs(scale0)))):.3f})")
 
     # 3 loss computes ndvi_main + ndvi_consistency
     loss_fn = EarthNetForecastLoss(red_index=2, nir_index=3, w_obs=0.1, w_ndvi=0.0,
@@ -167,20 +171,17 @@ def main() -> None:
           q_g > 0 and t_g > 0 and o_g > 0 and scale_g is not None and abs(scale_g) > 0,
           f"|g q|={q_g:.3e} |g T|={t_g:.3e} |g O|={o_g:.3e} g_scale={scale_g}")
 
-    # 5 ndvi_head wired: grad flows once scale != 0 (zero-init is intentional)
-    head_g0 = gnorm(raw.core.ndvi_head)
-    with torch.no_grad():
-        raw.core.ndvi_residual_scale.fill_(0.5)
-    model.zero_grad(set_to_none=True)
-    out2 = model(mv, selected_steps=[0, 9, 19])
-    l2 = loss_fn(out2["pred"], tgt, tmask, ndvi_pred=out2["ndvi_pred"], veg_mask=veg)["total"]
-    l2.backward()
-    head_g1 = gnorm(raw.core.ndvi_head)
-    with torch.no_grad():
-        raw.core.ndvi_residual_scale.fill_(0.0)
-    check("5 ndvi_head wired (grad 0 at scale=0, >0 at scale=0.5)",
-          head_g0 == 0.0 and head_g1 > 0.0,
-          f"|g head|@scale0={head_g0:.3e} |g head|@scale0.5={head_g1:.3e}")
+    # 5 DDP-safety: at the DEFAULT init scale, the NDVI head receives gradient
+    # AND no trainable parameter is left without a grad after one backward. This
+    # reproduces DDP's find_unused_parameters=False contract (a zero-init scale
+    # would leave the whole head unused and crash 8-GPU training at step 1).
+    head_g_init = gnorm(raw.core.ndvi_head)
+    unused = [name for name, p in raw.named_parameters()
+              if p.requires_grad and p.grad is None]
+    check("5 DDP-safe: head has grad at init & no trainable param unused",
+          head_g_init > 0.0 and len(unused) == 0,
+          f"|g head|@init(scale={float(raw.core.ndvi_residual_scale.detach()):.2f})={head_g_init:.3e} "
+          f"unused_trainable_params={unused[:5]}{'...' if len(unused) > 5 else ''} (count={len(unused)})")
 
     # 6 future-satellite invariance: z0 independent of x_target
     model.eval()
@@ -201,8 +202,8 @@ def main() -> None:
         raw.transition.state_dynamics.output_proj.weight.normal_(0.0, 0.3)
         if raw.transition.state_dynamics.output_proj.bias is not None:
             raw.transition.state_dynamics.output_proj.bias.normal_(0.0, 0.1)
-        # Activate the NDVI head (scale != 0) so weather sensitivity is visible
-        # through it; check 2 already covered the zero-init persistence case.
+        # Push the NDVI head scale up a bit so weather sensitivity is clearly
+        # visible through it (check 2 covers the small-scale near-persistence).
         raw.core.ndvi_residual_scale.fill_(0.5)
 
     # 7 weather sensitivity: perturb future driver path -> zh + outputs move
@@ -280,7 +281,9 @@ def main() -> None:
         # s1_proj / modality_embed_s1, which are correctly excluded from the
         # optimizer, so the full encoder param set is not a subset by design.
         enc_ids = {id(p) for p in fresh.core.encoder.parameters() if p.requires_grad}
-        head_ids = {id(p) for p in fresh.core.ndvi_head.parameters()} | {id(fresh.core.ndvi_residual_scale)}
+        # Only trainable head params: mask_token is frozen (unused in decode) and
+        # correctly excluded from the optimizer, so don't require it to be present.
+        head_ids = {id(p) for p in fresh.core.ndvi_head.parameters() if p.requires_grad} | {id(fresh.core.ndvi_residual_scale)}
         ok = (1e-5 in by_lr and enc_ids <= by_lr[1e-5]
               and 1e-4 in by_lr and head_ids <= by_lr[1e-4])
         check("11 optimizer: q@backbone_lr, NDVI head@lr", ok,
