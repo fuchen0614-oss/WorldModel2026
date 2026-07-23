@@ -534,6 +534,13 @@ def _parse_earthnet_netcdf_v2_cube(
             config=config,
             s2_variables=s2_variables,
         )
+    # GreenEarthNet CVPR-2024 "chopped" evaluation cubes drop the raw ``s2_mask``
+    # but keep the deep-learning cloud mask ``s2_dlmask`` (0 == clear). Derive the
+    # clear mask from it so a raw-v2/full24-trained model can be evaluated on the
+    # chopped tracks unchanged (mirrors the physical4 parser below). Raw cubes keep
+    # their own ``s2_mask`` -> strict no-op for training and raw IID/OOD eval.
+    if "s2_mask" not in cube.variables and "s2_dlmask" in cube.variables:
+        cube = cube.assign(s2_mask=cube["s2_dlmask"])
     required = (*s2_variables, "s2_mask", *EOBS_NETCDF_VARIABLES, "cop_dem")
     missing = [name for name in required if name not in cube.variables]
     if missing:
