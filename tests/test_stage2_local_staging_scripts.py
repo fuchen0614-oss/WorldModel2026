@@ -477,3 +477,127 @@ def test_launcher_train_val_scope_stages_only_manifest_union(tmp_path):
             text=True,
         )
         Path(f"{stage_root}.lock").unlink(missing_ok=True)
+
+
+def _fake_runner_capturing_initializer(tmp_path: Path) -> Path:
+    """A fake runner that records which Stage2 initializer it received."""
+
+    runner = tmp_path / "fake_stage2_runner_capture.sh"
+    runner.write_text(
+        "#!/usr/bin/env bash\n"
+        "set -euo pipefail\n"
+        "test -d \"${DATA_ROOT}/earthnet2021x/train\"\n"
+        "printf '%s\\n' \"${STAGE15_CHECKPOINT:-}\" > \"${STAGE15_CAPTURE_FILE}\"\n"
+        "printf '%s\\n' \"${INIT_FROM_CHECKPOINT:-}\" > \"${INIT_CAPTURE_FILE}\"\n"
+        "exit 0\n",
+        encoding="utf-8",
+    )
+    runner.chmod(0o755)
+    return runner
+
+
+def test_launcher_accepts_init_from_checkpoint_without_stage15(tmp_path):
+    """rescue A': INIT_FROM_CHECKPOINT alone must be accepted and forwarded."""
+    stage_root = Path("/tmp") / f"obsworld_stage2_init_ok_{tmp_path.name}"
+    runner = _fake_runner_capturing_initializer(tmp_path)
+    environment = _launcher_environment(tmp_path, stage_root, runner)
+    init_ckpt = tmp_path / "artifacts" / "s1a_stage2.pt"
+    init_ckpt.write_text("non-empty", encoding="utf-8")
+    del environment["STAGE15_CHECKPOINT"]
+    environment["INIT_FROM_CHECKPOINT"] = str(init_ckpt)
+    environment["STAGE15_CAPTURE_FILE"] = str(tmp_path / "seen_stage15.txt")
+    environment["INIT_CAPTURE_FILE"] = str(tmp_path / "seen_init.txt")
+    try:
+        subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        assert Path(environment["INIT_CAPTURE_FILE"]).read_text(encoding="utf-8").strip() == str(init_ckpt)
+        assert Path(environment["STAGE15_CAPTURE_FILE"]).read_text(encoding="utf-8").strip() == ""
+        assert not stage_root.exists()
+    finally:
+        shutil.rmtree(stage_root, ignore_errors=True)
+        Path(f"{stage_root}.lock").unlink(missing_ok=True)
+
+
+def test_launcher_forwards_stage15_checkpoint_without_init(tmp_path):
+    """fresh A': STAGE15_CHECKPOINT alone must still be accepted and forwarded."""
+    stage_root = Path("/tmp") / f"obsworld_stage2_stage15_ok_{tmp_path.name}"
+    runner = _fake_runner_capturing_initializer(tmp_path)
+    environment = _launcher_environment(tmp_path, stage_root, runner)
+    environment["STAGE15_CAPTURE_FILE"] = str(tmp_path / "seen_stage15.txt")
+    environment["INIT_CAPTURE_FILE"] = str(tmp_path / "seen_init.txt")
+    try:
+        subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        assert Path(environment["STAGE15_CAPTURE_FILE"]).read_text(encoding="utf-8").strip() == environment["STAGE15_CHECKPOINT"]
+        assert Path(environment["INIT_CAPTURE_FILE"]).read_text(encoding="utf-8").strip() == ""
+        assert not stage_root.exists()
+    finally:
+        shutil.rmtree(stage_root, ignore_errors=True)
+        Path(f"{stage_root}.lock").unlink(missing_ok=True)
+
+
+def test_launcher_requires_exactly_one_initializer(tmp_path):
+    """Neither STAGE15_CHECKPOINT nor INIT_FROM_CHECKPOINT set -> hard failure."""
+    stage_root = Path("/tmp") / f"obsworld_stage2_no_init_{tmp_path.name}"
+    runner = _fake_runner(tmp_path)
+    environment = _launcher_environment(tmp_path, stage_root, runner)
+    del environment["STAGE15_CHECKPOINT"]
+    environment.pop("INIT_FROM_CHECKPOINT", None)
+    try:
+        completed = subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        assert completed.returncode != 0
+        assert "no Stage2 initializer" in (completed.stdout + completed.stderr)
+        assert not stage_root.exists()
+    finally:
+        shutil.rmtree(stage_root, ignore_errors=True)
+        Path(f"{stage_root}.lock").unlink(missing_ok=True)
+
+
+def test_launcher_rejects_conflicting_initializers(tmp_path):
+    """Both initializers set -> mutually-exclusive hard failure."""
+    stage_root = Path("/tmp") / f"obsworld_stage2_both_init_{tmp_path.name}"
+    runner = _fake_runner(tmp_path)
+    environment = _launcher_environment(tmp_path, stage_root, runner)
+    init_ckpt = tmp_path / "artifacts" / "s1a_stage2.pt"
+    init_ckpt.write_text("non-empty", encoding="utf-8")
+    environment["INIT_FROM_CHECKPOINT"] = str(init_ckpt)
+    try:
+        completed = subprocess.run(
+            ["bash", str(LAUNCHER)],
+            cwd=ROOT,
+            env=environment,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30,
+        )
+        assert completed.returncode != 0
+        assert "mutually exclusive" in (completed.stdout + completed.stderr)
+        assert not stage_root.exists()
+    finally:
+        shutil.rmtree(stage_root, ignore_errors=True)
+        Path(f"{stage_root}.lock").unlink(missing_ok=True)

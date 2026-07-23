@@ -88,6 +88,10 @@ LOCAL_STAGE_CLEANUP="${LOCAL_STAGE_CLEANUP:-auto}"
 LOCAL_STAGE_DATA_SCOPE="${LOCAL_STAGE_DATA_SCOPE:-all}"
 REQUIRE_EMPTY_GPUS="${REQUIRE_EMPTY_GPUS:-0}"
 PYTHON_BIN="${PYTHON_BIN:-python}"
+# Exactly one Stage2 initializer is required downstream: a frozen Stage1.5 state
+# bridge (fresh A') OR an A' weights-only warm-start checkpoint (rescue A').
+STAGE15_CHECKPOINT="${STAGE15_CHECKPOINT:-}"
+INIT_FROM_CHECKPOINT="${INIT_FROM_CHECKPOINT:-}"
 
 CHECKPOINT_DIR="${CHECKPOINT_DIR:-${PROJECT_ROOT}/checkpoints/${RUN_ID}}"
 LOG_DIR="${LOG_DIR:-${PROJECT_ROOT}/logs/${RUN_ID}}"
@@ -163,7 +167,19 @@ fi
 require_file "conditioning stats" "${CONDITIONING_STATS_PATH:-}"
 require_file "train manifest" "${MANIFEST_PATH:-}"
 require_file "validation manifest" "${VALIDATION_MANIFEST_PATH:-}"
-require_file "Stage1.5 checkpoint" "${STAGE15_CHECKPOINT:-}"
+# Exactly one Stage2 initializer must be provided, and only one. The rescue
+# config (plan_a_prime_from_s1a_stage2.yaml, require_stage15_checkpoint=false)
+# supplies INIT_FROM_CHECKPOINT and must NOT be forced to name a Stage1.5
+# checkpoint; the fresh config supplies STAGE15_CHECKPOINT.
+if [[ -n "${STAGE15_CHECKPOINT}" && -n "${INIT_FROM_CHECKPOINT}" ]]; then
+  die "STAGE15_CHECKPOINT and INIT_FROM_CHECKPOINT are mutually exclusive; provide exactly one"
+elif [[ -n "${INIT_FROM_CHECKPOINT}" ]]; then
+  require_file "A' warm-start checkpoint (INIT_FROM_CHECKPOINT)" "${INIT_FROM_CHECKPOINT}"
+elif [[ -n "${STAGE15_CHECKPOINT}" ]]; then
+  require_file "Stage1.5 checkpoint (STAGE15_CHECKPOINT)" "${STAGE15_CHECKPOINT}"
+else
+  die "no Stage2 initializer: set STAGE15_CHECKPOINT (fresh) or INIT_FROM_CHECKPOINT (A' warm-start)"
+fi
 [[ -f "${PROJECT_ROOT}/${CONFIG}" ]] || die "config not found under project: ${CONFIG}"
 [[ -f "${STAGE2_RUNNER}" ]] || die "Stage2 runner not found: ${STAGE2_RUNNER}"
 
@@ -432,6 +448,11 @@ export DATA_ROOT="${LOCAL_DATA_ROOT}"
 export CONFIG MAX_STEPS BATCH_SIZE NUM_WORKERS PREFETCH_FACTOR PERSISTENT_WORKERS LOG_INTERVAL GPUS
 export PREFLIGHT PREFLIGHT_MAX_FILES PREFLIGHT_CHECK_MODEL REQUIRE_MANIFEST RUN_TRAIN
 export CHECKPOINT_DIR LOG_DIR PREFLIGHT_OUTPUT
+# Forward the initializer + frozen-artifact paths to the Stage2 runner so the
+# choice (fresh Stage1.5 vs A' warm-start) is explicit and independent of shell
+# export inheritance. Empty vars stay empty and are ignored by the runner.
+export STAGE15_CHECKPOINT INIT_FROM_CHECKPOINT
+export CONDITIONING_STATS_PATH MANIFEST_PATH VALIDATION_MANIFEST_PATH
 export HDF5_USE_FILE_LOCKING="${HDF5_USE_FILE_LOCKING:-FALSE}"
 export TORCH_NCCL_ASYNC_ERROR_HANDLING="${TORCH_NCCL_ASYNC_ERROR_HANDLING:-1}"
 
