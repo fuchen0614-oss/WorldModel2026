@@ -6,6 +6,7 @@ import argparse
 import copy
 from contextlib import nullcontext
 from dataclasses import dataclass, field
+import hashlib
 import math
 import os
 import random
@@ -624,31 +625,60 @@ def load_stage2_model_state(model: nn.Module, checkpoint_state: dict, strict: bo
 
 
 def build_optimizer(model: nn.Module, config: dict) -> optim.Optimizer:
+    """Two MODULE-IDENTITY parameter groups.
+
+    The Stage1.5-pretrained state-inference operator ``q`` (core.encoder +
+    core.phi_encoder + core.state_projector) trains at ``backbone_lr``; every
+    other trainable module (context aggregator, transition ``T``, decoder /
+    NDVI head ``O``, geo tokenizer, adapters) trains at ``lr``.
+
+    Grouping is by explicit module identity, NOT the transient
+    ``_warmup_frozen_parameters`` attribute: that attribute is set on the raw
+    model but ``build_optimizer`` previously read it off the DDP wrapper (which
+    does not delegate arbitrary attributes), so under DDP the whole backbone
+    silently collapsed into the ``lr`` group. We unwrap DDP here so the grouping
+    is identical single-GPU and distributed. Frozen params (requires_grad=False)
+    are excluded from both groups, as they must be.
+    """
     opt_cfg = config["optimizer"]
-    warmup_ids = {
-        id(parameter)
-        for parameter in getattr(model, "_warmup_frozen_parameters", [])
-    }
-    new_params = [
+    raw = model.module if isinstance(model, DDP) else model
+    lr = float(opt_cfg.get("lr", 1e-4))
+    backbone_lr = float(opt_cfg.get("backbone_lr", 1e-5))
+
+    q_param_ids: set[int] = set()
+    core = getattr(raw, "core", None)
+    if core is not None:
+        for attr in ("encoder", "phi_encoder", "state_projector"):
+            module = getattr(core, attr, None)
+            if module is not None:
+                q_param_ids.update(id(parameter) for parameter in module.parameters())
+
+    q_params = [
         parameter
-        for parameter in model.parameters()
-        if parameter.requires_grad and id(parameter) not in warmup_ids
+        for parameter in raw.parameters()
+        if parameter.requires_grad and id(parameter) in q_param_ids
     ]
-    backbone_params = [
+    head_params = [
         parameter
-        for parameter in model.parameters()
-        if parameter.requires_grad and id(parameter) in warmup_ids
+        for parameter in raw.parameters()
+        if parameter.requires_grad and id(parameter) not in q_param_ids
     ]
-    if not new_params and not backbone_params:
+    if not q_params and not head_params:
         raise RuntimeError("No trainable parameters found for Stage2.")
+
     groups = []
-    if new_params:
-        groups.append({"params": new_params, "lr": float(opt_cfg.get("lr", 1e-4))})
-    if backbone_params:
-        groups.append({
-            "params": backbone_params,
-            "lr": float(opt_cfg.get("backbone_lr", 1e-5)),
-        })
+    if head_params:
+        groups.append({"params": head_params, "lr": lr, "name": "heads_T_O_agg_dec"})
+    if q_params:
+        groups.append({"params": q_params, "lr": backbone_lr, "name": "q_encoder_phi_projector"})
+
+    for group in groups:
+        numel = sum(parameter.numel() for parameter in group["params"])
+        log_main(
+            f"optimizer group '{group['name']}': "
+            f"params={numel / 1e6:.3f}M tensors={len(group['params'])} lr={group['lr']:.2e}"
+        )
+
     return optim.AdamW(
         groups,
         weight_decay=float(opt_cfg.get("weight_decay", 0.05)),
@@ -803,6 +833,7 @@ def stage2_supervision_for_output(batch: dict, output: dict) -> dict[str, Option
         raise KeyError("Stage2 training/validation batch is missing x_target")
     target = batch["x_target"]
     target_mask = batch.get("target_mask")
+    target_veg_mask = batch.get("target_veg_mask")
     horizons = batch.get("h")
     steps = output.get("step_indices")
     if steps is not None:
@@ -817,6 +848,8 @@ def stage2_supervision_for_output(batch: dict, output: dict) -> dict[str, Option
         target = target.index_select(1, steps)
         if target_mask is not None:
             target_mask = target_mask.index_select(1, steps)
+        if target_veg_mask is not None:
+            target_veg_mask = target_veg_mask.index_select(1, steps)
         if horizons is not None:
             horizons = horizons.index_select(1, steps)
     if output["pred"].shape[:2] != target.shape[:2]:
@@ -827,6 +860,7 @@ def stage2_supervision_for_output(batch: dict, output: dict) -> dict[str, Option
     return {
         "target": target,
         "target_mask": target_mask,
+        "target_veg_mask": target_veg_mask,
         "horizons": horizons,
     }
 
@@ -930,6 +964,14 @@ def save_checkpoint(
         "best_validation": best_validation,
         "curriculum": curriculum_checkpoint_state(config, step),
         "provenance": provenance,
+        # Load-bearing A' diagnostic: the NDVI residual scale. If it stays near
+        # zero the final NDVI prediction has collapsed to persistence, i.e. the
+        # world-model path is not load-bearing. Persisted with every checkpoint.
+        "ndvi_residual_scale": (
+            float(raw_model.core.ndvi_residual_scale.detach().float().cpu())
+            if getattr(getattr(raw_model, "core", None), "ndvi_residual_scale", None) is not None
+            else None
+        ),
         "data_position": data_position.as_dict() if data_position is not None else None,
         # ``rng_state`` remains for compatibility with earlier single-process
         # checkpoints. ``rng_states_by_rank`` is the exact DDP representation.
@@ -1075,6 +1117,8 @@ def validate_stage2(
                 z_context=out.get("z_context"),
                 z_target_mask=out.get("z_target_mask"),
                 horizons=supervision["horizons"],
+                ndvi_pred=out.get("ndvi_pred"),
+                veg_mask=supervision.get("target_veg_mask"),
             )
         batch_size = int(batch["x_context"].shape[0])
         sample_count += batch_size
@@ -1272,6 +1316,15 @@ def main():
     parser.add_argument("--validation-max-batches", type=int)
     parser.add_argument("--resume-from", type=str)
     parser.add_argument(
+        "--init-from-checkpoint",
+        type=str,
+        help=(
+            "A' warm-start: initialise model weights only from this Stage2 "
+            "checkpoint (non-strict; optimizer/scheduler/step/RNG NOT restored). "
+            "Mutually exclusive with --resume-from."
+        ),
+    )
+    parser.add_argument(
         "--stop-after-steps",
         type=int,
         help=(
@@ -1339,6 +1392,16 @@ def main():
             "epoch_checkpoint_epochs, not both."
         )
     resume_from = args.resume_from or config.get("resume_from")
+    # A' warm-start (weights-only) source: CLI flag overrides the config value.
+    # It is applied later (after the model is built) and, unlike resume_from,
+    # restores no optimizer/scheduler/step state. The two are mutually exclusive.
+    if args.init_from_checkpoint is not None:
+        config.setdefault("training", {})["init_from_checkpoint"] = args.init_from_checkpoint
+    if resume_from and config.get("training", {}).get("init_from_checkpoint"):
+        raise ValueError(
+            "Use either --resume-from (full resume) or "
+            "training.init_from_checkpoint (A' weights-only warm-start), not both."
+        )
     # Preserve this before a Stage2 resume clears the initializer from the
     # live config.  The run provenance must still say which frozen Stage1.5
     # state bridge started the original experiment whenever it is available.
@@ -1640,6 +1703,69 @@ def main():
                 f"stop_after={stop_after_steps}, resumed_step={optimizer_step}"
             )
         log_main(f"resumed Stage2 from {resume_from} at optimizer_step={optimizer_step}")
+    else:
+        # A' warm-start: initialise model *weights only* from a prior Stage2
+        # checkpoint (e.g. S1a Stage2), then train fresh. Unlike ``resume_from``
+        # this deliberately does NOT restore optimizer/scheduler/global_step/RNG/
+        # best_validation, so the corrected optimizer grouping and NDVI-aligned
+        # loss/selection start from a clean state. New parameters absent from the
+        # source (the NDVI head + its residual scale) keep their init; a strict
+        # load is impossible by construction, so we load non-strict and log the
+        # exact missing/unexpected key report for the run record.
+        init_from = config["training"].get("init_from_checkpoint")
+        if init_from:
+            init_source = Path(init_from)
+            if not init_source.is_file():
+                raise FileNotFoundError(
+                    f"training.init_from_checkpoint not found: {init_source}"
+                )
+            init_sha256 = hashlib.sha256(init_source.read_bytes()).hexdigest()
+            log_main(
+                f"A' warm-start initializer provenance: path={init_source.resolve()} "
+                f"sha256={init_sha256}"
+            )
+            init_checkpoint = torch.load(
+                init_source, map_location="cpu", weights_only=False
+            )
+            if "model_state_dict" not in init_checkpoint:
+                raise KeyError(
+                    f"init_from_checkpoint {init_source} has no model_state_dict"
+                )
+            raw_model = model.module if isinstance(model, DDP) else model
+            report = raw_model.load_state_dict(
+                _upgrade_legacy_geo_tokenizer_state_dict(
+                    init_checkpoint["model_state_dict"]
+                ),
+                strict=False,
+            )
+            # Hard gate: a weights-only warm-start must load EVERY source weight
+            # (no unexpected keys) and may leave uninitialised ONLY the freshly
+            # added NDVI head + its residual scale. Any other missing/unexpected
+            # key means the source is not the expected S1a Stage2 architecture,
+            # so we abort instead of silently training a mis-loaded model.
+            allowed_missing = {
+                name
+                for name in raw_model.state_dict()
+                if name.startswith("core.ndvi_head") or name == "core.ndvi_residual_scale"
+            }
+            unexpected = list(report.unexpected_keys)
+            illegal_missing = sorted(set(report.missing_keys) - allowed_missing)
+            if unexpected or illegal_missing:
+                raise RuntimeError(
+                    "A' warm-start refused: the checkpoint does not match the A' "
+                    "architecture as a pure NDVI-head extension.\n"
+                    f"  source={init_source}\n"
+                    f"  unexpected_keys={unexpected}\n"
+                    f"  missing_keys_outside_ndvi_head={illegal_missing}\n"
+                    "Only core.ndvi_head.* and core.ndvi_residual_scale may be "
+                    "missing; fix the checkpoint/config before training."
+                )
+            log_main(
+                f"A' warm-start weights-only from {init_source}: "
+                f"missing_keys={sorted(report.missing_keys)} (all in NDVI head) "
+                f"unexpected_keys=[] "
+                "(optimizer/scheduler/step/RNG/best_validation NOT restored)"
+            )
     loss_fn = EarthNetForecastLoss.from_config(
         config["loss"],
         red_index=data_cfg.band_spec.red_index,
@@ -1849,6 +1975,8 @@ def main():
                         z_context=out.get("z_context"),
                         z_target_mask=out.get("z_target_mask"),
                         horizons=supervision["horizons"],
+                        ndvi_pred=out.get("ndvi_pred"),
+                        veg_mask=supervision.get("target_veg_mask"),
                     )
                     if partition_start is not None:
                         if partition_loss_fn is None:
@@ -1990,6 +2118,16 @@ def main():
                                 float(out["state_delta_norm"].detach().float().mean().cpu()),
                                 optimizer_step,
                             )
+                        raw_for_log = model.module if isinstance(model, DDP) else model
+                        scale_param = getattr(
+                            getattr(raw_for_log, "core", None), "ndvi_residual_scale", None
+                        )
+                        if scale_param is not None:
+                            writer.add_scalar(
+                                "train/ndvi_residual_scale",
+                                float(scale_param.detach().float().cpu()),
+                                optimizer_step,
+                            )
 
             if not should_update:
                 if device.type == "cuda":
@@ -2023,6 +2161,16 @@ def main():
                             ),
                             correction_seed=seed,
                         )
+                        scale_param = getattr(
+                            getattr(raw_model, "core", None), "ndvi_residual_scale", None
+                        )
+                        if scale_param is not None:
+                            # Surface the load-bearing NDVI scale alongside the
+                            # validation metrics (written to validation/ scalars
+                            # and the summary line below).
+                            validation_metrics["ndvi_residual_scale"] = float(
+                                scale_param.detach().float().cpu()
+                            )
                         metric_name = best_validation["metric"]
                         if metric_name not in validation_metrics:
                             raise KeyError(
@@ -2046,7 +2194,7 @@ def main():
                             f"{name}={value:.5f}"
                             for name, value in validation_metrics.items()
                             if isinstance(value, (int, float))
-                            and name in {"loss/total", "MAE", "NDVI_MAE", "skill_vs_persistence"}
+                            and name in {"loss/total", "loss/ndvi_main", "MAE", "NDVI_MAE", "skill_vs_persistence", "ndvi_residual_scale"}
                         )
                         log_main(f"validation step={optimizer_step}: {summary}")
                         if writer is not None:

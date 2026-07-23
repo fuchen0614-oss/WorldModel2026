@@ -117,8 +117,9 @@ class ObsWorldDirectPathModel(nn.Module):
             state_delta_norms.append((state - state0).norm(dim=-1).mean(dim=-1))
 
         states = torch.stack(endpoint_states, dim=1)
-        decoded = self.core.decode_states(states, baseline=initialized.get("last_valid_rgbn"))
-        return {
+        last_valid_rgbn = initialized.get("last_valid_rgbn")
+        decoded = self.core.decode_states(states, baseline=last_valid_rgbn)
+        output = {
             "pred": decoded["mean"],
             "z_pred": states,
             "z_context": state0,
@@ -131,6 +132,13 @@ class ObsWorldDirectPathModel(nn.Module):
             "state_delta_norm": torch.stack(state_delta_norms, dim=1),
             **({"pred_logvar": decoded["logvar"]} if "logvar" in decoded else {}),
         }
+        if getattr(self.core, "ndvi_head", None) is not None and last_valid_rgbn is not None:
+            # History-only last-valid NDVI baseline (EarthNet bands: red=2, nir=3).
+            red = last_valid_rgbn[:, 2]
+            nir = last_valid_rgbn[:, 3]
+            baseline_ndvi = ((nir - red) / (nir + red + 1e-6)).clamp(-1.0, 1.0)
+            output["ndvi_pred"] = self.core.decode_ndvi(states, baseline_ndvi)
+        return output
 
 
 def normalize_selected_steps(

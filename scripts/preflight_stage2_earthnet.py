@@ -574,6 +574,55 @@ def _check_v2_stats(config: dict) -> Dict[str, Any]:
     }
 
 
+# Raw cube fields the A' evaluator-aligned vegetation-clear mask depends on:
+# clear (s2_dlmask) ∩ SCL-valid (s2_SCL) ∩ vegetation (esawc_lc). A formal A'
+# run must NOT silently degrade to a looser mask, so preflight opens real cubes
+# and hard-fails on any missing field.
+_APRIME_REQUIRED_CUBE_FIELDS = ("s2_dlmask", "s2_SCL", "esawc_lc")
+
+
+def _check_aprime_veg_mask_fields(config: dict, split: str, probe_files: int = 8) -> Dict[str, Any]:
+    """Open real train cubes and assert the A' veg-mask fields are all present."""
+
+    import xarray as xr
+
+    data_cfg = EarthNet2021Config.from_config(config["data"], split=split)
+    all_files = _discover_npz_files(data_cfg)
+    if not all_files:
+        return {
+            "checked": False,
+            "fatal_reasons": [
+                f"A' veg-mask field check found no cubes under {data_cfg.root} "
+                f"for split={split}"
+            ],
+        }
+    probe = all_files if probe_files <= 0 else all_files[:probe_files]
+    per_file: List[dict] = []
+    fatal_reasons: List[str] = []
+    for path in probe:
+        try:
+            with xr.open_dataset(path, cache=False) as cube:
+                present = {name: (name in cube.variables) for name in _APRIME_REQUIRED_CUBE_FIELDS}
+        except Exception as exc:  # pragma: no cover - server-side IO
+            fatal_reasons.append(f"A' veg-mask field check could not open {path}: {exc}")
+            continue
+        missing = [name for name, ok in present.items() if not ok]
+        per_file.append({"path": str(path), "present": present})
+        if missing:
+            fatal_reasons.append(
+                f"A' veg-mask fields missing in {path.name}: {missing}. Formal A' "
+                "training requires clear∩SCL-valid∩vegetation and must not degrade "
+                "to a looser mask."
+            )
+    return {
+        "checked": True,
+        "required_fields": list(_APRIME_REQUIRED_CUBE_FIELDS),
+        "probed_files": len(per_file),
+        "per_file": per_file,
+        "fatal_reasons": fatal_reasons,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
@@ -653,6 +702,15 @@ def main() -> None:
                 raise ValueError("formal training requires --dgh-stats-path")
         report["data"] = _scan_data(config, args.max_files)
         fatal.extend(report["data"]["fatal_reasons"])
+        # A' hard gate: when the run uses the NDVI head (accuracy-aligned A'),
+        # the evaluator-aligned veg mask is load-bearing, so prove its raw fields
+        # exist in real train cubes (val shares the GreenEarthNet schema).
+        if is_v2 and bool(config.get("model", {}).get("ndvi_head", False)):
+            veg_rep = _check_aprime_veg_mask_fields(
+                config, config["data"].get("split", "train")
+            )
+            report["aprime_veg_mask_fields"] = veg_rep
+            fatal.extend(veg_rep.get("fatal_reasons", []))
         if is_v2 and config["data"].get("conditioning_stats_path"):
             report["stats"] = _check_stats(config)
         elif config["data"].get("dgh_stats_path"):

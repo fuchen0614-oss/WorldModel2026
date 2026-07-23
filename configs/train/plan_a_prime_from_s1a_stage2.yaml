@@ -1,0 +1,48 @@
+# Plan A' (accuracy-aligned) · warm-start from the S1a Stage2 checkpoint.
+#
+# Identical objective/identity to plan_a_prime_from_s15.yaml, but instead of a
+# fresh Stage1.5 start it loads the already-Stage2-trained S1a weights and only
+# initialises the new NDVI head. This is a *weights-only* warm-start: the old
+# optimizer / scheduler / global_step / RNG / best_validation are deliberately
+# NOT restored (that is what training.init_from_checkpoint does, unlike
+# resume_from), so the corrected optimizer grouping and NDVI-aligned selection
+# start clean.
+#
+# Set training.init_from_checkpoint to the S1a Stage2 checkpoint on the server,
+# e.g. Hydra override:
+#   training.init_from_checkpoint=/.../checkpoints/plan-a-s1a/checkpoint_best.pt
+_base_: plan_a_stage2v3_vits.yaml
+
+model:
+  # No Stage1.5 file needed: every backbone/decoder/transition weight is
+  # overwritten by the S1a Stage2 load below; only the NDVI head stays at init.
+  require_stage15_checkpoint: false
+  ndvi_head: true
+  encoder:
+    from_checkpoint: null
+    freeze: false
+    unfreeze_at_step: 0
+
+training:
+  horizons_per_sample: 0
+  # Weights-only warm-start source (S1a Stage2). Override on the CLI; the
+  # trainer loads it non-strict and logs the missing/unexpected key report.
+  init_from_checkpoint: null
+
+loss:
+  obs_loss: huber
+  weights:
+    ndvi_main: 1.0
+    ndvi_consistency: 0.1
+    obs: 0.1
+    ndvi: 0.0
+    latent: 0.0
+    delta: 0.0
+    smooth: 0.0
+
+validation:
+  primary_metric: loss/ndvi_main
+  mode: min
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/plan_a_prime_from_s1a_stage2
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/plan_a_prime_from_s1a_stage2

@@ -1,0 +1,57 @@
+# Plan A' (accuracy-aligned) · initialise q from the frozen Stage1.5 bridge.
+#
+# Identity is unchanged: z0=q(history), zh=T(z0, physical4, geography, h),
+# y=O(zh). This config only fixes the five verified train/eval misalignments
+# (doc 85); it starts a *fresh* Stage2 from the Stage1.5 state bridge, so pass
+# STAGE15_CHECKPOINT at launch (require_stage15_checkpoint=true).
+#
+# Differences from plan_a_stage2v3_vits.yaml:
+#   - model.ndvi_head: true            -> direct O_ndvi(zh) residual NDVI head
+#   - loss reweighted to masked-L2 NDVI as the MAIN term (evaluator-aligned),
+#     RGBN reflectance kept only as a low-weight auxiliary output
+#   - training.horizons_per_sample: 0  -> supervise all 20 future endpoints
+#   - validation selects the checkpoint by masked-NDVI-MSE (loss/ndvi_main)
+#   - isolated checkpoint/log dirs so no S1a artifact is ever overwritten
+_base_: plan_a_stage2v3_vits.yaml
+
+model:
+  require_stage15_checkpoint: true
+  # A' NDVI residual head O_ndvi(zh): reads only the transitioned state; a
+  # zero-init residual scale makes the untrained prediction exactly persistence.
+  ndvi_head: true
+  encoder:
+    from_checkpoint: null   # pass STAGE15_CHECKPOINT at launch
+    freeze: false
+    unfreeze_at_step: 0
+
+training:
+  # Supervise every future endpoint (0 -> select_v2_horizon_indices returns
+  # None -> all 20 decoded), removing the 6/20 supervision gap.
+  horizons_per_sample: 0
+
+loss:
+  obs_loss: huber
+  weights:
+    # Direct masked-L2 NDVI over the evaluator-aligned vegetation-clear mask is
+    # the accuracy-aligned main objective.
+    ndvi_main: 1.0
+    # Tie the direct NDVI to the NDVI implied by the reflectance head so the two
+    # heads cannot diverge.
+    ndvi_consistency: 0.1
+    # RGBN reflectance kept as a low-weight auxiliary (keeps the decoder honest,
+    # supplies the persistence baseline) instead of the previous w=1.0 main.
+    obs: 0.1
+    # The old RGBN-derived NDVI L1 is redundant with ndvi_main; drop it.
+    ndvi: 0.0
+    latent: 0.0
+    delta: 0.0
+    smooth: 0.0
+
+validation:
+  # Select the checkpoint by the same masked-NDVI-MSE the loss optimises, which
+  # is monotone in the evaluator NDVI RMSE. Replaces RGBN MAE selection.
+  primary_metric: loss/ndvi_main
+  mode: min
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/plan_a_prime_from_s15
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/plan_a_prime_from_s15

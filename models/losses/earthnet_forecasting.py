@@ -23,6 +23,8 @@ class EarthNetForecastLoss(nn.Module):
         w_latent: float = 0.2,
         w_delta: float = 0.1,
         w_smooth: float = 0.02,
+        w_ndvi_main: float = 0.0,
+        w_ndvi_consistency: float = 0.0,
         obs_loss: str = "huber",
     ):
         super().__init__()
@@ -33,6 +35,11 @@ class EarthNetForecastLoss(nn.Module):
         self.w_latent = w_latent
         self.w_delta = w_delta
         self.w_smooth = w_smooth
+        # A' accuracy-aligned terms (off by default): masked-L2 NDVI on the direct
+        # NDVI head over the evaluator-aligned vegetation mask, and a consistency
+        # term tying the direct NDVI to the NDVI implied by predicted red/nir.
+        self.w_ndvi_main = w_ndvi_main
+        self.w_ndvi_consistency = w_ndvi_consistency
         self.obs_loss = obs_loss
 
     @classmethod
@@ -46,6 +53,8 @@ class EarthNetForecastLoss(nn.Module):
             w_latent=float(weights.get("latent", 0.2)),
             w_delta=float(weights.get("delta", 0.1)),
             w_smooth=float(weights.get("smooth", 0.02)),
+            w_ndvi_main=float(weights.get("ndvi_main", 0.0)),
+            w_ndvi_consistency=float(weights.get("ndvi_consistency", 0.0)),
             obs_loss=str(config.get("obs_loss", "huber")),
         )
 
@@ -59,6 +68,8 @@ class EarthNetForecastLoss(nn.Module):
         z_context: Optional[torch.Tensor] = None,
         z_target_mask: Optional[torch.Tensor] = None,
         horizons: Optional[torch.Tensor] = None,
+        ndvi_pred: Optional[torch.Tensor] = None,
+        veg_mask: Optional[torch.Tensor] = None,
     ) -> Dict[str, torch.Tensor]:
         """Compute losses.
 
@@ -79,6 +90,26 @@ class EarthNetForecastLoss(nn.Module):
             target_mask,
         )
         total = total + self.w_ndvi * out["ndvi"]
+
+        # A' accuracy-aligned NDVI head supervision. ``ndvi_pred`` is [B,T,1,H,W]
+        # (or [B,T,H,W]) from O_ndvi(zh); the main term is masked-L2 against the
+        # target NDVI over the evaluator-aligned vegetation-clear mask, matching
+        # the metric the official evaluator scores. A consistency term ties the
+        # direct NDVI to the NDVI implied by the reflectance head so the two
+        # outputs cannot diverge. Both terms are weight-gated (0 by default), so
+        # legacy configs are byte-for-byte unaffected.
+        if ndvi_pred is not None:
+            ndvi_pred_hw = ndvi_pred.squeeze(2) if ndvi_pred.dim() == 5 else ndvi_pred
+            target_ndvi = compute_ndvi(target, self.red_index, self.nir_index).clamp(-1.0, 1.0)
+            veg = veg_mask if veg_mask is not None else target_mask
+            out["ndvi_main"] = _masked_mean((ndvi_pred_hw - target_ndvi).pow(2), veg)
+            total = total + self.w_ndvi_main * out["ndvi_main"]
+            pred_ndvi = compute_ndvi(pred, self.red_index, self.nir_index).clamp(-1.0, 1.0)
+            out["ndvi_consistency"] = _masked_l1(ndvi_pred_hw, pred_ndvi, veg)
+            total = total + self.w_ndvi_consistency * out["ndvi_consistency"]
+        else:
+            out["ndvi_main"] = pred.new_zeros(())
+            out["ndvi_consistency"] = pred.new_zeros(())
 
         if z_pred is not None and z_target is not None:
             out["latent"] = _latent_cosine_loss(z_pred, z_target, z_target_mask)

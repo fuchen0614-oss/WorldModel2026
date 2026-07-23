@@ -11,6 +11,7 @@ import math
 import json
 import hashlib
 import re
+import warnings
 from datetime import date, timedelta
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -595,6 +596,61 @@ def _parse_earthnet_netcdf_v2_cube(
     )
 
 
+# SCL classes counted as valid ground observations by the official GreenEarthNet
+# evaluator (eval/greenearthnet_protocol.py VALID_SCL_CLASSES). Kept in sync here
+# so the A' training mask scores the same pixel population as Table 1.
+_EVALUATOR_VALID_SCL_CLASSES = (1, 2, 4, 5, 6, 7)
+
+# One-time missing-field warnings for the A' veg mask, so a real run surfaces a
+# silent degradation exactly once per process instead of per sample.
+_VEG_MASK_MISSING_WARNED: set[str] = set()
+
+
+def _evaluator_aligned_veg_clear_mask(
+    cube: Any,
+    clear_mask: np.ndarray,
+    indices: slice,
+) -> np.ndarray:
+    """Training mask aligned with the GreenEarthNet evaluator's scored pixels.
+
+    ``clear ∩ SCL-valid ∩ vegetation(esawc_lc < 41)``. This intentionally does
+    NOT apply the evaluator's cube-level sample-quality gates (n_obs / sigma),
+    which are eval-time subset selection, not a per-batch loss target.
+
+    Reproducible degradation: if ``s2_SCL`` or ``esawc_lc`` are absent from the
+    cube, the corresponding factor is skipped (a one-time warning names the
+    missing field, so a real run can never silently fall back to a plain
+    ``clear_mask`` without a visible record).
+    """
+    veg_clear = clear_mask.astype(np.float32)
+    has_scl = "s2_SCL" in cube.variables
+    has_lc = "esawc_lc" in cube.variables
+    if not has_scl or not has_lc:
+        missing = [n for n, present in (("s2_SCL", has_scl), ("esawc_lc", has_lc)) if not present]
+        for name in missing:
+            if name not in _VEG_MASK_MISSING_WARNED:
+                _VEG_MASK_MISSING_WARNED.add(name)
+                warnings.warn(
+                    f"A' evaluator-aligned veg mask: cube field {name!r} absent; "
+                    "that factor is skipped and the training mask is looser than "
+                    "the GreenEarthNet evaluator population. Verify the train cube "
+                    "schema before trusting Table-1 alignment.",
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
+    if has_scl:
+        scl = _xarray_time_slice_to_thw(cube["s2_SCL"], "s2_SCL", indices)
+        scl_valid = (
+            np.isfinite(scl) & np.isin(scl, _EVALUATOR_VALID_SCL_CLASSES)
+        ).astype(np.float32)
+        veg_clear = veg_clear * scl_valid
+    if has_lc:
+        landcover = _xarray_to_hw(cube["esawc_lc"], "esawc_lc").astype(np.float32)
+        vegetation = (np.isfinite(landcover) & (landcover < 41.0)).astype(np.float32)
+        veg_clear = veg_clear * vegetation[None]
+    return veg_clear.astype(np.float32)
+
+
 def _parse_earthnet_netcdf_physical4_cube(
     cube: Any,
     path: Path,
@@ -636,6 +692,7 @@ def _parse_earthnet_netcdf_physical4_cube(
         & (raw_mask <= 0)
         & np.all(np.isfinite(image), axis=1)
     ).astype(np.float32)
+    veg_clear_mask = _evaluator_aligned_veg_clear_mask(cube, clear_mask, indices)
 
     stats = config.conditioning_stats or load_physical_dgh_stats(
         config.conditioning_stats_path,
@@ -678,6 +735,7 @@ def _parse_earthnet_netcdf_physical4_cube(
     return _format_stage2_v2_sample(
         image=image,
         clear_mask=clear_mask,
+        veg_clear_mask=veg_clear_mask,
         conditioning=conditioning,
         elevation=elevation,
         geo_mask=geo_mask,
@@ -713,6 +771,7 @@ def _format_stage2_v2_sample(
     geo_mask: np.ndarray,
     config: EarthNet2021Config,
     start_date: Optional[date],
+    veg_clear_mask: Optional[np.ndarray] = None,
 ) -> Dict[str, Any]:
     """Format image/condition tensors whose different spatial sizes are valid."""
 
@@ -785,6 +844,21 @@ def _format_stage2_v2_sample(
             context_mask_tensor, context_img_size, mode="nearest"
         )
 
+    if veg_clear_mask is None:
+        target_veg_mask = target_mask
+    else:
+        vm = veg_clear_mask.astype(np.float32)
+        if original_frames < total_steps:
+            vm = np.concatenate(
+                [vm, np.zeros((total_steps - original_frames, *vm.shape[-2:]), dtype=np.float32)],
+                axis=0,
+            )
+        elif original_frames > total_steps:
+            vm = vm[:total_steps]
+        target_veg_mask = vm[config.context_frames:total_steps].copy()
+        if original_frames < total_steps:
+            target_veg_mask[max(0, original_frames - config.context_frames):] = 0.0
+
     return {
         "x_context": context_tensor.float(),
         "x_target": _resize_tchw(
@@ -793,6 +867,9 @@ def _format_stage2_v2_sample(
         "context_mask": context_mask_tensor.float(),
         "target_mask": _resize_thw(
             torch.from_numpy(target_mask), target_img_size, mode="nearest"
+        ).float(),
+        "target_veg_mask": _resize_thw(
+            torch.from_numpy(target_veg_mask), target_img_size, mode="nearest"
         ).float(),
         "D_path": torch.from_numpy(conditioning.values).float(),
         "D_mask": torch.from_numpy(conditioning.mask).float(),

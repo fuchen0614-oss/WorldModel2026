@@ -32,6 +32,7 @@ class ObsWorldV2Core(nn.Module):
         geo_tokenizer: nn.Module,
         decoder: nn.Module,
         use_phi_encoder: bool = True,
+        ndvi_head: Optional[nn.Module] = None,
     ):
         super().__init__()
         self.band_adapter = band_adapter
@@ -42,6 +43,14 @@ class ObsWorldV2Core(nn.Module):
         self.geo_tokenizer = geo_tokenizer
         self.decoder = decoder
         self.use_phi_encoder = bool(use_phi_encoder)
+        # Optional A' NDVI residual head O_ndvi(zh): decodes a bounded NDVI delta
+        # on a history-only last-valid-NDVI baseline. The zero-initialised scale
+        # makes the initial prediction exactly persistence, and every future
+        # correction is read from the transitioned state zh (no history bypass).
+        self.ndvi_head = ndvi_head
+        self.ndvi_residual_scale = (
+            nn.Parameter(torch.zeros(())) if ndvi_head is not None else None
+        )
 
         # The EarthNet main task has no compatible per-frame acquisition
         # metadata.  This fixed neutral reference preserves Stage1.5 encoder
@@ -178,6 +187,41 @@ class ObsWorldV2Core(nn.Module):
         for name, value in decoded.items():
             out[name] = value.reshape(batch, steps, *value.shape[1:])
         return out
+
+    def decode_ndvi(
+        self,
+        states: torch.Tensor,
+        baseline_ndvi: torch.Tensor,
+    ) -> torch.Tensor:
+        """A' NDVI residual head: ndvi = clamp(baseline + tanh(scale*O_ndvi(z)), -1, 1).
+
+        ``states`` is ``[B,N,D]`` or ``[B,T,N,D]``; ``baseline_ndvi`` is the
+        history-only last-valid NDVI (``[B,Hc,Wc]`` or ``[B,1,Hc,Wc]``), broadcast
+        over steps and bilinearly resized to the head grid. The zero-initialised
+        scale makes the untrained prediction exactly persistence, and the
+        correction is read only from the transitioned state (no history bypass).
+        """
+
+        if self.ndvi_head is None or self.ndvi_residual_scale is None:
+            raise RuntimeError("decode_ndvi called but no NDVI head was configured")
+        squeeze = states.dim() == 3
+        if squeeze:
+            states = states.unsqueeze(1)
+        batch, steps, tokens, dim = states.shape
+        residual = self.ndvi_head(states.reshape(batch * steps, tokens, dim))
+        if isinstance(residual, dict):
+            residual = residual["mean"]
+        residual = residual.reshape(batch, steps, *residual.shape[1:])  # [B,T,1,H,W]
+        base = baseline_ndvi
+        if base.dim() == 3:
+            base = base.unsqueeze(1)  # [B,1,Hc,Wc]
+        if base.shape[-2:] != residual.shape[-2:]:
+            base = F.interpolate(
+                base, size=residual.shape[-2:], mode="bilinear", align_corners=False
+            )
+        base = base.unsqueeze(1)  # [B,1,1,H,W] -> broadcasts over the step dim
+        ndvi = (base + torch.tanh(self.ndvi_residual_scale * residual)).clamp(-1.0, 1.0)
+        return ndvi.squeeze(1) if squeeze else ndvi
 
 
 def last_valid_pixels(x_context: torch.Tensor, context_mask: torch.Tensor) -> torch.Tensor:

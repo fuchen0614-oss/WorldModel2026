@@ -20,6 +20,7 @@ REQUIRE_MANIFEST="${REQUIRE_MANIFEST:-0}"
 EXTERNAL_DRIVER_ROOT="${EXTERNAL_DRIVER_ROOT:-}"
 STAGE15_CHECKPOINT="${STAGE15_CHECKPOINT:-}"
 RESUME_FROM="${RESUME_FROM:-}"
+INIT_FROM_CHECKPOINT="${INIT_FROM_CHECKPOINT:-}"
 CHECKPOINT_DIR="${CHECKPOINT_DIR:-}"
 LOG_DIR="${LOG_DIR:-}"
 PREFLIGHT="${PREFLIGHT:-1}"
@@ -51,6 +52,24 @@ if [[ "${LOG_INTERVAL}" -le 0 ]]; then
   exit 2
 fi
 
+# A' weights-only warm-start (--init-from-checkpoint) and a full resume
+# (--resume-from) are mutually exclusive. Resolve the initializer to an
+# absolute path and record its SHA256 so provenance names the exact weights.
+INIT_FROM_ABS=""
+INIT_FROM_SHA256=""
+if [[ -n "${INIT_FROM_CHECKPOINT}" ]]; then
+  if [[ -n "${RESUME_FROM}" ]]; then
+    echo "INIT_FROM_CHECKPOINT and RESUME_FROM are mutually exclusive." >&2
+    exit 2
+  fi
+  if [[ ! -f "${INIT_FROM_CHECKPOINT}" ]]; then
+    echo "INIT_FROM_CHECKPOINT not found: ${INIT_FROM_CHECKPOINT}" >&2
+    exit 2
+  fi
+  INIT_FROM_ABS="$(readlink -f "${INIT_FROM_CHECKPOINT}")"
+  INIT_FROM_SHA256="$(sha256sum "${INIT_FROM_ABS}" | awk '{print $1}')"
+fi
+
 echo "=== ObsWorld Stage2 EarthNet Training ==="
 echo "CONFIG=${CONFIG}"
 echo "DATA_ROOT=${DATA_ROOT}"
@@ -71,6 +90,10 @@ echo "RUN_TRAIN=${RUN_TRAIN}"
 echo "EXTERNAL_DRIVER_ROOT=${EXTERNAL_DRIVER_ROOT:-<config>}"
 echo "STAGE15_CHECKPOINT=${STAGE15_CHECKPOINT:-<config>}"
 echo "RESUME_FROM=${RESUME_FROM:-<none>}"
+echo "INIT_FROM_CHECKPOINT=${INIT_FROM_ABS:-<none>}"
+if [[ -n "${INIT_FROM_ABS}" ]]; then
+  echo "INIT_FROM_CHECKPOINT_SHA256=${INIT_FROM_SHA256}"
+fi
 echo "CHECKPOINT_DIR=${CHECKPOINT_DIR:-<config>}"
 echo "LOG_DIR=${LOG_DIR:-<config>}"
 
@@ -98,6 +121,9 @@ if [[ -n "${STAGE15_CHECKPOINT}" ]]; then
 fi
 if [[ -n "${RESUME_FROM}" ]]; then
   EXTRA_ARGS+=(--resume-from "${RESUME_FROM}")
+fi
+if [[ -n "${INIT_FROM_ABS}" ]]; then
+  EXTRA_ARGS+=(--init-from-checkpoint "${INIT_FROM_ABS}")
 fi
 if [[ -n "${CHECKPOINT_DIR}" ]]; then
   EXTRA_ARGS+=(--checkpoint-dir "${CHECKPOINT_DIR}")

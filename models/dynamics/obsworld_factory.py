@@ -17,6 +17,7 @@ import torch.nn as nn
 from models.adapters.earthnet_band_adapter import EarthNetInputAdapter
 from models.adapters.geo_tokenizer import GeoTokenizer
 from models.decoders.earthnet_observation_decoder import EarthNetObservationDecoder
+from models.decoders.light_decoder import LightDecoder
 from models.encoders.multimodal_vit_encoder_film import MultiModalViTEncoderFiLM
 from models.encoders.pure_imaging_condition_encoder import PureImagingConditionEncoder
 from models.encoders.state_projection import SpatialStateProjector
@@ -157,6 +158,23 @@ def create_obsworld_v2_model(
         )
 
     conditions = model_cfg.get("conditions", {})
+    ndvi_head = None
+    if bool(model_cfg.get("ndvi_head", False)):
+        # A' NDVI residual head: same token->pixel decoder geometry as O, one
+        # output channel (NDVI delta), no output activation (raw residual; the
+        # core bounds it with tanh and a zero-init scale on a last-valid NDVI base).
+        ndvi_head = LightDecoder(
+            in_dim=decoder_cfg["in_dim"],
+            out_channels=1,
+            patch_size=decoder_cfg["patch_size"],
+            img_size=decoder_cfg["img_size"],
+            depth=int(decoder_cfg.get("depth", 3)),
+            num_heads=int(decoder_cfg.get("num_heads", 4)),
+            decoder_embed_dim=int(decoder_cfg.get("decoder_embed_dim", 192)),
+            mlp_ratio=float(decoder_cfg.get("mlp_ratio", 4.0)),
+            dropout=float(decoder_cfg.get("dropout", 0.0)),
+            decoder_mode=str(decoder_cfg.get("decoder_mode", "transformer")),
+        )
     core = ObsWorldV2Core(
         band_adapter=band_adapter,
         encoder=encoder,
@@ -166,6 +184,7 @@ def create_obsworld_v2_model(
         geo_tokenizer=geo_tokenizer,
         decoder=decoder,
         use_phi_encoder=bool(model_cfg.get("use_phi_encoder", True)),
+        ndvi_head=ndvi_head,
     )
     transition = ControlledTransition(
         interval_driver_encoder=interval_encoder,

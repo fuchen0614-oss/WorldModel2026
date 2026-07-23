@@ -21,7 +21,10 @@ class _TinyCore(nn.Module):
         assert expected_tokens == 4
         return torch.zeros(geo.shape[0], 4, 2, device=geo.device)
 
-    def decode_states(self, states):
+    def decode_states(self, states, baseline=None):
+        # Signature mirrors the production ObsWorldV2Core.decode_states, which
+        # accepts an optional residual ``baseline``. The tiny stand-in decoder is
+        # absolute (baseline-independent), so the argument is accepted and unused.
         batch, steps = states.shape[:2]
         # A deterministic decoder that exposes every endpoint state's first dim.
         value = states[..., 0].mean(dim=2).view(batch, steps, 1, 1, 1)
