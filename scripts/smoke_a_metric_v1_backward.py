@@ -90,6 +90,23 @@ def main() -> None:
         default="cuda" if torch.cuda.is_available() else "cpu",
         help="Device to run the single batch on.",
     )
+    parser.add_argument(
+        "--conditioning-stats-path",
+        default=str(
+            REPO_ROOT
+            / "artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048"
+            / "conditioning_stats_physical4_v1_train_dev.json"
+        ),
+        help=(
+            "Train-only physical4 conditioning stats JSON required by the "
+            "physical4 data config. Defaults to the repo artifacts path."
+        ),
+    )
+    parser.add_argument(
+        "--data-root",
+        default=None,
+        help="Override data.root if the config's baked path is absent on this host.",
+    )
     args = parser.parse_args()
 
     device = torch.device(args.device)
@@ -100,6 +117,13 @@ def main() -> None:
     model_cfg["require_stage15_checkpoint"] = False
     model_cfg.setdefault("encoder", {})["from_checkpoint"] = None
     config.setdefault("training", {})["init_from_checkpoint"] = None
+
+    # physical4 requires a train-only conditioning-stats file; inject it (and an
+    # optional data-root override) before building the dataset config.
+    if args.conditioning_stats_path:
+        config["data"]["conditioning_stats_path"] = args.conditioning_stats_path
+    if args.data_root:
+        config["data"]["root"] = args.data_root
 
     opt_cfg = config["optimizer"]
     expected_lr = {
