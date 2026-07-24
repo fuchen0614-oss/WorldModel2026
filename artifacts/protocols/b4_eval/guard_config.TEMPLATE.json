@@ -1,0 +1,7 @@
+{
+  "_README": "PRE-REGISTERED endpoint guard for the B4 Q4 composition/non-collapse check. Copy to guard_config.json, set a threshold BEFORE seeing final results, fill rationale + frozen_utc, then pass via --guard-config. Leaving threshold null keeps the guard UNSET_FAIL_CLOSED (the contract exits non-zero and never prints 'complete'). The threshold bounds a DIAGNOSTIC model normalized-NDVI-space endpoint MSE (NOT an official GreenEarthNet metric).",
+  "threshold": null,
+  "caliber": "diagnostic model normalized-NDVI space, training cloud(dl_cloudmask<1)+vegetation-landcover mask, masked MSE at the model step index; NOT official GreenEarthNet",
+  "rationale": "FILL IN before freezing: why this max endpoint MSE means 'not collapsed' (e.g. derived from B0 persistence endpoint MSE on val_chopped × margin).",
+  "frozen_utc": "FILL IN e.g. 2026-07-23T00:00:00Z"
+}
