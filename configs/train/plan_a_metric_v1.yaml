@@ -15,11 +15,24 @@
 # All of these ride on new, default-off code paths; with this config absent the
 # plan_a_prime_from_s15 / plan_a_prime_from_s1a_stage2 behavior is unchanged.
 #
-# Warm start: pass STAGE15_CHECKPOINT at launch (require_stage15_checkpoint=true,
-# inherited). To instead initialise the WHOLE model from the A2-best checkpoint,
-# pass it on the CLI as INIT_FROM_CHECKPOINT (training.init_from_checkpoint);
-# left null here so no path is hard-coded into the config.
+# Warm start: the WHOLE model is initialised from the A2-best checkpoint, passed
+# on the CLI as INIT_FROM_CHECKPOINT (training.init_from_checkpoint). Because that
+# provides every weight (encoder/q/T/O), NO separate Stage1.5 checkpoint is
+# needed -> require_stage15_checkpoint=false + encoder.from_checkpoint=null below
+# (mirrors plan_a_prime_from_s1a_stage2's weights-only warm-start).
 _base_: plan_a_prime_from_s15.yaml
+
+model:
+  # A full Stage2 checkpoint (A2-best) is loaded via INIT_FROM_CHECKPOINT, so the
+  # frozen Stage1.5 state-bridge is NOT required and the encoder starts from those
+  # loaded weights (never a random initializer). Without this the formal Stage2-v2
+  # preflight aborts with "requires the frozen Stage1.5 state-bridge checkpoint".
+  require_stage15_checkpoint: false
+  ndvi_head: true
+  encoder:
+    from_checkpoint: null
+    freeze: false
+    unfreeze_at_step: 0
 
 training:
   # Full-model warm start from the A2-best checkpoint. Provided on the CLI as
