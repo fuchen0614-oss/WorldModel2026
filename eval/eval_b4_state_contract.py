@@ -131,8 +131,12 @@ def _targets(args, ds, root: Path):
     if args.limit:                                              # NON-formal smoke
         return [Path(p) for p in ds.filepaths[:args.limit]]
     from data.earthnet_manifest import load_manifest_files      # FORMAL: frozen manifest, no discovery
+    man = json.loads(Path(args.data_manifest).read_text())      # honour the manifest's OWN protocol + role
+    proto = man.get("protocol", "earthnet2021_standard_v1")
+    role = man.get("role") or man.get("split") or args.split
     return [Path(p) for p in load_manifest_files(args.data_manifest, str(root),
-                                                 expected_split=args.split, verify_exists=True)]
+                                                 expected_split=role, expected_protocol=proto,
+                                                 verify_exists=True)]
 
 
 def _data(ds, idx, dev):

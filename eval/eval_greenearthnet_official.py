@@ -15,7 +15,11 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from data.earthnet_manifest import load_manifest_files  # noqa: E402
+from data.earthnet_manifest import (  # noqa: E402
+    GREENEARTHNET_CHOPPED_PROTOCOL_ID,
+    PROTOCOL_ID,
+    load_manifest_files,
+)
 from eval.greenearthnet_protocol import (  # noqa: E402
     OFFICIAL_EVALUATOR_COMMIT,
     PREDICTION_GRID_FIVE_DAILY_20,
@@ -37,6 +41,7 @@ def _target_files(args: argparse.Namespace) -> list[Path]:
             args.manifest,
             args.dataset_root,
             expected_split=args.split,
+            expected_protocol=args.manifest_protocol,
             verify_exists=True,
             verify_sizes=args.verify_manifest_sizes,
         )
@@ -117,6 +122,10 @@ def main() -> int:
     parser.add_argument("--manifest")
     parser.add_argument("--dataset-root")
     parser.add_argument("--split", default="ood-t")
+    parser.add_argument("--manifest-protocol", default=PROTOCOL_ID,
+                        choices=(PROTOCOL_ID, GREENEARTHNET_CHOPPED_PROTOCOL_ID),
+                        help="Protocol the --manifest was frozen under. Use the chopped "
+                             "protocol for val_chopped/ood-t_chopped manifests.")
     parser.add_argument("--verify-manifest-sizes", action="store_true")
     parser.add_argument("--allow-discovery", action="store_true")
     parser.add_argument("--workers", type=int, default=1)

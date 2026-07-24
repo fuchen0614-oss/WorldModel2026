@@ -43,8 +43,11 @@ def main() -> int:
     args = ap.parse_args()
 
     root = Path(args.dataset_root)
+    man = json.loads(Path(args.data_manifest).read_text())      # honour the manifest's OWN protocol + role
+    proto = man.get("protocol", "earthnet2021_standard_v1")
+    role = man.get("role") or man.get("split") or args.split
     targets = load_manifest_files(args.data_manifest, str(root),
-                                  expected_split=args.split, verify_exists=True)
+                                  expected_split=role, expected_protocol=proto, verify_exists=True)
     records = {}
     for t in targets:
         rel = str(Path(t).relative_to(root))

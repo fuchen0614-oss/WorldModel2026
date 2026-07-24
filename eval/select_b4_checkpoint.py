@@ -145,9 +145,13 @@ def _score_one(py, ckpt: Path, args, data_hash: str, out_dir: Path) -> dict:
 
     if formal:                                                  # FORMAL -> frozen data manifest, NO discovery
         target_dir = args.val_dir
+        man = json.loads(Path(args.data_manifest).read_text())   # forward the manifest's OWN protocol + role
+        m_proto = man.get("protocol", "earthnet2021_standard_v1")
+        m_role = man.get("role") or man.get("split") or args.split
         score = [py, "eval/eval_greenearthnet_official.py", "--target-dir", target_dir,
                  "--prediction-dir", str(pred_dir), "--output-dir", str(score_dir), "--workers", str(args.workers),
-                 "--manifest", args.data_manifest, "--dataset-root", args.dataset_root, "--split", args.split]
+                 "--manifest", args.data_manifest, "--dataset-root", args.dataset_root,
+                 "--split", m_role, "--manifest-protocol", m_proto]
     else:                                                       # NON-formal smoke -> score EXACTLY the N exported cubes
         created, missing = mirror_prediction_targets(pred_dir, Path(args.val_dir), mirror_dir)
         if missing or not created:
@@ -210,7 +214,15 @@ def main() -> int:
         try:
             results.append(_score_one(args.python, c, args, data_hash, out))
         except subprocess.CalledProcessError as e:
+            print(f"[select] ERROR scoring {c.stem}: {e}")
             results.append({"name": c.stem, "metrics": None, "error": str(e)})
+    n_ok = sum(1 for r in results if (r.get("metrics") is not None))
+    if formal and n_ok == 0:                                    # systematic failure must not look like "no winner, ok"
+        (out / "ranking.json").write_text(json.dumps(
+            {"formal": formal, "primary_metric": args.primary_metric, "data_manifest_sha256": data_hash,
+             "ranked": results, "winner": None, "error": "ALL candidates failed to score"}, indent=2))
+        raise SystemExit(f"REFUSED: all {len(results)} candidates failed to score (see errors above). "
+                         "No selection.json written.")
     ranked, winner = rank_and_select(results, args.primary_metric, not args.lower_better)
 
     (out / "ranking.json").write_text(json.dumps(
