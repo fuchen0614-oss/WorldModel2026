@@ -651,6 +651,22 @@ def _evaluator_aligned_veg_clear_mask(
     return veg_clear.astype(np.float32)
 
 
+def _evaluator_landcover_map(cube: Any) -> Optional[np.ndarray]:
+    """Raw per-pixel ESA WorldCover land-cover class map ``[H,W]`` (or ``None``).
+
+    Returns the static ``esawc_lc`` codes (10/20/30/40 = tree/shrub/grass/crop,
+    matching the GreenEarthNet macro-average classes) so the loss can compute
+    the land-cover-macro NDVI metrics on the SAME class population the evaluator
+    scores. Non-finite pixels are set to 0 ("unknown"). Absent field -> None so
+    callers emit a zeros land-cover tensor and the loss degrades gracefully.
+    """
+    if "esawc_lc" not in cube.variables:
+        return None
+    landcover = _xarray_to_hw(cube["esawc_lc"], "esawc_lc").astype(np.float32)
+    landcover = np.where(np.isfinite(landcover), landcover, 0.0).astype(np.float32)
+    return landcover
+
+
 def _parse_earthnet_netcdf_physical4_cube(
     cube: Any,
     path: Path,
@@ -693,6 +709,7 @@ def _parse_earthnet_netcdf_physical4_cube(
         & np.all(np.isfinite(image), axis=1)
     ).astype(np.float32)
     veg_clear_mask = _evaluator_aligned_veg_clear_mask(cube, clear_mask, indices)
+    landcover_map = _evaluator_landcover_map(cube)
 
     stats = config.conditioning_stats or load_physical_dgh_stats(
         config.conditioning_stats_path,
@@ -736,6 +753,7 @@ def _parse_earthnet_netcdf_physical4_cube(
         image=image,
         clear_mask=clear_mask,
         veg_clear_mask=veg_clear_mask,
+        landcover_map=landcover_map,
         conditioning=conditioning,
         elevation=elevation,
         geo_mask=geo_mask,
@@ -772,6 +790,7 @@ def _format_stage2_v2_sample(
     config: EarthNet2021Config,
     start_date: Optional[date],
     veg_clear_mask: Optional[np.ndarray] = None,
+    landcover_map: Optional[np.ndarray] = None,
 ) -> Dict[str, Any]:
     """Format image/condition tensors whose different spatial sizes are valid."""
 
@@ -859,6 +878,29 @@ def _format_stage2_v2_sample(
         if original_frames < total_steps:
             target_veg_mask[max(0, original_frames - config.context_frames):] = 0.0
 
+    # Per-pixel land-cover class map broadcast over the target frames, following
+    # the SAME frame-slice + nearest-resize path as ``target_veg_mask``. The map
+    # is static in time; when land cover is unavailable (v2/full24 path or a
+    # cube missing ``esawc_lc``) emit zeros (0 == "unknown"), which the loss
+    # treats as "no class" and falls back to the global veg-masked reduction.
+    target_img_size = config.target_img_size or config.eval_img_size
+    if landcover_map is None:
+        target_landcover = torch.zeros(
+            (config.target_frames, int(target_img_size), int(target_img_size)),
+            dtype=torch.float32,
+        )
+    else:
+        lc_hw = np.asarray(landcover_map, dtype=np.float32)
+        lc_thw = np.broadcast_to(
+            lc_hw[None], (total_steps, *lc_hw.shape[-2:])
+        ).copy()
+        lc_target = lc_thw[config.context_frames:total_steps].copy()
+        if original_frames < total_steps:
+            lc_target[max(0, original_frames - config.context_frames):] = 0.0
+        target_landcover = _resize_thw(
+            torch.from_numpy(lc_target), target_img_size, mode="nearest"
+        ).float()
+
     return {
         "x_context": context_tensor.float(),
         "x_target": _resize_tchw(
@@ -871,6 +913,7 @@ def _format_stage2_v2_sample(
         "target_veg_mask": _resize_thw(
             torch.from_numpy(target_veg_mask), target_img_size, mode="nearest"
         ).float(),
+        "target_landcover": target_landcover,
         "D_path": torch.from_numpy(conditioning.values).float(),
         "D_mask": torch.from_numpy(conditioning.mask).float(),
         # This is an audit field, not a model input.  It enables preflight and

@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import argparse
 import copy
-from contextlib import nullcontext
+from collections import defaultdict
+from contextlib import contextmanager, nullcontext
 from dataclasses import dataclass, field
 import hashlib
 import math
@@ -624,8 +625,79 @@ def load_stage2_model_state(model: nn.Module, checkpoint_state: dict, strict: bo
     )
 
 
+class ModelEMA:
+    """Minimal exponential-moving-average of the raw model's parameters.
+
+    Off by default (``training.use_ema=false``). When enabled it keeps a float32
+    shadow of every parameter, blends it after each optimizer step, lets
+    validation run on the smoothed weights, and folds the shadow into a SINGLE
+    checkpoint at save time (no inference-time ensembling). Buffers are left as
+    the live model's, matching common EMA-of-weights practice. The shadow is
+    built over ALL parameters so warmup-frozen params that later unfreeze are
+    tracked correctly from the moment they start moving.
+    """
+
+    def __init__(self, model: nn.Module, decay: float):
+        self.decay = float(decay)
+        raw = model.module if isinstance(model, DDP) else model
+        self.shadow: dict[str, torch.Tensor] = {
+            name: parameter.detach().clone().float()
+            for name, parameter in raw.named_parameters()
+        }
+
+    @torch.no_grad()
+    def update(self, model: nn.Module) -> None:
+        raw = model.module if isinstance(model, DDP) else model
+        decay = self.decay
+        for name, parameter in raw.named_parameters():
+            if not parameter.requires_grad:
+                continue
+            shadow = self.shadow.get(name)
+            if shadow is None:
+                continue
+            shadow.mul_(decay).add_(parameter.detach().float(), alpha=1.0 - decay)
+
+    def load_shadow(self, shadow_state: dict) -> None:
+        for name, tensor in shadow_state.items():
+            if name in self.shadow:
+                self.shadow[name].copy_(torch.as_tensor(tensor).float())
+
+    def shadow_state_for_checkpoint(self) -> dict:
+        return {
+            name: tensor.detach().cpu().clone()
+            for name, tensor in self.shadow.items()
+        }
+
+    def folded_state_dict(self, model: nn.Module) -> dict:
+        """Full state_dict with EMA-smoothed weights folded in (one checkpoint)."""
+        raw = model.module if isinstance(model, DDP) else model
+        state = raw.state_dict()
+        for name, shadow in self.shadow.items():
+            if name in state:
+                state[name] = shadow.detach().to(state[name].dtype).cpu().clone()
+        return state
+
+    @contextmanager
+    def swapped_in(self, model: nn.Module):
+        """Temporarily install the EMA weights on ``model`` (restored on exit)."""
+        raw = model.module if isinstance(model, DDP) else model
+        backup: dict[str, torch.Tensor] = {}
+        try:
+            for name, parameter in raw.named_parameters():
+                shadow = self.shadow.get(name)
+                if shadow is None:
+                    continue
+                backup[name] = parameter.detach().clone()
+                parameter.data.copy_(shadow.to(parameter.dtype))
+            yield
+        finally:
+            for name, parameter in raw.named_parameters():
+                if name in backup:
+                    parameter.data.copy_(backup[name])
+
+
 def build_optimizer(model: nn.Module, config: dict) -> optim.Optimizer:
-    """Two MODULE-IDENTITY parameter groups.
+    """Three MODULE-IDENTITY parameter groups (backward-compatible).
 
     The Stage1.5-pretrained state-inference operator ``q`` (core.encoder +
     core.phi_encoder + core.state_projector) trains at ``backbone_lr``; every
@@ -644,6 +716,18 @@ def build_optimizer(model: nn.Module, config: dict) -> optim.Optimizer:
     raw = model.module if isinstance(model, DDP) else model
     lr = float(opt_cfg.get("lr", 1e-4))
     backbone_lr = float(opt_cfg.get("backbone_lr", 1e-5))
+    weight_decay = float(opt_cfg.get("weight_decay", 0.05))
+    # New (default-off) knobs. ``transition_lr`` unset -> the transition module
+    # is NOT split into its own group: its params fold into the ``O`` (head/lr)
+    # group exactly as the legacy two-group optimizer did, so a legacy A1/A2
+    # checkpoint's optimizer state_dict (2 param groups) still loads. When
+    # ``transition_lr`` IS set, T becomes a third group at that lr.
+    # ``no_decay_norm_bias`` False -> the global weight decay applies to every
+    # group, as before.
+    transition_lr_cfg = opt_cfg.get("transition_lr", None)
+    split_transition = transition_lr_cfg is not None
+    transition_lr = float(transition_lr_cfg) if split_transition else lr
+    no_decay_norm_bias = bool(opt_cfg.get("no_decay_norm_bias", False))
 
     q_param_ids: set[int] = set()
     core = getattr(raw, "core", None)
@@ -653,35 +737,91 @@ def build_optimizer(model: nn.Module, config: dict) -> optim.Optimizer:
             if module is not None:
                 q_param_ids.update(id(parameter) for parameter in module.parameters())
 
-    q_params = [
-        parameter
-        for parameter in raw.parameters()
-        if parameter.requires_grad and id(parameter) in q_param_ids
-    ]
-    head_params = [
-        parameter
-        for parameter in raw.parameters()
-        if parameter.requires_grad and id(parameter) not in q_param_ids
-    ]
-    if not q_params and not head_params:
+    t_param_ids: set[int] = set()
+    transition = getattr(raw, "transition", None)
+    if split_transition and transition is not None:
+        t_param_ids.update(id(parameter) for parameter in transition.parameters())
+
+    def _bucket(param_id: int) -> str:
+        if param_id in q_param_ids:
+            return "q"
+        if param_id in t_param_ids:
+            return "T"
+        return "O"
+
+    def _is_no_decay(name: str, parameter: torch.Tensor) -> bool:
+        lowered = name.lower()
+        return (
+            parameter.ndim <= 1
+            or "bias" in lowered
+            or "norm" in lowered
+            or ".ln" in lowered
+            or lowered.endswith("ln")
+        )
+
+    bucket_lr = {"q": backbone_lr, "T": transition_lr, "O": lr}
+    bucket_name = {
+        "q": "q_encoder_phi_projector",
+        "T": "transition_T",
+        "O": "heads_O_agg_dec",
+    }
+    buckets: dict[str, list[tuple[str, torch.Tensor]]] = {"q": [], "T": [], "O": []}
+    for name, parameter in raw.named_parameters():
+        if not parameter.requires_grad:
+            continue
+        buckets[_bucket(id(parameter))].append((name, parameter))
+
+    if not any(buckets.values()):
         raise RuntimeError("No trainable parameters found for Stage2.")
 
     groups = []
-    if head_params:
-        groups.append({"params": head_params, "lr": lr, "name": "heads_T_O_agg_dec"})
-    if q_params:
-        groups.append({"params": q_params, "lr": backbone_lr, "name": "q_encoder_phi_projector"})
+    # Order O, T, q so that scheduler.get_last_lr()[0] remains a ``lr`` module and
+    # the last group is the ``backbone_lr`` q group, preserving legacy logging.
+    for key in ("O", "T", "q"):
+        params = buckets[key]
+        if not params:
+            continue
+        if no_decay_norm_bias:
+            decay = [p for n, p in params if not _is_no_decay(n, p)]
+            no_decay = [p for n, p in params if _is_no_decay(n, p)]
+            if decay:
+                groups.append(
+                    {
+                        "params": decay,
+                        "lr": bucket_lr[key],
+                        "weight_decay": weight_decay,
+                        "name": f"{bucket_name[key]}_decay",
+                    }
+                )
+            if no_decay:
+                groups.append(
+                    {
+                        "params": no_decay,
+                        "lr": bucket_lr[key],
+                        "weight_decay": 0.0,
+                        "name": f"{bucket_name[key]}_nodecay",
+                    }
+                )
+        else:
+            groups.append(
+                {
+                    "params": [p for _, p in params],
+                    "lr": bucket_lr[key],
+                    "name": bucket_name[key],
+                }
+            )
 
     for group in groups:
         numel = sum(parameter.numel() for parameter in group["params"])
         log_main(
             f"optimizer group '{group['name']}': "
-            f"params={numel / 1e6:.3f}M tensors={len(group['params'])} lr={group['lr']:.2e}"
+            f"params={numel / 1e6:.3f}M tensors={len(group['params'])} "
+            f"lr={group['lr']:.2e} weight_decay={group.get('weight_decay', weight_decay):.4g}"
         )
 
     return optim.AdamW(
         groups,
-        weight_decay=float(opt_cfg.get("weight_decay", 0.05)),
+        weight_decay=weight_decay,
         betas=tuple(opt_cfg.get("betas", [0.9, 0.95])),
     )
 
@@ -834,6 +974,7 @@ def stage2_supervision_for_output(batch: dict, output: dict) -> dict[str, Option
     target = batch["x_target"]
     target_mask = batch.get("target_mask")
     target_veg_mask = batch.get("target_veg_mask")
+    target_landcover = batch.get("target_landcover")
     horizons = batch.get("h")
     steps = output.get("step_indices")
     if steps is not None:
@@ -850,6 +991,8 @@ def stage2_supervision_for_output(batch: dict, output: dict) -> dict[str, Option
             target_mask = target_mask.index_select(1, steps)
         if target_veg_mask is not None:
             target_veg_mask = target_veg_mask.index_select(1, steps)
+        if target_landcover is not None:
+            target_landcover = target_landcover.index_select(1, steps)
         if horizons is not None:
             horizons = horizons.index_select(1, steps)
     if output["pred"].shape[:2] != target.shape[:2]:
@@ -861,6 +1004,7 @@ def stage2_supervision_for_output(batch: dict, output: dict) -> dict[str, Option
         "target": target,
         "target_mask": target_mask,
         "target_veg_mask": target_veg_mask,
+        "target_landcover": target_landcover,
         "horizons": horizons,
     }
 
@@ -943,6 +1087,8 @@ def save_checkpoint(
     best_validation: Optional[dict] = None,
     provenance: Optional[dict] = None,
     data_position: Optional[Stage2DataPosition] = None,
+    ema: Optional["ModelEMA"] = None,
+    fold_ema: bool = False,
 ) -> None:
     # All ranks must enter this function for a DDP checkpoint.  The former
     # rank-zero-only implementation restored rank zero's random stream on
@@ -955,9 +1101,18 @@ def save_checkpoint(
             barrier()
         return
     raw_model = model.module if isinstance(model, DDP) else model
+    # EMA folding: when ``fold_ema`` (best / final checkpoints) the single saved
+    # ``model_state_dict`` already carries the EMA-smoothed weights, so inference
+    # uses ONE checkpoint with no ensembling. Periodic/resume checkpoints keep the
+    # live (raw) weights but also carry ``ema_state_dict`` so EMA can continue on
+    # resume. When EMA is off nothing changes.
+    if ema is not None and fold_ema:
+        model_state = ema.folded_state_dict(model)
+    else:
+        model_state = raw_model.state_dict()
     payload = {
         "global_step": step,
-        "model_state_dict": raw_model.state_dict(),
+        "model_state_dict": model_state,
         "optimizer_state_dict": optimizer.state_dict(),
         "scheduler_state_dict": scheduler.state_dict(),
         "config": config,
@@ -973,6 +1128,13 @@ def save_checkpoint(
             else None
         ),
         "data_position": data_position.as_dict() if data_position is not None else None,
+        # EMA continuation state (present only when EMA is enabled). ``fold_ema``
+        # above decides whether ``model_state_dict`` is the raw or the folded
+        # weights; this shadow always lets a resume keep the EMA moving.
+        "ema_state_dict": (
+            ema.shadow_state_for_checkpoint() if ema is not None else None
+        ),
+        "ema_folded_into_model_state": bool(ema is not None and fold_ema),
         # ``rng_state`` remains for compatibility with earlier single-process
         # checkpoints. ``rng_states_by_rank`` is the exact DDP representation.
         "rng_state": rng_states_by_rank[0],
@@ -1043,6 +1205,110 @@ def restore_rng_state(
     return exact
 
 
+_LC_RMSE_CLASSES = (10.0, 20.0, 30.0, 40.0)
+
+
+def _accumulate_lc_ndvi_rmse(
+    rmse_sums: dict,
+    counts: dict,
+    ndvi_pred: Optional[torch.Tensor],
+    target: torch.Tensor,
+    veg_mask: Optional[torch.Tensor],
+    landcover: Optional[torch.Tensor],
+    red_index: int,
+    nir_index: int,
+) -> None:
+    """Stream per-pixel NDVI RMSE for the land-cover-macro ``val/ndvi_lc_rmse``.
+
+    Mirrors the official GreenEarthNet protocol
+    (eval/greenearthnet_protocol.py:175-214,284): the reduction is PER-PIXEL
+    OVER TIME first (rmse_pixel = sqrt(mean_t (pred-true)^2)), the pixel must
+    pass the HQ subset gates, THEN pixels are aggregated per land-cover class and
+    macro-averaged. This differs from a space-time-pooled RMSE.
+
+    HQ gates applied per pixel (over the veg-valid time steps):
+        landcover < 41 (already guaranteed by the veg mask), n_obs >= 10,
+        sigma_targ > 0.1, min_ndvi_targ > 0.
+    The official ``(n_obs_full - n_obs) >= 3`` gate is the ONE approximation we
+    drop here: ``n_obs_full`` (clear obs before the model-input reveal split) is
+    not available inside the training/validation batch.
+
+    ``rmse_sums`` accumulates Σ(per-pixel rmse) and ``counts`` the kept-pixel
+    count, keyed by land-cover class plus a ``__all__`` bucket used when land
+    cover is absent. A no-op if the model has no NDVI head.
+    """
+    if ndvi_pred is None:
+        return
+    from data.earthnet_fields import compute_ndvi as _compute_ndvi
+
+    pred_hw = ndvi_pred.squeeze(2) if ndvi_pred.dim() == 5 else ndvi_pred
+    pred_hw = pred_hw.float()  # [B,T,H,W]
+    true_hw = _compute_ndvi(target.float(), red_index, nir_index).clamp(-1.0, 1.0)
+    if veg_mask is None:
+        veg = torch.ones_like(pred_hw)
+    else:
+        veg = veg_mask.to(dtype=pred_hw.dtype, device=pred_hw.device)
+    veg = (veg > 0).to(dtype=pred_hw.dtype)
+
+    n_obs = veg.sum(dim=1)  # [B,H,W]
+    denom = n_obs.clamp_min(1.0)
+    se_sum = ((pred_hw - true_hw).pow(2) * veg).sum(dim=1)
+    rmse_pixel = torch.sqrt(se_sum / denom)  # sqrt(mean_t SE) per pixel
+    mean_true = (true_hw * veg).sum(dim=1) / denom
+    var_true = ((true_hw - mean_true.unsqueeze(1)).pow(2) * veg).sum(dim=1) / denom
+    sigma_targ = torch.sqrt(var_true.clamp_min(0.0))
+    # Per-pixel min over veg-valid time: invalid steps -> +inf so they never win.
+    big = torch.finfo(pred_hw.dtype).max
+    masked_true = torch.where(veg > 0, true_hw, torch.full_like(true_hw, big))
+    min_ndvi = masked_true.min(dim=1).values  # [B,H,W] (big where no obs)
+
+    keep = (n_obs >= 10.0) & (sigma_targ > 0.1) & (min_ndvi > 0.0)
+    keep_f = keep.to(dtype=pred_hw.dtype)
+
+    rmse_sums["__all__"] += float((rmse_pixel * keep_f).sum().detach().cpu())
+    counts["__all__"] += float(keep_f.sum().detach().cpu())
+
+    if landcover is None:
+        return
+    lc = landcover.to(dtype=pred_hw.dtype, device=pred_hw.device)
+    if lc.dim() == 4:
+        lc_hw = lc[:, 0]  # land cover is static over the time axis
+    elif lc.dim() == 3:
+        lc_hw = lc
+    else:
+        return
+    if lc_hw.shape != rmse_pixel.shape:
+        # Do not silently drop the per-class breakdown on a resolution mismatch;
+        # nearest-resize the class map onto the pixel grid (as _landcover_bthw).
+        lc_hw = nn.functional.interpolate(
+            lc_hw.unsqueeze(1), size=rmse_pixel.shape[-2:], mode="nearest"
+        ).squeeze(1)
+    for c in _LC_RMSE_CLASSES:
+        mask_c = keep_f * (lc_hw == c).to(dtype=pred_hw.dtype)
+        rmse_sums[c] += float((rmse_pixel * mask_c).sum().detach().cpu())
+        counts[c] += float(mask_c.sum().detach().cpu())
+
+
+def _finalize_lc_ndvi_rmse(rmse_sums: dict, counts: dict) -> float:
+    """Land-cover-macro of per-pixel NDVI RMSE (mean per class, then over classes).
+
+    Values in ``rmse_sums`` are already sqrt'd per-pixel RMSE sums, so per class
+    the mean is ``sum/count`` (NOT re-sqrt'd). Degrades to the global mean of
+    per-pixel RMSE over all kept veg pixels when no land-cover class is present.
+    """
+    class_means = [
+        rmse_sums[c] / counts[c]
+        for c in _LC_RMSE_CLASSES
+        if counts.get(c, 0.0) > 0.0
+    ]
+    if class_means:
+        return float(sum(class_means) / len(class_means))
+    total = counts.get("__all__", 0.0)
+    if total > 0.0:
+        return float(rmse_sums["__all__"] / total)
+    return float("nan")
+
+
 @torch.no_grad()
 def validate_stage2(
     model: nn.Module,
@@ -1071,6 +1337,14 @@ def validate_stage2(
         red_index=data_cfg.band_spec.red_index,
         nir_index=data_cfg.band_spec.nir_index,
     )
+    # Land-cover-macro per-pixel NDVI RMSE (direct NDVI head) accumulators,
+    # following the official per-pixel-over-time-then-macro structure with the HQ
+    # pixel gates. Keyed by land-cover class plus a global "__all__" bucket used
+    # when land cover is absent. Exposed as ``val/ndvi_lc_rmse`` so the
+    # metric-aligned config selects checkpoints by the quantity closest to the
+    # official evaluator.
+    lc_rmse_sums = defaultdict(float)
+    lc_rmse_counts = defaultdict(float)
     raw_model = model.module if isinstance(model, DDP) else model
     correction_mode = is_observation_correction_mode(
         getattr(raw_model, "forecast_mode", None)
@@ -1119,6 +1393,7 @@ def validate_stage2(
                 horizons=supervision["horizons"],
                 ndvi_pred=out.get("ndvi_pred"),
                 veg_mask=supervision.get("target_veg_mask"),
+                landcover=supervision.get("target_landcover"),
             )
         batch_size = int(batch["x_context"].shape[0])
         sample_count += batch_size
@@ -1134,6 +1409,16 @@ def validate_stage2(
             batch["x_context"],
             batch["context_mask"],
         )
+        _accumulate_lc_ndvi_rmse(
+            lc_rmse_sums,
+            lc_rmse_counts,
+            out.get("ndvi_pred"),
+            supervision["target"],
+            supervision.get("target_veg_mask"),
+            supervision.get("target_landcover"),
+            data_cfg.band_spec.red_index,
+            data_cfg.band_spec.nir_index,
+        )
     if was_training:
         model.train()
     if sample_count == 0:
@@ -1143,6 +1428,7 @@ def validate_stage2(
         for name, value in loss_sums.items()
     }
     result.update(metrics.compute())
+    result["val/ndvi_lc_rmse"] = _finalize_lc_ndvi_rmse(lc_rmse_sums, lc_rmse_counts)
     result["num_samples"] = sample_count
     return result
 
@@ -1839,6 +2125,20 @@ def main():
             accumulation_steps=accum_steps,
         )
     )
+    # EMA (default off). Built AFTER resume/warm-start weight loading so the
+    # shadow starts from the exact initial weights; restored from a resume
+    # checkpoint's ``ema_state_dict`` when present so the average is continuous.
+    training_cfg = config.get("training", {})
+    use_ema = bool(training_cfg.get("use_ema", False))
+    ema = ModelEMA(model, float(training_cfg.get("ema_decay", 0.999))) if use_ema else None
+    if ema is not None:
+        if resume_checkpoint is not None and resume_checkpoint.get("ema_state_dict"):
+            ema.load_shadow(resume_checkpoint["ema_state_dict"])
+            log_main("EMA: restored shadow weights from resume checkpoint")
+        log_main(
+            f"EMA enabled: decay={ema.decay}; validation and the best/final "
+            "checkpoint use the EMA-smoothed weights"
+        )
     model.train()
     optimizer.zero_grad(set_to_none=True)
     progress = tqdm(
@@ -1977,6 +2277,7 @@ def main():
                         horizons=supervision["horizons"],
                         ndvi_pred=out.get("ndvi_pred"),
                         veg_mask=supervision.get("target_veg_mask"),
+                        landcover=supervision.get("target_landcover"),
                     )
                     if partition_start is not None:
                         if partition_loss_fn is None:
@@ -2051,6 +2352,8 @@ def main():
                 optimizer.step()
                 scheduler.step()
                 optimizer.zero_grad(set_to_none=True)
+                if ema is not None:
+                    ema.update(model)
                 if device.type == "cuda":
                     compute_end.record()
                     compute_events = (compute_start, compute_end)
@@ -2149,18 +2452,27 @@ def main():
                     barrier()
                     if is_main_process():
                         raw_model = model.module if isinstance(model, DDP) else model
-                        validation_metrics = validate_stage2(
-                            raw_model,
-                            validation_loader,
-                            loss_fn,
-                            validation_data_cfg,
-                            device,
-                            max_batches=int(validation_cfg.get("max_batches", 0)),
-                            correction_config=config.get("training", {}).get(
-                                "observation_correction", {}
-                            ),
-                            correction_seed=seed,
+                        # Validate on the EMA-smoothed weights when EMA is on, so
+                        # checkpoint selection matches the weights that will be
+                        # folded into the saved checkpoint. Swapped back on exit.
+                        ema_ctx = (
+                            ema.swapped_in(raw_model)
+                            if ema is not None
+                            else nullcontext()
                         )
+                        with ema_ctx:
+                            validation_metrics = validate_stage2(
+                                raw_model,
+                                validation_loader,
+                                loss_fn,
+                                validation_data_cfg,
+                                device,
+                                max_batches=int(validation_cfg.get("max_batches", 0)),
+                                correction_config=config.get("training", {}).get(
+                                    "observation_correction", {}
+                                ),
+                                correction_seed=seed,
+                            )
                         scale_param = getattr(
                             getattr(raw_model, "core", None), "ndvi_residual_scale", None
                         )
@@ -2179,7 +2491,13 @@ def main():
                             )
                         metric_value = float(validation_metrics[metric_name])
                         previous = best_validation.get("value")
-                        improved = (
+                        # A non-finite metric (nan/inf) from a degenerate val
+                        # batch must NOT be recorded as "best" — otherwise the
+                        # comparison below (nan<x is False, so a min-mode run
+                        # keeps the first non-finite value forever) freezes
+                        # checkpoint_best. Skip the update entirely.
+                        metric_is_finite = math.isfinite(metric_value)
+                        improved = metric_is_finite and (
                             previous is None
                             or (
                                 best_validation["mode"] == "min"
@@ -2190,11 +2508,17 @@ def main():
                                 and metric_value > float(previous)
                             )
                         )
+                        if not metric_is_finite:
+                            log_main(
+                                f"validation step={optimizer_step}: primary_metric "
+                                f"{metric_name!r}={metric_value} is non-finite; "
+                                "skipping best-checkpoint update"
+                            )
                         summary = ", ".join(
                             f"{name}={value:.5f}"
                             for name, value in validation_metrics.items()
                             if isinstance(value, (int, float))
-                            and name in {"loss/total", "loss/ndvi_main", "MAE", "NDVI_MAE", "skill_vs_persistence", "ndvi_residual_scale"}
+                            and name in {"loss/total", "loss/ndvi_main", "val/ndvi_lc_rmse", "MAE", "NDVI_MAE", "skill_vs_persistence", "ndvi_residual_scale"}
                         )
                         log_main(f"validation step={optimizer_step}: {summary}")
                         if writer is not None:
@@ -2238,6 +2562,8 @@ def main():
                             best_validation=best_validation,
                             provenance=run_provenance,
                             data_position=last_data_position,
+                            ema=ema,
+                            fold_ema=True,
                         )
                     else:
                         # Match save_checkpoint's internal distributed barrier
@@ -2255,6 +2581,7 @@ def main():
                         best_validation=best_validation,
                         provenance=run_provenance,
                         data_position=last_data_position,
+                        ema=ema,
                     )
 
                 named_tag = epoch_checkpoint_steps.get(optimizer_step)
@@ -2272,6 +2599,7 @@ def main():
                         best_validation=best_validation,
                         provenance=run_provenance,
                         data_position=last_data_position,
+                        ema=ema,
                     )
 
             if should_update and (
@@ -2314,6 +2642,23 @@ def main():
             best_validation=best_validation,
             provenance=run_provenance,
             data_position=last_data_position,
+            ema=ema,
+        )
+    if ema is not None:
+        # Single FINAL inference checkpoint with the EMA weights folded in (no
+        # ensembling at inference). Emitted only when EMA is enabled.
+        save_checkpoint(
+            os.path.join(config["checkpoint_dir"], "checkpoint_final.pt"),
+            optimizer_step,
+            model,
+            optimizer,
+            scheduler,
+            config,
+            best_validation=best_validation,
+            provenance=run_provenance,
+            data_position=last_data_position,
+            ema=ema,
+            fold_ema=True,
         )
     if stop_after_steps is not None and optimizer_step == stop_after_steps:
         log_main(

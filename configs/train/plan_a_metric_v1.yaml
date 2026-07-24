@@ -1,0 +1,72 @@
+# Plan A metric-aligned v1 · one-shot training aligned to the official
+# GreenEarthNet scoring structure.
+#
+# Inherits the warm-start-from-Stage1.5 machinery of plan_a_prime_from_s15 (the
+# same identity z0=q(history), zh=T(z0, physical4, geo, h), y=O(zh) with the
+# direct O_ndvi head), then layers on the metric-aligned objective:
+#   - loss: land-cover-macro veg-masked NDVI MSE as the MAIN term
+#     (loss.weights.ndvi_lc_mse), plus small temporal-bias and temporal-CCC
+#     regularisers that mirror the evaluator's per-pixel-over-time reductions.
+#   - optimizer: transition expert T at 0.1x LR; no weight decay on norm/bias.
+#   - training: parameter EMA (folded into ONE checkpoint at save time).
+#   - checkpoint selection: val/ndvi_lc_rmse (land-cover-macro masked NDVI RMSE),
+#     the validation metric closest to the official Table-1 score.
+#
+# All of these ride on new, default-off code paths; with this config absent the
+# plan_a_prime_from_s15 / plan_a_prime_from_s1a_stage2 behavior is unchanged.
+#
+# Warm start: pass STAGE15_CHECKPOINT at launch (require_stage15_checkpoint=true,
+# inherited). To instead initialise the WHOLE model from the A2-best checkpoint,
+# pass it on the CLI as INIT_FROM_CHECKPOINT (training.init_from_checkpoint);
+# left null here so no path is hard-coded into the config.
+_base_: plan_a_prime_from_s15.yaml
+
+training:
+  # Full-model warm start from the A2-best checkpoint. Provided on the CLI as
+  # INIT_FROM_CHECKPOINT; null here so the file never pins a stale path.
+  init_from_checkpoint: null
+  # Supervise every future endpoint (all 20 horizons).
+  horizons_per_sample: 0
+  warmup_steps: 300
+  # Parameter EMA. The best/final checkpoints fold the EMA weights into a single
+  # checkpoint (no inference-time ensembling); validation runs on EMA weights.
+  use_ema: true
+  ema_decay: 0.999
+
+loss:
+  obs_loss: huber
+  # Guards for the metric-aligned terms.
+  lc_min_pixels: 32
+  ccc_min_obs: 5
+  weights:
+    # Land-cover-macro veg-masked NDVI MSE is the accuracy-aligned MAIN term.
+    ndvi_lc_mse: 1.0
+    # Temporal-structure regularisers (per-pixel-over-time, land-cover-macro).
+    ndvi_time_bias: 0.05
+    ndvi_time_ccc: 0.05
+    # Tie the direct NDVI head to the reflectance-implied NDVI.
+    ndvi_consistency: 0.1
+    # RGBN reflectance kept as a low-weight auxiliary output.
+    obs: 0.1
+    # ndvi_main is superseded by the land-cover-macro ndvi_lc_mse.
+    ndvi_main: 0.0
+    # Redundant / disabled auxiliaries.
+    ndvi: 0.0
+    latent: 0.0
+    delta: 0.0
+    smooth: 0.0
+
+optimizer:
+  # Transition expert T trains at 0.1x the module LR (lr=1e-4 -> 1e-5).
+  transition_lr: 0.00001
+  # Exclude norm/bias (ndim<=1) params from weight decay.
+  no_decay_norm_bias: true
+
+validation:
+  # Select the checkpoint by the land-cover-macro masked NDVI RMSE, the
+  # validation quantity closest to the official evaluator's macro score.
+  primary_metric: val/ndvi_lc_rmse
+  mode: min
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/plan_a_metric_v1
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/plan_a_metric_v1
