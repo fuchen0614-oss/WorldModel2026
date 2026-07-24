@@ -107,6 +107,20 @@ def main() -> None:
         default=None,
         help="Override data.root if the config's baked path is absent on this host.",
     )
+    parser.add_argument(
+        "--manifest-path",
+        default=None,
+        help=(
+            "Frozen manifest for the smoke split (physical4 EarthNet2021x). "
+            "Reuse the A1/A2 val_dev manifest. Required because the config's "
+            "manifest paths are supplied by the training launcher at runtime."
+        ),
+    )
+    parser.add_argument(
+        "--split",
+        default="val",
+        help="Dataset split to pull the single smoke batch from (default: val).",
+    )
     args = parser.parse_args()
 
     device = torch.device(args.device)
@@ -124,6 +138,15 @@ def main() -> None:
         config["data"]["conditioning_stats_path"] = args.conditioning_stats_path
     if args.data_root:
         config["data"]["root"] = args.data_root
+    # The config leaves manifest paths null (the launcher injects them at
+    # runtime); the smoke needs an explicit manifest for its split.
+    config["data"]["split"] = args.split
+    if args.manifest_path:
+        config["data"]["manifest_path"] = args.manifest_path
+        manifest_paths = config["data"].setdefault("manifest_paths", {})
+        if isinstance(manifest_paths, dict):
+            manifest_paths[args.split] = args.manifest_path
+        config["data"]["require_manifest"] = True
 
     opt_cfg = config["optimizer"]
     expected_lr = {
