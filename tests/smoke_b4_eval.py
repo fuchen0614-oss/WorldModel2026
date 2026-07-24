@@ -251,6 +251,32 @@ def main():
               dd["mean_transitioned_state_delta"] >= 0 and dd["mean_endpoint_output_abs_delta"] >= 0
               and len(dd["per_cube"]["state_delta"]) == len(tg)
               and len(dd["per_cube"]["out_signed"]) == len(tg)))
+
+    # -- BATCH EQUIVALENCE: bs=1 vs bs=3 must be numerically identical (no cross-cube mixing) --
+    ds3 = FakeDS(6); idx3 = {str(Path(p)): i for i, p in enumerate(ds3.filepaths)}
+    tg3 = [Path(p) for p in ds3.filepaths]
+    dd1 = _driver_deltas(model, ds3, idx3, tg3, dev, "mean", bs=1, workers=0)
+    ddB = _driver_deltas(model, ds3, idx3, tg3, dev, "mean", bs=3, workers=0)
+    drv_eq = all(abs(a - b) <= 1e-5 for k in ("state_delta", "out_abs", "out_signed")
+                 for a, b in zip(dd1["per_cube"][k], ddB["per_cube"][k]))
+    q4_1 = _q4(model, ds3, idx3, tg3, dev, 0.5, "x", official_overall_R2=0.5, bs=1, workers=0)
+    q4_B = _q4(model, ds3, idx3, tg3, dev, 0.5, "x", official_overall_R2=0.5, bs=3, workers=0)
+    def _q4vals(q):
+        v = []
+        for sp in ("train", "heldout"):
+            for key, p in q[sp].items():
+                v += [p["diagnostic_endpoint_dir_mse_modelspace"], p["diagnostic_endpoint_cmp_mse_modelspace"],
+                      p["diagnostic_path_gap_mse_modelspace"]["mean"], p["diagnostic_state_path_gap"]["mean"],
+                      p["control_path_gap_shuffled_weather"]]
+        for h, s in q["state"].items():
+            v += [s["std"], s["eff_rank"], s["movement"]]
+        return v
+    q4_eq = (len(_q4vals(q4_1)) == len(_q4vals(q4_B))
+             and all(abs(a - b) <= 1e-5 for a, b in zip(_q4vals(q4_1), _q4vals(q4_B)))
+             and all(q4_1[sp][k]["guard_verdict"] == q4_B[sp][k]["guard_verdict"]
+                     for sp in ("train", "heldout") for k in q4_1[sp]))
+    C.append(("BATCH EQUIVALENCE bs=1 vs bs=3: driver + Q4 identical (<=1e-5) + same verdicts", drv_eq and q4_eq))
+
     C.append(("_targets(limit=2) = first 2",
               [str(p) for p in _targets(SimpleNamespace(limit=2), ds, Path("/fake"))] == ds.filepaths[:2]))
 

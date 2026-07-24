@@ -168,10 +168,42 @@ def _data(ds, idx, dev):
             "landcover": s["landcover"].unsqueeze(0).to(dev), "filepath": s["filepath"]}
 
 
-def _export(model, ds, idx_of, targets, out_dir: Path, predict, dev, tag: dict):
+# ---- batched loading (manifest ORDER preserved; per-cube stats stay separable) ----
+def _collate_cpu(samples):
+    """Stack N single-cube dicts into a (B,...) batch on CPU. Order = DataLoader order
+    = manifest order (shuffle=False). Filenames stay 1:1 with the batch rows."""
+    return {"dynamic": [torch.stack([s["dynamic"][0] for s in samples]),
+                        torch.stack([s["dynamic"][1] for s in samples])],
+            "dynamic_mask": [torch.stack([s["dynamic_mask"][0] for s in samples])],
+            "static": [torch.stack([s["static"][0] for s in samples])],
+            "landcover": torch.stack([s["landcover"] for s in samples]),
+            "filepath": [s["filepath"] for s in samples]}
+
+
+def _to_dev(b, dev):
+    return {"dynamic": [b["dynamic"][0].to(dev), b["dynamic"][1].to(dev)],
+            "dynamic_mask": [b["dynamic_mask"][0].to(dev)],
+            "static": [b["static"][0].to(dev)],
+            "landcover": b["landcover"].to(dev), "filepath": b["filepath"]}
+
+
+def _batch_iter(ds, targets, idx_of, dev, bs=1, workers=0):
+    """Yield (B,...) batches over EXACTLY `targets` in manifest order. bs=1 reproduces
+    the single-cube path byte-for-byte; bs>1 only batches the forward — every downstream
+    statistic is still computed per cube by the callers (no cross-cube aggregation)."""
+    from torch.utils.data import DataLoader, Subset
+    order = [idx_of[str(Path(t))] for t in targets]
+    dl = DataLoader(Subset(ds, order), batch_size=bs, shuffle=False,
+                    num_workers=workers, collate_fn=_collate_cpu)
+    for b in dl:
+        yield _to_dev(b, dev)
+
+
+def _export(model, ds, idx_of, targets, out_dir: Path, predict, dev, tag: dict, bs=1, workers=0):
     """Write NDVI NetCDFs for the EXACT target set; skip ONLY if the FULL provenance
     tag matches (Fix 8/9: a different arm / ckpt / data / evaluator never reuses a
-    stale prediction). Returns 'reused' or 'written'."""
+    stale prediction). Returns 'reused' or 'written'. Forward is batched (bs); each
+    cube's NetCDF is written separately, preserving manifest order + filenames."""
     import xarray as xr
     from eval.export_contextformer_predictions import make_ndvi_prediction_dataset
     prov = out_dir / "provenance.json"
@@ -180,14 +212,14 @@ def _export(model, ds, idx_of, targets, out_dir: Path, predict, dev, tag: dict):
     if out_dir.exists():
         shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    for t in targets:
-        data = _data(ds, idx_of[str(Path(t))], dev)
+    for data in _batch_iter(ds, targets, idx_of, dev, bs, workers):
         with torch.no_grad():
-            ndvi = predict(model, data)[:, :, 0].float().cpu().numpy()
-        fp = Path(data["filepath"]); op = out_dir / fp.parent.name / fp.name
-        op.parent.mkdir(parents=True, exist_ok=True)
-        with xr.open_dataset(fp) as tgt:
-            make_ndvi_prediction_dataset(tgt, ndvi[0]).to_netcdf(op, encoding={"ndvi_pred": {"dtype": "float32"}})
+            ndvi = predict(model, data)[:, :, 0].float().cpu().numpy()      # (B, target_len, H, W)
+        for i, fpath in enumerate(data["filepath"]):
+            fp = Path(fpath); op = out_dir / fp.parent.name / fp.name
+            op.parent.mkdir(parents=True, exist_ok=True)
+            with xr.open_dataset(fp) as tgt:
+                make_ndvi_prediction_dataset(tgt, ndvi[i]).to_netcdf(op, encoding={"ndvi_pred": {"dtype": "float32"}})
     prov.write_text(json.dumps(tag, sort_keys=True))
     return "written"
 
@@ -236,6 +268,11 @@ def main() -> int:
                     help="SMOKE-ONLY inline threshold; ignored in FORMAL mode (use --guard-config).")
     ap.add_argument("--limit", type=int, default=0, help="NON-formal smoke on first N cubes")
     ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--batch-size", type=int, default=1,
+                    help="GPU forward batch (default 1 = byte-identical to single-cube). >1 only batches "
+                         "the forward; ALL Q3/Q4 stats stay per-cube. FP32 only (no autocast). Verify with "
+                         "the equivalence gate (tools/bench_b4_batch.py) before a formal run.")
+    ap.add_argument("--num-data-workers", type=int, default=4, help="DataLoader workers for parallel NetCDF reads")
     ap.add_argument("--device", default="cuda")
     args = ap.parse_args()
 
@@ -276,7 +313,8 @@ def main() -> int:
         pdir, sdir = out / f"{arm}/pred", out / f"{arm}/score"
         tag = {**prov_base, "arm": arm}
         with ctx:
-            status = _export(model, ds, idx_of, targets, pdir, predict, dev, tag)
+            status = _export(model, ds, idx_of, targets, pdir, predict, dev, tag,
+                             bs=args.batch_size, workers=args.num_data_workers)
         if status == "written" and sdir.exists():   # Fix 8: never summarize a prior provenance's parquet
             shutil.rmtree(sdir)
         return _score(targets, pdir, sdir, args.workers), _per_cube_r2(sdir)
@@ -302,11 +340,12 @@ def main() -> int:
     # ---- Q3 driver (B0 FIXED; per-cube state Δ + output Δ + metric CI + direction) ---
     # matched == q2_full (SAME arm, SAME provenance, SAME process) -> safe reuse (Fix 9).
     m_mean, r_mean = _run("q3_mean", contextlib.nullcontext(), lambda m, d: m.forecast_weather(d, "mean")[1])
-    noise = _driver_deltas(model, ds, idx_of, targets, dev, "matched")   # NOISE FLOOR: matched vs matched ~0
+    _bw = dict(bs=args.batch_size, workers=args.num_data_workers)
+    noise = _driver_deltas(model, ds, idx_of, targets, dev, "matched", **_bw)   # NOISE FLOOR: matched vs matched ~0
     q3 = {"matched": m_full, "matched_reuse_note": "identical to q2_full arm under the same full provenance",
           "noise_floor_matched_vs_matched": {"mean_state_delta": noise["mean_transitioned_state_delta"],
                                              "mean_out_abs_delta": noise["mean_endpoint_output_abs_delta"]},
-          "mean": _q3_arm(model, ds, idx_of, targets, dev, "mean", m_mean, r_mean, r_full, m_full)}
+          "mean": _q3_arm(model, ds, idx_of, targets, dev, "mean", m_mean, r_mean, r_full, m_full, **_bw)}
     if args.donor_manifest:
         donors = json.loads(Path(args.donor_manifest).read_text())
         errs = validate_donor_manifest(donors, targets, root)
@@ -315,14 +354,19 @@ def main() -> int:
             q3["donor"] = {"status": "FAIL_CLOSED", "errors": errs[:20]}
         else:
             pairs = donors.get("pairs", {})
-            def donor_uf(d):
-                donor_rel = _donor_rel(pairs[str(Path(d["filepath"]).relative_to(root))])
-                di = idx_of[str(root / donor_rel)]
-                return ds[di]["dynamic"][1].unsqueeze(0).to(dev)[:, model.context_len:model.context_len + model.target_len]
+            def donor_uf(data):   # BATCHED: data["filepath"] is a list of B; exact per-target donor, NO roll
+                cl, tl = model.context_len, model.target_len
+                ws = []
+                for fpath in data["filepath"]:
+                    donor_rel = _donor_rel(pairs[str(Path(fpath).relative_to(root))])
+                    di = idx_of[str(root / donor_rel)]
+                    ws.append(ds[di]["dynamic"][1][cl:cl + tl])
+                return torch.stack(ws).to(dev)                         # (B, target_len, 24)
             m_don, r_don = _run("q3_donor", contextlib.nullcontext(),
                                 lambda m, d: _predict_donor(m, d, donor_uf(d)))
             q3["donor"] = {"donor_schema": donors.get("donor_schema"),
-                           **_q3_arm(model, ds, idx_of, targets, dev, "donor", m_don, r_don, r_full, m_full, donor_uf)}
+                           **_q3_arm(model, ds, idx_of, targets, dev, "donor", m_don, r_don, r_full, m_full,
+                                     donor_uf=donor_uf, **_bw)}
     else:
         q3["donor"] = {"status": "FAIL_CLOSED", "reason": "no --donor-manifest; batch-roll is NOT a valid donor"}
         if formal:
@@ -331,7 +375,7 @@ def main() -> int:
 
     # ---- Q4 composition + guard ----------------------------------------------
     R["Q4_composition"] = _q4(model, ds, idx_of, targets, dev, guard_max, guard_sha,
-                              official_overall_R2=m_full.get("R2"))
+                              official_overall_R2=m_full.get("R2"), bs=args.batch_size, workers=args.num_data_workers)
     if guard_max is None and formal:
         R["status"] = "INCOMPLETE_FAIL_CLOSED"; R["incomplete_reasons"].append("Q4 endpoint guard UNSET (no frozen --guard-config)")
 
@@ -346,8 +390,9 @@ def main() -> int:
     return 0
 
 
-def _driver_deltas(model, ds, idx_of, targets, dev, mode, donor_uf=None):
-    """Per-cube driver sensitivity (mode vs matched), B0 held FIXED. Returns per-cube arrays:
+def _driver_deltas(model, ds, idx_of, targets, dev, mode, donor_uf=None, bs=1, workers=0):
+    """Per-cube driver sensitivity (mode vs matched), B0 held FIXED. Forward is batched;
+    EVERY statistic is sliced back per cube (no cross-cube mixing). Returns per-cube arrays:
       state_delta = mean|z_h(intervened)-z_h(matched)|  (transitioned-state change, h=target_len)
       out_abs     = mean|ŷ_intervened-ŷ_matched| over valid veg pixels at endpoint NDVI
       out_signed  = mean(ŷ_intervened-ŷ_matched) over valid veg pixels  (directionality)
@@ -355,33 +400,36 @@ def _driver_deltas(model, ds, idx_of, targets, dev, mode, donor_uf=None):
     import numpy as np
     cl, tl = model.context_len, model.target_len
     sd, oa, osg = [], [], []
-    for t in targets:
-        d = _data(ds, idx_of[str(Path(t))], dev)
+    for data in _batch_iter(ds, targets, idx_of, dev, bs, workers):
         with torch.no_grad():
-            pb0, z_t = model._b0_and_state(d); geo, uf_m = model._geo_weather(d)
-            B, H, W = d["dynamic"][0].shape[0], d["dynamic"][0].shape[-2], d["dynamic"][0].shape[-1]
-            uf_x = uf_m if mode == "matched" else (torch.zeros_like(uf_m) if mode == "mean" else donor_uf(d))
-            zh_m = model.direct_state(z_t, uf_m, geo, tl); zh_x = model.direct_state(z_t, uf_x, geo, tl)
+            pb0, z_t = model._b0_and_state(data); geo, uf_m = model._geo_weather(data)
+            B, H, W = data["dynamic"][0].shape[0], data["dynamic"][0].shape[-2], data["dynamic"][0].shape[-1]
+            uf_x = uf_m if mode == "matched" else (torch.zeros_like(uf_m) if mode == "mean" else donor_uf(data))
+            Np = z_t.shape[0] // B
+            zh_m = model.direct_state(z_t, uf_m, geo, tl).view(B, Np, -1)
+            zh_x = model.direct_state(z_t, uf_x, geo, tl).view(B, Np, -1)
             y_m = (pb0 + model.gate * model._direct_residual(z_t, uf_m, geo, B, H, W))[:, tl - 1, 0:1]
             y_x = (pb0 + model.gate * model._direct_residual(z_t, uf_x, geo, B, H, W))[:, tl - 1, 0:1]
-            lc = d["landcover"]; veg = ((lc >= model.lc_min) & (lc <= model.lc_max)).float()
-            cloud = (d["dynamic_mask"][0][:, cl + tl - 1] < 1.0).float()
-            valid = veg * cloud; den = valid.sum() + 1e-8; diff = y_x - y_m
-            sd.append((zh_x - zh_m).abs().mean().item())
-            oa.append(((diff.abs() * valid).sum() / den).item())
-            osg.append(((diff * valid).sum() / den).item())
+            lc = data["landcover"]; veg = ((lc >= model.lc_min) & (lc <= model.lc_max)).float()
+            cloud = (data["dynamic_mask"][0][:, cl + tl - 1] < 1.0).float()
+            valid = veg * cloud
+            for n in range(B):
+                vn = valid[n:n + 1]; den = vn.sum() + 1e-8; diff = y_x[n:n + 1] - y_m[n:n + 1]
+                sd.append((zh_x[n] - zh_m[n]).abs().mean().item())
+                oa.append(((diff.abs() * vn).sum() / den).item())
+                osg.append(((diff * vn).sum() / den).item())
     return {"mean_transitioned_state_delta": float(np.mean(sd)),
             "mean_endpoint_output_abs_delta": float(np.mean(oa)),
             "mean_endpoint_output_signed_delta": float(np.mean(osg)),
             "per_cube": {"state_delta": sd, "out_abs": oa, "out_signed": osg}}
 
 
-def _q3_arm(model, ds, idx_of, targets, dev, mode, m_arm, r_arm, r_full, m_full, donor_uf=None):
+def _q3_arm(model, ds, idx_of, targets, dev, mode, m_arm, r_arm, r_full, m_full, donor_uf=None, bs=1, workers=0):
     """One Q3 intervention arm: official metric diff (+per-cube CI), transitioned-state Δ (+CI),
     endpoint output Δ abs (+CI) and signed (+CI, direction consistency). CI not crossing 0 and
     > the matched noise floor => weather genuinely drives T beyond numeric noise."""
     import numpy as np
-    dd = _driver_deltas(model, ds, idx_of, targets, dev, mode, donor_uf)
+    dd = _driver_deltas(model, ds, idx_of, targets, dev, mode, donor_uf, bs=bs, workers=workers)
     pc = dd["per_cube"]
     return {
         "metrics": m_arm,
@@ -405,41 +453,44 @@ _Q4_CALIBER = ("DIAGNOSTIC, model normalized-NDVI space on the TRAINING cloud "
                "bounds a DIAGNOSTIC non-collapse quantity, not an official metric.")
 
 
-def _q4(model, ds, idx_of, targets, dev, guard_max, guard_sha=None, official_overall_R2=None):
+def _q4(model, ds, idx_of, targets, dev, guard_max, guard_sha=None, official_overall_R2=None, bs=1, workers=0):
     import numpy as np
     cl, tl = model.context_len, model.target_len
     parts = {"train": model.partitions, "heldout": model.heldout_partitions}
     acc = {"train": {}, "heldout": {}}
     state_h = {h: {"std": [], "eff_rank": [], "movement": []} for h in (1, 5, 10, 20)}
-    for t in targets:
-        d = _data(ds, idx_of[str(Path(t))], dev)
+    for data in _batch_iter(ds, targets, idx_of, dev, bs, workers):
         with torch.no_grad():
-            pb0, z_t = model._b0_and_state(d); geo, uf = model._geo_weather(d)
+            pb0, z_t = model._b0_and_state(data); geo, uf = model._geo_weather(data)
             uf_sh = uf.flip(dims=[1])                                   # SHUFFLED control: time-reversed future weather
-            B, H, W = d["dynamic"][0].shape[0], d["dynamic"][0].shape[-2], d["dynamic"][0].shape[-1]
-            lc = d["landcover"]; lcm = ((lc >= model.lc_min) & (lc <= model.lc_max)).float()
-            targ = d["dynamic"][0][:, cl:cl + tl, 0:1]; cloud = (d["dynamic_mask"][0][:, cl:cl + tl] < 1.0).float()
+            B, H, W = data["dynamic"][0].shape[0], data["dynamic"][0].shape[-2], data["dynamic"][0].shape[-1]
+            Np = z_t.shape[0] // B; z_bn = z_t.view(B, Np, -1)
+            lc = data["landcover"]; lcm = ((lc >= model.lc_min) & (lc <= model.lc_max)).float()
+            targ = data["dynamic"][0][:, cl:cl + tl, 0:1]; cloud = (data["dynamic_mask"][0][:, cl:cl + tl] < 1.0).float()
             for h in (1, 5, 10, 20):
-                zh = model.direct_state(z_t, uf, geo, h)
-                state_h[h]["std"].append(model.state_std(zh)); state_h[h]["eff_rank"].append(model.effective_rank(zh))
-                state_h[h]["movement"].append((zh - z_t).abs().mean().item())
+                zh = model.direct_state(z_t, uf, geo, h).view(B, Np, -1)
+                for n in range(B):
+                    state_h[h]["std"].append(model.state_std(zh[n]))
+                    state_h[h]["eff_rank"].append(model.effective_rank(zh[n]))
+                    state_h[h]["movement"].append((zh[n] - z_bn[n]).abs().mean().item())
             for split, plist in parts.items():
                 for (h1, h2) in plist:
                     h = h1 + h2
-                    z_dir = model.direct_state(z_t, uf, geo, h)
-                    z_cmp = model.composed_state(z_t, uf, geo, h1, h2)
-                    y_dir = pb0[:, h - 1] + model.gate * model._decode_state(z_dir, B, H, W)
+                    z_dir = model.direct_state(z_t, uf, geo, h).view(B, Np, -1)
+                    z_cmp = model.composed_state(z_t, uf, geo, h1, h2).view(B, Np, -1)
+                    y_dir = pb0[:, h - 1] + model.gate * model._decode_state(model.direct_state(z_t, uf, geo, h), B, H, W)
                     y_cmp = model.composed_prediction(pb0, z_t, uf, geo, h1, h2, B, H, W)
                     y_dir_sh = pb0[:, h - 1] + model.gate * model._decode_state(model.direct_state(z_t, uf_sh, geo, h), B, H, W)
                     y_cmp_sh = model.composed_prediction(pb0, z_t, uf_sh, geo, h1, h2, B, H, W)
-                    th, ch = targ[:, h - 1], cloud[:, h - 1]
                     key = f"{h1}+{h2}"
                     a = acc[split].setdefault(key, {"dir": [], "cmp": [], "gap": [], "sgap": [], "gap_sh": []})
-                    a["dir"].append(model._masked_mse1(y_dir, th, ch, lcm).item())
-                    a["cmp"].append(model._masked_mse1(y_cmp, th, ch, lcm).item())
-                    a["gap"].append(model._masked_mse1(y_cmp, y_dir, ch, lcm).item())
-                    a["sgap"].append((z_cmp - z_dir).abs().mean().item())               # STATE-level path gap
-                    a["gap_sh"].append(model._masked_mse1(y_cmp_sh, y_dir_sh, ch, lcm).item())
+                    for n in range(B):
+                        th, ch, lm = targ[n:n + 1, h - 1], cloud[n:n + 1, h - 1], lcm[n:n + 1]
+                        a["dir"].append(model._masked_mse1(y_dir[n:n + 1], th, ch, lm).item())
+                        a["cmp"].append(model._masked_mse1(y_cmp[n:n + 1], th, ch, lm).item())
+                        a["gap"].append(model._masked_mse1(y_cmp[n:n + 1], y_dir[n:n + 1], ch, lm).item())
+                        a["sgap"].append((z_cmp[n] - z_dir[n]).abs().mean().item())
+                        a["gap_sh"].append(model._masked_mse1(y_cmp_sh[n:n + 1], y_dir_sh[n:n + 1], ch, lm).item())
     out = {"caliber": _Q4_CALIBER,
            "official_overall_R2_reference": official_overall_R2,
            "guard_endpoint_max": guard_max, "guard_config_sha256": guard_sha,
