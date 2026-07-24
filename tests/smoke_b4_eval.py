@@ -28,8 +28,8 @@ from eval.select_b4_checkpoint import (  # noqa: E402
     discover_checkpoints, rank_and_select, mirror_prediction_targets, _finite,
 )
 from eval.eval_b4_state_contract import (  # noqa: E402
-    _gate_zero, _t_identity, _paired_diff, _sha, _predict_donor, _load_guard_config,
-    _targets, _q4, _driver_deltas, validate_donor_manifest,
+    _gate_zero, _t_identity, _paired_diff, _paired_deltas, _bootstrap_ci, _sha, _predict_donor,
+    _load_guard_config, _targets, _q4, _driver_deltas, validate_donor_manifest,
 )
 from eval.b4_donor_schema import (  # noqa: E402
     SCHEMA_VERSION, season_bucket, parse_cube_key, haversine_km, build_pairs,
@@ -222,19 +222,35 @@ def main():
     tg = [Path(p) for p in ds.filepaths]
     q4 = _q4(model, ds, idx_of, tg, dev, None, None, official_overall_R2=0.5)
     part0 = next(iter(q4["train"].values()))
-    C.append(("Q4 UNSET => FAIL_CLOSED + diagnostic caliber + gap withheld",
+    C.append(("Q4 UNSET => FAIL_CLOSED + diagnostic caliber + gap dict/controls",
               q4["guard_status"] == "UNSET_FAIL_CLOSED" and "DIAGNOSTIC" in q4["caliber"]
               and part0["guard_verdict"] == "UNSET_FAIL_CLOSED"
               and "diagnostic_endpoint_dir_mse_modelspace" in part0
-              and isinstance(part0["diagnostic_path_gap_mse_modelspace"], str)))
+              and isinstance(part0["diagnostic_path_gap_mse_modelspace"], dict)
+              and "bootstrap95" in part0["diagnostic_path_gap_mse_modelspace"]
+              and "diagnostic_state_path_gap" in part0
+              and part0["control_path_gap_identity_transition"] == 0.0
+              and "control_path_gap_shuffled_weather" in part0))
     q4s = _q4(model, ds, idx_of, tg, dev, 0.5, "deadbeef", official_overall_R2=0.5)
     C.append(("Q4 SET_FROZEN => PASS/FAIL + records guard sha",
               q4s["guard_status"] == "SET_FROZEN" and q4s["guard_config_sha256"] == "deadbeef"
               and next(iter(q4s["train"].values()))["guard_verdict"] in ("PASS", "FAIL")))
 
-    # -- driver deltas + limit subset + ckpt invariance -----------------------
+    # -- bootstrap CI: known-positive deltas -> CI_low>0; zero-mean -> CI crosses 0 ---
+    ci_pos = _bootstrap_ci([0.1, 0.12, 0.09, 0.11, 0.10] * 4)
+    ci_zero = _bootstrap_ci([0.1, -0.1, 0.05, -0.05, 0.0] * 4)
+    pd = _paired_deltas({"a": 0.6, "b": 0.5}, {"a": 0.55, "b": 0.4})
+    C.append(("bootstrap CI: positive=significant, zero-mean crosses 0",
+              ci_pos["significant_gt0"] and ci_pos["ci_low"] > 0
+              and not ci_zero["significant_gt0"] and ci_zero["ci_low"] < 0 < ci_zero["ci_high"]
+              and abs(pd[0] - 0.05) < 1e-9 and abs(pd[1] - 0.1) < 1e-9))
+
+    # -- driver deltas: per-cube arrays + new keys ----------------------------
     dd = _driver_deltas(model, ds, idx_of, tg, dev, "mean")
-    C.append(("driver deltas finite", dd["mean_transitioned_state_delta"] >= 0 and dd["mean_endpoint_output_delta"] >= 0))
+    C.append(("driver deltas per-cube + finite",
+              dd["mean_transitioned_state_delta"] >= 0 and dd["mean_endpoint_output_abs_delta"] >= 0
+              and len(dd["per_cube"]["state_delta"]) == len(tg)
+              and len(dd["per_cube"]["out_signed"]) == len(tg)))
     C.append(("_targets(limit=2) = first 2",
               [str(p) for p in _targets(SimpleNamespace(limit=2), ds, Path("/fake"))] == ds.filepaths[:2]))
 

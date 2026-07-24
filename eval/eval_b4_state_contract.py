@@ -107,6 +107,27 @@ def _paired_diff(a: dict, b: dict):
             "win": wins, "tie": len(d) - wins - losses, "loss": losses}
 
 
+def _paired_deltas(a: dict, b: dict):
+    """Per-cube signed delta a[k]-b[k] over the common (season/id) keys (SAME cube)."""
+    keys = sorted(set(a) & set(b))
+    return [a[k] - b[k] for k in keys]
+
+
+def _bootstrap_ci(deltas, n_boot: int = 10000, seed: int = 0, alpha: float = 0.05):
+    """Cube-resampled bootstrap 95% CI of the MEAN paired delta + directionality.
+    Returns mean, ci_low, ci_high, frac_pos, n. CI not crossing 0 => significant."""
+    import numpy as np
+    d = np.asarray([x for x in deltas if x == x], dtype=float)
+    if d.size == 0:
+        return {"n": 0, "mean": None, "ci_low": None, "ci_high": None, "frac_pos": None}
+    rng = np.random.default_rng(seed)
+    means = d[rng.integers(0, d.size, size=(n_boot, d.size))].mean(axis=1)
+    lo, hi = (float(x) for x in np.percentile(means, [100 * alpha / 2, 100 * (1 - alpha / 2)]))
+    return {"n": int(d.size), "mean": float(d.mean()), "ci_low": lo, "ci_high": hi,
+            "frac_pos": float((d > 0).mean()), "significant_gt0": bool(lo > 0)}
+
+
+
 def _predict_donor(model, data, donor_uf):
     """B0 from the REAL data (unchanged); ONLY the transition sees donor future weather."""
     preds_b0, z_t = model._b0_and_state(data)
@@ -262,22 +283,30 @@ def main() -> int:
     m_full, r_full = _run("q2_full", contextlib.nullcontext(), lambda m, d: m.forecast(d))
     m_g0, r_g0 = _run("q2_gate0", _gate_zero(model), lambda m, d: m.forecast(d))
     m_ti, r_ti = _run("q2_Tid", _t_identity(model), lambda m, d: m.forecast(d))
-    _pc_caliber = "per-cube LC-balanced R2 (official aggregation at cube granularity); win/tie/loss only"
+    _pc = "per-cube LC-balanced R2 (official aggregation at cube granularity), SAME cube paired"
+    d_g0, d_ti = _paired_deltas(r_full, r_g0), _paired_deltas(r_full, r_ti)
+    ci_g0, ci_ti = _bootstrap_ci(d_g0), _bootstrap_ci(d_ti)
     R["Q2_load_bearing"] = {
         "caliber_note": "full/gate0/T_identity metrics are the OFFICIAL LC-balanced GreenEarthNet aggregation.",
         "full": m_full, "gate0": m_g0, "T_identity": m_ti,
         "official_overall_R2_full_minus_gate0": m_full.get("R2", float("nan")) - m_g0.get("R2", float("nan")),
         "official_overall_R2_full_minus_Tidentity": m_full.get("R2", float("nan")) - m_ti.get("R2", float("nan")),
-        "paired_percube_full_minus_gate0": {**_paired_diff(r_full, r_g0), "caliber": _pc_caliber},
-        "paired_percube_full_minus_Tidentity": {**_paired_diff(r_full, r_ti), "caliber": _pc_caliber}}
+        "closure_cut": {"caliber": _pc, "paired": _paired_diff(r_full, r_g0), "bootstrap95": ci_g0},
+        "transition_identity": {"caliber": _pc, "paired": _paired_diff(r_full, r_ti), "bootstrap95": ci_ti},
+        # LOAD-BEARING only if full is significantly better (CI_low>0) than BOTH broken controls.
+        "verdict_closure_load_bearing": bool(ci_g0.get("significant_gt0")),
+        "verdict_transition_load_bearing": bool(ci_ti.get("significant_gt0")),
+        "verdict": ("LOAD_BEARING" if (ci_g0.get("significant_gt0") and ci_ti.get("significant_gt0"))
+                    else "NOT_LOAD_BEARING (CI crosses 0 on gate-cut and/or T-identity)")}
 
-    # ---- Q3 driver (B0 FIXED; state Δ + output Δ + metric diff) ---------------
+    # ---- Q3 driver (B0 FIXED; per-cube state Δ + output Δ + metric CI + direction) ---
     # matched == q2_full (SAME arm, SAME provenance, SAME process) -> safe reuse (Fix 9).
-    m_mean, _ = _run("q3_mean", contextlib.nullcontext(), lambda m, d: m.forecast_weather(d, "mean")[1])
+    m_mean, r_mean = _run("q3_mean", contextlib.nullcontext(), lambda m, d: m.forecast_weather(d, "mean")[1])
+    noise = _driver_deltas(model, ds, idx_of, targets, dev, "matched")   # NOISE FLOOR: matched vs matched ~0
     q3 = {"matched": m_full, "matched_reuse_note": "identical to q2_full arm under the same full provenance",
-          "mean": {"metrics": m_mean,
-                   "metric_diff_vs_matched_R2": (m_mean.get("R2", float("nan")) - m_full.get("R2", float("nan")))}}
-    q3["mean"].update(_driver_deltas(model, ds, idx_of, targets, dev, "mean"))
+          "noise_floor_matched_vs_matched": {"mean_state_delta": noise["mean_transitioned_state_delta"],
+                                             "mean_out_abs_delta": noise["mean_endpoint_output_abs_delta"]},
+          "mean": _q3_arm(model, ds, idx_of, targets, dev, "mean", m_mean, r_mean, r_full, m_full)}
     if args.donor_manifest:
         donors = json.loads(Path(args.donor_manifest).read_text())
         errs = validate_donor_manifest(donors, targets, root)
@@ -290,11 +319,10 @@ def main() -> int:
                 donor_rel = _donor_rel(pairs[str(Path(d["filepath"]).relative_to(root))])
                 di = idx_of[str(root / donor_rel)]
                 return ds[di]["dynamic"][1].unsqueeze(0).to(dev)[:, model.context_len:model.context_len + model.target_len]
-            m_don, _ = _run("q3_donor", contextlib.nullcontext(),
-                            lambda m, d: _predict_donor(m, d, donor_uf(d)))
-            q3["donor"] = {"metrics": m_don, "donor_schema": donors.get("donor_schema"),
-                           "metric_diff_vs_matched_R2": (m_don.get("R2", float("nan")) - m_full.get("R2", float("nan")))}
-            q3["donor"].update(_driver_deltas(model, ds, idx_of, targets, dev, "donor", donor_uf))
+            m_don, r_don = _run("q3_donor", contextlib.nullcontext(),
+                                lambda m, d: _predict_donor(m, d, donor_uf(d)))
+            q3["donor"] = {"donor_schema": donors.get("donor_schema"),
+                           **_q3_arm(model, ds, idx_of, targets, dev, "donor", m_don, r_don, r_full, m_full, donor_uf)}
     else:
         q3["donor"] = {"status": "FAIL_CLOSED", "reason": "no --donor-manifest; batch-roll is NOT a valid donor"}
         if formal:
@@ -319,22 +347,53 @@ def main() -> int:
 
 
 def _driver_deltas(model, ds, idx_of, targets, dev, mode, donor_uf=None):
-    """Per-cube transitioned-state Δ and endpoint-output Δ (mode vs matched), at h=target_len."""
+    """Per-cube driver sensitivity (mode vs matched), B0 held FIXED. Returns per-cube arrays:
+      state_delta = mean|z_h(intervened)-z_h(matched)|  (transitioned-state change, h=target_len)
+      out_abs     = mean|ŷ_intervened-ŷ_matched| over valid veg pixels at endpoint NDVI
+      out_signed  = mean(ŷ_intervened-ŷ_matched) over valid veg pixels  (directionality)
+    mode='matched' is the NOISE FLOOR (intervened==matched -> ~0)."""
     import numpy as np
-    sd, od = [], []
+    cl, tl = model.context_len, model.target_len
+    sd, oa, osg = [], [], []
     for t in targets:
         d = _data(ds, idx_of[str(Path(t))], dev)
         with torch.no_grad():
             pb0, z_t = model._b0_and_state(d); geo, uf_m = model._geo_weather(d)
             B, H, W = d["dynamic"][0].shape[0], d["dynamic"][0].shape[-2], d["dynamic"][0].shape[-1]
-            uf_x = torch.zeros_like(uf_m) if mode == "mean" else donor_uf(d)
-            zh_m = model.direct_state(z_t, uf_m, geo, model.target_len)
-            zh_x = model.direct_state(z_t, uf_x, geo, model.target_len)
-            y_m = pb0 + model.gate * model._direct_residual(z_t, uf_m, geo, B, H, W)
-            y_x = pb0 + model.gate * model._direct_residual(z_t, uf_x, geo, B, H, W)
-            sd.append((zh_x - zh_m).abs().mean().item()); od.append((y_x - y_m).abs().max().item())
+            uf_x = uf_m if mode == "matched" else (torch.zeros_like(uf_m) if mode == "mean" else donor_uf(d))
+            zh_m = model.direct_state(z_t, uf_m, geo, tl); zh_x = model.direct_state(z_t, uf_x, geo, tl)
+            y_m = (pb0 + model.gate * model._direct_residual(z_t, uf_m, geo, B, H, W))[:, tl - 1, 0:1]
+            y_x = (pb0 + model.gate * model._direct_residual(z_t, uf_x, geo, B, H, W))[:, tl - 1, 0:1]
+            lc = d["landcover"]; veg = ((lc >= model.lc_min) & (lc <= model.lc_max)).float()
+            cloud = (d["dynamic_mask"][0][:, cl + tl - 1] < 1.0).float()
+            valid = veg * cloud; den = valid.sum() + 1e-8; diff = y_x - y_m
+            sd.append((zh_x - zh_m).abs().mean().item())
+            oa.append(((diff.abs() * valid).sum() / den).item())
+            osg.append(((diff * valid).sum() / den).item())
     return {"mean_transitioned_state_delta": float(np.mean(sd)),
-            "mean_endpoint_output_delta": float(np.mean(od))}
+            "mean_endpoint_output_abs_delta": float(np.mean(oa)),
+            "mean_endpoint_output_signed_delta": float(np.mean(osg)),
+            "per_cube": {"state_delta": sd, "out_abs": oa, "out_signed": osg}}
+
+
+def _q3_arm(model, ds, idx_of, targets, dev, mode, m_arm, r_arm, r_full, m_full, donor_uf=None):
+    """One Q3 intervention arm: official metric diff (+per-cube CI), transitioned-state Δ (+CI),
+    endpoint output Δ abs (+CI) and signed (+CI, direction consistency). CI not crossing 0 and
+    > the matched noise floor => weather genuinely drives T beyond numeric noise."""
+    import numpy as np
+    dd = _driver_deltas(model, ds, idx_of, targets, dev, mode, donor_uf)
+    pc = dd["per_cube"]
+    return {
+        "metrics": m_arm,
+        "metric_diff_vs_matched_R2_overall": m_arm.get("R2", float("nan")) - m_full.get("R2", float("nan")),
+        "metric_diff_percube_bootstrap95": _bootstrap_ci(_paired_deltas(r_arm, r_full)),
+        "state_delta": {"mean": dd["mean_transitioned_state_delta"], "bootstrap95": _bootstrap_ci(pc["state_delta"])},
+        "output_abs_delta": {"mean": dd["mean_endpoint_output_abs_delta"], "bootstrap95": _bootstrap_ci(pc["out_abs"])},
+        "output_signed_delta": {"mean": dd["mean_endpoint_output_signed_delta"],
+                                "bootstrap95": _bootstrap_ci(pc["out_signed"]),
+                                "direction_frac_negative": float(np.mean([x < 0 for x in pc["out_signed"]])),
+                                "note": "signed = intervened-matched over valid veg px; frac near 0/1 => directional"}}
+
 
 
 _Q4_CALIBER = ("DIAGNOSTIC, model normalized-NDVI space on the TRAINING cloud "
@@ -356,6 +415,7 @@ def _q4(model, ds, idx_of, targets, dev, guard_max, guard_sha=None, official_ove
         d = _data(ds, idx_of[str(Path(t))], dev)
         with torch.no_grad():
             pb0, z_t = model._b0_and_state(d); geo, uf = model._geo_weather(d)
+            uf_sh = uf.flip(dims=[1])                                   # SHUFFLED control: time-reversed future weather
             B, H, W = d["dynamic"][0].shape[0], d["dynamic"][0].shape[-2], d["dynamic"][0].shape[-1]
             lc = d["landcover"]; lcm = ((lc >= model.lc_min) & (lc <= model.lc_max)).float()
             targ = d["dynamic"][0][:, cl:cl + tl, 0:1]; cloud = (d["dynamic_mask"][0][:, cl:cl + tl] < 1.0).float()
@@ -366,33 +426,46 @@ def _q4(model, ds, idx_of, targets, dev, guard_max, guard_sha=None, official_ove
             for split, plist in parts.items():
                 for (h1, h2) in plist:
                     h = h1 + h2
-                    y_dir = pb0[:, h - 1] + model.gate * model._decode_state(model.direct_state(z_t, uf, geo, h), B, H, W)
+                    z_dir = model.direct_state(z_t, uf, geo, h)
+                    z_cmp = model.composed_state(z_t, uf, geo, h1, h2)
+                    y_dir = pb0[:, h - 1] + model.gate * model._decode_state(z_dir, B, H, W)
                     y_cmp = model.composed_prediction(pb0, z_t, uf, geo, h1, h2, B, H, W)
+                    y_dir_sh = pb0[:, h - 1] + model.gate * model._decode_state(model.direct_state(z_t, uf_sh, geo, h), B, H, W)
+                    y_cmp_sh = model.composed_prediction(pb0, z_t, uf_sh, geo, h1, h2, B, H, W)
                     th, ch = targ[:, h - 1], cloud[:, h - 1]
                     key = f"{h1}+{h2}"
-                    acc[split].setdefault(key, {"dir": [], "cmp": [], "gap": []})
-                    acc[split][key]["dir"].append(model._masked_mse1(y_dir, th, ch, lcm).item())
-                    acc[split][key]["cmp"].append(model._masked_mse1(y_cmp, th, ch, lcm).item())
-                    acc[split][key]["gap"].append(model._masked_mse1(y_cmp, y_dir, ch, lcm).item())
+                    a = acc[split].setdefault(key, {"dir": [], "cmp": [], "gap": [], "sgap": [], "gap_sh": []})
+                    a["dir"].append(model._masked_mse1(y_dir, th, ch, lcm).item())
+                    a["cmp"].append(model._masked_mse1(y_cmp, th, ch, lcm).item())
+                    a["gap"].append(model._masked_mse1(y_cmp, y_dir, ch, lcm).item())
+                    a["sgap"].append((z_cmp - z_dir).abs().mean().item())               # STATE-level path gap
+                    a["gap_sh"].append(model._masked_mse1(y_cmp_sh, y_dir_sh, ch, lcm).item())
     out = {"caliber": _Q4_CALIBER,
            "official_overall_R2_reference": official_overall_R2,
            "guard_endpoint_max": guard_max, "guard_config_sha256": guard_sha,
            "guard_status": "UNSET_FAIL_CLOSED" if guard_max is None else "SET_FROZEN",
+           "control_note": "identity-transition control path gap = 0 by construction (T=id => z_dir=z_cmp=z_t); "
+                           "shuffled control = time-reversed future weather. composition_ratio<1 => composable "
+                           "beyond a scrambled driver.",
            "state": {f"h={h}": {"std": float(np.mean(v["std"])), "eff_rank": float(np.mean(v["eff_rank"])),
                                 "movement": float(np.mean(v["movement"]))} for h, v in state_h.items()}}
     for split in ("train", "heldout"):
         out[split] = {}
         for p, v in acc[split].items():
-            ed, ec, gp = float(np.mean(v["dir"])), float(np.mean(v["cmp"])), float(np.mean(v["gap"]))
+            ed, ec, gp, gsh = (float(np.mean(v[k])) for k in ("dir", "cmp", "gap", "gap_sh"))
             if guard_max is None:
-                verdict = "UNSET_FAIL_CLOSED"; gap_report = "withheld (guard unset; gap is NOT positive evidence)"
+                verdict = "UNSET_FAIL_CLOSED"
             else:
-                passed = ed <= guard_max and ec <= guard_max
-                verdict = "PASS" if passed else "FAIL"; gap_report = gp if passed else "withheld (endpoints not qualified)"
+                verdict = "PASS" if (ed <= guard_max and ec <= guard_max) else "FAIL"
             out[split][p] = {"diagnostic_endpoint_dir_mse_modelspace": ed,
                              "diagnostic_endpoint_cmp_mse_modelspace": ec,
                              "guard_verdict": verdict,
-                             "diagnostic_path_gap_mse_modelspace": gap_report}
+                             "diagnostic_path_gap_mse_modelspace": {"mean": gp, "bootstrap95": _bootstrap_ci(v["gap"])},
+                             "diagnostic_state_path_gap": {"mean": float(np.mean(v["sgap"])),
+                                                           "bootstrap95": _bootstrap_ci(v["sgap"])},
+                             "control_path_gap_shuffled_weather": gsh,
+                             "control_path_gap_identity_transition": 0.0,
+                             "composition_ratio_real_over_shuffled": gp / (gsh + 1e-12)}
     return out
 
 
