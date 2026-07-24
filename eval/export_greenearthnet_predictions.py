@@ -39,6 +39,8 @@ from data.earthnet_manifest import PROTOCOL_ID, manifest_protocol_spec  # noqa: 
 from eval.earthnet_table1 import source_manifest_identity  # noqa: E402
 from eval.greenearthnet_protocol import (  # noqa: E402
     PREDICTION_GRID_FIVE_DAILY_20,
+    PREDICTION_VARIABLE,
+    expected_prediction_times,
     make_prediction_dataset,
 )
 from eval.stage2_evaluation_provenance import (  # noqa: E402
@@ -98,6 +100,18 @@ def main() -> int:
         "--prediction-manifest",
         default=None,
         help="Defaults to <output-dir>/prediction_manifest.json.",
+    )
+    parser.add_argument(
+        "--ndvi-source",
+        choices=["rgbn", "head"],
+        required=True,
+        help=(
+            "REQUIRED (no default). Which NDVI closure to export/score. 'rgbn' "
+            "computes NDVI from the reflectance head; 'head' exports the model's "
+            "DIRECT ndvi_pred head. Must be stated explicitly so a formal export "
+            "never silently scores the wrong closure. Fail-closed if 'head' is "
+            "requested but the checkpoint has no NDVI head."
+        ),
     )
     parser.add_argument(
         "--allow-checkpoint-contract-mismatch",
@@ -172,6 +186,7 @@ def main() -> int:
         manifest_protocol=args.manifest_protocol,
         source_manifest=source_manifest,
         prediction_grid=PREDICTION_GRID_FIVE_DAILY_20,
+        ndvi_source=args.ndvi_source,
         overwrite=args.overwrite,
     )
 
@@ -185,7 +200,17 @@ def main() -> int:
             # Match training/validation: restore the deferred context resize on
             # device before the model (no-op unless defer_context_resize_to_device).
             batch = prepare_stage2_batch_for_model(batch, data_cfg)
-            prediction = forward_stage2_model(model, batch)["pred"].float().clamp(0, 1)
+            out = forward_stage2_model(model, batch)
+            prediction = out["pred"].float().clamp(0, 1)
+            ndvi_head_pred = None
+            if args.ndvi_source == "head":
+                ndvi_head_pred = out.get("ndvi_pred")
+                if ndvi_head_pred is None:
+                    raise RuntimeError(
+                        "--ndvi-source head requires the model to emit ndvi_pred "
+                        "(the checkpoint has no A' NDVI head)."
+                    )
+                ndvi_head_pred = ndvi_head_pred.float()
             if prediction.shape[1] != target_steps:
                 raise RuntimeError(
                     "Formal GreenEarthNet export must contain the full future path: "
@@ -204,20 +229,30 @@ def main() -> int:
                 with xr.open_dataset(target_path) as target:
                     height = int(target.sizes["lat"])
                     width = int(target.sizes["lon"])
-                    rgbn = prediction[index]
-                    if tuple(rgbn.shape[-2:]) != (height, width):
-                        rgbn = F.interpolate(
-                            rgbn,
-                            size=(height, width),
-                            mode="bilinear",
-                            align_corners=False,
-                        )
-                    prediction_cube = make_prediction_dataset(
-                        target,
-                        rgbn.cpu().numpy(),
-                        red_index=data_cfg.band_spec.red_index,
-                        nir_index=data_cfg.band_spec.nir_index,
-                    ).load()
+                    if args.ndvi_source == "head":
+                        ndvi_chw = ndvi_head_pred[index]  # [T,1,H,W]
+                        if tuple(ndvi_chw.shape[-2:]) != (height, width):
+                            ndvi_chw = F.interpolate(
+                                ndvi_chw, size=(height, width),
+                                mode="bilinear", align_corners=False,
+                            )
+                        ndvi_thw = ndvi_chw.squeeze(1).clamp(-1.0, 1.0).cpu().numpy()
+                        prediction_cube = _direct_ndvi_dataset(target, ndvi_thw).load()
+                    else:
+                        rgbn = prediction[index]
+                        if tuple(rgbn.shape[-2:]) != (height, width):
+                            rgbn = F.interpolate(
+                                rgbn,
+                                size=(height, width),
+                                mode="bilinear",
+                                align_corners=False,
+                            )
+                        prediction_cube = make_prediction_dataset(
+                            target,
+                            rgbn.cpu().numpy(),
+                            red_index=data_cfg.band_spec.red_index,
+                            nir_index=data_cfg.band_spec.nir_index,
+                        ).load()
                 output_path.parent.mkdir(parents=True, exist_ok=True)
                 _atomic_write_netcdf(output_path, prediction_cube)
                 written += 1
@@ -253,6 +288,7 @@ def main() -> int:
         "output_dir": str(output_root),
         "split": args.split,
         "manifest_protocol": args.manifest_protocol,
+        "ndvi_source": args.ndvi_source,
         "source_manifest": source_manifest,
         "prediction_grid": PREDICTION_GRID_FIVE_DAILY_20,
         "prediction_steps": target_steps,
@@ -270,6 +306,32 @@ def main() -> int:
     print(f"num_cubes={len(output_records)}")
     print(f"prediction_manifest={manifest_path}")
     return 0
+
+
+def _direct_ndvi_dataset(target: "xr.Dataset", ndvi_thw) -> "xr.Dataset":
+    """Build the scored GreenEarthNet cube directly from the A' NDVI head output.
+
+    Mirrors make_prediction_dataset's tail but takes NDVI ([T,H,W], already in
+    [-1,1]) instead of RGBN reflectance, so the DIRECT ndvi_pred closure is what
+    the official evaluator scores.
+    """
+
+    import numpy as np
+
+    ndvi = np.asarray(ndvi_thw, dtype=np.float32)
+    times = expected_prediction_times(target)
+    expected_shape = (times.size, target.sizes["lat"], target.sizes["lon"])
+    if ndvi.shape != expected_shape:
+        raise ValueError(f"direct NDVI shape={ndvi.shape}, expected={expected_shape}")
+    return xr.Dataset(
+        {
+            PREDICTION_VARIABLE: xr.DataArray(
+                np.clip(ndvi, -1.0, 1.0),
+                coords={"time": times, "lat": target.lat, "lon": target.lon},
+                dims=("time", "lat", "lon"),
+            )
+        }
+    )
 
 
 def _atomic_write_netcdf(path: Path, cube: "xr.Dataset") -> None:
@@ -302,6 +364,7 @@ def _validate_existing_output_directory(
     manifest_protocol: str,
     source_manifest: Mapping[str, Any],
     prediction_grid: str,
+    ndvi_source: str,
     overwrite: bool,
 ) -> None:
     """Forbid silently mixing GreenEarthNet exports from different checkpoints/runs."""
@@ -332,6 +395,12 @@ def _validate_existing_output_directory(
         raise ValueError(
             "Existing prediction manifest uses a different public target-time grid; "
             "use a separate output directory."
+        )
+    if manifest.get("ndvi_source", "rgbn") != ndvi_source:
+        raise ValueError(
+            "Existing prediction manifest scored a different NDVI closure "
+            f"(ndvi_source={manifest.get('ndvi_source', 'rgbn')!r} vs {ndvi_source!r}); "
+            "rgbn and head predictions must never be mixed in one directory."
         )
     provenance = manifest.get("provenance")
     if not isinstance(provenance, Mapping):

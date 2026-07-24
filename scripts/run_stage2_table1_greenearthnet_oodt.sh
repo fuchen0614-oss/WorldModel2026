@@ -66,6 +66,11 @@ if [[ "$RUN_MODEL" == 1 ]]; then
     require_var CONFIG
     require_var CHECKPOINT
     require_var CONDITIONING_STATS_PATH
+    require_var NDVI_SOURCE
+    case "$NDVI_SOURCE" in
+        head|rgbn) ;;
+        *) echo "NDVI_SOURCE must be 'head' or 'rgbn' (got: $NDVI_SOURCE)" >&2; exit 2 ;;
+    esac
     test -f "$CHECKPOINT"
     test -f "$CONDITIONING_STATS_PATH"
 fi
@@ -157,7 +162,8 @@ PERSISTENCE_SCORE="${PERSISTENCE_SCORE:-$PERSISTENCE_SCORE_DIR/metrics_en21x.jso
 PERSISTENCE_SCORE_PROVENANCE="${PERSISTENCE_SCORE_PROVENANCE:-$PERSISTENCE_SCORE_DIR/score_provenance.json}"
 
 if [[ "$RUN_MODEL" == 1 ]]; then
-    model_args=(eval/export_greenearthnet_predictions.py --config "$CONFIG" --checkpoint "$CHECKPOINT" --data-root "$GREEN_EVAL_ROOT" --manifest "$OODT_MANIFEST" --manifest-protocol "$PROTOCOL" --split "$TRACK" --output-dir "$METHOD_ROOT/predictions" --prediction-manifest "$METHOD_ROOT/predictions/prediction_manifest.json" --conditioning-stats-path "$CONDITIONING_STATS_PATH" --batch-size "$MODEL_BATCH_SIZE" --num-workers "$MODEL_NUM_WORKERS" --hash-mode "$HASH_MODE" "${manifest_size_args[@]}")
+    model_args=(eval/export_greenearthnet_predictions.py --config "$CONFIG" --checkpoint "$CHECKPOINT" --data-root "$GREEN_EVAL_ROOT" --manifest "$OODT_MANIFEST" --manifest-protocol "$PROTOCOL" --split "$TRACK" --output-dir "$METHOD_ROOT/predictions" --prediction-manifest "$METHOD_ROOT/predictions/prediction_manifest.json" --conditioning-stats-path "$CONDITIONING_STATS_PATH" --ndvi-source "$NDVI_SOURCE" --batch-size "$MODEL_BATCH_SIZE" --num-workers "$MODEL_NUM_WORKERS" --hash-mode "$HASH_MODE" "${manifest_size_args[@]}")
+    echo "  NDVI_SOURCE (scored closure): $NDVI_SOURCE"
     if [[ -n "${DGH_STATS_PATH:-}" ]]; then model_args+=(--dgh-stats-path "$DGH_STATS_PATH"); fi
     "$PYTHON_BIN" "${model_args[@]}"
     score_ndvi "$METHOD_ROOT/predictions" "$METHOD_ROOT/predictions/prediction_manifest.json" "$METHOD_ROOT/score" "$CLIMATOLOGY_SCORE_DIR"

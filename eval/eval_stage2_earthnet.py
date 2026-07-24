@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from data.datasets.earthnet2021 import EarthNet2021Config, EarthNet2021Dataset, collate_earthnet2021
+from data.earthnet_fields import compute_ndvi
 from eval.earthnet_standard_metrics import (
     OFFICIAL_EARTHNET2021_PROTOCOL,
     EarthNetScoreAccumulator,
@@ -42,6 +43,56 @@ from train.train_stage2_earthnet import (
     prepare_stage2_batch_for_model,
     stage2_supervision_for_output,
 )
+
+
+def _accumulate_dual_ndvi(dual, out, supervision, red_index, nir_index):
+    """Accumulate masked NDVI stats for BOTH the direct head and RGBN NDVI.
+
+    Same target, same evaluator-aligned vegetation-clear mask, same forward.
+    """
+
+    target_ndvi = compute_ndvi(supervision["target"], red_index, nir_index).clamp(-1.0, 1.0)
+    veg = supervision.get("target_veg_mask")
+    if veg is None:
+        veg = supervision.get("target_mask")
+    m = None if veg is None else veg.to(target_ndvi.dtype)
+    if m is None:
+        m = target_ndvi.new_ones(target_ndvi.shape)
+    dual["mask"] += float(m.sum())
+    dual["t"] += float((target_ndvi * m).sum())
+    dual["tt"] += float((target_ndvi * target_ndvi * m).sum())
+    rgbn_ndvi = compute_ndvi(out["pred"], red_index, nir_index).clamp(-1.0, 1.0)
+    dual["rgbn_sae"] += float(((rgbn_ndvi - target_ndvi).abs() * m).sum())
+    dual["rgbn_sse"] += float(((rgbn_ndvi - target_ndvi).pow(2) * m).sum())
+    head = out.get("ndvi_pred")
+    if head is not None:
+        head_ndvi = head.squeeze(2).clamp(-1.0, 1.0)
+        dual["head_seen"] = True
+        dual["head_sae"] += float(((head_ndvi - target_ndvi).abs() * m).sum())
+        dual["head_sse"] += float(((head_ndvi - target_ndvi).pow(2) * m).sum())
+
+
+def _finalize_dual_ndvi(dual, *, veg_masked):
+    """Turn accumulated dual-NDVI sums into MAE/RMSE/R^2 for head and rgbn."""
+
+    out = {"ndvi_metric_mask": "veg_clear" if veg_masked else "clear",
+           "ndvi_metric_pixels": int(dual["mask"])}
+    w = dual["mask"]
+    if w <= 0:
+        return out
+    mean = dual["t"] / w
+    ss_tot = dual["tt"] - mean * mean * w
+    for src in ("head", "rgbn"):
+        if src == "head" and not dual["head_seen"]:
+            out["ndvi_head_mae"] = None
+            out["ndvi_head_rmse"] = None
+            out["ndvi_head_r2"] = None
+            continue
+        sae, sse = dual[f"{src}_sae"], dual[f"{src}_sse"]
+        out[f"ndvi_{src}_mae"] = sae / w
+        out[f"ndvi_{src}_rmse"] = (sse / w) ** 0.5
+        out[f"ndvi_{src}_r2"] = (1.0 - sse / ss_tot) if ss_tot > 0 else None
+    return out
 
 
 def main():
@@ -73,6 +124,16 @@ def main():
         help=(
             "Allow an explicitly labeled legacy/compatibility evaluation when "
             "the checkpoint config does not match the current Stage2 contract."
+        ),
+    )
+    parser.add_argument(
+        "--max-batches",
+        type=int,
+        default=0,
+        help=(
+            "0 = evaluate the full split (formal). >0 caps the number of eval "
+            "batches for a NON-FORMAL smoke; the sidecar is stamped is_smoke=true "
+            "and must never be used to crown a formal winner."
         ),
     )
     args = parser.parse_args()
@@ -135,8 +196,18 @@ def main():
         red_index=data_cfg.band_spec.red_index,
         nir_index=data_cfg.band_spec.nir_index,
     )
+    # Dual-NDVI accuracy gate: on the SAME forward, score BOTH the direct NDVI
+    # head and the RGBN-derived NDVI against the SAME target over the SAME
+    # evaluator-aligned vegetation-clear mask, so head-vs-rgbn is a fair
+    # apples-to-apples comparison (MAE/RMSE/R^2).
+    red_i, nir_i = data_cfg.band_spec.red_index, data_cfg.band_spec.nir_index
+    dual = {"mask": 0.0, "t": 0.0, "tt": 0.0,
+            "head_sae": 0.0, "head_sse": 0.0, "rgbn_sae": 0.0, "rgbn_sse": 0.0,
+            "head_seen": False}
     with torch.no_grad():
-        for batch in tqdm(loader, desc=f"eval {args.split}"):
+        for batch_index, batch in enumerate(tqdm(loader, desc=f"eval {args.split}")):
+            if args.max_batches and batch_index >= args.max_batches:
+                break
             batch = move_batch_to_device(batch, device)
             # Match training/validation: restore the deferred context resize on
             # device before the model (no-op unless defer_context_resize_to_device).
@@ -152,11 +223,17 @@ def main():
                 z_context=out.get("z_context"),
                 z_target_mask=out.get("z_target_mask"),
                 horizons=supervision["horizons"],
+                # A'-aware: feed the direct NDVI head + evaluator-aligned veg mask
+                # so ndvi_main (masked-NDVI-MSE) is a REAL number, not zeros. This
+                # mirrors the trainer's validation loss call.
+                ndvi_pred=out.get("ndvi_pred"),
+                veg_mask=supervision.get("target_veg_mask"),
             )
             bs = batch["x_target"].shape[0]
             count += bs
             for key, value in losses.items():
                 sums[key] = sums.get(key, 0.0) + float(value.detach().cpu()) * bs
+            _accumulate_dual_ndvi(dual, out, supervision, red_i, nir_i)
             forecast_metrics.update(
                 out["pred"],
                 supervision["target"],
@@ -176,6 +253,12 @@ def main():
     metrics = {key: value / max(count, 1) for key, value in sums.items()}
     metrics["num_samples"] = count
     metrics.update(forecast_metrics.compute())
+    metrics.update(_finalize_dual_ndvi(dual, veg_masked=True))
+    # A' smoke marker: a batch-limited evaluation is NON-FORMAL and must never be
+    # consumed as a formal selection number.
+    metrics["is_smoke"] = bool(args.max_batches and args.max_batches > 0)
+    if metrics["is_smoke"]:
+        metrics["max_batches"] = int(args.max_batches)
     if official is not None:
         metrics.update(official.compute())
         # Self-describe the temporal protocol so downstream never mistakes a
