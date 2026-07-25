@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import os
 import sys
 import time
@@ -232,6 +233,9 @@ def main():
     ap.add_argument("--lambda-vic-future", type=float, default=0.0, help="Stage-B anti-collapse on transitioned z_h; 0=OFF")
     ap.add_argument("--cmp-start-frac", type=float, default=0.5, help="Stage-B: fraction of steps before composition losses turn on")
     ap.add_argument("--cmp-ramp-frac", type=float, default=0.25, help="Stage-B: linear ramp fraction to full cmp/con/state_con/vic_future")
+    ap.add_argument("--lambda-intervention", type=float, default=0.0, help="Stage-B intervention-distillation weight; 0=OFF (default)")
+    ap.add_argument("--intervention-prob", type=float, default=0.0, help="per-step probability of an intervention arm; 0=OFF (default)")
+    ap.add_argument("--intervention-preflight", default="", help="FROZEN teacher_preflight.json; enabling REQUIRES its GATE_pass==true")
     args = ap.parse_args()
 
     # lazy (server-only) heavy imports so this module's helpers import without xarray
@@ -275,7 +279,22 @@ def main():
 
     lambdas = SimpleNamespace(fore=args.lambda_fore, distill=args.lambda_distill, resid=args.lambda_resid,
                               vic=args.lambda_vic, cmp=args.lambda_cmp, con=args.lambda_con,
-                              state_con=args.lambda_state_con, vic_future=args.lambda_vic_future)
+                              state_con=args.lambda_state_con, vic_future=args.lambda_vic_future,
+                              intervention=args.lambda_intervention)
+    # intervention-distillation gate (spec 四): OFF unless BOTH weight+prob>0 AND a FROZEN preflight with
+    # GATE_pass==true is provided. Fail-closed: refuse to enable a fabricated Q3 driver.
+    intervention_on = False
+    if args.lambda_intervention > 0 or args.intervention_prob > 0:
+        assert args.stage == "B", "intervention-distillation is Stage-B only"
+        assert args.lambda_intervention > 0 and args.intervention_prob > 0, \
+            "enable needs BOTH --lambda-intervention>0 and --intervention-prob>0"
+        assert args.intervention_preflight, "intervention REQUIRES --intervention-preflight (frozen GATE_pass=true file)"
+        _pf = json.loads(Path(args.intervention_preflight).read_text())
+        assert _pf.get("GATE_pass") is True, \
+            f"intervention-distillation REFUSED: preflight GATE_pass != true ({args.intervention_preflight})"
+        intervention_on = True
+        log(f"intervention-distillation ENABLED: prob={args.intervention_prob} weight={args.lambda_intervention} "
+            f"(preflight gate OK: {args.intervention_preflight})")
     log(f"student q trainable: {sum(1 for p in student.q.parameters() if p.requires_grad)}/"
         f"{sum(1 for _ in student.q.parameters())}  stage={args.stage}")
     student.train()
@@ -332,8 +351,26 @@ def main():
                                      cmp_start_frac=args.cmp_start_frac, cmp_ramp_frac=args.cmp_ramp_frac)
             with torch.no_grad():
                 t_pred = teacher.encode(data, pred_start=cl, preds_length=tl)[0].detach()
+            # OPTIONAL intervention arm (spec 四): decision derived from (seed+step) so ALL DDP ranks pick
+            # the SAME arm together -> identical graph structure -> no collective mismatch. Teacher runs the
+            # SAME arm as the student; the arm's L_int is added INSIDE the single DDP forward (loss()).
+            interv = None
+            if intervention_on:
+                g = torch.Generator().manual_seed(int(args.seed + step))
+                if torch.rand((1,), generator=g).item() < args.intervention_prob:
+                    B0 = data["dynamic"][0].shape[0]
+                    arms = ["matched", "zero"] + (["donor"] if B0 >= 2 else [])
+                    arm = arms[int(torch.randint(0, len(arms), (1,), generator=g).item())]
+                    ad = dict(data); ad["dynamic"] = [data["dynamic"][0], data["dynamic"][1].clone()]
+                    if arm == "zero":
+                        ad["dynamic"][1][:, cl:cl + tl] = 0.0
+                    elif arm == "donor":                                   # another cube's real future weather (in-batch roll)
+                        ad["dynamic"][1][:, cl:cl + tl] = data["dynamic"][1].roll(1, 0)[:, cl:cl + tl]
+                    with torch.no_grad():
+                        t_arm = teacher.encode(ad, pred_start=cl, preds_length=tl)[0].detach()
+                    interv = {"arm_data": ad, "teacher_arm_pred": t_arm, "arm": arm}
             opt.zero_grad(set_to_none=True)
-            _, aux = student(data, t_pred, lam_step)                   # DUAL-signature forward (DDP-safe)
+            _, aux = student(data, t_pred, lam_step, interv)               # DUAL-signature forward (DDP-safe)
             loss = aux["total"]
             finite = bool(torch.isfinite(loss))
             if is_dist():                                              # symmetric skip: if ANY rank non-finite, ALL skip

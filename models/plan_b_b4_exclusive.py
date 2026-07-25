@@ -62,12 +62,26 @@ class ObsWorldB4Exclusive(ObsWorldB4):
             self.heldout_partitions = [tuple(p) for p in EXCL_HELDOUT_PARTITIONS]
 
     # ---- dual-signature forward so DDP works: -------------------------------
-    #   model(data)                        -> inference (NO teacher)
-    #   model(data, teacher_pred, lambdas) -> training loss
-    def forward(self, data, teacher_pred=None, lambdas=None):
+    #   model(data)                                     -> inference (NO teacher)
+    #   model(data, teacher_pred, lambdas[, interv])    -> training loss
+    def forward(self, data, teacher_pred=None, lambdas=None, intervention=None):
         if lambdas is None:
             return self.forecast(data)
-        return self.loss(data, teacher_pred, lambdas)
+        return self.loss(data, teacher_pred, lambdas, intervention)
+
+    def intervention_residual_loss(self, arm_data, teacher_arm_pred):
+        """OPTIONAL Stage-B intervention-distillation (spec 四), GATE-gated + default OFF. The student
+        residual UNDER an intervened future-weather arm fits stopgrad(teacher_arm - context_prior);
+        the weather-free prior cancels the base, so the target isolates the teacher's WEATHER response
+        and trains T to MOVE with weather. Does NOT replace L_fore. Teacher runs the SAME arm (trainer)."""
+        _, prior, residual, _, _, _ = self.forecast(arm_data, want_parts=True)
+        cl, tl = self.context_len, self.target_len
+        lc = arm_data["landcover"]
+        lcm = ((lc >= self.lc_min) & (lc <= self.lc_max)).type_as(residual)
+        cloud = (arm_data["dynamic_mask"][0][:, cl:cl + tl] < 1.0).type_as(residual)
+        valid = cloud * lcm.unsqueeze(1)
+        target = (teacher_arm_pred.detach() - prior).detach()
+        return (((residual - target) ** 2) * valid).sum() / (valid.sum() + 1e-8)
 
     # Parent gate-based methods MUST NOT be used on the exclusive route.
     def forecast_weather(self, *a, **k):
@@ -116,7 +130,7 @@ class ObsWorldB4Exclusive(ObsWorldB4):
         return prior[:, h1 + h2 - 1] + self.alpha * r
 
     # ---- training loss (teacher_pred is passed IN by the trainer, NOT owned here) ----
-    def loss(self, data, teacher_pred, lambdas: SimpleNamespace):
+    def loss(self, data, teacher_pred, lambdas: SimpleNamespace, intervention=None):
         """Losses for the exclusive route. `teacher_pred` = stop-grad full-weather forecast
         computed by the trainer from a SEPARATE frozen q copy (never `self` during Phase B).
 
@@ -190,6 +204,12 @@ class ObsWorldB4Exclusive(ObsWorldB4):
                 l_vf = l_vf + (25.0 * var_h + cov_h)
             l_vf = l_vf / 2
             logs["vic_future"] = l_vf.detach(); terms["vic_future"] = l_vf; total = total + lam.vic_future * l_vf
+        # OPTIONAL intervention-distillation (spec 四): only fires when the trainer passes an arm batch
+        # AND lam.intervention>0 (both gated OFF by default => Stage-A path untouched). Never replaces L_fore.
+        if intervention is not None and float(getattr(lam, "intervention", 0.0)) > 0:
+            l_int = self.intervention_residual_loss(intervention["arm_data"], intervention["teacher_arm_pred"])
+            logs["intervention"] = l_int.detach(); terms["intervention"] = l_int
+            total = total + lam.intervention * l_int
         logs["alpha"] = self.alpha.detach().clone()
         logs["total"] = total.detach()
         return pred, {"total": total, "logs": logs, "terms": terms}

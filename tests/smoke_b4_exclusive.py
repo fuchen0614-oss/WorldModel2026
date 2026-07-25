@@ -252,6 +252,50 @@ def main():
               doy_diff_circular(1, 364) == 2 and weather_divergence([[0]], [[3]]) == 3.0
               and pairs_v2["c0"]["donor"] == "c3" and all(e["donor_reuse_count"] <= 1 for e in pairs_v2.values())))
 
+    # (四) intervention-distillation: gated term + gradient when an arm batch is passed; ABSENT when None
+    m_iv = ObsWorldB4Exclusive(hp, contract_cfg={"state_dim": 256, "freeze_b0": True})
+    load_exclusive_from_b4(m_iv, b4_sd); unfreeze_q_by_prefix(m_iv, ["core.blocks.2.", "core.head."]); m_iv.train()
+    tch = PVTContextformerQ(hp)
+    tch.load_state_dict({k[2:]: v for k, v in b4_sd.items() if k.startswith("q.")}, strict=False); tch.eval()
+    ad = fake_data(seed=9); ad["dynamic"][0][:, :cl] = data["dynamic"][0][:, :cl]; ad["dynamic"][1][:, cl:] = 0.0
+    with torch.no_grad():
+        tp2 = tch.encode(data, pred_start=cl, preds_length=tl)[0].detach()
+        ta = tch.encode(ad, pred_start=cl, preds_length=tl)[0].detach()
+    lam_iv = SimpleNamespace(fore=1.0, distill=0.0, resid=0.0, vic=0.0, cmp=0.0, con=0.0, state_con=0.0, vic_future=0.0, intervention=0.2)
+    m_iv.zero_grad(set_to_none=True)
+    _, aux_iv = m_iv(data, tp2, lam_iv, {"arm_data": ad, "teacher_arm_pred": ta, "arm": "zero"}); aux_iv["total"].backward()
+    ig = any(p.grad is not None and p.grad.abs().sum() > 0 for p in m_iv.transition.parameters())
+    with torch.no_grad():
+        _, aux_off = m_iv(data, tp2, lam_iv, None)                                     # no arm batch => term must NOT fire
+        _, aux_fo = m_iv(data, tp2, SimpleNamespace(fore=1.0, distill=0, resid=0, vic=0, cmp=0, con=0,
+                                                    state_con=0, vic_future=0, intervention=0), None)
+    C.append(("intervention: gated term+grad w/ arm; ABSENT w/o arm; never replaces L_fore",
+              "intervention" in aux_iv["terms"] and ig and "intervention" not in aux_off["terms"]
+              and torch.equal(aux_off["total"], aux_fo["total"])))
+
+    # Stage-B MAIN/SAFE full-lambda ONE-BATCH train: fwd+bwd+opt.step+checkpoint save/reload runs
+    import tempfile as _tf
+    def _one_step(lam, with_interv):
+        mm = ObsWorldB4Exclusive(hp, contract_cfg={"state_dim": 256, "freeze_b0": True})
+        load_exclusive_from_b4(mm, b4_sd); unfreeze_q_by_prefix(mm, ["core.blocks.2.", "core.head."]); mm.train()
+        iv = {"arm_data": ad, "teacher_arm_pred": ta, "arm": "zero"} if with_interv else None
+        opt2 = torch.optim.AdamW([p for p in mm.parameters() if p.requires_grad], lr=1e-5)
+        opt2.zero_grad(set_to_none=True)
+        _, a = mm(data, tp2, lam, iv); a["total"].backward()
+        torch.nn.utils.clip_grad_norm_(mm.parameters(), 1.0); opt2.step()
+        ok = bool(torch.isfinite(a["total"]))
+        with _tf.TemporaryDirectory() as td:
+            pth = Path(td) / "sb.pt"
+            torch.save({"b4_state_dict": mm.state_dict(), "contract_cfg": mm.config(), "arch": mm.ARCH,
+                        "route_version": mm.ROUTE_VERSION, "stage": "B"}, pth)
+            m2 = ObsWorldB4Exclusive(hp, contract_cfg={"state_dim": 256, "freeze_b0": True})
+            _, _, src = load_student_init(m2, torch.load(pth, map_location="cpu", weights_only=False))
+        return ok and src == "exclusive"
+    lam_main = SimpleNamespace(fore=1.0, distill=0.5, resid=0.5, vic=0.05, cmp=0.5, con=0.5, state_con=0.25, vic_future=0.05, intervention=0.1)
+    lam_safe = SimpleNamespace(fore=1.0, distill=1.0, resid=1.0, vic=0.05, cmp=0.25, con=0.5, state_con=0.1, vic_future=0.05, intervention=0.0)
+    C.append(("Stage-B MAIN one-batch: full loss fwd+bwd+opt.step+ckpt save/reload (with intervention arm)", _one_step(lam_main, True)))
+    C.append(("Stage-B SAFE one-batch: full loss fwd+bwd+opt.step+ckpt save/reload (no intervention)", _one_step(lam_safe, False)))
+
     # --sections parsing: q1q2 -> {q1,q2} only; all -> q1..q4; q2 implies q1
     C.append(("parse_sections: q1q2->{q1,q2}, all->q1..q4, q2 implies q1",
               parse_sections("q1q2") == {"q1", "q2"} and parse_sections("all") == {"q1", "q2", "q3", "q4"}
