@@ -77,7 +77,16 @@ def main() -> int:
     targets = _targets(args, ds)
     base = Path(args.out).parent if args.out else Path("evaluations/context_prior_diag")
     tdir, pdir = base / "teacher/pred", base / "prior/pred"
+    ckpt_sha = _sha(args.ckpt)
+    prov = {"ckpt_sha256": ckpt_sha, "n_cubes": len(targets), "kind": "context_prior_diag"}
+    prov_path = base / "diag_provenance.json"
+    # refuse silent mix/overwrite: a prior run with a DIFFERENT ckpt/subset must not be reused
+    if prov_path.is_file() and json.loads(prov_path.read_text()) != prov:
+        if not args.overwrite:
+            raise SystemExit(f"REFUSED: {base} holds a different diag ({prov_path}); pass --overwrite to wipe.")
+        shutil.rmtree(base, ignore_errors=True)
     tdir.mkdir(parents=True, exist_ok=True); pdir.mkdir(parents=True, exist_ok=True)
+    prov_path.parent.mkdir(parents=True, exist_ok=True); prov_path.write_text(json.dumps(prov, indent=2))
 
     rmse_tp, energy = [], []
     for t in targets:

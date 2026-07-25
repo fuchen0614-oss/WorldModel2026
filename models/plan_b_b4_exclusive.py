@@ -14,9 +14,9 @@ Exclusive route (this file) — future weather can reach ŷ ONLY through T:
 Key properties (NOT claims about Q2 — Q2 must be confirmed empirically after training):
   * `prior` is provably future-weather-free: it is q's forecast on `_context_only_data`
     (future frames AND future weather zeroed). Changing future weather cannot change it.
-  * NO free learnable gate. `alpha` is a NON-learnable buffer (a fixed schedule value);
-    it can warm up 0→1 during training but the deployed structure has a fixed, non-zero
-    state path (alpha=1).
+  * NO free learnable gate. `alpha` is a NON-learnable buffer FIXED at 1.0 (both stages).
+    (alpha must stay 1: L_distill wants residual≈teacher−prior while L_resid wants the same;
+    any alpha<1 would demand residual≈(teacher−prior)/alpha and make the two targets conflict.)
   * NO teacher inside this (inference) model. The full-weather teacher is a SEPARATE
     frozen q copy held by the trainer; it never enters this model's state_dict / params.
 
@@ -37,6 +37,7 @@ from models.plan_b_b4 import ObsWorldB4
 
 class ObsWorldB4Exclusive(ObsWorldB4):
     ARCH = "ObsWorldB4Exclusive"
+    ROUTE_VERSION = "exclusive_v1"
 
     def __init__(self, hparams=None, contract_cfg: Optional[dict] = None):
         super().__init__(hparams, contract_cfg)
@@ -45,6 +46,23 @@ class ObsWorldB4Exclusive(ObsWorldB4):
             del self._parameters["gate"]
         # alpha: NON-learnable schedule value (buffer, not a Parameter). Fixed at deploy.
         self.register_buffer("alpha", torch.tensor(1.0))
+        self.route_version = self.ROUTE_VERSION
+
+    # ---- dual-signature forward so DDP works: -------------------------------
+    #   model(data)                        -> inference (NO teacher)
+    #   model(data, teacher_pred, lambdas) -> training loss
+    def forward(self, data, teacher_pred=None, lambdas=None):
+        if lambdas is None:
+            return self.forecast(data)
+        return self.loss(data, teacher_pred, lambdas)
+
+    # Parent gate-based methods MUST NOT be used on the exclusive route.
+    def forecast_weather(self, *a, **k):
+        raise NotImplementedError("exclusive route: use eval.eval_b4_exclusive_contract weather intervention (T-only, alpha).")
+
+    def composed_predictions(self, *a, **k):
+        raise NotImplementedError("exclusive route: use _composed_pred / the exclusive evaluator (no gate).")
+
 
     # ---- context prior + state (student q, NO future weather, NO teacher) ------
     def _prior_state(self, data):
@@ -105,18 +123,18 @@ class ObsWorldB4Exclusive(ObsWorldB4):
         cloud_win = (data["dynamic_mask"][0][:, cl:cl + tl] < 1.0).type_as(pred)        # (B,tl,1,H,W)
         valid = cloud_win * lc_mask.unsqueeze(1)
         td = teacher_pred.detach()
-        logs, total = {}, pred.new_zeros(())
+        logs, terms, total = {}, {}, pred.new_zeros(())
 
         if float(getattr(lam, "fore", 0.0)) > 0:                                        # real label, beat teacher
             l_fore, _ = self.ndvi_loss(pred, data)
-            logs["fore"] = l_fore.detach(); total = total + lam.fore * l_fore
+            logs["fore"] = l_fore.detach(); terms["fore"] = l_fore; total = total + lam.fore * l_fore
         if float(getattr(lam, "distill", 0.0)) > 0:                                     # protect accuracy
             l_d = (((pred - td) ** 2) * valid).sum() / (valid.sum() + 1e-8)
-            logs["distill"] = l_d.detach(); total = total + lam.distill * l_d
+            logs["distill"] = l_d.detach(); terms["distill"] = l_d; total = total + lam.distill * l_d
         if float(getattr(lam, "resid", 0.0)) > 0:                                       # residual -> teacher-prior
             r_teacher = (td - prior).detach()
             l_r = (((residual - r_teacher) ** 2) * valid).sum() / (valid.sum() + 1e-8)
-            logs["resid"] = l_r.detach(); total = total + lam.resid * l_r
+            logs["resid"] = l_r.detach(); terms["resid"] = l_r; total = total + lam.resid * l_r
         if float(getattr(lam, "cmp", 0.0)) > 0 or float(getattr(lam, "con", 0.0)) > 0:  # Phase-B composition
             k = len(self.partitions); l_cmp = pred.new_zeros(()); l_con = pred.new_zeros(())
             for (h1, h2) in self.partitions:
@@ -136,10 +154,10 @@ class ObsWorldB4Exclusive(ObsWorldB4):
             logs["vic_var"] = var_t.detach(); total = total + lam.vic * (25.0 * var_t + cov_t)
         logs["alpha"] = self.alpha.detach().clone()
         logs["total"] = total.detach()
-        return pred, {"total": total, "logs": logs}
+        return pred, {"total": total, "logs": logs, "terms": terms}
 
     def config(self) -> dict:
-        c = super().config(); c["arch"] = self.ARCH; return c
+        c = super().config(); c["arch"] = self.ARCH; c["route_version"] = self.ROUTE_VERSION; return c
 
 
 def load_exclusive_from_b4(model: "ObsWorldB4Exclusive", b4_state_dict: dict):
