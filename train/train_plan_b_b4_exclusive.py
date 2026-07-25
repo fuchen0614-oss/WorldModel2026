@@ -306,6 +306,7 @@ def main():
 
     cl, tl = m.context_len, m.target_len
     best_val, no_improve, step, t0, done = float("inf"), 0, 0, time.time(), False
+    t_prev, step_prev = t0, 0                                          # windowed it/s (excludes startup+val)
     for epoch in range(10_000):
         if done:
             break
@@ -319,8 +320,13 @@ def main():
             opt.zero_grad(set_to_none=True)
             _, aux = student(data, t_pred, lam_step)                   # DUAL-signature forward (DDP-safe)
             loss = aux["total"]
-            if not torch.isfinite(loss):
-                log(f"WARN non-finite loss @ {step}; skip"); step += 1; sched.step(); continue
+            finite = bool(torch.isfinite(loss))
+            if is_dist():                                              # symmetric skip: if ANY rank non-finite, ALL skip
+                fflag = torch.tensor([1.0 if finite else 0.0], device=dev)
+                dist.all_reduce(fflag, op=dist.ReduceOp.MIN)
+                finite = fflag.item() > 0.5
+            if not finite:
+                log(f"WARN non-finite loss @ {step} (some rank); skip on ALL ranks"); step += 1; sched.step(); continue
             if step < args.grad_diag_steps and not is_dist() and len(aux.get("terms", {})) >= 2:
                 conf = _log_conflict(m, aux["terms"])                  # grad norm + pairwise cosine on T/O (diagnose only)
                 log("  [gconf] " + " ".join(f"{k}={v:+.3e}" for k, v in conf.items()))
@@ -330,8 +336,9 @@ def main():
             opt.step(); sched.step(); step += 1
 
             if step % args.log_interval == 0:
+                now = time.time(); ips = (step - step_prev) / max(now - t_prev, 1e-6); t_prev, step_prev = now, step
                 lg = {k: float(v) for k, v in aux["logs"].items() if k != "alpha"}
-                log(f"step {step}/{total_steps} loss={loss.item():.5f} lr={sched.get_last_lr()[0]:.2e} "
+                log(f"step {step}/{total_steps} {ips:.2f}it/s loss={loss.item():.5f} lr={sched.get_last_lr()[0]:.2e} "
                     f"a2={'Y' if step>=int(args.a2_start_frac*total_steps) else 'N'} "
                     + " ".join(f"{k}={lg[k]:.4f}" for k in ("fore", "distill", "resid", "vic_var", "cmp", "con") if k in lg))
             if step % args.val_interval == 0 or step == total_steps:
