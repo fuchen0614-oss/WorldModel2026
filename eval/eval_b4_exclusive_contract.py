@@ -75,6 +75,18 @@ def _uf(model, data):
     return data["dynamic"][1][:, cl:cl + tl]
 
 
+def parse_sections(s):
+    """Which contract sections to run. 'all' -> q1,q2,q3,q4. Q2 implies Q1 (needs `full`).
+    q1q2-only mode skips the expensive Q3 driver + Q4 composition and does NOT require a
+    donor manifest or a frozen guard."""
+    if not s or s.strip().lower() == "all":
+        return {"q1", "q2", "q3", "q4"}
+    out = {x.strip().lower() for x in s.replace("q1q2", "q1,q2").split(",") if x.strip()}
+    if "q2" in out:
+        out.add("q1")
+    return out
+
+
 def _composed_broken(model, prior, z_t, uf, geo, h1, h2, B, H, W):
     """ASYMMETRIC control: leg-1 correct, leg-2 gets the WRONG weather window (uf[:, :h2] from t,
     not uf[:, h1:h1+h2] from t+h1) -> breaks ONLY the composed path's weather/time correspondence.
@@ -190,8 +202,10 @@ def main() -> int:
     ap.add_argument("--donor-manifest", default=""); ap.add_argument("--guard-config", default="")
     ap.add_argument("--limit", type=int, default=0); ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--batch-size", type=int, default=1); ap.add_argument("--num-data-workers", type=int, default=4)
+    ap.add_argument("--sections", default="all", help="'all' or subset of q1,q2,q3,q4 (or 'q1q2'). q1q2 skips Q3/Q4 and needs no donor/guard.")
     ap.add_argument("--device", default="cuda")
     args = ap.parse_args()
+    sections = parse_sections(args.sections)
 
     formal = not args.limit
     if formal and not (args.data_manifest and args.dataset_root):
@@ -213,8 +227,8 @@ def main() -> int:
             "donor_manifest_sha256": _sha(args.donor_manifest) if args.donor_manifest else None,
             "guard_config_sha256": guard_sha, "evaluator_commit": _evaluator_commit(),
             "route_version": model.ROUTE_VERSION, "split": args.split, "formal": formal, "n_targets": len(targets)}
-    R = {"checkpoint": str(Path(args.ckpt).resolve()), "provenance": prov, "command": " ".join(sys.argv),
-         "status": "COMPLETE", "incomplete_reasons": []}
+    R = {"checkpoint": str(Path(args.ckpt).resolve()), "provenance": {**prov, "sections": sorted(sections)},
+         "command": " ".join(sys.argv), "status": "COMPLETE", "incomplete_reasons": []}
     bw = dict(bs=args.batch_size, workers=args.num_data_workers)
 
     def _run(arm, ctx, predict):
@@ -225,58 +239,64 @@ def main() -> int:
             shutil.rmtree(sdir)
         return _score(targets, pdir, sdir, args.workers), _per_cube_r2(sdir)
 
-    # ---- Q1 + Q2 (alpha=0 & T-identity) ----
+    # ---- Q1 (full) — always (Q2/Q3/Q4 all reference it) ----
     m_full, r_full = _run("q1_full", contextlib.nullcontext(), lambda m, d: m.forecast(d))
-    m_a0, r_a0 = _run("q2_alpha0", _alpha_zero(model), lambda m, d: m.forecast(d))
-    m_ti, r_ti = _run("q2_Tid", _t_identity(model), lambda m, d: m.forecast(d))
-    ci_a0, ci_ti = _bootstrap_ci(_paired_deltas(r_full, r_a0)), _bootstrap_ci(_paired_deltas(r_full, r_ti))
     R["Q1_forecast"] = {"full": m_full}
-    R["Q2_load_bearing"] = {"full": m_full, "alpha0": m_a0, "T_identity": m_ti,
-                            "official_R2_full_minus_alpha0": m_full.get("R2", float("nan")) - m_a0.get("R2", float("nan")),
-                            "official_R2_full_minus_Tid": m_full.get("R2", float("nan")) - m_ti.get("R2", float("nan")),
-                            "closure_cut_alpha0": {"paired": _paired_diff(r_full, r_a0), "bootstrap95": ci_a0},
-                            "transition_identity": {"paired": _paired_diff(r_full, r_ti), "bootstrap95": ci_ti},
-                            "verdict": ("LOAD_BEARING" if (ci_a0.get("significant_gt0") and ci_ti.get("significant_gt0"))
-                                        else "NOT_LOAD_BEARING (CI crosses 0 on alpha0 and/or T-identity)")}
+
+    # ---- Q2 (alpha=0 & T-identity) ----
+    if "q2" in sections:
+        m_a0, r_a0 = _run("q2_alpha0", _alpha_zero(model), lambda m, d: m.forecast(d))
+        m_ti, r_ti = _run("q2_Tid", _t_identity(model), lambda m, d: m.forecast(d))
+        ci_a0, ci_ti = _bootstrap_ci(_paired_deltas(r_full, r_a0)), _bootstrap_ci(_paired_deltas(r_full, r_ti))
+        R["Q2_load_bearing"] = {"full": m_full, "alpha0": m_a0, "T_identity": m_ti,
+                                "official_R2_full_minus_alpha0": m_full.get("R2", float("nan")) - m_a0.get("R2", float("nan")),
+                                "official_R2_full_minus_Tid": m_full.get("R2", float("nan")) - m_ti.get("R2", float("nan")),
+                                "closure_cut_alpha0": {"paired": _paired_diff(r_full, r_a0), "bootstrap95": ci_a0},
+                                "transition_identity": {"paired": _paired_diff(r_full, r_ti), "bootstrap95": ci_ti},
+                                "verdict": ("LOAD_BEARING" if (ci_a0.get("significant_gt0") and ci_ti.get("significant_gt0"))
+                                            else "NOT_LOAD_BEARING (CI crosses 0 on alpha0 and/or T-identity)")}
 
     # ---- Q3 (T-only weather) ----
-    m_mean, r_mean = _run("q3_mean", contextlib.nullcontext(),
-                          lambda m, d: _predict_weather(m, d, torch.zeros_like(_uf(m, d))))
-    noise = _driver_deltas(model, ds, idx_of, targets, dev, "matched", **bw)
-    q3 = {"matched": m_full, "noise_floor_matched": {"state": noise["mean_state_delta"], "abs": noise["mean_out_abs_delta"]},
-          "mean": _q3_arm(model, ds, idx_of, targets, dev, "mean", m_mean, r_mean, r_full, m_full, **bw)}
-    if args.donor_manifest:
-        donors = json.loads(Path(args.donor_manifest).read_text())
-        errs = validate_donor_manifest(donors, targets, root)
-        if errs:
-            R["status"] = "INCOMPLETE_FAIL_CLOSED"; R["incomplete_reasons"].append({"donor": errs[:20]})
-            q3["donor"] = {"status": "FAIL_CLOSED", "errors": errs[:20]}
+    if "q3" in sections:
+        m_mean, r_mean = _run("q3_mean", contextlib.nullcontext(),
+                              lambda m, d: _predict_weather(m, d, torch.zeros_like(_uf(m, d))))
+        noise = _driver_deltas(model, ds, idx_of, targets, dev, "matched", **bw)
+        q3 = {"matched": m_full, "noise_floor_matched": {"state": noise["mean_state_delta"], "abs": noise["mean_out_abs_delta"]},
+              "mean": _q3_arm(model, ds, idx_of, targets, dev, "mean", m_mean, r_mean, r_full, m_full, **bw)}
+        if args.donor_manifest:
+            donors = json.loads(Path(args.donor_manifest).read_text())
+            errs = validate_donor_manifest(donors, targets, root)
+            if errs:
+                R["status"] = "INCOMPLETE_FAIL_CLOSED"; R["incomplete_reasons"].append({"donor": errs[:20]})
+                q3["donor"] = {"status": "FAIL_CLOSED", "errors": errs[:20]}
+            else:
+                pairs = donors.get("pairs", {})
+                def donor_uf(data):
+                    cl, tl = model.context_len, model.target_len; ws = []
+                    for fp in data["filepath"]:
+                        dr = _donor_rel(pairs[str(Path(fp).relative_to(root))]); di = idx_of[str(root / dr)]
+                        ws.append(ds[di]["dynamic"][1][cl:cl + tl])
+                    return torch.stack(ws).to(dev)
+                m_don, r_don = _run("q3_donor", contextlib.nullcontext(), lambda m, d: _predict_weather(m, d, donor_uf(d)))
+                q3["donor"] = {"donor_schema": donors.get("donor_schema"),
+                               **_q3_arm(model, ds, idx_of, targets, dev, "donor", m_don, r_don, r_full, m_full, donor_uf=donor_uf, **bw)}
         else:
-            pairs = donors.get("pairs", {})
-            def donor_uf(data):
-                cl, tl = model.context_len, model.target_len; ws = []
-                for fp in data["filepath"]:
-                    dr = _donor_rel(pairs[str(Path(fp).relative_to(root))]); di = idx_of[str(root / dr)]
-                    ws.append(ds[di]["dynamic"][1][cl:cl + tl])
-                return torch.stack(ws).to(dev)
-            m_don, r_don = _run("q3_donor", contextlib.nullcontext(), lambda m, d: _predict_weather(m, d, donor_uf(d)))
-            q3["donor"] = {"donor_schema": donors.get("donor_schema"),
-                           **_q3_arm(model, ds, idx_of, targets, dev, "donor", m_don, r_don, r_full, m_full, donor_uf=donor_uf, **bw)}
-    else:
-        q3["donor"] = {"status": "FAIL_CLOSED", "reason": "no --donor-manifest"}
-        if formal:
-            R["status"] = "INCOMPLETE_FAIL_CLOSED"; R["incomplete_reasons"].append("Q3 donor missing")
-    R["Q3_driver"] = q3
+            q3["donor"] = {"status": "FAIL_CLOSED", "reason": "no --donor-manifest"}
+            if formal:
+                R["status"] = "INCOMPLETE_FAIL_CLOSED"; R["incomplete_reasons"].append("Q3 donor missing")
+        R["Q3_driver"] = q3
 
     # ---- Q4 (exclusive composed + asymmetric broken control) ----
-    R["Q4_composition"] = _q4(model, ds, idx_of, targets, dev, guard_max, guard_sha, m_full.get("R2"), **bw)
-    if guard_max is None and formal:
-        R["status"] = "INCOMPLETE_FAIL_CLOSED"; R["incomplete_reasons"].append("Q4 guard UNSET")
+    if "q4" in sections:
+        R["Q4_composition"] = _q4(model, ds, idx_of, targets, dev, guard_max, guard_sha, m_full.get("R2"), **bw)
+        if guard_max is None and formal:
+            R["status"] = "INCOMPLETE_FAIL_CLOSED"; R["incomplete_reasons"].append("Q4 guard UNSET")
 
     R["checkpoint_unchanged"] = (_sha(args.ckpt) == ckpt_sha0)
     assert R["checkpoint_unchanged"], "checkpoint changed!"
     (out / "state_contract_exclusive.json").write_text(json.dumps(R, indent=2, allow_nan=True))
-    print(f"[excl-contract] status={R['status']} Q2={R['Q2_load_bearing']['verdict']} out={out}")
+    q2v = R.get("Q2_load_bearing", {}).get("verdict", "n/a")
+    print(f"[excl-contract] status={R['status']} sections={sorted(sections)} Q2={q2v} out={out}")
     return 0 if R["status"] == "COMPLETE" else 2
 
 

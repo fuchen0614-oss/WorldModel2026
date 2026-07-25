@@ -55,6 +55,22 @@ def log(m):
         print(m, flush=True)
 
 
+def _seed_everything(seed):
+    """Explicit reproducible seeding: torch(+cuda)/numpy/python. Same seed across the 4
+    tournament configs so only lr/a2-lambda differ."""
+    import random
+    import numpy as np
+    random.seed(seed); np.random.seed(seed)
+    torch.manual_seed(seed); torch.cuda.manual_seed_all(seed)
+
+
+def _seed_worker(worker_id):
+    import random
+    import numpy as np
+    s = (torch.initial_seed() + worker_id) % (2 ** 32)
+    np.random.seed(s); random.seed(s)
+
+
 def state_sha(sd) -> str:
     h = hashlib.sha256()
     for k in sorted(sd):
@@ -182,6 +198,7 @@ def main():
     ap.add_argument("--max-epochs", type=int, default=40); ap.add_argument("--max-steps", type=int, default=0)
     ap.add_argument("--lr", type=float, default=1e-5); ap.add_argument("--weight-decay", type=float, default=0.0)
     ap.add_argument("--grad-clip", type=float, default=1.0)
+    ap.add_argument("--seed", type=int, default=42, help="explicit reproducible seed (torch/cuda/numpy/random + DataLoader)")
     ap.add_argument("--log-interval", type=int, default=50); ap.add_argument("--val-interval", type=int, default=1000)
     ap.add_argument("--ckpt-interval", type=int, default=2000); ap.add_argument("--state-dim", type=int, default=256)
     ap.add_argument("--stage", choices=("A", "B"), default="A")
@@ -202,6 +219,7 @@ def main():
     from train.train_plan_b_contextformer import collate, to_device
 
     local_rank = int(os.environ.get("LOCAL_RANK", 0)); world = int(os.environ.get("WORLD_SIZE", 1))
+    _seed_everything(args.seed + local_rank)                           # reproducible; +rank so DDP ranks differ
     if world > 1:
         dist.init_process_group("nccl", device_id=torch.device("cuda", local_rank)); torch.cuda.set_device(local_rank)
     dev = torch.device("cuda", local_rank) if torch.cuda.is_available() else torch.device("cpu")
@@ -257,9 +275,11 @@ def main():
                                ndvi_pred_idx=0, ndvi_targ_idx=0, pred_mask_value=-1, scale_by_std=False)
     train_ds = GreenEarthNetContextformerDataset(args.train_dir, dl_cloudmask=True)
     val_ds = GreenEarthNetContextformerDataset(args.val_dir, dl_cloudmask=True)
-    sampler = DistributedSampler(train_ds, shuffle=True) if world > 1 else None
+    sampler = DistributedSampler(train_ds, shuffle=True, seed=args.seed) if world > 1 else None
+    _gen = torch.Generator(); _gen.manual_seed(args.seed)
     loader = DataLoader(train_ds, batch_size=args.per_gpu_batch, sampler=sampler, shuffle=(sampler is None),
-                        num_workers=args.num_workers, collate_fn=collate, pin_memory=True, drop_last=True)
+                        num_workers=args.num_workers, collate_fn=collate, pin_memory=True, drop_last=True,
+                        generator=_gen, worker_init_fn=_seed_worker)
     val_loader = DataLoader(val_ds, batch_size=args.per_gpu_batch, shuffle=False,
                             num_workers=args.num_workers, collate_fn=collate, pin_memory=True)
     steps_per_epoch = max(len(loader), 1)
@@ -271,7 +291,7 @@ def main():
     def save(path, step, vloss):
         torch.save({"b4_state_dict": m.state_dict(), "contract_cfg": m.config(), "arch": m.ARCH,
                     "route_version": m.ROUTE_VERSION, "step": step, "stage": args.stage,
-                    "val_loss": vloss, "alpha": float(m.alpha), "teacher_sha256": teacher_sha0,
+                    "val_loss": vloss, "alpha": float(m.alpha), "seed": args.seed, "teacher_sha256": teacher_sha0,
                     "student_init_sha256": student_init_sha, "args": vars(args)}, path)
 
     cl, tl = m.context_len, m.target_len

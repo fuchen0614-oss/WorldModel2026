@@ -25,7 +25,7 @@ from models.plan_b_b4_exclusive import ObsWorldB4Exclusive, load_exclusive_from_
 from train.train_plan_b_b4_exclusive import (  # noqa: E402
     unfreeze_q_by_prefix, state_sha, sched_lambdas, lr_factor, load_student_init,
 )
-from eval.eval_b4_exclusive_contract import _alpha_zero, _predict_weather, _uf, _q4, _driver_deltas  # noqa: E402
+from eval.eval_b4_exclusive_contract import _alpha_zero, _predict_weather, _uf, _q4, _driver_deltas, parse_sections  # noqa: E402
 
 LAST_STAGE_HEAD = ["core.blocks.2.", "core.head."]
 
@@ -169,6 +169,11 @@ def main():
               (y_match - y_mean).abs().max() > 1e-6 and len(dd["per_cube"]["signed"]) == len(tg)
               and "control_broken_composed_leg2_gap" in part and "composition_ratio_real_over_broken" in part
               and "diagnostic_state_path_gap" in part))
+
+    # --sections parsing: q1q2 -> {q1,q2} only; all -> q1..q4; q2 implies q1
+    C.append(("parse_sections: q1q2->{q1,q2}, all->q1..q4, q2 implies q1",
+              parse_sections("q1q2") == {"q1", "q2"} and parse_sections("all") == {"q1", "q2", "q3", "q4"}
+              and parse_sections("q2") == {"q1", "q2"} and "q3" not in parse_sections("q1,q2")))
 
     # DDP (gloo, 2-proc) forward+backward — verifies dual-signature under DDP
     ddp_ok = True
