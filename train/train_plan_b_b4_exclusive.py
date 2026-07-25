@@ -135,13 +135,20 @@ def lr_factor(step, warmup, total):
     return 0.5 * (1.0 + math.cos(math.pi * min(1.0, prog)))
 
 
-def sched_lambdas(base, step, total, a2_start_frac, a2_lambda):
-    """Segmented A1/A2 loss schedule. A1 (first a2_start_frac of steps): distill=resid=1.
-    A2 (after): distill=resid=a2_lambda (e.g. 0.5/0.25). fore stays 1. cmp/con come from args."""
+def sched_lambdas(base, step, total, a2_start_frac, a2_lambda, cmp_start_frac=0.0, cmp_ramp_frac=0.0):
+    """Segmented A1/A2 loss schedule + Stage-B composition ramp (spec 五.2). A1 (first a2_start_frac):
+    distill=resid=1. A2 (after): distill=resid=a2_lambda. fore stays 1. Composition terms
+    (cmp/con/state_con/vic_future) are 0 before cmp_start_frac*total, then ramp LINEARLY to their base
+    weight over cmp_ramp_frac*total. With base cmp/con/state_con/vic_future=0 (Stage A) this is a no-op."""
     lam = SimpleNamespace(**vars(base))
     if step >= int(a2_start_frac * total):
         lam.distill = base.distill * a2_lambda
         lam.resid = base.resid * a2_lambda
+    start = int(cmp_start_frac * total); ramp = max(1, int(cmp_ramp_frac * total))
+    frac = 0.0 if step < start else min(1.0, (step - start) / ramp)
+    for k in ("cmp", "con", "state_con", "vic_future"):
+        if hasattr(base, k):
+            setattr(lam, k, getattr(base, k) * frac)
     return lam
 
 
@@ -221,6 +228,10 @@ def main():
     ap.add_argument("--lambda-fore", type=float, default=1.0); ap.add_argument("--lambda-distill", type=float, default=1.0)
     ap.add_argument("--lambda-resid", type=float, default=1.0); ap.add_argument("--lambda-vic", type=float, default=0.05)
     ap.add_argument("--lambda-cmp", type=float, default=0.0); ap.add_argument("--lambda-con", type=float, default=0.0)
+    ap.add_argument("--lambda-state-con", type=float, default=0.0, help="Stage-B latent (LayerNorm) consistency; 0=OFF")
+    ap.add_argument("--lambda-vic-future", type=float, default=0.0, help="Stage-B anti-collapse on transitioned z_h; 0=OFF")
+    ap.add_argument("--cmp-start-frac", type=float, default=0.5, help="Stage-B: fraction of steps before composition losses turn on")
+    ap.add_argument("--cmp-ramp-frac", type=float, default=0.25, help="Stage-B: linear ramp fraction to full cmp/con/state_con/vic_future")
     args = ap.parse_args()
 
     # lazy (server-only) heavy imports so this module's helpers import without xarray
@@ -256,12 +267,15 @@ def main():
     else:
         prefixes = [s for s in args.unfreeze_q_prefixes.split(",") if s]
         assert prefixes, "Stage B requires --unfreeze-q-prefixes (e.g. 'core.blocks.2.,core.head.')"
+        assert args.lambda_cmp > 0 or args.lambda_con > 0, \
+            "Stage B must enable composition (--lambda-cmp/--lambda-con > 0) or Q4 gets NO training signal (spec 五/objective)."
         unf = unfreeze_q_by_prefix(student, prefixes)
         log(f"Stage B: unfroze {len(unf)} q tensors: {unf[:6]}{' ...' if len(unf) > 6 else ''}")
     student.alpha.fill_(1.0)                                           # alpha FIXED 1.0 in BOTH stages (never scheduled)
 
     lambdas = SimpleNamespace(fore=args.lambda_fore, distill=args.lambda_distill, resid=args.lambda_resid,
-                              vic=args.lambda_vic, cmp=args.lambda_cmp, con=args.lambda_con)
+                              vic=args.lambda_vic, cmp=args.lambda_cmp, con=args.lambda_con,
+                              state_con=args.lambda_state_con, vic_future=args.lambda_vic_future)
     log(f"student q trainable: {sum(1 for p in student.q.parameters() if p.requires_grad)}/"
         f"{sum(1 for _ in student.q.parameters())}  stage={args.stage}")
     student.train()
@@ -314,7 +328,8 @@ def main():
             sampler.set_epoch(epoch)
         for batch in loader:
             data = to_device(batch, dev)
-            lam_step = sched_lambdas(lambdas, step, total_steps, args.a2_start_frac, args.a2_lambda)
+            lam_step = sched_lambdas(lambdas, step, total_steps, args.a2_start_frac, args.a2_lambda,
+                                     cmp_start_frac=args.cmp_start_frac, cmp_ramp_frac=args.cmp_ramp_frac)
             with torch.no_grad():
                 t_pred = teacher.encode(data, pred_start=cl, preds_length=tl)[0].detach()
             opt.zero_grad(set_to_none=True)

@@ -35,6 +35,13 @@ import torch.nn as nn
 from models.plan_b_b4 import ObsWorldB4
 
 
+# Exclusive-only composition splits (spec 五.3-4), FROZEN. TRAIN covers totals 10/15/20; HELDOUT is
+# disjoint and covers unseen split ratios + total=10 + total=20. Unused when cmp/con=0 (Stage A), so
+# Stage-A loss/forecast numerics are byte-unchanged.
+EXCL_TRAIN_PARTITIONS = [(5, 5), (7, 8), (10, 10)]                     # totals 10, 15, 20
+EXCL_HELDOUT_PARTITIONS = [(3, 7), (6, 4), (4, 11), (8, 12), (2, 18)]  # totals 10, 10, 15, 20, 20 (disjoint)
+
+
 class ObsWorldB4Exclusive(ObsWorldB4):
     ARCH = "ObsWorldB4Exclusive"
     ROUTE_VERSION = "exclusive_v1"
@@ -47,6 +54,12 @@ class ObsWorldB4Exclusive(ObsWorldB4):
         # alpha: NON-learnable schedule value (buffer, not a Parameter). Fixed at deploy.
         self.register_buffer("alpha", torch.tensor(1.0))
         self.route_version = self.ROUTE_VERSION
+        # exclusive composition splits (overridable via contract_cfg; unused in Stage A)
+        cfg = contract_cfg or {}
+        if "partitions" not in cfg:
+            self.partitions = [tuple(p) for p in EXCL_TRAIN_PARTITIONS]
+        if "heldout_partitions" not in cfg:
+            self.heldout_partitions = [tuple(p) for p in EXCL_HELDOUT_PARTITIONS]
 
     # ---- dual-signature forward so DDP works: -------------------------------
     #   model(data)                        -> inference (NO teacher)
@@ -124,6 +137,12 @@ class ObsWorldB4Exclusive(ObsWorldB4):
         valid = cloud_win * lc_mask.unsqueeze(1)
         td = teacher_pred.detach()
         logs, terms, total = {}, {}, pred.new_zeros(())
+        # never-alone guard (spec 五.7): latent state-consistency must co-occur with real target loss
+        # AND an endpoint composition/consistency loss (else identity/collapse trivially satisfies it).
+        if float(getattr(lam, "state_con", 0.0)) > 0:
+            assert float(getattr(lam, "fore", 0.0)) > 0 and (
+                float(getattr(lam, "cmp", 0.0)) > 0 or float(getattr(lam, "con", 0.0)) > 0), \
+                "state_con must never train alone: require fore>0 and (cmp>0 or con>0) (spec 五.7)."
 
         if float(getattr(lam, "fore", 0.0)) > 0:                                        # real label, beat teacher
             l_fore, _ = self.ndvi_loss(pred, data)
@@ -135,8 +154,12 @@ class ObsWorldB4Exclusive(ObsWorldB4):
             r_teacher = (td - prior).detach()
             l_r = (((residual - r_teacher) ** 2) * valid).sum() / (valid.sum() + 1e-8)
             logs["resid"] = l_r.detach(); terms["resid"] = l_r; total = total + lam.resid * l_r
-        if float(getattr(lam, "cmp", 0.0)) > 0 or float(getattr(lam, "con", 0.0)) > 0:  # Phase-B composition
-            k = len(self.partitions); l_cmp = pred.new_zeros(()); l_con = pred.new_zeros(())
+        # Phase-B composition: cmp (composed endpoint accuracy) / con (output consistency) / state_con
+        # (LayerNorm-normalized LATENT consistency, direct branch stop-grad). All default 0 => Stage-A unchanged.
+        if any(float(getattr(lam, k, 0.0)) > 0 for k in ("cmp", "con", "state_con")):
+            import torch.nn.functional as F
+            k = len(self.partitions)
+            l_cmp = pred.new_zeros(()); l_con = pred.new_zeros(()); l_state = pred.new_zeros(())
             for (h1, h2) in self.partitions:
                 h = h1 + h2
                 y_cmp = self._composed_pred(prior, z_t, u_future, geo, h1, h2, B, H, W)
@@ -144,14 +167,29 @@ class ObsWorldB4Exclusive(ObsWorldB4):
                 th, ch = targ_win[:, h - 1], cloud_win[:, h - 1]
                 l_cmp = l_cmp + self._masked_mse1(y_cmp, th, ch, lc_mask)
                 l_con = l_con + self._masked_mse1(y_cmp, y_dir.detach(), ch, lc_mask)
-            l_cmp, l_con = l_cmp / k, l_con / k
+                if float(getattr(lam, "state_con", 0.0)) > 0:                            # normalized latent consistency (五.5)
+                    z_cmp = self.composed_state(z_t, u_future, geo, h1, h2)
+                    z_dir = self.direct_state(z_t, u_future, geo, h).detach()            # direct branch stop-grad
+                    zc = F.layer_norm(z_cmp, (z_cmp.shape[-1],)); zd = F.layer_norm(z_dir, (z_dir.shape[-1],))
+                    l_state = l_state + ((zc - zd) ** 2).mean()
+            l_cmp, l_con, l_state = l_cmp / k, l_con / k, l_state / k
             if float(getattr(lam, "cmp", 0.0)) > 0:
-                logs["cmp"] = l_cmp.detach(); total = total + lam.cmp * l_cmp
+                logs["cmp"] = l_cmp.detach(); terms["cmp"] = l_cmp; total = total + lam.cmp * l_cmp
             if float(getattr(lam, "con", 0.0)) > 0:
-                logs["con"] = l_con.detach(); total = total + lam.con * l_con
+                logs["con"] = l_con.detach(); terms["con"] = l_con; total = total + lam.con * l_con
+            if float(getattr(lam, "state_con", 0.0)) > 0:
+                logs["state_con"] = l_state.detach(); terms["state_con"] = l_state; total = total + lam.state_con * l_state
         if float(getattr(lam, "vic", 0.0)) > 0:
             var_t, cov_t = self.vicreg_loss(z_t)
             logs["vic_var"] = var_t.detach(); total = total + lam.vic * (25.0 * var_t + cov_t)
+        if float(getattr(lam, "vic_future", 0.0)) > 0:                                   # anti-collapse on transitioned z_h (五.6)
+            l_vf = pred.new_zeros(())
+            for h in (10, self.target_len):
+                z_h = self.direct_state(z_t, u_future, geo, h)
+                var_h, cov_h = self.vicreg_loss(z_h)
+                l_vf = l_vf + (25.0 * var_h + cov_h)
+            l_vf = l_vf / 2
+            logs["vic_future"] = l_vf.detach(); terms["vic_future"] = l_vf; total = total + lam.vic_future * l_vf
         logs["alpha"] = self.alpha.detach().clone()
         logs["total"] = total.detach()
         return pred, {"total": total, "logs": logs, "terms": terms}
