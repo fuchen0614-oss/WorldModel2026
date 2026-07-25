@@ -65,9 +65,12 @@ def _seed_everything(seed):
 
 
 def _seed_worker(worker_id):
+    # torch already derives each worker's torch.initial_seed() as base_seed+worker_id, so it
+    # is per-worker unique already. Adding +worker_id again double-counts (and collides across
+    # ranks). Standard PyTorch recipe = torch.initial_seed() % 2**32.
     import random
     import numpy as np
-    s = (torch.initial_seed() + worker_id) % (2 ** 32)
+    s = torch.initial_seed() % (2 ** 32)
     np.random.seed(s); random.seed(s)
 
 
@@ -169,12 +172,13 @@ def _log_conflict(model, terms):
 
 
 @torch.no_grad()
-def validate(model, loader, loss_fn, dev, max_batches=50):
+def validate(model, loader, loss_fn, dev, max_batches=0):
+    """max_batches=0 => FULL val (no biased prefix). >0 truncates (dev only)."""
     from train.train_plan_b_contextformer import to_device  # lazy (server-only)
     m = model.module if hasattr(model, "module") else model
     m.eval(); tot, n = 0.0, 0
     for i, batch in enumerate(loader):
-        if i >= max_batches:
+        if max_batches > 0 and i >= max_batches:
             break
         data = to_device(batch, dev)
         preds = m(data)                                                # exclusive inference forecast
@@ -200,6 +204,12 @@ def main():
     ap.add_argument("--grad-clip", type=float, default=1.0)
     ap.add_argument("--seed", type=int, default=42, help="explicit reproducible seed (torch/cuda/numpy/random + DataLoader)")
     ap.add_argument("--log-interval", type=int, default=50); ap.add_argument("--val-interval", type=int, default=1000)
+    ap.add_argument("--val-max-batches", type=int, default=0,
+                    help="0 => FULL val (tournament selection). >0 truncates val (dev/debug only, biased).")
+    ap.add_argument("--early-stop-patience", type=int, default=5,
+                    help="stop after N consecutive full-val no-improvements (0 disables). Best+last always saved.")
+    ap.add_argument("--early-stop-min-epochs", type=int, default=10,
+                    help="never early-stop before this many completed epochs")
     ap.add_argument("--ckpt-interval", type=int, default=2000); ap.add_argument("--state-dim", type=int, default=256)
     ap.add_argument("--stage", choices=("A", "B"), default="A")
     ap.add_argument("--lr-warmup-steps", type=int, default=200, help="linear LR warm-up steps (alpha is NEVER scheduled)")
@@ -295,7 +305,7 @@ def main():
                     "student_init_sha256": student_init_sha, "args": vars(args)}, path)
 
     cl, tl = m.context_len, m.target_len
-    best_val, step, t0, done = float("inf"), 0, time.time(), False
+    best_val, no_improve, step, t0, done = float("inf"), 0, 0, time.time(), False
     for epoch in range(10_000):
         if done:
             break
@@ -325,10 +335,24 @@ def main():
                     f"a2={'Y' if step>=int(args.a2_start_frac*total_steps) else 'N'} "
                     + " ".join(f"{k}={lg[k]:.4f}" for k in ("fore", "distill", "resid", "vic_var", "cmp", "con") if k in lg))
             if step % args.val_interval == 0 or step == total_steps:
-                vloss = validate(student, val_loader, loss_fn, dev)
-                log(f"  [val] step {step} val_loss={vloss:.5f} (best {best_val:.5f})")
-                if rank0() and vloss < best_val:
-                    best_val = vloss; save(out / "checkpoint_best.pt", step, vloss); log(f"  saved best {vloss:.5f}")
+                vloss = validate(student, val_loader, loss_fn, dev, max_batches=args.val_max_batches)
+                improved = vloss < best_val
+                log(f"  [val] step {step} epoch={epoch} val_loss={vloss:.5f} (best {best_val:.5f}) "
+                    f"no_improve={no_improve}{'' if args.val_max_batches == 0 else ' (TRUNCATED val — not selection-grade)'}")
+                if improved:
+                    best_val = vloss; no_improve = 0
+                    if rank0():
+                        save(out / "checkpoint_best.pt", step, vloss); log(f"  saved best {vloss:.5f}")
+                else:
+                    no_improve += 1
+                # early stop: only after >= min epochs, then `patience` consecutive full-val no-improvements.
+                # best_val/no_improve are updated identically on every rank (validate() all-reduces vloss),
+                # so all ranks decide `done` together — no DDP desync.
+                if (args.early_stop_patience > 0 and epoch >= args.early_stop_min_epochs
+                        and no_improve >= args.early_stop_patience):
+                    log(f"  [early-stop] epoch={epoch}>={args.early_stop_min_epochs} & {no_improve} consecutive "
+                        f"vals w/o improve >= patience {args.early_stop_patience} — stopping (best+last saved)")
+                    done = True; break
             if rank0() and step % args.ckpt_interval == 0:
                 save(out / f"checkpoint_step{step}.pt", step, None)
             if step >= total_steps:
