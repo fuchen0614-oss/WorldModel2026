@@ -59,6 +59,7 @@ def main() -> int:
     ap.add_argument("--data-manifest", default=""); ap.add_argument("--dataset-root", default="")
     ap.add_argument("--split", default="val"); ap.add_argument("--n-cubes", type=int, default=128)
     ap.add_argument("--workers", type=int, default=8); ap.add_argument("--device", default="cuda")
+    ap.add_argument("--overwrite", action="store_true", help="wipe an existing diag with different provenance")
     ap.add_argument("--out", default="")
     args = ap.parse_args()
 
@@ -75,7 +76,8 @@ def main() -> int:
     ds = GreenEarthNetContextformerDataset(args.val_dir, dl_cloudmask=True)
     idx_of = {str(Path(p)): i for i, p in enumerate(ds.filepaths)}
     targets = _targets(args, ds)
-    base = Path(args.out).parent if args.out else Path("evaluations/context_prior_diag")
+    # per-OUT base dir (out.with_suffix('')) so two diags with different --out never collide
+    base = Path(args.out).with_suffix("") if args.out else Path("evaluations/context_prior_diag")
     tdir, pdir = base / "teacher/pred", base / "prior/pred"
     ckpt_sha = _sha(args.ckpt)
     prov = {"ckpt_sha256": ckpt_sha, "n_cubes": len(targets), "kind": "context_prior_diag"}
