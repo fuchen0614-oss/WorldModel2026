@@ -1,6 +1,6 @@
 # OOD-t hot-dry predictive-state audit protocol (FROZEN)
 
-- git_commit: `0ca675032439d87e6925618a9e80ed70d4cde374` (dirty=True)
+- git_commit: `83e62e9d9e58a4705f0e7dcec74df97a1acaad21` (dirty=False)
 - frozen_utc: 2026-07-26T00:00:00Z
 - primary tier: **broad**  (strict=36, broad=84, primary=84, control_unique=45)
 

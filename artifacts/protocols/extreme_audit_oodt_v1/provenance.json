@@ -2,8 +2,8 @@
   "kind": "provenance",
   "builder_version": "extreme_audit_protocol_v1",
   "selector_kind": "hotdry_selection_oodt",
-  "git_commit": "0ca675032439d87e6925618a9e80ed70d4cde374",
-  "git_dirty": true,
+  "git_commit": "83e62e9d9e58a4705f0e7dcec74df97a1acaad21",
+  "git_dirty": false,
   "frozen_utc": "2026-07-26T00:00:00Z",
   "dataset_root_basename": "earthnet2021x",
   "inputs": {
