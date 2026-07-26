@@ -1,0 +1,18 @@
+{
+  "kind": "provenance",
+  "builder_version": "extreme_audit_protocol_v1",
+  "selector_kind": "hotdry_selection_oodt",
+  "git_commit": "0ca675032439d87e6925618a9e80ed70d4cde374",
+  "git_dirty": true,
+  "frozen_utc": "2026-07-26T00:00:00Z",
+  "dataset_root_basename": "earthnet2021x",
+  "inputs": {
+    "selection_json_sha256": "8acc5054f2e02404d4ca41a292ee5020b14a68d02dc088bbf1b93177c4d4db4d",
+    "climatology_json_sha256": "0123a0166485ac651e38ba4bbef610528a3bcf01d2606f86f80fdffeafe93f24"
+  },
+  "seed": 42,
+  "n_train_used": 22749,
+  "n_train_excluded": 1067,
+  "n_oodt_valid": 1704,
+  "n_oodt_excluded": 200
+}

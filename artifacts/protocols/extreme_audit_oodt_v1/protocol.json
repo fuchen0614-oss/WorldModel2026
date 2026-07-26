@@ -1,0 +1,57 @@
+{
+  "kind": "extreme_hotdry_state_audit_protocol",
+  "builder_version": "extreme_audit_protocol_v1",
+  "track": "ood-t_chopped",
+  "primary_tier": "broad",
+  "geometry": {
+    "context_days": 50,
+    "total_days": 150,
+    "future_slice": [
+      50,
+      150
+    ]
+  },
+  "variables": {
+    "hot": "eobs_tg",
+    "hot_robust": "eobs_tx",
+    "dry": "eobs_rr",
+    "units": {
+      "hot": "Celsius",
+      "dry": "mm"
+    }
+  },
+  "config": {
+    "valid_fraction_min": 0.8,
+    "min_cohort_n": 30,
+    "lat_bin_deg": 3.0,
+    "lon_bin_deg": 3.0,
+    "lat_band_deg": 6.0,
+    "strict_q": 0.9,
+    "broad_q": 0.8,
+    "normal_band": 0.75,
+    "caliper": 1.5,
+    "reuse_cap": 5,
+    "seed": 42
+  },
+  "matching_features": [
+    "doy",
+    "lat",
+    "lon",
+    "lc_veg_frac",
+    "ctx_cloud_ratio",
+    "ctx_valid_frac",
+    "ctx_ndvi_mean",
+    "future_valid_frac"
+  ],
+  "matching_hard_constraint": "meteorological_season (DJF/MAM/JJA/SON)",
+  "internal_vs_external": {
+    "this_protocol": "forcing-only OOD-t hot-dry subset -- INTERNAL state stress test",
+    "not_this": "EarthNet2021 extreme-2018 EO-WM external protocol (raw NPZ+CSV); no strict same-table reproduction is claimed here."
+  },
+  "counts": {
+    "n_strict": 36,
+    "n_broad": 84,
+    "n_primary": 84,
+    "n_control_unique": 45
+  }
+}
