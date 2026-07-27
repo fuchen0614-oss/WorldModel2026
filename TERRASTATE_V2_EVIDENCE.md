@@ -84,6 +84,14 @@ Manifest `evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chop
 - → Q2 LOAD_BEARING on **both** val and OOD-t; Q1 usable on OOD-t; combined with the Q3 response fidelity,
   the internally-testable weather-driven state is a robust, generalizing property of the model.
 
+### OOD-t detailed metrics (from raw `state_contract_exclusive.json`; no NaN/Inf; ckpt sha `644deaac…` unchanged)
+- **Q1 full**: NSE −0.09866 · |bias| 0.10083 · RMSE25 (rmse_0_5) 0.08205.
+- **Q1 per land-cover** (R2 / RMSE): forest 0.5521 / 0.1473 · shrub 0.5562 / 0.1478 · grass 0.5845 / 0.1451 · crop 0.5847 / 0.1622.
+- **Q2 arms** (R2 / RMSE): full 0.56935 / 0.15059 · alpha0 (frozen prior) 0.54938 / 0.16519 · T_identity 0.54766 / 0.25832.
+- **Q2 CIs**: closure ΔR2 +0.01997, CI [+0.01422, +0.03018] sig; transition ΔR2 +0.02169, CI [+0.01609, +0.03217] sig; floor_pass=True, significant=True; invariants all pass; `clean=False` (T_identity OOD-confounded — closure remains the honest test). VERDICT LOAD_BEARING.
+- Provenance: evaluator commit repo `78073db` + official scorer `a0329636…`; manifest role `ood-t_chopped`, n=1904, data_manifest_sha256 `58c8d648…`.
+
+
 ## val_chopped ↔ OOD-t side-by-side (same frozen boundary80)
 | gate | val_chopped | OOD-t | note |
 |---|---|---|---|
