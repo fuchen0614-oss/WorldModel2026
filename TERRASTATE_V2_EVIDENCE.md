@@ -83,3 +83,47 @@ Manifest `evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chop
 - The load-bearing state is **robust and stronger on OOD-t** (closure +0.020 vs val +0.011).
 - → Q2 LOAD_BEARING on **both** val and OOD-t; Q1 usable on OOD-t; combined with the Q3 response fidelity,
   the internally-testable weather-driven state is a robust, generalizing property of the model.
+
+## val_chopped ↔ OOD-t side-by-side (same frozen boundary80)
+| gate | val_chopped | OOD-t | note |
+|---|---|---|---|
+| Q1 R2 | 0.49732 (< 0.502) | **0.56935 (≥ 0.502)** | usable on OOD-t; short on val |
+| Q1 RMSE | 0.15729 (> 0.156) | **0.15059 (≤ 0.156)** | usable on OOD-t; short on val |
+| Q2 closure ΔR2 | +0.01121 | +0.01997 | both above the 0.005 floor |
+| Q2 closure 95% CI | [+0.00643,+0.02590] sig | [+0.01422,+0.03018] sig | both exclude 0 |
+| Q2 verdict | LOAD_BEARING | LOAD_BEARING | robust across splits |
+
+## Same-caliber OOD-t vs Phase-I B4 (full-weather accuracy anchor)
+| metric | TerraState boundary80 | Phase-I B4 (full-weather) | Δ (TerraState − B4) |
+|---|---|---|---|
+| OOD-t R2 | **0.56935** | 0.58252 | **−0.01317** |
+| OOD-t RMSE | **0.15059** | 0.14342 | **+0.00717** |
+
+TerraState is slightly behind B4 on OOD-t accuracy but **does not collapse**; the full-weather B4 remains the
+accuracy anchor. The state's material contribution (Q2) carries from val into the temporal-OOD split.
+
+## Final evidence table (frozen boundary80, all contracts)
+| contract | split | key metric | verdict |
+|---|---|---|---|
+| Q1 usability | val_chopped | R2 0.49732 / RMSE 0.15729 | SHORT (internal gate 0.502 / 0.156) |
+| Q1 usability | OOD-t | R2 0.56935 / RMSE 0.15059 | PASS |
+| Q2 load-bearing | val_chopped | closure +0.01121, CI [+0.0064,+0.0259], sig | LOAD_BEARING |
+| Q2 load-bearing | OOD-t | closure +0.01997, CI [+0.0142,+0.0302], sig | LOAD_BEARING |
+| Q3 response fidelity | extreme (ood-t subset, 84 pairs) | endpoint PASS; enhancement FAIL | RESPONSE_FIDELITY_ONLY / PARTIAL |
+
+## Paper-usable statement (中文 / English)
+- **中文**：TerraState 在保持实质性时间-OOD 预测能力的同时，形成了在验证集和时间-OOD 条件下都显著服务最终预测的内部状态，并能更忠实地利用真实未来天气（真实天气显著优于季节/地理匹配的错误 donor 天气与气候均值天气）。
+- **English**: TerraState forms an internal predictive state that significantly serves the final forecast on
+  both the validation and the temporal-OOD splits, and that uses the actual future weather more faithfully
+  (real weather significantly outperforms a season/geography-matched wrong-donor weather and a
+  climatology-mean weather), while retaining substantial temporal-OOD predictive skill.
+
+## Forbidden / unsupported claims (do NOT write)
+- Q3's extreme-stratum forecast **R2 = 0.6254 is NOT the full OOD-t Table-1 score**. TerraState's full OOD-t
+  score is **R2 = 0.56935, RMSE = 0.15059**.
+- **0.502 is an INTERNAL frozen gate, not a domain-recognized threshold.**
+- Q3 supports **weather-response fidelity only — NOT hot-dry-specific enhancement**.
+- Do **NOT** claim SOTA, extreme-specific enhancement, or temporal composition.
+- The **"accuracy–verifiability tradeoff" is an observed phenomenon, not a proven causal claim.**
+- OOD-t Q2 (+0.020) is numerically higher than val Q2 (+0.011), but **without a cross-split significance test,
+  do NOT claim that the temporal-OOD condition *causes* a stronger state contribution.**
