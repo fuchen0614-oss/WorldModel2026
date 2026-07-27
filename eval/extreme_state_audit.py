@@ -52,7 +52,11 @@ def _tile(path) -> str:
 
 
 def load_model(ckpt_path, device, arch_hint=None):
-    """Load ObsWorldB4 or ObsWorldB4Exclusive from a checkpoint; construct fresh (random) if ckpt is None."""
+    """Load ObsWorldB4 / ObsWorldB4Exclusive / TerraStateV2 from a checkpoint; fresh (random) if None.
+
+    TerraStateV2 subclasses ObsWorldB4Exclusive and reuses the exclusive T-only inference VERBATIM,
+    so it is loaded into an ObsWorldB4Exclusive shell via the SAME path the Q2 evaluator uses
+    (load_exclusive_from_b4), with a fail-closed exact-key check."""
     from models.plan_b_b4 import ObsWorldB4
     from models.plan_b_b4_exclusive import ObsWorldB4Exclusive, load_exclusive_from_b4
     hp = contextformer6m_hparams(pvt_pretrained=False)
@@ -65,9 +69,12 @@ def load_model(ckpt_path, device, arch_hint=None):
         raise ValueError(f"{ckpt_path} has no b4_state_dict")
     arch = (ck.get("contract_cfg", {}) or {}).get("arch") or ck.get("arch")
     cfg = ck.get("contract_cfg", {"state_dim": 256})
-    if arch == "ObsWorldB4Exclusive":
+    if arch in ("ObsWorldB4Exclusive", "TerraStateV2"):
         model = ObsWorldB4Exclusive(hp, contract_cfg=cfg)
-        model.load_state_dict(ck["b4_state_dict"], strict=False)
+        miss, unexp = load_exclusive_from_b4(model, ck["b4_state_dict"])
+        if miss or unexp:
+            raise ValueError(f"{ckpt_path}: exclusive load NOT clean (arch={arch}): "
+                             f"missing={list(miss)} unexpected={list(unexp)}")
     else:
         model = ObsWorldB4(hp, contract_cfg=cfg)
         try:

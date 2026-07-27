@@ -168,6 +168,16 @@ def _synthetic_adapter_test():
     b4, _ = ESA.load_model(None, cpu, "b4")
     ex, _ = ESA.load_model(None, cpu, "exclusive")
     assert A.weather_in_base(b4) is True and A.weather_in_base(ex) is False, "weather_in_base tags wrong"
+    # arch dispatch: a TerraStateV2-arch checkpoint must load into the exclusive T-only shell (fail-closed)
+    import tempfile
+    fake = {"arch": "TerraStateV2", "contract_cfg": {"state_dim": 256, "arch": "TerraStateV2"},
+            "b4_state_dict": ex.state_dict()}
+    tf = tempfile.NamedTemporaryFile(suffix=".pt", delete=False)
+    torch.save(fake, tf.name)
+    m2, prov = ESA.load_model(tf.name, cpu)
+    assert A.arch_of(m2) == "exclusive" and prov["arch"] == "TerraStateV2", \
+        "TerraStateV2 checkpoint must load into the exclusive (T-only) route"
+    print("  arch dispatch: TerraStateV2 ckpt -> ObsWorldB4Exclusive (clean fail-closed load) OK")
     B, H, W, T = 2, 128, 128, 30
     data = {"dynamic": [torch.rand(B, T, 5, H, W), torch.randn(B, T, 24)],
             "dynamic_mask": [torch.rand(B, T, 1, H, W)], "static": [torch.rand(B, 5, H, W)],
