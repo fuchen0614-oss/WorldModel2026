@@ -16,12 +16,12 @@ frozen-protocol evaluations on the same checkpoint. Provenance is recorded per s
   **fallback: pick the best-Q1 pre-registered candidate = `boundary80`** (NOT chosen by any Q2 margin).
 
 ## Q1 — public usability (official LC-balanced R2, `val_chopped`, bs=1)
-| metric | value | gate | result |
+| metric | value | internal criterion | result |
 |---|---|---|---|
-| R2 | **0.49732** | ≥ 0.502 | short by 0.0047 |
-| RMSE | **0.15729** | ≤ 0.156 | over by 0.0013 |
+| R2 | **0.49732** | ≥ 0.502 (internal, not a domain threshold) | short by 0.0047 |
+| RMSE | **0.15729** | ≤ 0.156 (internal) | over by 0.0013 |
 
-→ **Q1 = SHORT** (usable but below the accuracy qualifier). Accuracy anchor = full-weather Phase-I B4 ≈ 0.512.
+→ **Q1 = SHORT** (usable but below our internal accuracy criterion). Accuracy anchor = full-weather Phase-I B4 ≈ 0.512.
 
 ## Q2 — load-bearing core hard gate (`val_chopped`, bs=1, evaluator 0ca6750)
 - full R2 `0.49732` · alpha0 (== frozen weather-free prior) R2 `0.48610754` · T_identity R2 `0.48542`.
@@ -52,7 +52,7 @@ Frozen protocol SHA: hotdry `f8db1ccb…`, matched_normal `84a09421…`, protoco
 ## Three-gate summary (same frozen boundary80)
 | Gate | Result | Verdict |
 |---|---|---|
-| Q1 (public usability) | R2 0.497 < 0.502, RMSE 0.157 > 0.156 | **SHORT** |
+| Q1 (public usability) | R2 0.497 < 0.502 (internal), RMSE 0.157 > 0.156 (internal) | **SHORT** |
 | Q2 (load-bearing core hard gate) | closure +0.0112, sig, ≥ floor; invariants pass | **LOAD_BEARING ✅** |
 | Q3 (weather response) | endpoint fidelity PASS; hot-dry enhancement FAIL | **RESPONSE_FIDELITY / PARTIAL ✅** |
 
@@ -70,17 +70,17 @@ Frozen protocol SHA: hotdry `f8db1ccb…`, matched_normal `84a09421…`, protoco
 Manifest `evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json`
 (role/protocol `ood-t_chopped` / greenearthnet chopped). Loaded `arch=TerraStateV2` on the exclusive T-only route.
 
-| metric | OOD-t | val (ref) | gate | OOD-t result |
+| metric | OOD-t | val (ref) | internal criterion | OOD-t result |
 |---|---|---|---|---|
-| Q1 R2 | **0.56935** | 0.49732 | ≥ 0.502 | **PASS** |
-| Q1 RMSE | **0.15059** | 0.15729 | ≤ 0.156 | **PASS** |
+| Q1 R2 | **0.56935** | 0.49732 | ≥ 0.502 (internal) | **PASS** |
+| Q1 RMSE | **0.15059** | 0.15729 | ≤ 0.156 (internal) | **PASS** |
 | Q2 closure ΔR2 | **+0.01997** | +0.01121 | ≥ 0.005 | pass |
 | Q2 closure CI | [+0.01422,+0.03018] sig | [+0.00643,+0.02590] sig | > 0 | pass |
 | Q2 verdict | **LOAD_BEARING** | LOAD_BEARING | — | ✅ |
 
-- On the temporal-OOD split boundary80 **clears both Q1 gates** (the val shortfall does not generalize) and is
-  close to the full-weather B4 anchor (OOD-t ≈ **0.583 / 0.143**; R2 gap −0.014, same as the val gap).
-- The load-bearing state is **robust and stronger on OOD-t** (closure +0.020 vs val +0.011).
+- On the temporal-OOD split boundary80 **meets both frozen internal criteria** — the **OOD-t score exceeds the
+  frozen internal criterion** — and is close to the full-weather B4 anchor (OOD-t ≈ **0.583 / 0.143**; R2 gap −0.014, same as the val gap).
+- The load-bearing state **remains significant on OOD-t** (closure +0.020, CI excludes 0; val +0.011).
 - → Q2 LOAD_BEARING on **both** val and OOD-t; Q1 usable on OOD-t; combined with the Q3 response fidelity,
   the internally-testable weather-driven state is a robust, generalizing property of the model.
 
@@ -119,6 +119,34 @@ accuracy anchor. The state's material contribution (Q2) carries from val into th
 | Q2 load-bearing | OOD-t | closure +0.01997, CI [+0.0142,+0.0302], sig | LOAD_BEARING |
 | Q3 response fidelity | extreme (ood-t subset, 84 pairs) | endpoint PASS; enhancement FAIL | RESPONSE_FIDELITY_ONLY / PARTIAL |
 
+## Paper-ready materials
+
+### A. Table 1 — TerraState final metric row (official LC-balanced R2, bs=1, frozen boundary80)
+| model | split | R2 | RMSE | NSE | \|bias\| | RMSE25 |
+|---|---|---|---|---|---|---|
+| TerraState-V2 (boundary80) | val_chopped | 0.49732 | 0.15729 | (val JSON, same schema) | — | — |
+| TerraState-V2 (boundary80) | OOD-t | **0.56935** | **0.15059** | −0.09866 | 0.10083 | 0.08205 |
+| Phase-I B4 (full-weather anchor) | OOD-t | 0.58252 | 0.14342 | — | — | — |
+
+- OOD-t per-LC R2 / RMSE: forest 0.5521/0.1473 · shrub 0.5562/0.1478 · grass 0.5845/0.1451 · crop 0.5847/0.1622.
+- val NSE/\|bias\|/RMSE25/per-LC live in the same `Q1_forecast.full` schema of the val JSON (extract identically if the row is needed complete).
+
+### B. Q2 / Q3 main evidence table
+| contract | split / stratum | statistic | value | 95% CI | verdict |
+|---|---|---|---|---|---|
+| Q2 closure (full − alpha0) | val_chopped | ΔR2 | +0.01121 | [+0.00643, +0.02590] | LOAD_BEARING |
+| Q2 closure (full − alpha0) | OOD-t | ΔR2 | +0.01997 | [+0.01422, +0.03018] | LOAD_BEARING |
+| Q3 endpoint (actual vs donor) | extreme, 84 pairs | ΔLoss | +0.00257 | [+0.00112, +0.00399] | PASS |
+| Q3 endpoint (actual vs mean) | extreme, 84 pairs | ΔLoss | +0.01126 | [+0.00547, +0.01708] | PASS |
+| Q3 hot-dry × normal interaction | extreme | Δ(dloss_donor) | +0.00044 | [−0.00216, +0.00320] | FAIL (no enhancement) |
+
+### C. Figure source fields & recommended plots (NO new runs — plot from the frozen JSONs already in the Release)
+- **Q2 bar+CI** ← `results/{val_q2,oodt_q1q2}_state_contract_exclusive.json`:
+  bars = `Q2_load_bearing.{full,alpha0,T_identity}.R2`; error bar = `Q2_load_bearing.closure_cut_alpha0.bootstrap95.{mean,ci_low,ci_high}`. Two panels (val, OOD-t).
+- **Q3 fidelity bar+CI** ← `results/q3_extreme_state_audit.json`: endpoint arms `actual_vs_donor` / `actual_vs_mean` ΔLoss + geo-cluster CI; forecast-score triplet actual 0.6254 > donor 0.5893 > mean 0.5430 (R2), RMSE 0.1492 < 0.1584 < 0.1971.
+- **per-cube data**: **no `--dump-per-cube` file was produced, and re-running is frozen** — so there is no per-cube path. The finest available units are the bootstrap inputs *inside* the JSONs (Q2 paired n=1019/1904; Q3 84 pairs / geo-clusters). Plot aggregate means with the stored bootstrap CIs; do **not** regenerate per-cube (that would be a new run).
+- Recommended figures: (1) grouped bar of R2 {full, alpha0-prior, T-identity} with closure CI, val vs OOD-t; (2) Q3 forecast R2 {actual, donor, mean} bar; (3) Q3 endpoint ΔLoss {vs donor, vs mean} with CI.
+
 ## Paper-usable statement (中文 / English)
 - **中文**：TerraState 在保持实质性时间-OOD 预测能力的同时，形成了在验证集和时间-OOD 条件下都显著服务最终预测的内部状态，并能更忠实地利用真实未来天气（真实天气显著优于季节/地理匹配的错误 donor 天气与气候均值天气）。
 - **English**: TerraState forms an internal predictive state that significantly serves the final forecast on
@@ -129,9 +157,12 @@ accuracy anchor. The state's material contribution (Q2) carries from val into th
 ## Forbidden / unsupported claims (do NOT write)
 - Q3's extreme-stratum forecast **R2 = 0.6254 is NOT the full OOD-t Table-1 score**. TerraState's full OOD-t
   score is **R2 = 0.56935, RMSE = 0.15059**.
-- **0.502 is an INTERNAL frozen gate, not a domain-recognized threshold.**
+- **0.502 / 0.156 are our INTERNAL frozen criteria, NOT a public/domain-recognized gate.** Never call them a public gate.
 - Q3 supports **weather-response fidelity only — NOT hot-dry-specific enhancement**.
 - Do **NOT** claim SOTA, extreme-specific enhancement, or temporal composition.
 - The **"accuracy–verifiability tradeoff" is an observed phenomenon, not a proven causal claim.**
-- OOD-t Q2 (+0.020) is numerically higher than val Q2 (+0.011), but **without a cross-split significance test,
-  do NOT claim that the temporal-OOD condition *causes* a stronger state contribution.**
+- Wording discipline for OOD-t Q2: OOD-t closure (+0.020) is numerically higher than val (+0.011), but there is
+  **no cross-split significance test** →
+  - write **"Q2 remains significant on OOD-t"**, NOT "Q2 is stronger on OOD-t";
+  - write **"the OOD-t score exceeds the frozen internal criterion"**, NOT "the val shortfall does not generalize";
+  - do NOT claim the temporal-OOD condition *causes* a stronger state contribution.
