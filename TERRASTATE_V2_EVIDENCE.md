@@ -66,6 +66,20 @@ Frozen protocol SHA: hotdry `f8db1ccb…`, matched_normal `84a09421…`, protoco
   weather-free prior yields a verifiable, load-bearing, correctly-responding state, at a small accuracy
   cost (Q1 short by ~0.005). The accuracy anchor remains the full-weather B4 (~0.512).
 
-## OOD-t (temporal-OOD robustness) — PENDING
-- Planned: Q1 + Q2 on `ood-t_chopped` (1904 cubes) with the same frozen boundary80, using the committed
-  `evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json`. Q4 optional.
+## OOD-t (temporal-OOD robustness) — frozen boundary80, `ood-t_chopped` (1904), bs=1, `--sections q1q2`
+Manifest `evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json`
+(role/protocol `ood-t_chopped` / greenearthnet chopped). Loaded `arch=TerraStateV2` on the exclusive T-only route.
+
+| metric | OOD-t | val (ref) | gate | OOD-t result |
+|---|---|---|---|---|
+| Q1 R2 | **0.56935** | 0.49732 | ≥ 0.502 | **PASS** |
+| Q1 RMSE | **0.15059** | 0.15729 | ≤ 0.156 | **PASS** |
+| Q2 closure ΔR2 | **+0.01997** | +0.01121 | ≥ 0.005 | pass |
+| Q2 closure CI | [+0.01422,+0.03018] sig | [+0.00643,+0.02590] sig | > 0 | pass |
+| Q2 verdict | **LOAD_BEARING** | LOAD_BEARING | — | ✅ |
+
+- On the temporal-OOD split boundary80 **clears both Q1 gates** (the val shortfall does not generalize) and is
+  close to the full-weather B4 anchor (OOD-t ≈ **0.583 / 0.143**; R2 gap −0.014, same as the val gap).
+- The load-bearing state is **robust and stronger on OOD-t** (closure +0.020 vs val +0.011).
+- → Q2 LOAD_BEARING on **both** val and OOD-t; Q1 usable on OOD-t; combined with the Q3 response fidelity,
+  the internally-testable weather-driven state is a robust, generalizing property of the model.
