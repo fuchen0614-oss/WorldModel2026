@@ -168,16 +168,21 @@ def _synthetic_adapter_test():
     b4, _ = ESA.load_model(None, cpu, "b4")
     ex, _ = ESA.load_model(None, cpu, "exclusive")
     assert A.weather_in_base(b4) is True and A.weather_in_base(ex) is False, "weather_in_base tags wrong"
-    # arch dispatch: a TerraStateV2-arch checkpoint must load into the exclusive T-only shell (fail-closed)
+    # arch dispatch (fail-closed exact-key load): TerraStateV2 & ObsWorldB4Exclusive -> exclusive T-only
+    # route; ObsWorldB4 -> gate route. Confirms the V2 fix AND that the existing B4/B4Exclusive paths
+    # are intact. load_model RAISES on the exclusive route if missing/unexpected != [].
     import tempfile
-    fake = {"arch": "TerraStateV2", "contract_cfg": {"state_dim": 256, "arch": "TerraStateV2"},
-            "b4_state_dict": ex.state_dict()}
-    tf = tempfile.NamedTemporaryFile(suffix=".pt", delete=False)
-    torch.save(fake, tf.name)
-    m2, prov = ESA.load_model(tf.name, cpu)
-    assert A.arch_of(m2) == "exclusive" and prov["arch"] == "TerraStateV2", \
-        "TerraStateV2 checkpoint must load into the exclusive (T-only) route"
-    print("  arch dispatch: TerraStateV2 ckpt -> ObsWorldB4Exclusive (clean fail-closed load) OK")
+
+    def _fake_ckpt(arch, sd):
+        p = tempfile.NamedTemporaryFile(suffix=".pt", delete=False).name
+        torch.save({"arch": arch, "contract_cfg": {"state_dim": 256, "arch": arch}, "b4_state_dict": sd}, p)
+        return p
+    for arch, src, want in (("TerraStateV2", ex, "exclusive"),
+                            ("ObsWorldB4Exclusive", ex, "exclusive"),
+                            ("ObsWorldB4", b4, "b4")):
+        mdl, prov = ESA.load_model(_fake_ckpt(arch, src.state_dict()), cpu)
+        assert A.arch_of(mdl) == want and prov["arch"] == arch, f"{arch} must dispatch to the {want} route"
+    print("  arch dispatch: TerraStateV2/ObsWorldB4Exclusive -> exclusive, ObsWorldB4 -> b4 (all clean fail-closed) OK")
     B, H, W, T = 2, 128, 128, 30
     data = {"dynamic": [torch.rand(B, T, 5, H, W), torch.randn(B, T, 24)],
             "dynamic_mask": [torch.rand(B, T, 1, H, W)], "static": [torch.rand(B, 5, H, W)],
