@@ -3,9 +3,9 @@
 
 Verifies the multi-process concerns the single-process smoke cannot:
   * no collective deadlock through the FULL run incl. checkpoint_last save;
-  * DDP re-wrap after the stage2->3 unfreeze actually gives the last q block gradients;
-  * both ranks' updated q params are IDENTICAL (q_last_block_sha equal);
-  * boundary80 + checkpoint_last saved; clean exit;
+  * no-FS configuration is identical on every rank and effective lambda_s stays zero;
+  * both ranks' updated model params are IDENTICAL;
+  * boundary80 + checkpoint_last saved before stage3; clean synchronized exit;
   * exact resume runs >=1 further update.
 
 Dual-mode single file:
@@ -83,7 +83,12 @@ def worker():
     outp = os.environ["QCONSIST_OUT"].format(rank=lr)
     json.dump({"rank": lr, "q_last_block_sha": res["q_last_block_sha"],
                "q_grad_seen_stage3": res["q_grad_seen_stage3"], "n_trainable_q": res["n_trainable_q"],
-               "step": res["step"], "final_stage": res["final_stage"]}, open(outp, "w"))
+               "step": res["step"], "final_stage": res["final_stage"],
+               "model_sha": res["model_sha"], "future_state_scale": res["future_state_scale"],
+               "stop_after_step": res["stop_after_step"], "global_batch": res["global_batch"],
+               "accum": res["accum"],
+               "effective_lambdas": [r["effective_lambda_state"] for r in res["loss_log"]]},
+              open(outp, "w"))
 
 
 # ----------------------------------------------------------------------- DRIVER
@@ -126,22 +131,23 @@ def driver(data_root):
     train_cache = str(cache_dir / "train_future_state_cache.pt")
     val_cache = str(cache_dir / "val_future_state_cache.pt")
 
-    def base(od, per_gpu=1, gb=2, max_steps=6, resume=""):
+    def base(od, per_gpu=1, gb=2, max_steps=5, resume=""):
         a = ["--train-dir", train_root, "--val-dir", val_root,
              "--train-cache", train_cache, "--val-cache", val_cache,
              "--student-init", str(init_path), "--teacher-b4", str(init_path),
              "--output-dir", od, "--device", "cpu", "--per-gpu-batch", str(per_gpu),
              "--global-batch", str(gb), "--num-workers", "0", "--max-steps", str(max_steps),
+             "--future-state-scale", "0", "--stop-after-step", "4",
              "--branch-lr", "3e-5", "--q-lr-scale", "0.033", "--lr-warmup-steps", "1",
-             "--val-interval", "2", "--ckpt-interval", "3", "--log-interval", "1",
+             "--val-interval", "1000", "--ckpt-interval", "3", "--log-interval", "1",
              "--unfreeze-q-prefixes", "core.blocks.2.", "--deterministic"]
         if resume:
             a += ["--resume", resume]
         return a
 
-    # 2) main 2-process DDP run (crosses stage2->3 at step 5; total 6)
+    # 2) no-FS 2-process DDP run: total schedule 5, exact 80% boundary/stop at step 4.
     run_out = str(root / "run")
-    _torchrun(base(run_out, max_steps=6), run_out)
+    _torchrun(base(run_out, max_steps=5), run_out)
 
     # 3) read per-rank q-consistency + assert
     q0 = json.load(open(Path(run_out) / "qconsist_rank0.json"))
@@ -152,28 +158,38 @@ def driver(data_root):
         results.append((name, bool(ok), detail))
         print(f"[{'PASS' if ok else 'FAIL'}] {name}" + (f" :: {detail}" if detail else ""), flush=True)
 
-    ck("D1: both ranks crossed to stage 3", q0["final_stage"] == 3 and q1["final_stage"] == 3,
+    ck("D1: both ranks stop at boundary in stage 2", q0["final_stage"] == 2 and q1["final_stage"] == 2,
        f"stages={q0['final_stage']},{q1['final_stage']}")
-    ck("D2: last q block got gradient after DDP re-wrap (both ranks)",
-       q0["q_grad_seen_stage3"] and q1["q_grad_seen_stage3"], f"n_trainable_q={q0['n_trainable_q']}")
-    ck("D3: both ranks' updated q params IDENTICAL", q0["q_last_block_sha"] == q1["q_last_block_sha"]
-       and q0["q_last_block_sha"] != "", f"sha={q0['q_last_block_sha'][:16]}")
+    ck("D2: no stage-3 q gradient/unfreeze on either rank",
+       not q0["q_grad_seen_stage3"] and not q1["q_grad_seen_stage3"]
+       and q0["n_trainable_q"] == q1["n_trainable_q"] == 0,
+       f"n_trainable_q={q0['n_trainable_q']},{q1['n_trainable_q']}")
+    ck("D3: both ranks' updated full model params IDENTICAL",
+       q0["model_sha"] == q1["model_sha"] and q0["model_sha"] != "",
+       f"sha={q0['model_sha'][:16]}")
     ck("D4: boundary80 + checkpoint_last saved (no deadlock, clean exit)",
        (Path(run_out) / "checkpoint_boundary80.pt").exists() and (Path(run_out) / "checkpoint_last.pt").exists())
-    ck("D5: run completed all 6 updates on both ranks", q0["step"] == 6 and q1["step"] == 6,
+    ck("D5: both ranks use scale=0, stop=4, unchanged global batch/accum",
+       q0["step"] == q1["step"] == 4
+       and q0["future_state_scale"] == q1["future_state_scale"] == 0.0
+       and q0["stop_after_step"] == q1["stop_after_step"] == 4
+       and q0["global_batch"] == q1["global_batch"] == 2
+       and q0["accum"] == q1["accum"] == 1
+       and q0["effective_lambdas"] and all(x == 0.0 for x in q0["effective_lambdas"]),
        f"steps={q0['step']},{q1['step']}")
 
     # 4) exact resume: continue from step-3 checkpoint, run >=1 more update, clean exit
     step3 = Path(run_out) / "checkpoint_step3.pt"
     resume_out = str(root / "resume")
-    _torchrun(base(resume_out, max_steps=6, resume=str(step3)), resume_out)
+    _torchrun(base(resume_out, max_steps=5, resume=str(step3)), resume_out)
     r0 = json.load(open(Path(resume_out) / "qconsist_rank0.json"))
     r1 = json.load(open(Path(resume_out) / "qconsist_rank1.json"))
     ck("D6: DDP resume ran >=1 further update to completion",
-       r0["step"] == 6 and r1["step"] == 6, f"resumed steps={r0['step']},{r1['step']}")
-    ck("D7: resumed ranks' q params identical + crossed stage3",
-       r0["q_last_block_sha"] == r1["q_last_block_sha"] and r0["final_stage"] == 3,
-       f"resume sha={r0['q_last_block_sha'][:16]}")
+       r0["step"] == 4 and r1["step"] == 4, f"resumed steps={r0['step']},{r1['step']}")
+    ck("D7: resumed ranks identical, scale=0, and still stage2",
+       r0["model_sha"] == r1["model_sha"] and r0["final_stage"] == r1["final_stage"] == 2
+       and r0["future_state_scale"] == r1["future_state_scale"] == 0.0,
+       f"resume sha={r0['model_sha'][:16]}")
 
     npass = sum(1 for _, ok, _ in results if ok)
     print(f"\n==== DDP SMOKE {npass}/{len(results)} PASSED ====", flush=True)

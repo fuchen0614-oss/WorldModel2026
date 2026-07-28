@@ -9,6 +9,7 @@ Run (from the v2train worktree):
 from __future__ import annotations
 
 import argparse
+import copy
 import sys
 from pathlib import Path
 
@@ -25,7 +26,10 @@ from train.terrastate_future_state_cache import FrozenFutureStateEncoder, Future
 from train.terrastate_v2_common import (
     FULL24_FIELD_ORDER, atomic_torch_save, collate_with_ids, module_pair_sha256, to_device_with_ids,
 )
-from train.train_terrastate_v2 import apply_stage, build_argparser, run_training
+from train.train_terrastate_v2 import (
+    apply_stage, build_argparser, build_optimizer, lambda_state_at, lambda_state_values,
+    lr_factor, run_training,
+)
 
 FORBIDDEN = [
     "tools/hotdry_selector.py", "scripts/build_extreme_audit_protocol.py",
@@ -40,6 +44,16 @@ RESULTS = []
 def check(name, ok, detail=""):
     RESULTS.append((name, bool(ok), detail))
     print(f"[{'PASS' if ok else 'FAIL'}] {name}" + (f" :: {detail}" if detail else ""), flush=True)
+
+
+def nested_tensor_equal(a, b):
+    if torch.is_tensor(a):
+        return torch.equal(a, b)
+    if isinstance(a, dict):
+        return a.keys() == b.keys() and all(nested_tensor_equal(a[k], b[k]) for k in a)
+    if isinstance(a, (list, tuple)):
+        return len(a) == len(b) and all(nested_tensor_equal(x, y) for x, y in zip(a, b))
+    return a == b
 
 
 def one_batch(data_dir, n=2):
@@ -147,6 +161,65 @@ def main():
           f"loss={float(loss):.5f} terms={ {k: round(float(v),5) for k,v in aux['logs'].items() if k in ('gt','kd','future_state')} }")
     model.zero_grad(set_to_none=True); model.eval()
 
+    # ---- 2a. default scale=1 is an exact regression to the legacy raw-lambda path ---
+    # Same fixed model/input/teacher/cache, including one optimizer+scheduler update.
+    legacy = copy.deepcopy(model).train()
+    scaled = copy.deepcopy(model).train()
+    apply_stage(legacy, 1, ["core.blocks.2."])
+    apply_stage(scaled, 1, ["core.blocks.2."])
+    teacher_fixed = model.forecast(data).detach()
+    raw_lam = lambda_state_at(1, 6)
+    raw_v, effective_v = lambda_state_values(1, 6, 1.0)
+    opt_legacy = build_optimizer(legacy, 3e-5, 0.033, 0.0)
+    opt_scaled = build_optimizer(scaled, 3e-5, 0.033, 0.0)
+    sch_legacy = torch.optim.lr_scheduler.LambdaLR(
+        opt_legacy, lr_lambda=lambda s: lr_factor(s, 1, 6))
+    sch_scaled = torch.optim.lr_scheduler.LambdaLR(
+        opt_scaled, lr_lambda=lambda s: lr_factor(s, 1, 6))
+    _, aux_legacy = legacy(data, teacher_fixed, z_star, pmask, raw_lam)
+    _, aux_scaled = scaled(data, teacher_fixed, z_star, pmask, effective_v)
+    aux_legacy["total"].backward()
+    aux_scaled["total"].backward()
+    grad_equal = all(
+        (pa.grad is None) == (pb.grad is None)
+        and (pa.grad is None or torch.equal(pa.grad, pb.grad))
+        for pa, pb in zip(legacy.parameters(), scaled.parameters()))
+    components_equal = all(
+        torch.equal(aux_legacy["terms"][k], aux_scaled["terms"][k])
+        for k in ("gt", "kd", "future_state"))
+    opt_legacy.step(); sch_legacy.step()
+    opt_scaled.step(); sch_scaled.step()
+    state_equal = nested_tensor_equal(legacy.state_dict(), scaled.state_dict())
+    opt_equal = nested_tensor_equal(opt_legacy.state_dict(), opt_scaled.state_dict())
+    sched_equal = nested_tensor_equal(sch_legacy.state_dict(), sch_scaled.state_dict())
+    default_parser_scale = build_argparser().get_default("future_state_scale")
+    check("2a: scale=1 exact default regression (rtol=0, atol=0)",
+          raw_lam == raw_v == effective_v and default_parser_scale == 1.0
+          and torch.equal(aux_legacy["total"], aux_scaled["total"])
+          and components_equal and grad_equal and state_equal and opt_equal and sched_equal,
+          f"lambda={raw_lam:.6f} loss={float(aux_scaled['total']):.8f} "
+          f"grad={grad_equal} model/opt/sched={state_equal}/{opt_equal}/{sched_equal}")
+
+    # ---- 2b. scale=0 has exactly the GT+0.5*KD objective and gradient ---------------
+    nofs = copy.deepcopy(model).train()
+    gt_kd = copy.deepcopy(model).train()
+    apply_stage(nofs, 1, ["core.blocks.2."])
+    apply_stage(gt_kd, 1, ["core.blocks.2."])
+    _, aux_nofs = nofs(data, teacher_fixed, z_star, pmask, 0.0)
+    _, aux_gtkd = gt_kd(data, teacher_fixed, z_star, pmask, 0.0)
+    reference_total = aux_gtkd["terms"]["gt"] + 0.5 * aux_gtkd["terms"]["kd"]
+    aux_nofs["total"].backward()
+    reference_total.backward()
+    nofs_grad_equal = all(
+        (pa.grad is None) == (pb.grad is None)
+        and (pa.grad is None or torch.equal(pa.grad, pb.grad))
+        for pa, pb in zip(nofs.parameters(), gt_kd.parameters()))
+    check("2b: scale=0 objective/gradient exactly GT + 0.5 KD (rtol=0, atol=0)",
+          torch.equal(aux_nofs["total"], reference_total) and nofs_grad_equal
+          and all(torch.isfinite(aux_nofs["terms"][k]) for k in ("gt", "kd", "future_state")),
+          f"total={float(aux_nofs['total']):.8f} fs={float(aux_nofs['terms']['future_state']):.8f} "
+          f"grad={nofs_grad_equal}")
+
     # ---- 3. full24 path enters T (weather changes forecast) -------------------------
     with torch.no_grad():
         y0 = model.forecast(data)
@@ -194,7 +267,8 @@ def main():
     apply_stage(model, 1, ["core.blocks.2."])
 
     # ---- 10/11/2b. tiny 3-stage run: no-NaN, 80% boundary ckpt, stage transitions ---
-    def base_args(od, per_gpu=2, gb=2, max_steps=6, max_epochs=40, resume="", deterministic=True):
+    def base_args(od, per_gpu=2, gb=2, max_steps=6, max_epochs=40, resume="",
+                  deterministic=True, future_state_scale=1.0, stop_after_step=0):
         a = build_argparser().parse_args([
             "--train-dir", train_dir, "--val-dir", val_dir,
             "--train-cache", str(cache_dir / "train_future_state_cache.pt"),
@@ -203,8 +277,10 @@ def main():
             "--output-dir", od, "--device", "cpu",
             "--per-gpu-batch", str(per_gpu), "--global-batch", str(gb), "--num-workers", "0",
             "--max-steps", str(max_steps), "--max-epochs", str(max_epochs),
+            "--future-state-scale", str(future_state_scale),
+            "--stop-after-step", str(stop_after_step),
             "--branch-lr", "3e-5", "--q-lr-scale", "0.033",
-            "--lr-warmup-steps", "1", "--val-interval", "2", "--ckpt-interval", "3",
+            "--lr-warmup-steps", "1", "--val-interval", "1000", "--ckpt-interval", "3",
             "--log-interval", "1", "--unfreeze-q-prefixes", "core.blocks.2.",
         ] + (["--resume", resume] if resume else []) + (["--deterministic"] if deterministic else []))
         return a
@@ -229,6 +305,59 @@ def main():
         for s in res_tail)
     check("12: save/resume — resumed next-step losses match uninterrupted", aligned,
           f"ref_tail={ {k: round(v,5) for k,v in ref_tail.items()} } res_tail={ {k: round(v,5) for k,v in res_tail.items()} }")
+
+    # ---- 12b. no-FS boundary stop + metadata + exact scale-0 resume -----------------
+    wofs_out = out_dir / "wofs"
+    wofs = run_training(base_args(str(wofs_out), max_steps=5,
+                                  future_state_scale=0.0, stop_after_step=4))
+    wofs_ck = torch.load(wofs_out / "checkpoint_boundary80.pt",
+                         map_location="cpu", weights_only=False)
+    expected_objective = all(
+        abs(r["total"] - (r["gt"] + 0.5 * r["kd"])) <= 1e-7
+        and r["effective_lambda_state"] == 0.0
+        and r["lambda_state_raw"] == lambda_state_at(r["step"] - 1, 5)
+        for r in wofs["loss_log"])
+    branch_changed = any(
+        not k.startswith("q.") and not torch.equal(v, init_ck["b4_state_dict"][k])
+        for k, v in wofs_ck["b4_state_dict"].items()
+        if k in init_ck["b4_state_dict"] and torch.is_tensor(v))
+    wofs_meta = (
+        wofs["step"] == 4 and wofs["final_stage"] == 2 and not wofs["q_grad_seen_stage3"]
+        and wofs_ck["step"] == 4 and wofs_ck["stage"] == 2
+        and wofs_ck["total_steps"] == 5 and wofs_ck["q_freeze"]["trainable_q"] == []
+        and wofs_ck["future_state_scale"] == 0.0
+        and wofs_ck["args"]["future_state_scale"] == 0.0
+        and wofs_ck["lambda_state_raw"] == lambda_state_at(4, 5)
+        and wofs_ck["effective_lambda_state"] == 0.0
+        and wofs_ck["loss_weights"]["kd"] == 0.5)
+    check("12b: no-FS stops at boundary before stage3; loss/checkpoint identity exact",
+          expected_objective and wofs_meta and branch_changed,
+          f"step/stage={wofs['step']}/{wofs['final_stage']} raw/effective="
+          f"{wofs_ck['lambda_state_raw']}/{wofs_ck['effective_lambda_state']} "
+          f"branch_updated={branch_changed}")
+
+    wofs_resume_out = out_dir / "wofs_resume"
+    wofs_resume = run_training(base_args(
+        str(wofs_resume_out), max_steps=5,
+        resume=str(wofs_out / "checkpoint_step3.pt"),
+        future_state_scale=0.0, stop_after_step=4))
+    wofs_step4 = next(r for r in wofs["loss_log"] if r["step"] == 4)
+    wofs_resume_step4 = next(r for r in wofs_resume["loss_log"] if r["step"] == 4)
+    check("12c: no-FS checkpoint resume preserves scale and next update",
+          wofs_resume["step"] == 4 and wofs_resume["final_stage"] == 2
+          and wofs_resume_step4["effective_lambda_state"] == 0.0
+          and abs(wofs_step4["total"] - wofs_resume_step4["total"])
+          <= 1e-4 * (abs(wofs_step4["total"]) + 1e-3),
+          f"full/resume step4={wofs_step4['total']:.8f}/{wofs_resume_step4['total']:.8f}")
+
+    mismatch_rejected = False
+    try:
+        run_training(base_args(str(out_dir / "wofs_bad_resume"), max_steps=5,
+                               resume=str(wofs_out / "checkpoint_step3.pt"),
+                               future_state_scale=1.0, stop_after_step=4))
+    except AssertionError as e:
+        mismatch_rejected = "future_state_scale mismatch" in str(e)
+    check("12d: resume rejects future-state-scale mismatch", mismatch_rejected)
 
     # ---- 13. single vs 'DDP' global-batch / effective-update definition -------------
     e_a = run_training(base_args(str(out_dir / "gb_a"), per_gpu=2, gb=4, max_steps=0, max_epochs=2))  # accum=2

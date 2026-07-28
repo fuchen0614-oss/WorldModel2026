@@ -76,6 +76,17 @@ def lambda_state_at(step: int, total: int) -> float:
     return LAM_LATE                                      # 0.01
 
 
+def lambda_state_values(step: int, total: int, future_state_scale: float) -> tuple[float, float]:
+    """Return (scheduled/raw lambda_s, effective lambda_s).
+
+    ``future_state_scale`` is an explicit ablation multiplier.  Its CLI default is 1.0,
+    so the production schedule and loss are bit-for-bit unchanged unless the ablation is
+    deliberately requested.
+    """
+    raw = lambda_state_at(step, total)
+    return raw, raw * future_state_scale
+
+
 def stage_at(step: int, total: int) -> int:
     frac = step / max(1, total)
     if frac < STAGE1_FRAC:
@@ -191,7 +202,7 @@ def validate_v2(model, loader, cache, dev):
 # ------------------------------------------------------------------ checkpoint schema
 def make_checkpoint(raw, opt, sched, *, epoch, step, micro_in_epoch, stage, trainable_q,
                     unfreeze_prefixes, best_val, total_steps, accum, world, global_batch,
-                    shas, args, lambda_state, gathered_rng):
+                    shas, args, lambda_state_raw, lambda_state_effective, gathered_rng):
     return {
         "arch": raw.ARCH, "route_version": raw.ROUTE_VERSION,
         "b4_state_dict": raw.state_dict(), "contract_cfg": raw.config(),
@@ -202,10 +213,17 @@ def make_checkpoint(raw, opt, sched, *, epoch, step, micro_in_epoch, stage, trai
         "stage": stage, "q_freeze": {"trainable_q": trainable_q, "unfreeze_prefixes": unfreeze_prefixes},
         "rng_state": capture_rng_state(),
         "rng_states_by_rank": gathered_rng,
-        "best_val": best_val, "lambda_state": lambda_state,
+        "best_val": best_val,
+        # Keep the legacy key as the weight actually applied to the loss.  The explicit
+        # raw/effective pair makes an ablation checkpoint unambiguous.
+        "lambda_state": lambda_state_effective,
+        "lambda_state_raw": lambda_state_raw,
+        "effective_lambda_state": lambda_state_effective,
+        "future_state_scale": float(args.future_state_scale),
         "total_steps": total_steps, "accum": accum, "world_size": world, "global_batch": global_batch,
         "alpha": float(raw.alpha), "sha": shas, "args": vars(args),
-        "loss_weights": {"gt": raw.W_GT, "kd": raw.W_KD},
+        "loss_weights": {"gt": raw.W_GT, "kd": raw.W_KD,
+                         "future_state_scale": float(args.future_state_scale)},
         "selection_note": ("This checkpoint is NOT automatically final. Final selection (doc 88 "
                            "§6.3): satisfy validation Q1 first, then pick the min non-intervention "
                            "future-state val loss among candidates {stage2_end_boundary80, "
@@ -230,6 +248,11 @@ def run_training(args, dataset_factory=None) -> dict:
     if dataset_factory is None:
         from data.greenearthnet_contextformer_dataset import GreenEarthNetContextformerDataset
         dataset_factory = lambda split, d: GreenEarthNetContextformerDataset(d, dl_cloudmask=True)
+
+    if not math.isfinite(args.future_state_scale) or args.future_state_scale < 0:
+        raise ValueError("--future-state-scale must be finite and >= 0")
+    if args.stop_after_step < 0:
+        raise ValueError("--stop-after-step must be >= 0")
 
     local_rank = int(os.environ.get("LOCAL_RANK", 0))
     world = int(os.environ.get("WORLD_SIZE", 1))
@@ -299,8 +322,15 @@ def run_training(args, dataset_factory=None) -> dict:
     updates_per_epoch = max(len(loader) // accum, 1)
     total_steps = args.max_steps if args.max_steps > 0 else args.max_epochs * updates_per_epoch
     boundary80 = int(STAGE3_FRAC * total_steps)
+    stop_after_step = args.stop_after_step if args.stop_after_step > 0 else total_steps
+    if stop_after_step > total_steps:
+        raise ValueError(f"--stop-after-step {stop_after_step} exceeds scheduled total_steps {total_steps}")
     log(f"world={world} per_gpu={args.per_gpu_batch} accum={accum} global_batch={args.global_batch} "
-        f"updates/epoch={updates_per_epoch} total_steps={total_steps} boundary80={boundary80}")
+        f"updates/epoch={updates_per_epoch} total_steps={total_steps} boundary80={boundary80} "
+        f"stop_after_step={stop_after_step}")
+    raw0, effective0 = lambda_state_values(0, total_steps, args.future_state_scale)
+    log(f"future_state_scale={args.future_state_scale:g} "
+        f"lambda_state_raw(step0)={raw0:.6f} effective_lambda_state(step0)={effective0:.6f}")
 
     cl, tl = student.context_len, student.target_len
 
@@ -331,6 +361,21 @@ def run_training(args, dataset_factory=None) -> dict:
         assert rk["arch"] == student.ARCH, "resume arch mismatch"
         assert rk["sha"]["q_projector_init_sha256"] == q_proj_init_sha, "resume q/proj SHA mismatch"
         assert rk["total_steps"] == total_steps, "resume total_steps mismatch (schedule changed)"
+        for sha_key in (
+            "teacher_sha256", "student_init_sha256",
+            "train_cache_sha256", "val_cache_sha256",
+            "train_manifest_sha256", "val_manifest_sha256",
+        ):
+            assert rk["sha"].get(sha_key) == shas.get(sha_key), (
+                f"resume {sha_key} mismatch: checkpoint={rk['sha'].get(sha_key)} "
+                f"current={shas.get(sha_key)}")
+        assert int(rk["global_batch"]) == args.global_batch, "resume global_batch mismatch"
+        assert int(rk["accum"]) == accum, "resume gradient-accumulation mismatch"
+        resume_scale = float((rk.get("args") or {}).get(
+            "future_state_scale", rk.get("future_state_scale", 1.0)))
+        assert resume_scale == float(args.future_state_scale), (
+            f"resume future_state_scale mismatch: checkpoint={resume_scale} "
+            f"CLI={args.future_state_scale}")
         current_stage = int(rk["stage"])
         apply_stage(student, current_stage, unfreeze_prefixes)   # restore freeze-set BEFORE loading opt
         student.load_state_dict(rk["b4_state_dict"], strict=True)
@@ -361,11 +406,14 @@ def run_training(args, dataset_factory=None) -> dict:
         raw = model.module if hasattr(model, "module") else model
         trainable_q = sorted(n for n, p in raw.q.named_parameters() if p.requires_grad)
         gathered_rng = _gather_rng()                                  # <-- collective; all ranks
+        lambda_raw, lambda_effective = lambda_state_values(
+            step, total_steps, args.future_state_scale)
         ck = make_checkpoint(raw, opt, sched, epoch=epoch, step=step, micro_in_epoch=micro_in_epoch,
                              stage=current_stage, trainable_q=trainable_q, unfreeze_prefixes=unfreeze_prefixes,
                              best_val=best_val, total_steps=total_steps, accum=accum, world=world,
                              global_batch=args.global_batch, shas=shas, args=args,
-                             lambda_state=lambda_state_at(step, total_steps), gathered_rng=gathered_rng)
+                             lambda_state_raw=lambda_raw,
+                             lambda_state_effective=lambda_effective, gathered_rng=gathered_rng)
         ck["candidate"] = candidate                                  # which pre-registered candidate this is
         if rank0():
             atomic_torch_save(ck, path)
@@ -378,6 +426,12 @@ def run_training(args, dataset_factory=None) -> dict:
                 save(out / "checkpoint_boundary80.pt", epoch, micro_in_epoch, None,
                      candidate="stage2_end_boundary80")
                 log(f"  [boundary80] forced checkpoint saved at step {step}")
+                # An exact boundary-stop run must not enter partial q unfreezing.  The
+                # forced checkpoint above is stage 2 and is the only formal ablation
+                # checkpoint; leave the in-memory model in stage 2 before terminating.
+                if args.stop_after_step == step:
+                    log(f"  [stop] requested at boundary80 step {step}; stage 3 not entered")
+                    return
             trainable_q = apply_stage(model.module if hasattr(model, "module") else model,
                                       new_stage, unfreeze_prefixes)
             if world > 1:                      # re-wrap DDP so the reducer sees the new grad set
@@ -404,7 +458,7 @@ def run_training(args, dataset_factory=None) -> dict:
             z_star, pmask = train_cache.gather(batch["filepath"], dev)
             with torch.no_grad():
                 teacher_pred = teacher.encode(data, pred_start=cl, preds_length=tl)[0].detach()
-            lam_s = lambda_state_at(step, total_steps)
+            lam_s_raw, lam_s = lambda_state_values(step, total_steps, args.future_state_scale)
             in_window = (micro_idx - skip) % accum
             is_boundary = (in_window == accum - 1)
             sync_ctx = model.no_sync() if (world > 1 and not is_boundary) else nullcontext()
@@ -427,7 +481,11 @@ def run_training(args, dataset_factory=None) -> dict:
                 log(f"WARN non-finite loss window @ step {step}; skip update (all ranks)")
                 opt.zero_grad(set_to_none=True); window_finite = True
                 sched.step(); step += 1
-                maybe_transition(stage_at(step, total_steps)); continue
+                maybe_transition(stage_at(step, total_steps))
+                if stop_after_step < total_steps and step >= stop_after_step:
+                    done = True
+                    break
+                continue
 
             raw_m = model.module if hasattr(model, "module") else model
             if current_stage == 3 and not q_grad_seen_stage3:        # verify unfrozen q block trains
@@ -442,18 +500,26 @@ def run_training(args, dataset_factory=None) -> dict:
 
             if rank0():
                 lg = {k: float(v) for k, v in aux["logs"].items() if k not in ("alpha",)}
-                loss_log.append({"step": step, "stage": current_stage, "lambda_state": lam_s,
+                loss_log.append({"step": step, "stage": current_stage,
+                                 "future_state_scale": float(args.future_state_scale),
+                                 "lambda_state_raw": lam_s_raw,
+                                 "lambda_state": lam_s,
+                                 "effective_lambda_state": lam_s,
                                  "total": float(aux["total"]), "gt": lg.get("gt"),
                                  "kd": lg.get("kd"), "future_state": lg.get("future_state")})
             if step % args.log_interval == 0 and rank0():
                 now = time.time(); ips = (step - step_prev) / max(now - t_prev, 1e-6); t_prev, step_prev = now, step
                 l = aux["logs"]
                 log(f"step {step}/{total_steps} st{current_stage} {ips:.2f}it/s "
-                    f"lam_s={lam_s:.4f} lr={sched.get_last_lr()[0]:.2e} "
+                    f"lam_s_raw={lam_s_raw:.4f} lam_s_effective={lam_s:.4f} "
+                    f"fs_scale={args.future_state_scale:g} lr={sched.get_last_lr()[0]:.2e} "
                     f"total={float(l['total']):.5f} gt={float(l['gt']):.5f} "
                     f"kd={float(l['kd']):.5f} fs={float(l['future_state']):.5f}")
 
             maybe_transition(stage_at(step, total_steps))
+            if stop_after_step < total_steps and step >= stop_after_step:
+                done = True
+                break
 
             if step % args.val_interval == 0 or step == total_steps:
                 vfs, vgt = validate_v2(model, val_loader, val_cache, dev)
@@ -490,6 +556,9 @@ def run_training(args, dataset_factory=None) -> dict:
     return {"step": step, "best_val": best_val, "total_steps": total_steps,
             "loss_log": loss_log, "boundary80": boundary80, "accum": accum,
             "global_batch": args.global_batch, "final_stage": current_stage,
+            "future_state_scale": float(args.future_state_scale),
+            "stop_after_step": stop_after_step,
+            "model_sha": state_sha(raw_m.state_dict()),
             "q_grad_seen_stage3": q_grad_seen_stage3, "q_last_block_sha": q_last_block_sha,
             "n_trainable_q": len(tq)}
 
@@ -508,6 +577,10 @@ def build_argparser():
     ap.add_argument("--num-workers", type=int, default=8)
     ap.add_argument("--max-epochs", type=int, default=40)
     ap.add_argument("--max-steps", type=int, default=0, help=">0 overrides epochs (smoke)")
+    ap.add_argument("--stop-after-step", type=int, default=0,
+                    help=">0 stops execution at this update without changing the planned schedule/total_steps")
+    ap.add_argument("--future-state-scale", type=float, default=1.0,
+                    help="explicit multiplier on scheduled lambda_s; use 0 only for the no-FS-anchor ablation")
     ap.add_argument("--branch-lr", type=float, default=3e-5)
     ap.add_argument("--q-lr-scale", type=float, default=0.033, help="q LR = branch LR x this (doc: 0.02-0.05)")
     ap.add_argument("--weight-decay", type=float, default=0.0)
