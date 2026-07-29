@@ -59,11 +59,36 @@ status() {
   [[ -f "$PIPELINE_LOG" ]] && tail -60 "$PIPELINE_LOG"
 }
 
+summarize() {
+  val_json=$VAL_OUT/state_contract_exclusive.json
+  ood_json=$OODT_OUT/state_contract_exclusive.json
+  [[ -f "$val_json" ]] || die "missing completed val JSON: $val_json"
+  [[ -f "$ood_json" ]] || die "missing completed OOD-t JSON: $ood_json"
+
+  python "$V2/scripts/summarize_terrastate_no_fs_q1q2.py" \
+    --val-json "$val_json" \
+    --ood-json "$ood_json" \
+    --output-json "$EVAL_ROOT/full_vs_no_fs_q1q2.json" \
+    --output-md "$EVAL_ROOT/full_vs_no_fs_q1q2.md"
+
+  touch "$EVAL_ROOT/Q1Q2_COMPLETE"
+  touch "$EVAL_ROOT/Q3_NOT_RUN"
+  find "$EVAL_ROOT" -type f ! -name SHA256SUMS.txt -print0 |
+    sort -z |
+    xargs -0 sha256sum > "$EVAL_ROOT/SHA256SUMS.txt"
+  cat "$EVAL_ROOT/full_vs_no_fs_q1q2.md"
+  log "Q1Q2_SUMMARY_COMPLETE"
+}
+
 if [[ "$ACTION" == "status" ]]; then
   status
   exit 0
 fi
-[[ "$ACTION" == "run" ]] || die "usage: $0 {run|status}"
+if [[ "$ACTION" == "summary" ]]; then
+  summarize
+  exit 0
+fi
+[[ "$ACTION" == "run" ]] || die "usage: $0 {run|status|summary}"
 
 printf '%s\n' "$$" > "$PID_FILE"
 trap 'rm -f "$PID_FILE"' EXIT
