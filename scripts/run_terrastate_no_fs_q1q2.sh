@@ -104,9 +104,18 @@ gpu_processes=$(nvidia-smi --query-compute-apps=pid --format=csv,noheader 2>/dev
   die "GPU compute processes are already running"
 }
 
-mkdir -p "$LOCAL_OODT" "$EVAL_ROOT"
-log "STAGE ood-t_chopped -> $LOCAL_OODT"
-rsync -a --delete --whole-file --info=progress2 "$DATA/ood-t_chopped/" "$LOCAL_OODT/"
+mkdir -p "$LOCAL_VAL" "$LOCAL_OODT" "$EVAL_ROOT"
+# GreenEarthNet chopped tracks may contain symlinked cubes. Formal manifests
+# resolve paths and correctly reject links that escape LOCAL_STAGE, so materialize
+# the targets with -L instead of preserving symlinks.
+log "STAGE materialized val_chopped -> $LOCAL_VAL"
+rsync -aL --delete --whole-file --info=progress2 "$DATA/val_chopped/" "$LOCAL_VAL/"
+log "STAGE materialized ood-t_chopped -> $LOCAL_OODT"
+rsync -aL --delete --whole-file --info=progress2 "$DATA/ood-t_chopped/" "$LOCAL_OODT/"
+
+remaining_links=$(find "$LOCAL_VAL" "$LOCAL_OODT" -type l -print -quit)
+[[ -z "$remaining_links" ]] ||
+  die "local evaluation tracks still contain symlinks: $remaining_links"
 
 log "FREEZE val_chopped manifest"
 python "$V2/scripts/freeze_greenearthnet_chopped_protocol.py" \
