@@ -104,7 +104,15 @@ gpu_processes=$(nvidia-smi --query-compute-apps=pid --format=csv,noheader 2>/dev
   die "GPU compute processes are already running"
 }
 
-mkdir -p "$LOCAL_VAL" "$LOCAL_OODT" "$EVAL_ROOT"
+for local_track in "$LOCAL_VAL" "$LOCAL_OODT"; do
+  if [[ -L "$local_track" ]]; then
+    link_target=$(readlink "$local_track")
+    log "UNLINK local staging symlink $local_track -> $link_target"
+    unlink "$local_track"
+  fi
+  mkdir -p "$local_track"
+done
+mkdir -p "$EVAL_ROOT"
 # GreenEarthNet chopped tracks may contain symlinked cubes. Formal manifests
 # resolve paths and correctly reject links that escape LOCAL_STAGE, so materialize
 # the targets with -L instead of preserving symlinks.
