@@ -187,107 +187,11 @@ CUDA_VISIBLE_DEVICES=0 python "$V2/eval/eval_b4_exclusive_contract.py" \
   2>&1 | tee "$EVAL_ROOT/ood-t_chopped.log"
 
 log "SUMMARIZE Full TerraState vs w/o future-state anchor"
-python - \
-  "$VAL_OUT/state_contract_exclusive.json" \
-  "$OODT_OUT/state_contract_exclusive.json" \
-  "$EVAL_ROOT/full_vs_no_fs_q1q2.json" \
-  "$EVAL_ROOT/full_vs_no_fs_q1q2.md" <<'PY'
-import json
-import math
-import sys
-from pathlib import Path
-
-val_path, ood_path, json_out, md_out = map(Path, sys.argv[1:])
-references = {
-    "val_chopped": {
-        "full_R2": 0.49732,
-        "RMSE": 0.15729,
-        "state_removal_official_delta_R2": 0.01121,
-        "paired_mean_delta_R2": 0.01616,
-        "paired_ci95": [0.00643, 0.02590],
-    },
-    "ood-t_chopped": {
-        "full_R2": 0.56935,
-        "RMSE": 0.15059,
-        "state_removal_official_delta_R2": 0.01997,
-        "paired_mean_delta_R2": 0.02200,
-        "paired_ci95": [0.01422, 0.03018],
-    },
-}
-
-
-def finite_tree(value):
-    if isinstance(value, dict):
-        return all(finite_tree(v) for v in value.values())
-    if isinstance(value, list):
-        return all(finite_tree(v) for v in value)
-    if isinstance(value, float):
-        return math.isfinite(value)
-    return True
-
-
-def extract(path):
-    result = json.loads(path.read_text())
-    assert result["status"] == "COMPLETE"
-    assert result["checkpoint_unchanged"] is True
-    assert result["provenance"]["sections"] == ["q1", "q2"]
-    assert finite_tree(result)
-    q1 = result["Q1_forecast"]["full"]
-    q2 = result["Q2_load_bearing"]
-    closure = q2["closure_cut_alpha0"]["bootstrap95"]
-    transition = q2["transition_identity"]["bootstrap95"]
-    return {
-        "full_R2": q1["R2"],
-        "RMSE": q1["RMSE"],
-        "state_removal_R2": q2["alpha0"]["R2"],
-        "state_removal_official_delta_R2": q2["official_R2_full_minus_alpha0"],
-        "paired_mean_delta_R2": closure["mean"],
-        "paired_ci95": [closure["ci_low"], closure["ci_high"]],
-        "T_identity_R2": q2["T_identity"]["R2"],
-        "T_identity_official_delta_R2": q2["official_R2_full_minus_Tid"],
-        "T_identity_paired_mean_delta_R2": transition["mean"],
-        "T_identity_paired_ci95": [transition["ci_low"], transition["ci_high"]],
-        "q2_verdict": q2["verdict"],
-        "invariants": q2["invariants"],
-        "checkpoint_unchanged": result["checkpoint_unchanged"],
-    }
-
-
-ablations = {
-    "val_chopped": extract(val_path),
-    "ood-t_chopped": extract(ood_path),
-}
-payload = {
-    "status": "Q1_Q2_COMPLETE",
-    "q3_status": "NOT_RUN",
-    "full_terrastate_reference": references,
-    "without_future_state_anchor": ablations,
-}
-Path(json_out).write_text(json.dumps(payload, indent=2, allow_nan=False))
-
-lines = [
-    "# TerraState: Full vs w/o Future-State Anchor",
-    "",
-    "| split | model | Full R2 | RMSE | state-removal R2 | official delta R2 | paired mean | paired 95% CI | T=Id R2 |",
-    "|---|---|---:|---:|---:|---:|---:|---:|---:|",
-]
-for split in ("val_chopped", "ood-t_chopped"):
-    ref, abl = references[split], ablations[split]
-    lines.append(
-        f"| {split} | Full TerraState | {ref['full_R2']:.5f} | {ref['RMSE']:.5f} | — | "
-        f"{ref['state_removal_official_delta_R2']:.5f} | {ref['paired_mean_delta_R2']:.5f} | "
-        f"[{ref['paired_ci95'][0]:.5f}, {ref['paired_ci95'][1]:.5f}] | — |"
-    )
-    lines.append(
-        f"| {split} | w/o FS | {abl['full_R2']:.5f} | {abl['RMSE']:.5f} | "
-        f"{abl['state_removal_R2']:.5f} | {abl['state_removal_official_delta_R2']:.5f} | "
-        f"{abl['paired_mean_delta_R2']:.5f} | "
-        f"[{abl['paired_ci95'][0]:.5f}, {abl['paired_ci95'][1]:.5f}] | "
-        f"{abl['T_identity_R2']:.5f} |"
-    )
-Path(md_out).write_text("\n".join(lines) + "\n")
-print(json.dumps(payload, indent=2, allow_nan=False))
-PY
+python "$V2/scripts/summarize_terrastate_no_fs_q1q2.py" \
+  --val-json "$VAL_OUT/state_contract_exclusive.json" \
+  --ood-json "$OODT_OUT/state_contract_exclusive.json" \
+  --output-json "$EVAL_ROOT/full_vs_no_fs_q1q2.json" \
+  --output-md "$EVAL_ROOT/full_vs_no_fs_q1q2.md"
 
 find "$EVAL_ROOT" -type f ! -name SHA256SUMS.txt -print0 |
   sort -z |
