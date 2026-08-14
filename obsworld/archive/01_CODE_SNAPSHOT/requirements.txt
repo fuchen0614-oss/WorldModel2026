@@ -1,0 +1,14 @@
+torch>=2.0
+torchvision
+zarr
+webdataset
+einops
+pyyaml
+tensorboard
+earthnet==0.3.9
+pytest
+tqdm
+xarray
+netCDF4
+dask[array]
+pyproj

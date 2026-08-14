@@ -1,0 +1,11 @@
+{
+  "method": "TerraState",
+  "split": "OOD-t",
+  "n_minicubes": 1904,
+  "R2": 0.56935,
+  "RMSE": 0.15059,
+  "NSE": -0.099,
+  "absolute_bias": 0.101,
+  "RMSE25": 0.082,
+  "status": "reported_reference_metrics"
+}

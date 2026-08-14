@@ -1,0 +1,15 @@
+2026-07-31 strict-load audit
+
+file=checkpoint_best.pt
+size_bytes=28846423
+sha256=2c5d084236716d84d1ed11289248a501a7cb906675a32ccb8fd73e1f2a26881c
+step=13000
+arch=ObsWorldB4
+val_loss=0.0218854040466249
+state_entries=255
+model_class=ObsWorldB4
+strict_load_missing=0
+strict_load_unexpected=0
+num_params=7180897
+gate_abs_mean=0.11598
+result=PASS

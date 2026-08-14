@@ -1,0 +1,20 @@
+# Plan A · Stage2-v3 (ViT-S encoder + Contextformer-style recipe).
+# Driver = physical4 (precip_sum_5d, temp_mean_5d, vpd_mean_5d, srad_sum_5d):
+# compact, physically-motivated vegetation drivers (water + energy + water-stress).
+# Chosen deliberately over full24 (the 4-vs-21 accuracy gap is physically small;
+# keeps DGH as an interpretable, defensible design).
+# Adds:
+#   - decoder.residual: bounded delta on a last-valid baseline (accuracy lever)
+#   - encoder.freeze=false: end-to-end fine-tune (backbone_lr stays 1e-5)
+# NOTE: smoke/bring-up variant. For real training set require_stage15_checkpoint=true
+# and pass STAGE15_CHECKPOINT.
+_base_: stage2_earthnet_v2_direct_physical4.yaml
+
+model:
+  require_stage15_checkpoint: false
+  encoder:
+    from_checkpoint: null
+    freeze: false
+    unfreeze_at_step: 0
+  decoder:
+    residual: true

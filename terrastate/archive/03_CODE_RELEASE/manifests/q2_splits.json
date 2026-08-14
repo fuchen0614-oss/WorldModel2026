@@ -1,0 +1,12 @@
+{
+  "dataset": "GreenEarthNet",
+  "splits": {
+    "validation": {"n_targets": 952, "n_paired_units": 589},
+    "OOD-t": {"n_targets": 1904, "n_paired_units": 1019}
+  },
+  "interventions": [
+    "full",
+    "state_removed",
+    "identity_transition"
+  ]
+}

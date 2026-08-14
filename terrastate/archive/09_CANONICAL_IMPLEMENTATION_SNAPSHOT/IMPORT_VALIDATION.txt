@@ -1,0 +1,27 @@
+Validation date: 2026-07-30 UTC
+Python: WorldModel2026/.conda/envs/WorldModel/bin/python
+Mode: PYTHONDONTWRITEBYTECODE=1, python -B
+
+v2_training_commit_52578ca:
+  models.terrastate_v2: PASS
+  train.train_terrastate_v2: PASS
+  train.terrastate_future_state_cache: PASS
+  train.terrastate_v2_common: PASS
+  models.plan_b_b4_exclusive: PASS
+  eval.eval_b4_exclusive_contract: PASS
+
+q2_validation_evaluator_commit_221052f:
+  eval.eval_b4_exclusive_contract: PASS
+
+q1_q2_ood_evaluator_commit_78073db:
+  eval.eval_b4_exclusive_contract: PASS
+
+q3_evaluator_commit_4dce19a:
+  eval.extreme_state_audit: PASS
+
+Note:
+  The environment prints a non-fatal optional dependency warning:
+  "Error importing huggingface_hub.hf_api: No module named 'httpx'".
+  It does not prevent the archived modules or checkpoint from loading.
+
+Overall: IMPORT_PASS

@@ -1,0 +1,118 @@
+# ============================================================
+# Stage 1 ViT-S/16 双模态 MAE 预训练配置
+# ============================================================
+# 对齐 SSL4EO-S12 baseline（94.1% EuroSAT linear probe）的标准配置。
+#
+# ⭐ Step/Epoch 换算权威：任务描述相关/23_Step_Epoch换算与各阶段训练时长权威汇总.md
+#
+# 调研依据：
+#   任务描述相关/16_各阶段训练步数与epoch调研报告.md（22 篇顶刊；§1.2 换算表已过期）
+#   本会话 ViT-S vs ViT-B 决策综述（16 篇顶刊）
+#
+# 训练目标：
+#   200 patch-epoch S2-视角（dual 轮流,S2 每步只占一半,实际 S2 effective batch=2048）
+#
+# Step 数推导（核对过三次）：
+#   - 数据：243,968 地点 × 4 季 = 975,872 patches
+#   - global_batch = 8 × 512 = 4096
+#   - dual 模式 S2 每 2 步训一次 → S2 effective batch = 2048
+#   - 1 S2 patch-epoch = 975,872 / 2048 = 476.5 step
+#   - 100 patch-epoch ≈ 47,500 step (实际 99.69)
+#   - 150 patch-epoch ≈ 71,500 step (实际 150.15)
+#   - 200 patch-epoch ≈ 95,000 step (实际 199.37)
+# ============================================================
+
+# ---------- 训练模式 ----------
+# 'dual'(S1/S2 轮流) | 's1_only' | 's2_only'
+training_mode: dual
+
+# ---------- 模型配置 ----------
+model:
+  encoder:
+    # ViT-S/16 标准（embed=384 / depth=12 / heads=6, ~22M 参数）
+    img_size: 256
+    s1_channels: 2          # S1 GRD: VV/VH
+    s2_channels: 12         # S2 L2A: 12 bands
+    patch_size: 16
+    embed_dim: 384
+    depth: 12
+    num_heads: 6
+    mlp_ratio: 4.0
+    dropout: 0.0
+
+  decoder:
+    # MAE 风格的轻量 decoder（is 是 encoder 一半,4 blocks）
+    in_dim: 384             # 必须 == encoder.embed_dim
+    s1_channels: 2
+    s2_channels: 12
+    patch_size: 16
+    img_size: 256
+    decoder_embed_dim: 192  # decoder = encoder 一半（MAE 原论文）
+    depth: 4                # 4 blocks（MAE 风格）
+    num_heads: 6
+    mlp_ratio: 4.0
+    dropout: 0.0
+    decoder_mode: transformer
+
+# ---------- 数据 ----------
+data:
+  split: train
+  random_season: true     # 每步随机取 1 季，配合 dual 模态轮流
+  normalize: true
+  # ⭐ STAGED: 指向运存/本地盘门面目录(S2在/dev/shm真目录, S1是指向/tmp的软链)
+  # 原始数据仍在 /csy-mix02/.../TrainData/SSL4EO-S12-v1.1, 一字未动
+  data_root: /dev/shm/zjliu17_ssl4eo
+  batch_size: 512        # 每卡 batch（8卡 → global 4096）
+  # ⭐ STAGED 最快方案: batch=512 w=6 pf=1
+  # IPC~90G(占剩余55%),step~2.24s,总时长2.5天,安全且最快。
+  num_workers: 6
+  prefetch_factor: 1
+  shard_pattern: "ssl4eos12_shard_{000001..000477}.tar"
+  cache_size: 2000
+
+# ---------- 训练超参 ----------
+# ⭐ batch=512 配置（global=4096, dual → S2 有效 batch=2048）：
+#   1 S2 patch-epoch = 975,872 / 2048 = 476.5 step
+#   100 ep ≈ 47,650 → 对齐 47,500 (实际 99.7 ep)
+#   150 ep ≈ 71,475 → 对齐 71,500 (实际 150.1 ep)
+#   200 ep ≈ 95,300 → 对齐 95,000 (实际 199.4 ep)
+max_steps: 95000          # ≈ 199.4 S2 patch-epoch (batch=512)
+warmup_steps: 2000        # ~4.2 patch-epoch warmup
+log_interval: 100         # 每 100 步打一次
+
+# Loss
+loss:
+  s1_weight: 1.0
+  s2_weight: 1.0
+  loss_type: l1           # 'l1' 或 'mse'
+
+# 掩码比例
+mask_ratio: 0.75
+
+# ---------- 优化器 ----------
+optimizer:
+  name: adamw
+  lr: 0.0003              # global batch 8192,从 3e-4(@4096) 按 sqrt(2) 缩放到 4e-4
+  weight_decay: 0.05
+  betas: [0.9, 0.95]
+
+# ---------- 调度器 ----------
+scheduler:
+  name: cosine
+  warmup_steps: 2000
+  min_lr: 0.0003
+
+# ---------- Epoch 标记（额外保存带 tag 的 ckpt 副本）----------
+# batch=512 对应步数（都对齐 checkpoint_interval=2500）：
+epoch_tag_steps:
+  - {step: 47500, tag: epoch100}    # 实际 99.7 patch-epoch
+  - {step: 72500, tag: epoch150}    # 实际 152.1 patch-epoch
+  - {step: 95000, tag: epoch200}    # 实际 199.4 patch-epoch
+
+# ---------- 输出路径 ----------
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage1_vits_dual_staged
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage1_vits_dual_staged
+checkpoint_interval: 2500  # 每 2500 step 存一次（共 38 个；47500/72500/95000 都对齐）
+
+# 可视化间隔（0 = 关闭,Stage 1 不需要可视化）
+viz_interval: 0

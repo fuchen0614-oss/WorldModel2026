@@ -1,0 +1,21 @@
+Stage2 continuation commit/import validation
+Date: 2026-07-31
+Source commit: WorldModel2026 plan-a-vits 541dd76
+
+Commit byte comparison:
+- 70/70 files match `git show 541dd76:<path>` by SHA-256
+
+Static syntax:
+- 60/60 Python files pass AST parsing
+
+Runtime imports:
+- train.train_stage2_earthnet: PASS
+- models.dynamics.obsworld_factory: PASS
+- models.losses.earthnet_forecasting: PASS
+- eval.aprime_load_bearing: PASS
+- eval.aprime_driver_sensitivity: PASS
+- eval.aprime_composition: PASS
+- eval.eval_stage2_earthnet: PASS
+- data.datasets.earthnet2021: PASS
+
+See VALIDATION.txt for the independent 32-test and 13-check smoke results.

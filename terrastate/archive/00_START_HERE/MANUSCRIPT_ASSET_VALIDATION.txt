@@ -1,0 +1,17 @@
+Validation date: 2026-07-30 UTC
+
+main.tex includegraphics targets:
+  figures/terrastate_concept_overview_author_layout_20260729.png: PASS
+  figures/terrastate_architecture_fig2_author_layout_20260729.png: PASS
+  ../figure_workspace/export/fig3_behavior_singlecol_aaai_cropped.pdf: PASS
+
+Citations used in main.tex: 28
+BibTeX entries in references.bib: 30
+Missing citation keys: 0
+
+Figure mirror hashes:
+  Figure 1: cdb52b05f51a8412ee3de34cdf4cfc9d22dbd89495301a5d32432fd54a405481 PASS
+  Figure 2: 88611ce3b0b26e3ec8daeec75f4ac0369c72890d04d64c43c07d9d7d26f6968f PASS
+  Figure 3: b9049a5a66990a7d026b2049aa4956c817ea3b6764ae5466d16d14197584d17e PASS
+
+Overall: MANUSCRIPT_ASSET_VALIDATION_PASS

@@ -1,0 +1,12 @@
+Validation date: 2026-07-30 UTC
+Command: sha256sum -c MANIFEST.SHA256
+
+README.md: OK
+climatology_train.json: OK
+hotdry_manifest.json: OK
+matched_normal_manifest.json: OK
+protocol.json: OK
+provenance.json: OK
+thresholds.json: OK
+
+Overall: FROZEN_PROTOCOL_MANIFEST_PASS

@@ -1,0 +1,25 @@
+Stage2 continuation validation
+Date: 2026-07-31
+Source repository: WorldModel2026
+Source branch: plan-a-vits
+Source commit: 541dd76
+
+Snapshot:
+- 70 commit-exact files
+- 60 Python files
+- config inheritance chain closed through stage2_earthnet_v2_direct24.yaml
+
+Independent tests from the curated snapshot:
+- test_aprime_eval.py
+- test_obsworld_direct_path.py
+- test_stage2_v2_contract.py
+- test_stage2_v2_training_utils.py
+- test_stage2_components.py
+Result: 32 passed, 4 non-fatal PyTorch nested-tensor warnings
+
+Synthetic Plan-A-prime smoke from the curated snapshot:
+Result: 13/13 PASS
+
+The smoke validates wiring, gradients, information isolation, driver sensitivity,
+state-dependent readout, checkpoint round-trip, optimizer groups, and mask logic.
+It does not validate full-dataset forecasting accuracy.

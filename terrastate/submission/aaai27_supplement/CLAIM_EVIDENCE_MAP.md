@@ -1,0 +1,11 @@
+# Claim--Evidence Map
+
+| Claim | Evidence | Source | Status | Allowed Wording | Forbidden Wording |
+|---|---|---|---|---|---|
+| TerraState retains useful OOD-t forecasting skill. | \(R^2=0.5693493611664086\), RMSE \(=0.1505941190915099\), 1,904 targets. | `evidence_workspace/results_ledger.json`, record `Q1-OODT-FROZEN` | supported | Useful predictive skill on the frozen temporal-shift evaluation. | SOTA, strict superiority, multi-seed robustness. |
+| The explicit state contribution is load-bearing on validation and OOD-t. | State-removal official and paired effects are positive; paired intervals exclude zero. | `results_ledger.json`, Q2 records | supported | The state-mediated contribution carries a measurable forecast increment under the frozen intervention. | All information passes through the state; complete physical state. |
+| Identity-transition substitution supports transition involvement. | Performance degrades in both splits, but the readout receives an unevolved state. | Q2 records; `transition_margin_clean=false` | partially supported | Supporting diagnostic of transition involvement. | Clean proof that the transition is necessary or optimal. |
+| Actual future weather has better complete-window fidelity than both controls on the frozen 84-pair subset. | Donor-minus-actual and mean-minus-actual loss intervals are above zero. | `results_ledger.json`, Q3 record | supported | Conditional response-fidelity result under the frozen matching protocol. | Causal identification, valid counterfactual proof, physical correctness in general. |
+| The reported Q1--Q3 model completed 40 epochs and 14,880 updates. | Formal paper, final tables, and authoritative author confirmation. | `paper/main.tex`; author confirmation dated 2026-07-30 UTC | supported | The submitted model completed the 40-epoch, 14,880-update protocol. | Any intermediate checkpoint identity or development-stage narrative. |
+| Heat--drought-specific enhancement is established. | Interaction CI crosses zero and the frozen verdict is `FAIL`. | Q3 guard in `results_ledger.json` | unsupported | Omit from the Supplementary PDF. | Extreme-specific enhancement. |
+| Temporal composition is established. | No frozen core evidence. | Frozen claim map and result ledger | unsupported | Omit from the Supplementary PDF. | Q4 or composition validation. |

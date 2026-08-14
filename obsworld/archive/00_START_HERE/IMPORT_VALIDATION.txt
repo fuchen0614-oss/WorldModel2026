@@ -1,0 +1,21 @@
+validated_at_utc=2026-07-30T17:42:00Z
+python=/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026/.conda/envs/WorldModel/bin/python
+pythonpath=01_CODE_SNAPSHOT
+bytecode_writes=disabled
+
+modules:
+  train.train_stage1_vits: PASS
+  train.train_stage1_5_dual_conditioned: PASS
+  models.encoders.multimodal_vit_encoder_film: PASS
+
+result=IMPORT_PASS
+
+The validation is a real import test, not only a syntax compilation. Three
+files were required to close the import graph:
+
+  data/datasets/ssl4eo_simple.py
+  models/encoders/tiny_vit_encoder.py
+  models/losses/state_dynamics.py
+
+The last file is included only because the frozen models.losses package
+initializer imports it. Its presence does not expand this archive to Stage 2.

@@ -1,0 +1,7 @@
+Validation date: 2026-07-30 UTC
+Python: WorldModel2026/.conda/envs/WorldModel/bin/python
+Command: PYTHONDONTWRITEBYTECODE=1 python -B examples/smoke.py
+Exit code: 0
+Output: none (the smoke is silent on success)
+
+Overall: PUBLIC_CODE_SMOKE_PASS

@@ -1,0 +1,116 @@
+{
+  "kind": "terrastate_v2_selection_record",
+  "internal_q1_gate": {
+    "R2_min": 0.502,
+    "RMSE_max": 0.156,
+    "result": "NEITHER candidate passed"
+  },
+  "fallback_rule": "无候选达到内部 Q1 qualifier(R2>=0.502 且 RMSE<=0.156);因此在查看任何干预(Q2)结果之前,从预注册候选 {stage2_end_boundary80, future_state_val_best, last} 中选择 Q1 最优者 = boundary80。不允许按 Q2 ablation margin 选择 checkpoint。",
+  "selected": {
+    "candidate": "boundary80",
+    "candidate_tag": "stage2_end_boundary80",
+    "checkpoint_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_boundary80.pt",
+    "step": 11904,
+    "stage": 2,
+    "alpha": 1.0,
+    "file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+    "weight_sha256": "aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7",
+    "q1_R2": 0.49732196418835595,
+    "q1_RMSE": 0.1572881669325748,
+    "future_state_val": 0.3129661069503852,
+    "gt_val": 0.021245447613754347
+  },
+  "candidates_considered": {
+    "boundary80": {
+      "R2": 0.49732196418835595,
+      "RMSE": 0.1572881669325748,
+      "fs_val": 0.3129661069503852,
+      "weight_sha256": "aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7",
+      "step": 11904
+    },
+    "fsval_best": {
+      "R2": 0.49709355615470024,
+      "RMSE": 0.15733399506089182,
+      "fs_val": 0.3128751756233251,
+      "weight_sha256": "aa98fbd2fa302727bc3375dff17e1c414c652c19d0919c4fbcdcd05a0a5d28aa",
+      "step": 14880
+    },
+    "last": {
+      "duplicate_of": "fsval_best"
+    }
+  },
+  "provenance": {
+    "v2_git_commit": "52578ca4b1c0b434b10707cf052a623f0c4e4a99",
+    "main_git_commit": "221052fb3326cec42b84253478774496429ea0d1",
+    "training_config": {
+      "train_dir": "/tmp/zjliu17_mix_stage_v2/train",
+      "val_dir": "/tmp/zjliu17_mix_stage_v2/val_chopped",
+      "train_cache": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/cache/train_future_state_cache.pt",
+      "val_cache": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/cache/val_future_state_cache.pt",
+      "student_init": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/runs/planb_excl_tournament/stageA_rescue_20260726_173149/MAIN/checkpoint_last.pt",
+      "teacher_b4": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/checkpoints/plan_b_b4a/checkpoint_best.pt",
+      "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1",
+      "resume": "",
+      "state_dim": 256,
+      "per_gpu_batch": 8,
+      "global_batch": 64,
+      "num_workers": 8,
+      "max_epochs": 40,
+      "max_steps": 0,
+      "branch_lr": 3e-05,
+      "q_lr_scale": 0.033,
+      "weight_decay": 0.0,
+      "grad_clip": 1.0,
+      "lr_warmup_steps": 300,
+      "unfreeze_q_prefixes": "core.blocks.2.",
+      "seed": 42,
+      "log_interval": 50,
+      "val_interval": 1000,
+      "ckpt_interval": 2000,
+      "device": "cuda",
+      "cache_fail_closed_gb": 4.0,
+      "deterministic": false
+    },
+    "full24_field_order": [
+      "mean_fg",
+      "mean_hu",
+      "mean_pp",
+      "mean_qq",
+      "mean_rr",
+      "mean_tg",
+      "mean_tn",
+      "mean_tx",
+      "min_fg",
+      "min_hu",
+      "min_pp",
+      "min_qq",
+      "min_rr",
+      "min_tg",
+      "min_tn",
+      "min_tx",
+      "max_fg",
+      "max_hu",
+      "max_pp",
+      "max_qq",
+      "max_rr",
+      "max_tg",
+      "max_tn",
+      "max_tx"
+    ],
+    "val_manifest": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/artifacts/protocols/b4_eval/val_chopped.manifest.json",
+      "sha256": "d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e"
+    },
+    "future_state_cache_val": {
+      "config_sha256": "2a14f0a4c3653f38ee52155d38c38f76d01cc234a5fb301a3dfb512ee0101a66",
+      "q_projector_sha256": "da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d",
+      "data_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+      "coverage": 0.31557227383140757
+    },
+    "checkpoint_shas": {
+      "teacher_sha256": "bbe2c3ee6de540ae6eabeb7798f331388112ad370dbcae9533187344f2f8a302",
+      "q_projector_init_sha256": "da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d"
+    },
+    "frozen_utc": "2026-07-27T10:23:54.408098Z"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kind": "table1_greenearthnet_score",
+  "source_manifest": {
+    "path": "/root/nas/users/luzheng/workspace/ssh/czj/WorldModel2026/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+    "sha256": "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49",
+    "dataset": "greenearthnet_chopped",
+    "protocol": "greenearthnet_cvpr2024_chopped_v1",
+    "split": "ood-t_chopped",
+    "role": "ood-t_chopped",
+    "num_files": 1904,
+    "files_sha256": "5c05025bef233100e147fc0645842ee2b2851a8950f41a900707409e629ab687"
+  },
+  "source_manifest_protocol": "greenearthnet_cvpr2024_chopped_v1",
+  "evaluation_track": "ood-t_chopped",
+  "prediction_validation": {
+    "tracked": true,
+    "manifest": {
+      "path": "/root/nas/users/luzheng/workspace/ssh/czj/WorldModel2026/evaluations/greenearthnet_oodt_20260719_214234/direct-p4/oodt_chopped/predictions/prediction_manifest.json",
+      "size_bytes": 449826,
+      "sha256": "2d4ce219f7a928a2141e5436659d76074fc51f7d840af5cfab023aae5cae1d16"
+    },
+    "kind": "greenearthnet_prediction_manifest",
+    "format": "greenearthnet_ndvi_netcdf",
+    "split": "ood-t_chopped",
+    "manifest_protocol": "greenearthnet_cvpr2024_chopped_v1",
+    "source_manifest": {
+      "path": "/root/nas/users/luzheng/workspace/ssh/czj/WorldModel2026/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+      "sha256": "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49",
+      "dataset": "greenearthnet_chopped",
+      "protocol": "greenearthnet_cvpr2024_chopped_v1",
+      "split": "ood-t_chopped",
+      "role": "ood-t_chopped",
+      "num_files": 1904,
+      "files_sha256": "5c05025bef233100e147fc0645842ee2b2851a8950f41a900707409e629ab687"
+    },
+    "prediction_grid": "official_5day_20",
+    "baseline": null,
+    "num_predictions": 1904,
+    "files_sha256": "dbc85d277996ce52570ae90c5803b12a88dcd0a230dea6bf9843205862339683",
+    "extra_predictions_allowed": false
+  },
+  "comparison": null,
+  "workers": 8,
+  "num_target_files": 1904,
+  "num_eligible_pixels": 2112698,
+  "metric_output": {
+    "path": "/root/nas/users/luzheng/workspace/ssh/czj/WorldModel2026/evaluations/greenearthnet_oodt_20260719_214234/direct-p4/oodt_chopped/score/metrics_en21x.json",
+    "size_bytes": 1298,
+    "sha256": "4db6d9793e1cd1c00909388d93f1911f886f51602a2d28fe44e12a30249a2846"
+  }
+}

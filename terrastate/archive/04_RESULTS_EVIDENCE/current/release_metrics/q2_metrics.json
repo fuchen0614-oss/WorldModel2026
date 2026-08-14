@@ -1,0 +1,43 @@
+{
+  "method": "TerraState",
+  "protocol": "frozen-forward state interventions",
+  "validation": {
+    "n_targets": 952,
+    "n_paired_units": 589,
+    "full": {"R2": 0.49732, "RMSE": 0.15729},
+    "state_removed": {
+      "R2": 0.48611,
+      "RMSE": 0.17101,
+      "official_delta_R2": 0.01121,
+      "paired_mean_delta_R2": 0.01616,
+      "paired_bootstrap_95": [0.00643, 0.02590]
+    },
+    "identity_transition": {
+      "R2": 0.48542,
+      "RMSE": 0.26102,
+      "official_delta_R2": 0.01191,
+      "paired_mean_delta_R2": 0.01742,
+      "paired_bootstrap_95": [0.00782, 0.02696]
+    }
+  },
+  "OOD-t": {
+    "n_targets": 1904,
+    "n_paired_units": 1019,
+    "full": {"R2": 0.56935, "RMSE": 0.15059},
+    "state_removed": {
+      "R2": 0.54938,
+      "RMSE": 0.16519,
+      "official_delta_R2": 0.01997,
+      "paired_mean_delta_R2": 0.02200,
+      "paired_bootstrap_95": [0.01422, 0.03018]
+    },
+    "identity_transition": {
+      "R2": 0.54766,
+      "RMSE": 0.25832,
+      "official_delta_R2": 0.02169,
+      "paired_mean_delta_R2": 0.02402,
+      "paired_bootstrap_95": [0.01609, 0.03217]
+    }
+  },
+  "status": "reported_reference_metrics"
+}

@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+{\small
+\setlength{\tabcolsep}{1.5pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\shortstack[l]{Future\\weather} & $R^2\uparrow$ & RMSE$\downarrow$ &
+$\Delta$Loss [95\% CI]$\uparrow$ & \shortstack{Actual\\lower}\\
+\midrule
+Actual & 0.6254 & 0.1492 & reference & ---\\
+\shortstack[l]{Matched\\donor} & 0.5893 & 0.1584 &
+0.00257 [0.00112, 0.00399] & 56/84\\
+\shortstack[l]{Normalized\\mean} & 0.5430 & 0.1971 &
+0.01126 [0.00547, 0.01708] & 69/84\\
+\bottomrule
+\end{tabular}
+}
+\caption{Weather interventions on 84 frozen matched pairs. $\Delta$Loss is the
+masked loss over the complete 20-step forecast window, computed as control
+minus actual (positive values favor actual); intervals are geographic-cluster
+95\% CIs and counts are descriptive. $R^2$ and RMSE apply only to the
+matched subset.}
+\label{tab:q3}
+\end{table}

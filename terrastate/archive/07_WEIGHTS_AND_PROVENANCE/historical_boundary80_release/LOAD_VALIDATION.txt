@@ -1,0 +1,16 @@
+Validation date: 2026-07-30 UTC
+Python: WorldModel2026/.conda/envs/WorldModel/bin/python
+Implementation: 09_CANONICAL_IMPLEMENTATION_SNAPSHOT/v2_training_commit_52578ca
+
+arch: TerraStateV2
+step: 11904
+stage: 2
+candidate: stage2_end_boundary80
+file_sha256: 644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd
+model_load_missing: []
+model_load_unexpected: []
+teacher_sha256: bbe2c3ee6de540ae6eabeb7798f331388112ad370dbcae9533187344f2f8a302
+student_init_sha256: 488052d97c7d1c8a2e805d9838f344daef7ad02e5f185d3025031a5f1c026338
+q_projector_init_sha256: da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d
+
+CHECKPOINT_LOAD_PASS

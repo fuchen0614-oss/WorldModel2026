@@ -1,0 +1,30 @@
+\begin{table*}[t]
+\centering
+{\small
+\setlength{\tabcolsep}{6.0pt}
+\renewcommand{\arraystretch}{0.70}
+\begin{tabular}{llrrrr}
+\toprule
+Split & Configuration & $R^2\uparrow$ & RMSE$\downarrow$ &
+Official $\Delta R^2\uparrow$ & Paired $\Delta R^2$ [95\% CI]\\
+\midrule
+Validation & Full TerraState & 0.49732 & 0.15729 & reference & ---\\
+& State removed & 0.48611 & 0.17101 & 0.01121 &
+0.01616 [0.00643, 0.02590]\\
+& $T_\psi=\mathrm{Id}$ & 0.48542 & 0.26102 & 0.01191 &
+0.01742 [0.00782, 0.02696]\\
+\midrule
+OOD-t & Full TerraState & 0.56935 & 0.15059 & reference & ---\\
+& State removed & 0.54938 & 0.16519 & 0.01997 &
+0.02200 [0.01422, 0.03018]\\
+& $T_\psi=\mathrm{Id}$ & 0.54766 & 0.25832 & 0.02169 &
+0.02402 [0.01609, 0.03217]\\
+\bottomrule
+\end{tabular}
+}
+\caption{Q2 interventions. Official $\Delta R^2$ is dataset-level; paired
+$\Delta R^2$ is the per-minicube mean with paired-bootstrap 95\% CI
+(Validation $n=589$; OOD-t $n=1{,}019$). State removal is primary;
+$T_\psi\!\rightarrow I$ is supporting.}
+\label{tab:q2}
+\end{table*}

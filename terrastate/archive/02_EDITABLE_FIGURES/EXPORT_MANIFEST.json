@@ -1,0 +1,59 @@
+{
+  "format_version": 1,
+  "revision": "2.1-final",
+  "figures": [
+    {
+      "source": "source/fig1_overview.svg",
+      "source_sha256": "26200f87a25445ad87fb3a29d55d921cebcb11309f71e08b78b295df03f10261",
+      "pdf": "export/fig1_overview.pdf",
+      "pdf_sha256": "35992a054de36897e687587d95e6ee744bca9732c74ce480c8ba6f5524b71849",
+      "png": "export/fig1_overview.png",
+      "png_sha256": "0129fd01fe11b96dfa2e1172fa3d2015c87949ef27b92b3e417038c4782e79f9",
+      "pdf_width_pt": 504.0,
+      "pdf_height_pt": 158.4,
+      "png_width_px": 2100,
+      "png_height_px": 660,
+      "png_dpi": 300
+    },
+    {
+      "source": "source/fig2_method.svg",
+      "source_sha256": "6337966059974fe2a0bbc5343fdb76d7040b78e65b276ea7e8f9127431e87f54",
+      "pdf": "export/fig2_method.pdf",
+      "pdf_sha256": "dcfae18e4482a7138554eca8def19f9b01eb571dc1ad2a9de009abff2236009f",
+      "png": "export/fig2_method.png",
+      "png_sha256": "26429e3573e3204836d93d26bd02015663bfc067e0ca40483abefa1fabb2174d",
+      "pdf_width_pt": 504.0,
+      "pdf_height_pt": 223.2,
+      "png_width_px": 2100,
+      "png_height_px": 930,
+      "png_dpi": 300
+    },
+    {
+      "source": "source/fig3_behavior.svg",
+      "source_sha256": "a286526c79a0fa5eee5a9921e82dfa5142e7e7f0f74a67c1b1aca63ae3c03676",
+      "pdf": "export/fig3_behavior.pdf",
+      "pdf_sha256": "18e33c1e5bdcc1b19d2866b8711764f8c7974975c2ad3477efd9277d05915817",
+      "png": "export/fig3_behavior.png",
+      "png_sha256": "8f7ca9883e96bec282ad99ebb1660510611932556e344fe48a0b8d428a19347e",
+      "pdf_width_pt": 504.0,
+      "pdf_height_pt": 151.2,
+      "png_width_px": 2100,
+      "png_height_px": 630,
+      "png_dpi": 300
+    }
+  ],
+  "paper_scale_qa": {
+    "pdf": "qa/paperscale_preview.pdf",
+    "png": "qa/paperscale_preview.png",
+    "page_width_pt": 612,
+    "page_height_pt": 792,
+    "render_dpi": 150
+  },
+  "contact_sheet": {
+    "png": "FIGURE_CONTACT_SHEET.png",
+    "pdf": "qa/figure_contact_sheet.pdf",
+    "render_dpi": 144,
+    "status": "All three panels shown at a common thumbnail width."
+  },
+  "note": "Revision 2.1 final. PDFs are vector exports; PNGs are 300 dpi paper previews."
+}

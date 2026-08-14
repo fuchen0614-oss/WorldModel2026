@@ -1,0 +1,21 @@
+2026-07-31 recovered-weight strict-load audit
+
+Stage1 final 95k
+- file: weights/stage1_final/checkpoint_epoch200_step_95000.pt
+- size: 327546060 bytes
+- SHA-256: 79b20ee6ddc499c60019ed8590108e08789dcc0d8877d1892eb490b2cc5500df
+- metadata: global_step=95000
+- strict load: MultiModalViTEncoder PASS; DualHeadDecoder PASS
+
+Stage1.5 final 60k state-bridge
+- file: weights/stage1_5_final_state_bridge/checkpoint_step_60000.pt
+- size: 363727067 bytes
+- SHA-256: 24646b89eda5fb97ff03a76da5c136969bd1e2af9d76d60bd9537b6e304ff97d
+- metadata: global_step=60000
+- strict load: MultiModalViTEncoderFiLM PASS
+- strict load: PureImagingConditionEncoder PASS
+- strict load: SpatialStateProjector PASS
+- strict load: StateReconstructionBridge PASS
+- strict load: DualHeadDecoder PASS
+
+Release digest and locally recomputed SHA-256 matched for both files.

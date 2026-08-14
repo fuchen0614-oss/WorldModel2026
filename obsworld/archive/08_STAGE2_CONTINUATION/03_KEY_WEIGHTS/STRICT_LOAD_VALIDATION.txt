@@ -1,0 +1,25 @@
+Validation date: 2026-07-31 UTC
+Validation environment: local WorldModel conda environment, CPU, map_location=cpu
+
+direct-p4 STRICT_LOAD_PASS ObsWorldDirectPathModel 360
+rollout-p4 STRICT_LOAD_PASS ObsWorldRolloutModel 360
+
+Procedure:
+1. torch.load(checkpoint, map_location="cpu", weights_only=False)
+2. use the serialized checkpoint config
+3. set model.encoder.from_checkpoint=None and compute_latent_targets=False, as formal evaluation does
+4. create_stage2_model(config, cpu)
+5. load_stage2_model_state(model, checkpoint["model_state_dict"], strict=True)
+
+Result: both selected checkpoints load with no missing or unexpected keys.
+
+plan-a-s1a-full24 STRICT_LOAD_PASS ObsWorldDirectPathModel 360
+- size_bytes: 335371774
+- sha256: 2a0a465fe4d4a148a493954a8acc63b0e6e55896b12631cf3bd9efa08440fad5
+- global_step: 8000
+- driver_protocol: full24
+- Stage1.5 initializer strict load: PASS
+- missing: []
+- unexpected: []
+
+Result: all three selected checkpoints load with no missing or unexpected keys.

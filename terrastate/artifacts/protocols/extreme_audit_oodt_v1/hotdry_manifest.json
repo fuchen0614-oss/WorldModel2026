@@ -1,0 +1,629 @@
+{
+  "schema_version": 2,
+  "dataset": "greenearthnet_chopped",
+  "protocol": "greenearthnet_cvpr2024_chopped_v1",
+  "split": "ood-t_chopped",
+  "role": "ood-t_chopped",
+  "source_splits": [
+    "ood-t_chopped"
+  ],
+  "hash_mode": "sha256",
+  "num_files": 84,
+  "files": [
+    {
+      "path": "ood-t_chopped/JAS21/minicube_103_32TPR_45.49_10.47.nc",
+      "size_bytes": 3394119,
+      "sample_id": "minicube_103_32TPR_45.49_10.47",
+      "sha256": "72b351da84d7ae3cc5cdc8eab40a6b200a9647af7fa1bcda86737867f6f0a6a5"
+    },
+    {
+      "path": "ood-t_chopped/JAS21/minicube_111_32TQM_42.08_12.44.nc",
+      "size_bytes": 3525813,
+      "sample_id": "minicube_111_32TQM_42.08_12.44",
+      "sha256": "243ca62d24f37697853e3be887edb29d6d6755a7acaa721d44847a2c4a30b4bb"
+    },
+    {
+      "path": "ood-t_chopped/JAS21/minicube_112_32TQM_42.36_12.39.nc",
+      "size_bytes": 3468492,
+      "sample_id": "minicube_112_32TQM_42.36_12.39",
+      "sha256": "a967a8d12bb950ac33cb0a7a27ef27fa620a31804a2f76d7350db74ccc2aed48"
+    },
+    {
+      "path": "ood-t_chopped/JAS21/minicube_197_34SEJ_39.50_21.71.nc",
+      "size_bytes": 3552513,
+      "sample_id": "minicube_197_34SEJ_39.50_21.71",
+      "sha256": "99525401b1d8ce0e6edeb3a641e72a27e43478bbbde17ed629756b4ee7082ec9"
+    },
+    {
+      "path": "ood-t_chopped/JAS21/minicube_199_34SEJ_39.49_21.83.nc",
+      "size_bytes": 3525068,
+      "sample_id": "minicube_199_34SEJ_39.49_21.83",
+      "sha256": "64ac0f2c84e48c7ba52caca235d3516a0be7e456d47405f5cd873941e1b93ba6"
+    },
+    {
+      "path": "ood-t_chopped/JAS22/minicube_18_29TQF_40.76_-6.24.nc",
+      "size_bytes": 3485268,
+      "sample_id": "minicube_18_29TQF_40.76_-6.24",
+      "sha256": "db5b31c517efc7404f5e3eed8b90edfcb6ae9da679ae625b02eb17dc1199ce00"
+    },
+    {
+      "path": "ood-t_chopped/JAS22/minicube_19_29TQF_40.87_-5.90.nc",
+      "size_bytes": 3432374,
+      "sample_id": "minicube_19_29TQF_40.87_-5.90",
+      "sha256": "8d806af81ae3fddcd6854bb69c7a3f5300f8aa30172c8c9a613da77ee8c6becb"
+    },
+    {
+      "path": "ood-t_chopped/JAS22/minicube_22_30STJ_38.85_-5.31.nc",
+      "size_bytes": 3128626,
+      "sample_id": "minicube_22_30STJ_38.85_-5.31",
+      "sha256": "ab7a4da0da4d052317034a6879839a0ad635a717967a0fac4a6c29f49ffc0938"
+    },
+    {
+      "path": "ood-t_chopped/JAS22/minicube_23_30STJ_39.19_-5.73.nc",
+      "size_bytes": 3462730,
+      "sample_id": "minicube_23_30STJ_39.19_-5.73",
+      "sha256": "e903fc7633e55140b9a007c91d04de6671225fe41a397a0021f4dc0c8067afe4"
+    },
+    {
+      "path": "ood-t_chopped/JAS22/minicube_27_30TWK_39.68_-2.64.nc",
+      "size_bytes": 3489717,
+      "sample_id": "minicube_27_30TWK_39.68_-2.64",
+      "sha256": "617cd2c0f89b0b1be13842e3816c176bfe647142e7377b76724615c2e26df2bd"
+    },
+    {
+      "path": "ood-t_chopped/JAS22/minicube_28_30TWK_39.82_-2.94.nc",
+      "size_bytes": 3370607,
+      "sample_id": "minicube_28_30TWK_39.82_-2.94",
+      "sha256": "03136503219633602af0cc8c2faf9578f3015f95c7af968a61f67e616afce435"
+    },
+    {
+      "path": "ood-t_chopped/JAS22/minicube_33_30TXR_45.17_-0.36.nc",
+      "size_bytes": 3246749,
+      "sample_id": "minicube_33_30TXR_45.17_-0.36",
+      "sha256": "5f2367f38c87c7356c836bd999e82ada076d086cd9a4f9e1c83708dabc277ddd"
+    },
+    {
+      "path": "ood-t_chopped/JAS22/minicube_38_30TXS_45.96_-0.42.nc",
+      "size_bytes": 3277238,
+      "sample_id": "minicube_38_30TXS_45.96_-0.42",
+      "sha256": "cc5927004d75a2bed72eac150dd4bc72bed3e4183df51d0503f6e53c6570b605"
+    },
+    {
+      "path": "ood-t_chopped/JAS22/minicube_61_31TBF_41.20_-0.55.nc",
+      "size_bytes": 3688631,
+      "sample_id": "minicube_61_31TBF_41.20_-0.55",
+      "sha256": "9cbd1748d57a7263ff1e8040db622b184291c4192ae1b5b5c4346f0d039ae38c"
+    },
+    {
+      "path": "ood-t_chopped/JAS22/minicube_8_29SQB_37.77_-5.77.nc",
+      "size_bytes": 3440000,
+      "sample_id": "minicube_8_29SQB_37.77_-5.77",
+      "sha256": "66f9da59a1572bc2ec5bccbbdf1faf86c8819955aeaad881ebf533f9ad8d1f2d"
+    },
+    {
+      "path": "ood-t_chopped/MAM21/minicube_6_29SQB_37.12_-5.86.nc",
+      "size_bytes": 3356338,
+      "sample_id": "minicube_6_29SQB_37.12_-5.86",
+      "sha256": "c8e3e0c84f32d2687ee2ccb5f698e8322c13c0239f136de1931a4bc5cf8aebe0"
+    },
+    {
+      "path": "ood-t_chopped/MAM21/minicube_8_29SQB_37.77_-5.77.nc",
+      "size_bytes": 3261119,
+      "sample_id": "minicube_8_29SQB_37.77_-5.77",
+      "sha256": "dba8a38af6b1d6454e07df689ea827af941b5e76d90bbab01d3575a44038df09"
+    },
+    {
+      "path": "ood-t_chopped/MAM22/minicube_147_33TVF_41.18_14.17.nc",
+      "size_bytes": 3199639,
+      "sample_id": "minicube_147_33TVF_41.18_14.17",
+      "sha256": "93e178469fd96c092e4202b56cb9d3aab886dccf1cbdc82f600b0cb99375f31d"
+    },
+    {
+      "path": "ood-t_chopped/MAM22/minicube_197_34SEJ_39.50_21.71.nc",
+      "size_bytes": 3498258,
+      "sample_id": "minicube_197_34SEJ_39.50_21.71",
+      "sha256": "e89306dbcdda24deb6c26e40f6c1b81697da90d7123cf87741f42ce33ca094d7"
+    },
+    {
+      "path": "ood-t_chopped/MAM22/minicube_198_34SEJ_39.24_21.03.nc",
+      "size_bytes": 3189612,
+      "sample_id": "minicube_198_34SEJ_39.24_21.03",
+      "sha256": "cd9f7ce1350418e8ffb0042751fb591c2753c9403e21f32519e546988d6091b2"
+    },
+    {
+      "path": "ood-t_chopped/MAM22/minicube_199_34SEJ_39.49_21.83.nc",
+      "size_bytes": 3400431,
+      "sample_id": "minicube_199_34SEJ_39.49_21.83",
+      "sha256": "1078beb3da8bc5b54fa9d1df275ba228bf4cc270eae35786a9bd70a129523ff2"
+    },
+    {
+      "path": "ood-t_chopped/MJJ21/minicube_101_32TPR_45.53_11.26.nc",
+      "size_bytes": 3314863,
+      "sample_id": "minicube_101_32TPR_45.53_11.26",
+      "sha256": "4ff7773cdc7e45d0f6fbab1b0e0bd3f2c7ce38737f07d37384abb32a711764d9"
+    },
+    {
+      "path": "ood-t_chopped/MJJ21/minicube_103_32TPR_45.49_10.47.nc",
+      "size_bytes": 3417262,
+      "sample_id": "minicube_103_32TPR_45.49_10.47",
+      "sha256": "b133ab26962fd13011ee152a9fc6c48ab06a213795bc797b41f45a615a6dc4f9"
+    },
+    {
+      "path": "ood-t_chopped/MJJ21/minicube_224_34TET_47.72_21.24.nc",
+      "size_bytes": 3294381,
+      "sample_id": "minicube_224_34TET_47.72_21.24",
+      "sha256": "affc5827d4e9ad3a93dc610feedb7cd2d01cde8700363ef08eb9306007debbd4"
+    },
+    {
+      "path": "ood-t_chopped/MJJ21/minicube_225_34TET_47.37_22.05.nc",
+      "size_bytes": 3448612,
+      "sample_id": "minicube_225_34TET_47.37_22.05",
+      "sha256": "c77a23735dd77060f82580b33da568c2a286b36c71c4791b0ff78627b2803dc9"
+    },
+    {
+      "path": "ood-t_chopped/MJJ21/minicube_226_34TET_46.98_21.74.nc",
+      "size_bytes": 3358916,
+      "sample_id": "minicube_226_34TET_46.98_21.74",
+      "sha256": "c2367b4f90644deb465199aadf083f8701b2f7b316f8b1d6febacc8cfc9285c6"
+    },
+    {
+      "path": "ood-t_chopped/MJJ21/minicube_28_30TWK_39.82_-2.94.nc",
+      "size_bytes": 3449833,
+      "sample_id": "minicube_28_30TWK_39.82_-2.94",
+      "sha256": "1e853a1da17e0118e338ee015258a43e48f69f49a8be2abc84cc3600a335f73a"
+    },
+    {
+      "path": "ood-t_chopped/MJJ21/minicube_30_30TWM_41.96_-1.70.nc",
+      "size_bytes": 3498303,
+      "sample_id": "minicube_30_30TWM_41.96_-1.70",
+      "sha256": "befe612026bd708684a2103fbffc784968095c1c744cd0968de6b174b4134b64"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_0_29SND_39.29_-8.56.nc",
+      "size_bytes": 3438272,
+      "sample_id": "minicube_0_29SND_39.29_-8.56",
+      "sha256": "d29c0555336ecd757105204fc612b11257037692db1931ee131d46c9ddf86fa3"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_101_32TPR_45.53_11.26.nc",
+      "size_bytes": 3447837,
+      "sample_id": "minicube_101_32TPR_45.53_11.26",
+      "sha256": "fdb374e7969b21c3abe64adbe1f08a5c1f0d8787f582fe4c95a20d7ee8ba2bf8"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_103_32TPR_45.49_10.47.nc",
+      "size_bytes": 3540022,
+      "sample_id": "minicube_103_32TPR_45.49_10.47",
+      "sha256": "09beb4f1055cc5d1d59664234ecdde4b097c7b8d3cdd33909b85e6b852c73841"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_128_32UPC_52.07_11.73.nc",
+      "size_bytes": 3414687,
+      "sample_id": "minicube_128_32UPC_52.07_11.73",
+      "sha256": "4ff179b58e926e89a2fbab393efd01814292987e962da5339a28ae7f3a004f37"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_12_29TPE_39.71_-6.82.nc",
+      "size_bytes": 3349105,
+      "sample_id": "minicube_12_29TPE_39.71_-6.82",
+      "sha256": "c33a9c7f1ecb6a5608ab533d624412c32156afcd056b1373199cedb78ae1d548"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_131_32UQC_51.73_12.23.nc",
+      "size_bytes": 3472428,
+      "sample_id": "minicube_131_32UQC_51.73_12.23",
+      "sha256": "26fa57f10801518bc901f3c9e0bcfe44af52317d249368030041b8efad771ac7"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_133_32UQC_51.92_12.17.nc",
+      "size_bytes": 3318522,
+      "sample_id": "minicube_133_32UQC_51.92_12.17",
+      "sha256": "f07ba4fc9ede9fa96670d715e1a2b5fe8ad4e6e001246ae82a5b2f07d9628af4"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_13_29TPE_39.88_-7.17.nc",
+      "size_bytes": 3369938,
+      "sample_id": "minicube_13_29TPE_39.88_-7.17",
+      "sha256": "9957ab470c14a2157325c515a4abc820deb7cd68e2d4da2bd87e8ab0575e8505"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_158_33TYM_46.41_18.67.nc",
+      "size_bytes": 3360099,
+      "sample_id": "minicube_158_33TYM_46.41_18.67",
+      "sha256": "00247255c02add945308d908021e15c51d4fafd97a3d0aecfb186d6613c2216c"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_159_33TYM_46.57_18.14.nc",
+      "size_bytes": 3356943,
+      "sample_id": "minicube_159_33TYM_46.57_18.14",
+      "sha256": "1e80ff7b1f79ab505ada7b929e4a997b46840c77fe7d193907307a20799027c8"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_160_33TYM_46.19_17.62.nc",
+      "size_bytes": 3445647,
+      "sample_id": "minicube_160_33TYM_46.19_17.62",
+      "sha256": "23b4e5d008ca02058abc5e0dfa4833e72ff1f5d735e2c8ca5b8f365453df8691"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_162_33TYN_46.95_18.60.nc",
+      "size_bytes": 3214731,
+      "sample_id": "minicube_162_33TYN_46.95_18.60",
+      "sha256": "1cefc27ad0917f1d7e4526502258848c04a6f4076764d23dc9a8fe8a631c210c"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_163_33TYN_47.01_18.77.nc",
+      "size_bytes": 3387304,
+      "sample_id": "minicube_163_33TYN_47.01_18.77",
+      "sha256": "76ecb77fa43d58a8b8c17306cc09191245e32b23c8baf0df5dbd158a158d707d"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_18_29TQF_40.76_-6.24.nc",
+      "size_bytes": 3451008,
+      "sample_id": "minicube_18_29TQF_40.76_-6.24",
+      "sha256": "5a9a3b7f71355a2c9e882b0ddcff9fed6b2a73b0f5be6c4f6c8c8b17c0cfceab"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_19_29TQF_40.87_-5.90.nc",
+      "size_bytes": 3270765,
+      "sample_id": "minicube_19_29TQF_40.87_-5.90",
+      "sha256": "41ecb078501d71c4d06e8099d07418980401264bd9fb7752b123cb4949cac1c5"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_1_29SND_39.34_-8.53.nc",
+      "size_bytes": 3391946,
+      "sample_id": "minicube_1_29SND_39.34_-8.53",
+      "sha256": "7dd6ca5bb93747167ae6fbf1c321b9cb0abe2da9a8501b25f43b700db16c7ea9"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_20_29TQF_40.81_-5.66.nc",
+      "size_bytes": 3457471,
+      "sample_id": "minicube_20_29TQF_40.81_-5.66",
+      "sha256": "e9702216dbc07b7799f256cc855c20d267e471422fc5a4bdc432fb27e6088a31"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_219_34TDQ_45.04_20.93.nc",
+      "size_bytes": 3349165,
+      "sample_id": "minicube_219_34TDQ_45.04_20.93",
+      "sha256": "9fae42c13cd0328cbe840b57295b9649d0bdfc3abc851dd2ea1e64d535fe7b3b"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_21_30STJ_39.42_-5.68.nc",
+      "size_bytes": 3371653,
+      "sample_id": "minicube_21_30STJ_39.42_-5.68",
+      "sha256": "9e82ff87eada881cfe17a4f684417e833a13e31d75ed5cf950f1e9b0ac95ea37"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_224_34TET_47.72_21.24.nc",
+      "size_bytes": 3318800,
+      "sample_id": "minicube_224_34TET_47.72_21.24",
+      "sha256": "c31d3a292f86ec25634ae4b3029fc852d1b58621ab0a9bb29e7a37ac58088ddd"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_225_34TET_47.37_22.05.nc",
+      "size_bytes": 3335647,
+      "sample_id": "minicube_225_34TET_47.37_22.05",
+      "sha256": "1909ce9abc9f1a172d6981a6d54c199562d18933bf6a1a0adadd0d83ca27930e"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_226_34TET_46.98_21.74.nc",
+      "size_bytes": 3217012,
+      "sample_id": "minicube_226_34TET_46.98_21.74",
+      "sha256": "349d3390c405a11e01cb3eecc0f5c73a50b48254630f022b38cf44ba80622999"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_22_30STJ_38.85_-5.31.nc",
+      "size_bytes": 3391742,
+      "sample_id": "minicube_22_30STJ_38.85_-5.31",
+      "sha256": "0fa3f369ec21aea216c0aca8a19fb1ce9c5bf7b291eb0b24a3bf86b5cf9bb91e"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_238_34TFT_47.29_22.46.nc",
+      "size_bytes": 3425669,
+      "sample_id": "minicube_238_34TFT_47.29_22.46",
+      "sha256": "7a37e52c0688dfca5b776be52a68b7492f6f7a8f52975635f6cac7f53dc46d31"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_23_30STJ_39.19_-5.73.nc",
+      "size_bytes": 3353806,
+      "sample_id": "minicube_23_30STJ_39.19_-5.73",
+      "sha256": "25c5d7116b3fbbc5ff9888e9cbe2256ec33e2b38a07ef812429cd5b00acbda3e"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_24_30TTK_39.99_-6.07.nc",
+      "size_bytes": 3207500,
+      "sample_id": "minicube_24_30TTK_39.99_-6.07",
+      "sha256": "243196b1c75a7078770a4945336e6a62c21db6a9e33117ce8ed42f743270b4d4"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_26_30TTK_39.70_-6.41.nc",
+      "size_bytes": 3177701,
+      "sample_id": "minicube_26_30TTK_39.70_-6.41",
+      "sha256": "ac8f36de51ffa43362f37897015525141ebe6480372672eb4337196849182a0b"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_27_30TWK_39.68_-2.64.nc",
+      "size_bytes": 3452122,
+      "sample_id": "minicube_27_30TWK_39.68_-2.64",
+      "sha256": "156ebfa49e3f1673af4f74eec52eb9652a41950c7d4571c09191b03c44ad02de"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_28_30TWK_39.82_-2.94.nc",
+      "size_bytes": 3481297,
+      "sample_id": "minicube_28_30TWK_39.82_-2.94",
+      "sha256": "57cfa6b0f272a1ad29fe206da738db9be71b4170645556cc00b4c223e33942ce"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_29_30TWK_40.05_-2.43.nc",
+      "size_bytes": 3642185,
+      "sample_id": "minicube_29_30TWK_40.05_-2.43",
+      "sha256": "5ac14bbd5b9b901ffb26bc0f1f73855ab1862f8470a0c50995f00e1326d9dd3a"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_30_30TWM_41.96_-1.70.nc",
+      "size_bytes": 3527365,
+      "sample_id": "minicube_30_30TWM_41.96_-1.70",
+      "sha256": "e387be554163467d7811035666986dc2d9c22cf5d5116d419c022e3fc792fdd6"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_31_30TWM_41.81_-2.42.nc",
+      "size_bytes": 3474087,
+      "sample_id": "minicube_31_30TWM_41.81_-2.42",
+      "sha256": "45a664adc68c9c1fce677bd089e808603ca23e57739f23300b4a0192ce9027d9"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_32_30TWM_42.08_-2.23.nc",
+      "size_bytes": 3426225,
+      "sample_id": "minicube_32_30TWM_42.08_-2.23",
+      "sha256": "024a61844962849f2a50371112e3d003a45cfd0b13a302a63da0e230328c7076"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_33_30TXR_45.17_-0.36.nc",
+      "size_bytes": 3387540,
+      "sample_id": "minicube_33_30TXR_45.17_-0.36",
+      "sha256": "1576fe82ba9ff5bec12aab7aa91a7baceb583233cf1d55a769b191324281b681"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_36_30TXS_46.61_-0.73.nc",
+      "size_bytes": 3509166,
+      "sample_id": "minicube_36_30TXS_46.61_-0.73",
+      "sha256": "dc008af924b3e6726bd677cba7005291f39b9dca6665cae6879827113b5dc05a"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_37_30TXS_46.65_-0.52.nc",
+      "size_bytes": 3489503,
+      "sample_id": "minicube_37_30TXS_46.65_-0.52",
+      "sha256": "52acec69be3b7756766624a3f5002f89eb818b3c47d71c8c5bdefbfdbb86a08e"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_38_30TXS_45.96_-0.42.nc",
+      "size_bytes": 3368965,
+      "sample_id": "minicube_38_30TXS_45.96_-0.42",
+      "sha256": "c085009a7ab1c58e0d5da21130f6c618535db67d7a2cc472bbd032d665b07d1c"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_42_30TYQ_44.96_-0.34.nc",
+      "size_bytes": 3320222,
+      "sample_id": "minicube_42_30TYQ_44.96_-0.34",
+      "sha256": "4a4e6afc0afe7345d60d5b77ecfd8e629f7c01277f1c5fea4a5b220495ca7f0c"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_43_30TYQ_44.35_0.09.nc",
+      "size_bytes": 3256865,
+      "sample_id": "minicube_43_30TYQ_44.35_0.09",
+      "sha256": "57e686adab222b3730eba6ee4967bc26347c43514699d0d45fa89c2700fe7c1e"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_44_30TYQ_44.48_-0.46.nc",
+      "size_bytes": 3254484,
+      "sample_id": "minicube_44_30TYQ_44.48_-0.46",
+      "sha256": "c3624e16f15070fd1ef30a29d61efa343b19c53a9095bf5bb4f8207b1e71649b"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_46_30TYR_45.49_0.70.nc",
+      "size_bytes": 3412925,
+      "sample_id": "minicube_46_30TYR_45.49_0.70",
+      "sha256": "3742734af387be1db18cf4a3162a547bde8a7b7d92e4a595f1c8d41a05aea165"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_47_30TYR_45.79_0.69.nc",
+      "size_bytes": 3460013,
+      "sample_id": "minicube_47_30TYR_45.79_0.69",
+      "sha256": "ecccc8be41b70c0b7e54327029845eb70b0ee45585c65703e8f54266431f7898"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_56_30UYU_47.75_-0.16.nc",
+      "size_bytes": 3453763,
+      "sample_id": "minicube_56_30UYU_47.75_-0.16",
+      "sha256": "811e26abdb8c0ae3cb159f7c59b49edb8190f93d207986f8e6b049ffecf6bc49"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_5_29SPC_38.81_-6.73.nc",
+      "size_bytes": 3145938,
+      "sample_id": "minicube_5_29SPC_38.81_-6.73",
+      "sha256": "011942a0909d21c65dbaf359b6ca9157e46b9dbf37014cc3b7c092470b77d954"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_67_31TCN_47.31_1.00.nc",
+      "size_bytes": 3309007,
+      "sample_id": "minicube_67_31TCN_47.31_1.00",
+      "sha256": "f585e0bd6df147e0553eb3be3bf3f39256a61350b03be3afa6da2423ad59a603"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_68_31TCN_47.21_0.93.nc",
+      "size_bytes": 3235822,
+      "sample_id": "minicube_68_31TCN_47.21_0.93",
+      "sha256": "850132e10fa10d91a8c018be3e3de90b60c942b13c0596d69e942ccf295809f5"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_6_29SQB_37.12_-5.86.nc",
+      "size_bytes": 3283851,
+      "sample_id": "minicube_6_29SQB_37.12_-5.86",
+      "sha256": "134a992248e102820c647996cd698ec8417a501acbb994ba0a88d83d8a66d0c5"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_78_31TEJ_43.47_3.31.nc",
+      "size_bytes": 3323610,
+      "sample_id": "minicube_78_31TEJ_43.47_3.31",
+      "sha256": "17bfc6a82a0187ba77062198a426ffb408be758321f7582a5e0d5b3b77c6a265"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_86_31UFP_48.13_5.44.nc",
+      "size_bytes": 3284879,
+      "sample_id": "minicube_86_31UFP_48.13_5.44",
+      "sha256": "2bb9dc768e4bdf5995db03c78e839921d036103911127ab7dc72fc7fbba5c1f9"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_87_31UFP_48.13_5.44.nc",
+      "size_bytes": 3284879,
+      "sample_id": "minicube_87_31UFP_48.13_5.44",
+      "sha256": "cbddf3884fddd9bbabc128e80c21b00a6e188d267a1bf028285f436d233ca518"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_95_32TNR_45.18_9.23.nc",
+      "size_bytes": 3442783,
+      "sample_id": "minicube_95_32TNR_45.18_9.23",
+      "sha256": "0764332a0510948267f7607ea5a707b78e95c67038d4cd5c765400aafff9a10f"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_96_32TNR_45.27_9.19.nc",
+      "size_bytes": 3438160,
+      "sample_id": "minicube_96_32TNR_45.27_9.19",
+      "sha256": "caf0b96eb00291df7cb9896937bd75467dcc0274336d0b13a10a52ee24d61b8d"
+    },
+    {
+      "path": "ood-t_chopped/MJJ22/minicube_99_32TPP_43.78_10.94.nc",
+      "size_bytes": 3460291,
+      "sample_id": "minicube_99_32TPP_43.78_10.94",
+      "sha256": "365fa1eccf75a41a4bf6fc026cb7ae5c95087236f307214a8312ebcb9ac3ac29"
+    },
+    {
+      "path": "ood-t_chopped/SON22/minicube_28_30TWK_39.82_-2.94.nc",
+      "size_bytes": 3324906,
+      "sample_id": "minicube_28_30TWK_39.82_-2.94",
+      "sha256": "b7e0fbd2c5737c7440504c06dd33e3ffe6325e35bfdb6509928478b7819868fe"
+    },
+    {
+      "path": "ood-t_chopped/SON22/minicube_30_30TWM_41.96_-1.70.nc",
+      "size_bytes": 3381889,
+      "sample_id": "minicube_30_30TWM_41.96_-1.70",
+      "sha256": "a47a8945643fc52651273af62b675d4b709cfb8581d0252465d01a75c10813d8"
+    },
+    {
+      "path": "ood-t_chopped/SON22/minicube_60_31TBF_41.35_-0.04.nc",
+      "size_bytes": 3499842,
+      "sample_id": "minicube_60_31TBF_41.35_-0.04",
+      "sha256": "5671aab8f29886cec160b1ebce040275283ea6ecb0aaeeb034970b1dc2d83cf5"
+    }
+  ],
+  "files_sha256": "e9b2c977c4bd57c73558e49f88e75ccbcb7e68d1daa3395282d88fe5b91fd7bc",
+  "audit": {
+    "kind": "hotdry_extreme",
+    "primary_tier": "broad",
+    "n_strict": 36,
+    "n_broad": 84,
+    "n_primary": 84,
+    "tier_by_path": {
+      "ood-t_chopped/JAS21/minicube_103_32TPR_45.49_10.47.nc": "broad",
+      "ood-t_chopped/JAS21/minicube_111_32TQM_42.08_12.44.nc": "strict",
+      "ood-t_chopped/JAS21/minicube_112_32TQM_42.36_12.39.nc": "broad",
+      "ood-t_chopped/JAS21/minicube_197_34SEJ_39.50_21.71.nc": "broad",
+      "ood-t_chopped/JAS21/minicube_199_34SEJ_39.49_21.83.nc": "broad",
+      "ood-t_chopped/JAS22/minicube_18_29TQF_40.76_-6.24.nc": "strict",
+      "ood-t_chopped/JAS22/minicube_19_29TQF_40.87_-5.90.nc": "broad",
+      "ood-t_chopped/JAS22/minicube_22_30STJ_38.85_-5.31.nc": "strict",
+      "ood-t_chopped/JAS22/minicube_23_30STJ_39.19_-5.73.nc": "broad",
+      "ood-t_chopped/JAS22/minicube_27_30TWK_39.68_-2.64.nc": "broad",
+      "ood-t_chopped/JAS22/minicube_28_30TWK_39.82_-2.94.nc": "strict",
+      "ood-t_chopped/JAS22/minicube_33_30TXR_45.17_-0.36.nc": "strict",
+      "ood-t_chopped/JAS22/minicube_38_30TXS_45.96_-0.42.nc": "broad",
+      "ood-t_chopped/JAS22/minicube_61_31TBF_41.20_-0.55.nc": "broad",
+      "ood-t_chopped/JAS22/minicube_8_29SQB_37.77_-5.77.nc": "broad",
+      "ood-t_chopped/MAM21/minicube_6_29SQB_37.12_-5.86.nc": "strict",
+      "ood-t_chopped/MAM21/minicube_8_29SQB_37.77_-5.77.nc": "broad",
+      "ood-t_chopped/MAM22/minicube_147_33TVF_41.18_14.17.nc": "broad",
+      "ood-t_chopped/MAM22/minicube_197_34SEJ_39.50_21.71.nc": "broad",
+      "ood-t_chopped/MAM22/minicube_198_34SEJ_39.24_21.03.nc": "broad",
+      "ood-t_chopped/MAM22/minicube_199_34SEJ_39.49_21.83.nc": "strict",
+      "ood-t_chopped/MJJ21/minicube_101_32TPR_45.53_11.26.nc": "broad",
+      "ood-t_chopped/MJJ21/minicube_103_32TPR_45.49_10.47.nc": "strict",
+      "ood-t_chopped/MJJ21/minicube_224_34TET_47.72_21.24.nc": "broad",
+      "ood-t_chopped/MJJ21/minicube_225_34TET_47.37_22.05.nc": "broad",
+      "ood-t_chopped/MJJ21/minicube_226_34TET_46.98_21.74.nc": "strict",
+      "ood-t_chopped/MJJ21/minicube_28_30TWK_39.82_-2.94.nc": "broad",
+      "ood-t_chopped/MJJ21/minicube_30_30TWM_41.96_-1.70.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_0_29SND_39.29_-8.56.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_101_32TPR_45.53_11.26.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_103_32TPR_45.49_10.47.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_128_32UPC_52.07_11.73.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_12_29TPE_39.71_-6.82.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_131_32UQC_51.73_12.23.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_133_32UQC_51.92_12.17.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_13_29TPE_39.88_-7.17.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_158_33TYM_46.41_18.67.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_159_33TYM_46.57_18.14.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_160_33TYM_46.19_17.62.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_162_33TYN_46.95_18.60.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_163_33TYN_47.01_18.77.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_18_29TQF_40.76_-6.24.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_19_29TQF_40.87_-5.90.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_1_29SND_39.34_-8.53.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_20_29TQF_40.81_-5.66.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_219_34TDQ_45.04_20.93.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_21_30STJ_39.42_-5.68.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_224_34TET_47.72_21.24.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_225_34TET_47.37_22.05.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_226_34TET_46.98_21.74.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_22_30STJ_38.85_-5.31.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_238_34TFT_47.29_22.46.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_23_30STJ_39.19_-5.73.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_24_30TTK_39.99_-6.07.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_26_30TTK_39.70_-6.41.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_27_30TWK_39.68_-2.64.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_28_30TWK_39.82_-2.94.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_29_30TWK_40.05_-2.43.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_30_30TWM_41.96_-1.70.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_31_30TWM_41.81_-2.42.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_32_30TWM_42.08_-2.23.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_33_30TXR_45.17_-0.36.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_36_30TXS_46.61_-0.73.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_37_30TXS_46.65_-0.52.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_38_30TXS_45.96_-0.42.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_42_30TYQ_44.96_-0.34.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_43_30TYQ_44.35_0.09.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_44_30TYQ_44.48_-0.46.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_46_30TYR_45.49_0.70.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_47_30TYR_45.79_0.69.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_56_30UYU_47.75_-0.16.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_5_29SPC_38.81_-6.73.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_67_31TCN_47.31_1.00.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_68_31TCN_47.21_0.93.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_6_29SQB_37.12_-5.86.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_78_31TEJ_43.47_3.31.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_86_31UFP_48.13_5.44.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_87_31UFP_48.13_5.44.nc": "broad",
+      "ood-t_chopped/MJJ22/minicube_95_32TNR_45.18_9.23.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_96_32TNR_45.27_9.19.nc": "strict",
+      "ood-t_chopped/MJJ22/minicube_99_32TPP_43.78_10.94.nc": "broad",
+      "ood-t_chopped/SON22/minicube_28_30TWK_39.82_-2.94.nc": "broad",
+      "ood-t_chopped/SON22/minicube_30_30TWM_41.96_-1.70.nc": "broad",
+      "ood-t_chopped/SON22/minicube_60_31TBF_41.35_-0.04.nc": "broad"
+    },
+    "thresholds": {
+      "strict": {
+        "hot": 1.2117177042830387,
+        "dry": 1.0949437827259716
+      },
+      "broad": {
+        "hot": 0.845641263662687,
+        "dry": 0.820555570556644
+      },
+      "q": {
+        "strict": 0.9,
+        "broad": 0.8
+      },
+      "note": "frozen from the TRAIN anomaly distribution; applied unchanged to OOD-t (correction 2)."
+    },
+    "climatology_sha256": "0123a0166485ac651e38ba4bbef610528a3bcf01d2606f86f80fdffeafe93f24",
+    "selection_note": "forcing-only; NO future NDVI / model / prediction-error / checkpoint used."
+  }
+}

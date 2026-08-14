@@ -1,0 +1,13 @@
+panel,split_or_control,intervention,metric,estimate,ci_low,ci_high,source_record_sha256
+q2,Validation,State contribution ablation,delta_r2,0.01121,0.00643,0.02590,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q2,Validation,Transition to identity,delta_r2,0.01191,0.00782,0.02696,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q2,Temporal shift,State contribution ablation,delta_r2,0.01997,0.01422,0.03018,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q2,Temporal shift,Transition to identity,delta_r2,0.02169,0.01609,0.03217,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q3_effect,Matched control,Actual minus control,delta_loss,0.00257,0.00112,0.00399,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q3_effect,Normalized mean,Actual minus control,delta_loss,0.01126,0.00547,0.01708,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q3_skill,Actual weather,Forecast,r2,0.6254,,,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q3_skill,Matched control,Forecast,r2,0.5893,,,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q3_skill,Normalized mean,Forecast,r2,0.5430,,,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q3_skill,Actual weather,Forecast,rmse,0.1492,,,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q3_skill,Matched control,Forecast,rmse,0.1584,,,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da
+q3_skill,Normalized mean,Forecast,rmse,0.1971,,,dcb5f9c0143a1d58e19d1732a9348215392278f266d2348c0ef87988e0ca86da

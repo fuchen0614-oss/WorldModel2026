@@ -1,0 +1,48 @@
+model:
+  state_dim: 256
+  weather_dim: 128
+  geography_dim: 64
+  horizon_dim: 64
+  condition_dim: 256
+  context_steps: 10
+  forecast_steps: 20
+  patch_size: 4
+  history_pretrained: false
+
+data:
+  image_size: 128
+  optical_channels: 5
+  weather_channels: 24
+  static_channels: 5
+  per_device_batch: 8
+  workers: 8
+
+training:
+  epochs: 40
+  optimizer_updates: 14880
+  global_batch: 64
+  optimizer: AdamW
+  betas: [0.9, 0.999]
+  weight_decay: 0.0
+  branch_learning_rate: 0.00003
+  history_learning_rate: 0.00000099
+  learning_rate_warmup_updates: 300
+  schedule: cosine
+  gradient_clip_norm: 1.0
+  history_frozen_fraction: 0.8
+  history_final_block_fraction: 0.2
+  loss:
+    ground_truth: 1.0
+    knowledge_distillation: 0.5
+    future_state:
+      first_fraction: 0.2
+      first_end: 0.02
+      middle_end_fraction: 0.8
+      middle_value: 0.02
+      final_value: 0.01
+
+evaluation:
+  vegetation_landcover_min: 10
+  vegetation_landcover_max: 40
+  bootstrap_replicates: 10000
+  seed: 42

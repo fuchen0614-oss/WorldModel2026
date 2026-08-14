@@ -1,0 +1,454 @@
+{
+  "schema_version": "1.0",
+  "audit_date_utc": "2026-07-27",
+  "scope": "TerraState AAAI-27 frozen Q1-Q3 evidence only; Q4/composition excluded from core evidence",
+  "release": {
+    "tag": "terrastate-v2-boundary80-evidence-v1",
+    "url": "https://github.com/fuchen0614-oss/WorldModel2026/releases/tag/terrastate-v2-boundary80-evidence-v1",
+    "release_commit": "c63a333a4fc0ad31d68159b090d06c80bf13f21f",
+    "checkpoint_asset_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+    "downloaded_evidence_assets_verified_against_release_digests": true
+  },
+  "checkpoint": {
+    "method_display_name": "TerraState",
+    "internal_checkpoint_name": "boundary80",
+    "internal_candidate_tag": "stage2_end_boundary80",
+    "checkpoint_step": 11904,
+    "checkpoint_stage": 2,
+    "checkpoint_file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+    "weights_sha256": "aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7",
+    "training_code_commit": "52578ca4b1c0b434b10707cf052a623f0c4e4a99",
+    "selection_record": "/mnt/data/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/evidence_workspace/raw/release/selection_record.json",
+    "selection_rule": "No preregistered candidate passed the internal Q1 qualifier; before viewing Q2, the best Q1 candidate among the preregistered set was selected.",
+    "selection_limitations": [
+      "One selected checkpoint/run; training deterministic=false and seed=42.",
+      "The internal candidate name is retained only for traceability and must not appear in the paper tables."
+    ]
+  },
+  "records": [
+    {
+      "record_id": "Q1-OODT-FROZEN",
+      "paper_question": "Q1",
+      "method_display_name": "TerraState",
+      "internal_checkpoint_name": "boundary80",
+      "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "dataset": "GreenEarthNet",
+      "split": "ood-t_chopped",
+      "protocol": "exclusive_v1; formal Q1 forecast evaluation; batch size 1; official GreenEarthNet metric implementation",
+      "manifest": {
+        "path": "/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+        "sha256": "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49",
+        "locally_rehashed": true
+      },
+      "metrics": [
+        {
+          "name": "R2",
+          "value": 0.5693493611664086,
+          "json_field_path": "$.Q1_forecast.full.R2"
+        },
+        {
+          "name": "RMSE",
+          "value": 0.1505941190915099,
+          "json_field_path": "$.Q1_forecast.full.rmse"
+        }
+      ],
+      "confidence_interval_or_statistical_method": "No confidence interval in the frozen Q1 artifact; one fixed checkpoint evaluated over the full frozen manifest.",
+      "sample_size": {
+        "n_targets": 1904,
+        "json_field_path": "$.provenance.n_targets"
+      },
+      "raw_json_absolute_path": "/mnt/data/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/evidence_workspace/raw/release/oodt_q1q2_state_contract_exclusive.json",
+      "raw_json_sha256": "7ebc0569d705a9991ac8b8d17c42113c9da052b2bec73f7c28d021e28a65a051",
+      "evaluator_version": "repo:78073db+official:a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+      "enters_main_text": true,
+      "supported_claim": "TerraState retains useful future-prediction skill on the frozen temporal-shift split.",
+      "strict_public_comparability": false,
+      "limitations_and_noncomparability": [
+        "Published GreenEarthNet results use the same nominal OOD-t benchmark family, but the original publication does not expose this exact manifest hash or evaluator revision.",
+        "No multi-seed uncertainty is available for TerraState.",
+        "This supports predictive skill, not SOTA."
+      ]
+    },
+    {
+      "record_id": "Q2-VAL-LOAD-BEARING",
+      "paper_question": "Q2",
+      "method_display_name": "TerraState",
+      "internal_checkpoint_name": "boundary80",
+      "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "dataset": "GreenEarthNet",
+      "split": "val",
+      "protocol": "exclusive_v1 frozen-checkpoint state-contract intervention; full, alpha=0 state-path removal, and identity-transition variants; batch size 1",
+      "manifest": {
+        "evaluation_time_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/artifacts/protocols/b4_eval/val_chopped.manifest.json",
+        "sha256": "d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e",
+        "locally_available_for_rehash": false,
+        "sha_evidence_fields": [
+          "$.provenance.data_manifest_sha256",
+          "selection_record.json $.provenance.val_manifest.sha256"
+        ]
+      },
+      "metrics": [
+        {
+          "name": "full R2",
+          "value": 0.49732196418835595,
+          "json_field_path": "$.Q2_load_bearing.full.R2"
+        },
+        {
+          "name": "full RMSE",
+          "value": 0.1572881669325748,
+          "json_field_path": "$.Q2_load_bearing.full.rmse"
+        },
+        {
+          "name": "state-path removal (alpha0) R2",
+          "value": 0.48610753997662814,
+          "json_field_path": "$.Q2_load_bearing.alpha0.R2"
+        },
+        {
+          "name": "identity-transition R2",
+          "value": 0.48541607437960566,
+          "json_field_path": "$.Q2_load_bearing.T_identity.R2"
+        },
+        {
+          "name": "official full-minus-alpha0 delta R2",
+          "value": 0.011214424211727803,
+          "json_field_path": "$.Q2_load_bearing.official_R2_full_minus_alpha0"
+        },
+        {
+          "name": "paired state-path effect mean delta R2",
+          "value": 0.01616252595360122,
+          "json_field_path": "$.Q2_load_bearing.closure_cut_alpha0.bootstrap95.mean"
+        },
+        {
+          "name": "paired state-path effect 95% CI",
+          "value": [
+            0.006432408120151691,
+            0.02590229577842624
+          ],
+          "json_field_path": "$.Q2_load_bearing.closure_cut_alpha0.bootstrap95.[ci_low,ci_high]"
+        },
+        {
+          "name": "official full-minus-identity delta R2",
+          "value": 0.011905889808750292,
+          "json_field_path": "$.Q2_load_bearing.official_R2_full_minus_Tid"
+        },
+        {
+          "name": "paired identity-transition effect mean delta R2",
+          "value": 0.017417428921451206,
+          "json_field_path": "$.Q2_load_bearing.transition_identity.bootstrap95.mean"
+        },
+        {
+          "name": "paired identity-transition effect 95% CI",
+          "value": [
+            0.007824839508750908,
+            0.026960749441100905
+          ],
+          "json_field_path": "$.Q2_load_bearing.transition_identity.bootstrap95.[ci_low,ci_high]"
+        },
+        {
+          "name": "verdict",
+          "value": "LOAD_BEARING",
+          "json_field_path": "$.Q2_load_bearing.verdict"
+        }
+      ],
+      "confidence_interval_or_statistical_method": "Paired per-minicube bootstrap; 95% percentile interval. The evaluator gate requires official delta R2 > 0.005 and paired CI lower bound > 0.",
+      "sample_size": {
+        "n_targets": 952,
+        "n_paired_metric_units": 589,
+        "json_field_paths": [
+          "$.provenance.n_targets",
+          "$.Q2_load_bearing.closure_cut_alpha0.bootstrap95.n"
+        ]
+      },
+      "raw_json_absolute_path": "/mnt/data/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/evidence_workspace/raw/release/val_q2_state_contract_exclusive.json",
+      "raw_json_sha256": "33b40d3e6bf6e0190c9415a9e0421e9809063356dcba2350890defeeed35f2d9",
+      "evaluator_version": "repo:221052f+official:a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+      "enters_main_text": true,
+      "supported_claim": "Removing the state-mediated residual path reduces prediction quality; the selected predictive state is load-bearing under the preregistered evaluator rule.",
+      "strict_public_comparability": "not applicable; within-model intervention",
+      "limitations_and_noncomparability": [
+        "The official dataset-level delta and the paired-bootstrap mean/CI are different estimands; the interval must not be presented as a CI centered on the official delta.",
+        "The validation manifest file is not present locally, so its recorded SHA could not be independently recomputed.",
+        "Identity transition is not a clean transition-only ablation because the readout receives a frozen state outside its training distribution.",
+        "One frozen checkpoint/run."
+      ]
+    },
+    {
+      "record_id": "Q2-OODT-LOAD-BEARING",
+      "paper_question": "Q2",
+      "method_display_name": "TerraState",
+      "internal_checkpoint_name": "boundary80",
+      "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "dataset": "GreenEarthNet",
+      "split": "ood-t_chopped",
+      "protocol": "exclusive_v1 frozen-checkpoint state-contract intervention; full, alpha=0 state-path removal, and identity-transition variants; batch size 1",
+      "manifest": {
+        "path": "/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+        "sha256": "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49",
+        "locally_rehashed": true
+      },
+      "metrics": [
+        {
+          "name": "full R2",
+          "value": 0.5693493611664086,
+          "json_field_path": "$.Q2_load_bearing.full.R2"
+        },
+        {
+          "name": "full RMSE",
+          "value": 0.1505941190915099,
+          "json_field_path": "$.Q2_load_bearing.full.rmse"
+        },
+        {
+          "name": "state-path removal (alpha0) R2",
+          "value": 0.5493773508945857,
+          "json_field_path": "$.Q2_load_bearing.alpha0.R2"
+        },
+        {
+          "name": "identity-transition R2",
+          "value": 0.5476642387248465,
+          "json_field_path": "$.Q2_load_bearing.T_identity.R2"
+        },
+        {
+          "name": "official full-minus-alpha0 delta R2",
+          "value": 0.019972010271822827,
+          "json_field_path": "$.Q2_load_bearing.official_R2_full_minus_alpha0"
+        },
+        {
+          "name": "paired state-path effect mean delta R2",
+          "value": 0.021997768589881533,
+          "json_field_path": "$.Q2_load_bearing.closure_cut_alpha0.bootstrap95.mean"
+        },
+        {
+          "name": "paired state-path effect 95% CI",
+          "value": [
+            0.014219898623411737,
+            0.03017606928017251
+          ],
+          "json_field_path": "$.Q2_load_bearing.closure_cut_alpha0.bootstrap95.[ci_low,ci_high]"
+        },
+        {
+          "name": "official full-minus-identity delta R2",
+          "value": 0.021685122441562066,
+          "json_field_path": "$.Q2_load_bearing.official_R2_full_minus_Tid"
+        },
+        {
+          "name": "paired identity-transition effect mean delta R2",
+          "value": 0.024015932710944276,
+          "json_field_path": "$.Q2_load_bearing.transition_identity.bootstrap95.mean"
+        },
+        {
+          "name": "paired identity-transition effect 95% CI",
+          "value": [
+            0.016086752271438905,
+            0.032169788967835664
+          ],
+          "json_field_path": "$.Q2_load_bearing.transition_identity.bootstrap95.[ci_low,ci_high]"
+        },
+        {
+          "name": "verdict",
+          "value": "LOAD_BEARING",
+          "json_field_path": "$.Q2_load_bearing.verdict"
+        }
+      ],
+      "confidence_interval_or_statistical_method": "Paired per-minicube bootstrap; 95% percentile interval. The evaluator gate requires official delta R2 > 0.005 and paired CI lower bound > 0.",
+      "sample_size": {
+        "n_targets": 1904,
+        "n_paired_metric_units": 1019,
+        "json_field_paths": [
+          "$.provenance.n_targets",
+          "$.Q2_load_bearing.closure_cut_alpha0.bootstrap95.n"
+        ]
+      },
+      "raw_json_absolute_path": "/mnt/data/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/evidence_workspace/raw/release/oodt_q1q2_state_contract_exclusive.json",
+      "raw_json_sha256": "7ebc0569d705a9991ac8b8d17c42113c9da052b2bec73f7c28d021e28a65a051",
+      "evaluator_version": "repo:78073db+official:a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+      "enters_main_text": true,
+      "supported_claim": "The state-mediated residual path remains load-bearing under temporal distribution shift.",
+      "strict_public_comparability": "not applicable; within-model intervention",
+      "limitations_and_noncomparability": [
+        "The official dataset-level delta and the paired-bootstrap mean/CI are different estimands.",
+        "Identity transition is supporting evidence only because transition_margin_clean=false.",
+        "One frozen checkpoint/run."
+      ]
+    },
+    {
+      "record_id": "Q3-OODT-HOTDRY-ENDPOINT-FIDELITY",
+      "paper_question": "Q3",
+      "method_display_name": "TerraState",
+      "internal_checkpoint_name": "boundary80 (linked by frozen release bundle; not embedded in the Q3 JSON)",
+      "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "dataset": "GreenEarthNet",
+      "split": "ood-t_chopped hot-dry extreme subset",
+      "protocol": "extreme_audit_oodt_v1, broad primary track; actual future weather versus season/geography/quality-matched donor future weather and mean weather; future slice 50-150 days; 10,000 bootstrap replicates",
+      "manifests": [
+        {
+          "path": "/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026-planb/artifacts/protocols/extreme_audit_oodt_v1/hotdry_manifest.json",
+          "sha256": "f8db1ccbb39120c78723d203655e506f5ac13790e11e59e4c6fbb96e5f2d09c7",
+          "locally_rehashed": true
+        },
+        {
+          "path": "/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026-planb/artifacts/protocols/extreme_audit_oodt_v1/matched_normal_manifest.json",
+          "sha256": "84a09421ff5b43c5b5529a3e7e9a0b40e3e999c170f1cd365d0509c73e9c2ccf",
+          "locally_rehashed": true
+        },
+        {
+          "path": "/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026-planb/artifacts/protocols/extreme_audit_oodt_v1/protocol.json",
+          "sha256": "570a0c36c3d1ceb83d0b2294fc7998b55443ae8a3ccc73f05f92c4e45a792ae5",
+          "locally_rehashed": true
+        }
+      ],
+      "metrics": [
+        {
+          "name": "actual-weather R2",
+          "value": 0.6253516462782711,
+          "json_field_path": "$.models.exclusive.q3_aggregate_extreme.actual.R2"
+        },
+        {
+          "name": "actual-weather RMSE",
+          "value": 0.14915162604727777,
+          "json_field_path": "$.models.exclusive.q3_aggregate_extreme.actual.rmse"
+        },
+        {
+          "name": "matched-donor-weather R2",
+          "value": 0.5893404938146756,
+          "json_field_path": "$.models.exclusive.q3_aggregate_extreme.donor.R2"
+        },
+        {
+          "name": "matched-donor-weather RMSE",
+          "value": 0.15841893205313404,
+          "json_field_path": "$.models.exclusive.q3_aggregate_extreme.donor.rmse"
+        },
+        {
+          "name": "mean-weather R2",
+          "value": 0.5430064798749749,
+          "json_field_path": "$.models.exclusive.q3_aggregate_extreme.mean.R2"
+        },
+        {
+          "name": "mean-weather RMSE",
+          "value": 0.19709368956822035,
+          "json_field_path": "$.models.exclusive.q3_aggregate_extreme.mean.rmse"
+        },
+        {
+          "name": "matched-donor delta loss versus actual",
+          "value": 0.002565468112672014,
+          "json_field_path": "$.models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.delta_loss_mean"
+        },
+        {
+          "name": "matched-donor geo-cluster 95% CI",
+          "value": [
+            0.0011187122087714869,
+            0.003987491067301663
+          ],
+          "json_field_path": "$.models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.geo_cluster_bootstrap.[ci_low,ci_high]"
+        },
+        {
+          "name": "mean-weather delta loss versus actual",
+          "value": 0.011261332329706334,
+          "json_field_path": "$.models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.delta_loss_mean"
+        },
+        {
+          "name": "mean-weather geo-cluster 95% CI",
+          "value": [
+            0.005465624536528642,
+            0.0170799320898515
+          ],
+          "json_field_path": "$.models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.geo_cluster_bootstrap.[ci_low,ci_high]"
+        },
+        {
+          "name": "endpoint response-fidelity verdict",
+          "value": "PASS",
+          "json_field_path": "$.models.exclusive.q3_donor_fidelity.endpoint_fidelity_status"
+        },
+        {
+          "name": "overall Q3 status",
+          "value": "Q3_RESPONSE_FIDELITY_ONLY",
+          "json_field_path": "$.models.exclusive.q3_donor_fidelity.overall_status"
+        }
+      ],
+      "confidence_interval_or_statistical_method": "Primary criterion is geo-cluster bootstrap CI lower bound > 0, using 10,000 replicates and 31 geographic clusters; paired and reused-control-cluster intervals are secondary checks.",
+      "sample_size": {
+        "n_pairs": 84,
+        "n_extreme": 84,
+        "n_unique_controls": 45,
+        "n_geographic_clusters": 31,
+        "json_field_paths": [
+          "$.n_pairs",
+          "$.n_extreme",
+          "$.n_control_unique",
+          "$.models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.geo_cluster_bootstrap.n_clusters"
+        ]
+      },
+      "raw_json_absolute_path": "/mnt/data/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/evidence_workspace/raw/release/q3_extreme_state_audit.json",
+      "raw_json_sha256": "9dae43b9a8a4fcdf0a73ef91daa58c189a88e769541ce295046cd0e938497041",
+      "evaluator_version": {
+        "q3_release_narrative_commit": "4dce19a5b86f39229837fab04fac2fcbf50da788",
+        "q3_code_path_fix_commit": "0cbaf4d367ceedc619d493367dacdf4c9873b46d",
+        "protocol_builder_commit": "83e62e9d9e58a4705f0e7dcec74df97a1acaad21",
+        "limitation": "The Q3 raw JSON does not embed checkpoint SHA or evaluator commit; linkage to the frozen checkpoint relies on the release bundle, EVIDENCE.md, and q3.run.log."
+      },
+      "enters_main_text": true,
+      "supported_claim": "Future-weather inputs alter forecast behavior, and actual weather yields better endpoint fidelity than matched donor or mean weather on the frozen subset.",
+      "strict_public_comparability": "not applicable; internal intervention/stress test",
+      "limitations_and_noncomparability": [
+        "This is an internal stress test, not an EO-WM external extreme benchmark.",
+        "Scores cover 84 selected pairs, not the full OOD-t split.",
+        "The test supports response fidelity, not causal counterfactual correctness.",
+        "The Q3 JSON has a provenance gap because checkpoint and evaluator identifiers are not embedded."
+      ]
+    },
+    {
+      "record_id": "Q3-HOTDRY-ENHANCEMENT-GUARD",
+      "paper_question": "Q3",
+      "method_display_name": "TerraState",
+      "internal_checkpoint_name": "boundary80 (linked by frozen release bundle; not embedded in the Q3 JSON)",
+      "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "dataset": "GreenEarthNet",
+      "split": "ood-t_chopped matched hot-dry versus normal pairs",
+      "protocol": "extreme_audit_oodt_v1 interaction guard; hot-dry-minus-normal donor-loss response; primary geo-cluster bootstrap",
+      "manifest": {
+        "path": "/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026-planb/artifacts/protocols/extreme_audit_oodt_v1/protocol.json",
+        "sha256": "570a0c36c3d1ceb83d0b2294fc7998b55443ae8a3ccc73f05f92c4e45a792ae5",
+        "locally_rehashed": true
+      },
+      "metrics": [
+        {
+          "name": "hot-dry-minus-normal donor delta-loss interaction",
+          "value": 0.0004360788783136134,
+          "json_field_path": "$.models.exclusive.q3_donor_fidelity.interaction_hotdry_minus_normal.dloss_donor.geo_cluster_bootstrap.mean"
+        },
+        {
+          "name": "geo-cluster 95% CI",
+          "value": [
+            -0.0021624635347345066,
+            0.003199765110504583
+          ],
+          "json_field_path": "$.models.exclusive.q3_donor_fidelity.interaction_hotdry_minus_normal.dloss_donor.geo_cluster_bootstrap.[ci_low,ci_high]"
+        },
+        {
+          "name": "hot-dry enhancement verdict",
+          "value": "FAIL",
+          "json_field_path": "$.models.exclusive.q3_donor_fidelity.hotdry_enhancement_status"
+        }
+      ],
+      "confidence_interval_or_statistical_method": "Geo-cluster bootstrap, 10,000 replicates, 31 geographic clusters; CI crosses zero.",
+      "sample_size": {
+        "n_pairs": 84,
+        "n_geographic_clusters": 31
+      },
+      "raw_json_absolute_path": "/mnt/data/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/evidence_workspace/raw/release/q3_extreme_state_audit.json",
+      "raw_json_sha256": "9dae43b9a8a4fcdf0a73ef91daa58c189a88e769541ce295046cd0e938497041",
+      "evaluator_version": "See Q3-OODT-HOTDRY-ENDPOINT-FIDELITY; raw JSON omits embedded checkpoint/evaluator identifiers.",
+      "enters_main_text": false,
+      "supported_claim": "None; this is a failed guard against overclaiming extreme-specific enhancement.",
+      "strict_public_comparability": "not applicable",
+      "limitations_and_noncomparability": [
+        "The CI includes zero.",
+        "Must not be written as successful extreme hot-dry enhancement."
+      ]
+    }
+  ],
+  "engineering_name_mapping": {
+    "boundary80": "selected TerraState checkpoint; display as TerraState only",
+    "B4": "legacy/internal baseline engineering label; do not use as a public method name",
+    "V2": "training/evidence pipeline generation; do not use as a public method name"
+  }
+}

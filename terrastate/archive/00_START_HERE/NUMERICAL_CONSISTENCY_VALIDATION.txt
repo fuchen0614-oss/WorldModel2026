@@ -1,0 +1,19 @@
+Validation date: 2026-07-30 UTC
+
+q1_metrics.json:
+  04_RESULTS_EVIDENCE/current == 03_CODE_RELEASE/results: PASS
+
+q2_metrics.json:
+  04_RESULTS_EVIDENCE/current == 03_CODE_RELEASE/results: PASS
+
+q3_metrics.json:
+  04_RESULTS_EVIDENCE/current == 03_CODE_RELEASE/results: PASS
+
+Frozen Q1-Q3 values checked in 01_MANUSCRIPT/paper/main.tex: 30/30 present
+
+Final table snapshots:
+  table1_forecast_final.tex is an exact byte substring of main.tex: PASS
+  table2_state_interventions_final.tex is an exact byte substring of main.tex: PASS
+  table3_weather_interventions_final.tex is an exact byte substring of main.tex: PASS
+
+Overall: NUMERICAL_CONSISTENCY_PASS

@@ -1,0 +1,31 @@
+TerraState-V2 canonical implementation smoke validation
+Date: 2026-07-30
+Snapshot: v2_training_commit_52578ca
+Execution: CPU-only, isolated temporary minicubes; no original data or repository was modified
+
+Result: SMOKE 15/15 PASSED
+
+Validated gates:
+1. Future-state cache generation, memory-mapped loading, field order, horizon, and SHA binding.
+2. Forward/backward pass remains finite.
+3. Future weather changes the shared-transition forecast.
+4. The context-only prior is invariant to future weather.
+5. The future-state target is invariant to future weather while remaining sensitive to future EO.
+6. Inference ignores future EO frames and does not consume the target cache.
+7. The state contribution scale alpha is fixed at 1.
+8. The loss contains exactly ground-truth, one distillation, and one future-state term.
+9. Stage-wise encoder freezing/unfreezing follows the archived implementation.
+10. The 80% boundary checkpoint is force-saved.
+11. A complete three-stage miniature run remains finite.
+12. Save/resume reproduces the uninterrupted next-step losses.
+13. Effective updates remain consistent across equivalent global-batch factorizations.
+
+The archived smoke script also reports the isolation and cache checks separately; its
+final aggregate is 15/15 because those setup gates are counted in addition to the
+numbered model/training checks above.
+
+Runtime note:
+The surrounding zsh wrapper attempted to assign to its read-only variable `status`
+after Python had completed. This produced a wrapper exit code of 1, but the smoke
+program itself reached and printed `==== SMOKE 15/15 PASSED ====`. The validation
+result above is therefore taken from the completed program log, not the wrapper.

@@ -1,0 +1,65 @@
+# Plan A · full24 variant — ACCURACY PROBE.
+# Question: does using the full E-OBS weather (8 vars x 3 aggs = 24) instead of
+# physical4 (4 derived vars) close the gap to the published GreenEarthNet
+# frontier? Same recipe as S1a: ViT-S Stage1.5 initializer + last-valid residual
+# head + end-to-end fine-tune. ONLY the driver protocol changes vs S1a.
+#
+# TWO KNOWN DATA GOTCHAS handled here (see doc 74 troubleshooting):
+#  (1) this EarthNet2021x copy may LACK E-OBS `fg` (wind). require_all_driver_
+#      _features=false + min_driver_valid_fraction=0 mask-fill any absent var so
+#      the run does not hard-fail. The startup log prints each var's valid-rate —
+#      READ IT to see how many of the 24 are actually present (if fg is 0.000 we
+#      are effectively "full21", still richer than physical4).
+#  (2) full24 conditioning stats: this run does NOT reuse the physical4 stats
+#      file. require_conditioning_stats=false lets the trainer compute driver
+#      normalization from data on the fly. For a paper-final number, precompute a
+#      frozen full24 stats artifact instead; for this probe, on-the-fly is fine.
+_base_: stage2_earthnet_v2_direct24.yaml
+
+model:
+  require_stage15_checkpoint: true
+  forecast_mode: direct_path_24d
+  driver_protocol: full24
+  encoder:
+    from_checkpoint: null
+    freeze: false
+    unfreeze_at_step: 0
+  decoder:
+    residual: true
+
+data:
+  driver_protocol: full24
+  conditioning_stats_path: null
+  require_conditioning_stats: false
+  # H200 route, mirrors the physical4 config (8 GPU x 64 = global batch 512).
+  batch_size: 64
+  num_workers: 8
+  prefetch_factor: 1
+  persistent_workers: true
+  defer_context_resize_to_device: true
+
+training:
+  max_steps: 8800
+  require_conditioning_stats: false
+  require_full_conditioning_stats: false
+  # This data copy may miss E-OBS fg; mask-fill instead of hard-fail (doc 74).
+  require_all_driver_features: false
+  min_driver_valid_fraction: 0.0
+
+validation:
+  batch_size: 8
+  num_workers: 4
+  prefetch_factor: 1
+  persistent_workers: true
+
+performance:
+  allow_tf32: true
+  cudnn_benchmark: true
+  float32_matmul_precision: high
+
+# New output dirs — never overwrite the physical4 S1a run.
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/plan_a_s1a_full24
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/plan_a_s1a_full24
+checkpoint_interval: 1000
+log_interval: 50
+epoch_checkpoint_epochs: [100, 150, 200]

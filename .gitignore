@@ -1,41 +1,52 @@
-# ========== 模型权重（12G，绝对不传）==========
-checkpoints/
+# ============================================================
+# WorldModel2026 — 仓库级忽略规则
+# 两个项目 terrastate/ 与 obsworld/ 共用本文件。
+# 原则：排除权重、运行时产物与缓存；但 archive/ submission/
+#       evaluations/ 属于策展证据，必须完整入库。
+# ============================================================
+
+# ---------- 模型权重：一律走 GitHub Release ----------
+# 见 terrastate/WEIGHTS_INDEX.md 与 obsworld/WEIGHTS_INDEX.md
 *.pt
 *.pth
+*.ckpt
 *.bin
 *.safetensors
-*.ckpt
 *.onnx
 
-# ========== 训练日志（434M，会持续增长）==========
+# ---------- 运行时输出 ----------
 logs/
-*.log
-
-# ========== 运行时输出 ==========
 outputs/
 wandb/
 tensorboard/
 runs/
+/output/
 
-# ========== Python 缓存 ==========
+# ---------- 大体量中间数据 ----------
+*.log
+*.csv
+*.parquet
+*.h5
+*.hdf5
+*.nc
+
+# ---------- Python ----------
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
+*.py[cod]
 *.so
 *.egg
 *.egg-info/
 dist/
 build/
+.Python
 
-# ========== 虚拟环境 ==========
+# ---------- 虚拟环境 ----------
 venv/
 env/
 .venv/
 .conda/
 
-# ========== 系统和编辑器 ==========
+# ---------- 系统与编辑器 ----------
 .DS_Store
 .idea/
 .vscode/
@@ -43,15 +54,39 @@ env/
 *.swo
 *~
 
-# ========== 数据文件（如果有大数据集）==========
-*.csv
-*.parquet
-*.h5
-*.hdf5
+# ---------- LaTeX 中间产物 ----------
+*.aux
+*.fls
+*.fdb_latexmk
+*.synctex.gz
 
-# 正式评估只跟踪小型汇总 CSV；预测 NetCDF 仍禁止进入 Git。
-!evaluations/**/metrics_en21x.csv
-!evaluations/**/table1_oodt_chopped.csv
-evaluations/**/predictions/
+# ---------- 迁移临时目录 ----------
+_UPLOAD_STAGING/
+_UPLOAD_TMP/
+_MAIN_WT/
 
-/output/
+# ============================================================
+# 例外：策展证据必须入库
+# 上面的 *.log / *.csv 等是为训练产物写的，不适用于归档树。
+# 注意 git 规则：只能用文件模式取消忽略，父目录不可先被整目录排除。
+# ============================================================
+!*/archive/**
+!*/submission/**
+!*/evaluations/**
+!*/checkpoints/**
+!*/reports/**
+!*/results/**
+!*/artifacts/**
+!*/refine-logs/**
+
+# 但归档里的权重仍然排除（Release 承载）
+*/archive/**/*.pt
+*/archive/**/*.ckpt
+*/archive/**/*.pth
+*/archive/**/*.safetensors
+*/checkpoints/**/*.pt
+*/checkpoints/**/*.ckpt
+
+# 预测 NetCDF 体量过大，任何位置都不入库
+**/predictions/
+*.nc

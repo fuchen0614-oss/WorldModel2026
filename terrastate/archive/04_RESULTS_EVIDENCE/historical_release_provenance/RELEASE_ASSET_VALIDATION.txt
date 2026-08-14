@@ -1,0 +1,30 @@
+Validation date: 2026-07-30 UTC
+Release: https://github.com/fuchen0614-oss/WorldModel2026/releases/tag/terrastate-v2-boundary80-evidence-v1
+
+All nine uploaded assets listed by GitHub were found or restored and match the
+release SHA-256 digests:
+
+candidates.json
+  308e323710e8ffb031331e36e6a7e58c4a25c8ed21f29ab1ae4aa737b3a16461 PASS
+checkpoint_boundary80.pt
+  644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd PASS
+EVIDENCE.md
+  5b8cfc54c7f76db9a74f802a2beb6058962864d18d61ffa4be97e5026b06da4b PASS
+oodt.run.log
+  b4383099e013a0660ed73d3ca7e7059c6537c61ad5f7ea1cbb1ea28ccf3e1769 PASS
+oodt_q1q2_state_contract_exclusive.json
+  7ebc0569d705a9991ac8b8d17c42113c9da052b2bec73f7c28d021e28a65a051 PASS
+q3.run.log
+  dbac86860d57b6094e2b6bdf5392c1ae4a5571b9701529ccf7406db600254efd PASS
+q3_extreme_state_audit.json
+  9dae43b9a8a4fcdf0a73ef91daa58c189a88e769541ce295046cd0e938497041 PASS
+selection_record.json
+  9a278294d5294e30f4423aae6cb2e10d54592248e4f2f901a8f2e1b9e3f307cd PASS
+val_q2_state_contract_exclusive.json
+  33b40d3e6bf6e0190c9415a9e0421e9809063356dcba2350890defeeed35f2d9 PASS
+
+The checkpoint is stored separately under
+07_WEIGHTS_AND_PROVENANCE/historical_boundary80_release/ to keep large
+binaries out of the evidence-text directory.
+
+Overall: RELEASE_ASSET_SET_PASS

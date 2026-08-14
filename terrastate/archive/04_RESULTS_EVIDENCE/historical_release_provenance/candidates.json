@@ -1,0 +1,39 @@
+{
+  "rows": {
+    "boundary80": {
+      "file": "checkpoint_boundary80.pt",
+      "step": 11904,
+      "stage": 2,
+      "candidate": "stage2_end_boundary80",
+      "file_sha256": "644deaac0b1578cd",
+      "weight_sha256": "aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7",
+      "qproj_init_sha": "da978b0243c8",
+      "teacher_sha": "bbe2c3ee6de5"
+    },
+    "fsval_best": {
+      "file": "checkpoint_fsval_best.pt",
+      "step": 14880,
+      "stage": 3,
+      "candidate": "future_state_val_best",
+      "file_sha256": "420e1c359f1f8d67",
+      "weight_sha256": "aa98fbd2fa302727bc3375dff17e1c414c652c19d0919c4fbcdcd05a0a5d28aa",
+      "qproj_init_sha": "da978b0243c8",
+      "teacher_sha": "bbe2c3ee6de5"
+    },
+    "last": {
+      "file": "checkpoint_last.pt",
+      "step": 14880,
+      "stage": 3,
+      "candidate": "last",
+      "file_sha256": "99f15a35fb9a3569",
+      "weight_sha256": "aa98fbd2fa302727bc3375dff17e1c414c652c19d0919c4fbcdcd05a0a5d28aa",
+      "qproj_init_sha": "da978b0243c8",
+      "teacher_sha": "bbe2c3ee6de5",
+      "duplicate_of": "fsval_best"
+    }
+  },
+  "independent": [
+    "boundary80",
+    "fsval_best"
+  ]
+}

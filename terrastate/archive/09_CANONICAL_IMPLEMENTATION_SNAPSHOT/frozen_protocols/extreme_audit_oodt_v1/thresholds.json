@@ -1,0 +1,17 @@
+{
+  "kind": "frozen_thresholds",
+  "strict": {
+    "hot": 1.2117177042830387,
+    "dry": 1.0949437827259716
+  },
+  "broad": {
+    "hot": 0.845641263662687,
+    "dry": 0.820555570556644
+  },
+  "q": {
+    "strict": 0.9,
+    "broad": 0.8
+  },
+  "note": "frozen from the TRAIN anomaly distribution; applied unchanged to OOD-t (correction 2).",
+  "climatology_sha256": "0123a0166485ac651e38ba4bbef610528a3bcf01d2606f86f80fdffeafe93f24"
+}

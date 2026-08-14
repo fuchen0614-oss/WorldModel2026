@@ -1,0 +1,11 @@
+{
+  "dataset": "GreenEarthNet",
+  "split": "OOD-t",
+  "n_minicubes": 1904,
+  "context_steps": 10,
+  "forecast_steps": 20,
+  "sampling_days": 5,
+  "image_size": [128, 128],
+  "ground_sampling_distance_m": 20,
+  "path_policy": "Resolve sample paths relative to DATA_ROOT."
+}

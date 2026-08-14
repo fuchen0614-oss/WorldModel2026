@@ -1,0 +1,28 @@
+\begin{table*}[t]
+\centering
+{\small
+\setlength{\tabcolsep}{7.0pt}
+\renewcommand{\arraystretch}{0.70}
+\begin{tabular}{lrrrrrr}
+\toprule
+Method & $R^2\uparrow$ & RMSE$\downarrow$ & NSE$\uparrow$ &
+$|\mathrm{Bias}|\downarrow$ & $\mathrm{RMSE}_{25}\downarrow$ &
+\#Params\\
+\midrule
+Persistence & 0.000 & 0.230 & -1.280 & 0.170 & 0.090 & 0\\
+Previous year & 0.560 & 0.200 & -0.400 & 0.140 & 0.180 & 0\\
+Climatology & 0.580 & 0.180 & -0.340 & 0.130 & 0.160 & 0\\
+ConvLSTM & 0.580 & 0.160 & -0.130 & 0.110 & 0.110 & 1.0M\\
+Earthformer & 0.520 & 0.160 & -0.130 & 0.100 & 0.090 & 60.6M\\
+PredRNN & 0.620 & 0.150 & 0.030 & 0.100 & 0.100 & 1.4M\\
+SimVP & 0.600 & 0.150 & 0.030 & 0.090 & 0.100 & 6.6M\\
+Contextformer & 0.620 & 0.140 & 0.090 & 0.090 & 0.080 & 6.1M\\
+\textbf{TerraState} & 0.569 & 0.151 & -0.099 & 0.101 & 0.082 & 7.18M\\
+\bottomrule
+\end{tabular}
+}
+\caption{GreenEarthNet temporal-shift forecasting. $\mathrm{RMSE}_{25}$ covers
+the first 25 forecast days; RMSE, absolute bias, and $\mathrm{RMSE}_{25}$ are
+lower-is-better.}
+\label{tab:forecast}
+\end{table*}

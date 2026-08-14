@@ -1,0 +1,432 @@
+{
+  "dataset": "GreenEarthNet",
+  "matching": [
+    "season",
+    "geography",
+    "quality"
+  ],
+  "n_pairs": 84,
+  "pairs": [
+    {
+      "cluster": "32TPR",
+      "donor": "JAS21/minicube_97_32TNR_45.45_9.59.nc",
+      "sample": "JAS21/minicube_103_32TPR_45.49_10.47.nc"
+    },
+    {
+      "cluster": "32TQM",
+      "donor": "JAS21/minicube_99_32TPP_43.78_10.94.nc",
+      "sample": "JAS21/minicube_111_32TQM_42.08_12.44.nc"
+    },
+    {
+      "cluster": "32TQM",
+      "donor": "JAS21/minicube_150_33TWE_40.38_15.12.nc",
+      "sample": "JAS21/minicube_112_32TQM_42.36_12.39.nc"
+    },
+    {
+      "cluster": "34SEJ",
+      "donor": "JAS21/minicube_151_33TWE_40.62_16.18.nc",
+      "sample": "JAS21/minicube_197_34SEJ_39.50_21.71.nc"
+    },
+    {
+      "cluster": "34SEJ",
+      "donor": "JAS22/minicube_146_33TVF_40.88_14.87.nc",
+      "sample": "JAS21/minicube_199_34SEJ_39.49_21.83.nc"
+    },
+    {
+      "cluster": "29TQF",
+      "donor": "JAS22/minicube_0_29SND_39.29_-8.56.nc",
+      "sample": "JAS22/minicube_18_29TQF_40.76_-6.24.nc"
+    },
+    {
+      "cluster": "29TQF",
+      "donor": "JAS21/minicube_27_30TWK_39.68_-2.64.nc",
+      "sample": "JAS22/minicube_19_29TQF_40.87_-5.90.nc"
+    },
+    {
+      "cluster": "30STJ",
+      "donor": "SON22/minicube_22_30STJ_38.85_-5.31.nc",
+      "sample": "JAS22/minicube_22_30STJ_38.85_-5.31.nc"
+    },
+    {
+      "cluster": "30STJ",
+      "donor": "JAS22/minicube_64_31TCG_41.73_1.24.nc",
+      "sample": "JAS22/minicube_23_30STJ_39.19_-5.73.nc"
+    },
+    {
+      "cluster": "30TWK",
+      "donor": "JAS21/minicube_27_30TWK_39.68_-2.64.nc",
+      "sample": "JAS22/minicube_27_30TWK_39.68_-2.64.nc"
+    },
+    {
+      "cluster": "30TWK",
+      "donor": "JAS21/minicube_60_31TBF_41.35_-0.04.nc",
+      "sample": "JAS22/minicube_28_30TWK_39.82_-2.94.nc"
+    },
+    {
+      "cluster": "30TXR",
+      "donor": "JAS22/minicube_44_30TYQ_44.48_-0.46.nc",
+      "sample": "JAS22/minicube_33_30TXR_45.17_-0.36.nc"
+    },
+    {
+      "cluster": "30TXS",
+      "donor": "JAS22/minicube_77_31TDK_44.81_3.09.nc",
+      "sample": "JAS22/minicube_38_30TXS_45.96_-0.42.nc"
+    },
+    {
+      "cluster": "31TBF",
+      "donor": "SON21/minicube_61_31TBF_41.20_-0.55.nc",
+      "sample": "JAS22/minicube_61_31TBF_41.20_-0.55.nc"
+    },
+    {
+      "cluster": "29SQB",
+      "donor": "JAS21/minicube_27_30TWK_39.68_-2.64.nc",
+      "sample": "JAS22/minicube_8_29SQB_37.77_-5.77.nc"
+    },
+    {
+      "cluster": "29SQB",
+      "donor": "MAM21/minicube_29_30TWK_40.05_-2.43.nc",
+      "sample": "MAM21/minicube_6_29SQB_37.12_-5.86.nc"
+    },
+    {
+      "cluster": "29SQB",
+      "donor": "MAM21/minicube_21_30STJ_39.42_-5.68.nc",
+      "sample": "MAM21/minicube_8_29SQB_37.77_-5.77.nc"
+    },
+    {
+      "cluster": "33TVF",
+      "donor": "MAM22/minicube_74_31TDJ_43.31_2.71.nc",
+      "sample": "MAM22/minicube_147_33TVF_41.18_14.17.nc"
+    },
+    {
+      "cluster": "34SEJ",
+      "donor": "MAM22/minicube_228_34TFL_40.92_22.43.nc",
+      "sample": "MAM22/minicube_197_34SEJ_39.50_21.71.nc"
+    },
+    {
+      "cluster": "34SEJ",
+      "donor": "MAM21/minicube_30_30TWM_41.96_-1.70.nc",
+      "sample": "MAM22/minicube_198_34SEJ_39.24_21.03.nc"
+    },
+    {
+      "cluster": "34SEJ",
+      "donor": "MAM22/minicube_228_34TFL_40.92_22.43.nc",
+      "sample": "MAM22/minicube_199_34SEJ_39.49_21.83.nc"
+    },
+    {
+      "cluster": "32TPR",
+      "donor": "MJJ21/minicube_98_32TPP_43.52_11.19.nc",
+      "sample": "MJJ21/minicube_101_32TPR_45.53_11.26.nc"
+    },
+    {
+      "cluster": "32TPR",
+      "donor": "MJJ21/minicube_99_32TPP_43.78_10.94.nc",
+      "sample": "MJJ21/minicube_103_32TPR_45.49_10.47.nc"
+    },
+    {
+      "cluster": "34TET",
+      "donor": "MJJ21/minicube_238_34TFT_47.29_22.46.nc",
+      "sample": "MJJ21/minicube_224_34TET_47.72_21.24.nc"
+    },
+    {
+      "cluster": "34TET",
+      "donor": "MJJ21/minicube_236_34TFT_47.42_23.07.nc",
+      "sample": "MJJ21/minicube_225_34TET_47.37_22.05.nc"
+    },
+    {
+      "cluster": "34TET",
+      "donor": "MJJ21/minicube_99_32TPP_43.78_10.94.nc",
+      "sample": "MJJ21/minicube_226_34TET_46.98_21.74.nc"
+    },
+    {
+      "cluster": "30TWK",
+      "donor": "MJJ22/minicube_9_29TNE_40.49_-7.88.nc",
+      "sample": "MJJ21/minicube_28_30TWK_39.82_-2.94.nc"
+    },
+    {
+      "cluster": "30TWM",
+      "donor": "MJJ22/minicube_147_33TVF_41.18_14.17.nc",
+      "sample": "MJJ21/minicube_30_30TWM_41.96_-1.70.nc"
+    },
+    {
+      "cluster": "29SND",
+      "donor": "MJJ22/minicube_2_29SND_38.90_-8.35.nc",
+      "sample": "MJJ22/minicube_0_29SND_39.29_-8.56.nc"
+    },
+    {
+      "cluster": "32TPR",
+      "donor": "MJJ22/minicube_112_32TQM_42.36_12.39.nc",
+      "sample": "MJJ22/minicube_101_32TPR_45.53_11.26.nc"
+    },
+    {
+      "cluster": "32TPR",
+      "donor": "MJJ22/minicube_112_32TQM_42.36_12.39.nc",
+      "sample": "MJJ22/minicube_103_32TPR_45.49_10.47.nc"
+    },
+    {
+      "cluster": "32UPC",
+      "donor": "MJJ22/minicube_116_32UMC_52.08_8.88.nc",
+      "sample": "MJJ22/minicube_128_32UPC_52.07_11.73.nc"
+    },
+    {
+      "cluster": "29TPE",
+      "donor": "MJJ22/minicube_14_29TPE_40.38_-6.74.nc",
+      "sample": "MJJ22/minicube_12_29TPE_39.71_-6.82.nc"
+    },
+    {
+      "cluster": "32UQC",
+      "donor": "MJJ22/minicube_116_32UMC_52.08_8.88.nc",
+      "sample": "MJJ22/minicube_131_32UQC_51.73_12.23.nc"
+    },
+    {
+      "cluster": "32UQC",
+      "donor": "MJJ22/minicube_116_32UMC_52.08_8.88.nc",
+      "sample": "MJJ22/minicube_133_32UQC_51.92_12.17.nc"
+    },
+    {
+      "cluster": "29TPE",
+      "donor": "MJJ22/minicube_9_29TNE_40.49_-7.88.nc",
+      "sample": "MJJ22/minicube_13_29TPE_39.88_-7.17.nc"
+    },
+    {
+      "cluster": "33TYM",
+      "donor": "MJJ22/minicube_154_33TXJ_43.62_16.81.nc",
+      "sample": "MJJ22/minicube_158_33TYM_46.41_18.67.nc"
+    },
+    {
+      "cluster": "33TYM",
+      "donor": "MJJ21/minicube_237_34TFT_47.24_22.89.nc",
+      "sample": "MJJ22/minicube_159_33TYM_46.57_18.14.nc"
+    },
+    {
+      "cluster": "33TYM",
+      "donor": "MJJ22/minicube_154_33TXJ_43.62_16.81.nc",
+      "sample": "MJJ22/minicube_160_33TYM_46.19_17.62.nc"
+    },
+    {
+      "cluster": "33TYN",
+      "donor": "MJJ21/minicube_236_34TFT_47.42_23.07.nc",
+      "sample": "MJJ22/minicube_162_33TYN_46.95_18.60.nc"
+    },
+    {
+      "cluster": "33TYN",
+      "donor": "MJJ21/minicube_236_34TFT_47.42_23.07.nc",
+      "sample": "MJJ22/minicube_163_33TYN_47.01_18.77.nc"
+    },
+    {
+      "cluster": "29TQF",
+      "donor": "MJJ22/minicube_14_29TPE_40.38_-6.74.nc",
+      "sample": "MJJ22/minicube_18_29TQF_40.76_-6.24.nc"
+    },
+    {
+      "cluster": "29TQF",
+      "donor": "MJJ22/minicube_14_29TPE_40.38_-6.74.nc",
+      "sample": "MJJ22/minicube_19_29TQF_40.87_-5.90.nc"
+    },
+    {
+      "cluster": "29SND",
+      "donor": "MJJ21/minicube_1_29SND_39.34_-8.53.nc",
+      "sample": "MJJ22/minicube_1_29SND_39.34_-8.53.nc"
+    },
+    {
+      "cluster": "29TQF",
+      "donor": "MJJ22/minicube_25_30TTK_40.30_-5.51.nc",
+      "sample": "MJJ22/minicube_20_29TQF_40.81_-5.66.nc"
+    },
+    {
+      "cluster": "34TDQ",
+      "donor": "MJJ22/minicube_208_34TCQ_44.74_18.50.nc",
+      "sample": "MJJ22/minicube_219_34TDQ_45.04_20.93.nc"
+    },
+    {
+      "cluster": "30STJ",
+      "donor": "MJJ22/minicube_9_29TNE_40.49_-7.88.nc",
+      "sample": "MJJ22/minicube_21_30STJ_39.42_-5.68.nc"
+    },
+    {
+      "cluster": "34TET",
+      "donor": "MJJ22/minicube_208_34TCQ_44.74_18.50.nc",
+      "sample": "MJJ22/minicube_224_34TET_47.72_21.24.nc"
+    },
+    {
+      "cluster": "34TET",
+      "donor": "MJJ22/minicube_208_34TCQ_44.74_18.50.nc",
+      "sample": "MJJ22/minicube_225_34TET_47.37_22.05.nc"
+    },
+    {
+      "cluster": "34TET",
+      "donor": "MJJ21/minicube_236_34TFT_47.42_23.07.nc",
+      "sample": "MJJ22/minicube_226_34TET_46.98_21.74.nc"
+    },
+    {
+      "cluster": "30STJ",
+      "donor": "MJJ22/minicube_9_29TNE_40.49_-7.88.nc",
+      "sample": "MJJ22/minicube_22_30STJ_38.85_-5.31.nc"
+    },
+    {
+      "cluster": "34TFT",
+      "donor": "MJJ22/minicube_208_34TCQ_44.74_18.50.nc",
+      "sample": "MJJ22/minicube_238_34TFT_47.29_22.46.nc"
+    },
+    {
+      "cluster": "30STJ",
+      "donor": "MJJ22/minicube_14_29TPE_40.38_-6.74.nc",
+      "sample": "MJJ22/minicube_23_30STJ_39.19_-5.73.nc"
+    },
+    {
+      "cluster": "30TTK",
+      "donor": "MJJ22/minicube_9_29TNE_40.49_-7.88.nc",
+      "sample": "MJJ22/minicube_24_30TTK_39.99_-6.07.nc"
+    },
+    {
+      "cluster": "30TTK",
+      "donor": "MJJ21/minicube_29_30TWK_40.05_-2.43.nc",
+      "sample": "MJJ22/minicube_26_30TTK_39.70_-6.41.nc"
+    },
+    {
+      "cluster": "30TWK",
+      "donor": "MJJ22/minicube_14_29TPE_40.38_-6.74.nc",
+      "sample": "MJJ22/minicube_27_30TWK_39.68_-2.64.nc"
+    },
+    {
+      "cluster": "30TWK",
+      "donor": "MJJ21/minicube_29_30TWK_40.05_-2.43.nc",
+      "sample": "MJJ22/minicube_28_30TWK_39.82_-2.94.nc"
+    },
+    {
+      "cluster": "30TWK",
+      "donor": "MJJ21/minicube_29_30TWK_40.05_-2.43.nc",
+      "sample": "MJJ22/minicube_29_30TWK_40.05_-2.43.nc"
+    },
+    {
+      "cluster": "30TWM",
+      "donor": "MAM21/minicube_1_29SND_39.34_-8.53.nc",
+      "sample": "MJJ22/minicube_30_30TWM_41.96_-1.70.nc"
+    },
+    {
+      "cluster": "30TWM",
+      "donor": "MJJ22/minicube_62_31TBF_41.07_0.71.nc",
+      "sample": "MJJ22/minicube_31_30TWM_41.81_-2.42.nc"
+    },
+    {
+      "cluster": "30TWM",
+      "donor": "MJJ22/minicube_62_31TBF_41.07_0.71.nc",
+      "sample": "MJJ22/minicube_32_30TWM_42.08_-2.23.nc"
+    },
+    {
+      "cluster": "30TXR",
+      "donor": "MJJ22/minicube_66_31TCN_47.02_1.44.nc",
+      "sample": "MJJ22/minicube_33_30TXR_45.17_-0.36.nc"
+    },
+    {
+      "cluster": "30TXS",
+      "donor": "MJJ22/minicube_66_31TCN_47.02_1.44.nc",
+      "sample": "MJJ22/minicube_36_30TXS_46.61_-0.73.nc"
+    },
+    {
+      "cluster": "30TXS",
+      "donor": "MJJ22/minicube_66_31TCN_47.02_1.44.nc",
+      "sample": "MJJ22/minicube_37_30TXS_46.65_-0.52.nc"
+    },
+    {
+      "cluster": "30TXS",
+      "donor": "MJJ22/minicube_66_31TCN_47.02_1.44.nc",
+      "sample": "MJJ22/minicube_38_30TXS_45.96_-0.42.nc"
+    },
+    {
+      "cluster": "30TYQ",
+      "donor": "MJJ21/minicube_60_31TBF_41.35_-0.04.nc",
+      "sample": "MJJ22/minicube_42_30TYQ_44.96_-0.34.nc"
+    },
+    {
+      "cluster": "30TYQ",
+      "donor": "MJJ22/minicube_25_30TTK_40.30_-5.51.nc",
+      "sample": "MJJ22/minicube_43_30TYQ_44.35_0.09.nc"
+    },
+    {
+      "cluster": "30TYQ",
+      "donor": "MJJ22/minicube_25_30TTK_40.30_-5.51.nc",
+      "sample": "MJJ22/minicube_44_30TYQ_44.48_-0.46.nc"
+    },
+    {
+      "cluster": "30TYR",
+      "donor": "MJJ22/minicube_66_31TCN_47.02_1.44.nc",
+      "sample": "MJJ22/minicube_46_30TYR_45.49_0.70.nc"
+    },
+    {
+      "cluster": "30TYR",
+      "donor": "MJJ21/minicube_98_32TPP_43.52_11.19.nc",
+      "sample": "MJJ22/minicube_47_30TYR_45.79_0.69.nc"
+    },
+    {
+      "cluster": "30UYU",
+      "donor": "MJJ22/minicube_118_32UMC_51.86_7.58.nc",
+      "sample": "MJJ22/minicube_56_30UYU_47.75_-0.16.nc"
+    },
+    {
+      "cluster": "29SPC",
+      "donor": "MJJ21/minicube_29_30TWK_40.05_-2.43.nc",
+      "sample": "MJJ22/minicube_5_29SPC_38.81_-6.73.nc"
+    },
+    {
+      "cluster": "31TCN",
+      "donor": "MJJ22/minicube_127_32UNU_48.68_10.25.nc",
+      "sample": "MJJ22/minicube_67_31TCN_47.31_1.00.nc"
+    },
+    {
+      "cluster": "31TCN",
+      "donor": "MJJ22/minicube_127_32UNU_48.68_10.25.nc",
+      "sample": "MJJ22/minicube_68_31TCN_47.21_0.93.nc"
+    },
+    {
+      "cluster": "29SQB",
+      "donor": "MJJ21/minicube_29_30TWK_40.05_-2.43.nc",
+      "sample": "MJJ22/minicube_6_29SQB_37.12_-5.86.nc"
+    },
+    {
+      "cluster": "31TEJ",
+      "donor": "MJJ22/minicube_74_31TDJ_43.31_2.71.nc",
+      "sample": "MJJ22/minicube_78_31TEJ_43.47_3.31.nc"
+    },
+    {
+      "cluster": "31UFP",
+      "donor": "MJJ22/minicube_127_32UNU_48.68_10.25.nc",
+      "sample": "MJJ22/minicube_86_31UFP_48.13_5.44.nc"
+    },
+    {
+      "cluster": "31UFP",
+      "donor": "MJJ22/minicube_127_32UNU_48.68_10.25.nc",
+      "sample": "MJJ22/minicube_87_31UFP_48.13_5.44.nc"
+    },
+    {
+      "cluster": "32TNR",
+      "donor": "MJJ22/minicube_154_33TXJ_43.62_16.81.nc",
+      "sample": "MJJ22/minicube_95_32TNR_45.18_9.23.nc"
+    },
+    {
+      "cluster": "32TNR",
+      "donor": "MJJ22/minicube_154_33TXJ_43.62_16.81.nc",
+      "sample": "MJJ22/minicube_96_32TNR_45.27_9.19.nc"
+    },
+    {
+      "cluster": "32TPP",
+      "donor": "MJJ22/minicube_111_32TQM_42.08_12.44.nc",
+      "sample": "MJJ22/minicube_99_32TPP_43.78_10.94.nc"
+    },
+    {
+      "cluster": "30TWK",
+      "donor": "SON21/minicube_28_30TWK_39.82_-2.94.nc",
+      "sample": "SON22/minicube_28_30TWK_39.82_-2.94.nc"
+    },
+    {
+      "cluster": "30TWM",
+      "donor": "SON21/minicube_30_30TWM_41.96_-1.70.nc",
+      "sample": "SON22/minicube_30_30TWM_41.96_-1.70.nc"
+    },
+    {
+      "cluster": "31TBF",
+      "donor": "SON21/minicube_63_31TCG_41.48_0.66.nc",
+      "sample": "SON22/minicube_60_31TBF_41.35_-0.04.nc"
+    }
+  ],
+  "subset": "frozen heat-drought subset"
+}

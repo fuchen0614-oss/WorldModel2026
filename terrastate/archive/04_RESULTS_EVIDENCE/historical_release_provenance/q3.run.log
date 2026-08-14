@@ -1,0 +1,4 @@
+[audit] exclusive: arch=exclusive weather_in_base=False n_extreme=84 n_control_unique=45 n_pairs=84 role=final
+[audit] exclusive: Q3 endpoint(donor) geo-cluster CI=[0.001119,0.003987] sig>0=True | uf_differs_all=True
+[audit] exclusive: Q3 endpoint=PASS enhancement=FAIL raw=Q3_RESPONSE_FIDELITY_ONLY -> overall=Q3_RESPONSE_FIDELITY_ONLY
+[audit] wrote /csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/selection/q3_final_boundary80_20260727_230029/extreme_state_audit.json

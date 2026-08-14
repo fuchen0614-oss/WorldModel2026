@@ -1,0 +1,20 @@
+Validation date: 2026-07-30 UTC
+Python: WorldModel2026/.conda/envs/WorldModel/bin/python
+PYTHONPATH: 01_CODE_SNAPSHOT
+Bytecode/cache writes: disabled
+
+Tests:
+  03_TRAINING_AND_EVAL/tests/test_stage1_5_dual_conditioned.py
+  03_TRAINING_AND_EVAL/tests/test_stage1_5_integration.py
+
+Coverage:
+  pure imaging-condition encoder
+  FiLM placement and identity behavior
+  spatial state projector and state reconstruction bridge
+  phi collation and missing values
+  reconstruction/decoupling losses and gradients
+  Stage1-style weight loading
+  end-to-end Stage1.5 micro-step
+
+Result: 12 passed in 48.21s
+Overall: STAGE1_5_TEST_PASS

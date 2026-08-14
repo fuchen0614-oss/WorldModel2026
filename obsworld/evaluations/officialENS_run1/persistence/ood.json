@@ -1,0 +1,13 @@
+{
+  "metrics": {
+    "ENS": 0.20670518916142303,
+    "MAD": 0.22163794833277906,
+    "OLS": 0.32137029972903514,
+    "EMD": 0.20453395432044494,
+    "SSIM": 0.14623023725802275,
+    "num_scored_cubes": 4202
+  },
+  "split": "ood",
+  "baseline": "persistence_context_mean",
+  "num_samples": 4202
+}

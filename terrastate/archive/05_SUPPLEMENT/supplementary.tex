@@ -1,0 +1,272 @@
+\documentclass[letterpaper]{article}
+\usepackage[submission]{aaai2027}
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\urlstyle{rm}
+\def\UrlFont{\rm}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\frenchspacing
+
+\pdfinfo{
+/TemplateVersion (2027.1)
+}
+
+\setcounter{secnumdepth}{2}
+
+\title{Supplementary Material for TerraState: A Testable Predictive-State World Model for Weather-Driven Land-Surface Forecasting}
+\author{Anonymous Submission}
+\affiliations{}
+
+\begin{document}
+\maketitle
+
+This technical appendix provides details omitted from Sections~3 and 4 of the
+main paper. Appendix~A specifies implementation details of the predictive
+state, transition, readout, and training targets; Appendix~B records the
+training, preprocessing, and scoring protocol; and Appendices~C--D give the
+complete Q2 and Q3 intervention procedures. Numerical Q1--Q3 results remain
+in the main paper to avoid duplicating its tables.
+
+\appendix
+
+% Mini-outline: context isolation; state dimensions; transition; training targets.
+\section{Additional Implementation Details}
+\label{sec:method-details}
+
+\subsection{Context Isolation and Predictive-State Construction}
+
+At forecast issue time \(t\), the optical context is
+\(\mathcal H_t=\{(x_i,m_i,\tau_i)\}_{i=1}^{C}\), where \(x_i\) is a
+Sentinel-2 composite, \(m_i\) is its validity mask, and \(\tau_i\) is the
+acquisition time. Historical meteorology is denoted by
+\(u_{\leq t}^{\mathrm{past}}\), the ordered future meteorological sequence by
+\(u_{t+1:t+H}\), static geography by \(g\), and the future optical targets by
+\(y_{t+1:t+H}\). The context
+\(\widetilde{\mathcal C}_t=(\mathcal H_t,u_{\leq t}^{\mathrm{past}},g)\)
+contains neither future optical observations nor future meteorology.
+
+Each minicube contains 30 five-day composites at \(128\times128\) pixels. The
+first \(C=10\) composites form the context, and the following \(H=20\)
+composites form the 100-day prediction window. Optical input has five
+channels, including normalized difference vegetation index (NDVI) and four
+reflectance bands. Meteorology has 24 channels, obtained from eight variables
+with mean, minimum, and maximum aggregation. Static input has five channels;
+the first three elevation products provide the patch-wise geography input.
+
+The history operator uses the PVT v2/Contextformer configuration adopted by
+TerraState. A \(4\times4\) patch size yields \(32\times32=1{,}024\)
+spatial tokens for each minicube. The projector applies layer normalization,
+a two-layer multilayer perceptron, and output normalization to the
+final-context token at every patch. The resulting per-minicube state has shape
+\([1024,256]\), or \([1024B,256]\) after flattening the batch and patch
+dimensions.
+
+The context-only constraint is structural. Future optical tensors and future
+meteorology are zeroed before the history pass, and future image positions are
+masked by the history operator. Consequently, \(b_{1:H}\) and \(z_t\) depend
+only on historical observations, past meteorology, and static geography. This
+separation makes the later weather substitution specific to the state
+transition.
+
+\subsection{Direct Shared Transition and State Readout}
+
+For each queried horizon, the shared transition is conditioned on the
+corresponding ordered future-weather prefix. A shared gated recurrent unit
+produces codes for all 20 prefixes in one recurrent pass. A geography encoder
+average-pools the three elevation channels to the \(4\times4\) patch grid, and
+a sinusoidal embedding represents elapsed horizon. The fusion network and
+residual transition share parameters across patches and horizons; geography
+remains patch-specific, whereas weather and horizon codes are broadcast
+across the patch grid.
+
+Every horizon is queried directly from the same history-derived state
+\(z_t\). The model applies the shared transition once for each \(h\), using
+the prefix \(u_{t+1:t+h}\), rather than feeding \(z_{t+h-1}\) recursively into
+the next horizon. The state readout maps each 256-dimensional transitioned token
+to one local \(4\times4\) output patch and unpatchifies the patches into
+\(r_h\in\mathbb R^{1\times128\times128}\). The coefficient multiplying this
+contribution is a fixed non-learnable buffer with value one, which supplies
+the precise Q2 cut point.
+
+\subsection{Training-Target Construction}
+
+The ground-truth objective first averages squared error over clear horizons
+for each pixel and then averages over eligible vegetation pixels. A frozen
+full-weather KD teacher supplies a stopped forecast target, weighted by 0.5
+in the complete objective.
+
+The future-state objective anchors only the terminal transitioned state. A
+training-start frozen copy of the history operator and projector processes the
+observed all-frame optical sequence with recorded masks while future weather
+is zeroed. The patch mask requires a fully clear terminal \(4\times4\) patch
+containing at least one vegetation pixel. Layer-normalized student and target
+tokens are compared by cosine distance. Future optical observations create
+this stopped training target only; they are absent from the deployed
+inference graph. The teacher and target encoder are discarded after training,
+and Q2--Q3 introduce no additional objective.
+
+% Mini-outline: optimizer; schedule; batching; hardware; selection.
+\section{Training and Evaluation Protocol}
+\label{sec:training-evaluation}
+
+\subsection{Training and Implementation Details}
+
+Table~\ref{tab:training} gives the TerraState training configuration. Training
+lasts 40 epochs and exactly 14,880 optimizer updates. The implementation uses
+AdamW with \(\beta=(0.9,0.999)\), zero weight decay, and gradient clipping at
+norm 1.0. The non-history branch uses a base learning rate of
+\(3\times10^{-5}\). The history-operator parameter group uses
+\(9.9\times10^{-7}\), equal to 0.033 times the branch rate.
+
+The update schedule controls both trainable parameters and
+\(\lambda_s\). During the first 20\% of updates, the history operator remains
+frozen and \(\lambda_s\) increases linearly from 0 to 0.02. From 20\% through
+80\%, the history operator remains frozen and \(\lambda_s=0.02\). During the
+final 20\%, only the final Transformer block of the history operator is
+unfrozen, and \(\lambda_s=0.01\). The projector, weather encoder, geography
+encoder, fusion network, transition, and readout are optimized throughout.
+
+The global batch is 64, realized as eight samples on each of eight GPUs
+without gradient accumulation. The shared learning-rate multiplier increases
+linearly during the first 300 optimizer updates and then follows cosine decay,
+preserving the ratio between the two parameter-group rates.
+
+Model selection uses validation forecasting performance only. Neither Q2,
+Q3, nor OOD-t contributes to selection. The selected model is evaluated
+without parameter updates on all three questions, thereby keeping the
+intervention results outside checkpoint selection and parameter updates.
+
+\begin{table}[t]
+\centering
+{\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Setting & Value\\
+\midrule
+Epochs / optimizer updates & 40 / 14,880\\
+Optimizer & AdamW\\
+\(\beta_1,\beta_2\) / weight decay & \(0.9,0.999\) / 0\\
+Branch / history learning rate & \(3{\times}10^{-5}\) / \(9.9{\times}10^{-7}\)\\
+Learning-rate schedule & 300-update warm-up, cosine decay\\
+Global batch & 64 (8 devices \(\times\) 8 samples)\\
+Gradient accumulation & none\\
+Gradient clipping & global norm 1.0\\
+Precision & FP32\\
+Hardware & 8 NVIDIA H200 GPUs\\
+\bottomrule
+\end{tabular}
+}
+\caption{TerraState training configuration.}
+\label{tab:training}
+\end{table}
+
+% Mini-outline: splits; preprocessing; masks; scoring outputs.
+\subsection{GreenEarthNet Splits and Preprocessing}
+
+GreenEarthNet supplies separate training, validation, and temporal
+out-of-distribution partitions. Training optimizes the model, validation
+supports checkpoint selection and the validation Q2 analysis, and OOD-t is
+held out from selection. The OOD-t evaluation contains 1,904 minicubes. The
+validation Q2 scorer contains 952 target minicubes, of which 589 yield paired
+metric units after the scorer's eligibility rules.
+
+For each minicube, the data adapter samples the optical record every five days
+to obtain 30 composites. NDVI is computed from near-infrared and red
+reflectance. Missing optical values are set to zero after a separate cloud and
+quality mask is constructed. The cloud mask combines the provided learned
+mask with valid scene-class labels. Meteorological variables are normalized
+using the GreenEarthNet statistics and aggregated over each five-day interval
+by mean, minimum, and maximum, producing 24 channels. Elevation channels are
+scaled by 500, and categorical static layers retain their original scale.
+
+The forecast target is NDVI over valid vegetation pixels. Clear target
+observations satisfy the official cloud and scene-class rule, and vegetation
+pixels fall in the declared land-cover range. Prediction tensors have shape
+\([B,20,1,128,128]\). For file-based scoring, each output stores the 20 NDVI
+predictions on the target timestamps with the original latitude and longitude
+coordinates. The official scorer computes pixel-level time-series quantities
+before balancing them across minicubes and vegetation land-cover classes. It
+reports \(R^2\), RMSE, NSE, absolute bias, and \(\mathrm{RMSE}_{25}\), as
+defined under \emph{Experimental Setup} in Section~4 of the main paper.
+
+% Mini-outline: arms; global estimand; paired estimand; uncertainty; invariants.
+\section{Q2 Intervention and Statistical Protocol}
+\label{sec:q2-results}
+
+Q2 evaluates three forward computations on identical samples. The full model
+uses the additive state path in the main paper. State removal sets the state
+contribution to zero immediately before addition, giving
+\(\widehat y^{\mathrm{remove}}_{t+h}=b_h\). The identity-transition control
+replaces the learned transition output by the unevolved \(z_t\) while keeping
+the state readout active. Model weights, history, target window, masks, and
+scorer remain fixed for every arm.
+
+The analysis reports two distinct estimands. Official
+\(\Delta R^2\) is the difference between full and intervened dataset-level
+scores. Paired \(\Delta R^2\) is computed per eligible minicube and then
+averaged; its 95\% percentile interval comes from 10,000 paired bootstrap
+resamples. Because the two quantities use different aggregation orders, the
+paired interval characterizes the mean paired-minicube effect rather than the
+official dataset-level difference.
+
+The state-removal comparison provides the primary evidence: the explicit
+state contribution is removed without changing the matched context forecast.
+The identity-transition arm is a supporting diagnostic because it can present
+the readout with states outside its trained input distribution. Numerical
+effects for both splits are reported in Table~2 of the main paper.
+
+Implementation invariants check that all arms use identical sample order,
+target tensors, masks, history-derived context forecast, and frozen
+model weights. They also verify that state removal recovers \(b_h\), the fixed
+state-contribution coefficient is restored after each call, and finite paired
+units are aligned before bootstrapping.
+
+% Mini-outline: subset; controls; fixed quantities; loss; bootstrap; scope.
+\section{Q3 Heat--Drought Subset and Weather-Control Protocol}
+\label{sec:q3-results}
+
+Q3 uses a frozen heat--drought subset with 84 matched pairs. The 84 evaluation
+samples comprise all eligible OOD-t minicubes in the predeclared
+heat--drought stratum. Hot and dry anomaly thresholds were estimated from the
+training climatology at the 80th percentile and frozen before model
+evaluation; eligible samples additionally required at least 80\% valid
+future-weather coverage. Neither future NDVI, model predictions, forecast
+errors, nor checkpoint outputs entered subset construction. For each sample,
+the donor was selected from the normal-weather pool under an exact seasonal
+constraint and matching on geography, historical context, vegetation
+coverage, and data quality. This frozen procedure produced 84 pairs involving
+45 unique donors and 31 geographic clusters.
+
+For the weather intervention, each evaluated minicube retains its historical
+context, \(b_{1:H}\), \(z_t\), geography, horizon queries, readout, target
+window, and mask. Only the future-weather tensor supplied to \(T_\psi\)
+changes among three arms:
+\begin{enumerate}
+    \item actual future weather from the evaluated minicube;
+    \item donor future weather from the frozen matching procedure;
+    \item normalized-mean weather, represented by zero in the frozen
+    global standardized feature space.
+\end{enumerate}
+
+The primary loss is masked mean squared error over the complete 20-step
+forecast window. Control-minus-actual loss is computed per pair, so a positive
+value favors actual weather. The uncertainty analysis resamples the 31
+geographic clusters with replacement for 10,000 replicates, preserving
+dependence caused by donor reuse. Whether actual weather yields lower loss is
+summarized by a descriptive pair count, while statistical inference relies on
+the geographic-cluster bootstrap. The subset \(R^2\) and RMSE in Table~3 of
+the main paper refer specifically to these 84 matched samples.
+
+This intervention measures conditional response fidelity under a frozen
+matched protocol. This estimand characterizes response fidelity under observed
+targets; causal and counterfactual identification lie outside its scope
+because alternate real-world outcomes under the control weather sequences are
+unobserved.
+
+\end{document}

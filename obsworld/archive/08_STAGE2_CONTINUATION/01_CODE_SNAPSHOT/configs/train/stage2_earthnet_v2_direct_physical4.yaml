@@ -1,0 +1,63 @@
+# Original physical DGH formal candidate. Additive to Direct24: only the
+# weather layout and the first driver projection change; C/G/delta-t/state,
+# decoder, loss, optimizer and Stage1.5 initializer remain inherited.
+_base_: stage2_earthnet_v2_direct24.yaml
+
+protocol:
+  driver_protocol: physical4_v1
+  physical_raw_variables: [rr, tg, hu, qq]
+  d_feature_names: [precip_sum_5d, temp_mean_5d, vpd_mean_5d, srad_sum_5d]
+
+model:
+  forecast_mode: direct_path_physical4
+  driver_protocol: physical4_v1
+  interval_driver_encoder:
+    input_dim: 4
+    feature_names: [precip_sum_5d, temp_mean_5d, vpd_mean_5d, srad_sum_5d]
+
+data:
+  driver_protocol: physical4_v1
+  conditioning_stats_path: null
+  # Formal H200 route: 8 GPUs × 64 samples/GPU = global batch 512.  DDP pads
+  # each rank to 2,856 episodes, and drop_last therefore gives 44 updates per
+  # EarthNet epoch (8,800 updates for 200 epochs).
+  batch_size: 64
+  # 8 GPUs × 8 workers = 64 NetCDF readers, below the 192 CPU cores of the
+  # formal node. One prefetched batch bounds NAS and host-RAM pressure.
+  num_workers: 8
+  prefetch_factor: 1
+  persistent_workers: true
+  # Keep native 128² context in workers, then perform the pre-existing
+  # bilinear/nearest resize batch-wise after H2D transfer. Model input stays
+  # 10 × 4 × 256 × 256; only the data-pipeline location changes.
+  defer_context_resize_to_device: true
+
+training:
+  # 44 steps/epoch × 200 EarthNet train epochs.
+  max_steps: 8800
+
+validation:
+  # Validation runs on rank zero while the other ranks wait. It has no
+  # gradient state, so a moderate larger batch substantially shortens each
+  # 512-minicube validation without changing the metric population.
+  batch_size: 8
+  num_workers: 4
+  prefetch_factor: 1
+  persistent_workers: true
+
+performance:
+  # Conservative hardware optimizations; none changes the EarthNet/DGH
+  # protocol, loss, model topology, or bf16 training precision.
+  allow_tf32: true
+  cudnn_benchmark: true
+  float32_matmul_precision: high
+
+checkpoint_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage2_earthnet_v2_direct_physical4
+log_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026/logs/stage2_earthnet_v2_direct_physical4
+checkpoint_interval: 1000
+log_interval: 50
+
+# Keep only the paper-facing milestone copies in addition to ordinary
+# step checkpoints.  The trainer converts these epochs using the actual
+# loader length, so changing per-GPU batch does not mislabel the files.
+epoch_checkpoint_epochs: [100, 150, 200]

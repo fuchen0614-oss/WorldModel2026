@@ -1,0 +1,11 @@
+Validation date: 2026-07-30 UTC
+Status: PASS_REBUILT_FROM_CURATED_SOURCE
+Compiler: TeX Live 2026 pdflatex x2
+Build location: isolated temporary directory
+PDF: 3 pages, letter 612x792 pt
+Final-pass LaTeX errors: 0
+Final-pass undefined references: 0
+Final-pass overfull hbox: 0
+Font embedding: PASS
+Extracted text comparison with archived supplementary.pdf: IDENTICAL
+Extracted text SHA-256: 35ac1b7c0f1704ce093e87e0f6b80427552dd1661068149b8cba2709a8364441

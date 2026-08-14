@@ -1,0 +1,27 @@
+{
+  "method": "TerraState",
+  "protocol": "complete-window weather-response fidelity",
+  "n_pairs": 84,
+  "n_geographic_clusters": 31,
+  "bootstrap_replicates": 10000,
+  "actual": {"R2": 0.6254, "RMSE": 0.1492},
+  "matched_donor": {
+    "R2": 0.5893,
+    "RMSE": 0.1584,
+    "control_minus_actual_loss": 0.00257,
+    "geographic_cluster_95": [0.00112, 0.00399],
+    "actual_lower_count": 56
+  },
+  "normalized_mean": {
+    "R2": 0.5430,
+    "RMSE": 0.1971,
+    "control_minus_actual_loss": 0.01126,
+    "geographic_cluster_95": [0.00547, 0.01708],
+    "actual_lower_count": 69
+  },
+  "mean_absolute_forecast_difference": {
+    "actual_vs_matched_donor": 0.03592,
+    "actual_vs_normalized_mean": 0.08137
+  },
+  "status": "reported_reference_metrics"
+}

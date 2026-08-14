@@ -1,0 +1,24 @@
+Validation date: 2026-07-30 UTC
+Method: compare SHA-256 of each archived file with `git show <commit>:<path>`
+
+v2_training_commit_52578ca:
+  commit 52578ca4b1c0b434b10707cf052a623f0c4e4a99
+  28/28 files PASS
+
+q2_validation_evaluator_commit_221052f:
+  commit 221052f
+  17/17 files PASS
+
+q1_q2_ood_evaluator_commit_78073db:
+  commit 78073db
+  17/17 files PASS
+
+q3_evaluator_commit_4dce19a:
+  commit 4dce19a5b86f39229837fab04fac2fcbf50da788
+  19/19 files PASS
+
+q3_protocol_builder_commit_83e62e9:
+  commit 83e62e9d9e58a4705f0e7dcec74df97a1acaad21
+  2/2 files PASS
+
+Total: 83/83 commit-exact files PASS
