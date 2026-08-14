@@ -45,10 +45,13 @@ TerraState 在历史上从 ObsWorld 的研究线中分化出来（分叉点约�
 
 仓库内**不存放任何模型权重**。全部走 GitHub Release：
 
-| Release tag | 内容 | 索引 |
+| Release | 内容 | 索引 |
 |---|---|---|
-| `weights-terrastate-v1` | 133 MB / 3 个 | [`terrastate/WEIGHTS_INDEX.md`](terrastate/WEIGHTS_INDEX.md) |
-| `weights-obsworld-v1` | 1.29 GB / 5 个 | [`obsworld/WEIGHTS_INDEX.md`](obsworld/WEIGHTS_INDEX.md) |
+| [`weights-terrastate-v1`](https://github.com/fuchen0614-oss/WorldModel2026/releases/tag/weights-terrastate-v1) | 3 个 / 133.4 MB | [`terrastate/WEIGHTS_INDEX.md`](terrastate/WEIGHTS_INDEX.md) |
+| [`weights-obsworld-v1`](https://github.com/fuchen0614-oss/WorldModel2026/releases/tag/weights-obsworld-v1) | 5 个 / 1.29 GB | [`obsworld/WEIGHTS_INDEX.md`](obsworld/WEIGHTS_INDEX.md) |
+
+资产名是扁平化的（`来源目录__文件名`），下载后按索引里的对照表放回仓库内路径。
+每个索引都给了 `gh` 与 `curl + token` 两种下载方式，并附 SHA-256 校验块。
 
 ## 服务器端使用
 
