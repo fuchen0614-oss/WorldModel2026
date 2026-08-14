@@ -335,3 +335,21 @@ python eval/eval_stage2_earthnet.py --config configs/train/plan_a_stage2v3_vits.
 - **踩坑**：orchestrator 打分步无条件要 climatology comparison provenance → `RUN_BASELINES=0` 时崩；修复=**手动跑 `score_table1_greenearthnet.py` 不带 `--comparison-score-dir`**（`_comparison_provenance` 第274行 `if not score_dir: return None` 优雅跳过）。已补进 doc 80。
 
 **下一步**：跑 `eval/measure_composition_gap.py`（Table 3 世界模型证据）+ 重评 Direct-P4 锚点 + previous-year 基线。
+
+---
+
+## ✅ full24 精度探针结论（2026-07-23，决定性）
+
+**S1a full24 ood-t**（同 harness，evaluator a0329636）：**R²=0.5380, RMSE=0.1763, NSE=−0.408, rmse25=0.1106**。
+对标 **S1a physical4 R²=0.5472/RMSE=0.1795**：
+
+| | physical4 | full24 | 结论 |
+|---|---|---|---|
+| R² | **0.5472** | 0.5380 | full weather **反而低 0.009** |
+| RMSE | 0.1795 | 0.1763 | 略好 0.003 |
+
+- **full weather（24 变量）不是精度杠杆，堵死**——physical4（4 变量）精度零代价甚至 R² 更高，**当初选 physical4 是对的**（保 DGH 可解释性 + 不掉精度）。
+- 两者都 ~0.54、**低于 climatology(0.58)/prev-year(0.56)** → **Plan A(ViT-S) 单独过不了 doc84 的精度必过门；精度瓶颈在【骨架】，能打的精度只能靠 Plan B(PVT)。**
+- **战略**：TerraState 最终大概率=Plan B 骨架；Plan A 的 S1a 作 load-bearing 干净的世界模型证据源 + matched ablation。physical4 保留。
+- 修复记录：full24 评测踩 `s2_mask` v2 解析器无回退坑（commit 79e8e4e 补 `s2_dlmask→s2_mask`，本地端到端验证 D_path 30×24 OK）。
+- 产物：`evaluations/table1_oodt_plan_a_s1a_full24_best/plan-a-s1a-full24/oodt_chopped/score/metrics_en21x.json`；权重待传 release `plan-a-s1a-full24`。

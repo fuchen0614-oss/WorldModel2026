@@ -1,0 +1,956 @@
+{
+  "metrics": {
+    "EMD": 0.2374806389046872,
+    "ENS": 0.15002353414542022,
+    "MAD": 0.240558916385255,
+    "MAE": 0.0281096641972179,
+    "MAE_h10": 0.02388157475563929,
+    "MAE_h100": 0.03238957016908991,
+    "MAE_h15": 0.024181614332757912,
+    "MAE_h20": 0.02534857124765088,
+    "MAE_h25": 0.02622237532753276,
+    "MAE_h30": 0.026108255089704237,
+    "MAE_h35": 0.026209356839786705,
+    "MAE_h40": 0.02740297816198944,
+    "MAE_h45": 0.027498801250708856,
+    "MAE_h5": 0.023115828123593887,
+    "MAE_h50": 0.02836483067963805,
+    "MAE_h55": 0.028319353844599673,
+    "MAE_h60": 0.029045498303834887,
+    "MAE_h65": 0.029348484881113558,
+    "MAE_h70": 0.02938547479765989,
+    "MAE_h75": 0.029027119020841378,
+    "MAE_h80": 0.03126481212609252,
+    "MAE_h85": 0.03151348321896939,
+    "MAE_h90": 0.032204598050794384,
+    "MAE_h95": 0.03367793521008612,
+    "NDVI_MAE": 0.08921529369368361,
+    "NDVI_MAE_h10": 0.06685330742833115,
+    "NDVI_MAE_h100": 0.10745773596707724,
+    "NDVI_MAE_h15": 0.06972910130013878,
+    "NDVI_MAE_h20": 0.07506196031306982,
+    "NDVI_MAE_h25": 0.07749420103551642,
+    "NDVI_MAE_h30": 0.08110911275216291,
+    "NDVI_MAE_h35": 0.08185233059121544,
+    "NDVI_MAE_h40": 0.08542497853408562,
+    "NDVI_MAE_h45": 0.0877568341861131,
+    "NDVI_MAE_h5": 0.06300752116580166,
+    "NDVI_MAE_h50": 0.09345852515117056,
+    "NDVI_MAE_h55": 0.0929407818434947,
+    "NDVI_MAE_h60": 0.0950858393316791,
+    "NDVI_MAE_h65": 0.09704081156766117,
+    "NDVI_MAE_h70": 0.09926949239241627,
+    "NDVI_MAE_h75": 0.10123261013588403,
+    "NDVI_MAE_h80": 0.10252152298495125,
+    "NDVI_MAE_h85": 0.10371487266558878,
+    "NDVI_MAE_h90": 0.10604187306686408,
+    "NDVI_MAE_h95": 0.10758907386555563,
+    "OLS": 0.3383514842669673,
+    "SSIM": 0.0651927693779751,
+    "delta": 0.0,
+    "latent": 0.0,
+    "long_horizon_MAE": 0.030823198272106844,
+    "ndvi": 0.09157122921787743,
+    "num_samples": 4205,
+    "num_scored_cubes": 4205,
+    "obs": 0.0014384418707141624,
+    "persistence_MAE": 0.03808943155400786,
+    "skill_vs_persistence": 0.26200882894877087,
+    "smooth": 0.0001271734762986646,
+    "total": 0.04722405637699699
+  },
+  "provenance": {
+    "checkpoint": {
+      "exists": true,
+      "path": "/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026/checkpoints_pulled/rollout-p4/checkpoint_best.pt",
+      "sha256": "8908c62e40b6f71d7ca45aa74047ba2e0c719ea4bc2db7d9cef41587510ead31",
+      "size_bytes": 178271665
+    },
+    "checkpoint_training_provenance": {
+      "conditioning_stats": {
+        "driver_protocol": "physical4_v1",
+        "exists": true,
+        "feature_names": [
+          "precip_sum_5d",
+          "temp_mean_5d",
+          "vpd_mean_5d",
+          "srad_sum_5d"
+        ],
+        "g_variable": "cop_dem",
+        "is_full_train": true,
+        "manifest_sha256": "c2cf69d7f57f302c2a4e8b6c7453c537031f56ae7c4ccf1d8ae6e988fff53147",
+        "num_files": 22847,
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/conditioning_stats_physical4_v1_train_dev.json",
+        "schema_version": 1,
+        "sha256": "9ef95c28d48d6b64a8034b56c592e17e11229ad3de0f40b1f732f41c523f0e7a",
+        "size_bytes": 2595,
+        "vpd_clip_value": 2.7215497493743896
+      },
+      "data_root": "/tmp/zjliu17_obsworld_stage2_earthnet2021x_trainval/EarthNet2021",
+      "git": {
+        "branch": "main",
+        "commit": "d2fd5afc98ef70344c6ece073a95881ca6f65d55",
+        "dirty": true,
+        "repository": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026",
+        "status_porcelain": "?? artifacts/audits/\n?? artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/\n?? artifacts/protocols/earthnet2021x_standard_v1/preflight_train_dev.json\n?? artifacts/protocols/preflight_model16.json\n?? configs/train/stage1_5_dual_conditioned_vits_60k_runA.yaml"
+      },
+      "official_evaluator": {
+        "implementation": "eval.earthnet_standard_metrics",
+        "repository_commit": "d2fd5afc98ef70344c6ece073a95881ca6f65d55"
+      },
+      "parent_provenance": null,
+      "protocol": {
+        "data_driver_protocol": "physical4_v1",
+        "dataset_protocol": "earthnet2021x_raw_v2",
+        "driver_protocol": "physical4_v1",
+        "evaluation_protocol": "earthnet2021_standard_v1",
+        "forecast_mode": "rollout_t5_physical4",
+        "schema_version": 2,
+        "stage2_protocol": "earthnet2021x_path_v2"
+      },
+      "resolved_config_sha256": "406d533d27d43bc4bd124bc59c20f48e9df3b83f432477903655a15efc7e77e5",
+      "resume_checkpoint": null,
+      "run_started_at_utc": "2026-07-18T12:37:23.458611+00:00",
+      "runtime": {
+        "cuda_available": true,
+        "cudnn": 92000,
+        "gpu_names": [
+          "NVIDIA H200",
+          "NVIDIA H200",
+          "NVIDIA H200",
+          "NVIDIA H200",
+          "NVIDIA H200",
+          "NVIDIA H200",
+          "NVIDIA H200",
+          "NVIDIA H200"
+        ],
+        "platform": "Linux-5.15.0-25-generic-x86_64-with-glibc2.35",
+        "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+        "requested_device": "cuda:0",
+        "torch": "2.12.0+cu130",
+        "torch_cuda": "13.0",
+        "world_size": 8
+      },
+      "schema_version": 1,
+      "stage15_initializer": {
+        "exists": true,
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/checkpoints/stage1_5_dual_conditioned_vits_state_bridge_60k/checkpoint_step_60000.pt",
+        "sha256": "24646b89eda5fb97ff03a76da5c136969bd1e2af9d76d60bd9537b6e304ff97d",
+        "size_bytes": 363727067
+      },
+      "train_manifest": {
+        "dataset": "earthnet2021x",
+        "exists": true,
+        "files_sha256": "c2cf69d7f57f302c2a4e8b6c7453c537031f56ae7c4ccf1d8ae6e988fff53147",
+        "num_files": 22847,
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/train_dev.json",
+        "protocol": "earthnet2021_standard_v1",
+        "role": "train",
+        "selection": {
+          "held_out_tiles": [
+            "30UWB",
+            "31UES",
+            "32TPT",
+            "32UNC",
+            "32UQC",
+            "33VUE",
+            "34TDK",
+            "34TFT"
+          ],
+          "kind": "tile_holdout_complement",
+          "seed": 20260716
+        },
+        "sha256": "eb6ca0f458ee303aac98f1a90dde08ddb2fe257b369e726385ddc428a25736c0",
+        "size_bytes": 4945735,
+        "source_splits": [
+          "train"
+        ],
+        "split": "train-dev"
+      },
+      "training": {
+        "batch_size": 64,
+        "gradient_accumulation_steps": 1,
+        "horizons_per_sample": 6,
+        "max_steps": 8800,
+        "partition": null,
+        "rollout_curriculum": [
+          {
+            "length": 2,
+            "start_step": 0
+          },
+          {
+            "length": 4,
+            "start_step": 1760
+          },
+          {
+            "length": 8,
+            "start_step": 3520
+          },
+          {
+            "length": 12,
+            "start_step": 5280
+          },
+          {
+            "length": 20,
+            "start_step": 7040
+          }
+        ],
+        "seed": 42
+      },
+      "validation_manifest": {
+        "dataset": "earthnet2021x",
+        "exists": true,
+        "files_sha256": "36d886c7bda2e07081230974b432bd2588b0cda23aa6b31a191b0a0f16c5675a",
+        "num_files": 969,
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/val_dev.json",
+        "protocol": "earthnet2021_standard_v1",
+        "role": "val",
+        "selection": {
+          "held_out_tiles": [
+            "30UWB",
+            "31UES",
+            "32TPT",
+            "32UNC",
+            "32UQC",
+            "33VUE",
+            "34TDK",
+            "34TFT"
+          ],
+          "kind": "tile_holdout",
+          "seed": 20260716
+        },
+        "sha256": "3b562c74d5163dc2f3d1ad5de7ce1bca17b9d349585f2ed4f9b66a6ac846fe5d",
+        "size_bytes": 210545,
+        "source_splits": [
+          "train"
+        ],
+        "split": "val-dev"
+      }
+    },
+    "contract_verification": {
+      "checked": true,
+      "checkpoint_contract": {
+        "data": {
+          "band_spec": {
+            "auto_scale": true,
+            "input_bands": [
+              "blue",
+              "green",
+              "red",
+              "nir"
+            ],
+            "nir_band": "nir",
+            "red_band": "red",
+            "scale_factor": 10000.0,
+            "target_bands": [
+              "blue",
+              "green",
+              "red",
+              "nir"
+            ]
+          },
+          "context_frames": 10,
+          "context_img_size": 256,
+          "data_format": "netcdf",
+          "dataset": "earthnet2021x",
+          "dataset_protocol": "earthnet2021x_raw_v2",
+          "driver_protocol": "physical4_v1",
+          "eval_img_size": 128,
+          "evaluation_protocol": "earthnet2021_standard_v1",
+          "file_glob": "**/*.nc",
+          "formal_dem_variable": "cop_dem",
+          "frame_interval_days": 5,
+          "geo_img_size": 128,
+          "image_channels": 4,
+          "model_img_size": 256,
+          "netcdf_dem_variables": [
+            "cop_dem"
+          ],
+          "netcdf_s2_offset_days": 4,
+          "normalize": true,
+          "stage2_protocol": "earthnet2021x_path_v2",
+          "target_channels": 4,
+          "target_frames": 20,
+          "target_img_size": 128
+        },
+        "loss": {
+          "obs_loss": "huber",
+          "weights": {
+            "delta": 0.0,
+            "latent": 0.0,
+            "ndvi": 0.5,
+            "obs": 1.0,
+            "smooth": 0.0
+          }
+        },
+        "model": {
+          "band_adapter": {
+            "hidden_channels": 32,
+            "in_channels": 4,
+            "mode": "linear",
+            "out_channels": 12,
+            "source_to_canonical": [
+              1,
+              2,
+              3,
+              8
+            ],
+            "type": "EarthNetInputAdapter"
+          },
+          "conditions": {
+            "use_D": true,
+            "use_G": true,
+            "use_h": true
+          },
+          "context_aggregator": {
+            "dropout": 0.0,
+            "hidden_dim": 256,
+            "max_context_frames": 10,
+            "min_token_clear_fraction": 0.25,
+            "state_dim": 256,
+            "type": "ContextStateAggregator",
+            "zero_unobserved_tokens": true
+          },
+          "decoder": {
+            "decoder_embed_dim": 192,
+            "decoder_mode": "transformer",
+            "depth": 3,
+            "dropout": 0.0,
+            "img_size": 128,
+            "in_dim": 256,
+            "mlp_ratio": 4.0,
+            "num_heads": 4,
+            "out_channels": 4,
+            "output_activation": "sigmoid",
+            "patch_size": 8,
+            "predict_logvar": false,
+            "type": "EarthNetObservationDecoder"
+          },
+          "driver_protocol": "physical4_v1",
+          "dynamics": {
+            "driver_dim": 32,
+            "dropout": 0.0,
+            "dynamics_type": "transformer",
+            "geo_dim": 16,
+            "hidden_dim": 256,
+            "latent_dim": 256,
+            "num_heads": 4,
+            "num_layers": 2,
+            "time_dim": 16,
+            "type": "StateDynamicsModule"
+          },
+          "encoder": {
+            "depth": 12,
+            "dropout": 0.0,
+            "embed_dim": 384,
+            "film_start_layer": 8,
+            "img_size": 256,
+            "mlp_ratio": 4.0,
+            "num_heads": 6,
+            "patch_size": 16,
+            "phi_dim": 384,
+            "s1_channels": 2,
+            "s2_channels": 12,
+            "type": "MultiModalViTEncoderFiLM",
+            "use_cross_attention": false,
+            "use_film": true
+          },
+          "family": "obsworld_stage2_v2",
+          "forecast_mode": "rollout_t5_physical4",
+          "future_start_index": 10,
+          "geo_tokenizer": {
+            "geo_dim": 16,
+            "img_size": 128,
+            "in_channels": 1,
+            "patch_size": 8,
+            "type": "GeoTokenizer"
+          },
+          "horizon_encoder": {
+            "hidden_dim": 32,
+            "max_h_days": 100.0,
+            "out_dim": 16,
+            "type": "HorizonEncoder"
+          },
+          "interval_driver_encoder": {
+            "calendar_dim": 2,
+            "dropout": 0.0,
+            "feature_names": [
+              "precip_sum_5d",
+              "temp_mean_5d",
+              "vpd_mean_5d",
+              "srad_sum_5d"
+            ],
+            "hidden_dim": 128,
+            "input_dim": 4,
+            "max_segment_length": 20,
+            "num_heads": 4,
+            "num_layers": 2,
+            "out_dim": 32,
+            "token_dim": 64,
+            "type": "IntervalDriverEncoder"
+          },
+          "phi_encoder": {
+            "condition_dropout": 0.0,
+            "dropout": 0.0,
+            "embed_dim": 384,
+            "sar_geom_dim": 64,
+            "sun_dim": 64,
+            "type": "PureImagingConditionEncoder",
+            "use_sar_geometry": true
+          },
+          "residual_scale_init": 1.0,
+          "state_projector": {
+            "hidden_dim": 512,
+            "in_dim": 384,
+            "state_dim": 256,
+            "type": "SpatialStateProjector"
+          },
+          "target_steps": 20,
+          "use_phi_encoder": true
+        },
+        "protocol": {
+          "d_feature_names": [
+            "precip_sum_5d",
+            "temp_mean_5d",
+            "vpd_mean_5d",
+            "srad_sum_5d"
+          ],
+          "dataset_protocol": "earthnet2021x_raw_v2",
+          "dem_variable": "cop_dem",
+          "driver_protocol": "physical4_v1",
+          "eobs_aggregations": [
+            "mean",
+            "min",
+            "max"
+          ],
+          "eobs_variables": [
+            "fg",
+            "hu",
+            "pp",
+            "qq",
+            "rr",
+            "tg",
+            "tn",
+            "tx"
+          ],
+          "evaluation_protocol": "earthnet2021_standard_v1",
+          "physical_raw_variables": [
+            "rr",
+            "tg",
+            "hu",
+            "qq"
+          ],
+          "schema_version": 2,
+          "stage2_protocol": "earthnet2021x_path_v2"
+        },
+        "schema_version": 1
+      },
+      "checkpoint_contract_sha256": "6c50b3ec5212700cef0e690cca61ab17bf69572c40152054b0e90b65af727590",
+      "matches": true,
+      "mismatches": [],
+      "override_used": false,
+      "runtime_contract": {
+        "data": {
+          "band_spec": {
+            "auto_scale": true,
+            "input_bands": [
+              "blue",
+              "green",
+              "red",
+              "nir"
+            ],
+            "nir_band": "nir",
+            "red_band": "red",
+            "scale_factor": 10000.0,
+            "target_bands": [
+              "blue",
+              "green",
+              "red",
+              "nir"
+            ]
+          },
+          "context_frames": 10,
+          "context_img_size": 256,
+          "data_format": "netcdf",
+          "dataset": "earthnet2021x",
+          "dataset_protocol": "earthnet2021x_raw_v2",
+          "driver_protocol": "physical4_v1",
+          "eval_img_size": 128,
+          "evaluation_protocol": "earthnet2021_standard_v1",
+          "file_glob": "**/*.nc",
+          "formal_dem_variable": "cop_dem",
+          "frame_interval_days": 5,
+          "geo_img_size": 128,
+          "image_channels": 4,
+          "model_img_size": 256,
+          "netcdf_dem_variables": [
+            "cop_dem"
+          ],
+          "netcdf_s2_offset_days": 4,
+          "normalize": true,
+          "stage2_protocol": "earthnet2021x_path_v2",
+          "target_channels": 4,
+          "target_frames": 20,
+          "target_img_size": 128
+        },
+        "loss": {
+          "obs_loss": "huber",
+          "weights": {
+            "delta": 0.0,
+            "latent": 0.0,
+            "ndvi": 0.5,
+            "obs": 1.0,
+            "smooth": 0.0
+          }
+        },
+        "model": {
+          "band_adapter": {
+            "hidden_channels": 32,
+            "in_channels": 4,
+            "mode": "linear",
+            "out_channels": 12,
+            "source_to_canonical": [
+              1,
+              2,
+              3,
+              8
+            ],
+            "type": "EarthNetInputAdapter"
+          },
+          "conditions": {
+            "use_D": true,
+            "use_G": true,
+            "use_h": true
+          },
+          "context_aggregator": {
+            "dropout": 0.0,
+            "hidden_dim": 256,
+            "max_context_frames": 10,
+            "min_token_clear_fraction": 0.25,
+            "state_dim": 256,
+            "type": "ContextStateAggregator",
+            "zero_unobserved_tokens": true
+          },
+          "decoder": {
+            "decoder_embed_dim": 192,
+            "decoder_mode": "transformer",
+            "depth": 3,
+            "dropout": 0.0,
+            "img_size": 128,
+            "in_dim": 256,
+            "mlp_ratio": 4.0,
+            "num_heads": 4,
+            "out_channels": 4,
+            "output_activation": "sigmoid",
+            "patch_size": 8,
+            "predict_logvar": false,
+            "type": "EarthNetObservationDecoder"
+          },
+          "driver_protocol": "physical4_v1",
+          "dynamics": {
+            "driver_dim": 32,
+            "dropout": 0.0,
+            "dynamics_type": "transformer",
+            "geo_dim": 16,
+            "hidden_dim": 256,
+            "latent_dim": 256,
+            "num_heads": 4,
+            "num_layers": 2,
+            "time_dim": 16,
+            "type": "StateDynamicsModule"
+          },
+          "encoder": {
+            "depth": 12,
+            "dropout": 0.0,
+            "embed_dim": 384,
+            "film_start_layer": 8,
+            "img_size": 256,
+            "mlp_ratio": 4.0,
+            "num_heads": 6,
+            "patch_size": 16,
+            "phi_dim": 384,
+            "s1_channels": 2,
+            "s2_channels": 12,
+            "type": "MultiModalViTEncoderFiLM",
+            "use_cross_attention": false,
+            "use_film": true
+          },
+          "family": "obsworld_stage2_v2",
+          "forecast_mode": "rollout_t5_physical4",
+          "future_start_index": 10,
+          "geo_tokenizer": {
+            "geo_dim": 16,
+            "img_size": 128,
+            "in_channels": 1,
+            "patch_size": 8,
+            "type": "GeoTokenizer"
+          },
+          "horizon_encoder": {
+            "hidden_dim": 32,
+            "max_h_days": 100.0,
+            "out_dim": 16,
+            "type": "HorizonEncoder"
+          },
+          "interval_driver_encoder": {
+            "calendar_dim": 2,
+            "dropout": 0.0,
+            "feature_names": [
+              "precip_sum_5d",
+              "temp_mean_5d",
+              "vpd_mean_5d",
+              "srad_sum_5d"
+            ],
+            "hidden_dim": 128,
+            "input_dim": 4,
+            "max_segment_length": 20,
+            "num_heads": 4,
+            "num_layers": 2,
+            "out_dim": 32,
+            "token_dim": 64,
+            "type": "IntervalDriverEncoder"
+          },
+          "phi_encoder": {
+            "condition_dropout": 0.0,
+            "dropout": 0.0,
+            "embed_dim": 384,
+            "sar_geom_dim": 64,
+            "sun_dim": 64,
+            "type": "PureImagingConditionEncoder",
+            "use_sar_geometry": true
+          },
+          "residual_scale_init": 1.0,
+          "state_projector": {
+            "hidden_dim": 512,
+            "in_dim": 384,
+            "state_dim": 256,
+            "type": "SpatialStateProjector"
+          },
+          "target_steps": 20,
+          "use_phi_encoder": true
+        },
+        "protocol": {
+          "d_feature_names": [
+            "precip_sum_5d",
+            "temp_mean_5d",
+            "vpd_mean_5d",
+            "srad_sum_5d"
+          ],
+          "dataset_protocol": "earthnet2021x_raw_v2",
+          "dem_variable": "cop_dem",
+          "driver_protocol": "physical4_v1",
+          "eobs_aggregations": [
+            "mean",
+            "min",
+            "max"
+          ],
+          "eobs_variables": [
+            "fg",
+            "hu",
+            "pp",
+            "qq",
+            "rr",
+            "tg",
+            "tn",
+            "tx"
+          ],
+          "evaluation_protocol": "earthnet2021_standard_v1",
+          "physical_raw_variables": [
+            "rr",
+            "tg",
+            "hu",
+            "qq"
+          ],
+          "schema_version": 2,
+          "stage2_protocol": "earthnet2021x_path_v2"
+        },
+        "schema_version": 1
+      },
+      "runtime_contract_sha256": "6c50b3ec5212700cef0e690cca61ab17bf69572c40152054b0e90b65af727590"
+    },
+    "created_at_utc": "2026-07-21T10:25:38.860852+00:00",
+    "data": {
+      "conditioning_stats": {
+        "driver_protocol": "physical4_v1",
+        "exists": true,
+        "feature_names": [
+          "precip_sum_5d",
+          "temp_mean_5d",
+          "vpd_mean_5d",
+          "srad_sum_5d"
+        ],
+        "g_variable": "cop_dem",
+        "is_full_train": true,
+        "manifest_sha256": "c2cf69d7f57f302c2a4e8b6c7453c537031f56ae7c4ccf1d8ae6e988fff53147",
+        "num_files": 22847,
+        "path": "/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/conditioning_stats_physical4_v1_train_dev.json",
+        "schema_version": 1,
+        "sha256": "9ef95c28d48d6b64a8034b56c592e17e11229ad3de0f40b1f732f41c523f0e7a",
+        "size_bytes": 2595,
+        "vpd_clip_value": 2.7215497493743896
+      },
+      "manifest": {
+        "dataset": "earthnet2021x",
+        "exists": true,
+        "files_sha256": "6b2703f3a0ceaf7e8b7644c9e261f8a3ef246d4751966a4b70151c1a70354d24",
+        "num_files": 4205,
+        "path": "/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026/artifacts/protocols/earthnet2021x_physical4_v1_20260717_092048/iid.json",
+        "protocol": "earthnet2021_standard_v1",
+        "role": "iid",
+        "selection": null,
+        "sha256": "b133775c7a90c5ce3e5a038755f900cbd3eea811a046cad4001b9da74172e61d",
+        "size_bytes": 902077,
+        "source_splits": [
+          "iid"
+        ],
+        "split": "iid"
+      },
+      "root": "/mnt/data/users/luzheng/workspace/iclr/czj/TrainData/EarthNet2021/earthnet2021x"
+    },
+    "evaluator": "eval.eval_stage2_earthnet",
+    "git": {
+      "branch": "main",
+      "commit": "8cc99eafae319665638ea821388b3190fb87480e",
+      "dirty": true,
+      "repository": "/mnt/data/users/luzheng/workspace/iclr/czj/WorldModel2026",
+      "status_porcelain": "?? evaluations/_smoke/\n?? evaluations/officialENS_run1/\n?? \"\\346\\200\\235\\350\\267\\257\\346\\225\\264\\347\\220\\206\\350\\277\\233\\345\\261\\225/69_ObsWorld_\\345\\256\\230\\346\\226\\271EarthNetScore\\345\\257\\271\\346\\240\\207_published_vs_ours_20260722.md\"\n?? \"\\346\\200\\235\\350\\267\\257\\346\\225\\264\\347\\220\\206\\350\\277\\233\\345\\261\\225/70_ObsWorld_AAAI27\\344\\270\\255\\345\\277\\203\\345\\217\\231\\344\\272\\213\\344\\270\\216\\344\\270\\273\\350\\241\\250\\346\\234\\200\\347\\273\\210\\345\\206\\273\\347\\273\\223\\345\\206\\263\\347\\255\\226_20260721.md\""
+    },
+    "invocation": {
+      "batch_size": 8,
+      "num_workers": 4,
+      "official_score": true
+    },
+    "kind": "stage2_evaluation",
+    "runtime": {
+      "cuda_available": true,
+      "cudnn": 92000,
+      "gpu_names": [
+        "NVIDIA RTX PRO 5000 72GB Blackwell"
+      ],
+      "platform": "Linux-5.10.134-013.8.2.kangaroo.al8.x86_64-x86_64-with-glibc2.39",
+      "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+      "requested_device": "cuda",
+      "torch": "2.12.0+cu130",
+      "torch_cuda": "13.0",
+      "world_size": 1
+    },
+    "runtime_config_sha256": "dbffc257cd3e6107f0d01b5e9596fab2110522acdd2d08ef4529b7a3947d48cd",
+    "runtime_contract": {
+      "data": {
+        "band_spec": {
+          "auto_scale": true,
+          "input_bands": [
+            "blue",
+            "green",
+            "red",
+            "nir"
+          ],
+          "nir_band": "nir",
+          "red_band": "red",
+          "scale_factor": 10000.0,
+          "target_bands": [
+            "blue",
+            "green",
+            "red",
+            "nir"
+          ]
+        },
+        "context_frames": 10,
+        "context_img_size": 256,
+        "data_format": "netcdf",
+        "dataset": "earthnet2021x",
+        "dataset_protocol": "earthnet2021x_raw_v2",
+        "driver_protocol": "physical4_v1",
+        "eval_img_size": 128,
+        "evaluation_protocol": "earthnet2021_standard_v1",
+        "file_glob": "**/*.nc",
+        "formal_dem_variable": "cop_dem",
+        "frame_interval_days": 5,
+        "geo_img_size": 128,
+        "image_channels": 4,
+        "model_img_size": 256,
+        "netcdf_dem_variables": [
+          "cop_dem"
+        ],
+        "netcdf_s2_offset_days": 4,
+        "normalize": true,
+        "stage2_protocol": "earthnet2021x_path_v2",
+        "target_channels": 4,
+        "target_frames": 20,
+        "target_img_size": 128
+      },
+      "loss": {
+        "obs_loss": "huber",
+        "weights": {
+          "delta": 0.0,
+          "latent": 0.0,
+          "ndvi": 0.5,
+          "obs": 1.0,
+          "smooth": 0.0
+        }
+      },
+      "model": {
+        "band_adapter": {
+          "hidden_channels": 32,
+          "in_channels": 4,
+          "mode": "linear",
+          "out_channels": 12,
+          "source_to_canonical": [
+            1,
+            2,
+            3,
+            8
+          ],
+          "type": "EarthNetInputAdapter"
+        },
+        "conditions": {
+          "use_D": true,
+          "use_G": true,
+          "use_h": true
+        },
+        "context_aggregator": {
+          "dropout": 0.0,
+          "hidden_dim": 256,
+          "max_context_frames": 10,
+          "min_token_clear_fraction": 0.25,
+          "state_dim": 256,
+          "type": "ContextStateAggregator",
+          "zero_unobserved_tokens": true
+        },
+        "decoder": {
+          "decoder_embed_dim": 192,
+          "decoder_mode": "transformer",
+          "depth": 3,
+          "dropout": 0.0,
+          "img_size": 128,
+          "in_dim": 256,
+          "mlp_ratio": 4.0,
+          "num_heads": 4,
+          "out_channels": 4,
+          "output_activation": "sigmoid",
+          "patch_size": 8,
+          "predict_logvar": false,
+          "type": "EarthNetObservationDecoder"
+        },
+        "driver_protocol": "physical4_v1",
+        "dynamics": {
+          "driver_dim": 32,
+          "dropout": 0.0,
+          "dynamics_type": "transformer",
+          "geo_dim": 16,
+          "hidden_dim": 256,
+          "latent_dim": 256,
+          "num_heads": 4,
+          "num_layers": 2,
+          "time_dim": 16,
+          "type": "StateDynamicsModule"
+        },
+        "encoder": {
+          "depth": 12,
+          "dropout": 0.0,
+          "embed_dim": 384,
+          "film_start_layer": 8,
+          "img_size": 256,
+          "mlp_ratio": 4.0,
+          "num_heads": 6,
+          "patch_size": 16,
+          "phi_dim": 384,
+          "s1_channels": 2,
+          "s2_channels": 12,
+          "type": "MultiModalViTEncoderFiLM",
+          "use_cross_attention": false,
+          "use_film": true
+        },
+        "family": "obsworld_stage2_v2",
+        "forecast_mode": "rollout_t5_physical4",
+        "future_start_index": 10,
+        "geo_tokenizer": {
+          "geo_dim": 16,
+          "img_size": 128,
+          "in_channels": 1,
+          "patch_size": 8,
+          "type": "GeoTokenizer"
+        },
+        "horizon_encoder": {
+          "hidden_dim": 32,
+          "max_h_days": 100.0,
+          "out_dim": 16,
+          "type": "HorizonEncoder"
+        },
+        "interval_driver_encoder": {
+          "calendar_dim": 2,
+          "dropout": 0.0,
+          "feature_names": [
+            "precip_sum_5d",
+            "temp_mean_5d",
+            "vpd_mean_5d",
+            "srad_sum_5d"
+          ],
+          "hidden_dim": 128,
+          "input_dim": 4,
+          "max_segment_length": 20,
+          "num_heads": 4,
+          "num_layers": 2,
+          "out_dim": 32,
+          "token_dim": 64,
+          "type": "IntervalDriverEncoder"
+        },
+        "phi_encoder": {
+          "condition_dropout": 0.0,
+          "dropout": 0.0,
+          "embed_dim": 384,
+          "sar_geom_dim": 64,
+          "sun_dim": 64,
+          "type": "PureImagingConditionEncoder",
+          "use_sar_geometry": true
+        },
+        "residual_scale_init": 1.0,
+        "state_projector": {
+          "hidden_dim": 512,
+          "in_dim": 384,
+          "state_dim": 256,
+          "type": "SpatialStateProjector"
+        },
+        "target_steps": 20,
+        "use_phi_encoder": true
+      },
+      "protocol": {
+        "d_feature_names": [
+          "precip_sum_5d",
+          "temp_mean_5d",
+          "vpd_mean_5d",
+          "srad_sum_5d"
+        ],
+        "dataset_protocol": "earthnet2021x_raw_v2",
+        "dem_variable": "cop_dem",
+        "driver_protocol": "physical4_v1",
+        "eobs_aggregations": [
+          "mean",
+          "min",
+          "max"
+        ],
+        "eobs_variables": [
+          "fg",
+          "hu",
+          "pp",
+          "qq",
+          "rr",
+          "tg",
+          "tn",
+          "tx"
+        ],
+        "evaluation_protocol": "earthnet2021_standard_v1",
+        "physical_raw_variables": [
+          "rr",
+          "tg",
+          "hu",
+          "qq"
+        ],
+        "schema_version": 2,
+        "stage2_protocol": "earthnet2021x_path_v2"
+      },
+      "schema_version": 1
+    },
+    "schema_version": 1,
+    "split": "iid"
+  }
+}
