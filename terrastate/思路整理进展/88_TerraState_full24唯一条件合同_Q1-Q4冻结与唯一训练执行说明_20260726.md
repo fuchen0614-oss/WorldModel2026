@@ -40,13 +40,13 @@ driver_protocol = full24
 
 唯一新增完整训练只使用：
 
-\[
+$$
 L
 =
 L_{\mathrm{GT}}
 +\lambda_{\mathrm{KD}}L_{\mathrm{KD}}
 +\lambda_{\mathrm{state}}L_{\mathrm{future\text{-}state}}.
-\]
+$$
 
 其中：
 
@@ -79,9 +79,9 @@ Q3 PASS 才能把强 weather-response 结果写入摘要；Q4 允许失败并作
 | 输入 | 最终口径 |
 |---|---|
 | 历史观测 | cloud-masked EO history |
-| 动态驱动 \(D\) | full24 future weather path |
-| 静态地理 \(G\) | 当前 B4 已有 static geographic/topographic channels |
-| 时间查询 \(H\) | forecast horizon \(h\) |
+| 动态驱动 $D$ | full24 future weather path |
+| 静态地理 $G$ | 当前 B4 已有 static geographic/topographic channels |
+| 时间查询 $H$ | forecast horizon $h$ |
 
 full24 由 8 个 E-OBS 变量：
 
@@ -95,7 +95,7 @@ fg, hu, pp, qq, rr, tg, tn, tx
 mean, min, max
 ```
 
-组成 \(8\times 3=24\) 维天气路径。
+组成 $8\times 3=24$ 维天气路径。
 
 ### 1.2 B 层：仅由训练集拟合的预处理统计
 
@@ -137,21 +137,21 @@ mean, min, max
 
 抽象上，TerraState 仍然使用：
 
-\[
+$$
 D=\text{driver},\qquad
 G=\text{geography},\qquad
 H=\text{horizon}.
-\]
+$$
 
 但最终方案 B 的具体实现是：
 
-\[
+$$
 D=D_{\mathrm{full24}},
 \qquad
 G=G_{\mathrm{B4\ static}},
 \qquad
 H=h.
-\]
+$$
 
 ### 2.2 旧 physical4 的地位
 
@@ -197,23 +197,23 @@ shared predictive-state transition T
 
 ## 3. 最终方法合同
 
-\[
+$$
 z_t=q(o_{\le t}),
-\]
+$$
 
-\[
+$$
 z_{t+h}=T(z_t,u^{\mathrm{full24}}_{t:t+h},g,h),
-\]
+$$
 
-\[
+$$
 \hat y_{t+h}=b_h+O(z_{t+h}).
-\]
+$$
 
 约束：
 
-1. \(b_h\) 是 context-only prior，不得读取未来天气；
-2. 未来天气只能通过 \(T\) 影响状态支路；
-3. \(T\) 产生的状态必须进入同一个解码器 \(O\)；
+1. $b_h$ 是 context-only prior，不得读取未来天气；
+2. 未来天气只能通过 $T$ 影响状态支路；
+3. $T$ 产生的状态必须进入同一个解码器 $O$；
 4. `alpha=1` 且不可学习；
 5. teacher 与 future target 只在训练时存在；
 6. 正式推理只有 `history → q → T(full24,g,h) → O`；
@@ -224,7 +224,7 @@ z_{t+h}=T(z_t,u^{\mathrm{full24}}_{t:t+h},g,h),
 
 训练时使用冻结的 future-observation target：
 
-\[
+$$
 z^*_{t+20}
 =
 \operatorname{sg}
@@ -234,9 +234,9 @@ P_{\mathrm{frozen}}
 q_{\mathrm{frozen}}(o_{\le t+20})
 \right)
 \right),
-\]
+$$
 
-\[
+$$
 L_{\mathrm{future\text{-}state}}
 =
 1-\cos
@@ -244,7 +244,7 @@ L_{\mathrm{future\text{-}state}}
 \operatorname{LN}(z_{t+20}),
 \operatorname{LN}(z^*_{t+20})
 \right).
-\]
+$$
 
 target 协议：
 
@@ -252,7 +252,7 @@ target 协议：
 - 永久 `eval/no_grad`；
 - target 输入包含真实未来 EO；
 - target future weather 置零，避免直接复制天气；
-- 只取 \(h=20\) terminal target；
+- 只取 $h=20$ terminal target；
 - 缓存 FP16 target、mask、filepath 和 SHA；
 - target 不进入正式推理。
 
@@ -266,7 +266,7 @@ future-state loss 是训练方法，不是 Q2 的替代证据。最终仍必须�
 
 - student：**冻结为当前 exclusive MAIN-last**，即产生 `val R²=0.49027、RMSE=0.16038、Full-alpha0 ΔR²=+0.00416、Full-T-id ΔR²=+0.00869` 的同一个 checkpoint；它由强 Phase-I B4 初始化并已经过 exclusive state-route takeover，不是 raw B4，也不是从头训练；
 - KD teacher：原始强 Phase-I B4 `checkpoint_best.pt`（已知文件 SHA 前缀 `2c5d08423671`）；训练代码只抽取其中的 `q.*` 构造冻结的 full-weather `PVTContextformerQ`，因此论文中应称 **frozen full-weather forecasting teacher**，不能误写成完整 B4 residual 输出；
-- future-target q/projector：从上述 exact student checkpoint 在 V2 训练开始时复制其 `q + projector` 并永久冻结；它读取真实未来 EO、将 future weather 置零，只生成训练期 \(h=20\) target cache，不进入推理；
+- future-target q/projector：从上述 exact student checkpoint 在 V2 训练开始时复制其 `q + projector` 并永久冻结；它读取真实未来 EO、将 future weather 置零，只生成训练期 $h=20$ target cache，不进入推理；
 - 天气输入：原 B4 full24；
 - 不重新引入 physical4 或 Stage1/Stage1.5 状态。
 
@@ -297,29 +297,29 @@ runbook 或 CLI 中虽然可能仍兼容 raw Phase-I B4，但**正式唯一训�
 
 ### 4.2 损失
 
-\[
+$$
 L
 =
 1.0L_{\mathrm{GT}}
 +0.5L_{\mathrm{KD}}
 +\lambda_sL_{\mathrm{future\text{-}state}}.
-\]
+$$
 
-\[
+$$
 \lambda_s=
 \begin{cases}
 0\rightarrow0.02, & 0\%-20\%,\\
 0.02, & 20\%-80\%,\\
 0.01, & 80\%-100\%.
 \end{cases}
-\]
+$$
 
 ### 4.3 三阶段单 run
 
 #### 0%–20%
 
 - q 冻结；
-- 训练 projector、weather encoder、\(T\)、\(O\)；
+- 训练 projector、weather encoder、$T$、$O$；
 - state loss 从 0 线性升到 0.02；
 - 不加入 donor、composition 或 extreme sampling。
 
@@ -333,7 +333,7 @@ L
 #### 80%–100%
 
 - 只解冻 q 最后一个 Transformer block；
-- q LR 为 \(T/O\) LR 的 0.02–0.05 倍；
+- q LR 为 $T/O$ LR 的 0.02–0.05 倍；
 - state loss 降为 0.01；
 - GT/KD 不变；
 - 其余 q 层继续冻结。
@@ -343,8 +343,8 @@ L
 - global batch 64；
 - FP32；
 - AdamW；
-- branch LR 建议 \(3\times10^{-5}\)；
-- q LR 约 \(1\sim1.5\times10^{-6}\)；
+- branch LR 建议 $3\times10^{-5}$；
+- q LR 约 $1\sim1.5\times10^{-6}$；
 - 保持现有 weight decay 口径；
 - warm-up 200–500 steps；
 - cosine decay；
@@ -365,13 +365,13 @@ L
 
 val qualifier：
 
-- \(R^2\ge0.502\)；
-- RMSE \(\le0.156\)。
+- $R^2\ge0.502$；
+- RMSE $\le0.156$。
 
 最终 OOD-t 目标：
 
-- \(R^2\) 尽量保持约 0.58；
-- RMSE \(\le0.150\)。
+- $R^2$ 尽量保持约 0.58；
+- RMSE $\le0.150$。
 
 Q1 是 Table 1 和正文核心，不得用 Q2–Q4 替代。
 
@@ -389,9 +389,9 @@ Q1 是 Table 1 和正文核心，不得用 Q2–Q4 替代。
 
 理想通过条件：
 
-- Full-alpha0 aggregate \(\Delta R^2\ge0.005\)；
-- Full-T-id aggregate \(\Delta R^2\ge0.005\)；
-- paired/cluster bootstrap CI 下界 \(>0\)；
+- Full-alpha0 aggregate $\Delta R^2\ge0.005$；
+- Full-T-id aggregate $\Delta R^2\ge0.005$；
+- paired/cluster bootstrap CI 下界 $>0$；
 - prior 不变、权重恢复、checkpoint 不变等 invariants 全通过。
 
 证据地位：
@@ -414,17 +414,17 @@ Q1 是 Table 1 和正文核心，不得用 Q2–Q4 替代。
 
 hot-dry 增强检验：
 
-\[
+$$
 \Delta_{\mathrm{interaction}}
 =
 E_{\mathrm{hotdry}}
 -E_{\mathrm{matched\text{-}normal}}.
-\]
+$$
 
 若要写“极端热旱下状态/天气作用增强”，必须：
 
 - 直接检验 interaction；
-- cluster bootstrap CI 下界 \(>0\)；
+- cluster bootstrap CI 下界 $>0$；
 - actual weather 具有端点正确性优势；
 - 不能只报告输出发生变化。
 
@@ -470,7 +470,7 @@ Q4：
 3. 冻结 future-target cache：
    - q/projector SHA；
    - future weather 置零；
-   - \(h=20\)；
+   - $h=20$；
    - mask/patch 对齐；
    - target variance/effective-rank sanity。
 4. 冻结 C 层评测：
@@ -547,7 +547,7 @@ history
 
 1. 把 anomaly/stress 分组写成模型模块；
 2. 用极端子集 Q2/Q3 替代失败的 global Q2；
-3. 在 Q4 未通过前，把 horizon-conditioned shared \(T\) 写成已验证的固定一步 open-loop dynamics。
+3. 在 Q4 未通过前，把 horizon-conditioned shared $T$ 写成已验证的固定一步 open-loop dynamics。
 
 ### 7.3 论文贡献顺序
 
