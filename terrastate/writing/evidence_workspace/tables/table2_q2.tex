@@ -1,0 +1,46 @@
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Q2 state-path and transition interventions on the same frozen
+TerraState checkpoint. ``Official $\Delta R^2$'' is the difference between
+dataset-level official metrics. ``Paired effect'' is the mean per-minicube
+$\Delta R^2$ with its paired bootstrap 95\% interval; it is a distinct
+estimand and is therefore reported separately.}
+\label{tab:q2_load_bearing}
+\begin{tabular}{lcccccccc}
+\toprule
+Split &
+Full $R^2$ &
+$\alpha{=}0$ $R^2$ &
+$T{=}\mathrm{Id}$ $R^2$ &
+\multicolumn{2}{c}{State-path removal} &
+\multicolumn{2}{c}{Identity transition} &
+Verdict \\
+\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+& & & &
+Official $\Delta R^2$ & Paired effect [95\% CI] &
+Official $\Delta R^2$ & Paired effect [95\% CI] & \\
+\midrule
+Validation
+& 0.4973 & 0.4861 & 0.4854
+& 0.0112 & 0.0162 [0.0064, 0.0259]
+& 0.0119 & 0.0174 [0.0078, 0.0270]
+& \textsc{Load-bearing} \\
+Temporal shift
+& 0.5693 & 0.5494 & 0.5477
+& 0.0200 & 0.0220 [0.0142, 0.0302]
+& 0.0217 & 0.0240 [0.0161, 0.0322]
+& \textsc{Load-bearing} \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\parbox{0.98\linewidth}{\footnotesize
+The prespecified verdict requires official $\Delta R^2>0.005$ and a paired
+95\% interval above zero. Paired sample sizes are 589 (validation) and 1,019
+(temporal shift), versus 952 and 1,904 valid evaluation targets,
+respectively. State-path removal is the primary clean intervention.
+$T{=}\mathrm{Id}$ feeds a frozen, unevolved state to a readout trained on
+evolved states, so its margin is partly an out-of-distribution readout effect
+and is supporting rather than a clean transition-necessity estimate.}
+\end{table*}

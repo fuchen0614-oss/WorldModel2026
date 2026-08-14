@@ -1,0 +1,32 @@
+\begin{table}[t]
+\centering
+\small
+\caption{Q1 vegetation forecasting on the nominal GreenEarthNet temporal-shift
+test family. Published values and the frozen TerraState evaluation are shown in
+separate panels because exact protocol equivalence has not been established.}
+\label{tab:q1_public_forecasting}
+\begin{tabular}{llcc}
+\toprule
+Method & Source / protocol & $R^2 \uparrow$ & RMSE $\downarrow$ \\
+\midrule
+\multicolumn{4}{l}{\emph{Published GreenEarthNet OOD-t means}} \\
+Climatology  & GreenEarthNet, Table 2 & 0.58 & 0.18 \\
+ConvLSTM     & GreenEarthNet, Table 2 & 0.58 & 0.16 \\
+PredRNN      & GreenEarthNet, Table 2 & 0.62 & 0.15 \\
+Contextformer& GreenEarthNet, Table 2 & 0.62 & 0.14 \\
+\midrule
+\multicolumn{4}{l}{\emph{Frozen local evaluation}} \\
+TerraState & frozen \texttt{ood-t\_chopped} manifest & 0.569 & 0.151 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\parbox{0.98\linewidth}{\footnotesize
+For compactness, we report mean performance from the original publications and
+omit uncertainty estimates. The learned published baselines shown here were
+reported as means over three random seeds; Climatology is deterministic.
+TerraState is one frozen checkpoint/run over 1,904 targets. The two panels share
+the benchmark and nominal temporal-shift split, but the publication does not
+publish TerraState's exact manifest hash or evaluator revision; no strict
+cross-panel ranking is claimed.}
+\end{table}

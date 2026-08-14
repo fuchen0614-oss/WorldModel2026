@@ -1,0 +1,1427 @@
+{
+  "tool": "WisPaper True Cite observed web API",
+  "page": "https://www.wispaper.ai/agents/true-cite/",
+  "observed_interface_date": "2026-07-20",
+  "checked_at_utc": "2026-07-27T18:01:59.371620+00:00",
+  "input": {
+    "path": "/mnt/data/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/references.bib",
+    "sha256": "33cbfd5944a96915125ede529229ee8b26c1f274ac54bbaf433902fad4ea226a",
+    "size_bytes": 11437
+  },
+  "summary": {
+    "total_eligible_entry_count": 23,
+    "selected_entry_count": 23,
+    "checked_entry_count": 23,
+    "passed_count": 0,
+    "warning_count": 23,
+    "failed_count": 0,
+    "skipped_count": 7,
+    "api_error_count": 0
+  },
+  "results": [
+    {
+      "key": "requenamesa2021earthnet",
+      "type": "inproceedings",
+      "line": 1,
+      "input": {
+        "id": 0,
+        "title": "EarthNet2021: A Large-Scale Dataset and Challenge for Earth Surface Forecasting as a Guided Video Prediction Task",
+        "author": "Requena-Mesa, Christian and Benson, Vitus and Reichstein, Markus and Runge, Jakob and Denzler, Joachim",
+        "year": "2021",
+        "journal": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "EarthNet2021: A large-scale dataset and challenge for Earth surface forecasting as a guided video prediction task",
+        "verifiedAuthors": [
+          "Christian Requena-Mesa",
+          "Vitus Benson",
+          "Markus Reichstein",
+          "Jakob Runge",
+          "Joachim Denzler"
+        ],
+        "verifiedVenue": "CVPR Workshops",
+        "verifiedYear": "2021",
+        "verifiedPairs": [
+          [
+            "Requena-Mesa, Christian",
+            "Christian Requena-Mesa"
+          ],
+          [
+            "Benson, Vitus",
+            "Vitus Benson"
+          ],
+          [
+            "Reichstein, Markus",
+            "Markus Reichstein"
+          ],
+          [
+            "Runge, Jakob",
+            "Jakob Runge"
+          ],
+          [
+            "Denzler, Joachim",
+            "Joachim Denzler"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.15555555555555556
+      }
+    },
+    {
+      "key": "benson2024multimodal",
+      "type": "inproceedings",
+      "line": 9,
+      "input": {
+        "id": 1,
+        "title": "Multi-modal Learning for Geospatial Vegetation Forecasting",
+        "author": "Benson, Vitus and Robin, Claire and Requena-Mesa, Christian and Alonso, L\\'azaro and Carvalhais, Nuno and Cort\\'es, Jos\\'e and Gao, Zhihan and Linscheid, Nora and Weynants, M\\'elanie and Reichstein, Markus",
+        "year": "2024",
+        "journal": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "Multi-Modal Learning for Geospatial Vegetation Forecasting",
+        "verifiedAuthors": [
+          "Vitus Benson",
+          "Claire Robin",
+          "Christian Requena-Mesa",
+          "Lázaro Alonso",
+          "Nuno Carvalhais",
+          "José Cortés",
+          "Zhihan Gao",
+          "Nora Linscheid",
+          "Mélanie Weynants",
+          "Markus Reichstein"
+        ],
+        "verifiedVenue": "CVPR",
+        "verifiedYear": "2024",
+        "verifiedPairs": [
+          [
+            "Benson, Vitus",
+            "Vitus Benson"
+          ],
+          [
+            "Robin, Claire",
+            "Claire Robin"
+          ],
+          [
+            "Requena-Mesa, Christian",
+            "Christian Requena-Mesa"
+          ],
+          [
+            "Alonso, L\\'azaro",
+            "Lázaro Alonso"
+          ],
+          [
+            "Carvalhais, Nuno",
+            "Nuno Carvalhais"
+          ],
+          [
+            "",
+            "José Cortés"
+          ],
+          [
+            "Gao, Zhihan",
+            "Zhihan Gao"
+          ],
+          [
+            "Linscheid, Nora",
+            "Nora Linscheid"
+          ],
+          [
+            "Weynants, M\\'elanie",
+            "Mélanie Weynants"
+          ],
+          [
+            "Reichstein, Markus",
+            "Markus Reichstein"
+          ],
+          [
+            "Cort\\'es, Jos\\'e",
+            ""
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 0.8181818181818182,
+        "venueScore": 0.050000000000000044
+      }
+    },
+    {
+      "key": "shi2015convlstm",
+      "type": "inproceedings",
+      "line": 17,
+      "input": {
+        "id": 2,
+        "title": "Convolutional LSTM Network: A Machine Learning Approach for Precipitation Nowcasting",
+        "author": "Shi, Xingjian and Chen, Zhourong and Wang, Hao and Yeung, Dit-Yan and Wong, Wai-kin and Woo, Wang-chun",
+        "year": "2015",
+        "journal": "Advances in Neural Information Processing Systems",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "Convolutional LSTM Network: A Machine Learning Approach for Precipitation Nowcasting",
+        "verifiedAuthors": [
+          "Xingjian Shi",
+          "Zhourong Chen",
+          "Hao Wang",
+          "Dit-Yan Yeung",
+          "Wai-kin Wong",
+          "Wang-chun Woo"
+        ],
+        "verifiedVenue": "arXiv (Cornell University)",
+        "verifiedYear": "2015",
+        "verifiedPairs": [
+          [
+            "Shi, Xingjian",
+            "Xingjian Shi"
+          ],
+          [
+            "Chen, Zhourong",
+            "Zhourong Chen"
+          ],
+          [
+            "Wang, Hao",
+            "Hao Wang"
+          ],
+          [
+            "Yeung, Dit-Yan",
+            "Dit-Yan Yeung"
+          ],
+          [
+            "Wong, Wai-kin",
+            "Wai-kin Wong"
+          ],
+          [
+            "Woo, Wang-chun",
+            "Wang-chun Woo"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.24489795918367352
+      }
+    },
+    {
+      "key": "wang2017predrnn",
+      "type": "inproceedings",
+      "line": 25,
+      "input": {
+        "id": 3,
+        "title": "PredRNN: Recurrent Neural Networks for Predictive Learning Using Spatiotemporal LSTMs",
+        "author": "Wang, Yunbo and Long, Mingsheng and Wang, Jianmin and Gao, Zhifeng and Yu, Philip S.",
+        "year": "2017",
+        "journal": "Advances in Neural Information Processing Systems",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "PredRNN: recurrent neural networks for predictive learning using spatiotemporal LSTMs",
+        "verifiedAuthors": [
+          "Yunbo Wang",
+          "Mingsheng Long",
+          "Jianmin Wang",
+          "Zhifeng Gao",
+          "Philip S. Yu"
+        ],
+        "verifiedVenue": "Neural Information Processing Systems",
+        "verifiedYear": "2017",
+        "verifiedPairs": [
+          [
+            "Wang, Yunbo",
+            "Yunbo Wang"
+          ],
+          [
+            "Long, Mingsheng",
+            "Mingsheng Long"
+          ],
+          [
+            "Wang, Jianmin",
+            "Jianmin Wang"
+          ],
+          [
+            "Gao, Zhifeng",
+            "Zhifeng Gao"
+          ],
+          [
+            "Yu, Philip S.",
+            "Philip S. Yu"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.7551020408163265
+      }
+    },
+    {
+      "key": "gao2022simvp",
+      "type": "inproceedings",
+      "line": 33,
+      "input": {
+        "id": 4,
+        "title": "SimVP: Simpler Yet Better Video Prediction",
+        "author": "Gao, Zhangyang and Tan, Cheng and Wu, Lirong and Li, Stan Z.",
+        "year": "2022",
+        "journal": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "SimVP: Simpler yet Better Video Prediction",
+        "verifiedAuthors": [
+          "Zhangyang Gao",
+          "Cheng Tan",
+          "Lirong Wu",
+          "Stan Z. Li"
+        ],
+        "verifiedVenue": "CVPR",
+        "verifiedYear": "2022",
+        "verifiedPairs": [
+          [
+            "Gao, Zhangyang",
+            "Zhangyang Gao"
+          ],
+          [
+            "Tan, Cheng",
+            "Cheng Tan"
+          ],
+          [
+            "Wu, Lirong",
+            "Lirong Wu"
+          ],
+          [
+            "Li, Stan Z.",
+            "Stan Z. Li"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.050000000000000044
+      }
+    },
+    {
+      "key": "gao2022earthformer",
+      "type": "inproceedings",
+      "line": 41,
+      "input": {
+        "id": 5,
+        "title": "Earthformer: Exploring Space-Time Transformers for Earth System Forecasting",
+        "author": "Gao, Zhihan and Shi, Xingjian and Wang, Hao and Zhu, Yi and Wang, Yuyang and Li, Mu and Yeung, Dit-Yan",
+        "year": "2022",
+        "journal": "Advances in Neural Information Processing Systems",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "Earthformer: Exploring Space-Time Transformers for Earth System Forecasting",
+        "verifiedAuthors": [
+          "Zhihan Gao",
+          "Xingjian Shi",
+          "Hao Wang",
+          "Yi Zhu",
+          "Yuyang Wang",
+          "Mu Li",
+          "Dit-Yan Yeung"
+        ],
+        "verifiedVenue": "arXiv (Cornell University)",
+        "verifiedYear": "2022",
+        "verifiedPairs": [
+          [
+            "Gao, Zhihan",
+            "Zhihan Gao"
+          ],
+          [
+            "Shi, Xingjian",
+            "Xingjian Shi"
+          ],
+          [
+            "Wang, Hao",
+            "Hao Wang"
+          ],
+          [
+            "Zhu, Yi",
+            "Yi Zhu"
+          ],
+          [
+            "Wang, Yuyang",
+            "Yuyang Wang"
+          ],
+          [
+            "Li, Mu",
+            "Mu Li"
+          ],
+          [
+            "Yeung, Dit-Yan",
+            "Dit-Yan Yeung"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.24489795918367352
+      }
+    },
+    {
+      "key": "voleti2022mcvd",
+      "type": "inproceedings",
+      "line": 51,
+      "input": {
+        "id": 6,
+        "title": "MCVD: Masked Conditional Video Diffusion for Prediction, Generation, and Interpolation",
+        "author": "Voleti, Vikram and Jolicoeur-Martineau, Alexia and Pal, Christopher",
+        "year": "2022",
+        "journal": "Advances in Neural Information Processing Systems",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "MCVD: Masked Conditional Video Diffusion for Prediction, Generation, and Interpolation",
+        "verifiedAuthors": [
+          "Vikram Voleti",
+          "Alexia Jolicoeur-Martineau",
+          "Christopher Pal"
+        ],
+        "verifiedVenue": "NeurIPS",
+        "verifiedYear": "2022",
+        "verifiedPairs": [
+          [
+            "Voleti, Vikram",
+            "Vikram Voleti"
+          ],
+          [
+            "Jolicoeur-Martineau, Alexia",
+            "Alexia Jolicoeur-Martineau"
+          ],
+          [
+            "Pal, Christopher",
+            "Christopher Pal"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.1428571428571429
+      }
+    },
+    {
+      "key": "zhao2024vegediff",
+      "type": "article",
+      "line": 61,
+      "input": {
+        "id": 7,
+        "title": "VegeDiff: Latent Diffusion Model for Geospatial Vegetation Forecasting",
+        "author": "Zhao, Sijie and Chen, Hao and Zhang, Xueliang and Xiao, Pengfeng and Bai, Lei",
+        "year": "2025",
+        "journal": "IEEE Transactions on Geoscience and Remote Sensing",
+        "type": "article"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "VegeDiff: Latent Diffusion Model for Geospatial Vegetation Forecasting",
+        "verifiedAuthors": [
+          "Sijie Zhao",
+          "Hao Chen",
+          "Xueliang Zhang",
+          "Pengfeng Xiao",
+          "Lei Bai"
+        ],
+        "verifiedVenue": "IEEE Trans. Geosci. Remote. Sens.",
+        "verifiedYear": "2025",
+        "verifiedPairs": [
+          [
+            "Zhao, Sijie",
+            "Sijie Zhao"
+          ],
+          [
+            "Chen, Hao",
+            "Hao Chen"
+          ],
+          [
+            "Zhang, Xueliang",
+            "Xueliang Zhang"
+          ],
+          [
+            "Xiao, Pengfeng",
+            "Pengfeng Xiao"
+          ],
+          [
+            "Bai, Lei",
+            "Lei Bai"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.5800000000000001
+      }
+    },
+    {
+      "key": "shinohara2025vitkoop",
+      "type": "inproceedings",
+      "line": 95,
+      "input": {
+        "id": 8,
+        "title": "ViT-Koop: Vision-Transformer-Koopman Operators for Efficient Time-Series Forecasting of Earth-Observation Data",
+        "author": "Shinohara, Takayuki",
+        "year": "2025",
+        "journal": "Proceedings of the IEEE/CVF International Conference on Computer Vision Workshops",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "ViT-Koop: Vision-Transformer–Koopman Operators for Efficient Time-Series Forecasting of Earth-Observation Data",
+        "verifiedAuthors": [
+          "Takayuki Shinohara",
+          "H. Saomoto"
+        ],
+        "verifiedVenue": "2025 IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)",
+        "verifiedYear": "2025",
+        "verifiedPairs": [
+          [
+            "Shinohara, Takayuki",
+            "Takayuki Shinohara"
+          ],
+          [
+            "",
+            "H. Saomoto"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 0.5,
+        "venueScore": 0.7
+      }
+    },
+    {
+      "key": "diaconu2022weather",
+      "type": "inproceedings",
+      "line": 103,
+      "input": {
+        "id": 9,
+        "title": "Understanding the Role of Weather Data for Earth Surface Forecasting Using a ConvLSTM-Based Model",
+        "author": "Diaconu, Codrut-Andrei and Saha, Sudipan and G\\\"unnemann, Stephan and Zhu, Xiao Xiang",
+        "year": "2022",
+        "journal": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "Understanding the Role of Weather Data for Earth Surface Forecasting using a ConvLSTM-based Model",
+        "verifiedAuthors": [
+          "Codrut-Andrei Diaconu",
+          "Sudipan Saha",
+          "Stephan Günnemann",
+          "Xiao Xiang Zhu"
+        ],
+        "verifiedVenue": "CVPR Workshops",
+        "verifiedYear": "2022",
+        "verifiedPairs": [
+          [
+            "Diaconu, Codrut-Andrei",
+            "Codrut-Andrei Diaconu"
+          ],
+          [
+            "Saha, Sudipan",
+            "Sudipan Saha"
+          ],
+          [
+            "G\\\"unnemann, Stephan",
+            "Stephan Günnemann"
+          ],
+          [
+            "Zhu, Xiao Xiang",
+            "Xiao Xiang Zhu"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.15555555555555556
+      }
+    },
+    {
+      "key": "chen2023deeposg",
+      "type": "article",
+      "line": 127,
+      "input": {
+        "id": 10,
+        "title": "Deep-OSG: Deep Learning of Operators in Semigroup",
+        "author": "Chen, Junfeng and Wu, Kailiang",
+        "year": "2023",
+        "journal": "Journal of Computational Physics",
+        "type": "article"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "Deep-OSG: Deep learning of operators in semigroup",
+        "verifiedAuthors": [
+          "Junfeng Chen",
+          "Kailiang Wu"
+        ],
+        "verifiedVenue": "J. Comput. Phys.",
+        "verifiedYear": "2023",
+        "verifiedPairs": [
+          [
+            "Chen, Junfeng",
+            "Junfeng Chen"
+          ],
+          [
+            "Wu, Kailiang",
+            "Kailiang Wu"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.40625
+      }
+    },
+    {
+      "key": "hafner2019planet",
+      "type": "inproceedings",
+      "line": 145,
+      "input": {
+        "id": 11,
+        "title": "Learning Latent Dynamics for Planning from Pixels",
+        "author": "Hafner, Danijar and Lillicrap, Timothy and Fischer, Ian and Villegas, Ruben and Ha, David and Lee, Honglak and Davidson, James",
+        "year": "2019",
+        "journal": "Proceedings of the International Conference on Machine Learning",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "Learning Latent Dynamics for Planning from Pixels",
+        "verifiedAuthors": [
+          "Danijar Hafner",
+          "Timothy Lillicrap",
+          "Ian Fischer",
+          "Ruben Villegas",
+          "David Ha",
+          "Honglak Lee",
+          "James Davidson"
+        ],
+        "verifiedVenue": "ICML",
+        "verifiedYear": "2018",
+        "verifiedPairs": [
+          [
+            "Hafner, Danijar",
+            "Danijar Hafner"
+          ],
+          [
+            "Lillicrap, Timothy",
+            "Timothy Lillicrap"
+          ],
+          [
+            "Fischer, Ian",
+            "Ian Fischer"
+          ],
+          [
+            "Villegas, Ruben",
+            "Ruben Villegas"
+          ],
+          [
+            "Ha, David",
+            "David Ha"
+          ],
+          [
+            "Lee, Honglak",
+            "Honglak Lee"
+          ],
+          [
+            "Davidson, James",
+            "James Davidson"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.06349206349206349
+      }
+    },
+    {
+      "key": "hafner2020dreamer",
+      "type": "inproceedings",
+      "line": 155,
+      "input": {
+        "id": 12,
+        "title": "Dream to Control: Learning Behaviors by Latent Imagination",
+        "author": "Hafner, Danijar and Lillicrap, Timothy and Ba, Jimmy and Norouzi, Mohammad",
+        "year": "2020",
+        "journal": "International Conference on Learning Representations",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": true,
+        "verifiedTitle": "Dream to Control: Learning Behaviors by Latent Imagination",
+        "verifiedAuthors": [
+          "Danijar Hafner",
+          "T. Lillicrap",
+          "Jimmy Ba",
+          "Mohammad Norouzi"
+        ],
+        "verifiedVenue": "International Conference on Learning Representations",
+        "verifiedYear": "2019",
+        "verifiedPairs": [
+          [
+            "Hafner, Danijar",
+            "Danijar Hafner"
+          ],
+          [
+            "Lillicrap, Timothy",
+            "T. Lillicrap"
+          ],
+          [
+            "Ba, Jimmy",
+            "Jimmy Ba"
+          ],
+          [
+            "Norouzi, Mohammad",
+            "Mohammad Norouzi"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 1
+      }
+    },
+    {
+      "key": "littman2001predictive",
+      "type": "inproceedings",
+      "line": 162,
+      "input": {
+        "id": 13,
+        "title": "Predictive Representations of State",
+        "author": "Littman, Michael L. and Sutton, Richard S. and Singh, Satinder",
+        "year": "2001",
+        "journal": "Advances in Neural Information Processing Systems",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "Predictive Representations of State",
+        "verifiedAuthors": [
+          "Michael L. Littman",
+          "Richard S. Sutton",
+          "Satinder Singh"
+        ],
+        "verifiedVenue": "http://www-2.cs.cmu.edu/Groups/NIPS/NIPS2001/papers/psgz/CN12.ps.gz",
+        "verifiedYear": "2001",
+        "verifiedPairs": [
+          [
+            "Littman, Michael L.",
+            "Michael L. Littman"
+          ],
+          [
+            "Sutton, Richard S.",
+            "Richard S. Sutton"
+          ],
+          [
+            "Singh, Satinder",
+            "Satinder Singh"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.13207547169811318
+      }
+    },
+    {
+      "key": "assran2023ijepa",
+      "type": "inproceedings",
+      "line": 170,
+      "input": {
+        "id": 14,
+        "title": "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture",
+        "author": "Assran, Mahmoud and Duval, Quentin and Misra, Ishan and Bojanowski, Piotr and Vincent, Pascal and Rabbat, Michael and LeCun, Yann and Ballas, Nicolas",
+        "year": "2023",
+        "journal": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture",
+        "verifiedAuthors": [
+          "Mahmoud Assran",
+          "Quentin Duval",
+          "Ishan Misra",
+          "Piotr Bojanowski",
+          "Pascal Vincent",
+          "Michael G. Rabbat",
+          "Yann LeCun",
+          "Nicolas Ballas"
+        ],
+        "verifiedVenue": "CVPR",
+        "verifiedYear": "2023",
+        "verifiedPairs": [
+          [
+            "Assran, Mahmoud",
+            "Mahmoud Assran"
+          ],
+          [
+            "Duval, Quentin",
+            "Quentin Duval"
+          ],
+          [
+            "Misra, Ishan",
+            "Ishan Misra"
+          ],
+          [
+            "Bojanowski, Piotr",
+            "Piotr Bojanowski"
+          ],
+          [
+            "Vincent, Pascal",
+            "Pascal Vincent"
+          ],
+          [
+            "",
+            "Michael G. Rabbat"
+          ],
+          [
+            "LeCun, Yann",
+            "Yann LeCun"
+          ],
+          [
+            "Ballas, Nicolas",
+            "Nicolas Ballas"
+          ],
+          [
+            "Rabbat, Michael",
+            ""
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 0.7777777777777778,
+        "venueScore": 0.050000000000000044
+      }
+    },
+    {
+      "key": "saanum2024simplifying",
+      "type": "inproceedings",
+      "line": 186,
+      "input": {
+        "id": 15,
+        "title": "Simplifying Latent Dynamics with Softly State-Invariant World Models",
+        "author": "Saanum, Tankred and Dayan, Peter and Schulz, Eric",
+        "year": "2024",
+        "journal": "Advances in Neural Information Processing Systems",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "Simplifying Latent Dynamics with Softly State-Invariant World Models",
+        "verifiedAuthors": [
+          "T. Saanum",
+          "P. ; https://orcid.org/0000-0003-3476-1839 Dayan",
+          "E. Schulz"
+        ],
+        "verifiedVenue": "MPG.PuRe (Max Planck Society)",
+        "verifiedYear": "2025",
+        "verifiedPairs": [
+          [
+            "Saanum, Tankred",
+            "T. Saanum"
+          ],
+          [
+            "Dayan, Peter",
+            "P. ; https://orcid.org/0000-0003-3476-1839 Dayan"
+          ],
+          [
+            "Schulz, Eric",
+            "E. Schulz"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.20408163265306123
+      }
+    },
+    {
+      "key": "wang2023ssl4eo",
+      "type": "article",
+      "line": 196,
+      "input": {
+        "id": 16,
+        "title": "SSL4EO-S12: A Large-Scale Multimodal, Multitemporal Dataset for Self-Supervised Learning in Earth Observation",
+        "author": "Wang, Yi and Ait Ali Braham, Nassim and Xiong, Zhitong and Liu, Chenying and Albrecht, Conrad M. and Zhu, Xiao Xiang",
+        "year": "2023",
+        "journal": "IEEE Geoscience and Remote Sensing Magazine",
+        "type": "article"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "SSL4EO-S12: A Large-scale Multimodal Multitemporal Dataset for Self-supervised Learning in Earth Observation",
+        "verifiedAuthors": [
+          "Yi Wang",
+          "Nassim Ait Ali Braham",
+          "Conrad M Albrecht",
+          "Zhitong Xiong",
+          "Chenying Liu",
+          "Xiaoxiang Zhu"
+        ],
+        "verifiedVenue": "Technische Universität München, Universitätsbibliothek",
+        "verifiedYear": "2022",
+        "verifiedPairs": [
+          [
+            "Wang, Yi",
+            "Yi Wang"
+          ],
+          [
+            "Ait Ali Braham, Nassim",
+            "Nassim Ait Ali Braham"
+          ],
+          [
+            "Albrecht, Conrad M.",
+            "Conrad M Albrecht"
+          ],
+          [
+            "Xiong, Zhitong",
+            "Zhitong Xiong"
+          ],
+          [
+            "Liu, Chenying",
+            "Chenying Liu"
+          ],
+          [
+            "",
+            "Xiaoxiang Zhu"
+          ],
+          [
+            "Zhu, Xiao Xiang",
+            ""
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 0.7142857142857143,
+        "venueScore": 0.2264150943396226
+      }
+    },
+    {
+      "key": "manas2021seco",
+      "type": "inproceedings",
+      "line": 207,
+      "input": {
+        "id": 17,
+        "title": "Seasonal Contrast: Unsupervised Pre-Training from Uncurated Remote Sensing Data",
+        "author": "Ma\\ nas, Oscar and Lacoste, Alexandre and Gir\\'o-i-Nieto, Xavier and V\\'azquez, David and Rodr\\'iguez, Pau",
+        "year": "2021",
+        "journal": "Proceedings of the IEEE/CVF International Conference on Computer Vision",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "Seasonal Contrast: Unsupervised Pre-Training from Uncurated Remote Sensing Data",
+        "verifiedAuthors": [
+          "Oscar Mañas",
+          "Alexandre Lacoste",
+          "Xavier Giró-i-Nieto",
+          "David Vázquez",
+          "Pau Rodríguez"
+        ],
+        "verifiedVenue": "ICCV",
+        "verifiedYear": "2021",
+        "verifiedPairs": [
+          [
+            "Ma\\ nas, Oscar",
+            "Oscar Mañas"
+          ],
+          [
+            "Lacoste, Alexandre",
+            "Alexandre Lacoste"
+          ],
+          [
+            "Gir\\'o-i-Nieto, Xavier",
+            "Xavier Giró-i-Nieto"
+          ],
+          [
+            "V\\'azquez, David",
+            "David Vázquez"
+          ],
+          [
+            "Rodr\\'iguez, Pau",
+            "Pau Rodríguez"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.05714285714285716
+      }
+    },
+    {
+      "key": "cong2022satmae",
+      "type": "inproceedings",
+      "line": 215,
+      "input": {
+        "id": 18,
+        "title": "SatMAE: Pre-Training Transformers for Temporal and Multi-Spectral Satellite Imagery",
+        "author": "Cong, Yezhen and Khanna, Samar and Meng, Chenlin and Liu, Patrick and Rozi, Erik and He, Yutong and Burke, Marshall and Lobell, David and Ermon, Stefano",
+        "year": "2022",
+        "journal": "Advances in Neural Information Processing Systems",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "SatMAE: Pre-training Transformers for Temporal and Multi-Spectral Satellite Imagery",
+        "verifiedAuthors": [
+          "Yezhen Cong",
+          "Samar Khanna",
+          "Chenlin Meng",
+          "Patrick Liu",
+          "Erik Rozi",
+          "Yutong He",
+          "Marshall Burke",
+          "David B. Lobell",
+          "Stefano Ermon"
+        ],
+        "verifiedVenue": "NeurIPS",
+        "verifiedYear": "2022",
+        "verifiedPairs": [
+          [
+            "Cong, Yezhen",
+            "Yezhen Cong"
+          ],
+          [
+            "Khanna, Samar",
+            "Samar Khanna"
+          ],
+          [
+            "Meng, Chenlin",
+            "Chenlin Meng"
+          ],
+          [
+            "Liu, Patrick",
+            "Patrick Liu"
+          ],
+          [
+            "Rozi, Erik",
+            "Erik Rozi"
+          ],
+          [
+            "He, Yutong",
+            "Yutong He"
+          ],
+          [
+            "Burke, Marshall",
+            "Marshall Burke"
+          ],
+          [
+            "",
+            "David B. Lobell"
+          ],
+          [
+            "Ermon, Stefano",
+            "Stefano Ermon"
+          ],
+          [
+            "Lobell, David",
+            ""
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 0.8,
+        "venueScore": 0.1428571428571429
+      }
+    },
+    {
+      "key": "fuller2023croma",
+      "type": "inproceedings",
+      "line": 225,
+      "input": {
+        "id": 19,
+        "title": "CROMA: Remote Sensing Representations with Contrastive Radar-Optical Masked Autoencoders",
+        "author": "Fuller, Anthony and Millard, Koreen and Green, James R.",
+        "year": "2023",
+        "journal": "Advances in Neural Information Processing Systems",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "CROMA: Remote Sensing Representations with Contrastive Radar-Optical Masked Autoencoders",
+        "verifiedAuthors": [
+          "Anthony Fuller",
+          "Koreen Millard",
+          "James R. Green"
+        ],
+        "verifiedVenue": "arXiv (Cornell University)",
+        "verifiedYear": "2023",
+        "verifiedPairs": [
+          [
+            "Fuller, Anthony",
+            "Anthony Fuller"
+          ],
+          [
+            "Millard, Koreen",
+            "Koreen Millard"
+          ],
+          [
+            "Green, James R.",
+            "James R. Green"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.24489795918367352
+      }
+    },
+    {
+      "key": "guo2024skysense",
+      "type": "inproceedings",
+      "line": 235,
+      "input": {
+        "id": 20,
+        "title": "SkySense: A Multi-Modal Remote Sensing Foundation Model Towards Universal Interpretation for Earth Observation Imagery",
+        "author": "Guo, Xin and Lao, Jiangwei and Dang, Bo and Zhang, Yingying and Yu, Lei and Ru, Lixiang and Zhong, Liheng and Huang, Ziyuan and Wu, Kang and Hu, Dingxiang and He, Huimei and Wang, Jian and Chen, Jingdong and Yang, Ming and Zhang, Yongjun and Li, Yansheng",
+        "year": "2024",
+        "journal": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "SkySense: A Multi-Modal Remote Sensing Foundation Model Towards Universal Interpretation for Earth Observation Imagery",
+        "verifiedAuthors": [
+          "Xin Guo",
+          "Jiangwei Lao",
+          "Bo Dang",
+          "Yingying Zhang",
+          "Lei Yu",
+          "Lixiang Ru",
+          "Liheng Zhong",
+          "Ziyuan Huang",
+          "Kang Wu",
+          "Dingxiang Hu",
+          "Huimei He",
+          "Jian Wang",
+          "Jingdong Chen",
+          "Ming Yang",
+          "Yongjun Zhang",
+          "Yansheng Li"
+        ],
+        "verifiedVenue": "CVPR",
+        "verifiedYear": "2024",
+        "verifiedPairs": [
+          [
+            "Guo, Xin",
+            "Xin Guo"
+          ],
+          [
+            "Lao, Jiangwei",
+            "Jiangwei Lao"
+          ],
+          [
+            "Dang, Bo",
+            "Bo Dang"
+          ],
+          [
+            "Zhang, Yingying",
+            "Yingying Zhang"
+          ],
+          [
+            "Yu, Lei",
+            "Lei Yu"
+          ],
+          [
+            "Ru, Lixiang",
+            "Lixiang Ru"
+          ],
+          [
+            "Zhong, Liheng",
+            "Liheng Zhong"
+          ],
+          [
+            "Huang, Ziyuan",
+            "Ziyuan Huang"
+          ],
+          [
+            "Wu, Kang",
+            "Kang Wu"
+          ],
+          [
+            "Hu, Dingxiang",
+            "Dingxiang Hu"
+          ],
+          [
+            "He, Huimei",
+            "Huimei He"
+          ],
+          [
+            "Wang, Jian",
+            "Jian Wang"
+          ],
+          [
+            "Chen, Jingdong",
+            "Jingdong Chen"
+          ],
+          [
+            "Yang, Ming",
+            "Ming Yang"
+          ],
+          [
+            "Zhang, Yongjun",
+            "Yongjun Zhang"
+          ],
+          [
+            "Li, Yansheng",
+            "Yansheng Li"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.050000000000000044
+      }
+    },
+    {
+      "key": "ebel2023uncrtaints",
+      "type": "inproceedings",
+      "line": 243,
+      "input": {
+        "id": 21,
+        "title": "UnCRtainTS: Uncertainty Quantification for Cloud Removal in Optical Satellite Time Series",
+        "author": "Ebel, Patrick and Garnot, Vivien Sainte Fare and Schmitt, Michael and Wegner, Jan Dirk and Zhu, Xiao Xiang",
+        "year": "2023",
+        "journal": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "type": "inproceedings"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "UnCRtainTS: Uncertainty Quantification for Cloud Removal in Optical Satellite Time Series",
+        "verifiedAuthors": [
+          "Patrick Ebel",
+          "Vivien Sainte Fare Garnot",
+          "Michael Schmitt",
+          "Jan Dirk Wegner",
+          "Xiao Xiang Zhu"
+        ],
+        "verifiedVenue": "CVPR Workshops",
+        "verifiedYear": "2023",
+        "verifiedPairs": [
+          [
+            "Ebel, Patrick",
+            "Patrick Ebel"
+          ],
+          [
+            "Garnot, Vivien Sainte Fare",
+            "Vivien Sainte Fare Garnot"
+          ],
+          [
+            "Schmitt, Michael",
+            "Michael Schmitt"
+          ],
+          [
+            "Wegner, Jan Dirk",
+            "Jan Dirk Wegner"
+          ],
+          [
+            "Zhu, Xiao Xiang",
+            "Xiao Xiang Zhu"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.15555555555555556
+      }
+    },
+    {
+      "key": "wang2022pvtv2",
+      "type": "article",
+      "line": 252,
+      "input": {
+        "id": 22,
+        "title": "PVT v2: Improved Baselines with Pyramid Vision Transformer",
+        "author": "Wang, Wenhai and Xie, Enze and Li, Xiang and Fan, Deng-Ping and Song, Kaitao and Liang, Ding and Lu, Tong and Luo, Ping and Shao, Ling",
+        "year": "2022",
+        "journal": "Computational Visual Media",
+        "type": "article"
+      },
+      "status": "warning",
+      "response": {
+        "verified": true,
+        "titleMatch": true,
+        "authorMatch": false,
+        "venueMatch": false,
+        "verifiedTitle": "PVT v2: Improved baselines with pyramid vision transformer",
+        "verifiedAuthors": [
+          "Wenhai Wang",
+          "Enze Xie",
+          "Xiang Li",
+          "Deng-Ping Fan",
+          "Kaitao Song",
+          "Ding Liang",
+          "Tong Lu",
+          "Ping Luo",
+          "Ling Shao"
+        ],
+        "verifiedVenue": "Comput. Vis. Media",
+        "verifiedYear": "2022",
+        "verifiedPairs": [
+          [
+            "Wang, Wenhai",
+            "Wenhai Wang"
+          ],
+          [
+            "Xie, Enze",
+            "Enze Xie"
+          ],
+          [
+            "Li, Xiang",
+            "Xiang Li"
+          ],
+          [
+            "Fan, Deng-Ping",
+            "Deng-Ping Fan"
+          ],
+          [
+            "Song, Kaitao",
+            "Kaitao Song"
+          ],
+          [
+            "Liang, Ding",
+            "Ding Liang"
+          ],
+          [
+            "Lu, Tong",
+            "Tong Lu"
+          ],
+          [
+            "Luo, Ping",
+            "Ping Luo"
+          ],
+          [
+            "Shao, Ling",
+            "Ling Shao"
+          ]
+        ],
+        "titleScore": 1,
+        "authorScore": 1,
+        "venueScore": 0.6153846153846154
+      }
+    }
+  ],
+  "skipped_entries": [
+    {
+      "key": "luo2026eowm",
+      "type": "misc",
+      "line": 71
+    },
+    {
+      "key": "iele2026vegsim",
+      "type": "misc",
+      "line": 79
+    },
+    {
+      "key": "albughdadi2026observability",
+      "type": "misc",
+      "line": 87
+    },
+    {
+      "key": "yang2026latenttsf",
+      "type": "misc",
+      "line": 111
+    },
+    {
+      "key": "wang2026groupactions",
+      "type": "misc",
+      "line": 119
+    },
+    {
+      "key": "ha2018worldmodels",
+      "type": "misc",
+      "line": 137
+    },
+    {
+      "key": "bardes2024vjepa",
+      "type": "misc",
+      "line": 178
+    }
+  ],
+  "api_errors": [],
+  "limitations": [
+    "This is an observed browser-client interface, not a documented stable API.",
+    "Automated matches do not establish citation-to-claim support.",
+    "Skipped @misc entries require manual verification against official sources."
+  ]
+}

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="7in" height="3.10in" viewBox="0 0 2100 930">
+  <defs>
+    <style>
+      .text { font-family: Arial, Helvetica, sans-serif; fill: #202833; }
+      .label { font-size: 40px; font-weight: 700; }
+      .body { font-size: 36px; }
+      .small { font-size: 33px; }
+      .micro { font-size: 33px; }
+      .node { fill: #ffffff; stroke: #34424f; stroke-width: 4; rx: 18; }
+      .history { fill: #eaf3f8; stroke: #0072b2; stroke-width: 5; }
+      .state { fill: #e9f5f0; stroke: #008b6b; stroke-width: 5; }
+      .weather { fill: #f1eff9; stroke: #6f5aa8; stroke-width: 5; }
+      .output { fill: #fff3e8; stroke: #d55e00; stroke-width: 5; }
+      .train { fill: #fffaf3; stroke: #a65c1b; stroke-width: 4; stroke-dasharray: 13 9; }
+      .solid { fill: none; stroke: #202833; stroke-width: 6; marker-end: url(#arrow); }
+      .thin { fill: none; stroke: #66717c; stroke-width: 4; marker-end: url(#arrowGray); }
+      .q2 { fill: none; stroke: #d55e00; stroke-width: 6; stroke-dasharray: 15 10; marker-end: url(#arrowOrange); }
+      .q3 { fill: none; stroke: #6f5aa8; stroke-width: 6; stroke-dasharray: 15 10; marker-end: url(#arrowPurple); }
+      .training { fill: none; stroke: #a65c1b; stroke-width: 5; stroke-dasharray: 5 9; marker-end: url(#arrowBrown); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#202833"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#66717c"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#d55e00"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#6f5aa8"/>
+    </marker>
+    <marker id="arrowBrown" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#a65c1b"/>
+    </marker>
+    <pattern id="stateGrid" width="18" height="18" patternUnits="userSpaceOnUse">
+      <path d="M18 0H0V18" fill="none" stroke="#008b6b" stroke-width="2"/>
+    </pattern>
+  </defs>
+
+  <rect width="2100" height="930" fill="#ffffff"/>
+
+  <!-- semantic bands -->
+  <g id="normal_inference_region">
+  <rect x="24" y="25" width="2038" height="585" rx="24" fill="#ffffff" stroke="#c4cad0" stroke-width="4"/>
+  <text class="text small" x="52" y="70">NORMAL INFERENCE</text>
+  <line x1="389" y1="58" x2="1998" y2="58" stroke="#c4cad0" stroke-width="3"/>
+
+  <!-- inputs -->
+  <g id="history_inputs_and_state_encoder">
+  <rect class="node history" x="48" y="233" width="230" height="176" rx="18"/>
+  <g stroke="#0072b2" stroke-width="3" fill="none">
+    <rect x="80" y="258" width="74" height="58"/>
+    <rect x="96" y="273" width="74" height="58" fill="#ffffff"/>
+    <rect x="112" y="288" width="74" height="58" fill="#eaf3f8"/>
+    <path d="M116 293L181 341" stroke-dasharray="9 6"/>
+  </g>
+  <text class="text body" text-anchor="middle" x="163" y="382">EO history</text>
+  <text class="text micro" text-anchor="middle" x="163" y="445">cloud-masked</text>
+
+  <rect class="node history" x="328" y="216" width="230" height="210" rx="18"/>
+  <text class="text label" text-anchor="middle" x="443" y="278">q</text>
+  <text class="text small" text-anchor="middle" x="443" y="334">history</text>
+  <text class="text small" text-anchor="middle" x="443" y="372">encoder</text>
+
+  <rect class="node history" x="303" y="105" width="280" height="74" rx="16"/>
+  <text class="text small" text-anchor="middle" x="443" y="137">past weather</text>
+  <text class="text small" text-anchor="middle" x="443" y="169">static geography g</text>
+  <path class="solid" d="M443 179V216"/>
+  <path d="M443 216L432 196L454 196Z" fill="#202833"/>
+
+  <rect class="node history" x="610" y="257" width="142" height="128" rx="18"/>
+  <text class="text label" text-anchor="middle" x="681" y="314">P</text>
+  <text class="text small" text-anchor="middle" x="681" y="355">projector</text>
+
+  <rect class="node state" x="802" y="226" width="188" height="190" rx="18"/>
+  <rect x="848" y="252" width="96" height="78" fill="#ffffff" stroke="#008b6b" stroke-width="3"/>
+  <path d="M872 252V330M896 252V330M920 252V330M848 271.5H944M848 291H944M848 310.5H944" fill="none" stroke="#008b6b" stroke-width="2"/>
+  <text class="text label" text-anchor="middle" x="896" y="375">zₜ</text>
+  <text class="text micro" text-anchor="middle" x="896" y="404">predictive</text>
+  </g>
+
+  <!-- Q3 weather selector enters T only -->
+  <g id="q3_weather_switch_and_shared_transition">
+  <rect x="920" y="83" width="640" height="114" rx="18" fill="#f8f7fc" stroke="#6f5aa8" stroke-width="4"/>
+  <text class="text micro" text-anchor="middle" x="1240" y="117">Q3 · switch w only (g,h fixed)</text>
+  <rect x="940" y="133" width="100" height="45" rx="12" fill="#f1eff9" stroke="#6f5aa8" stroke-width="4"/>
+  <text class="text micro" text-anchor="middle" x="990" y="165">actual</text>
+  <rect x="1050" y="133" width="220" height="45" rx="12" fill="#ffffff" stroke="#6f5aa8" stroke-width="3" stroke-dasharray="10 7"/>
+  <text class="text micro" text-anchor="middle" x="1160" y="165">matched donor</text>
+  <rect x="1280" y="133" width="260" height="45" rx="12" fill="#ffffff" stroke="#6f5aa8" stroke-width="3" stroke-dasharray="10 7"/>
+  <text class="text micro" text-anchor="middle" x="1410" y="165">normalized mean</text>
+
+  <rect class="node weather" x="1080" y="226" width="320" height="190" rx="18"/>
+  <text class="text label" text-anchor="middle" x="1240" y="292">shared T</text>
+  <text class="text body" text-anchor="middle" x="1240" y="342">T(zₜ, w, g, h)</text>
+  <text class="text micro" text-anchor="middle" x="1240" y="386">weather-conditioned</text>
+  <path class="solid" d="M990 178V198Q990 214 1160 226"/>
+  <path class="q3" d="M1160 178V202Q1160 215 1240 226"/>
+  <path class="q3" d="M1410 178V202Q1410 215 1320 226"/>
+  <path d="M1160 226L1138 230L1147 209Z" fill="#202833"/>
+  <path d="M1240 226L1229 206L1251 206Z" fill="#6f5aa8"/>
+  <path d="M1320 226L1333 207L1342 228Z" fill="#6f5aa8"/>
+  </g>
+
+  <g id="future_state_readout_and_prediction">
+  <rect class="node state" x="1450" y="226" width="188" height="190" rx="18"/>
+  <rect x="1496" y="252" width="96" height="78" fill="#ffffff" stroke="#008b6b" stroke-width="3"/>
+  <path d="M1520 252V330M1544 252V330M1568 252V330M1496 271.5H1592M1496 291H1592M1496 310.5H1592" fill="none" stroke="#008b6b" stroke-width="2"/>
+  <text class="text label" text-anchor="middle" x="1544" y="375">zₜ₊ₕ</text>
+  <text class="text micro" text-anchor="middle" x="1544" y="404">future state</text>
+
+  <rect class="node output" x="1688" y="247" width="154" height="148" rx="18"/>
+  <text class="text label" text-anchor="middle" x="1765" y="294">O</text>
+  <text class="text micro" text-anchor="middle" x="1765" y="340">state</text>
+  <text class="text micro" text-anchor="middle" x="1765" y="375">readout</text>
+
+  <circle cx="1900" cy="321" r="40" fill="#ffffff" stroke="#d55e00" stroke-width="6"/>
+  <text class="text label" text-anchor="middle" x="1900" y="335">+</text>
+
+  <rect class="node output" x="1960" y="244" width="116" height="154" rx="18"/>
+  <text class="text small" text-anchor="middle" x="2018" y="296">future</text>
+  <text class="text small" text-anchor="middle" x="2018" y="337">NDVI</text>
+  <text class="text small" text-anchor="middle" x="2018" y="378">ŷₜ₊ₕ</text>
+  </g>
+
+  <!-- normal route -->
+  <g id="normal_prediction_route">
+  <path class="solid" d="M278 321H328"/>
+  <path class="solid" d="M558 321H610"/>
+  <path class="solid" d="M752 321H802"/>
+  <path class="solid" d="M990 321H1080"/>
+  <path class="solid" d="M1400 321H1450"/>
+  <path class="solid" d="M1638 321H1688"/>
+  <path class="solid" d="M1842 321H1860"/>
+  <path class="solid" d="M1940 321H1960"/>
+  <path d="M328 321L308 310L308 332Z" fill="#202833"/>
+  <path d="M610 321L590 310L590 332Z" fill="#202833"/>
+  <path d="M802 321L782 310L782 332Z" fill="#202833"/>
+  <path d="M1080 321L1060 310L1060 332Z" fill="#202833"/>
+  <path d="M1450 321L1430 310L1430 332Z" fill="#202833"/>
+  <path d="M1688 321L1668 310L1668 332Z" fill="#202833"/>
+  <path d="M1860 321L1840 310L1840 332Z" fill="#202833"/>
+  <path d="M1960 321L1940 310L1940 332Z" fill="#202833"/>
+  </g>
+
+  <!-- context-only prior b_h -->
+  <g id="context_only_forecast_path">
+  <path class="thin" d="M443 426V548H1858Q1884 548 1891 361"/>
+  <path d="M1891 361L1880 381L1902 381Z" fill="#66717c"/>
+  <rect x="580" y="512" width="500" height="72" rx="16" fill="#eaf3f8" stroke="#0072b2" stroke-width="4"/>
+  <text class="text small" text-anchor="middle" x="830" y="557">context-only forecast bₕ</text>
+  </g>
+
+  <!-- Q2 interventions, post-training only -->
+  <g id="q2_state_path_interventions">
+  <path class="q2" d="M990 452H1450"/>
+  <path d="M1450 452L1430 441L1430 463Z" fill="#d55e00"/>
+  <rect x="1060" y="429" width="360" height="62" rx="15" fill="#fff3e8" stroke="#d55e00" stroke-width="4" stroke-dasharray="12 8"/>
+  <text class="text small" text-anchor="middle" x="1240" y="471">Q2 support · T→I</text>
+
+  <line x1="1850" y1="292" x2="1880" y2="350" stroke="#d55e00" stroke-width="9"/>
+  <line x1="1880" y1="292" x2="1850" y2="350" stroke="#d55e00" stroke-width="9"/>
+  <rect x="1490" y="438" width="340" height="84" rx="16" fill="#fff3e8" stroke="#d55e00" stroke-width="4"/>
+  <text class="text small" text-anchor="middle" x="1660" y="474">Q2 primary</text>
+  <text class="text small" text-anchor="middle" x="1660" y="510">remove rₕ (s=0)</text>
+  <path class="q2" d="M1660 438V416H1865V350"/>
+  <path d="M1865 350L1854 370L1876 370Z" fill="#d55e00"/>
+  </g>
+  </g>
+
+  <!-- training-only compact band -->
+  <g id="training_only_supervision">
+  <rect class="train" x="24" y="638" width="2038" height="266" rx="24"/>
+  <text class="text small" x="52" y="684" fill="#8b4a12">TRAINING ONLY</text>
+  <text class="text small" x="330" y="684">Training objectives: forecasting + distillation + future-state alignment</text>
+  <text class="text small" text-anchor="end" x="2020" y="684">teacher + future EO absent at inference</text>
+
+  <rect class="node" x="55" y="730" width="430" height="108" rx="16" style="fill:#fffaf3;stroke:#a65c1b;stroke-width:4"/>
+  <text class="text body" text-anchor="middle" x="270" y="773">Forecast supervision</text>
+  <text class="text small" text-anchor="middle" x="270" y="816">ground-truth future</text>
+
+  <rect class="node" x="525" y="730" width="430" height="108" rx="16" style="fill:#fffaf3;stroke:#a65c1b;stroke-width:4"/>
+  <text class="text body" text-anchor="middle" x="740" y="773">Distillation</text>
+  <text class="text small" text-anchor="middle" x="740" y="816">frozen teacher</text>
+
+  <rect class="node" x="995" y="730" width="1007" height="108" rx="16" style="fill:#fffaf3;stroke:#a65c1b;stroke-width:4"/>
+  <text class="text body" text-anchor="middle" x="1498" y="773">Future-state supervision</text>
+  <text class="text small" text-anchor="middle" x="1498" y="816">terminal h = 20 target from frozen q + P on future EO</text>
+  </g>
+</svg>

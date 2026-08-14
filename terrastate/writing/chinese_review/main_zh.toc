@@ -1,0 +1,23 @@
+\contentsline {section}{摘要}{3}{section*.1}%
+\contentsline {section}{\numberline {1}引言}{3}{section.1}%
+\contentsline {section}{\numberline {2}相关工作}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}天气驱动 EO 预测}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}EO 世界模型与天气响应}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}预测状态与潜空间动力学}{5}{subsection.2.3}%
+\contentsline {section}{\numberline {3}方法}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}问题定义}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}历史上下文与空间预测状态}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}共享天气驱动转移}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}具有显式状态贡献的预测闭环}{6}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}学习由未来观测锚定的预测状态}{6}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}检验状态贡献与天气响应}{7}{subsection.3.6}%
+\contentsline {section}{\numberline {4}实验}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}评测问题与协议}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Q1：时间偏移下的预测能力}{9}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Q2：承载预测的状态}{9}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Q3：天气驱动响应}{10}{subsection.4.4}%
+\contentsline {section}{\numberline {5}局限性与适用范围}{11}{section.5}%
+\contentsline {section}{\numberline {6}结论}{11}{section.6}%
+\contentsline {section}{\numberline {A}中文审阅导航（非投稿正文）}{12}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}建议优先审核的五个问题}{12}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}核心 claim–evidence 对照}{12}{subsection.A.2}%

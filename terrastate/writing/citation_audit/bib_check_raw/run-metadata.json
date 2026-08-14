@@ -1,0 +1,56 @@
+{
+  "tool": "Bib-Check",
+  "repository": "https://github.com/LeoJ-xy/Bib-Check.git",
+  "requested_revision": "HEAD",
+  "started_at_utc": "2026-07-27T09:24:04.324131+00:00",
+  "input": {
+    "path": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/references.bib",
+    "sha256": "26c3662835b77986563add26c513f46c7c366bf8c150d25c25b0ce31b1d4961b"
+  },
+  "mode": "online-check-only",
+  "forbidden_write_flags_used": false,
+  "status": "completed",
+  "clone_command": [
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "https://github.com/LeoJ-xy/Bib-Check.git",
+    "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/citation_audit/tmp/cite-bib-check-psu6kldw/Bib-Check"
+  ],
+  "clone_exit_code": 0,
+  "resolved_commit": "19e8edbeeec7e07710e2c9f38a8912369698685b",
+  "venv_exit_code": 0,
+  "install_command": [
+    "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/citation_audit/tmp/cite-bib-check-psu6kldw/venv/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--disable-pip-version-check",
+    "-r",
+    "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/citation_audit/tmp/cite-bib-check-psu6kldw/Bib-Check/requirements.txt"
+  ],
+  "install_exit_code": 0,
+  "check_command": [
+    "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/citation_audit/tmp/cite-bib-check-psu6kldw/venv/bin/python",
+    "-m",
+    "bibcheck",
+    "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/references.bib",
+    "--outdir",
+    "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/citation_audit/bib_check_raw/report",
+    "--sources",
+    "crossref,arxiv,semantic_scholar",
+    "--enable-arxiv",
+    "--enable-dblp",
+    "--enable-citation-cff",
+    "--verbose",
+    "--progress",
+    "never",
+    "--user-agent",
+    "TerraState-AAAI27-citation-audit/1.0",
+    "--max-entries",
+    "30"
+  ],
+  "bibcheck_exit_code": 1,
+  "finished_at_utc": "2026-07-27T09:24:24.895100+00:00"
+}

@@ -1,0 +1,33 @@
+\documentclass{minimal}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{lmodern}
+
+\pdfpagewidth=520pt
+\pdfpageheight=410pt
+\setlength{\paperwidth}{520pt}
+\setlength{\paperheight}{410pt}
+\setlength{\textwidth}{520pt}
+\setlength{\textheight}{410pt}
+\setlength{\oddsidemargin}{-72pt}
+\setlength{\topmargin}{-72pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{0pt}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+\noindent
+\begin{tikzpicture}[x=1pt,y=1pt,font=\sffamily]
+\useasboundingbox (0,0) rectangle (520,410);
+\node[anchor=west,font=\bfseries\fontsize{10}{12}\selectfont] at (13,397)
+  {v1 at AAAI full-width scale};
+\node[anchor=north west,inner sep=0] at (13,382)
+  {\includegraphics[width=494pt]{terrastate_overview.pdf}};
+\node[anchor=west,font=\bfseries\fontsize{10}{12}\selectfont] at (13,224)
+  {v2 candidate at AAAI full-width scale};
+\node[anchor=north west,inner sep=0] at (13,209)
+  {\includegraphics[width=494pt]{terrastate_overview_v2.pdf}};
+\end{tikzpicture}
+\end{document}

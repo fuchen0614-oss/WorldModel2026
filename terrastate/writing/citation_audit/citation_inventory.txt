@@ -1,0 +1,13 @@
+{
+  "tex_file_count": 1,
+  "citation_command_count": 33,
+  "cited_key_occurrence_count": 49,
+  "unique_cited_key_count": 30,
+  "bib_entry_count": 30,
+  "missing_key_count": 0,
+  "duplicate_key_count": 0,
+  "unused_entry_count": 0,
+  "unknown_citation_command_count": 0,
+  "unresolved_input_count": 0,
+  "nocite_all": false
+}

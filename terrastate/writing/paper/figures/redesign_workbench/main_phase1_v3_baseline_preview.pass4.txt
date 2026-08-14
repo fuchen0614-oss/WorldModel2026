@@ -1,0 +1,175 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./main_phase1_v3_baseline_preview.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/base/article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/base/size10.clo)) (./aaai2027.sty
+Conference Style for AAAI for LaTeX 2e
+
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/iftex/iftex.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/base/fontenc.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/newtx/newtxtext.sty
+`newtxtext' v1.744, 2024/04/01 Text macros taking advantage of TeXGyre Termes a
+nd its extensions (msharpe)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/xpatch/xpatch.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/l3kernel/expl3.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/l3backend/l3backend-pdftex.def))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/l3packages/xparse/xparse.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/etoolbox/etoolbox.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/xcolor/xcolor.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics-cfg/color.cfg)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics-def/pdftex.def)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics/mathcolor.ltx))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/xkeyval/xkeyval.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/xkeyval/xkeyval.tex
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/xkeyval/xkvutils.tex
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/xkeyval/keyval.tex))))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/base/textcomp.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/xstring/xstring.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/xstring/xstring.tex))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/base/ifthen.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/carlisle/scalefnt.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/kastrup/binhex.tex)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/fontaxes/fontaxes.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/fontaxes/fontaxes-v1.sty)))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/psnfss/helvet.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/psnfss/courier.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/placeins/placeins.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/url/url.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics/graphicx.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics/graphics.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics/trig.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics-cfg/graphics.cfg)))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/natbib/natbib.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/caption/caption.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/caption/caption3.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/booktabs/booktabs.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsmath/amstext.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsmath/amsgen.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsmath/amsbsy.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsmath/amsopn.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsfonts/amssymb.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsfonts/amsfonts.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/newtx/t1ntxtlf.fd) (./main_phase1_v3_baseline_preview.aux)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/epstopdf-pkg/epstopdf-base.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/latexconfig/epstopdf-sys.cfg))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsfonts/umsa.fd)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsfonts/umsb.fd) [1{/mnt/data/users/luzheng/workspace/iclr/czj/.tools/te
+xlive-2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/mnt/data/users/luzhen
+g/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/enc/dvips/newtx/ntx-e
+c-tlf.enc}]
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/newtx/ts1ntxtlf.fd) [2{/mnt/data/users/luzheng/workspace/iclr/czj/.tools/
+texlive-2026/texmf-dist/fonts/enc/dvips/tex-gyre/q-ts1.enc} <../terrastate_over
+view_v3.pdf>] [3]
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/psnfss/t1pcr.fd) [4{/mnt/data/users/luzheng/workspace/iclr/czj/.tools/tex
+live-2026/texmf-dist/fonts/enc/dvips/base/8r.enc}] [5] [6]
+(./main_phase1_v3_baseline_preview.bbl
+Underfull \vbox (badness 10000) has occurred while \output is active [7]
+Underfull \hbox (badness 1092) in paragraph at lines 99--102
+[]\T1/ntxtlf/m/n/10 Ha, D.; and Schmid-hu-ber, J. 2018.  World Mod-els.
+
+Underfull \hbox (badness 2020) in paragraph at lines 169--174
+[]\T1/ntxtlf/m/n/10 Shinohara, T. 2025.  ViT-Koop: Vision-Transformer-
+[8]) [9] (./main_phase1_v3_baseline_preview.aux) )
+(see the transcript file for additional information)</mnt/data/users/luzheng/wo
+rkspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/newtx/NewTXM
+I.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmex10.pfb></mnt/data/users/luzheng/workspace/
+iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi5.pfb></mnt/data/users/luzheng/workspace/iclr
+/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></
+mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi7.pfb></mnt/data/users/luzheng/workspace/iclr/czj/
+.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></mnt/d
+ata/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr10.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tool
+s/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></mnt/data/us
+ers/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr6.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texli
+ve-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></mnt/data/users/luz
+heng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr9.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></mnt/data/users/luzheng/
+workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmsy7.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></mnt/data/users/luzheng/works
+pace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/symbol
+s/msbm10.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/te
+xmf-dist/fonts/type1/public/tex-gyre/qtmr.pfb></mnt/data/users/luzheng/workspac
+e/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/newtx/txexs.pfb></
+mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/
+type1/public/newtx/txmiaX.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tool
+s/texlive-2026/texmf-dist/fonts/type1/public/newtx/txsys.pfb></mnt/data/users/l
+uzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/urw/courie
+r/ucrr8a.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/te
+xmf-dist/fonts/type1/public/newtx/ztmb.pfb></mnt/data/users/luzheng/workspace/i
+clr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/newtx/ztmr.pfb></mnt/
+data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type
+1/public/newtx/ztmri.pfb>
+Output written on main_phase1_v3_baseline_preview.pdf (9 pages, 375786 bytes).
+Transcript written on main_phase1_v3_baseline_preview.log.

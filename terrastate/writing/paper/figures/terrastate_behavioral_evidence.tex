@@ -1,0 +1,113 @@
+\documentclass{minimal}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+\usepackage{xcolor}
+\usepackage{tikz}
+\pdfpagewidth=1000pt
+\pdfpageheight=260pt
+\setlength{\paperwidth}{1000pt}
+\setlength{\paperheight}{260pt}
+\setlength{\textwidth}{1000pt}
+\setlength{\textheight}{260pt}
+\setlength{\oddsidemargin}{-72pt}
+\setlength{\topmargin}{-72pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{0pt}
+\pagestyle{empty}
+\definecolor{c356787}{HTML}{356787}
+\definecolor{cA95B14}{HTML}{A95B14}
+\definecolor{c635694}{HTML}{635694}
+\definecolor{c66717C}{HTML}{66717C}
+\definecolor{cC8CDD2}{HTML}{C8CDD2}
+\definecolor{c202833}{HTML}{202833}
+\begin{document}
+\begin{tikzpicture}[x=1pt,y=1pt,line cap=round,line join=round]
+\useasboundingbox (0,0) rectangle (1000,260);
+\fill[white] (0,0) rectangle (1000,260);
+\draw[rounded corners=8pt,draw=cC8CDD2,line width=1.0pt,fill=white] (18,18) rectangle (342,242);
+\draw[rounded corners=8pt,draw=cC8CDD2,line width=1.0pt,fill=white] (350,18) rectangle (654,242);
+\draw[rounded corners=8pt,draw=cC8CDD2,line width=1.0pt,fill=white] (662,18) rectangle (982,242);
+\node[anchor=north west,font=\bfseries\fontsize{20}{23}\selectfont,text=c202833] at (28,232) {(a)};
+\node[anchor=north west,font=\bfseries\fontsize{20}{23}\selectfont,text=c202833] at (360,232) {(b)};
+\node[anchor=north west,font=\bfseries\fontsize{20}{23}\selectfont,text=c202833] at (672,232) {(c)};
+\draw[draw=cC8CDD2,line width=1.0pt] (111.14,61) -- (111.14,216);
+\node[anchor=east,font=\fontsize{17}{19}\selectfont,text=c202833] at (99,174.0) {Validation};
+\node[anchor=east,font=\fontsize{17}{19}\selectfont,text=c202833] at (99,102.0) {Temporal shift};
+\draw[draw=c356787,line width=1.6pt] (150.61,182.00) -- (270.14,182.00);
+\draw[draw=c356787,line width=1.2pt] (150.61,178.00) -- (150.61,186.00);
+\draw[draw=c356787,line width=1.2pt] (270.14,178.00) -- (270.14,186.00);
+\filldraw[draw=c356787,fill=c356787,line width=1.3pt] (179.96,182.00) circle (3.8pt);
+\draw[draw=c66717C,line width=1.6pt] (159.15,166.00) -- (276.64,166.00);
+\draw[draw=c66717C,line width=1.2pt] (159.15,162.00) -- (159.15,170.00);
+\draw[draw=c66717C,line width=1.2pt] (276.64,162.00) -- (276.64,170.00);
+\filldraw[draw=c66717C,fill=white,line width=1.3pt] (184.25,166.00) circle (3.8pt);
+\draw[draw=c356787,line width=1.6pt] (198.43,110.00) -- (296.41,110.00);
+\draw[draw=c356787,line width=1.2pt] (198.43,106.00) -- (198.43,114.00);
+\draw[draw=c356787,line width=1.2pt] (296.41,106.00) -- (296.41,114.00);
+\filldraw[draw=c356787,fill=c356787,line width=1.3pt] (233.73,110.00) circle (3.8pt);
+\draw[draw=c66717C,line width=1.6pt] (209.91,94.00) -- (308.63,94.00);
+\draw[draw=c66717C,line width=1.2pt] (209.91,90.00) -- (209.91,98.00);
+\draw[draw=c66717C,line width=1.2pt] (308.63,90.00) -- (308.63,98.00);
+\filldraw[draw=c66717C,fill=white,line width=1.3pt] (244.29,94.00) circle (3.8pt);
+\draw[draw=c202833,line width=1.0pt] (105.0,55) -- (326.0,55);
+\draw[draw=c202833,line width=0.8pt] (111.14,52) -- (111.14,58);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (111.14,50) {0.00};
+\draw[draw=c202833,line width=0.8pt] (172.53,52) -- (172.53,58);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (172.53,50) {0.01};
+\draw[draw=c202833,line width=0.8pt] (233.92,52) -- (233.92,58);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (233.92,50) {0.02};
+\draw[draw=c202833,line width=0.8pt] (295.31,52) -- (295.31,58);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (295.31,50) {0.03};
+\node[anchor=north,font=\fontsize{17}{19}\selectfont,text=c202833] at (215.50,28) {forecast skill removed ($\Delta R^2$)};
+\filldraw[draw=c356787,fill=c356787] (112,213) circle (3.5pt);\node[anchor=west,font=\fontsize{15}{17}\selectfont] at (121,213) {state ablation};
+\filldraw[draw=c66717C,fill=white,line width=1.2pt] (234,213) circle (3.5pt);\node[anchor=west,font=\fontsize{15}{17}\selectfont] at (243,213) {$T\!\rightarrow I$};
+\draw[draw=cC8CDD2,line width=1.0pt] (452.04,61) -- (452.04,216);
+\node[anchor=east,font=\fontsize{17}{19}\selectfont,text=c202833] at (439,174.0) {Matched control};
+\node[anchor=east,font=\fontsize{17}{19}\selectfont,text=c202833] at (439,102.0) {Normalized mean};
+\draw[draw=c635694,line width=1.6pt] (463.29,174.00) -- (492.14,174.00);
+\draw[draw=c635694,line width=1.2pt] (463.29,170.00) -- (463.29,178.00);
+\draw[draw=c635694,line width=1.2pt] (492.14,170.00) -- (492.14,178.00);
+\filldraw[draw=c635694,fill=c635694,line width=1.3pt] (477.87,174.00) circle (3.8pt);
+\draw[draw=c635694,line width=1.6pt] (507.02,102.00) -- (623.73,102.00);
+\draw[draw=c635694,line width=1.2pt] (507.02,98.00) -- (507.02,106.00);
+\draw[draw=c635694,line width=1.2pt] (623.73,98.00) -- (623.73,106.00);
+\filldraw[draw=c635694,fill=c635694,line width=1.3pt] (565.22,102.00) circle (3.8pt);
+\draw[draw=c202833,line width=1.0pt] (445.0,55) -- (638.0,55);
+\draw[draw=c202833,line width=0.8pt] (452.04,52) -- (452.04,58);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (452.04,50) {0.000};
+\draw[draw=c202833,line width=0.8pt] (502.30,52) -- (502.30,58);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (502.30,50) {0.005};
+\draw[draw=c202833,line width=0.8pt] (552.56,52) -- (552.56,58);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (552.56,50) {0.010};
+\draw[draw=c202833,line width=0.8pt] (602.82,52) -- (602.82,58);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (602.82,50) {0.015};
+\node[anchor=north,font=\fontsize{17}{19}\selectfont,text=c202833] at (541.50,28) {loss increase under control weather};
+\draw[draw=c202833,line width=1.0pt] (700.0,151) -- (960.0,151);
+\draw[draw=c202833,line width=0.8pt] (740.00,148) -- (740.00,154);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (740.00,146) {0.54};
+\draw[draw=c202833,line width=0.8pt] (820.00,148) -- (820.00,154);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (820.00,146) {0.58};
+\draw[draw=c202833,line width=0.8pt] (900.00,148) -- (900.00,154);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (900.00,146) {0.62};
+\node[anchor=north,font=\fontsize{17}{19}\selectfont,text=c202833] at (830.00,124) {$R^2$ on Q3 subset};
+\draw[draw=c202833,line width=1.0pt] (700.0,58) -- (960.0,58);
+\draw[draw=c202833,line width=0.8pt] (740.00,55) -- (740.00,61);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (740.00,53) {0.15};
+\draw[draw=c202833,line width=0.8pt] (820.00,55) -- (820.00,61);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (820.00,53) {0.17};
+\draw[draw=c202833,line width=0.8pt] (900.00,55) -- (900.00,61);
+\node[anchor=north,font=\fontsize{15}{17}\selectfont,text=c202833] at (900.00,53) {0.19};
+\node[anchor=north,font=\fontsize{17}{19}\selectfont,text=c202833] at (830.00,31) {RMSE on Q3 subset};
+\filldraw[draw=c635694,fill=c635694,line width=1.0pt] (704,216) circle (3.7pt);\node[anchor=west,font=\fontsize{14}{16}\selectfont,text=c202833] at (712,216) {Actual};
+\filldraw[draw=c66717C,fill=c66717C,line width=1.0pt] (792,216) circle (3.7pt);\node[anchor=west,font=\fontsize{14}{16}\selectfont,text=c202833] at (800,216) {Matched};
+\filldraw[draw=c202833,fill=cC8CDD2,line width=1.0pt] (891,216) circle (3.7pt);\node[anchor=west,font=\fontsize{14}{16}\selectfont,text=c202833] at (899,216) {Mean};
+\filldraw[draw=c635694,fill=c635694,line width=1.0pt] (910.80,174) circle (4pt);
+\filldraw[draw=c635694,fill=c635694,line width=1.0pt] (736.80,81) rectangle ++(7pt,7pt);
+\filldraw[draw=c66717C,fill=c66717C,line width=1.0pt] (838.60,174) circle (4pt);
+\filldraw[draw=c66717C,fill=c66717C,line width=1.0pt] (773.60,81) rectangle ++(7pt,7pt);
+\filldraw[draw=c202833,fill=cC8CDD2,line width=1.0pt] (746.00,174) circle (4pt);
+\filldraw[draw=c202833,fill=cC8CDD2,line width=1.0pt] (928.40,81) rectangle ++(7pt,7pt);
+\end{tikzpicture}
+\end{document}

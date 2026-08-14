@@ -1,0 +1,49 @@
+\documentclass{minimal}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
+
+\pdfpagewidth=1000pt
+\pdfpageheight=414pt
+\setlength{\paperwidth}{1000pt}
+\setlength{\paperheight}{414pt}
+\setlength{\textwidth}{1000pt}
+\setlength{\textheight}{414pt}
+\setlength{\oddsidemargin}{-72pt}
+\setlength{\topmargin}{-72pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{0pt}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+\begin{tikzpicture}[x=1pt,y=1pt,font=\rmfamily,line cap=round,line join=round]
+\input{wireframe_style.tex}
+\useasboundingbox (0,0) rectangle (1000,414);
+\begin{scope}[yshift=54pt]
+  \input{figure1_method_wireframe_body.tex}
+\end{scope}
+
+% Space-constrained fallback only: 43/414 = 10.4% of total height.
+\draw[rounded corners=8pt,draw=black!45,line width=1.1pt,fill=black!5]
+  (14,5) rectangle (986,48);
+\node[anchor=west,font=\rmfamily\bfseries\fontsize{18}{21}\selectfont]
+  at (28,27) {same checkpoint};
+\draw[query] (168,27) -- (230,27);
+\node[testnode,minimum width=132pt,
+      font=\rmfamily\bfseries\fontsize{18}{21}\selectfont]
+  at (326,27) {Q1 forecast skill};
+\node[testnode,minimum width=176pt,
+      font=\rmfamily\bfseries\fontsize{18}{21}\selectfont]
+  at (492,27) {Q2 full / cut / $T\!\to I$};
+\node[testnode,minimum width=187pt,
+      font=\rmfamily\bfseries\fontsize{18}{21}\selectfont]
+  at (688,27) {Q3 actual / mean / donor};
+\node[testnode,densely dashed,draw=black!45,fill=black!8,minimum width=158pt,
+      font=\rmfamily\bfseries\fontsize{18}{21}\selectfont]
+  at (899,27) {Q4 optional};
+\end{tikzpicture}
+\end{document}

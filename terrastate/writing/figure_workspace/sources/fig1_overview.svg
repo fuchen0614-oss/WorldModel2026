@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="7in" height="2.20in" viewBox="0 0 2100 660">
+  <defs>
+    <style>
+      .text { font-family: Arial, Helvetica, sans-serif; fill: #202833; }
+      .heading { font-size: 40px; font-weight: 700; }
+      .body { font-size: 36px; }
+      .small { font-size: 34px; }
+      .panel { fill: #ffffff; stroke: #9aa3ad; stroke-width: 4; }
+      .node { fill: #ffffff; stroke: #34424f; stroke-width: 4; }
+      .history { fill: #eaf3f8; stroke: #0072b2; stroke-width: 5; }
+      .state { fill: #e9f5f0; stroke: #008b6b; stroke-width: 5; }
+      .weather { fill: #f1eff9; stroke: #6f5aa8; stroke-width: 5; }
+      .output { fill: #fff3e8; stroke: #d55e00; stroke-width: 5; }
+      .route { fill: none; stroke: #202833; stroke-width: 6; }
+    </style>
+  </defs>
+
+  <rect width="2100" height="660" fill="#ffffff"/>
+
+  <g id="accuracy_only_forecaster">
+    <rect class="panel" x="24" y="24" width="500" height="520" rx="24"/>
+    <text class="text heading" x="54" y="72">Output prediction</text>
+    <text class="text body" x="54" y="114">what accuracy can verify</text>
+
+    <rect class="node weather" x="58" y="150" width="142" height="58" rx="15"/>
+    <text class="text small" text-anchor="middle" x="129" y="189">weather</text>
+
+    <rect class="node history" x="58" y="238" width="154" height="112" rx="18"/>
+    <g id="observation_stack" stroke="#0072b2" stroke-width="3" fill="none">
+      <rect x="79" y="257" width="58" height="46"/>
+      <rect x="92" y="269" width="58" height="46" fill="#ffffff"/>
+      <rect x="105" y="281" width="58" height="46" fill="#eaf3f8"/>
+      <path d="M109 286L159 323" stroke-dasharray="9 6"/>
+    </g>
+    <text class="text small" text-anchor="middle" x="135" y="383">observations</text>
+
+    <rect class="node" x="292" y="205" width="184" height="128" rx="18"/>
+    <text class="text body" text-anchor="middle" x="384" y="257">endpoint</text>
+    <text class="text body" text-anchor="middle" x="384" y="300">forecaster</text>
+
+    <path class="route" d="M200 179H246Q268 179 292 229"/>
+    <path d="M292 229L270 222L286 207Z" fill="#202833"/>
+    <path class="route" d="M212 294H292"/>
+    <path d="M292 294L271 282L271 306Z" fill="#202833"/>
+
+    <rect class="node output" x="270" y="378" width="154" height="88" rx="18"/>
+    <g id="future_output_grid" stroke="#d55e00" stroke-width="3">
+      <rect x="297" y="395" width="100" height="52" fill="#ffffff"/>
+      <path d="M297 412H397M297 429H397M330 395V447M364 395V447"/>
+    </g>
+    <path class="route" d="M384 333V378"/>
+    <path d="M384 378L372 357L396 357Z" fill="#202833"/>
+
+    <text class="text small" x="54" y="495">Accuracy checks the endpoint.</text>
+    <text class="text small" x="54" y="528">Internal mechanism: untested.</text>
+  </g>
+
+  <g id="explicit_predictive_state_path">
+    <rect class="panel" x="548" y="24" width="910" height="520" rx="24"/>
+    <text class="text heading" x="578" y="72">TerraState exposes an explicit state path</text>
+
+    <rect class="node history" x="586" y="235" width="148" height="104" rx="18"/>
+    <text class="text body" text-anchor="middle" x="660" y="278">past</text>
+    <text class="text body" text-anchor="middle" x="660" y="320">context</text>
+
+    <g id="predictive_state_t">
+      <rect class="node state" x="780" y="208" width="178" height="158" rx="18"/>
+      <rect x="825" y="229" width="88" height="66" fill="#ffffff" stroke="#008b6b" stroke-width="3"/>
+      <path d="M847 229V295M869 229V295M891 229V295M825 246H913M825 262H913M825 279H913"
+            fill="none" stroke="#008b6b" stroke-width="2"/>
+      <text class="text small" text-anchor="middle" x="869" y="329">zₜ</text>
+    </g>
+
+    <rect class="node weather" x="975" y="208" width="310" height="158" rx="18"/>
+    <text class="text small" text-anchor="middle" x="1130" y="272">shared transition</text>
+    <text class="text small" text-anchor="middle" x="1130" y="326">weather-conditioned</text>
+
+    <rect class="node weather" x="1030" y="120" width="200" height="54" rx="15"/>
+    <text class="text small" text-anchor="middle" x="1130" y="157">future weather</text>
+    <path d="M1130 174V208" fill="none" stroke="#6f5aa8" stroke-width="6" stroke-dasharray="12 9"/>
+    <path d="M1130 208L1118 187L1142 187Z" fill="#6f5aa8"/>
+
+    <g id="predictive_state_future">
+      <rect class="node state" x="1295" y="208" width="145" height="158" rx="18"/>
+      <rect x="1324" y="229" width="88" height="66" fill="#ffffff" stroke="#008b6b" stroke-width="3"/>
+      <path d="M1346 229V295M1368 229V295M1390 229V295M1324 246H1412M1324 262H1412M1324 279H1412"
+            fill="none" stroke="#008b6b" stroke-width="2"/>
+      <text class="text small" text-anchor="middle" x="1368" y="330">zₜ₊ₕ</text>
+    </g>
+
+    <path class="route" d="M734 287H780"/>
+    <path d="M780 287L759 275L759 299Z" fill="#202833"/>
+    <path class="route" d="M958 287H975"/>
+    <path d="M975 287L954 275L954 299Z" fill="#202833"/>
+    <path class="route" d="M1285 287H1295"/>
+    <path d="M1295 287L1274 275L1274 299Z" fill="#202833"/>
+
+    <text class="text small" text-anchor="middle" x="869" y="395">predictive state</text>
+    <text class="text small" text-anchor="middle" x="1368" y="395">future state</text>
+    <text class="text body" text-anchor="middle" x="1003" y="470">forecast-bearing path that can be intervened on</text>
+  </g>
+
+  <g id="verification_tests">
+    <rect class="panel" x="1482" y="24" width="594" height="520" rx="24"/>
+    <text class="text heading" x="1512" y="72">Three verification tests</text>
+
+    <rect class="node history" x="1514" y="120" width="530" height="104" rx="18"/>
+    <text class="text heading" x="1542" y="170">Q1</text>
+    <text class="text body" x="1640" y="168">Forecast skill</text>
+    <text class="text small" x="1640" y="207">useful prediction?</text>
+
+    <rect x="1514" y="250" width="530" height="104" rx="18" fill="#fff3e8" stroke="#d55e00" stroke-width="5"/>
+    <text class="text heading" x="1542" y="300" fill="#d55e00">Q2</text>
+    <text class="text body" x="1640" y="298">State intervention</text>
+    <text class="text small" x="1640" y="337">cut or bypass the path</text>
+
+    <rect class="node weather" x="1514" y="380" width="530" height="104" rx="18"/>
+    <text class="text heading" x="1542" y="430" fill="#6f5aa8">Q3</text>
+    <text class="text body" x="1640" y="428">Weather intervention</text>
+    <text class="text small" x="1640" y="467">replace the future driver</text>
+  </g>
+
+  <g id="internally_testable_outcome">
+    <rect x="548" y="566" width="1528" height="70" rx="28" fill="#e9f5f0" stroke="#008b6b" stroke-width="5"/>
+    <text class="text body" text-anchor="middle" x="1312" y="612">
+      Explicit state path + targeted tests → internally testable EO world model
+    </text>
+  </g>
+</svg>

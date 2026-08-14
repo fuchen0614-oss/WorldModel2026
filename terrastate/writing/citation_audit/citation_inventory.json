@@ -1,0 +1,346 @@
+{
+  "tool": "citation_inventory.py",
+  "bib": {
+    "path": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/references.bib",
+    "sha256": "26c3662835b77986563add26c513f46c7c366bf8c150d25c25b0ce31b1d4961b",
+    "entry_count": 30
+  },
+  "tex": [
+    {
+      "path": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "sha256": "527db5027a9b80d0c78e2c362cc5e886c400d85a5bd236df09466d7ac6a37b37"
+    }
+  ],
+  "summary": {
+    "tex_file_count": 1,
+    "citation_command_count": 33,
+    "cited_key_occurrence_count": 49,
+    "unique_cited_key_count": 30,
+    "bib_entry_count": 30,
+    "missing_key_count": 0,
+    "duplicate_key_count": 0,
+    "unused_entry_count": 0,
+    "unknown_citation_command_count": 0,
+    "unresolved_input_count": 0,
+    "nocite_all": false
+  },
+  "cited_key_counts": {
+    "albughdadi2026observability": 1,
+    "assran2023ijepa": 1,
+    "bardes2024vjepa": 1,
+    "benson2024multimodal": 7,
+    "chen2023deeposg": 1,
+    "cong2022satmae": 1,
+    "diaconu2022weather": 1,
+    "ebel2023uncrtaints": 1,
+    "fuller2023croma": 1,
+    "gao2022earthformer": 2,
+    "gao2022simvp": 2,
+    "guo2024skysense": 1,
+    "ha2018worldmodels": 1,
+    "hafner2019planet": 1,
+    "hafner2020dreamer": 1,
+    "iele2026vegsim": 3,
+    "littman2001predictive": 1,
+    "luo2026eowm": 4,
+    "manas2021seco": 1,
+    "requenamesa2021earthnet": 2,
+    "saanum2024simplifying": 1,
+    "shi2015convlstm": 2,
+    "shinohara2025vitkoop": 1,
+    "voleti2022mcvd": 2,
+    "wang2017predrnn": 2,
+    "wang2022pvtv2": 1,
+    "wang2023ssl4eo": 1,
+    "wang2026groupactions": 1,
+    "yang2026latenttsf": 2,
+    "zhao2024vegediff": 2
+  },
+  "missing_keys": [],
+  "duplicate_keys": {},
+  "unused_entries": [],
+  "occurrences": [
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 34,
+      "command": "cite",
+      "keys": [
+        "requenamesa2021earthnet"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 34,
+      "command": "cite",
+      "keys": [
+        "benson2024multimodal"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 34,
+      "command": "cite",
+      "keys": [
+        "shi2015convlstm",
+        "wang2017predrnn",
+        "gao2022simvp",
+        "gao2022earthformer",
+        "voleti2022mcvd"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 34,
+      "command": "cite",
+      "keys": [
+        "zhao2024vegediff"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 34,
+      "command": "cite",
+      "keys": [
+        "luo2026eowm"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 34,
+      "command": "cite",
+      "keys": [
+        "iele2026vegsim"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 52,
+      "command": "cite",
+      "keys": [
+        "yang2026latenttsf"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 62,
+      "command": "cite",
+      "keys": [
+        "luo2026eowm"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 63,
+      "command": "cite",
+      "keys": [
+        "iele2026vegsim"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 97,
+      "command": "cite",
+      "keys": [
+        "requenamesa2021earthnet"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 97,
+      "command": "cite",
+      "keys": [
+        "diaconu2022weather"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 97,
+      "command": "cite",
+      "keys": [
+        "benson2024multimodal"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 97,
+      "command": "cite",
+      "keys": [
+        "shi2015convlstm",
+        "wang2017predrnn",
+        "gao2022simvp",
+        "gao2022earthformer"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 97,
+      "command": "cite",
+      "keys": [
+        "voleti2022mcvd",
+        "zhao2024vegediff"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 97,
+      "command": "cite",
+      "keys": [
+        "shinohara2025vitkoop"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 100,
+      "command": "cite",
+      "keys": [
+        "luo2026eowm"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 100,
+      "command": "cite",
+      "keys": [
+        "iele2026vegsim"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 100,
+      "command": "cite",
+      "keys": [
+        "albughdadi2026observability"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 103,
+      "command": "cite",
+      "keys": [
+        "littman2001predictive"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 103,
+      "command": "cite",
+      "keys": [
+        "ha2018worldmodels",
+        "hafner2019planet",
+        "hafner2020dreamer"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 103,
+      "command": "cite",
+      "keys": [
+        "assran2023ijepa",
+        "bardes2024vjepa"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 103,
+      "command": "cite",
+      "keys": [
+        "yang2026latenttsf"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 103,
+      "command": "cite",
+      "keys": [
+        "saanum2024simplifying"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 103,
+      "command": "cite",
+      "keys": [
+        "chen2023deeposg"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 103,
+      "command": "cite",
+      "keys": [
+        "wang2026groupactions"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 106,
+      "command": "cite",
+      "keys": [
+        "manas2021seco",
+        "cong2022satmae",
+        "wang2023ssl4eo",
+        "fuller2023croma",
+        "guo2024skysense"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 106,
+      "command": "cite",
+      "keys": [
+        "ebel2023uncrtaints"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 118,
+      "command": "cite",
+      "keys": [
+        "benson2024multimodal"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 149,
+      "command": "cite",
+      "keys": [
+        "wang2022pvtv2",
+        "benson2024multimodal"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 427,
+      "command": "cite",
+      "keys": [
+        "benson2024multimodal"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 459,
+      "command": "cite",
+      "keys": [
+        "benson2024multimodal"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 528,
+      "command": "citet",
+      "keys": [
+        "benson2024multimodal"
+      ]
+    },
+    {
+      "file": "/mnt/workspace/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/main.tex",
+      "line": 675,
+      "command": "cite",
+      "keys": [
+        "luo2026eowm"
+      ]
+    }
+  ],
+  "unknown_citation_commands": [],
+  "unresolved_inputs": []
+}

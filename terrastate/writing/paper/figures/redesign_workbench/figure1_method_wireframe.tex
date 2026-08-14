@@ -1,0 +1,28 @@
+\documentclass{minimal}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
+
+\pdfpagewidth=1000pt
+\pdfpageheight=360pt
+\setlength{\paperwidth}{1000pt}
+\setlength{\paperheight}{360pt}
+\setlength{\textwidth}{1000pt}
+\setlength{\textheight}{360pt}
+\setlength{\oddsidemargin}{-72pt}
+\setlength{\topmargin}{-72pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\footskip}{0pt}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+\begin{tikzpicture}[x=1pt,y=1pt,font=\rmfamily,line cap=round,line join=round]
+\input{wireframe_style.tex}
+\useasboundingbox (0,0) rectangle (1000,360);
+\input{figure1_method_wireframe_body.tex}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,404 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./main_phase1_compact_preview.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/base/article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/base/size10.clo)) (./aaai2027.sty
+Conference Style for AAAI for LaTeX 2e
+
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/iftex/iftex.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/base/fontenc.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/newtx/newtxtext.sty
+`newtxtext' v1.744, 2024/04/01 Text macros taking advantage of TeXGyre Termes a
+nd its extensions (msharpe)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/xpatch/xpatch.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/l3kernel/expl3.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/l3backend/l3backend-pdftex.def))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/l3packages/xparse/xparse.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/etoolbox/etoolbox.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/xcolor/xcolor.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics-cfg/color.cfg)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics-def/pdftex.def)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics/mathcolor.ltx))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/xkeyval/xkeyval.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/xkeyval/xkeyval.tex
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/xkeyval/xkvutils.tex
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/xkeyval/keyval.tex))))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/base/textcomp.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/xstring/xstring.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/xstring/xstring.tex))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/base/ifthen.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/carlisle/scalefnt.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+generic/kastrup/binhex.tex)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/fontaxes/fontaxes.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/fontaxes/fontaxes-v1.sty)))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/psnfss/helvet.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/psnfss/courier.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/placeins/placeins.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/url/url.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics/graphicx.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics/graphics.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics/trig.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/graphics-cfg/graphics.cfg)))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/natbib/natbib.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/caption/caption.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/caption/caption3.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/booktabs/booktabs.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsmath/amstext.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsmath/amsgen.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsmath/amsbsy.sty)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsmath/amsopn.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsfonts/amssymb.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsfonts/amsfonts.sty))
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/newtx/t1ntxtlf.fd)
+No file main_phase1_compact_preview.aux.
+
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/epstopdf-pkg/epstopdf-base.sty
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/latexconfig/epstopdf-sys.cfg))
+
+Package natbib Warning: Citation `requenamesa2021earthnet' on page 1 undefined 
+on input line 34.
+
+
+Package natbib Warning: Citation `benson2024multimodal' on page 1 undefined on 
+input line 34.
+
+
+Package natbib Warning: Citation `shi2015convlstm' on page 1 undefined on input
+ line 34.
+
+
+Package natbib Warning: Citation `wang2017predrnn' on page 1 undefined on input
+ line 34.
+
+
+Package natbib Warning: Citation `gao2022simvp' on page 1 undefined on input li
+ne 34.
+
+
+Package natbib Warning: Citation `gao2022earthformer' on page 1 undefined on in
+put line 34.
+
+
+Package natbib Warning: Citation `voleti2022mcvd' on page 1 undefined on input 
+line 34.
+
+
+Package natbib Warning: Citation `zhao2024vegediff' on page 1 undefined on inpu
+t line 34.
+
+
+Package natbib Warning: Citation `luo2026eowm' on page 1 undefined on input lin
+e 34.
+
+
+Package natbib Warning: Citation `iele2026vegsim' on page 1 undefined on input 
+line 34.
+
+
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsfonts/umsa.fd)
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/amsfonts/umsb.fd)
+
+Package natbib Warning: Citation `yang2026latenttsf' on page 1 undefined on inp
+ut line 54.
+
+
+Package natbib Warning: Citation `luo2026eowm' on page 1 undefined on input lin
+e 64.
+
+
+Package natbib Warning: Citation `iele2026vegsim' on page 1 undefined on input 
+line 65.
+
+[1{/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-var/fon
+ts/map/pdftex/updmap/pdftex.map}{/mnt/data/users/luzheng/workspace/iclr/czj/.to
+ols/texlive-2026/texmf-dist/fonts/enc/dvips/newtx/ntx-ec-tlf.enc}]
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/newtx/ts1ntxtlf.fd)
+
+Package natbib Warning: Citation `requenamesa2021earthnet' on page 2 undefined 
+on input line 99.
+
+
+Package natbib Warning: Citation `diaconu2022weather' on page 2 undefined on in
+put line 99.
+
+
+Package natbib Warning: Citation `benson2024multimodal' on page 2 undefined on 
+input line 99.
+
+
+Package natbib Warning: Citation `shi2015convlstm' on page 2 undefined on input
+ line 99.
+
+
+Package natbib Warning: Citation `wang2017predrnn' on page 2 undefined on input
+ line 99.
+
+
+Package natbib Warning: Citation `gao2022simvp' on page 2 undefined on input li
+ne 99.
+
+
+Package natbib Warning: Citation `gao2022earthformer' on page 2 undefined on in
+put line 99.
+
+
+Package natbib Warning: Citation `voleti2022mcvd' on page 2 undefined on input 
+line 99.
+
+
+Package natbib Warning: Citation `zhao2024vegediff' on page 2 undefined on inpu
+t line 99.
+
+
+Package natbib Warning: Citation `shinohara2025vitkoop' on page 2 undefined on 
+input line 99.
+
+
+Package natbib Warning: Citation `luo2026eowm' on page 2 undefined on input lin
+e 102.
+
+
+Package natbib Warning: Citation `iele2026vegsim' on page 2 undefined on input 
+line 102.
+
+
+Package natbib Warning: Citation `albughdadi2026observability' on page 2 undefi
+ned on input line 102.
+
+
+Package natbib Warning: Citation `littman2001predictive' on page 2 undefined on
+ input line 105.
+
+
+Package natbib Warning: Citation `ha2018worldmodels' on page 2 undefined on inp
+ut line 105.
+
+
+Package natbib Warning: Citation `hafner2019planet' on page 2 undefined on inpu
+t line 105.
+
+
+Package natbib Warning: Citation `hafner2020dreamer' on page 2 undefined on inp
+ut line 105.
+
+
+Package natbib Warning: Citation `assran2023ijepa' on page 2 undefined on input
+ line 105.
+
+
+Package natbib Warning: Citation `bardes2024vjepa' on page 2 undefined on input
+ line 105.
+
+
+Package natbib Warning: Citation `yang2026latenttsf' on page 2 undefined on inp
+ut line 105.
+
+
+Package natbib Warning: Citation `saanum2024simplifying' on page 2 undefined on
+ input line 105.
+
+
+Package natbib Warning: Citation `chen2023deeposg' on page 2 undefined on input
+ line 105.
+
+
+Package natbib Warning: Citation `wang2026groupactions' on page 2 undefined on 
+input line 105.
+
+[2{/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fo
+nts/enc/dvips/tex-gyre/q-ts1.enc} <./figure1_compact_wireframe.pdf>]
+
+Package natbib Warning: Citation `manas2021seco' on page 3 undefined on input l
+ine 108.
+
+
+Package natbib Warning: Citation `cong2022satmae' on page 3 undefined on input 
+line 108.
+
+
+Package natbib Warning: Citation `wang2023ssl4eo' on page 3 undefined on input 
+line 108.
+
+
+Package natbib Warning: Citation `fuller2023croma' on page 3 undefined on input
+ line 108.
+
+
+Package natbib Warning: Citation `guo2024skysense' on page 3 undefined on input
+ line 108.
+
+
+Package natbib Warning: Citation `ebel2023uncrtaints' on page 3 undefined on in
+put line 108.
+
+
+Package natbib Warning: Citation `benson2024multimodal' on page 3 undefined on 
+input line 120.
+
+
+Package natbib Warning: Citation `wang2022pvtv2' on page 3 undefined on input l
+ine 151.
+
+
+Package natbib Warning: Citation `benson2024multimodal' on page 3 undefined on 
+input line 151.
+
+[3]
+(/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/tex/
+latex/psnfss/t1pcr.fd)
+
+LaTeX Warning: Reference `eq:closure' on page 4 undefined on input line 340.
+
+[4{/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fo
+nts/enc/dvips/base/8r.enc}]
+
+Package natbib Warning: Citation `benson2024multimodal' on page 5 undefined on 
+input line 429.
+
+
+Package natbib Warning: Citation `benson2024multimodal' on page 5 undefined on 
+input line 461.
+
+
+LaTeX Warning: Reference `eq:transition' on page 5 undefined on input line 474.
+
+
+
+LaTeX Warning: Reference `eq:closure' on page 5 undefined on input line 475.
+
+[5]
+
+Package natbib Warning: Citation `benson2024multimodal' on page 6 undefined on 
+input line 535.
+
+
+Package natbib Warning: Citation `benson2024multimodal' on page 6 undefined on 
+input line 535.
+
+
+LaTeX Warning: Reference `tab:forecast' on page 6 undefined on input line 541.
+
+
+LaTeX Warning: Reference `tab:cuts' on page 6 undefined on input line 562.
+
+
+LaTeX Warning: Reference `eq:endpointguard' on page 6 undefined on input line 6
+21.
+
+
+Package natbib Warning: Citation `luo2026eowm' on page 6 undefined on input lin
+e 681.
+
+[6]
+No file main_phase1_compact_preview.bbl.
+
+Package natbib Warning: There were undefined citations.
+
+[7] (./main_phase1_compact_preview.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ )</mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fo
+nts/type1/public/newtx/NewTXMI.pfb></mnt/data/users/luzheng/workspace/iclr/czj/
+.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></mnt/
+data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmmi10.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.to
+ols/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></mnt/data
+/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmmi6.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/t
+exlive-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></mnt/data/user
+s/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi9.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texliv
+e-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></mnt/data/users/luz
+heng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr5.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></mnt/data/users/luzheng/wo
+rkspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr7.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></mnt/data/users/luzheng/workspace
+/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.
+pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy7.pfb></mnt/data/users/luzheng/workspace/icl
+r/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><
+/mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts
+/type1/public/amsfonts/symbols/msbm10.pfb></mnt/data/users/luzheng/workspace/ic
+lr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/tex-gyre/qtmr.pfb></mn
+t/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/ty
+pe1/public/newtx/txexs.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/t
+exlive-2026/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb></mnt/data/users/luz
+heng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/newtx
+/txsys.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texm
+f-dist/fonts/type1/urw/courier/ucrr8a.pfb></mnt/data/users/luzheng/workspace/ic
+lr/czj/.tools/texlive-2026/texmf-dist/fonts/type1/public/newtx/ztmb.pfb></mnt/d
+ata/users/luzheng/workspace/iclr/czj/.tools/texlive-2026/texmf-dist/fonts/type1
+/public/newtx/ztmr.pfb></mnt/data/users/luzheng/workspace/iclr/czj/.tools/texli
+ve-2026/texmf-dist/fonts/type1/public/newtx/ztmri.pfb>
+Output written on main_phase1_compact_preview.pdf (7 pages, 367337 bytes).
+Transcript written on main_phase1_compact_preview.log.

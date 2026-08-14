@@ -1,0 +1,54 @@
+{
+  "tool": "Bib-Check",
+  "repository": "https://github.com/LeoJ-xy/Bib-Check.git",
+  "requested_revision": "HEAD",
+  "started_at_utc": "2026-07-27T18:00:26.530006+00:00",
+  "input": {
+    "path": "/mnt/data/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/references.bib",
+    "sha256": "33cbfd5944a96915125ede529229ee8b26c1f274ac54bbaf433902fad4ea226a"
+  },
+  "mode": "online-check-only",
+  "forbidden_write_flags_used": false,
+  "status": "completed",
+  "clone_command": [
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "https://github.com/LeoJ-xy/Bib-Check.git",
+    "/tmp/cite-bib-check-0w29m0k7/Bib-Check"
+  ],
+  "clone_exit_code": 0,
+  "resolved_commit": "19e8edbeeec7e07710e2c9f38a8912369698685b",
+  "venv_exit_code": 0,
+  "install_command": [
+    "/tmp/cite-bib-check-0w29m0k7/venv/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--disable-pip-version-check",
+    "-r",
+    "/tmp/cite-bib-check-0w29m0k7/Bib-Check/requirements.txt"
+  ],
+  "install_exit_code": 0,
+  "check_command": [
+    "/tmp/cite-bib-check-0w29m0k7/venv/bin/python",
+    "-m",
+    "bibcheck",
+    "/mnt/data/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/paper/references.bib",
+    "--outdir",
+    "/mnt/data/users/luzheng/workspace/iclr/czj/TerraState_AAAI27/evidence_workspace/audit/bibcheck/report",
+    "--sources",
+    "crossref,openalex,s2",
+    "--enable-arxiv",
+    "--enable-dblp",
+    "--enable-citation-cff",
+    "--verbose",
+    "--progress",
+    "never",
+    "--user-agent",
+    "cite-bib-check/1.0"
+  ],
+  "bibcheck_exit_code": 0,
+  "finished_at_utc": "2026-07-27T18:04:36.966216+00:00"
+}

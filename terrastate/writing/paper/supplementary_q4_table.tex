@@ -1,0 +1,40 @@
+% Optional Q4 result table.
+% This file is intentionally not included by paper/main.tex while Q4 has no
+% real result package. Restore it only if the final optional evidence is strong
+% enough for the main paper; otherwise use it in the Supplementary Document.
+\begin{table*}[!t]
+\centering
+\small
+\setlength{\tabcolsep}{2.1pt}
+\begin{tabular}{lccccccc}
+\toprule
+\multicolumn{8}{l}{\emph{A. Endpoint accuracy and path controls by partition}}\\
+Partition & $E^{\rm dir}$ & $E^{\rm cmp}$ & Joint guard &
+$\delta_z$ & $\delta_y$ & $\delta_y^{\rm broken}$ & $A_{\rm comp}$\\
+\midrule
+3+7 & TBD & TBD & TBD & TBD & TBD & TBD & TBD\\
+6+4 & TBD & TBD & TBD & TBD & TBD & TBD & TBD\\
+4+11 & TBD & TBD & TBD & TBD & TBD & TBD & TBD\\
+8+12 & TBD & TBD & TBD & TBD & TBD & TBD & TBD\\
+2+18 & TBD & TBD & TBD & TBD & TBD & TBD & TBD\\
+\midrule
+\multicolumn{8}{l}{\emph{B. Anti-collapse summaries by direct-query horizon}}\\
+Horizon & $M_h$ & $S_h/S_t$ & $r_{\rm eff,h}/r_{\rm eff,t}$ &
+\multicolumn{4}{c}{Validation-frozen degeneracy check}\\
+\midrule
+1 & TBD & TBD & TBD & \multicolumn{4}{c}{TBD}\\
+5 & TBD & TBD & TBD & \multicolumn{4}{c}{TBD}\\
+10 & TBD & TBD & TBD & \multicolumn{4}{c}{TBD}\\
+20 & TBD & TBD & TBD & \multicolumn{4}{c}{TBD}\\
+\bottomrule
+\end{tabular}
+\caption{Optional post-training Q4 separates partition-level path evidence
+(A) from horizon-level anti-collapse evidence (B). No Q4 quantity is a
+training loss or selection criterion. Panel A reports endpoint MSE, the joint
+guard, state/output gaps, the broken-path gap, and
+$A_{\mathrm{comp}}=\delta_y^{\mathrm{broken}}-\delta_y$. Panel B reports
+movement, standard-deviation retention, effective-rank retention, and the
+validation-frozen degeneracy check. Positive interpretation requires a passing
+joint guard and cannot compensate for failed Q2.}
+\label{tab:composition}
+\end{table*}

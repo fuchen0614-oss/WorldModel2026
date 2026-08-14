@@ -1,0 +1,31 @@
+citekey,status,issue_types,issue_messages,doi,title,year
+requenamesa2021earthnet,WARNING,CANDIDATE_FOUND_NO_DOI,High-confidence candidate found; consider adding DOI 10.1109/cvprw53098.2021.00124,,{EarthNet2021}: A Large-Scale Dataset and Challenge for Earth Surface Forecasting as a Guided Video Prediction Task,2021
+benson2024multimodal,WARNING,CANDIDATE_FOUND_NO_DOI,High-confidence candidate found; consider adding DOI 10.1109/cvpr52733.2024.02625,,Multi-modal Learning for Geospatial Vegetation Forecasting,2024
+shi2015convlstm,OK,,,,Convolutional {LSTM} Network: A Machine Learning Approach for Precipitation Nowcasting,2015
+wang2017predrnn,OK,,,,{PredRNN}: Recurrent Neural Networks for Predictive Learning Using Spatiotemporal {LSTM}s,2017
+gao2022simvp,WARNING,CANDIDATE_FOUND_NO_DOI,High-confidence candidate found; consider adding DOI 10.1109/CVPR52688.2022.00317,,{SimVP}: Simpler Yet Better Video Prediction,2022
+gao2022earthformer,OK,,,10.52202/068431-1841,Earthformer: Exploring Space-Time Transformers for Earth System Forecasting,2022
+voleti2022mcvd,OK,,,10.52202/068431-1698,"{MCVD}: Masked Conditional Video Diffusion for Prediction, Generation, and Interpolation",2022
+zhao2024vegediff,OK,,,10.1109/TGRS.2025.3564317,{VegeDiff}: Latent Diffusion Model for Geospatial Vegetation Forecasting,2025
+luo2026eowm,OK,,,,{EO-WM}: A Physically Informed World Model for Probabilistic Earth Observation Forecasting,2026
+iele2026vegsim,OK,,,,{VegSim}: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation,2026
+albughdadi2026observability,OK,,,,From Surface Forecasting to Observability Forecasting: A Latent World Model for Cloud-Aware {EO} Monitoring,2026
+shinohara2025vitkoop,WARNING,CANDIDATE_FOUND_NO_DOI,High-confidence candidate found; consider adding DOI 10.1109/iccvw69036.2025.00296,,{ViT-Koop}: Vision-Transformer-Koopman Operators for Efficient Time-Series Forecasting of Earth-Observation Data,2025
+diaconu2022weather,WARNING,CANDIDATE_FOUND_NO_DOI,High-confidence candidate found; consider adding DOI 10.1109/cvprw56347.2022.00142,,Understanding the Role of Weather Data for Earth Surface Forecasting Using a {ConvLSTM}-Based Model,2022
+yang2026latenttsf,OK,,,,From Observations to States: Latent Time Series Forecasting,2026
+wang2026groupactions,OK,,,,World Models as Group Actions,2026
+chen2023deeposg,OK,,,10.1016/j.jcp.2023.112498,{Deep-OSG}: Deep Learning of Operators in Semigroup,2023
+ha2018worldmodels,WARNING,CANDIDATE_FOUND_NO_DOI,High-confidence candidate found; consider adding DOI 10.5281/zenodo.1207631,,World Models,2018
+hafner2019planet,WARNING,LOW_CONFIDENCE_CANDIDATE,Candidate confidence is too low; manual review is recommended.,,Learning Latent Dynamics for Planning from Pixels,2019
+hafner2020dreamer,WARNING,CANDIDATE_FOUND_NO_DOI;VENUE_MISMATCH,"High-confidence candidate found; consider adding DOI 10.5040/9781666995671.ch-005;Venue mismatch: local international learning representations, online imagination and adolescent trauma",,Dream to Control: Learning Behaviors by Latent Imagination,2020
+littman2001predictive,WARNING,LOW_CONFIDENCE_CANDIDATE,Candidate confidence is too low; manual review is recommended.,,Predictive Representations of State,2001
+assran2023ijepa,WARNING,CANDIDATE_FOUND_NO_DOI,High-confidence candidate found; consider adding DOI 10.1109/cvpr52729.2023.01499,,Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture,2023
+bardes2024vjepa,OK,,,,Revisiting Feature Prediction for Learning Visual Representations from Video,2024
+saanum2024simplifying,OK,,,10.52202/079017-1212,Simplifying Latent Dynamics with Softly State-Invariant World Models,2024
+wang2023ssl4eo,OK,,,10.1109/MGRS.2023.3281651,"{SSL4EO-S12}: A Large-Scale Multimodal, Multitemporal Dataset for Self-Supervised Learning in Earth Observation",2023
+manas2021seco,WARNING,AMBIGUOUS_MATCH,Candidate match has medium confidence and needs manual review.,,Seasonal Contrast: Unsupervised Pre-Training from Uncurated Remote Sensing Data,2021
+cong2022satmae,OK,,,10.52202/068431-0015,{SatMAE}: Pre-Training Transformers for Temporal and Multi-Spectral Satellite Imagery,2022
+fuller2023croma,OK,,,10.52202/075280-0241,{CROMA}: Remote Sensing Representations with Contrastive Radar-Optical Masked Autoencoders,2023
+guo2024skysense,WARNING,CANDIDATE_FOUND_NO_DOI,High-confidence candidate found; consider adding DOI 10.1109/cvpr52733.2024.02613,,{SkySense}: A Multi-Modal Remote Sensing Foundation Model Towards Universal Interpretation for Earth Observation Imagery,2024
+ebel2023uncrtaints,OK,,,10.1109/CVPRW59228.2023.00202,{UnCRtainTS}: Uncertainty Quantification for Cloud Removal in Optical Satellite Time Series,2023
+wang2022pvtv2,OK,,,10.1007/s41095-022-0274-8,{PVT v2}: Improved Baselines with Pyramid Vision Transformer,2022

@@ -78,6 +78,7 @@ _MAIN_WT/
 !*/results/**
 !*/artifacts/**
 !*/refine-logs/**
+!*/writing/**
 
 # 但归档里的权重仍然排除（Release 承载）
 */archive/**/*.pt
