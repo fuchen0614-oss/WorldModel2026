@@ -70,29 +70,24 @@ $$
 | **Q3：天气响应** | 84 对极端匹配样本中 actual $0.6254$ $>$ donor $0.5893$ $>$ mean $0.5430$ | 真实未来天气具有更好的完整窗口响应保真度 | 因果反事实、hot-dry 特异增强 |
 | **旧 Q4** | real/shuffled composition ratio 约为 1 | 最多说明没有明显状态坍塌 | 组合律、递归动力学 |
 | **future-state anchor** | 去掉后四项 OOD-t 指标略好 | 历史训练组件及简化线索 | 必要组件或性能来源 |
-| **exclusive 路线** | $R^2=0.49027$，closure CI 跨 0 | 可作为历史 transition-dependence 诊断 | 与其他 checkpoint 拼接为一组完整证据 |
+| **exclusive 路线** | $R^2=0.49027$，closure CI 跨 0 | 可作为历史 transition-dependence 诊断 | 作为完整主证据 |
 
 > [!warning] Q3 数值口径
 > 极端子集的 $R^2=0.6254$ 不是完整 OOD-t 主表成绩。完整 OOD-t 为 $R^2=0.56935$、RMSE $=0.15059$。Q3 只支持 weather-response fidelity，不支持热旱特异增强。
 
-### 2.3 checkpoint 血统
+### 2.3 固定检查点
 
-当前存在“投稿口径”和“可执行证据”之间的血统差异：
+后续研究统一使用第 40 轮、14,880 训练步权重作为旧模型的唯一固定检查点：
 
-- 已有 Q1/Q2/Q3 可执行证据绑定 boundary80：epoch 31、step 11,904；
-- 40 epoch、step 14,880 的最终权重已经重新找到并只读核验；
 - 文件大小为 `44,300,969` bytes；
 - SHA-256 为 `99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b`；
-- [权重索引](../WEIGHTS_INDEX.md) 中“14,880 权重缺失”的表述属于待更新旧状态；
-- 不能假设 11,904-step 的现有数字自动等于 14,880-step 的结果。
 
 后续处理原则：
 
-1. 已投 AAAI 数字保持冻结，不反向改写；
-2. 后续研究先在 14,880 权重上统一重跑 Q1/Q2/Q3；
-3. 14,880 固定为旧模型扩展研究的 canonical checkpoint；boundary80 只保留为 AAAI 历史证据和并排参照，不依据新评测结果在两者之间回选；
-4. Candidate C 使用自己的唯一 checkpoint 和独立 provenance；
-5. 旧模型协议与绘图代码可以复用，但旧模型结果不能代替新模型结果。
+1. 14,880 固定为旧模型扩展研究的 canonical checkpoint；
+2. Q1/Q2/Q3 统一在该权重上执行；
+3. Candidate C 使用自己的唯一 checkpoint 和独立 provenance；
+4. 旧模型协议与绘图代码可以复用，但旧模型结果不能代替新模型结果。
 
 ---
 
@@ -296,9 +291,9 @@ flowchart LR
 > [!note] 执行优先级
 > E0/E1 是所有投稿路线的共同底座。E3–E5 的旧模型完整扩展对 TGRS/ISPRS JPRS 路线是必做项；对 ICLR/NeurIPS 主线只在解释 Candidate C 增量所需时执行，不能挤占 Candidate C 的 Q1–Q4、校准和消融。旧协议可复用，但 Candidate C 的对应结果仍须全部重跑。
 
-### 6.1 E0：canonical checkpoint 对齐
+### 6.1 E0：canonical checkpoint 固定
 
-**目的**：消除投稿描述、权重和机器证据之间的不一致。
+**目的**：固定旧模型的唯一检查点、数据协议和结果来源。
 
 **工作**：
 
@@ -306,10 +301,9 @@ flowchart LR
 2. 固定代码 commit、数据 manifest 和 scorer；
 3. 重跑 validation、OOD-t 的 Q1/Q2；
 4. 重跑冻结 84 对的 Q3 actual/donor/mean；
-5. 与 boundary80 并排，不按新结果回选 checkpoint；
-6. 输出单一 provenance JSON 和简表。
+5. 输出单一 provenance JSON 和简表。
 
-**验收**：每个扩展研究数字都能追溯到固定的 14,880 checkpoint、同一 scorer 和明确的 split。若 14,880 弱于 boundary80，应如实报告差异并分析训练后段变化，但不按结果把旧模型扩展主线切回 boundary80。
+**验收**：每个扩展研究数字都能追溯到固定的 14,880 checkpoint、同一 scorer 和明确的 split。
 
 ### 6.2 E1：同协议性能主表
 
