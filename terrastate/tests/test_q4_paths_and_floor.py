@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-"""目标变异门限、路径量、geo-clustered bootstrap 的单元测试。
+"""逐 cube 资格判据、路径量、geo-clustered bootstrap 的单元测试。
 
 覆盖三项本轮新增/修正的逻辑：
-  1 TARGET_STD_FLOOR：近常数目标的 cube 不得进入配对池（R² 会到 −1e5 量级）
+  1 MIN_VALID_PIXELS：有效像素太少的 cube 不得进入配对池（R² 会到 −1e5 量级）；
+    已停用的 v1 口径 std_floor 仍可显式传入，用于敏感性分析复现
   2 path_gaps：单段路径 delta 恒为 0（半群律一段情形），多段应 > 0
   3 geo_cluster_weights：臂间比较必须按 tile 聚类，且缓存键不能只看 n
 """
@@ -19,7 +20,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from eval.eval_terrastate_candidate_c_q4 import (  # noqa: E402
-    COMPARE_BOOTSTRAP_B, TARGET_STD_FLOOR, geo_cluster_weights, per_cube_metrics,
+    COMPARE_BOOTSTRAP_B, MIN_VALID_PIXELS, SENSITIVITY_STD_FLOOR,
+    TARGET_STD_FLOOR, geo_cluster_weights, per_cube_metrics,
 )
 
 
@@ -28,26 +30,32 @@ def _fail(m):
     return 1
 
 
-def t_std_floor_excludes_near_constant():
-    n = np.array([10000.0, 10000.0, 10000.0])
-    sy = np.array([0.0, 0.0, 0.0])
-    # cube0: 逐像素 std = 0.5（正常）; cube1: 1e-3（噪声地板）; cube2: 0.02（勉强合格）
-    sst = np.array([0.5, 1e-3, 2e-2]) ** 2 * n
-    s = {"n": n, "sse": np.array([1.0, 1.0, 1.0]), "sy": sy, "sy2": sst}
+def t_min_valid_excludes_cloud_starved():
+    """主口径：有效像素太少的 cube 出池，正常 cube 留下。"""
+    n = np.array([1600.0, 53.0, 2.0, 64.0])          # 中位数 / 事故现场两例 / 边界
+    sy = np.zeros(4)
+    sst = np.array([0.2, 0.2, 0.2, 0.2]) ** 2 * n     # 变异都正常，只有像素数不同
+    s = {"n": n, "sse": np.full(4, 1.0), "sy": sy, "sy2": sst}
     _m, _r, _s, el = per_cube_metrics(s)
-    if list(el.astype(int)) != [1, 0, 1]:
-        return _fail(f"std_floor 未正确筛选：{el}（期望 [1,0,1]）")
-    _m2, _r2, _s2, el2 = per_cube_metrics(s, std_floor=0.0)
+    if list(el.astype(int)) != [1, 0, 0, 1]:
+        return _fail(f"n_valid 门限未正确筛选：{el}（期望 [1,0,0,1]，含 64 边界取等）")
+    _m2, _r2, _s2, el2 = per_cube_metrics(s, min_valid=1)
     if not el2.all():
         return _fail(f"关闭门限后应全部合格：{el2}")
-    print("PASS std_floor 剔除近常数目标，可关闭做敏感性分析")
+    print(f"PASS n_valid>={MIN_VALID_PIXELS} 剔除云遮挡样本，可关闭做敏感性分析")
     return 0
 
 
-def t_std_floor_value_is_documented():
-    if not np.isclose(TARGET_STD_FLOOR, 1e-2):
-        return _fail(f"门限值意外变化：{TARGET_STD_FLOOR}")
-    print(f"PASS TARGET_STD_FLOOR={TARGET_STD_FLOOR:g}（NDVI 噪声地板上一个数量级）")
+def t_eligibility_constants_are_pinned():
+    """门限值与默认口径不得静默漂移——它们改变 Q4 结论。"""
+    if MIN_VALID_PIXELS != 64:
+        return _fail(f"主口径门限意外变化：{MIN_VALID_PIXELS}（应为 64）")
+    if TARGET_STD_FLOOR != 0.0:
+        return _fail(f"v1 std 口径应已停用（TARGET_STD_FLOOR=0），实际 {TARGET_STD_FLOOR}")
+    if not np.isclose(SENSITIVITY_STD_FLOOR, 1e-2):
+        return _fail(f"敏感性分析用的 v1 门限值意外变化：{SENSITIVITY_STD_FLOOR}")
+    print(f"PASS 口径常量已钉住：n_valid>={MIN_VALID_PIXELS}，"
+          f"std_floor 停用（敏感性分析保留 {SENSITIVITY_STD_FLOOR:g}）")
     return 0
 
 
@@ -57,13 +65,20 @@ def t_r2_blowup_is_what_we_exclude():
     sy = np.array([0.0])
     sst = np.array([3.824e-03])              # 事故现场的真实值
     s = {"n": n, "sse": np.array([0.72]), "sy": sy, "sy2": sst}
-    mse, r2, _s, el = per_cube_metrics(s, std_floor=0.0)
+    mse, r2, _s, el = per_cube_metrics(s, min_valid=1)
     if not (r2[0] < -100):
         return _fail(f"该样本 R² 应当极负，实际 {r2[0]}")
-    _m, _r, _s2, el2 = per_cube_metrics(s)
-    if bool(el2[0]):
-        return _fail("门限应剔除该样本")
-    print(f"PASS 门限剔除的正是 R²={r2[0]:.0f} 这类样本")
+    # 这个样本有 1324 个有效像素，n_valid 口径**不会**剔除它；
+    # 剔除它需要 v1 的 std 口径。两个轴抓的不是同一批样本，测试必须如实反映。
+    _m, _r, _s2, el_primary = per_cube_metrics(s)
+    if not bool(el_primary[0]):
+        return _fail("n_valid 口径不应剔除有 1324 个有效像素的 cube")
+    _m3, _r3, _s3, el_v1 = per_cube_metrics(s, min_valid=1,
+                                            std_floor=SENSITIVITY_STD_FLOOR)
+    if bool(el_v1[0]):
+        return _fail("v1 std 口径应剔除该样本")
+    print(f"PASS R²={r2[0]:.0f} 的近常数样本由 v1 std 口径捕获；"
+          f"n_valid 口径按设计放行（1324 像素充足），两轴职责已区分")
     return 0
 
 
@@ -128,7 +143,7 @@ def t_cluster_ci_wider_than_minicube():
 def main():
     torch.manual_seed(0)
     rc = 0
-    for fn in (t_std_floor_excludes_near_constant, t_std_floor_value_is_documented,
+    for fn in (t_min_valid_excludes_cloud_starved, t_eligibility_constants_are_pinned,
                t_r2_blowup_is_what_we_exclude, t_geo_cluster_weights_shape_and_unit,
                t_single_tile_refuses, t_cluster_ci_wider_than_minicube):
         rc |= fn()

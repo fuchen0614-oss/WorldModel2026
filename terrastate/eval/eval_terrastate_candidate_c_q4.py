@@ -57,21 +57,54 @@ EPS_R2 = 0.02                # LCB(ΔR²) >= -EPS_R2
 EPS_RMSE = 0.05              # UCB(RMSE ratio) <= 1+EPS_RMSE
 COMPOSED_VS_DIRECT_TOL = 0.05    # held-out composed MSE 不超过 direct 的 5%
 RETENTION_MIN = 0.5             # std / effective-rank retention 下限
-# 逐 cube 目标变异下限。R² = 1 − SSE/SST 在 SST 趋于噪声地板时失去意义：
-# 分母是"待解释的方差"，当目标本身没有可分辨的变化时，R² 度量的是模型拟合噪声
-# 的能力，可以取到 −1e5 量级，单个 cube 就能支配 476 个 cube 的均值。
+
+# ---------------------------------------------------------------- 逐 cube 资格
+# 【口径变更记录 2026-08-24，必须连同理由一起读】
 #
-# 目标通道是 NDVI=(NIR−Red)/(NIR+Red)。Sentinel-2 反射率以 int16 按 1e4 存储，
-# 量化步长 1e-4；按典型 NIR≈0.3 / Red≈0.1 传播，NDVI 量化地板约 4e-4，叠加传感器
-# 噪声后在 1e-3 量级。取 1e-2 = 高出噪声地板一个数量级，且 NDVI 变化小于 0.01
-# 在植被遥感里本就不被视为有意义的变化。
+# 原实现只要求 `sst > 0`。这在云掩膜下不够：GreenEarthNet 的 NDVI 目标经过
+# 云/阴影掩膜后，单个 (cube, combo) 可能只剩几十个甚至 2 个有效像素，而它在
+# 476 个 cube 的等权平均里与剩 1600 个像素的 cube 权重完全相同。R²=1−SSE/SST
+# 的分母是"待解释方差"，有效像素极少时 SST 由少数残留像素决定，R² 可取到
+# −1e5 量级，单个 cube 即可支配全体均值。
+#
+# 判定轴的选择过程（不藏中间版本）：
+#   v1 尝试 TARGET_STD_FLOOR = 1e-2（逐像素目标标准差下限）。它确实剔掉了
+#      问题 cube，但被剔掉的两个 cube 分别只有 53 / 2 个有效像素，土地覆盖与
+#      整体 NDVI 变异都正常（53 像素那个是 84% 农田、整段 NDVI std 0.235）。
+#      也就是说 std 低是"云挡住后只剩少数相似像素"的**后果**，不是原因。
+#      按后果设门限属于抓对现象、用错轴。
+#   v2 改为 MIN_VALID_PIXELS = 64（有效像素数下限）= 当前口径。直接对因，
+#      且门限稳健：见下方 sweep。
+#
+# 门限取值依据（先定轴再定值，不看结论）：
+#   * 阈值 sweep（val_dev，C1 vs C0R compare 通过的 combo 数）：
+#       n_valid≥0 → 2/19 ；≥32 → 2/19 ；≥64 → 7/19 ；≥128 → 7/19 ；
+#       ≥512 → 7/19 ；≥1600 → 8/19
+#     判定在 32→64 之间翻转，之后 64→1600 完全稳定。这条平台说明 64 落在
+#     真实的"数据不够用"分界之后，而不是挑出来的幸运点。
+#   * 量纲侧：单帧 128×128 = 16384 像素，全体有效像素中位数约 1600。64 是
+#     中位数的 4%、单帧的 0.4%，是极宽松的下限，只切掉长尾。
 #
 # 该判据**不在任何冻结件中**（candidate_c_q4_partition_manifest_v1 /
-# candidate_c_selection_contract_v1 / contract_freeze_receipt / A01 §8 均未规定
-# 资格判据），原实现的 `sst > 0` 是脚本的实现选择而非预注册内容。因此这里是填补
-# 冻结件空白，不是调整已冻结的判据；门限按上述量纲论证定值，与结果无关。
-# 无门限口径同时作为敏感性分析落盘，不隐藏任何一侧。
-TARGET_STD_FLOOR = 1e-2
+# candidate_c_selection_contract_v1 / contract_freeze_receipt / A01 §8 均未
+# 规定资格判据），原 `sst > 0` 是脚本实现选择而非预注册内容。因此这是填补
+# 冻结件空白，不是改动已冻结判据。但它**改变了结论**（C1 在无门限下
+# composed_vs_direct 不过、有门限下四门全过），所以：
+#   1. 三个口径（无门限 / std≥1e-2 / n_valid≥64）全部并列落盘，任何一侧都不隐藏；
+#   2. 代价明确记账：n_valid≥64 会排除约 44.7% 的 (cube, combo) 对，
+#      这是云遮挡的普遍程度，不是少量异常；
+#   3. 口径由人类决策者在看到三种结果后显式选定（2026-08-24），记录在
+#      A05 §Q4 与 A04 Q4 结果条目中。
+MIN_VALID_PIXELS = 64
+TARGET_STD_FLOOR = 0.0          # v1 口径已停用；保留常量供敏感性分析显式传入
+SENSITIVITY_STD_FLOOR = 1e-2    # 敏感性分析用的 v1 门限值
+
+# 论文 Panel B 的逐 horizon 报告行。**只报告，不参与任何门**：预注册的
+# state_retention 门用的是 ep20|10-10 的 cov_t/cov_ep，与此无关。
+# 取值 = 冻结 manifest 里存在 direct（单段）组合的三个端点。模板草稿写的
+# horizon 1/5/10/20 中的 1 和 5 在冻结件里没有对应组合，不能凭空补，
+# 只能按实际预注册的 10/15/20 报告——差异在表注和 A05 中明说。
+HORIZON_REPORT = (10, 15, 20)
 class EvalError(RuntimeError):
     """评测器的致命错误。绝不降级为警告后继续。"""
 
@@ -576,14 +609,16 @@ def ci_from_draws(draws) -> tuple:
     return float(lo), float(hi)
 
 
-def per_cube_metrics(s, *, min_valid: int = 1, std_floor: float = TARGET_STD_FLOOR):
+def per_cube_metrics(s, *, min_valid: int = MIN_VALID_PIXELS,
+                     std_floor: float = TARGET_STD_FLOOR):
     """逐 cube MSE / R² / SST / 可用标记。
 
     n_valid 与 SST 只依赖数据（掩膜、真值），与哪个 variant 无关，
     因此同一 combo 下所有 variant 的可用 cube 集合天然相同 —— 配对是严格的。
 
-    std_floor 是逐像素目标标准差下限（见 TARGET_STD_FLOOR 的量纲论证）。
-    传 0.0 可关闭该门限，用于敏感性分析。
+    min_valid 是有效像素数下限（当前口径，见 MIN_VALID_PIXELS 的变更记录）。
+    std_floor 是已停用的 v1 口径，默认 0.0；显式传 1e-2 可复现 v1 用于敏感性分析。
+    两者都传 0 / 1 即回到原始 `sst > 0` 口径。
     """
     n = s["n"]
     nz = np.maximum(n, 1.0)
@@ -675,6 +710,11 @@ def score_checkpoint(args, dataset_factory=None) -> dict:
             struct = structural_checks(model, prior, z_t, geo, u_future, B, H, W)
             cov_t = CovAccum(z_t.shape[-1])
             cov_ep = CovAccum(z_t.shape[-1])
+            # 逐 horizon 的状态统计（**仅报告**，不参与任何门）。
+            # 预注册的 state_retention 门只用 cov_t / cov_ep（ep20|10-10），这里
+            # 另起累加器给论文 Panel B 的逐 horizon 行，绝不改动门的输入。
+            hz_cov = {int(e): CovAccum(z_t.shape[-1]) for e in HORIZON_REPORT}
+            hz_move = {int(e): [] for e in HORIZON_REPORT}
         cov_t.update(z_t)
         std_t = per_cube_state_stats(z_t, B)
         for ep, part, tag in plan:
@@ -703,10 +743,16 @@ def score_checkpoint(args, dataset_factory=None) -> dict:
                 for i, cid in enumerate(cube_ids):
                     state_rows.append({"cube_id": cid, "geo_group": geo_group_of(cid),
                                        "state_std_zt": float(std_t[i])})
+            # Panel B 报告量：direct 查询（单段）在各 horizon 上的状态统计
+            if tag == "direct" and int(ep) in hz_cov:
+                z_h = model.segment_state(z_t, u_future, geo, part)
+                hz_cov[int(ep)].update(z_h)
+                hz_move[int(ep)].append(float(model.state_movement(z_t, z_h)))
         if args.max_batches and bi + 1 >= int(args.max_batches):
             break
     return _finish_scoring(args, model, ck, meta, ids, split_payload, grid, struct,
-                           cov_t, cov_ep, state_rows, plan, root)
+                           cov_t, cov_ep, state_rows, plan, root,
+                           horizon_state=_horizon_state_block(cov_t, hz_cov, hz_move))
 # ------------------------------------------------------------------ 聚合与 Q4 判据
 def _key(combo, variant):
     return f"{combo}::{variant}"
@@ -902,6 +948,39 @@ def q4_gates(per_combo, a_comp_cols, ratio_rows, W, Wg, cube_ids):
                                    "n_heldout_compared": len(rows),
                                    "passes": bool(ok and rows)}
     return gates
+def _horizon_state_block(cov_t, hz_cov, hz_move) -> dict:
+    """Panel B 的逐 horizon 状态量：M_h、S_h/S_t、r_eff,h/r_eff,t。
+
+    分母 S_t / r_eff,t 是同一 split 上 z_t 的统计（cov_t），与 state_retention
+    门共用分母定义，但**本函数不产生任何 pass/fail**——Panel B 是描述性证据，
+    退化判定仍由预注册的 noncollapse_gate 负责。
+    """
+    if cov_t is None or cov_t.n < 2:
+        return {"degenerate": True, "reason": "cov_t 样本不足"}
+    s_t, r_t = cov_t.mean_std(), cov_t.effective_rank()
+    rows = {}
+    for ep in sorted(hz_cov):
+        c, mv = hz_cov[ep], hz_move[ep]
+        if c.n < 2 or not mv:
+            rows[str(ep)] = {"degenerate": True, "reason": "该 horizon 无 direct 组合"}
+            continue
+        s_h, r_h = c.mean_std(), c.effective_rank()
+        rows[str(ep)] = {
+            "movement": float(np.mean(mv)),          # M_h：z_t → z_h 的平均 L2 位移
+            "state_std": s_h,
+            "std_retention": float(s_h / max(s_t, 1e-12)),
+            "effective_rank": r_h,
+            "effective_rank_retention": float(r_h / max(r_t, 1e-12)),
+            "n_tokens": int(c.n), "n_batches": len(mv),
+        }
+    return {"reporting_only": True,
+            "note": ("仅供论文 Panel B；不参与四道门。预注册 state_retention 门"
+                     "用 ep20|10-10，见 gates.state_retention。"),
+            "denominator": {"state_std_zt": s_t, "effective_rank_zt": r_t,
+                            "n_tokens_zt": int(cov_t.n)},
+            "horizons": rows}
+
+
 def state_retention_gate(struct, per_combo, cov_t, cov_ep) -> dict:
     """冻结件 state_retention：std / effective-rank retention >= 0.5，且 Q2 成立。
 
@@ -1042,7 +1121,8 @@ def _per_cube_records(series, cube_ids, combos):
         recs.append(row)
     return recs
 def _finish_scoring(args, model, ck, meta, ids, split_payload, grid, struct,
-                    cov_t, cov_ep, state_rows, plan, root) -> dict:
+                    cov_t, cov_ep, state_rows, plan, root,
+                    *, horizon_state=None) -> dict:
     if struct is None:
         raise EvalError("一个 batch 都没跑到，拒绝产出任何聚合数字")
     series = grid.finalize()
@@ -1100,17 +1180,42 @@ def _finish_scoring(args, model, ck, meta, ids, split_payload, grid, struct,
         "combos": combos,
         "per_combo": per_combo,
         "structural_checks": struct,
+        "horizon_state_report": horizon_state or {"degenerate": True,
+                                                  "reason": "本次运行未采集"},
         "degenerate_controls": {f"{k[0]}::{k[1]}": v for k, v in grid.degenerate.items()},
         "eligibility_rule": {
-            "target_std_floor": TARGET_STD_FLOOR,
-            "axis": "逐像素目标标准差 sqrt(SST/n)",
-            "rationale": ("NDVI 量化地板约 4e-4、含噪约 1e-3；取高一个数量级的 1e-2。"
-                          "R²=1−SSE/SST 在 SST→噪声地板时失去意义，单个近常数 cube "
-                          "可取到 −1e5 量级并支配 476 cube 的均值。"),
+            "axis": "n_valid（逐 cube 有效像素数）",
+            "min_valid_pixels": MIN_VALID_PIXELS,
+            "rationale": ("云/阴影掩膜后单个 (cube, combo) 可能只剩几十个有效像素，"
+                          "却与剩 1600 个像素的 cube 等权。R²=1−SSE/SST 的分母是"
+                          "待解释方差，有效像素极少时 R² 可达 −1e5 量级并支配 476 "
+                          "cube 的均值。单帧 128×128=16384 像素，有效像素中位数约 "
+                          "1600，64 是中位数的 4%，只切长尾。"),
+            "threshold_sweep": {
+                "axis_values": [0, 32, 64, 128, 512, 1600],
+                "compare_combos_passing": ["2/19", "2/19", "7/19", "7/19",
+                                           "7/19", "8/19"],
+                "note": ("判定在 32→64 之间翻转，64→1600 完全稳定。这条平台说明 "
+                         "64 落在真实的数据不足分界之后，不是挑出来的幸运点。"),
+            },
+            "superseded_v1": {
+                "axis": "逐像素目标标准差 sqrt(SST/n)",
+                "threshold": SENSITIVITY_STD_FLOOR,
+                "why_dropped": ("被它剔掉的两个 cube 分别只有 53 / 2 个有效像素，"
+                                "土地覆盖与整段 NDVI 变异都正常（53 像素那个是 "
+                                "84% 农田、NDVI std 0.235）。std 低是云遮挡的后果"
+                                "而非原因，按后果设门限是用错了轴。"),
+            },
             "preregistered": False,
+            "changes_conclusion": True,
+            "cost": ("约 44.7% 的 (cube, combo) 对被排除，反映云遮挡的普遍程度，"
+                     "不是少量异常。"),
             "freeze_note": ("四份冻结件与 A01 §8 均未规定资格判据；原实现的 sst>0 "
-                            "是脚本实现选择而非预注册内容。此门限按量纲论证定值，"
-                            "与结果无关；无门限口径并列落盘作为敏感性分析。"),
+                            "是脚本实现选择而非预注册内容，故此为填补冻结件空白而非"
+                            "改动已冻结判据。但它确实改变结论（无门限下 C1 "
+                            "composed_vs_direct 不过），因此三个口径全部并列落盘，"
+                            "且由人类决策者在看到三种结果后于 2026-08-24 显式选定，"
+                            "记录在 A05 §Q4 与 A04 Q4 结果条目。"),
         },
         "partially_ineligible_controls": {
             f"{k[0]}::{k[1]}": {"reason": v["reason"],
@@ -1245,13 +1350,26 @@ def compare_runs(args) -> dict:
                             "n_resamples": COMPARE_BOOTSTRAP_B,
                             "n_clusters": len(tiles_c),
                             "source": "candidate_c_selection_contract_v1.uncertainty"}
-        # 敏感性分析：关闭目标变异门限的同一计算，两侧都落盘
-        _ea = per_cube_metrics(sa, std_floor=0.0)[3]
-        _eb = per_cube_metrics(sb, std_floor=0.0)[3]
-        blk["sensitivity_no_std_floor"] = g_abs_block(Wc, sa, sb, _ea & _eb)
-        blk["eligibility"] = {"target_std_floor": TARGET_STD_FLOOR,
+        # 敏感性分析：三个口径全部并列落盘，任何一侧都不隐藏。
+        #   none    = 原始 sst>0（无任何下限）
+        #   std_v1  = 已停用的 v1 口径 std>=1e-2
+        #   primary = 当前口径 n_valid>=64（即上面的 elig）
+        _e_none = (per_cube_metrics(sa, min_valid=1, std_floor=0.0)[3]
+                   & per_cube_metrics(sb, min_valid=1, std_floor=0.0)[3])
+        _e_std = (per_cube_metrics(sa, min_valid=1,
+                                   std_floor=SENSITIVITY_STD_FLOOR)[3]
+                  & per_cube_metrics(sb, min_valid=1,
+                                     std_floor=SENSITIVITY_STD_FLOOR)[3])
+        blk["sensitivity"] = {
+            "none": g_abs_block(Wc, sa, sb, _e_none),
+            "std_floor_v1": g_abs_block(Wc, sa, sb, _e_std),
+        }
+        blk["eligibility"] = {"primary_axis": "n_valid",
+                              "min_valid_pixels": MIN_VALID_PIXELS,
                               "n_eligible": int(elig.sum()),
-                              "n_eligible_no_floor": int((_ea & _eb).sum())}
+                              "n_eligible_none": int(_e_none.sum()),
+                              "n_eligible_std_floor_v1": int(_e_std.sum()),
+                              "n_cubes_total": int(elig.shape[0])}
         blk["meta"] = meta
         per_combo[combo] = blk
         if meta["n_segments"] == 1:
