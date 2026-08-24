@@ -91,3 +91,6 @@ _MAIN_WT/
 # 预测 NetCDF 体量过大，任何位置都不入库
 **/predictions/
 *.nc
+
+# 本地备份目录，不入版本库
+terrastate/eval/_backup/
