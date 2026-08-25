@@ -1,0 +1,22 @@
+arm=C1  factual_path=recursive
+world=4  per_gpu_batch=8  accum=2  global_batch=64
+gpus=0,1,3,7   host=csy-zg01-gnode39
+total_steps=14880  updates/epoch=372  ckpt_interval=1000  seed=42
+started_local=2026-08-22 21:12:25   finished_local=2026-08-23 03:11:07
+状态=已完成  reason=schedule_complete  step=14880/14880
+最终 val: eo_traj=0.021303  eo_ep_mean=0.025437
+          per_ep={'10': 0.024007, '15': 0.0267, '20': 0.025602}
+
+配对：与 run_c0r_20260823T063516Z (4卡 C0R) 组成 4 卡两臂对照。
+注意：4卡组只能与4卡组互比，不可与8卡组混比（world 改变 DistributedSampler
+      分片边界与 shuffle 落位，accum 改变梯度归约次数与时机）。
+
+偏离登记（如实记录，未修正）：
+- --ckpt-interval 1000 与冻结配置 candidate_c_c1_config_v1.yaml 中的 372 不一致
+  （用户明确要求不使用 372 的密集 save）。
+- trainer 源码含 milestone tagging 改动，119 项 CPU 测试收据的源码哈希已失效。
+- 本 run 绕过 launch_gpu_run.py 直接 torchrun 启动，无 launch_record.json /
+  launch_info.json 证据链，无启动前空闲复核轮次。
+- 本 run 的 heartbeat / state_transition 未写入。
+- step 14880 的 milestone tag 告警属预期：14880 不是 ckpt_interval=1000 的倍数，
+  checkpoint_step14880.pt 不存在，端点权重已正常落在 checkpoint_main.pt。

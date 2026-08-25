@@ -1,0 +1,9 @@
+{
+  "schema": "candidate_c_q4_locked_execution_v1",
+  "output_root": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/results/q4_eval_locked_4gpu_20260824T101119Z",
+  "c1_rc": 0,
+  "c0r_rc": 1,
+  "compare_rc": 1,
+  "missing_artifacts": 0,
+  "finished_utc": "2026-08-24T11:46:01Z"
+}

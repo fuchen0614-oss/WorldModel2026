@@ -1,0 +1,341 @@
+{
+  "schema": "e0_launch_manifest_v1",
+  "frozen_at": "2026-08-18T08:08:01.666142+00:00",
+  "ops_dir": "ops/e0_q1q2q3_11904_vs_14880/20260818_154859",
+  "registry_revision": "a7fd2763935a26d1",
+  "artifacts": {
+    "verified_14880": {
+      "logical_id_via_alias": "terrastate/v2/default-training-anchor",
+      "resolved_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+      "file_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f"
+    },
+    "legacy_11904": {
+      "logical_id": "terrastate/v2/legacy-boundary11904@v1",
+      "resolved_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+      "file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd"
+    }
+  },
+  "frozen_inputs": {
+    "validation_manifest": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/artifacts/protocols/b4_eval/val_chopped.manifest.json",
+      "sha256": "d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e",
+      "num_files": 952
+    },
+    "oodt_manifest": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+      "sha256": "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49",
+      "num_files": 1904
+    },
+    "q3_protocol_dir": "artifacts/protocols/extreme_audit_oodt_v1",
+    "q3_protocol_gate": [
+      "README.md: OK",
+      "climatology_train.json: OK",
+      "hotdry_manifest.json: OK",
+      "matched_normal_manifest.json: OK",
+      "protocol.json: OK",
+      "provenance.json: OK",
+      "thresholds.json: OK"
+    ],
+    "q3_expected_pairs": 84
+  },
+  "gpu_policy": {
+    "gpus_used": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "gpus_left_free": [
+      6,
+      7
+    ],
+    "note": "one job per GPU via CUDA_VISIBLE_DEVICES; batch A = 0/1/2 (verified 14,880) starts first and must be verified alive before batch B = 3/4/5 (legacy 11,904)"
+  },
+  "forbidden": [
+    "--sections all",
+    "Q4",
+    "modifying scorer/mask/manifest/bootstrap/metric defs",
+    "aggregating smoke or INTERRUPTED outputs",
+    "re-selecting a checkpoint based on OOD results"
+  ],
+  "jobs": [
+    {
+      "name": "gpu0_v14880_val_q1q2",
+      "gpu": 0,
+      "kind": "q1q2",
+      "checkpoint_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+      "checkpoint_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "evaluator": "eval/eval_b4_exclusive_contract.py",
+      "evaluator_sha256": "c6759dec60ede433f99a97b1ba3191d9427210cd907a08d6d8776dfb8efec9b4",
+      "manifest_shas": [
+        [
+          "validation",
+          "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/artifacts/protocols/b4_eval/val_chopped.manifest.json",
+          "d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e"
+        ]
+      ],
+      "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu0_v14880_val_q1q2",
+      "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu0_v14880_val_q1q2.log",
+      "pid_file": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu0_v14880_val_q1q2.pid",
+      "expected_targets": 952,
+      "command": [
+        "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/eval_b4_exclusive_contract.py",
+        "--ckpt",
+        "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+        "--val-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped",
+        "--data-manifest",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/artifacts/protocols/b4_eval/val_chopped.manifest.json",
+        "--dataset-root",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet",
+        "--split",
+        "val",
+        "--sections",
+        "q1q2",
+        "--batch-size",
+        "1",
+        "--num-data-workers",
+        "2",
+        "--workers",
+        "4",
+        "--device",
+        "cuda",
+        "--output-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu0_v14880_val_q1q2"
+      ]
+    },
+    {
+      "name": "gpu1_v14880_oodt_q1q2",
+      "gpu": 1,
+      "kind": "q1q2",
+      "checkpoint_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+      "checkpoint_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "evaluator": "eval/eval_b4_exclusive_contract.py",
+      "evaluator_sha256": "c6759dec60ede433f99a97b1ba3191d9427210cd907a08d6d8776dfb8efec9b4",
+      "manifest_shas": [
+        [
+          "ood-t",
+          "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+          "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49"
+        ]
+      ],
+      "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu1_v14880_oodt_q1q2",
+      "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu1_v14880_oodt_q1q2.log",
+      "pid_file": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu1_v14880_oodt_q1q2.pid",
+      "expected_targets": 1904,
+      "command": [
+        "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/eval_b4_exclusive_contract.py",
+        "--ckpt",
+        "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+        "--val-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/ood-t_chopped",
+        "--data-manifest",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+        "--dataset-root",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet",
+        "--split",
+        "ood-t_chopped",
+        "--sections",
+        "q1q2",
+        "--batch-size",
+        "1",
+        "--num-data-workers",
+        "2",
+        "--workers",
+        "4",
+        "--device",
+        "cuda",
+        "--output-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu1_v14880_oodt_q1q2"
+      ]
+    },
+    {
+      "name": "gpu2_v14880_oodt_q3",
+      "gpu": 2,
+      "kind": "q3",
+      "checkpoint_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+      "checkpoint_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "evaluator": "eval/extreme_state_audit.py",
+      "evaluator_sha256": "10ef9e40f1f668a3b12c34e70accefae98ca4c419c7f122829f5531c5cd9f838",
+      "manifest_shas": [
+        [
+          "ood-t",
+          "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+          "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49"
+        ]
+      ],
+      "protocol_dir": "artifacts/protocols/extreme_audit_oodt_v1",
+      "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu2_v14880_oodt_q3",
+      "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu2_v14880_oodt_q3.log",
+      "pid_file": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu2_v14880_oodt_q3.pid",
+      "expected_pairs": 84,
+      "command": [
+        "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/extreme_state_audit.py",
+        "--protocol-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1",
+        "--dataset-root",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet",
+        "--ckpt-exclusive",
+        "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+        "--batch-size",
+        "1",
+        "--num-data-workers",
+        "2",
+        "--workers",
+        "4",
+        "--n-boot",
+        "10000",
+        "--evidence-role",
+        "final",
+        "--device",
+        "cuda",
+        "--dump-per-cube",
+        "--output-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu2_v14880_oodt_q3"
+      ]
+    },
+    {
+      "name": "gpu3_legacy11904_val_q1q2",
+      "gpu": 3,
+      "kind": "q1q2",
+      "checkpoint_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+      "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "evaluator": "eval/eval_b4_exclusive_contract.py",
+      "evaluator_sha256": "c6759dec60ede433f99a97b1ba3191d9427210cd907a08d6d8776dfb8efec9b4",
+      "manifest_shas": [
+        [
+          "validation",
+          "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/artifacts/protocols/b4_eval/val_chopped.manifest.json",
+          "d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e"
+        ]
+      ],
+      "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu3_legacy11904_val_q1q2",
+      "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu3_legacy11904_val_q1q2.log",
+      "pid_file": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu3_legacy11904_val_q1q2.pid",
+      "expected_targets": 952,
+      "command": [
+        "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/eval_b4_exclusive_contract.py",
+        "--ckpt",
+        "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+        "--val-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped",
+        "--data-manifest",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/artifacts/protocols/b4_eval/val_chopped.manifest.json",
+        "--dataset-root",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet",
+        "--split",
+        "val",
+        "--sections",
+        "q1q2",
+        "--batch-size",
+        "1",
+        "--num-data-workers",
+        "2",
+        "--workers",
+        "4",
+        "--device",
+        "cuda",
+        "--output-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu3_legacy11904_val_q1q2"
+      ]
+    },
+    {
+      "name": "gpu4_legacy11904_oodt_q1q2",
+      "gpu": 4,
+      "kind": "q1q2",
+      "checkpoint_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+      "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "evaluator": "eval/eval_b4_exclusive_contract.py",
+      "evaluator_sha256": "c6759dec60ede433f99a97b1ba3191d9427210cd907a08d6d8776dfb8efec9b4",
+      "manifest_shas": [
+        [
+          "ood-t",
+          "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+          "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49"
+        ]
+      ],
+      "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu4_legacy11904_oodt_q1q2",
+      "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu4_legacy11904_oodt_q1q2.log",
+      "pid_file": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu4_legacy11904_oodt_q1q2.pid",
+      "expected_targets": 1904,
+      "command": [
+        "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/eval_b4_exclusive_contract.py",
+        "--ckpt",
+        "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+        "--val-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/ood-t_chopped",
+        "--data-manifest",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+        "--dataset-root",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet",
+        "--split",
+        "ood-t_chopped",
+        "--sections",
+        "q1q2",
+        "--batch-size",
+        "1",
+        "--num-data-workers",
+        "2",
+        "--workers",
+        "4",
+        "--device",
+        "cuda",
+        "--output-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu4_legacy11904_oodt_q1q2"
+      ]
+    },
+    {
+      "name": "gpu5_legacy11904_oodt_q3",
+      "gpu": 5,
+      "kind": "q3",
+      "checkpoint_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+      "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "evaluator": "eval/extreme_state_audit.py",
+      "evaluator_sha256": "10ef9e40f1f668a3b12c34e70accefae98ca4c419c7f122829f5531c5cd9f838",
+      "manifest_shas": [
+        [
+          "ood-t",
+          "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+          "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49"
+        ]
+      ],
+      "protocol_dir": "artifacts/protocols/extreme_audit_oodt_v1",
+      "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu5_legacy11904_oodt_q3",
+      "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu5_legacy11904_oodt_q3.log",
+      "pid_file": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu5_legacy11904_oodt_q3.pid",
+      "expected_pairs": 84,
+      "command": [
+        "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/extreme_state_audit.py",
+        "--protocol-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1",
+        "--dataset-root",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet",
+        "--ckpt-exclusive",
+        "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+        "--batch-size",
+        "1",
+        "--num-data-workers",
+        "2",
+        "--workers",
+        "4",
+        "--n-boot",
+        "10000",
+        "--evidence-role",
+        "final",
+        "--device",
+        "cuda",
+        "--dump-per-cube",
+        "--output-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu5_legacy11904_oodt_q3"
+      ]
+    }
+  ]
+}

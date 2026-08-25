@@ -1,0 +1,39 @@
+14:  * 严格 CPU-only：不 import torch，不创建 CUDA context，不动任何进程。
+19:from __future__ import annotations
+21:import hashlib
+22:import json
+23:import math
+24:import os
+25:import subprocess
+26:import tempfile
+27:from datetime import datetime, timezone
+28:from pathlib import Path
+=== RUN ===
+[v3] attempt=20260820_100718 封账节点=csy-zg01-gnode68 GPU 执行节点=csy-zg01-gnode39
+[gate A] 作业清单、启动记录与 checkpoint 身份: 111/111 通过
+[gate B] 四份 Q1/Q2 结果：状态、契约、绑定、数值有限性与 Q2 schema 完整性: 183/185 通过  ✗ 失败 2 项
+    ✗ split:gpu1_v14880_oodt_q1q2: got='ood-t_chopped' want='oodt'
+    ✗ split:gpu4_legacy11904_oodt_q1q2: got='ood-t_chopped' want='oodt'
+[gate C] 两份 Q3 结果：证据角色、配对数、协议绑定、CI 完整性与 sidecar 身份: 152/156 通过  ✗ 失败 4 项
+    ✗ q3_checkpoint_via_log:gpu2_v14880_oodt_q3: 运行日志 head 行含 checkpoint SHA：/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu2_v14880_oo
+    ✗ stratum_accuracy_arm_count:gpu2_v14880_oodt_q3: got=4 want=3
+    ✗ q3_checkpoint_via_log:gpu5_legacy11904_oodt_q3: 运行日志 head 行含 checkpoint SHA：/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu5_legacy119
+    ✗ stratum_accuracy_arm_count:gpu5_legacy11904_oodt_q3: got=4 want=3
+[gate D] 11,904 复现历史参考：57 个正式指标逐项比对: 119/119 通过
+[gate E] 完整性：无 smoke/partial/中断混入、无幽灵结果、ground truth 归属、口径边界: 38/40 通过  ✗ 失败 2 项
+    ✗ frozen_manifest_sha:val: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/manifests/val_952.json
+    ✗ frozen_manifest_sha:oodt: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/manifests/oodt_1904.json
+[gate F] sanity anchor、M9 验收、参数审计与 evaluator 源码指纹交叉核对: 95/95 通过
+[write] e0_comparison_11904_vs_14880_v3.json  240571 B  sha256=1c61781d0efcdad8…
+[write] e0_metric_inventory_v3.json  82211 B  sha256=a76052ab56fdb82b…
+[write] e0_artifact_index_v3.json  40337 B  sha256=e61b71f1f23d9639…
+[write] e0_provenance_v3.json  35706 B  sha256=738c4b3c013ae9c0…
+[write] e0_launch_record_v3.json  8827 B  sha256=f15a5de857e4afe4…
+[write] attempt_manifest_v3.json  9675 B  sha256=bae584a88096128f…
+[write] e0_acceptance_report_v3.json  163027 B  sha256=769908919155fd54…
+[write] closeout_audit_v3.json  sha256=532e38819f8ee9ff…
+
+[verdict] BLOCKED  检查 706 项，失败 8 项；历史复现 57/57（逐位相同 57）
+=== exit=0 ===
+
+[exited with code 0]

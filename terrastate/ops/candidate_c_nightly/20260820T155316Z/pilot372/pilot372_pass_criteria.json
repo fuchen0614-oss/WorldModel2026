@@ -1,0 +1,96 @@
+{
+  "schema": "pilot372_pass_criteria_v1",
+  "recorded_at_utc": "2026-08-21T08:13:51.178837Z",
+  "registered_before_seeing_results": true,
+  "criteria": [
+    {
+      "id": "P1_completes_372_steps",
+      "fatal": true,
+      "requirement": "pilot 跑满 372 个 phase update，summary.step == 372 且 summary.phase_step == 372",
+      "acceptance": "summary.completion_reason in ['stop_after_step', 'schedule_complete']"
+    },
+    {
+      "id": "P2_no_oom",
+      "fatal": true,
+      "requirement": "不发生 OOM；per-GPU batch 8 保住",
+      "acceptance": "无 CUDA OOM / fragmentation 错误；summary.per_gpu_batch == 8 且 global_batch == 64 且 accum == 1"
+    },
+    {
+      "id": "P3_loss_all_finite",
+      "fatal": true,
+      "requirement": "372 个 loss 记录的 total、eo_endpoint、eo_traj 全部有限",
+      "acceptance": "loss_log.jsonl 每行的 total/eo_endpoint/eo_traj 全部 isfinite"
+    },
+    {
+      "id": "P4_no_divergence",
+      "fatal": true,
+      "requirement": "不发散：末 20 步均值 ≤ 首 20 步均值 × 3.0",
+      "acceptance": "mean(loss[-20:].total) / mean(loss[:20].total) <= 3.0"
+    },
+    {
+      "id": "P5_lr_matches_schedule",
+      "fatal": true,
+      "requirement": "372 个 update 的 lr 与真实 lr_factor(step, warmup=100, total=2976) 逐点相符",
+      "acceptance": "每行 |loss_log[i].lr - (base_lr * lr_factor(i))| <= 1e-12"
+    },
+    {
+      "id": "P6_val_dev_computable",
+      "fatal": true,
+      "requirement": "在 step 372 触发一次真实 8-rank val_dev forward，产出非 None 的 best_val_dev_endpoint_mse",
+      "acceptance": "summary.best_val_dev_endpoint_mse is not None and isinstance(summary.best_val_dev_endpoint_mse, (int, float))",
+      "observation_limit": "仅允许 val_dev（selector: validation_subsplit.val_dev.ids）；val_locked、ood_t、test 一律禁止",
+      "trigger_condition": "train/train_terrastate_candidate_c.py:582 `step % val_interval == 0 or step == total_steps`；val_interval=372, step=372, total_steps=2976 → 372 % 372 == 0 → 触发"
+    },
+    {
+      "id": "P7_ckpt_loadable",
+      "fatal": true,
+      "requirement": "checkpoint_last.pt 可 CPU 加载，255 张量，phase_step==372，world_size==8，有 optimizer/scheduler 状态，有 8 份 per-rank RNG",
+      "acceptance": "torch.load(..., map_location='cpu'); len(ckpt['b4_state_dict']) == 255; ckpt['phase_step'] == 372; ckpt['world_size'] == 8; 'optimizer_state_dict' in ckpt; 'scheduler_state_dict' in ckpt; len(ckpt['rng_states_by_rank']) == 8"
+    },
+    {
+      "id": "P8_zero_overrides",
+      "fatal": true,
+      "requirement": "四个 λ 全 0；batch/seed/total_steps 与正式 C1 逐字节一致",
+      "acceptance": "summary 里 lambda_z/y/pair/nc 全 0.0；per_gpu_batch=8, global_batch=64, accum=1, seed=42, total_steps=2976"
+    },
+    {
+      "id": "P9_no_test_ood",
+      "fatal": true,
+      "requirement": "不得接触 test/ood_t/val_locked split",
+      "acceptance": "summary.val_split_selector == 'validation_subsplit.val_dev.ids'；日志无 test/ood_t/val_locked 痕迹"
+    },
+    {
+      "id": "P10_grad_finite",
+      "fatal": true,
+      "requirement": "梯度全程有限（间接证据：零非有限窗 WARN + step 序列连续 + checkpoint 张量全有限）",
+      "acceptance": "日志无 '非有限 loss 窗口' WARN；loss_log step 序列 == [1..372] 连续无跳；checkpoint 255 张量全 isfinite",
+      "evidence_kind": "indirect",
+      "caveat": "grad_norm 本身未被 trainer 记录（clip_grad_norm_ 返回值在 train/train_terrastate_candidate_c.py:545 被丢弃），本条为间接证据而非直接测量"
+    }
+  ],
+  "non_counted_observations": [
+    {
+      "id": "OBS_grad_norm_not_logged",
+      "note": "trainer 在 :545 丢弃 clip_grad_norm_ 返回值，diag 字典未含 grad_norm；P10 改用间接证据",
+      "implication": "正式 run 若要直接测量需改 trainer——属于改动冻结代码，本轮不做"
+    },
+    {
+      "id": "W1_warmup_coverage",
+      "note": "warmup=100 而 pilot 372 步，意味着 272 步接近满 lr（lr(372) ≈ base × 1.0）",
+      "implication": "相比 128-update pilot 的 warmup 覆盖不足（28/128 接近满 lr），372-update pilot 已跨过 warmup 进入稳态训练阶段，更具代表性",
+      "not_a_defect": true
+    },
+    {
+      "id": "W2_base_lr_label_defect",
+      "note": "trainer 打印的 base_lr=0.00e+00 是标签错（LambdaLR 构造时就 step 了一次），真实 base 在 g['initial_lr']",
+      "implication": "不影响训练；P5 已逐点证明 schedule 正确",
+      "not_a_defect": true
+    }
+  ],
+  "verdict_rules": {
+    "PASS": "全部 fatal 判据通过",
+    "FAIL": "任一 fatal 判据失败",
+    "blocks_formal_launch": "verdict == FAIL"
+  },
+  "note": "判据在看到 pilot372 任何数字之前就冻结；本脚本只读此文件，不重写它"
+}

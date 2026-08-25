@@ -1,0 +1,13 @@
+/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/eval_terrastate_candidate_c_q4.py:910: RuntimeWarning: Mean of empty slice
+  pooled_delta = np.nanmean(Mx, axis=0)
+{
+  "verdict": "FAIL",
+  "n_cubes": 476,
+  "gates": {
+    "broken_control": true,
+    "composed_vs_direct": false,
+    "state_retention": false,
+    "semigroup_bit_exact": true
+  },
+  "output": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/results/q4_eval_locked_4gpu_20260824T101119Z/c0r_score"
+}

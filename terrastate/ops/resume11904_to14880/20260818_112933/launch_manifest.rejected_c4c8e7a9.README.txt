@@ -1,0 +1,12 @@
+REJECTED launch manifest, sha256 c4c8e7a94f11bdf1f70a7e8f434b4fc62986ba160c2e151ea460cac987d84038
+Frozen and immediately rejected on 2026-08-18 by the same task that wrote it.
+
+Defect: repo.tracked_files_modified recorded "rain/train_terrastate_v2.py" (leading "t" lost).
+Cause : the git() helper .strip()ed the whole stdout stream, eating the leading space of
+        `git status --short`'s fixed 3-char "XY " prefix, so the l[3:] path slice shifted by one.
+Fix   : added git_raw()/status_modified() which parse the fixed prefix without stripping the
+        stream, plus an assertion that the ONLY tracked modification is
+        train/train_terrastate_v2.py (shared-resource rule 13: protect the workspace).
+Impact: provenance-record only. No GPU was touched, no training was launched from this file,
+        no weight or historical output was read, written or overwritten.
+Superseded by: launch_manifest.json (rebuilt after the fix).

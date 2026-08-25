@@ -1,0 +1,277 @@
+{
+  "schema": "attempt_manifest_v3",
+  "generated_at_utc": "2026-08-20T14:33:48.362754Z",
+  "generated_by": "verify_and_aggregate_retry_v3.py",
+  "attempt_id": "20260820_100718",
+  "attempt_root": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718",
+  "parent_attempt": {
+    "id": "20260818_154859",
+    "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859",
+    "status": "INTERRUPTED",
+    "detail": {
+      "attempt": "20260818_154859",
+      "interrupted_markers": [
+        "runs/gpu0_v14880_val_q1q2/INTERRUPTED.json",
+        "runs/gpu1_v14880_oodt_q1q2/INTERRUPTED.json",
+        "runs/gpu2_v14880_oodt_q3/INTERRUPTED.json"
+      ],
+      "n_interrupted": 3,
+      "acceptance_status": "NOT_READY",
+      "acceptance_sha256": "70db57616c672ebca653e050c69fdf880064cca55593ae18e1ebc9339ee4734a",
+      "watcher_state": null,
+      "watcher_polls": 486,
+      "jobs_launched": false,
+      "launch_record_n_jobs": 3,
+      "yielded_to": [
+        {
+          "pid": "1057914",
+          "mem": "4752",
+          "user": "xddu2"
+        },
+        {
+          "pid": "1057916",
+          "mem": "5814",
+          "user": "xddu2"
+        },
+        {
+          "pid": "1057917",
+          "mem": "5814",
+          "user": "xddu2"
+        },
+        {
+          "pid": "1057918",
+          "mem": "5814",
+          "user": "xddu2"
+        },
+        {
+          "pid": "1057919",
+          "mem": "5814",
+          "user": "xddu2"
+        }
+      ]
+    }
+  },
+  "experiment": "E0：11,904 与 14,880 在同一 Q1/Q2/Q3 协议下的对照评测",
+  "nodes": {
+    "gpu_execution_hostname": "csy-zg01-gnode39",
+    "gpu_execution_hostname_source": "attempt_manifest.json 的 hostname 字段（GPU 执行时写入）",
+    "cpu_closeout_hostname": "csy-zg01-gnode68",
+    "note": "GPU 执行节点与本轮 CPU 封账节点是两台不同机器，两者都必须如实记录，任何一方都不得覆盖另一方"
+  },
+  "physical_gpus_used": [
+    2,
+    4,
+    5,
+    6
+  ],
+  "jobs": {
+    "gpu0_v14880_val_q1q2": {
+      "kind": "q1q2",
+      "split": "val",
+      "checkpoint_role": "verified14880",
+      "physical_gpu": 5,
+      "n_targets": 952,
+      "checkpoint_stage_recorded": 3
+    },
+    "gpu1_v14880_oodt_q1q2": {
+      "kind": "q1q2",
+      "split": "oodt",
+      "checkpoint_role": "verified14880",
+      "physical_gpu": 2,
+      "n_targets": 1904,
+      "checkpoint_stage_recorded": 3
+    },
+    "gpu2_v14880_oodt_q3": {
+      "kind": "q3",
+      "split": "oodt",
+      "checkpoint_role": "verified14880",
+      "physical_gpu": 5,
+      "n_targets": null,
+      "checkpoint_stage_recorded": 3
+    },
+    "gpu3_legacy11904_val_q1q2": {
+      "kind": "q1q2",
+      "split": "val",
+      "checkpoint_role": "boundary11904",
+      "physical_gpu": 6,
+      "n_targets": 952,
+      "checkpoint_stage_recorded": 2
+    },
+    "gpu4_legacy11904_oodt_q1q2": {
+      "kind": "q1q2",
+      "split": "oodt",
+      "checkpoint_role": "boundary11904",
+      "physical_gpu": 4,
+      "n_targets": 1904,
+      "checkpoint_stage_recorded": 2
+    },
+    "gpu5_legacy11904_oodt_q3": {
+      "kind": "q3",
+      "split": "oodt",
+      "checkpoint_role": "boundary11904",
+      "physical_gpu": 6,
+      "n_targets": null,
+      "checkpoint_stage_recorded": 2
+    }
+  },
+  "checkpoints": {
+    "boundary11904": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+      "bytes": 37972401,
+      "mode": "0o444",
+      "file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "logical_id": "terrastate/v2/legacy-boundary11904@v1",
+      "step": 11904
+    },
+    "verified14880": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+      "bytes": 44302057,
+      "mode": "0o444",
+      "file_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "logical_id": "terrastate/v2/verified-resume14880@v1",
+      "step": 14880
+    },
+    "historical14880": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/99/99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b.pt",
+      "bytes": 44300969,
+      "mode": "0o444",
+      "file_sha256": "99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b",
+      "logical_id": "terrastate/v2/historical-full14880@v1",
+      "step": 14880
+    }
+  },
+  "registry": {
+    "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/weight_registry.json",
+    "sha256": "a087670624e367d8c64d2b23ae6a2452b8dab07aac3ae4fc014765bc91a74907",
+    "revision": "a7fd2763935a26d1",
+    "schema": "terrastate_weight_registry_v1",
+    "n_artifacts": 7,
+    "aliases": {
+      "terrastate/v2/default-training-anchor": {
+        "location": "<store>/aliases/terrastate__v2__default-training-anchor.json",
+        "mutable": true,
+        "note": "Re-pointing this anchor is an operational act; the previous registry revision is preserved at ops/.../weight_registry.before_m10.ebc374b34b2e818a.json.",
+        "set_at": "2026-08-18T07:52:30.144961+00:00",
+        "target": "terrastate/v2/verified-resume14880@v1"
+      }
+    },
+    "policy": {
+      "aliases": "only <store>/aliases/*.json are mutable; re-pointing an anchor is an operational act with its own record.",
+      "immutability": "objects/ entries are content-addressed and mode 0444; originals are never moved or deleted; historical results are never overwritten.",
+      "selection": "Launchers, tests and eval scripts must name a LOGICAL ID and resolve it with tools/resolve_artifact.py. Selecting a weight by basename (checkpoint_last.pt / _best.pt / _boundary80.pt) is forbidden: three of those share a byte count in the same dir.",
+      "verification": "resolve_artifact re-hashes the object and fails closed on mismatch."
+    },
+    "store": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts"
+  },
+  "partitioning": {
+    "historical_reference": {
+      "what": "11,904 的历史 Q1/Q2/Q3 数字（57 个正式指标）",
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/historical_11904_reference.json",
+      "sha256": "0b97406c3bd44cd68bb3f098b6ee2fb5da914f1198bd4684a1a55c813bd493f4",
+      "role": "复现基准，不是本轮新测结果"
+    },
+    "formal_rerun": {
+      "what": "本轮六份正式结果",
+      "jobs": [
+        "gpu0_v14880_val_q1q2",
+        "gpu1_v14880_oodt_q1q2",
+        "gpu2_v14880_oodt_q3",
+        "gpu3_legacy11904_val_q1q2",
+        "gpu4_legacy11904_oodt_q1q2",
+        "gpu5_legacy11904_oodt_q3"
+      ]
+    },
+    "smoke": {
+      "what": "smoke 产物",
+      "entries": [
+        {
+          "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/smoke",
+          "children": [
+            "q1q2",
+            "q1q2.log",
+            "q3",
+            "q3_cpu",
+            "q3_cpu.log"
+          ],
+          "reason": "smoke 产物：永久保留为审计证据，绝不进入正式结果集"
+        }
+      ]
+    },
+    "selftest": {
+      "what": "自检 fixture",
+      "entries": [
+        {
+          "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/selftest",
+          "children": [
+            "fixture_clean",
+            "fixture_interrupted",
+            "smi_6gpu.sh",
+            "smi_foreign.sh",
+            "smi_idle.sh",
+            "smi_partial.sh"
+          ],
+          "reason": "selftest 产物：永久保留为审计证据，绝不进入正式结果集"
+        }
+      ]
+    },
+    "invalid_partial": {
+      "what": "无最终结果 JSON 的中途目录",
+      "dirs": [
+        "gpu2_v14880_oodt_q1q2",
+        "gpu5_v14880_val_q1q2",
+        "gpu6_legacy11904_val_q1q2"
+      ]
+    },
+    "interrupted_attempt": {
+      "what": "20260818 因共享 GPU 让让出而中断的尝试",
+      "detail": {
+        "attempt": "20260818_154859",
+        "interrupted_markers": [
+          "runs/gpu0_v14880_val_q1q2/INTERRUPTED.json",
+          "runs/gpu1_v14880_oodt_q1q2/INTERRUPTED.json",
+          "runs/gpu2_v14880_oodt_q3/INTERRUPTED.json"
+        ],
+        "n_interrupted": 3,
+        "acceptance_status": "NOT_READY",
+        "acceptance_sha256": "70db57616c672ebca653e050c69fdf880064cca55593ae18e1ebc9339ee4734a",
+        "watcher_state": null,
+        "watcher_polls": 486,
+        "jobs_launched": false,
+        "launch_record_n_jobs": 3,
+        "yielded_to": [
+          {
+            "pid": "1057914",
+            "mem": "4752",
+            "user": "xddu2"
+          },
+          {
+            "pid": "1057916",
+            "mem": "5814",
+            "user": "xddu2"
+          },
+          {
+            "pid": "1057917",
+            "mem": "5814",
+            "user": "xddu2"
+          },
+          {
+            "pid": "1057918",
+            "mem": "5814",
+            "user": "xddu2"
+          },
+          {
+            "pid": "1057919",
+            "mem": "5814",
+            "user": "xddu2"
+          }
+        ]
+      }
+    }
+  },
+  "constraints_this_round": [
+    "严格 CPU-only：CUDA_VISIBLE_DEVICES=\"\"，不创建 CUDA context",
+    "不重跑任何 GPU 作业，不启动训练 / Q4 / Candidate C / simulator",
+    "不删除、移动、覆盖任何 raw JSON、checkpoint、旧 manifest、v1/v2 工件",
+    "不进行任何进程操作，不执行 git 写操作"
+  ]
+}

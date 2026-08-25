@@ -1,0 +1,210 @@
+{
+  "schema": "e0_comparison_comprehensive_v2",
+  "note": "完整 Q1/Q2/Q3 对比，包含分层、horizon、bootstrap、CI",
+  "pairs": {
+    "validation": {
+      "11904": {
+        "Q1_full": {
+          "R2": 0.49732196418835595,
+          "rmse": 0.1572881669325748,
+          "nse": -0.15475482758989223,
+          "biasabs": 0.0997195960230769
+        },
+        "Q1_strata": {
+          "forest": {
+            "R2": 0.46621659389568965,
+            "rmse": 0.15281477321595893
+          },
+          "shrub": {
+            "R2": 0.45101969788240437,
+            "rmse": 0.14327760001576842
+          },
+          "grass": {
+            "R2": 0.5168759117784678,
+            "rmse": 0.15377077506243478
+          },
+          "crop": {
+            "R2": 0.5551756531968618,
+            "rmse": 0.17928951943613708
+          }
+        },
+        "Q1_horizon": {
+          "0-5": 0.09090479560083349,
+          "5-10": 0.13393325999713335,
+          "10-15": 0.16632608277799554,
+          "15-20": 0.17442212913596294
+        },
+        "Q2_full": 0.49732196418835595,
+        "Q2_alpha0": 0.48610753997662814,
+        "Q2_T_identity": 0.48541607437960566,
+        "Q2_official_full_minus_alpha0": 0.011214424211727803,
+        "Q2_official_full_minus_Tid": 0.011905889808750292,
+        "Q2_dr2_floor": 0.005,
+        "Q2_dr2_floor_pass": true,
+        "Q2_significant": true,
+        "Q2_transition_margin_clean": false,
+        "Q2_verdict": "LOAD_BEARING"
+      },
+      "14880": {
+        "Q1_full": {
+          "R2": 0.49709355615470024,
+          "rmse": 0.15733399506089182,
+          "nse": -0.1559974291116175,
+          "biasabs": 0.09972860331501403
+        },
+        "Q1_strata": {
+          "forest": {
+            "R2": 0.4656439091492853,
+            "rmse": 0.15277181827809383
+          },
+          "shrub": {
+            "R2": 0.45108005471236007,
+            "rmse": 0.14336952664799257
+          },
+          "grass": {
+            "R2": 0.5166785330649398,
+            "rmse": 0.15383190312088627
+          },
+          "crop": {
+            "R2": 0.5549717276922157,
+            "rmse": 0.17936273219659463
+          }
+        },
+        "Q1_horizon": {
+          "0-5": 0.09085997106383553,
+          "5-10": 0.1338262742675007,
+          "10-15": 0.16627023877194452,
+          "15-20": 0.17465838509010878
+        },
+        "Q2_full": 0.49709355615470024,
+        "Q2_alpha0": 0.4848311873867316,
+        "Q2_T_identity": 0.48408964425382095,
+        "Q2_official_full_minus_alpha0": 0.012262368767968657,
+        "Q2_official_full_minus_Tid": 0.013003911900879295,
+        "Q2_dr2_floor": 0.005,
+        "Q2_dr2_floor_pass": true,
+        "Q2_significant": true,
+        "Q2_transition_margin_clean": false,
+        "Q2_verdict": "LOAD_BEARING"
+      },
+      "delta": {
+        "Q1_R2": -0.00022840803365570261,
+        "Q1_rmse": 4.582812831702143e-05,
+        "Q2_full_minus_alpha0": 0.001047944556240854
+      }
+    },
+    "ood_temporal": {
+      "11904": {
+        "Q1_full": {
+          "R2": 0.5693493611664086,
+          "rmse": 0.1505941190915099,
+          "nse": -0.09865601980139305,
+          "biasabs": 0.10082906836242285
+        },
+        "Q1_strata": {
+          "forest": {
+            "R2": 0.5520583434492006,
+            "rmse": 0.14726302262452526
+          },
+          "shrub": {
+            "R2": 0.5561961670521653,
+            "rmse": 0.14781563907006598
+          },
+          "grass": {
+            "R2": 0.5844702559745557,
+            "rmse": 0.1451021388172394
+          },
+          "crop": {
+            "R2": 0.5846726781897127,
+            "rmse": 0.16219567585420902
+          }
+        },
+        "Q1_horizon": {
+          "0-5": 0.08204979645788998,
+          "5-10": 0.12936167962336273,
+          "10-15": 0.16020563672979962,
+          "15-20": 0.16795431222498258
+        },
+        "Q2_full": 0.5693493611664086,
+        "Q2_alpha0": 0.5493773508945857,
+        "Q2_T_identity": 0.5476642387248465,
+        "Q2_official_full_minus_alpha0": 0.019972010271822827,
+        "Q2_official_full_minus_Tid": 0.021685122441562066,
+        "Q2_dr2_floor": 0.005,
+        "Q2_dr2_floor_pass": true,
+        "Q2_significant": true,
+        "Q2_transition_margin_clean": false,
+        "Q2_verdict": "LOAD_BEARING"
+      },
+      "14880": {
+        "Q1_full": {
+          "R2": 0.5692781483135535,
+          "rmse": 0.15062711918297353,
+          "nse": -0.09975306029983821,
+          "biasabs": 0.10080980043117554
+        },
+        "Q1_strata": {
+          "forest": {
+            "R2": 0.5514548618611149,
+            "rmse": 0.14724421276329266
+          },
+          "shrub": {
+            "R2": 0.5556444335452279,
+            "rmse": 0.14800982654601774
+          },
+          "grass": {
+            "R2": 0.5848814393808391,
+            "rmse": 0.14510735586627033
+          },
+          "crop": {
+            "R2": 0.5851318584670321,
+            "rmse": 0.1621470815563134
+          }
+        },
+        "Q1_horizon": {
+          "0-5": 0.08209747324611069,
+          "5-10": 0.12929499935746214,
+          "10-15": 0.16014156716229558,
+          "15-20": 0.16812294120432825
+        },
+        "Q2_full": 0.5692781483135535,
+        "Q2_alpha0": 0.5489462969661727,
+        "Q2_T_identity": 0.5473352458096724,
+        "Q2_official_full_minus_alpha0": 0.020331851347380803,
+        "Q2_official_full_minus_Tid": 0.02194290250388109,
+        "Q2_dr2_floor": 0.005,
+        "Q2_dr2_floor_pass": true,
+        "Q2_significant": true,
+        "Q2_transition_margin_clean": false,
+        "Q2_verdict": "LOAD_BEARING"
+      },
+      "delta": {
+        "Q1_R2": -7.121285285505152e-05,
+        "Q1_rmse": 3.300009146361971e-05,
+        "Q2_full_minus_alpha0": 0.0003598410755579762
+      }
+    },
+    "q3": {
+      "11904": {
+        "n_pairs": 84,
+        "endpoint_fidelity_status": "PASS",
+        "hotdry_enhancement_status": "FAIL",
+        "overall_status": "Q3_RESPONSE_FIDELITY_ONLY",
+        "evidence_role": "final"
+      },
+      "14880": {
+        "n_pairs": 84,
+        "endpoint_fidelity_status": "PASS",
+        "hotdry_enhancement_status": "FAIL",
+        "overall_status": "Q3_RESPONSE_FIDELITY_ONLY",
+        "evidence_role": "final"
+      }
+    }
+  },
+  "interpretation": [
+    "|ΔR²| < 0.01 为描述性基本对齐标准，本实验未进行 checkpoint 间差异的统计显著性检验",
+    "14,880 已固定为后续 anchor，不根据 OOD 结果回选",
+    "Q3 hot-dry FAIL 原因仍待后续实验区分（架构/数据/训练策略）",
+    "Q2 transition_margin_clean=False 在两个 checkpoint 均存在"
+  ]
+}

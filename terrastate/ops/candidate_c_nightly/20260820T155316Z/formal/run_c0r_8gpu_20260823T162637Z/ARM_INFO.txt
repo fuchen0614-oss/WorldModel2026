@@ -1,0 +1,7 @@
+arm=C0R  factual_path=direct
+world=8  per_gpu_batch=8  accum=1  global_batch=64
+total_steps=14880  ckpt_interval=1000  seed=42
+host=csy-zg01-gnode68
+launched_utc=20260823T162637Z
+配对：与 run_c1_8gpu_20260823T160544Z(gnode39) 组成8卡两臂对照。
+注意：8卡组只能与8卡组互比，不可与4卡组混比（world/accum 不同）。

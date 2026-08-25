@@ -1,0 +1,10 @@
+{
+  "status": "NOT_READY",
+  "checks": [
+    {
+      "name": "launch_record_exists",
+      "ok": false,
+      "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/e0_launch_record.json absent -- the six formal jobs have not been launched"
+    }
+  ]
+}

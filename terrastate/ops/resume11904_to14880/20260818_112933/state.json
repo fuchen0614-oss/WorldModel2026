@@ -1,0 +1,485 @@
+{
+  "task": "terrastate_exact_resume_11904_to_14880",
+  "ops_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/resume11904_to14880/20260818_112933",
+  "workdir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+  "repo_head": "c9503030e498e8ec86fffe9105998c3a2a540d68",
+  "python": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+  "updated_at": "2026-08-18T05:22:30.473329+00:00",
+  "milestones": {
+    "M0_schema_and_parameter_audit": "DONE",
+    "M1_artifact_store_registry_resolver": "DONE",
+    "M2_failing_resume_regression_tests": "DONE",
+    "M3_resume_code_fix": "DONE",
+    "M4_cpu_test_suite_green": "DONE",
+    "M5_launch_manifest_freeze": "DONE",
+    "M6_gpu_watcher": "DONE",
+    "M7_launch_training": "DONE",
+    "M8_reach_step_14880": "DONE",
+    "M9_acceptance": "DONE",
+    "M10_register_future_anchor": "DONE"
+  },
+  "m0_artifacts": {
+    "parameter_audit": "parameter_audit.json",
+    "parameter_audit_rows": 49,
+    "parameter_audit_all_consistent": true,
+    "data_manifest_check": "data_manifest_check.json",
+    "data_manifest_all_match": true,
+    "helper_scripts": [
+      "make_parameter_audit.py",
+      "check_data_manifest.py"
+    ]
+  },
+  "m1_artifacts": {
+    "store_root": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts",
+    "registry": "terrastate/artifacts/weight_registry.json",
+    "registry_revision": "ebc374b34b2e818a",
+    "resolver": "terrastate/tools/resolve_artifact.py",
+    "published_report": "published_artifacts.json",
+    "helper_scripts": [
+      "publish_artifacts.py",
+      "make_registry.py",
+      "verify_state_shas.py"
+    ],
+    "objects_published": 4,
+    "path_registered": 2,
+    "reserved_ids": [
+      "terrastate/v2/verified-resume14880@v1",
+      "terrastate/v2/default-training-anchor"
+    ],
+    "resolver_selftest": "6 ids rc=0; unknown id rc=2; unknown alias rc=2",
+    "caches_never_copied": true
+  },
+  "m2_artifacts": {
+    "test_file": "terrastate/tests/test_resume_boundary11904.py",
+    "baseline_log": "m2_prefix_run.log",
+    "baseline_report": "m2_regression_baseline.json",
+    "baseline_result": "5/13 PASSED against the unmodified trainer",
+    "failing_checks": {
+      "R5": "B1 first post-resume update still in stage 2",
+      "R6": "B2 boundary80 checkpoint re-written",
+      "R8": "B1 downstream: step-10 loss 0.36174861 vs reference 0.36168817",
+      "R8b": "B1 downstream: final weights not bit-exact",
+      "R9": "B3 completed-resume performs one extra update and rewrites checkpoint_last.pt",
+      "R10": "B4 writes into a directory that already contains checkpoints",
+      "R10b": "B4 downstream: pre-existing outputs overwritten",
+      "R11": "B5 lineage empty"
+    },
+    "passing_checks_at_baseline": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R7"
+    ],
+    "gate": "all 13 must pass after M3 before any GPU launch"
+  },
+  "m3_artifacts": {
+    "file": "terrastate/train/train_terrastate_v2.py",
+    "sha256_before": "14b8b07040ab2b74b396d4c0b59034b081edc2782814aa3ad6bc864e8c90c8fe",
+    "sha256_after": "d0e4051bc86f8116603ba687eb7f7814191362213dff5eec11ae7a73dce090d6",
+    "diff": "m3_trainer.diff",
+    "diffstat": "1 file changed, 140 insertions(+), 10 deletions(-)",
+    "postfix_log": "m3_postfix_run.log",
+    "postfix_result": "13/13 PASSED",
+    "bit_exact_evidence": "R8b: resumed final model_sha == reference model_sha == e6d4ca3fda535f61",
+    "fixes_applied": {
+      "B1": "current_stage = stage_at(step, total_steps); apply_stage before opt.load_state_dict and before DDP wrap; logs the recomputation",
+      "B2": "boundary80_saved_by_parent = (step == boundary80) suppresses the duplicate forced save",
+      "B3": "resume_completed = step >= stop_after_step -> done=True, writes NO checkpoint and NO loss_log",
+      "B4": "guard_output_dir() raises FileExistsError before init_process_group; --allow-existing-out is the only override",
+      "B5": "lineage{} in every checkpoint: parent_path/parent_file_sha256/parent_step/parent_epoch/parent_micro_in_epoch/parent_stage_recorded/parent_b4_state_sha256/resume_stage_applied/data_order_restoration",
+      "B6": "stage-3 trainable q asserted == unfreeze-prefix set; unfreeze_prefixes cross-checked against parent q_freeze; parent trainable_q compared when parent was also stage 3"
+    },
+    "new_helpers": [
+      "_sha256_file",
+      "guard_output_dir",
+      "resume_data_order_note",
+      "CKPT_GLOB"
+    ],
+    "new_cli_flag": "--allow-existing-out (default off; NOT used by the formal run)",
+    "unchanged_invariants": "loss weights, lambda schedule, lr/cosine/warmup, batch arithmetic, stage fractions, alpha, teacher freeze",
+    "data_order_honesty": "resume_data_order_note() records exact vs approximate instead of claiming exactness; world=8 DDP resume at an epoch boundary is exact"
+  },
+  "m4_artifacts": {
+    "report": "m4_cpu_gate.json",
+    "suites": {
+      "test_resume_boundary11904": "13/13 PASS (m3_postfix_run.log)",
+      "smoke_terrastate_v2_ddp": "7/7 PASS (m4_smoke_ddp.log)",
+      "smoke_terrastate_v2": "19/20 PASS (m4_smoke_single2.log)"
+    },
+    "only_failure": "13/iso — asserts B-session evaluator/protocol files are absent, but they are COMMITTED repo state (e4c1158, luzheng, 2026-08-14) with zero modifications from this task; must NOT be 'fixed' by deleting another session's work",
+    "fixture_rebuilt": "m4_smoke_fixture/data/{train,val} = 4+2 SYMLINKS to the read-only roots (the runbook fixture runs/smoke_v2/data is now empty, which is why check 1 crashed on the short sanity dict)",
+    "env": "CUDA_VISIBLE_DEVICES='' OMP/MKL/NUMEXPR=4 TOKENIZERS_PARALLELISM=false device=cpu, no CUDA context, no network",
+    "resume_checks_green": [
+      "12",
+      "12b",
+      "12c",
+      "12d",
+      "D6",
+      "D7",
+      "R4",
+      "R5",
+      "R6",
+      "R7",
+      "R8",
+      "R8b",
+      "R9",
+      "R10",
+      "R10b",
+      "R11"
+    ]
+  },
+  "frozen_launch_parameters": {
+    "source": "parent checkpoint args (authoritative) cross-checked against train.log and runbook §4",
+    "state_dim": 256,
+    "per_gpu_batch": 8,
+    "global_batch": 64,
+    "num_workers": 8,
+    "max_epochs": 40,
+    "max_steps": 0,
+    "branch_lr": 3e-05,
+    "q_lr_scale": 0.033,
+    "weight_decay": 0.0,
+    "grad_clip": 1.0,
+    "lr_warmup_steps": 300,
+    "unfreeze_q_prefixes": "core.blocks.2.",
+    "seed": 42,
+    "log_interval": 50,
+    "val_interval": 1000,
+    "ckpt_interval": 2000,
+    "device": "cuda",
+    "cache_fail_closed_gb": 4.0,
+    "deterministic": false,
+    "future_state_scale": 1.0,
+    "future_state_scale_note": "the key is ABSENT from the parent args and absent top-level, so the trainer's fallback chain resolves to 1.0 and float() succeeds — launch must use the default 1.0",
+    "world_size": 8,
+    "accum": 1,
+    "total_steps": 14880,
+    "config_sha256_not_asserted": "resume asserts only arch, q_projector_init_sha256, total_steps, 6 sha keys, global_batch, accum, future_state_scale — NOT config_sha256, so the new --allow-existing-out flag cannot break resume"
+  },
+  "parent_checkpoint": {
+    "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_boundary80.pt",
+    "file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+    "bytes": 37972401,
+    "step": 11904,
+    "epoch": 31,
+    "micro_in_epoch": 372,
+    "stage_recorded": 2,
+    "stage_required_after_resume": 3,
+    "total_steps": 14880,
+    "best_val": 0.31334985432787643
+  },
+  "historical_reference_checkpoint": {
+    "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_last.pt",
+    "file_sha256": "99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b",
+    "bytes": 44300969,
+    "step": 14880,
+    "role": "read-only comparison target; NEVER overwritten"
+  },
+  "data_roots_frozen_for_resume": {
+    "train_dir": "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train",
+    "val_dir": "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped",
+    "train_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+    "val_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+    "train_cache": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/cache/train_future_state_cache.pt",
+    "val_cache": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/cache/val_future_state_cache.pt",
+    "cache_config_sha256_both_splits": "2a14f0a4c3653f38ee52155d38c38f76d01cc234a5fb301a3dfb512ee0101a66",
+    "note": "cache config_sha256 is a PROTOCOL fingerprint (no split/content), so train==val by construction; data identity is data_manifest_sha256 + mask_sha256"
+  },
+  "resume_bugs_to_fix_in_M3": [
+    {
+      "id": "B1",
+      "where": "train/train_terrastate_v2.py:379-380",
+      "defect": "current_stage = int(rk['stage']) = 2, so update #11905 runs in stage 2 with q fully frozen; original run had already switched to stage 3 at step 11904",
+      "fix": "post-resume stage must be stage_at(step, total_steps); apply the stage-3 unfreeze BEFORE opt.load_state_dict and BEFORE DDP wrapping"
+    },
+    {
+      "id": "B2",
+      "where": "train/train_terrastate_v2.py:421-440 maybe_transition",
+      "defect": "after resuming at the boundary, maybe_transition fires 2->3 again and re-saves checkpoint_boundary80.pt at step 11905",
+      "fix": "no duplicate boundary checkpoint after an exact boundary resume"
+    },
+    {
+      "id": "B3",
+      "where": "train/train_terrastate_v2.py:539-540",
+      "defect": "resuming from a completed step==total_steps checkpoint performs one extra update (step check happens only after an update)",
+      "fix": "completed-resume no-op: detect step >= total_steps at resume, log, skip training, do not overwrite outputs"
+    },
+    {
+      "id": "B4",
+      "where": "train/train_terrastate_v2.py:267-269",
+      "defect": "output_dir mkdir(exist_ok=True) with no protection against writing into a directory that already holds checkpoints",
+      "fix": "fail closed unless the dir is empty / explicitly allowed"
+    },
+    {
+      "id": "B5",
+      "where": "make_checkpoint / shas",
+      "defect": "no parent-child lineage recorded",
+      "fix": "record resume parent path + file sha256 + parent step in every child checkpoint"
+    },
+    {
+      "id": "B6",
+      "where": "resume assertions",
+      "defect": "q_freeze.trainable_q from the parent is ignored, and the recomputed trainable set is not asserted",
+      "fix": "assert the stage-3 trainable q set is exactly the 12 core.blocks.2.* tensors"
+    }
+  ],
+  "m8_artifacts": {
+    "done_line": "done step=14880 best_val=0.31288 teacher_unchanged=True stage3_qgrad_seen=True out=runs/resume11904_to14880/20260818_112933",
+    "launched_utc": "2026-08-18T05:13:21Z",
+    "launched_local_cst": "2026-08-18 13:13:21 (UTC+8)",
+    "first_resume_log_local_cst": "13:15:05",
+    "finished_local_cst": "13:58:46",
+    "wall_clock_minutes": 45,
+    "wall_clock_correction": "an earlier STATUS.md draft said ~8h45min; that subtracted a UTC launch stamp from a LOCAL log stamp and inflated it by exactly the UTC+8 offset. 2976 updates / 1.35 it/s ~= 37min compute + 3 validations + checkpoint IO ~= 45min, consistent with the M5 throughput estimate.",
+    "updates_executed": 2976,
+    "throughput_it_s": {
+      "min": 1.07,
+      "median": 1.35,
+      "max": 1.52
+    },
+    "validations": [
+      {
+        "step": 12000,
+        "future_state": 0.31292,
+        "improved": true
+      },
+      {
+        "step": 14000,
+        "future_state": 0.31288,
+        "improved": true
+      },
+      {
+        "step": 14880,
+        "future_state": 0.31288,
+        "final": true
+      }
+    ],
+    "exit": "PID 2091229 exited 0; no crash/OOM/NaN",
+    "artifacts_written": [
+      "checkpoint_last.pt",
+      "checkpoint_fsval_best.pt",
+      "checkpoint_step12000.pt",
+      "checkpoint_step14000.pt",
+      "loss_log.jsonl"
+    ],
+    "boundary80_duplicate_written": false
+  },
+  "m9_artifacts": {
+    "verifier": "ops/resume11904_to14880/20260818_112933/verify_acceptance.py",
+    "report": "ops/resume11904_to14880/20260818_112933/m9_acceptance_report.json",
+    "result": "31/31 PASSED, accepted=true",
+    "bit_exact_vs_historical": {
+      "method": "value_sha = sha256 over key-ordered raw tensor bytes, plus max abs diff over all 255 tensors",
+      "historical_value_sha": "aa98fbd2fa302727",
+      "resume_value_sha": "aa98fbd2fa302727",
+      "max_abs_diff": 0.0,
+      "n_tensors": 255,
+      "verdict": "byte-identical"
+    },
+    "teacher_unchanged_witnesses": {
+      "a_parent_child_digest": "parent(11904) teacher_sha256 == child(14880) == bbe2c3ee6de540ae...; parent record predates this task",
+      "b_content_addressed": "loaded teacher file sha256 == its filename == 2c5d084236716d84...",
+      "c_trainer_runtime_assertion": "done line teacher_unchanged=True"
+    },
+    "verifier_corrections": [
+      {
+        "id": "V1",
+        "issue": "torch.load defaulted to weights_only=True on torch 2.12; checkpoints embed numpy scalars so unpickling was refused",
+        "fix": "pass weights_only=False in the verifier (2 call sites)",
+        "training_impact": "none -- train_terrastate_v2.py always passed weights_only=False explicitly"
+      },
+      {
+        "id": "V2",
+        "issue": "original teacher_sha256_unchanged compared a 16-hex state_sha (tensor METADATA digest) against a 64-hex FILE sha256; different kinds of object, so it could never pass. Its FAIL was a script bug, not a teacher change.",
+        "bad_intermediate_fix": "I first hardcoded bbe2c3ee... read out of the very checkpoint under verification -- circular, could never fail, zero probative value",
+        "fix": "replaced with 4 falsifiable checks: parent-vs-child digest cross-check, path-divergence explanation, content-addressed file integrity, trainer runtime assertion"
+      },
+      {
+        "id": "V3",
+        "issue": "state_sha was used as the bit-exactness proof, but it hashes only dtype/shape/stride and contains NO tensor values; two checkpoints with different weights but equal architecture collide",
+        "fix": "added value_sha() (hashes raw tensor bytes) + max-abs-diff sweep; state_sha demoted to an explicit arch tag and its docstring now records the limitation",
+        "conclusion_change": "none -- byte-identical still holds, now on valid evidence"
+      }
+    ],
+    "check_count_history": "28 (first run) -> 31 (teacher 2->4, historical 1->2)"
+  },
+  "next_action": {
+    "in_this_ops_dir": "none -- M0..M10 all DONE",
+    "elsewhere": "E0 same-protocol Q1/Q2/Q3 formal evaluation of 11,904 vs verified 14,880",
+    "e0_ops_dir": "ops/e0_q1q2q3_11904_vs_14880/20260818_154859",
+    "e0_status": "WAITING_FOR_SHARED_GPU (six formal jobs NOT_STARTED; GPUs held by user xddu2; watcher PID 2834736 will auto-launch once the stable-idle gate passes)"
+  },
+  "shared_resource_log": {
+    "processes_started_by_this_task": [
+      {
+        "pid": 1854897,
+        "cmd": "check_data_manifest.py",
+        "state": "EXITED 0"
+      }
+    ],
+    "gpu_processes_started": [],
+    "kills": [],
+    "sudo": [],
+    "crontab_changes": [],
+    "git_pushes": [],
+    "git_adds": []
+  },
+  "m5_artifacts": {
+    "launch_manifest": {
+      "path": "ops/resume11904_to14880/20260818_112933/launch_manifest.json",
+      "sha256": "1c7ea6c862a177d8abf8e6777f07275869fc179b83b0799b6234cbc558167d0a",
+      "mode": "0444 (immutable)",
+      "frozen_at_utc": "2026-08-18T04:46:31.238360+00:00"
+    },
+    "builder": {
+      "path": "ops/resume11904_to14880/20260818_112933/make_launch_manifest.py",
+      "sha256": "a9394d029a80f4fb4955e1d26134f1f9450da096a5e2d806543c831a18377dba",
+      "refuses_to_overwrite_existing_manifest": true,
+      "asserts_only_tracked_modification_is": "train/train_terrastate_v2.py"
+    },
+    "rejected_first_attempt": {
+      "path": "ops/resume11904_to14880/20260818_112933/launch_manifest.rejected_c4c8e7a9.json",
+      "sha256": "c4c8e7a94f11bdf1f70a7e8f434b4fc62986ba160c2e151ea460cac987d84038",
+      "defect": "tracked_files_modified recorded 'rain/train_terrastate_v2.py' (leading 't' lost)",
+      "cause": "git() .strip()ed the whole stdout, eating the leading space of `git status --short`'s fixed 3-char 'XY ' prefix, shifting the l[3:] path slice by one",
+      "fix": "git_raw()/status_modified() parse the fixed prefix without stripping the stream",
+      "impact": "provenance-record only; no GPU touched, no training launched, nothing overwritten",
+      "kept_as": "evidence of the correction (my own artifact, minutes old, not a historical result)"
+    },
+    "argparse_validation": {
+      "trainer_options_defined": 30,
+      "flags_used_by_frozen_command": 26,
+      "unknown_or_malformed_flags": 0,
+      "required_but_missing": 0,
+      "deliberately_omitted": [
+        "--allow-existing-out",
+        "--deterministic",
+        "--max-steps",
+        "--stop-after-step"
+      ],
+      "omitted_defaults_verified": {
+        "--max-steps": 0,
+        "--stop-after-step": 0,
+        "--deterministic": "store_true, absent -> False (matches parent args deterministic=False)",
+        "--allow-existing-out": "store_true, absent -> False (overwrite protection ACTIVE)"
+      },
+      "derivation_confirmed": "max_steps=0 -> total_steps = 40*372 = 14880; stop_after_step=0 -> 14880; so resume_completed = (11904 >= 14880) is False and training proceeds",
+      "safety": {
+        "allow_existing_out": false,
+        "future_state_scale": "1.0",
+        "nproc_per_node": 8,
+        "CUDA_VISIBLE_DEVICES_set": false
+      }
+    },
+    "throughput_reference": {
+      "median_it_s": 1.57,
+      "min": 0.69,
+      "max": 1.79,
+      "n_samples": 297,
+      "source": "original run1/train.log",
+      "compute_estimate_minutes": 31.6
+    }
+  },
+  "m6_artifacts": {
+    "watcher_script": {
+      "path": "ops/resume11904_to14880/20260818_112933/gpu_watcher.sh",
+      "features": [
+        "flock single-instance",
+        "fd-9 no-leak",
+        "trap reaps sleep child",
+        "10x60s streak",
+        "idempotent/resumable"
+      ]
+    },
+    "selftest_driver": {
+      "path": "ops/resume11904_to14880/20260818_112933/m6_watcher_selftest.sh",
+      "result": "7/7 PASS"
+    },
+    "ready_record": {
+      "path": "ops/resume11904_to14880/20260818_112933/m6_gpu_ready.json",
+      "utc": "2026-08-18T05:11:27Z",
+      "consecutive_idle": 10,
+      "stable_minutes": 10,
+      "n_gpu": 8,
+      "bar": {
+        "mem_used_mib_lt": 1024,
+        "util_pct_lt": 5
+      }
+    },
+    "watcher_pid": 2065448,
+    "watcher_exited_after_ready": true
+  },
+  "m7_artifacts": {
+    "launcher_script": {
+      "path": "ops/resume11904_to14880/20260818_112933/launch_resume.py",
+      "preflight_checks": 32,
+      "all_passed": true
+    },
+    "launch_record": {
+      "path": "ops/resume11904_to14880/20260818_112933/m7_launch_record.json",
+      "pid": 2091229,
+      "pgid": 2091229,
+      "utc": "2026-08-18T05:13:21.645285+00:00"
+    },
+    "train_log": {
+      "path": "ops/resume11904_to14880/20260818_112933/m7_train.log"
+    },
+    "output_dir": "runs/resume11904_to14880/20260818_112933",
+    "resume_block_confirmed": {
+      "stage_recomputed": "2 -> 3 (B1 fix working)",
+      "step": 11904,
+      "stage": 3,
+      "trainable_q_tensors": 12,
+      "parent_sha256": "644deaac0b1578cd",
+      "data_order": "exact",
+      "first_update_step": 11950,
+      "lambda_s_at_11950": 0.01,
+      "first_val_step": 12000,
+      "val_fs": 0.31292,
+      "improved": true
+    }
+  },
+  "m10_artifacts": {
+    "executed_in": "ops/e0_q1q2q3_11904_vs_14880/20260818_154859",
+    "scripts": [
+      "m10_publish.py",
+      "m10_register.py"
+    ],
+    "reports": [
+      "m10_publish_report.json",
+      "m10_register_report.json"
+    ],
+    "object_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+    "object_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+    "object_mode": "0444",
+    "source_preserved": true,
+    "publish_method": "tmpfile -> fsync -> re-hash written bytes -> chmod 0444 -> os.replace -> fsync parent dir (copy-only)",
+    "logical_id": "terrastate/v2/verified-resume14880@v1",
+    "alias": "terrastate/v2/default-training-anchor -> terrastate/v2/verified-resume14880@v1",
+    "registry_revision": {
+      "before": "ebc374b34b2e818a",
+      "after": "a7fd2763935a26d1"
+    },
+    "registry_backup": "ops/e0_q1q2q3_11904_vs_14880/20260818_154859/weight_registry.before_m10.ebc374b34b2e818a.json",
+    "publish_conditions_discharged": "6/6 by named M9 checks",
+    "all_three_ids_resolve": true
+  },
+  "dual_sourcing": {
+    "legacy_11904": {
+      "file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "value_sha": "aba100c138119bc0",
+      "role": "legacy evidence checkpoint AND exact-resume parent; the ONLY source of the frozen Q1/Q2/Q3 historical numbers"
+    },
+    "verified_14880": {
+      "file_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "value_sha": "aa98fbd2fa302727",
+      "role": "anchor for later legacy-model evaluation and for initialising later stages"
+    },
+    "invariants": [
+      "11,904's historical Q1/Q2/Q3 numbers must NEVER be relabelled as coming from 14,880.",
+      "verified 14,880 vs historical 14,880: byte-identical WEIGHTS (value_sha aa98fbd2fa302727, max abs diff 0 over 255 tensors) but DIFFERENT file sha256 (a5d2a0cc vs 99f15a35) due to the B5 lineage block and this run's args/timestamps.",
+      "11,904 vs 14,880: DIFFERENT weights (max abs diff 1.9256e-03)."
+    ]
+  }
+}

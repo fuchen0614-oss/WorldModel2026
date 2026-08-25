@@ -1,0 +1,61 @@
+{
+  "artifacts": [
+    {
+      "expect_bytes": 37972401,
+      "expect_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "file_bytes": 37972401,
+      "file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "logical_id": "terrastate/v2/legacy-boundary11904@v1",
+      "object_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+      "object_relpath": "objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+      "reused_existing_object": false,
+      "role": "parent checkpoint for the exact resume (step 11904, recorded stage 2)",
+      "source": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_boundary80.pt",
+      "source_mtime": 1785118109
+    },
+    {
+      "expect_bytes": 44300969,
+      "expect_sha256": "99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b",
+      "file_bytes": 44300969,
+      "file_sha256": "99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b",
+      "logical_id": "terrastate/v2/historical-full14880@v1",
+      "object_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/99/99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b.pt",
+      "object_relpath": "objects/sha256/99/99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b.pt",
+      "reused_existing_object": false,
+      "role": "historical original-run step-14880 result; READ-ONLY comparison target",
+      "source": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_last.pt",
+      "source_mtime": 1785120197
+    },
+    {
+      "expect_bytes": null,
+      "expect_sha256": null,
+      "expect_state_sha256": "488052d97c7d1c8a2e805d9838f344daef7ad02e5f185d3025031a5f1c026338",
+      "file_bytes": 28847063,
+      "file_sha256": "42420f88a6aa631b14bf48551ee5cfb3645734ae8143bc3998a9c16dacdcd13c",
+      "logical_id": "obsworld/b4-exclusive/student-main-last-step14880@v1",
+      "object_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/42/42420f88a6aa631b14bf48551ee5cfb3645734ae8143bc3998a9c16dacdcd13c.pt",
+      "object_relpath": "objects/sha256/42/42420f88a6aa631b14bf48551ee5cfb3645734ae8143bc3998a9c16dacdcd13c.pt",
+      "reused_existing_object": false,
+      "role": "--student-init warm start (arch ObsWorldB4Exclusive)",
+      "source": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/runs/planb_excl_tournament/stageA_rescue_20260726_173149/MAIN/checkpoint_last.pt",
+      "source_mtime": 1785077716,
+      "state_sha_note": "state_sha(b4_state_dict) recorded as sha.student_init_sha256 in the parent checkpoint"
+    },
+    {
+      "expect_bytes": null,
+      "expect_sha256": null,
+      "expect_teacher_sha256": "bbe2c3ee6de540ae6eabeb7798f331388112ad370dbcae9533187344f2f8a302",
+      "file_bytes": 28846423,
+      "file_sha256": "2c5d084236716d84d1ed11289248a501a7cb906675a32ccb8fd73e1f2a26881c",
+      "logical_id": "obsworld/b4/teacher-best-step13000@v1",
+      "object_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/2c/2c5d084236716d84d1ed11289248a501a7cb906675a32ccb8fd73e1f2a26881c.pt",
+      "object_relpath": "objects/sha256/2c/2c5d084236716d84d1ed11289248a501a7cb906675a32ccb8fd73e1f2a26881c.pt",
+      "reused_existing_object": false,
+      "role": "--teacher-b4 frozen KD teacher (only q.* is loaded)",
+      "source": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/checkpoints/plan_b_b4a/checkpoint_best.pt",
+      "source_mtime": 1784842071,
+      "state_sha_note": "state_sha(teacher.state_dict()) after loading q.* == sha.teacher_sha256; verified separately by verify_state_shas.py"
+    }
+  ],
+  "store": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts"
+}

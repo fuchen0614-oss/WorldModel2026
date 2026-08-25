@@ -1,0 +1,504 @@
+{
+  "audit_kind": "terrastate_v2_resume_11904_to_14880_parameter_audit",
+  "generated_by": "ops/resume11904_to14880/20260818_112933/make_parameter_audit.py",
+  "sources": {
+    "checkpoint": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_boundary80.pt",
+    "checkpoint_file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+    "train_log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/train.log",
+    "runbook": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/TERRASTATE_V2_RUNBOOK.md"
+  },
+  "runbook_literals_missing": [],
+  "train_log_parsed": {
+    "world_size": 8,
+    "per_gpu_batch": 8,
+    "accum": 1,
+    "global_batch": 64,
+    "updates_per_epoch": 372,
+    "total_steps": 14880,
+    "boundary80": 11904,
+    "opt_branch_tensors": 30,
+    "opt_branch_base_lr_logged": 0.0,
+    "opt_q_tensors": 223,
+    "opt_q_base_lr_logged": 0.0,
+    "boundary80_saved_at_step": 11904,
+    "stage_1_to_2": {
+      "step": 2976,
+      "trainable_q": 0
+    },
+    "stage_2_to_3": {
+      "step": 11904,
+      "trainable_q": 12
+    },
+    "done_step": 14880,
+    "done_best_val": 0.31288,
+    "teacher_unchanged": true,
+    "stage3_qgrad_seen": true,
+    "train_cache_cubes": 23816,
+    "cache_horizon_h": 20,
+    "train_cache_mmap": "True",
+    "train_cache_size_gb": 12.526,
+    "val_cache_cubes": 952,
+    "q_projector_init_sha256_prefix": "da978b0243c8dae0"
+  },
+  "rows": [
+    {
+      "parameter": "per_gpu_batch",
+      "checkpoint": 8,
+      "train_log": 8,
+      "runbook": 8,
+      "frozen_value_for_resume": 8,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "global_batch",
+      "checkpoint": 64,
+      "train_log": 64,
+      "runbook": 64,
+      "frozen_value_for_resume": 64,
+      "consistent": true,
+      "note": "resume asserts int(ck['global_batch'])==args.global_batch"
+    },
+    {
+      "parameter": "world_size",
+      "checkpoint": 8,
+      "train_log": 8,
+      "runbook": 8,
+      "frozen_value_for_resume": 8,
+      "consistent": true,
+      "note": "runbook uses --nproc_per_node=8"
+    },
+    {
+      "parameter": "accum",
+      "checkpoint": 1,
+      "train_log": 1,
+      "runbook": 1,
+      "frozen_value_for_resume": 1,
+      "consistent": true,
+      "note": "accum = global_batch // (per_gpu*world) = 64//64; resume asserts equality"
+    },
+    {
+      "parameter": "max_epochs",
+      "checkpoint": 40,
+      "train_log": null,
+      "runbook": 40,
+      "frozen_value_for_resume": 40,
+      "consistent": true,
+      "note": "total_steps = max_epochs * updates_per_epoch; must reproduce 14880"
+    },
+    {
+      "parameter": "max_steps",
+      "checkpoint": 0,
+      "train_log": null,
+      "runbook": 0,
+      "frozen_value_for_resume": 0,
+      "consistent": true,
+      "note": "0 => epochs govern the schedule"
+    },
+    {
+      "parameter": "total_steps",
+      "checkpoint": 14880,
+      "train_log": 14880,
+      "runbook": null,
+      "frozen_value_for_resume": 14880,
+      "consistent": true,
+      "note": "top-level checkpoint field; resume asserts rk['total_steps']==total_steps"
+    },
+    {
+      "parameter": "updates_per_epoch",
+      "checkpoint": null,
+      "train_log": 372,
+      "runbook": null,
+      "frozen_value_for_resume": 372,
+      "consistent": true,
+      "note": "len(loader)//accum with drop_last=True over 23816 cubes / (8 ranks x bs8)"
+    },
+    {
+      "parameter": "boundary80",
+      "checkpoint": null,
+      "train_log": 11904,
+      "runbook": null,
+      "frozen_value_for_resume": 11904,
+      "consistent": true,
+      "note": "int(0.80*14880); == parent checkpoint step"
+    },
+    {
+      "parameter": "branch_lr",
+      "checkpoint": 3e-05,
+      "train_log": null,
+      "runbook": 3e-05,
+      "frozen_value_for_resume": 3e-05,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "q_lr_scale",
+      "checkpoint": 0.033,
+      "train_log": null,
+      "runbook": 0.033,
+      "frozen_value_for_resume": 0.033,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "weight_decay",
+      "checkpoint": 0.0,
+      "train_log": null,
+      "runbook": 0.0,
+      "frozen_value_for_resume": 0.0,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "grad_clip",
+      "checkpoint": 1.0,
+      "train_log": null,
+      "runbook": 1.0,
+      "frozen_value_for_resume": 1.0,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "lr_warmup_steps",
+      "checkpoint": 300,
+      "train_log": null,
+      "runbook": 300,
+      "frozen_value_for_resume": 300,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "unfreeze_q_prefixes",
+      "checkpoint": "core.blocks.2.",
+      "train_log": null,
+      "runbook": "core.blocks.2.",
+      "frozen_value_for_resume": "core.blocks.2.",
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "seed",
+      "checkpoint": 42,
+      "train_log": null,
+      "runbook": 42,
+      "frozen_value_for_resume": 42,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "val_interval",
+      "checkpoint": 1000,
+      "train_log": null,
+      "runbook": 1000,
+      "frozen_value_for_resume": 1000,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "ckpt_interval",
+      "checkpoint": 2000,
+      "train_log": null,
+      "runbook": 2000,
+      "frozen_value_for_resume": 2000,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "log_interval",
+      "checkpoint": 50,
+      "train_log": null,
+      "runbook": 50,
+      "frozen_value_for_resume": 50,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "num_workers",
+      "checkpoint": 8,
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": 8,
+      "consistent": true,
+      "note": "not schedule-affecting (DataLoader worker count)"
+    },
+    {
+      "parameter": "state_dim",
+      "checkpoint": 256,
+      "train_log": null,
+      "runbook": 256,
+      "frozen_value_for_resume": 256,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "device",
+      "checkpoint": "cuda",
+      "train_log": null,
+      "runbook": "cuda",
+      "frozen_value_for_resume": "cuda",
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "deterministic",
+      "checkpoint": false,
+      "train_log": null,
+      "runbook": false,
+      "frozen_value_for_resume": false,
+      "consistent": true,
+      "note": "False => train sampler shuffles; exact data order restored via sampler.set_epoch(epoch) + rng_states_by_rank"
+    },
+    {
+      "parameter": "cache_fail_closed_gb",
+      "checkpoint": 4.0,
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": 4.0,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "alpha",
+      "checkpoint": 1.0,
+      "train_log": null,
+      "runbook": 1.0,
+      "frozen_value_for_resume": 1.0,
+      "consistent": true,
+      "note": "fixed non-learnable buffer"
+    },
+    {
+      "parameter": "loss_weights.gt",
+      "checkpoint": 1.0,
+      "train_log": null,
+      "runbook": 1.0,
+      "frozen_value_for_resume": 1.0,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "loss_weights.kd",
+      "checkpoint": 0.5,
+      "train_log": null,
+      "runbook": 0.5,
+      "frozen_value_for_resume": 0.5,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "lambda_state@11904",
+      "checkpoint": 0.01,
+      "train_log": null,
+      "runbook": 0.01,
+      "frozen_value_for_resume": 0.01,
+      "consistent": true,
+      "note": "stage-3 value LAM_LATE; lambda_state_at(11904,14880)=0.01"
+    },
+    {
+      "parameter": "resume.step",
+      "checkpoint": 11904,
+      "train_log": 11904,
+      "runbook": null,
+      "frozen_value_for_resume": 11904,
+      "consistent": true,
+      "note": "first post-resume update is number 11905"
+    },
+    {
+      "parameter": "resume.epoch",
+      "checkpoint": 31,
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": 31,
+      "consistent": true,
+      "note": "11904/372 = 32 completed epochs => epoch index 31 was the last one finished; the trainer restarts the loop AT epoch 31 and fast-forwards micro_in_epoch"
+    },
+    {
+      "parameter": "resume.micro_in_epoch",
+      "checkpoint": 372,
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": 372,
+      "consistent": true,
+      "note": "== updates_per_epoch => the resumed epoch 31 is fully consumed and the loop should advance to epoch 32"
+    },
+    {
+      "parameter": "resume.stage",
+      "checkpoint": 2,
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": 2,
+      "consistent": true,
+      "note": "RECORDED stage is 2 because the boundary checkpoint is written BEFORE the 2->3 switch (train.log: save then '[stage] 2 -> 3 at step 11904'). An exact resume must therefore enter stage 3 BEFORE its first update -- this is the M2/M3 bug."
+    },
+    {
+      "parameter": "resume.q_freeze.trainable_q",
+      "checkpoint": [],
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": [],
+      "consistent": true,
+      "note": "empty in the parent; must become the 12 core.blocks.2.* tensors after the fix"
+    },
+    {
+      "parameter": "resume.best_val",
+      "checkpoint": 0.31334985432787643,
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": 0.31334985432787643,
+      "consistent": true,
+      "note": "carried forward so post-resume val comparisons keep the same baseline"
+    },
+    {
+      "parameter": "sha.q_projector_init_sha256",
+      "checkpoint": "da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d",
+      "train_log": "da978b0243c8dae0",
+      "runbook": null,
+      "frozen_value_for_resume": "da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d",
+      "consistent": true,
+      "note": "train.log prints only the 16-char prefix"
+    },
+    {
+      "parameter": "sha.train_manifest_sha256",
+      "checkpoint": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "consistent": true,
+      "note": "verified separately by check_data_manifest.py"
+    },
+    {
+      "parameter": "sha.val_manifest_sha256",
+      "checkpoint": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+      "consistent": true,
+      "note": "verified separately by check_data_manifest.py"
+    },
+    {
+      "parameter": "sha.train_cache_sha256",
+      "checkpoint": "2a14f0a4c3653f38ee52155d38c38f76d01cc234a5fb301a3dfb512ee0101a66",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "2a14f0a4c3653f38ee52155d38c38f76d01cc234a5fb301a3dfb512ee0101a66",
+      "consistent": true,
+      "note": "this is the cache CONFIG sha (schema/protocol/field_order/horizon/patch rule/q_projector sha) -- identical for train and val BY DESIGN, not a copy/paste bug"
+    },
+    {
+      "parameter": "sha.val_cache_sha256",
+      "checkpoint": "2a14f0a4c3653f38ee52155d38c38f76d01cc234a5fb301a3dfb512ee0101a66",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "2a14f0a4c3653f38ee52155d38c38f76d01cc234a5fb301a3dfb512ee0101a66",
+      "consistent": true,
+      "note": "same config sha as train (see above)"
+    },
+    {
+      "parameter": "train_cache_cubes",
+      "checkpoint": null,
+      "train_log": 23816,
+      "runbook": null,
+      "frozen_value_for_resume": 23816,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "val_cache_cubes",
+      "checkpoint": null,
+      "train_log": 952,
+      "runbook": null,
+      "frozen_value_for_resume": 952,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "cache_horizon_h",
+      "checkpoint": null,
+      "train_log": 20,
+      "runbook": null,
+      "frozen_value_for_resume": 20,
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "args.train_dir",
+      "checkpoint": "/tmp/zjliu17_mix_stage_v2/train",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train",
+      "consistent": true,
+      "note": "ORIGINAL /tmp staging dir no longer exists; substitution is legal ONLY if data_manifest_sha256 matches (checked by check_data_manifest.py). relpath keys are root-relative so the cache still resolves."
+    },
+    {
+      "parameter": "args.val_dir",
+      "checkpoint": "/tmp/zjliu17_mix_stage_v2/val_chopped",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped",
+      "consistent": true,
+      "note": "same as train_dir"
+    },
+    {
+      "parameter": "args.train_cache",
+      "checkpoint": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/cache/train_future_state_cache.pt",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/cache/train_future_state_cache.pt",
+      "consistent": true,
+      "note": "12.5GB cache stays in place (registry-by-path only)"
+    },
+    {
+      "parameter": "args.val_cache",
+      "checkpoint": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/cache/val_future_state_cache.pt",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/cache/val_future_state_cache.pt",
+      "consistent": true,
+      "note": ""
+    },
+    {
+      "parameter": "args.student_init",
+      "checkpoint": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/runs/planb_excl_tournament/stageA_rescue_20260726_173149/MAIN/checkpoint_last.pt",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/runs/planb_excl_tournament/stageA_rescue_20260726_173149/MAIN/checkpoint_last.pt",
+      "consistent": true,
+      "note": "resolved via the artifact registry; SHA must equal sha.student_init_sha256"
+    },
+    {
+      "parameter": "args.teacher_b4",
+      "checkpoint": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/checkpoints/plan_b_b4a/checkpoint_best.pt",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/checkpoints/plan_b_b4a/checkpoint_best.pt",
+      "consistent": true,
+      "note": "resolved via the artifact registry; q.* SHA must equal sha.teacher_sha256"
+    },
+    {
+      "parameter": "args.output_dir",
+      "checkpoint": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1",
+      "train_log": null,
+      "runbook": null,
+      "frozen_value_for_resume": "<NEW dir under terrastate/runs/resume11904_to14880/>",
+      "consistent": true,
+      "note": "MUST NOT reuse the original run1 dir -- historical outputs are read-only"
+    }
+  ],
+  "n_rows": 49,
+  "inconsistent_parameters": [],
+  "all_consistent": true,
+  "arithmetic_self_consistency": {
+    "total_steps_minus_parent_step": 2976,
+    "remaining_updates": 2976,
+    "updates_per_epoch": 372,
+    "remaining_epochs": 8.0,
+    "epochs_range": "32..39 inclusive (start_epoch index 31 fully consumed)",
+    "boundary80_formula": "int(0.80 * 14880) == 11904",
+    "ok": true
+  },
+  "stage_boundary_semantics": {
+    "stage_at_11904": 3,
+    "recorded_stage_in_parent": 2,
+    "evidence": "train.log: '[boundary80] forced checkpoint saved at step 11904' immediately followed by '[stage] 2 -> 3 at step 11904; trainable_q=12'",
+    "requirement": "the first post-resume update (#11905) must run in stage 3 with exactly the 12 core.blocks.2.* q tensors trainable, and the run must NOT re-save checkpoint_boundary80.pt"
+  }
+}

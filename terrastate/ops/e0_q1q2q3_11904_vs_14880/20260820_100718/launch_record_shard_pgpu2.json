@@ -1,0 +1,16 @@
+{
+ "physical_gpu": 2,
+ "jobs": [
+  {
+   "name": "gpu1_v14880_oodt_q1q2",
+   "physical_gpu": 2,
+   "pid": 3859216,
+   "exit_code": 0,
+   "started_utc": "2026-08-20T03:40:08Z",
+   "checkpoint_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+   "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu1_v14880_oodt_q1q2",
+   "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu1_v14880_oodt_q1q2.log",
+   "expected_targets": 1904
+  }
+ ]
+}

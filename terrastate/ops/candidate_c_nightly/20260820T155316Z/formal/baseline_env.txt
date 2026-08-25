@@ -1,0 +1,202 @@
+# C-BASE：上次 8 卡正式运行(C1)的环境基线
+# 提取时间(UTC): 2026-08-22T10:23:58.956287Z
+# 来源: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z/launch_record.json
+
+## [1] 子进程环境覆盖 (child_env_overrides) —— 重训必须一致
+PYTHONUNBUFFERED=1
+OMP_NUM_THREADS=4
+MKL_NUM_THREADS=4
+TOKENIZERS_PARALLELISM=false
+NCCL_ASYNC_ERROR_HANDLING=1
+TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+
+## [2] 运行身份 (identity)
+hostname       = csy-zg01-gnode39
+launcher_user  = zjliu17
+torchrun_pid   = 2940384
+torchrun_name  = pt_elastic
+torchrun_cwd   = /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate
+
+## [3] 其他 identity 字段（原样保留）
+{
+  "ts_utc": "2026-08-21T09:34:20.987858Z",
+  "hostname": "csy-zg01-gnode39",
+  "launcher_user": "zjliu17",
+  "n_workers": 8,
+  "workers": [
+    {
+      "pid": 2941067,
+      "alive": true,
+      "cmdline": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -u /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --arm C1 --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path recursive --global-batch 64 --grad-clip 1.0 --lambda-nc 0.0 --lambda-pair 0.0 --lambda-y 0.0 --lambda-z 0.0 --log-interval 10 --lr-warmup-steps 300 --max-epochs 40 --max-steps 0 --num-workers 8 --output-dir /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z --parent-alias terrastate/v2/default-training-anchor --parent-ckpt  --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 0 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "name": "python",
+      "ppid": 2940384,
+      "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+      "exe": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python3.11",
+      "owner": "zjliu17",
+      "pgid": 2941067,
+      "sid": 2941067,
+      "etime_s": 77.8
+    },
+    {
+      "pid": 2941068,
+      "alive": true,
+      "cmdline": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -u /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --arm C1 --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path recursive --global-batch 64 --grad-clip 1.0 --lambda-nc 0.0 --lambda-pair 0.0 --lambda-y 0.0 --lambda-z 0.0 --log-interval 10 --lr-warmup-steps 300 --max-epochs 40 --max-steps 0 --num-workers 8 --output-dir /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z --parent-alias terrastate/v2/default-training-anchor --parent-ckpt  --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 0 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "name": "python",
+      "ppid": 2940384,
+      "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+      "exe": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python3.11",
+      "owner": "zjliu17",
+      "pgid": 2941068,
+      "sid": 2941068,
+      "etime_s": 77.8
+    },
+    {
+      "pid": 2941069,
+      "alive": true,
+      "cmdline": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -u /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --arm C1 --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path recursive --global-batch 64 --grad-clip 1.0 --lambda-nc 0.0 --lambda-pair 0.0 --lambda-y 0.0 --lambda-z 0.0 --log-interval 10 --lr-warmup-steps 300 --max-epochs 40 --max-steps 0 --num-workers 8 --output-dir /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z --parent-alias terrastate/v2/default-training-anchor --parent-ckpt  --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 0 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "name": "python",
+      "ppid": 2940384,
+      "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+      "exe": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python3.11",
+      "owner": "zjliu17",
+      "pgid": 2941069,
+      "sid": 2941069,
+      "etime_s": 77.8
+    },
+    {
+      "pid": 2941070,
+      "alive": true,
+      "cmdline": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -u /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --arm C1 --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path recursive --global-batch 64 --grad-clip 1.0 --lambda-nc 0.0 --lambda-pair 0.0 --lambda-y 0.0 --lambda-z 0.0 --log-interval 10 --lr-warmup-steps 300 --max-epochs 40 --max-steps 0 --num-workers 8 --output-dir /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z --parent-alias terrastate/v2/default-training-anchor --parent-ckpt  --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 0 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "name": "python",
+      "ppid": 2940384,
+      "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+      "exe": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python3.11",
+      "owner": "zjliu17",
+      "pgid": 2941070,
+      "sid": 2941070,
+      "etime_s": 77.8
+    },
+    {
+      "pid": 2941071,
+      "alive": true,
+      "cmdline": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -u /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --arm C1 --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path recursive --global-batch 64 --grad-clip 1.0 --lambda-nc 0.0 --lambda-pair 0.0 --lambda-y 0.0 --lambda-z 0.0 --log-interval 10 --lr-warmup-steps 300 --max-epochs 40 --max-steps 0 --num-workers 8 --output-dir /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z --parent-alias terrastate/v2/default-training-anchor --parent-ckpt  --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 0 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "name": "python",
+      "ppid": 2940384,
+      "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+      "exe": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python3.11",
+      "owner": "zjliu17",
+      "pgid": 2941071,
+      "sid": 2941071,
+      "etime_s": 77.8
+    },
+    {
+      "pid": 2941072,
+      "alive": true,
+      "cmdline": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -u /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --arm C1 --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path recursive --global-batch 64 --grad-clip 1.0 --lambda-nc 0.0 --lambda-pair 0.0 --lambda-y 0.0 --lambda-z 0.0 --log-interval 10 --lr-warmup-steps 300 --max-epochs 40 --max-steps 0 --num-workers 8 --output-dir /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z --parent-alias terrastate/v2/default-training-anchor --parent-ckpt  --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 0 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "name": "python",
+      "ppid": 2940384,
+      "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+      "exe": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python3.11",
+      "owner": "zjliu17",
+      "pgid": 2941072,
+      "sid": 2941072,
+      "etime_s": 77.8
+    },
+    {
+      "pid": 2941073,
+      "alive": true,
+      "cmdline": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -u /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --arm C1 --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path recursive --global-batch 64 --grad-clip 1.0 --lambda-nc 0.0 --lambda-pair 0.0 --lambda-y 0.0 --lambda-z 0.0 --log-interval 10 --lr-warmup-steps 300 --max-epochs 40 --max-steps 0 --num-workers 8 --output-dir /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z --parent-alias terrastate/v2/default-training-anchor --parent-ckpt  --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 0 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "name": "python",
+      "ppid": 2940384,
+      "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+      "exe": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python3.11",
+      "owner": "zjliu17",
+      "pgid": 2941073,
+      "sid": 2941073,
+      "etime_s": 77.8
+    },
+    {
+      "pid": 2941074,
+      "alive": true,
+      "cmdline": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -u /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --arm C1 --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path recursive --global-batch 64 --grad-clip 1.0 --lambda-nc 0.0 --lambda-pair 0.0 --lambda-y 0.0 --lambda-z 0.0 --log-interval 10 --lr-warmup-steps 300 --max-epochs 40 --max-steps 0 --num-workers 8 --output-dir /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z --parent-alias terrastate/v2/default-training-anchor --parent-ckpt  --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 0 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "name": "python",
+      "ppid": 2940384,
+      "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+      "exe": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python3.11",
+      "owner": "zjliu17",
+      "pgid": 2941074,
+      "sid": 2941074,
+      "etime_s": 77.8
+    }
+  ],
+  "compute_apps_total": 8,
+  "compute_apps_ours": [
+    {
+      "pid": 2941067,
+      "used_memory": "1072 MiB",
+      "gpu_uuid": "GPU-b1911b1d-1f32-9d99-ab99-33b25a378350"
+    },
+    {
+      "pid": 2941068,
+      "used_memory": "1072 MiB",
+      "gpu_uuid": "GPU-97867b05-36f5-d411-56cb-cd4790a4d03b"
+    },
+    {
+      "pid": 2941069,
+      "used_memory": "1072 MiB",
+      "gpu_uuid": "GPU-a65f7012-8c05-7ff4-4df0-ac99f5dd6e63"
+    },
+    {
+      "pid": 2941070,
+      "used_memory": "1072 MiB",
+      "gpu_uuid": "GPU-907216b3-1cdf-e18a-b544-72584ca62622"
+    },
+    {
+      "pid": 2941071,
+      "used_memory": "1072 MiB",
+      "gpu_uuid": "GPU-c3afecd3-b341-6720-1c48-321ea62384c5"
+    },
+    {
+      "pid": 2941072,
+      "used_memory": "1072 MiB",
+      "gpu_uuid": "GPU-3dc8a98d-6c78-30b2-e419-0ee7e44bf200"
+    },
+    {
+      "pid": 2941073,
+      "used_memory": "1072 MiB",
+      "gpu_uuid": "GPU-96cabe9d-60a9-231d-9d40-ac5a8c8c8d7d"
+    },
+    {
+      "pid": 2941074,
+      "used_memory": "1072 MiB",
+      "gpu_uuid": "GPU-e81f34dd-8eb1-b487-9b2c-3319e101823d"
+    }
+  ],
+  "compute_apps_not_ours": [],
+  "gpus_held_by_us": [
+    "GPU-3dc8a98d-6c78-30b2-e419-0ee7e44bf200",
+    "GPU-907216b3-1cdf-e18a-b544-72584ca62622",
+    "GPU-96cabe9d-60a9-231d-9d40-ac5a8c8c8d7d",
+    "GPU-97867b05-36f5-d411-56cb-cd4790a4d03b",
+    "GPU-a65f7012-8c05-7ff4-4df0-ac99f5dd6e63",
+    "GPU-b1911b1d-1f32-9d99-ab99-33b25a378350",
+    "GPU-c3afecd3-b341-6720-1c48-321ea62384c5",
+    "GPU-e81f34dd-8eb1-b487-9b2c-3319e101823d"
+  ],
+  "foreign_processes_present": false,
+  "our_pids_on_gpu": [
+    2941067,
+    2941068,
+    2941069,
+    2941070,
+    2941071,
+    2941072,
+    2941073,
+    2941074
+  ]
+}
+
+## [4] 未记录项（诚实标注，不猜测）
+# launch_record.json 只记录了 child_env_overrides（6 项覆盖），没有记录完整 environ 快照。
+# 因此上次运行的完整环境变量集合无法从证据复原；重训只能保证这 6 项覆盖 + 同一 conda 环境
+# (/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python) 一致，其余继承登录 shell。这是本轮 SIGKILL 复盘的一个已知盲区，记入 UNRESOLVED_RISKS。

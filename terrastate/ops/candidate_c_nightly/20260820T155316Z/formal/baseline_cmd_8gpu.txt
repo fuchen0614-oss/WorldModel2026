@@ -1,0 +1,123 @@
+# C-BASE：上次 8 卡正式运行(C1)的原始启动命令基线
+# 提取时间(UTC): 2026-08-22T10:23:58.956287Z
+# 来源 run_dir: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z
+# 来源文件: launch_info.json (sha256=9de2a1c4769ecda44b75c2fca59d31e2fc0cfc4d90145cadd5cdf8dfd1a14a76)
+#          launch_record.json (sha256=781f61cc97649a161bae499460ce52b24364fb977a638b91c3cdd400f5cd7538)
+# 该 run 的结局: 在 step 2100/14880 被外部 SIGKILL(全部 8 rank exitcode -9)，未完成。
+# 本文件只做基线记录，不是可直接执行的脚本：重训必须新建时间戳 run 目录，
+# 且必须从 step 0 开始（禁止 --resume、禁止从 checkpoint_step*.pt 恢复）。
+
+## [1] 上层启动器命令 (launcher_cmd)
+/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python \
+  /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/launch_candidate_c.py \
+  --config \
+  /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml \
+  --output-dir \
+  /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z \
+  --gpus \
+  0,1,2,3,4,5,6,7 \
+  --emit-json \
+  /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z/launch_info.json
+
+## [2] 启动器展开后的 torchrun 命令 (launch_info.cmd, 81 tokens)
+/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python \
+  -m \
+  torch.distributed.run \
+  --standalone \
+  --nproc_per_node=8 \
+  /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py \
+  --arm \
+  C1 \
+  --branch-lr \
+  3e-05 \
+  --ckpt-interval \
+  372 \
+  --days-per-transition-step \
+  5 \
+  --device \
+  cuda \
+  --eo-endpoint-weight \
+  1.0 \
+  --eo-traj-weight \
+  1.0 \
+  --expect-train-manifest-sha \
+  17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 \
+  --expect-val-manifest-sha \
+  555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 \
+  --factual-path \
+  recursive \
+  --global-batch \
+  64 \
+  --grad-clip \
+  1.0 \
+  --lambda-nc \
+  0.0 \
+  --lambda-pair \
+  0.0 \
+  --lambda-y \
+  0.0 \
+  --lambda-z \
+  0.0 \
+  --log-interval \
+  10 \
+  --lr-warmup-steps \
+  300 \
+  --max-epochs \
+  40 \
+  --max-steps \
+  0 \
+  --num-workers \
+  8 \
+  --output-dir \
+  /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_20260821T093228Z \
+  --parent-alias \
+  terrastate/v2/default-training-anchor \
+  --parent-ckpt \
+  '' \
+  --per-gpu-batch \
+  8 \
+  --q-lr-scale \
+  0.033 \
+  --q4-partition-manifest \
+  /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json \
+  --seed \
+  42 \
+  --state-dim \
+  256 \
+  --stop-after-step \
+  0 \
+  --train-dir \
+  /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train \
+  --unfreeze-q-prefixes \
+  core.blocks.2. \
+  --val-dir \
+  /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped \
+  --val-interval \
+  372 \
+  --val-split-manifest \
+  /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json \
+  --val-split-selector \
+  validation_subsplit.val_dev.ids \
+  --verify-data-manifest \
+  --weight-decay \
+  0.0
+
+## [3] 关键上下文
+cwd                  = /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate
+python               = /csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python
+CUDA_VISIBLE_DEVICES = 0,1,2,3,4,5,6,7
+nproc_per_node       = 8
+config               = /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml
+config_sha256        = 593f790c4520136b53efcc0e1e33481e3f104db7d2497649902696752a780811
+config_name          = candidate_c_c1_v1
+arm                  = C1
+expected_total_updates = 14880
+overrides            = []  # 空：完全走冻结配置
+resume               = ''  # 空：上次也是从 step 0 起训
+detached             = {"start_new_session": true, "sid_differs_from_parent": true, "note": "SIGHUP/VS Code 断开不会终止该 session"}
+
+## [4] 与本轮重训的差异说明
+# 方案 A(8 卡)：本文件 [2] 中的参数应逐字节等同，只有 --output-dir 换成新 run 目录。
+# 方案 B(4 卡)：只允许 nproc_per_node 8->4 与 --per-gpu-batch 8->16；
+#              global-batch 恒为 64，其余预算参数(--max-epochs 40 / --lr-warmup-steps 300
+#              / --ckpt-interval 372 / --val-interval 372 / --seed 42)一律不变。

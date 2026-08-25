@@ -1,0 +1,3 @@
+{"step": 4, "stage": 2, "future_state_scale": 1.0, "lambda_state_raw": 0.02, "lambda_state": 0.02, "effective_lambda_state": 0.02, "total": 0.42327094078063965, "gt": 0.27534985542297363, "kd": 0.27360525727272034, "future_state": 0.5559228658676147}
+{"step": 5, "stage": 2, "future_state_scale": 1.0, "lambda_state_raw": 0.02, "lambda_state": 0.02, "effective_lambda_state": 0.02, "total": 0.33850163221359253, "gt": 0.21774812042713165, "kd": 0.21721218526363373, "future_state": 0.6073706746101379}
+{"step": 6, "stage": 3, "future_state_scale": 1.0, "lambda_state_raw": 0.01, "lambda_state": 0.01, "effective_lambda_state": 0.01, "total": 0.33888325095176697, "gt": 0.2228851169347763, "kd": 0.22086142003536224, "future_state": 0.5567417144775391}

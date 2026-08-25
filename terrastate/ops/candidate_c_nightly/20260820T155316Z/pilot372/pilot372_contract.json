@@ -1,0 +1,66 @@
+{
+  "schema": "pilot372_contract_v1",
+  "recorded_at_utc": "2026-08-21T08:13:51.178837Z",
+  "authorized_by": "user",
+  "authorization_receipt_sha256": "648365c3b5805c6018c19e351103e5fa7d436be20b3a482ea59a4bfa65c0d036",
+  "derivation": {
+    "parent_config": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml",
+    "parent_sha256": "d8ab36586f7313173c2f1f7d3fc0bc31d78dd282e9a7a817e9b7b60a1bc1be4e",
+    "pilot372_config": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_pilot372_config_v1.yaml",
+    "pilot372_sha256": "af9b80d7416d08cb694ab4ff9a062c12f4c8cc4cb7908783353daab60cd01870",
+    "rule": "pilot372 必须从正式 C1 配置派生；冻结独立配置 + manifest + SHA sidecar",
+    "only_allowed_change": "stop-after-step: 0 -> 372（步数上限，不改变 total_steps=2976，val_interval 保持 372）",
+    "must_inherit_unchanged": [
+      "per-gpu-batch",
+      "global-batch",
+      "grad-accum(隐含 accum=1)",
+      "branch-lr",
+      "q-lr-scale",
+      "weight-decay",
+      "grad-clip",
+      "lr-warmup-steps",
+      "lambda-z",
+      "lambda-y",
+      "lambda-pair",
+      "lambda-nc",
+      "seed",
+      "max-epochs",
+      "ckpt-interval",
+      "val-interval",
+      "parent-alias",
+      "factual-path",
+      "arm",
+      "expect-train-manifest-sha",
+      "expect-val-manifest-sha",
+      "val-split-selector",
+      "verify-data-manifest",
+      "train-dir",
+      "val-dir",
+      "state-dim",
+      "unfreeze-q-prefixes",
+      "eo-traj-weight",
+      "eo-endpoint-weight",
+      "days-per-transition-step"
+    ],
+    "lambdas_must_stay_zero": true,
+    "note": "与 128-update pilot 的唯一区别：stop-after-step 128 -> 372，使 val_interval=372 能触发一次 val_dev 评估"
+  },
+  "observation_limits": {
+    "allowed_split": "val_dev",
+    "selector": "validation_subsplit.val_dev.ids",
+    "forbidden_splits": [
+      "val_locked",
+      "ood_t",
+      "test"
+    ],
+    "forbidden_use": "不得使用 OOD/test 选模；val_locked 在 FORMAL_READY 之后才开"
+  },
+  "stop_conditions_fail_closed": [
+    "pilot 未通过 -> 立即停止并汇报",
+    "需要改变 batch size -> 立即停止并汇报，不得自行调整后继续",
+    "需要改变学习率 -> 立即停止并汇报，不得自行调整后继续",
+    "需要改变损失权重 -> 立即停止并汇报，不得自行调整后继续",
+    "需要改变训练步数（total_steps=2976）-> 立即停止并汇报，不得自行调整后继续"
+  ],
+  "oom_interaction": "若 pilot372 需要 per-GPU 4 + accum 2 才能跑，那属于『改变 batch size』，按上条必须停下汇报，不得自行改参数继续。"
+}

@@ -1,0 +1,75 @@
+{
+  "schema": "candidate_c_source_hashes_amendment_v1",
+  "amends": {
+    "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/source_hashes.json",
+    "sha256": "b60d0886734c11123e0cfb0ae64f5811c0a99349d819b47f6130894c8233cbb3",
+    "captured_at_utc": "2026-08-20T20:37:58.564199Z",
+    "n_files": 11,
+    "aggregate_sha256": "be24e5b5edeaecc24503722ffc5f03e29d024554f13e7b592a233bc8f39c3dc9"
+  },
+  "why_not_overwrite": "source_hashes.json 的 sha256 被 manifests/contract_freeze_receipt.json 与 configs/frozen_artifacts_index.json 双双记录（b60d0886734c1112…）。原地覆盖会打断冻结链，且会抹掉『冻结时是什么样』这个事实。修订另写一份。",
+  "amended_at_utc": "2026-08-21T03:31:17.296033Z",
+  "frozen_11_files": {
+    "unchanged": 10,
+    "drifted": 1,
+    "detail": {
+      "train/launch_candidate_c.py": {
+        "frozen_sha256": "058edf2f5c55c405240504e0ed88d80b32bc1f18925b827d42025ada8f7c70f9",
+        "live_sha256": "e083bc060c5a24e35e6213348716c21c8e71d0885280b845c807aaebe3f609ba",
+        "bytes_now": 17847,
+        "category": "support"
+      }
+    }
+  },
+  "drift_explanation": "train/launch_candidate_c.py 是本会话唯一改动的冻结文件：为堵住 §9 洞 3（pilot 可合法偏离 C1 全部超参）加入派生配置父一致性闸门。改动前已核 git status 为 ?? 未跟踪且 sha 与冻结记录相符，确认非其他会话改动。",
+  "ops_files_added_this_session": {
+    "ops/candidate_c_nightly/20260820T155316Z/reverify_guards.py": {
+      "sha256": "f0ab6a2a15ef74f11d3bbe7812a57f936120af6b8b513c18b37587b5efce2238",
+      "bytes": 7123
+    },
+    "ops/candidate_c_nightly/20260820T155316Z/env_identity.json": {
+      "sha256": "ffb92894bec4dc0b8778ca30b86281b458c17c67ea5fd590368efc9bb3f977b7",
+      "bytes": 2037
+    },
+    "ops/candidate_c_nightly/20260820T155316Z/prepare_pilot.py": {
+      "sha256": "5b223eb90cd0578e9c434f3ba346f9d26e13558dc2c72245ba635ef67afe5cfa",
+      "bytes": 12140
+    },
+    "ops/candidate_c_nightly/20260820T155316Z/pilot_contract.json": {
+      "sha256": "4473020075acf24e74eb09ae9efd860807aa9b5a61978d134fc050db9cdad561",
+      "bytes": 2622
+    },
+    "ops/candidate_c_nightly/20260820T155316Z/smoke_budget.json": {
+      "sha256": "6c0ab646886d088050fe3b9538aab0483658a17a9db95a51c08de8b5b709f2b7",
+      "bytes": 1081
+    }
+  },
+  "ops_files_modified_this_session": {
+    "ops/candidate_c_nightly/20260820T155316Z/ccn_lib.py": {
+      "sha256": "276ac457b1bfd91c01f545586789f9b33b43c447ec8250c799bde06f053f43fb",
+      "bytes": 7271
+    },
+    "ops/candidate_c_nightly/20260820T155316Z/launch_gpu_run.py": {
+      "sha256": "5fb6d8bad357def5df48018b544b12bec437257c430edc991e61800cd38ca561",
+      "bytes": 14772
+    },
+    "ops/candidate_c_nightly/20260820T155316Z/preflight_cpu.py": {
+      "sha256": "42cb89e5a134fa4cf574a6902e5990eef9b32fb726c0415acea5a5835fba6e61",
+      "bytes": 17963
+    },
+    "ops/candidate_c_nightly/20260820T155316Z/prepare_smoke.py": {
+      "sha256": "544d1fcf4e340e6662842ca7be2147af4baf3747e4286c5a7fa4e9614c6cb107",
+      "bytes": 12451
+    },
+    "ops/candidate_c_nightly/20260820T155316Z/regen_status.py": {
+      "sha256": "96a99428978ee8e37337c6c75f3c18a48439646b8a849615ac4872b1fac9bb15",
+      "bytes": 17882
+    }
+  },
+  "ops_files_note": "ops/candidate_c_nightly/** 不在冻结的 11 个文件里（那 11 个是 models/tests/train/eval 下的实现与测试）。这些运维脚本在此登记仅供漂移检测。",
+  "revalidation_after_change": {
+    "guard_regression": "reports/guard_reverify.json",
+    "cpu_suites_rerun": "logs/rerun_20260821T031500Z/（contract 51/51、resume 59/59、ddp 9/9，全 PASS，check id 集合与冻结收据完全相同）",
+    "interpreter": "全部在 env_identity.json 冻结的 envs/WorldModel/bin/python 3.11.15 / torch 2.12.0+cu130 下重跑"
+  }
+}

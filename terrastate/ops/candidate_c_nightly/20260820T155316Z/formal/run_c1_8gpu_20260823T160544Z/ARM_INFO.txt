@@ -1,0 +1,5 @@
+arm=C1  factual_path=recursive
+world=8  per_gpu_batch=8  accum=1  global_batch=64
+total_steps=14880  ckpt_interval=1000  seed=42
+launched_utc=20260823T160544Z
+注意：8卡组只能与8卡组互比，不可与4卡组混比（world/accum 不同）。

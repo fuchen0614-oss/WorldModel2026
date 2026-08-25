@@ -1,0 +1,16 @@
+{
+  "schema": "e0_closeout_audit_v1",
+  "verdict": "ACCEPTED",
+  "timestamp": "2026-08-20T12:12:28Z",
+  "v2_improvements": [
+    "fail-closed launch record 验证（检查重复、空名字）",
+    "递归 finite 检查覆盖全部数值叶",
+    "Q2 必需字段验证（full/alpha0/T_identity/verdict）",
+    "Q3 provenance sidecar-bound 明确记录",
+    "原子写入 JSON（临时文件 + fsync + rename）",
+    "历史 ref 缺失时 BLOCKED，不允许 ACCEPTED",
+    "完整 Q1/Q2/Q3 比较（包含 transition_margin_clean、verdict）"
+  ],
+  "failed_checks": 0,
+  "reproduction_status": "reproduced"
+}

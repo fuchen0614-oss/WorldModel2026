@@ -1,0 +1,118 @@
+{
+  "schema": "closeout_audit_v3",
+  "generated_at_utc": "2026-08-20T14:33:48.362754Z",
+  "generated_by": "verify_and_aggregate_retry_v3.py",
+  "verdict": "ACCEPTED",
+  "n_checks": 732,
+  "failed_checks": [],
+  "n_failed": 0,
+  "gate_groups": {
+    "A": "作业清单、启动记录与 checkpoint 身份",
+    "B": "四份 Q1/Q2 结果契约与 schema 完整性",
+    "C": "两份 Q3 极端态审计与协议绑定",
+    "D": "11,904 复现历史参考 57 个正式指标",
+    "E": "完整性、ground truth 归属与口径边界",
+    "F": "sanity anchor 与训练侧记录交叉核对"
+  },
+  "closeout_environment": {
+    "now_utc": "2026-08-20T14:33:48.362754Z",
+    "closeout_hostname": "csy-zg01-gnode68",
+    "closeout_role": "CPU-only 封账与审计（不执行任何 GPU 计算）",
+    "gpu_exec_hostname": "csy-zg01-gnode39",
+    "gpu_exec_hostname_source": "attempt_manifest.json 的 hostname 字段（GPU 执行时写入）",
+    "cuda_visible_devices": "",
+    "python": "3.13.12",
+    "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718",
+    "torch_imported": false,
+    "git_repo_toplevel": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2",
+    "git_head": "c9503030e498e8ec86fffe9105998c3a2a540d68",
+    "git_branch": "main",
+    "git_query_ok": true,
+    "git_worktree_dirty": true,
+    "git_dirty_entry_count": 63,
+    "git_dirty_outside_obsworld": 9,
+    "git_dirty_outside_obsworld_entries": [
+      " M terrastate/train/train_terrastate_v2.py",
+      "?? .aris/",
+      "?? terrastate/artifacts/weight_registry.json",
+      "?? terrastate/ops/",
+      "?? terrastate/tests/test_resume_boundary11904.py",
+      "?? terrastate/tools/resolve_artifact.py",
+      "?? \"terrastate/\\346\\200\\235\\350\\267\\257\\346\\225\\264\\347\\220\\206\\350\\277\\233\\345\\261\\225/A03_TerraState_\\345\\205\\263\\351\\224\\256\\345\\256\\236\\351\\252\\214\\347\\273\\223\\346\\236\\234\\344\\270\\216\\345\\206\\263\\347\\255\\226\\346\\200\\273\\350\\264\\246.md\"",
+      "?? \"\\346\\200\\235\\350\\267\\257\\346\\225\\264\\347\\220\\206/\"",
+      "?? \"\\346\\226\\207\\347\\214\\256\\351\\230\\205\\350\\257\\273/\""
+    ],
+    "git_note": "工作树确实是 dirty 的：obsworld/** 由另一会话并发修改，本轮不触碰；obsworld 之外的条目多为本封账自身新增的 untracked 目录/文档。本脚本只读 git，不执行 add/commit/push/reset/checkout/stash/clean。"
+  },
+  "artifacts_written": {
+    "e0_comparison_11904_vs_14880_v3.json": {
+      "sha256": "2e1529ca4e24b3ef8f3498f35f9de2a5912f817aa6ffe0bfc87274df8e2cde4a",
+      "bytes": 240571
+    },
+    "e0_metric_inventory_v3.json": {
+      "sha256": "e1b1c8c902d004267847197ea87970a0e7dd4993908ad01e80f218bed07e5a2e",
+      "bytes": 82211
+    },
+    "e0_artifact_index_v3.json": {
+      "sha256": "59365d48c9c2be6c49da872e23c72efa3971a91f04eae9d25fa159e489a69855",
+      "bytes": 42046
+    },
+    "e0_provenance_v3.json": {
+      "sha256": "719975c53699fa6a7a513e167e11136e34e58f95c9ad316a6dd7ec3abe18c1c6",
+      "bytes": 37491
+    },
+    "e0_launch_record_v3.json": {
+      "sha256": "9e07243ed156c0850249f0352d97c17fffafb67454ebe2cd4e3a18a0780c222d",
+      "bytes": 8827
+    },
+    "attempt_manifest_v3.json": {
+      "sha256": "41cee90e3d60dcd110b040eeaa896bc485d90f2cd63eaa7f02039b13b092602a",
+      "bytes": 9675
+    },
+    "e0_acceptance_report_v3.json": {
+      "sha256": "f53232870def9ff219093052fd2bacfd035769443ab399fca49051bbf5363f57",
+      "bytes": 166619
+    },
+    "verify_and_aggregate_retry_v3.py": {
+      "sha256": "9b7b6c0e7671460b3e4fcd9a4d0efd753fcf0e0e7545ce5550b8f984512174b8",
+      "bytes": 111147
+    }
+  },
+  "evidence_preserved": {
+    "v1_v2_artifacts": "全部保留，未删除未覆盖；本轮仅新增 _v3 文件",
+    "invalid_partial_dirs": [
+      "gpu2_v14880_oodt_q1q2",
+      "gpu5_v14880_val_q1q2",
+      "gpu6_legacy11904_val_q1q2"
+    ],
+    "interrupted_attempt": "20260818_154859",
+    "raw_results": "六份一手结果只读校验，SHA-256 与清点值一致"
+  },
+  "corrected_defects": [
+    {
+      "defect": "A03 v2 的 Q2 对照表数字无来源",
+      "values": [
+        0.556762,
+        0.556617,
+        0.556546,
+        0.484868,
+        0.012454,
+        0.013196,
+        0.012587,
+        0.012732
+      ],
+      "evidence": "对六份一手结果全部浮点值做 |Δ|<5e-7 搜索，命中集合为空",
+      "resolution": "v3 一律从 raw JSON 重新推导 Q2 三臂与官方 Δ"
+    }
+  ],
+  "known_gaps_recorded_honestly": [
+    "e0_launch_record.gpu{2,4,5,6}.json 的 jobs 列表为空",
+    "Q3 结果 JSON 不记录 checkpoint SHA 与 evaluator commit（sidecar 绑定）",
+    "Q3 协议文件计数三个口径不同：磁盘 8 / MANIFEST 7 / 结果 JSON 绑定 5",
+    "单作业 wall-clock 时长不可由现有日志证明",
+    "边界 checkpoint 记录 stage=2，而其后第一次更新属 stage=3"
+  ],
+  "next_action": "CANDIDATE_C_T3_CPU_CONTRACT",
+  "e0_closeout_v3": "ACCEPTED",
+  "t0_status": "COMPLETE"
+}

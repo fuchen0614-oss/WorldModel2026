@@ -1,0 +1,149 @@
+{
+  "schema": "candidate_c_smoke_attempt3_verdict_v1",
+  "at_utc": "2026-08-21T03:59:21.918145Z",
+  "run_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/smoke/run_20260821T034936Z",
+  "attempt": 3,
+  "budget_total": 3,
+  "n_checks": 22,
+  "n_passed": 21,
+  "n_fatal_failed": 0,
+  "n_warnings": 1,
+  "verdict": "PASS",
+  "checks": [
+    {
+      "id": "E1_proc_gone",
+      "ok": true,
+      "fatal": true,
+      "detail": "top_pid=2448921 已不在 /proc"
+    },
+    {
+      "id": "E2_log_clean_end",
+      "ok": true,
+      "fatal": true,
+      "detail": "日志末行：[11:54:14] done arm=C1 step=32/2976 reason=stop_after_step out=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/"
+    },
+    {
+      "id": "E3_no_real_errors",
+      "ok": true,
+      "fatal": true,
+      "detail": "错误样式命中 0 行（已排除 NCCL 弃用警告与 find_unused_parameters）"
+    },
+    {
+      "id": "E4_exit_code_reaped",
+      "ok": false,
+      "fatal": false,
+      "detail": "exit_code_at_settle=None；detach 后无人 wait()，这是**已知证据缺口**，不影响本次判定但正式 run 必须补上"
+    },
+    {
+      "id": "O1_step",
+      "ok": true,
+      "fatal": true,
+      "detail": "step=32 期望 32"
+    },
+    {
+      "id": "O2_total_unchanged",
+      "ok": true,
+      "fatal": true,
+      "detail": "total_steps=2976 期望 2976（smoke 不得缩减总预算）"
+    },
+    {
+      "id": "O3_reason",
+      "ok": true,
+      "fatal": true,
+      "detail": "completion_reason=stop_after_step"
+    },
+    {
+      "id": "O4_world",
+      "ok": true,
+      "fatal": true,
+      "detail": "world_size=8"
+    },
+    {
+      "id": "O5_batch",
+      "ok": true,
+      "fatal": true,
+      "detail": "per_gpu=8 global=64 accum=1（若需 per-GPU 4 + accum 2，按 §8 必须冻结到两臂并重跑 resume/parity）"
+    },
+    {
+      "id": "O6_loss_rows",
+      "ok": true,
+      "fatal": true,
+      "detail": "loss_log 32 行，step 1..32"
+    },
+    {
+      "id": "O7_lr_matches_schedule",
+      "ok": true,
+      "fatal": true,
+      "detail": "32 步 lr 与 lr_factor(step,100,2976)×3e-5 逐点相符；不符 0 处。step32 lr=9.600e-06"
+    },
+    {
+      "id": "C1_loadable",
+      "ok": true,
+      "fatal": true,
+      "detail": "b4_state_dict 255 张量（父锚点同为 255）"
+    },
+    {
+      "id": "C2_step",
+      "ok": true,
+      "fatal": true,
+      "detail": "step=32 phase_step=32"
+    },
+    {
+      "id": "C3_fork_marked",
+      "ok": true,
+      "fatal": true,
+      "detail": "not_exact_resume_of_parent=本 run 是 verified-14880 的 weights-only Phase-II fork：新 optimizer / 新 scheduler / 新 RNG / phase_step 从 0 开始。父 optimizer 与 scheduler 状态被故意丢弃，绝不可称为 exact resume。"
+    },
+    {
+      "id": "C4_opt_sched_present",
+      "ok": true,
+      "fatal": true,
+      "detail": "optimizer_state_dict / scheduler_state_dict 均在（新建的，非继承父的）"
+    },
+    {
+      "id": "C5_weights_moved",
+      "ok": true,
+      "fatal": true,
+      "detail": "value_sha16 6df1865ebbeabc74 ≠ 父 aa98fbd2fa302727，权重确实更新了"
+    },
+    {
+      "id": "S1_status",
+      "ok": true,
+      "fatal": true,
+      "detail": "status=COMPLETE"
+    },
+    {
+      "id": "S2_arm",
+      "ok": true,
+      "fatal": true,
+      "detail": "arm=C1 factual_path=recursive"
+    },
+    {
+      "id": "S3_not_formal",
+      "ok": true,
+      "fatal": true,
+      "detail": "summary 自带『非正式结果』声明"
+    },
+    {
+      "id": "S4_sim_blocked",
+      "ok": true,
+      "fatal": true,
+      "detail": "simulator_status=BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST"
+    },
+    {
+      "id": "S5_config_sha",
+      "ok": true,
+      "fatal": true,
+      "detail": "config_sha256=8b89854f87247729…"
+    },
+    {
+      "id": "S6_detached",
+      "ok": true,
+      "fatal": true,
+      "detail": "start_new_session=True 且 sid≠父 sid，VS Code 断开不会终止"
+    }
+  ],
+  "known_evidence_gap": "真实退出码未被收割（detach 后无人 wait()）。已用 /proc 消失 + 日志 done 行干净结束 + 无真实错误 间接证明。正式 run 的 watchdog 必须记录退出码。",
+  "log_mtime_note": "train.log mtime 比 done 行晚约 2.5 分钟，是 fd 关闭/NFS 属性更新所致；末尾无任何超出 done 行的内容（已逐字节核）。",
+  "lr_label_defect": "trainer L377 打印 `base_lr={g['lr']}`，而 LambdaLR 构造时已 step 一次，warmup 期该值为 0 —— 标签错，真实基准在 g['initial_lr']。已实测 32 步 lr 与 schedule 逐点相符，非训练缺陷。运行中不改冻结文件。"
+}

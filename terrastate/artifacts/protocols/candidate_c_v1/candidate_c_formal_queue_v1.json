@@ -1,0 +1,39 @@
+{
+  "schema": "candidate_c_formal_queue_v1",
+  "frozen_at_utc": "2026-08-21T09:08:00.067223Z",
+  "execution_rule": "严格顺序执行；C0R 是否运行由 C1 的机械完成门决定（跑满 14,880 updates 且主 checkpoint 可加载），与 C1 的结果好坏无关。",
+  "jobs": [
+    {
+      "job": 1,
+      "arm": "C1",
+      "seed": 42,
+      "factual_path": "recursive",
+      "config": "configs/candidate_c/candidate_c_c1_config_v1.yaml",
+      "total_updates": 14880,
+      "main_checkpoint_at_update": 14880,
+      "parent": "terrastate/v2/verified-resume14880@v1",
+      "status": "PENDING"
+    },
+    {
+      "job": 2,
+      "arm": "C0R",
+      "seed": 42,
+      "factual_path": "direct",
+      "config": "configs/candidate_c/candidate_c_c0r_config_v1.yaml",
+      "total_updates": 14880,
+      "main_checkpoint_at_update": 14880,
+      "parent": "terrastate/v2/verified-resume14880@v1",
+      "status": "PENDING",
+      "gate_to_start": "C1 机械完成（不看指标）"
+    }
+  ],
+  "not_in_this_round": {
+    "arms": [
+      "C4",
+      "C5",
+      "C0S"
+    ],
+    "reason": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+    "detail": "C4/C5 需要正式 simulator 情景库与 EO<->simulator mapping，环境中不存在；C0S 只在与 C4/C5 匹配时才有定义。"
+  }
+}

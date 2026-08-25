@@ -1,0 +1,85 @@
+{
+ "updated_utc": "2026-08-20T04:10:24.948625+00:00",
+ "hostname": "csy-zg01-gnode39",
+ "guardian_pid": 3959881,
+ "policy": {
+  "yield_to_foreign_after_launch": false,
+  "may_be_killed_by_others": true,
+  "on_killed": "wait for the card to free up, then relaunch",
+  "never_signals_foreign_processes": true,
+  "never_deletes_output": "partial output is renamed to .killed_<ts>"
+ },
+ "jobs": {
+  "gpu1_v14880_oodt_q1q2": {
+   "physical_gpu": 2,
+   "kind": "q1q2",
+   "done": true,
+   "live_pid": null,
+   "runner_alive": false
+  },
+  "gpu4_legacy11904_oodt_q1q2": {
+   "physical_gpu": 4,
+   "kind": "q1q2",
+   "done": true,
+   "live_pid": null,
+   "runner_alive": false
+  },
+  "gpu0_v14880_val_q1q2": {
+   "physical_gpu": 5,
+   "kind": "q1q2",
+   "done": true,
+   "live_pid": null,
+   "runner_alive": false
+  },
+  "gpu3_legacy11904_val_q1q2": {
+   "physical_gpu": 6,
+   "kind": "q1q2",
+   "done": true,
+   "live_pid": null,
+   "runner_alive": false
+  },
+  "gpu2_v14880_oodt_q3": {
+   "physical_gpu": 5,
+   "kind": "q3",
+   "done": true,
+   "live_pid": null,
+   "runner_alive": false
+  },
+  "gpu5_legacy11904_oodt_q3": {
+   "physical_gpu": 6,
+   "kind": "q3",
+   "done": true,
+   "live_pid": null,
+   "runner_alive": false
+  }
+ },
+ "gpu": {
+  "2": {
+   "mem": 0,
+   "util": 0,
+   "mine": [],
+   "foreign": []
+  },
+  "4": {
+   "mem": 0,
+   "util": 0,
+   "mine": [],
+   "foreign": []
+  },
+  "5": {
+   "mem": 0,
+   "util": 0,
+   "mine": [],
+   "foreign": []
+  },
+  "6": {
+   "mem": 0,
+   "util": 0,
+   "mine": [],
+   "foreign": []
+  }
+ },
+ "waiting_for_gpu": [],
+ "relaunched_this_round": [],
+ "remaining": []
+}

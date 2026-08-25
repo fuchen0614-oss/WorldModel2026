@@ -1,0 +1,1 @@
+{"rank": 0, "q_last_block_sha": "", "q_grad_seen_stage3": false, "n_trainable_q": 0, "step": 4, "final_stage": 2, "model_sha": "55e170d991fb95a4d475be16b20786f9e6737374ea79117bc57341fe44e3880d", "future_state_scale": 0.0, "stop_after_step": 4, "global_batch": 2, "accum": 1, "effective_lambdas": [0.0, 0.0, 0.0, 0.0]}

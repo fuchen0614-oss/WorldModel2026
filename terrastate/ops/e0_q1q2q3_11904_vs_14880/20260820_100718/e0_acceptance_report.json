@@ -1,0 +1,1018 @@
+{
+ "schema": "e0_acceptance_report_v1",
+ "accepted": true,
+ "checks": [
+  {
+   "name": "launch_record_exists",
+   "ok": true,
+   "detail": "6 任务"
+  },
+  {
+   "name": "all_six_jobs_launched",
+   "ok": true,
+   "detail": "6/6"
+  },
+  {
+   "name": "gpu0_v14880_val_q1q2:exit_code_0",
+   "ok": true,
+   "detail": "rc=0"
+  },
+  {
+   "name": "gpu0_v14880_val_q1q2:not_interrupted",
+   "ok": true,
+   "detail": "正常"
+  },
+  {
+   "name": "gpu0_v14880_val_q1q2:ckpt_unchanged",
+   "ok": true,
+   "detail": "a5d2a0cc...==a5d2a0cc..."
+  },
+  {
+   "name": "gpu0_v14880_val_q1q2:validation_manifest",
+   "ok": true,
+   "detail": "d9bd91d6..."
+  },
+  {
+   "name": "gpu0_v14880_val_q1q2:result_json",
+   "ok": true,
+   "detail": "7479B"
+  },
+  {
+   "name": "gpu0_v14880_val_q1q2:COMPLETE",
+   "ok": true,
+   "detail": "COMPLETE"
+  },
+  {
+   "name": "gpu0_v14880_val_q1q2:n_targets",
+   "ok": true,
+   "detail": "952"
+  },
+  {
+   "name": "gpu0_v14880_val_q1q2:r2_finite",
+   "ok": true,
+   "detail": "R2=0.49709355615470024"
+  },
+  {
+   "name": "gpu0_v14880_val_q1q2:rmse_finite",
+   "ok": true,
+   "detail": "rmse=0.15733399506089182"
+  },
+  {
+   "name": "gpu1_v14880_oodt_q1q2:exit_code_0",
+   "ok": true,
+   "detail": "rc=0"
+  },
+  {
+   "name": "gpu1_v14880_oodt_q1q2:not_interrupted",
+   "ok": true,
+   "detail": "正常"
+  },
+  {
+   "name": "gpu1_v14880_oodt_q1q2:ckpt_unchanged",
+   "ok": true,
+   "detail": "a5d2a0cc...==a5d2a0cc..."
+  },
+  {
+   "name": "gpu1_v14880_oodt_q1q2:ood-t_manifest",
+   "ok": true,
+   "detail": "58c8d648..."
+  },
+  {
+   "name": "gpu1_v14880_oodt_q1q2:result_json",
+   "ok": true,
+   "detail": "7535B"
+  },
+  {
+   "name": "gpu1_v14880_oodt_q1q2:COMPLETE",
+   "ok": true,
+   "detail": "COMPLETE"
+  },
+  {
+   "name": "gpu1_v14880_oodt_q1q2:n_targets",
+   "ok": true,
+   "detail": "1904"
+  },
+  {
+   "name": "gpu1_v14880_oodt_q1q2:r2_finite",
+   "ok": true,
+   "detail": "R2=0.5692781483135535"
+  },
+  {
+   "name": "gpu1_v14880_oodt_q1q2:rmse_finite",
+   "ok": true,
+   "detail": "rmse=0.15062711918297353"
+  },
+  {
+   "name": "gpu2_v14880_oodt_q3:exit_code_0",
+   "ok": true,
+   "detail": "rc=0"
+  },
+  {
+   "name": "gpu2_v14880_oodt_q3:not_interrupted",
+   "ok": true,
+   "detail": "正常"
+  },
+  {
+   "name": "gpu2_v14880_oodt_q3:ckpt_unchanged",
+   "ok": true,
+   "detail": "a5d2a0cc...==a5d2a0cc..."
+  },
+  {
+   "name": "gpu2_v14880_oodt_q3:ood-t_manifest",
+   "ok": true,
+   "detail": "58c8d648..."
+  },
+  {
+   "name": "gpu2_v14880_oodt_q3:result_json",
+   "ok": true,
+   "detail": "135432B"
+  },
+  {
+   "name": "gpu2_v14880_oodt_q3:final",
+   "ok": true,
+   "detail": "final"
+  },
+  {
+   "name": "gpu2_v14880_oodt_q3:84pairs",
+   "ok": true,
+   "detail": "84"
+  },
+  {
+   "name": "gpu3_legacy11904_val_q1q2:exit_code_0",
+   "ok": true,
+   "detail": "rc=0"
+  },
+  {
+   "name": "gpu3_legacy11904_val_q1q2:not_interrupted",
+   "ok": true,
+   "detail": "正常"
+  },
+  {
+   "name": "gpu3_legacy11904_val_q1q2:ckpt_unchanged",
+   "ok": true,
+   "detail": "644deaac...==644deaac..."
+  },
+  {
+   "name": "gpu3_legacy11904_val_q1q2:validation_manifest",
+   "ok": true,
+   "detail": "d9bd91d6..."
+  },
+  {
+   "name": "gpu3_legacy11904_val_q1q2:result_json",
+   "ok": true,
+   "detail": "7313B"
+  },
+  {
+   "name": "gpu3_legacy11904_val_q1q2:COMPLETE",
+   "ok": true,
+   "detail": "COMPLETE"
+  },
+  {
+   "name": "gpu3_legacy11904_val_q1q2:n_targets",
+   "ok": true,
+   "detail": "952"
+  },
+  {
+   "name": "gpu3_legacy11904_val_q1q2:r2_finite",
+   "ok": true,
+   "detail": "R2=0.49732196418835595"
+  },
+  {
+   "name": "gpu3_legacy11904_val_q1q2:rmse_finite",
+   "ok": true,
+   "detail": "rmse=0.1572881669325748"
+  },
+  {
+   "name": "gpu4_legacy11904_oodt_q1q2:exit_code_0",
+   "ok": true,
+   "detail": "rc=0"
+  },
+  {
+   "name": "gpu4_legacy11904_oodt_q1q2:not_interrupted",
+   "ok": true,
+   "detail": "正常"
+  },
+  {
+   "name": "gpu4_legacy11904_oodt_q1q2:ckpt_unchanged",
+   "ok": true,
+   "detail": "644deaac...==644deaac..."
+  },
+  {
+   "name": "gpu4_legacy11904_oodt_q1q2:ood-t_manifest",
+   "ok": true,
+   "detail": "58c8d648..."
+  },
+  {
+   "name": "gpu4_legacy11904_oodt_q1q2:result_json",
+   "ok": true,
+   "detail": "7361B"
+  },
+  {
+   "name": "gpu4_legacy11904_oodt_q1q2:COMPLETE",
+   "ok": true,
+   "detail": "COMPLETE"
+  },
+  {
+   "name": "gpu4_legacy11904_oodt_q1q2:n_targets",
+   "ok": true,
+   "detail": "1904"
+  },
+  {
+   "name": "gpu4_legacy11904_oodt_q1q2:r2_finite",
+   "ok": true,
+   "detail": "R2=0.5693493611664086"
+  },
+  {
+   "name": "gpu4_legacy11904_oodt_q1q2:rmse_finite",
+   "ok": true,
+   "detail": "rmse=0.1505941190915099"
+  },
+  {
+   "name": "gpu5_legacy11904_oodt_q3:exit_code_0",
+   "ok": true,
+   "detail": "rc=0"
+  },
+  {
+   "name": "gpu5_legacy11904_oodt_q3:not_interrupted",
+   "ok": true,
+   "detail": "正常"
+  },
+  {
+   "name": "gpu5_legacy11904_oodt_q3:ckpt_unchanged",
+   "ok": true,
+   "detail": "644deaac...==644deaac..."
+  },
+  {
+   "name": "gpu5_legacy11904_oodt_q3:ood-t_manifest",
+   "ok": true,
+   "detail": "58c8d648..."
+  },
+  {
+   "name": "gpu5_legacy11904_oodt_q3:result_json",
+   "ok": true,
+   "detail": "135430B"
+  },
+  {
+   "name": "gpu5_legacy11904_oodt_q3:final",
+   "ok": true,
+   "detail": "final"
+  },
+  {
+   "name": "gpu5_legacy11904_oodt_q3:84pairs",
+   "ok": true,
+   "detail": "84"
+  },
+  {
+   "name": "historical_ref",
+   "ok": true,
+   "detail": "57 指标"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q1_f",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q1_f",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q1_f",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q1_f",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=0e+00"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu3_legacy11904_val_q1q2:Q2_l",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q1_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q1_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q1_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q1_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=0e+00"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu4_legacy11904_oodt_q1q2:Q2_",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=0e+00"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=0e+00"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-05"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=1e-04"
+  },
+  {
+   "name": "repro:gpu5_legacy11904_oodt_q3:model",
+   "ok": true,
+   "detail": "Δ=0.00e+00 tol=0e+00"
+  }
+ ],
+ "failures": [],
+ "reproduction": {
+  "status": "reproduced",
+  "deltas": [
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q1_forecast.full.R2",
+    "want": 0.49732196418835595,
+    "got": 0.49732196418835595,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q1_forecast.full.biasabs",
+    "want": 0.0997195960230769,
+    "got": 0.0997195960230769,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q1_forecast.full.nse",
+    "want": -0.15475482758989223,
+    "got": -0.15475482758989223,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q1_forecast.full.rmse",
+    "want": 0.1572881669325748,
+    "got": 0.1572881669325748,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.T_identity.R2",
+    "want": 0.48541607437960566,
+    "got": 0.48541607437960566,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.T_identity.rmse",
+    "want": 0.26101825809538115,
+    "got": 0.26101825809538115,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.alpha0.R2",
+    "want": 0.48610753997662814,
+    "got": 0.48610753997662814,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.alpha0.rmse",
+    "want": 0.17101334735930204,
+    "got": 0.17101334735930204,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_high",
+    "want": 0.02590229577842624,
+    "got": 0.02590229577842624,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_low",
+    "want": 0.006432408120151691,
+    "got": 0.006432408120151691,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.mean",
+    "want": 0.01616252595360122,
+    "got": 0.01616252595360122,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.paired.n",
+    "want": 589,
+    "got": 589,
+    "delta": 0,
+    "tol": 0.0,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.full.R2",
+    "want": 0.49732196418835595,
+    "got": 0.49732196418835595,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.full.rmse",
+    "want": 0.1572881669325748,
+    "got": 0.1572881669325748,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.official_R2_full_minus_Tid",
+    "want": 0.011905889808750292,
+    "got": 0.011905889808750292,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.official_R2_full_minus_alpha0",
+    "want": 0.011214424211727803,
+    "got": 0.011214424211727803,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_high",
+    "want": 0.026960749441100905,
+    "got": 0.026960749441100905,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_low",
+    "want": 0.007824839508750908,
+    "got": 0.007824839508750908,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu3_legacy11904_val_q1q2:Q2_load_bearing.transition_identity.bootstrap95.mean",
+    "want": 0.017417428921451206,
+    "got": 0.017417428921451206,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.R2",
+    "want": 0.5693493611664086,
+    "got": 0.5693493611664086,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.biasabs",
+    "want": 0.10082906836242285,
+    "got": 0.10082906836242285,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.nse",
+    "want": -0.09865601980139305,
+    "got": -0.09865601980139305,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.rmse",
+    "want": 0.1505941190915099,
+    "got": 0.1505941190915099,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.T_identity.R2",
+    "want": 0.5476642387248465,
+    "got": 0.5476642387248465,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.T_identity.rmse",
+    "want": 0.2583161903165088,
+    "got": 0.2583161903165088,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.alpha0.R2",
+    "want": 0.5493773508945857,
+    "got": 0.5493773508945857,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.alpha0.rmse",
+    "want": 0.16518774015828974,
+    "got": 0.16518774015828974,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_high",
+    "want": 0.03017606928017251,
+    "got": 0.03017606928017251,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_low",
+    "want": 0.014219898623411737,
+    "got": 0.014219898623411737,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.mean",
+    "want": 0.021997768589881533,
+    "got": 0.021997768589881533,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.paired.n",
+    "want": 1019,
+    "got": 1019,
+    "delta": 0,
+    "tol": 0.0,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.full.R2",
+    "want": 0.5693493611664086,
+    "got": 0.5693493611664086,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.full.rmse",
+    "want": 0.1505941190915099,
+    "got": 0.1505941190915099,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.official_R2_full_minus_Tid",
+    "want": 0.021685122441562066,
+    "got": 0.021685122441562066,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.official_R2_full_minus_alpha0",
+    "want": 0.019972010271822827,
+    "got": 0.019972010271822827,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_high",
+    "want": 0.032169788967835664,
+    "got": 0.032169788967835664,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_low",
+    "want": 0.016086752271438905,
+    "got": 0.016086752271438905,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.transition_identity.bootstrap95.mean",
+    "want": 0.024015932710944276,
+    "got": 0.024015932710944276,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.n_control",
+    "want": 45,
+    "got": 45,
+    "delta": 0,
+    "tol": 0.0,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.n_extreme",
+    "want": 84,
+    "got": 84,
+    "delta": 0,
+    "tol": 0.0,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.actual.R2",
+    "want": 0.6253516462782711,
+    "got": 0.6253516462782711,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.actual.rmse",
+    "want": 0.14915162604727777,
+    "got": 0.14915162604727777,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.donor.R2",
+    "want": 0.5893404938146756,
+    "got": 0.5893404938146756,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.donor.rmse",
+    "want": 0.15841893205313404,
+    "got": 0.15841893205313404,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.mean.R2",
+    "want": 0.5430064798749749,
+    "got": 0.5430064798749749,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.mean.rmse",
+    "want": 0.19709368956822035,
+    "got": 0.19709368956822035,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.delta_loss_mean",
+    "want": 0.002565468112672014,
+    "got": 0.002565468112672014,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.geo_cluster_bootstrap.ci_high",
+    "want": 0.003987491067301663,
+    "got": 0.003987491067301663,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.geo_cluster_bootstrap.ci_low",
+    "want": 0.0011187122087714869,
+    "got": 0.0011187122087714869,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.paired_bootstrap.ci_high",
+    "want": 0.003982677219236003,
+    "got": 0.003982677219236003,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.paired_bootstrap.ci_low",
+    "want": 0.0011953603675855058,
+    "got": 0.0011953603675855058,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.delta_loss_mean",
+    "want": 0.011261332329706334,
+    "got": 0.011261332329706334,
+    "delta": 0.0,
+    "tol": 1e-05,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.geo_cluster_bootstrap.ci_high",
+    "want": 0.0170799320898515,
+    "got": 0.0170799320898515,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.geo_cluster_bootstrap.ci_low",
+    "want": 0.005465624536528642,
+    "got": 0.005465624536528642,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.paired_bootstrap.ci_high",
+    "want": 0.015303447515283812,
+    "got": 0.015303447515283812,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.paired_bootstrap.ci_low",
+    "want": 0.007529678631856639,
+    "got": 0.007529678631856639,
+    "delta": 0.0,
+    "tol": 0.0001,
+    "ok": true
+   },
+   {
+    "key": "gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.n_pairs",
+    "want": 84,
+    "got": 84,
+    "delta": 0,
+    "tol": 0.0,
+    "ok": true
+   }
+  ]
+ }
+}

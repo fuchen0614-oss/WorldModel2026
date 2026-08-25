@@ -1,0 +1,99 @@
+{
+ "schema": "e0_launch_record_raw_merged_v1",
+ "source_shards": [
+  {
+   "path": "launch_record_shard_pgpu2.json",
+   "sha256": "d994a20ab4a1581830b1a768a6f0c2ba6a911d45e88c5a3acd14b9de0903076b",
+   "physical_gpu": 2,
+   "job_count": 1
+  },
+  {
+   "path": "launch_record_shard_pgpu4.json",
+   "sha256": "6619af4e53834fe334872f7b25c8e059a624fa11901fced3d91b5ef1214aa3b0",
+   "physical_gpu": 4,
+   "job_count": 1
+  },
+  {
+   "path": "launch_record_shard_pgpu5.json",
+   "sha256": "49558f3f7a88b67dd160abc5a1ae90dc3cd2d6ab11e62673195cdf0adeb1e501",
+   "physical_gpu": 5,
+   "job_count": 2
+  },
+  {
+   "path": "launch_record_shard_pgpu6.json",
+   "sha256": "b9e4fd920dec2c82a8e12b762c46c490fb9a4e605b755769cf5b8871458578a3",
+   "physical_gpu": 6,
+   "job_count": 2
+  }
+ ],
+ "jobs": [
+  {
+   "name": "gpu1_v14880_oodt_q1q2",
+   "physical_gpu": 2,
+   "pid": 3859216,
+   "exit_code": 0,
+   "started_utc": "2026-08-20T03:40:08Z",
+   "checkpoint_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+   "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu1_v14880_oodt_q1q2",
+   "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu1_v14880_oodt_q1q2.log",
+   "expected_targets": 1904
+  },
+  {
+   "name": "gpu4_legacy11904_oodt_q1q2",
+   "physical_gpu": 4,
+   "pid": 3859304,
+   "exit_code": 0,
+   "started_utc": "2026-08-20T04:10:01Z",
+   "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+   "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu4_legacy11904_oodt_q1q2",
+   "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu4_legacy11904_oodt_q1q2.log",
+   "expected_targets": 1904
+  },
+  {
+   "name": "gpu0_v14880_val_q1q2",
+   "physical_gpu": 5,
+   "pid": 3859325,
+   "exit_code": 0,
+   "started_utc": "2026-08-20T03:27:18Z",
+   "checkpoint_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+   "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu0_v14880_val_q1q2",
+   "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu0_v14880_val_q1q2.log",
+   "expected_targets": 952
+  },
+  {
+   "name": "gpu2_v14880_oodt_q3",
+   "physical_gpu": 5,
+   "pid": 3933274,
+   "exit_code": 0,
+   "started_utc": "2026-08-20T03:46:39Z",
+   "checkpoint_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+   "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu2_v14880_oodt_q3",
+   "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu2_v14880_oodt_q3.log",
+   "kind": "q3",
+   "expected_pairs": 84
+  },
+  {
+   "name": "gpu3_legacy11904_val_q1q2",
+   "physical_gpu": 6,
+   "pid": 3859405,
+   "exit_code": 0,
+   "started_utc": "2026-08-20T03:40:23Z",
+   "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+   "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu3_legacy11904_val_q1q2",
+   "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu3_legacy11904_val_q1q2.log",
+   "expected_targets": 952
+  },
+  {
+   "name": "gpu5_legacy11904_oodt_q3",
+   "physical_gpu": 6,
+   "pid": 3949454,
+   "exit_code": 0,
+   "started_utc": "2026-08-20T03:57:49Z",
+   "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+   "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu5_legacy11904_oodt_q3",
+   "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu5_legacy11904_oodt_q3.log",
+   "kind": "q3",
+   "expected_pairs": 84
+  }
+ ]
+}

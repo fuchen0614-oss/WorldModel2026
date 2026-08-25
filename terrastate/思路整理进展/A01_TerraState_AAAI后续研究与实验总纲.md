@@ -75,16 +75,23 @@ $$
 > [!warning] Q3 数值口径
 > 极端子集的 $R^2=0.6254$ 不是完整 OOD-t 主表成绩。完整 OOD-t 为 $R^2=0.56935$、RMSE $=0.15059$。Q3 只支持 weather-response fidelity，不支持热旱特异增强。
 
+**|ΔR²| < 0.01 的地位**（见 A03 §4.2）：这是一条**描述性对齐标准**，用于陈述两个 checkpoint 的表现接近程度。它**不是**统计显著性检验，也**不是**成功门或 checkpoint 选择门。它**没有被废除**，仍作为描述性口径继续使用。
+
 ### 2.3 固定检查点
 
-后续研究统一使用第 40 轮、14,880 训练步权重作为旧模型的唯一固定检查点：
+**三份 checkpoint 及其角色**（详见 A03 §2.1）：
 
-- 文件大小为 `44,300,969` bytes；
-- SHA-256 为 `99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b`；
+| checkpoint | 步数 | 角色 | 文件 SHA-256 | 字节 |
+|---|---|---|---|---|
+| 边界 11,904 | 11,904 | 续训父节点 | `644deaac...` | 37,972,401 |
+| verified 14,880 | 14,880 | E0 验证产物 | `a5d2a0cc...` | 44,302,057 |
+| 历史 14,880 | 14,880 | 旧模型 canonical | `99f15a35...` | 44,300,969 |
+
+**权重同一性边界**：verified 14,880 与历史 14,880 的 255 个模型张量逐值相同（`value_sha=aa98fbd2fa302727`，max abs diff = 0），但文件 SHA-256 不同（verified 版携带 B5 谱系块）。**11,904 与 14,880 不是同一模型状态** —— 二者在同一 split 上的评测结果本身就不同（见 A03 §3.1）。
 
 后续处理原则：
 
-1. 14,880 固定为旧模型扩展研究的 canonical checkpoint；
+1. 历史 14,880（`99f15a35...`）固定为旧模型扩展研究的 canonical checkpoint；
 2. Q1/Q2/Q3 统一在该权重上执行；
 3. Candidate C 使用自己的唯一 checkpoint 和独立 provenance；
 4. 旧模型协议与绘图代码可以复用，但旧模型结果不能代替新模型结果。
@@ -238,6 +245,8 @@ $$
 
 旧 future-state anchor 仅作为消融项，不默认进入 full Candidate C。
 
+**λ 系数取值为暂定**。正式确定前须先做 loss/gradient scale pilot 确定合理范围，再在 validation 上选择并冻结，不用 OOD test 选择。
+
 ### 4.5 多保真训练角色
 
 | 数据层 | 作用 | 不能替代什么 |
@@ -281,6 +290,8 @@ flowchart LR
 | **T7** | 建立可读视觉证据 | 预测、误差、状态贡献、天气干预、组合路径、失败案例 | Figure suite、sample manifest | 必做 |
 | **T8** | 形成 venue 版本 | 顶会主版；TIP 条件改造；遥感期刊后备 | 对应图表组合与主张边界 | 分叉 |
 
+**T3 与 T5 的 manifest 冻结时机**：T3 smoke 阶段使用合成小样本快速验证代码合同，无需冻结情景 manifest；T5 正式训练前必须先构建并冻结适用范围明确的 simulator 情景库（scenario manifest + SHA + 适用地类说明），冻结后才可开展 C4/C5 的正式 paired 训练与评测。
+
 > [!important] 复用边界
 > T0–T2 的 manifest、evaluator、统计和绘图代码可以复用于 Candidate C，但旧模型结果不能成为新模型结果。模型结构改变后，T6 必须完整重跑。
 
@@ -293,6 +304,8 @@ flowchart LR
 
 ### 6.1 E0：canonical checkpoint 固定
 
+**状态**：✅ **已完成**（2026-08-20，v3 验收 ACCEPTED，732 checks / 0 failures，历史复现 57/57 bit-identical）
+
 **目的**：固定旧模型的唯一检查点、数据协议和结果来源。
 
 **工作**：
@@ -304,6 +317,8 @@ flowchart LR
 5. 输出单一 provenance JSON 和简表。
 
 **验收**：每个扩展研究数字都能追溯到固定的 14,880 checkpoint、同一 scorer 和明确的 split。
+
+**成果**：`ops/e0_q1q2q3_11904_vs_14880/20260820_100718/` 九件 `_v3` 工件，详见 [A03 §五](./A03_TerraState_关键实验结果与决策总账.md)。
 
 ### 6.2 E1：同协议性能主表
 

@@ -1,0 +1,71 @@
+{
+  "schema": "pilot372_authorization_v1",
+  "authorized_at_utc": "2026-08-21T08:13:51.178837Z",
+  "authorized_by": "user",
+  "ruling_on_p6": "P6_val_dev_computable 的 UNSATISFIABLE_BY_DESIGN 属于验收判据编写疏忽，不是模型、数据或工程缺陷",
+  "resolution": "最小修复方案：新建独立 372-update validation-capable pilot",
+  "derivation": {
+    "parent_config": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml",
+    "parent_sha256": "d8ab36586f7313173c2f1f7d3fc0bc31d78dd282e9a7a817e9b7b60a1bc1be4e",
+    "only_allowed_change": "stop-after-step: 0 -> 372",
+    "must_not_change": [
+      "val_interval (必须保持 372)",
+      "total_steps (必须保持 2976)",
+      "pilot_contract.json 中 must_inherit_unchanged 的全部 30 项"
+    ],
+    "lambdas_must_stay_zero": "z / y / pair / nc 全部保持 0，不得像 smoke 那样调成非零"
+  },
+  "execution_sequence": [
+    "1. 复核冻结配置、SHA sidecar、数据 manifest SHA（train=17c645d92e9dd4c3、val=555d44c0d59ab390）、CPU preflight",
+    "2. 现场执行 GPU 空闲门，5 轮 × 60s 连续通过，阈值沿用 mem_baseline 64 MiB / util 5% / min_free 200 GiB，并逐一核对 8 个 GPU UUID 与 expected_uuids 一致",
+    "3. 运行 372-update pilot（--kind pilot，8 ranks）",
+    "4. pilot 全部硬门通过 -> 写入 FORMAL_READY",
+    "5. 按 run_queue.json 冻结顺序执行 job 1 = Arm-C1（arm=C1、factual_path=recursive、2,976 updates）",
+    "6. C1 达成机械完成门（跑满 2,976 updates、completion_reason=schedule_complete、主 checkpoint 可加载）后，无论指标好坏，机械触发 job 2 = Arm-C0R（arm=C0R、factual_path=direct、同预算 2,976 updates）",
+    "7. 每个阶段结束后更新 state.json、A04 总账与 STATUS.md，全部数值机械生成，零手打"
+  ],
+  "revised_pilot_acceptance_criteria": {
+    "keep_from_original": [
+      "P1_completes_372_steps",
+      "P2_no_oom",
+      "P3_loss_all_finite",
+      "P4_no_divergence",
+      "P5_lr_matches_schedule",
+      "P7_ckpt_loadable",
+      "P8_zero_overrides",
+      "P9_no_test_ood",
+      "P10_grad_finite"
+    ],
+    "replace_p6_with": {
+      "id": "P6_val_dev_computable",
+      "fatal": true,
+      "requirement": "在 step 372 触发一次真实 8-rank val_dev forward，产出非 None 的 best_val_dev_endpoint_mse",
+      "observation_limit": "仅允许 val_dev（selector: validation_subsplit.val_dev.ids）；val_locked、ood_t、test 一律禁止"
+    }
+  },
+  "fail_closed_boundaries": [
+    "pilot 任一 fatal 判据失败",
+    "需要改变 batch size（含 per-GPU 8 -> 4 + accum 2 的 OOM 回退）",
+    "需要改变学习率、损失权重、seed、total_steps 或 val_interval",
+    "需要修改 train_terrastate_candidate_c.py 等已冻结代码",
+    "GPU 空闲门未连续 5 轮通过，或中途出现他人进程"
+  ],
+  "oom_protocol": "遇 OOM 不得自行降 batch：per-GPU 4 + accum 2 必须同时冻结到两臂并重跑 resume/parity 测试，决定权在我不在你",
+  "gpu_highest_principle": "永远不要影响别人的运行。启动前必须现场确认 8 卡连续完全空闲；运行中若发现他人任务进入，不得抢占、不得 kill 他人进程，按既有纪律记录并汇报。只允许 kill 属于 zjliu17 的占位训练；任何非 zjliu17 的进程一律不得触碰。",
+  "prohibitions": [
+    "不得进行第四次 smoke；smoke 工程门已关闭",
+    "不得把 pilot 改名为 formal 或反之来规避预算",
+    "不得启动 C4 / C5 / C0S（simulator 情景库与 mapping 不存在，硬阻塞）",
+    "不得用 OOD/test 选择 λ、arm 或 checkpoint；主 checkpoint 固定为 update 2,976",
+    "不得访问或操作 obsworld/**；该占位任务已自然完成",
+    "不得把计划写成已完成事实，不得把 smoke/pilot 结论写成正式结果"
+  ],
+  "expected_duration_by_pilot_steady_state_1_36_it_per_s": {
+    "pilot372": "约 5 分钟",
+    "C1": "约 37 分钟",
+    "C0R": "约 37 分钟",
+    "total_with_gates_and_acceptance": "约 1.5-2 小时"
+  },
+  "note": "若实测显著偏离，如实汇报，不得为迁就 ETA 改动任何参数",
+  "output_dir_rule": "必须使用全新输出目录，不得复用、删除、改名或覆盖 run_20260821T040602Z"
+}

@@ -1,0 +1,283 @@
+{
+  "schema": "candidate_c_launcher_verification_v1",
+  "verified_at_utc": "2026-08-20T20:42:00.233717Z",
+  "launcher": {
+    "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/launch_candidate_c.py",
+    "sha256": "058edf2f5c55c405240504e0ed88d80b32bc1f18925b827d42025ada8f7c70f9"
+  },
+  "configs": {
+    "C1": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml",
+      "sha256": "d8ab36586f7313173c2f1f7d3fc0bc31d78dd282e9a7a817e9b7b60a1bc1be4e"
+    },
+    "C0R": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c0r_config_v1.yaml",
+      "sha256": "9ca75acd1ad77a279fdbf8f97b80cb913178d1f798d497fe702223a19cb6701b"
+    },
+    "smoke": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/configs/candidate_c_smoke_config_v1.yaml",
+      "sha256": "8b89854f87247729652ebb4a53d9cabc969e656888fb61dab3c1be5633f95e53"
+    }
+  },
+  "positive": {
+    "C1": {
+      "rc": 0,
+      "cmd_shell": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -m torch.distributed.run --standalone --nproc_per_node=8 /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --arm C1 --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path recursive --global-batch 64 --grad-clip 1.0 --lambda-nc 0.0 --lambda-pair 0.0 --lambda-y 0.0 --lambda-z 0.0 --log-interval 10 --lr-warmup-steps 100 --max-epochs 8 --max-steps 0 --num-workers 8 --output-dir /tmp/_verify_C1 --parent-alias terrastate/v2/default-training-anchor --parent-ckpt '' --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 0 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "stderr": ""
+    },
+    "C0R": {
+      "rc": 0,
+      "cmd_shell": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -m torch.distributed.run --standalone --nproc_per_node=8 /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --arm C0R --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path direct --global-batch 64 --grad-clip 1.0 --lambda-nc 0.0 --lambda-pair 0.0 --lambda-y 0.0 --lambda-z 0.0 --log-interval 10 --lr-warmup-steps 100 --max-epochs 8 --max-steps 0 --num-workers 8 --output-dir /tmp/_verify_C0R --parent-alias terrastate/v2/default-training-anchor --parent-ckpt '' --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 0 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "stderr": ""
+    },
+    "smoke": {
+      "rc": 0,
+      "cmd_shell": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python -m torch.distributed.run --standalone --nproc_per_node=8 /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/train/train_terrastate_candidate_c.py --allow-nonzero-lambdas --arm C1 --branch-lr 3e-05 --ckpt-interval 372 --days-per-transition-step 5 --device cuda --eo-endpoint-weight 1.0 --eo-traj-weight 1.0 --expect-train-manifest-sha 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554 --expect-val-manifest-sha 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9 --factual-path recursive --global-batch 64 --grad-clip 1.0 --lambda-nc 0.01 --lambda-pair 0.0 --lambda-y 1.0 --lambda-z 0.1 --log-interval 10 --lr-warmup-steps 100 --max-epochs 8 --max-steps 0 --num-workers 8 --output-dir /tmp/_verify_smoke --parent-alias terrastate/v2/default-training-anchor --parent-ckpt '' --per-gpu-batch 8 --q-lr-scale 0.033 --q4-partition-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json --seed 42 --state-dim 256 --stop-after-step 32 --train-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train --unfreeze-q-prefixes core.blocks.2. --val-dir /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped --val-interval 372 --val-split-manifest /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json --val-split-selector validation_subsplit.val_dev.ids --verify-data-manifest --weight-decay 0.0",
+      "stderr": ""
+    }
+  },
+  "negative": [
+    {
+      "config": "smoke",
+      "override": "lambda-pair=0.5",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "λ_pair 闸门必须对非正式配置也生效（smoke attempt 1 的真实死因）",
+      "launcher_message": "lambda-pair=0.5: 必须为 0 —— L_pair 需要 paired simulator truth，本轮 simulator 情景库不存在（trainer 无条件拒绝，--allow-nonzero-lambdas 也放不开）"
+    },
+    {
+      "config": "smoke",
+      "override": "lambda-pair=0.001",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "任何非零 λ_pair 都必须被拒，不存在'小到可以忽略'",
+      "launcher_message": "lambda-pair=0.001: 必须为 0 —— L_pair 需要 paired simulator truth，本轮 simulator 情景库不存在（trainer 无条件拒绝，--allow-nonzero-lambdas 也放不开）"
+    },
+    {
+      "config": "C1",
+      "override": "lambda-z=0.1",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "正式臂 λ 必须为 0",
+      "launcher_message": "lambda-z: 正式臂必须为 0，实际 0.1"
+    },
+    {
+      "config": "C1",
+      "override": "lambda-nc=0.01",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "正式臂 λ 必须为 0",
+      "launcher_message": "lambda-nc: 正式臂必须为 0，实际 0.01"
+    },
+    {
+      "config": "C1",
+      "override": "allow-unverified-parent=true",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "正式 run 禁止跳过父权重校验",
+      "launcher_message": "allow-unverified-parent: 正式臂禁止使用"
+    },
+    {
+      "config": "C1",
+      "override": "allow-nonzero-lambdas=true",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "正式臂禁止开非零 λ 开关",
+      "launcher_message": "allow-nonzero-lambdas: 正式臂禁止使用"
+    },
+    {
+      "config": "C1",
+      "override": "allow-existing-out=true",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "正式 run 禁止写进已有 run 目录",
+      "launcher_message": "allow-existing-out: 正式臂禁止使用"
+    },
+    {
+      "config": "C1",
+      "override": "stop-after-step=32",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "正式臂必须跑满预注册 schedule",
+      "launcher_message": "stop-after-step: 正式臂必须为 0（跑满预注册 schedule）"
+    },
+    {
+      "config": "C1",
+      "override": "max-steps=100",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "正式臂必须跑满预注册 schedule",
+      "launcher_message": "max-steps: 正式臂必须为 0（跑满预注册 schedule）"
+    },
+    {
+      "config": "C1",
+      "override": "verify-data-manifest=false",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "正式 run 必须校验数据指纹",
+      "launcher_message": "verify-data-manifest: 正式 run 必须开启"
+    },
+    {
+      "config": "C1",
+      "override": "expect-train-manifest-sha=",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "正式 run 的期望指纹不得为空",
+      "launcher_message": "expect-train-manifest-sha: 正式 run 必须非空"
+    },
+    {
+      "config": "C1",
+      "override": "expect-train-manifest-sha=null",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "null 不得被当成'非空指纹'",
+      "launcher_message": "expect-train-manifest-sha: 值为 null；要留空请写空字符串，不要用 null"
+    },
+    {
+      "config": "C1",
+      "override": "expect-train-manifest-sha=17c645d9",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "截断的指纹必须被拒（非 64 位 hex）",
+      "launcher_message": "expect-train-manifest-sha: 必须是 64 位小写 hex sha256，实际 '17c645d9'"
+    },
+    {
+      "config": "C1",
+      "override": "expect-val-manifest-sha=555D44C0D59AB3902CF7D929CA86CE8BF4E3CE7CFDA66C1C72B45A2ED3FD76C9",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "大写 hex 与 sha256_file 的输出不一致，必须被拒",
+      "launcher_message": "expect-val-manifest-sha: 必须是 64 位小写 hex sha256，实际 '555D44C0D59AB3902CF7D929CA86CE8BF4E3CE7CFDA66C1C72B45A2ED3FD76C9'"
+    },
+    {
+      "config": "C1",
+      "override": "val-split-selector=validation_subsplit.val_locked.ids",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "锁定门不得进训练期观测",
+      "launcher_message": "val-split-selector='validation_subsplit.val_locked.ids': val_locked 是最终锁定门，训练期不得作为观测 split"
+    },
+    {
+      "config": "C1",
+      "override": "val-split-selector=splits.val_dev.ids",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "attempt 2 的错误 selector：冻结 manifest 没有 splits 顶层键",
+      "launcher_message": "val-split-selector=splits.val_dev.ids: 在 candidate_c_eo_split_manifest_v1.json 里解析不到（\"选择器 'splits.val_dev.ids' 在 'splits' 处不存在\"）。逐 flag 校验发现不了这种错，必须跨工件解析。"
+    },
+    {
+      "config": "C1",
+      "override": "val-split-selector=validation_subsplit.nonexistent.ids",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "解析不到的 selector 必须被拒",
+      "launcher_message": "val-split-selector=validation_subsplit.nonexistent.ids: 在 candidate_c_eo_split_manifest_v1.json 里解析不到（\"选择器 'validation_subsplit.nonexistent.ids' 在 'nonexistent' 处不存在\"）。逐 flag 校验发现不了这种错，必须跨工件解析。"
+    },
+    {
+      "config": "C1",
+      "override": "val-split-manifest=/tmp/does_not_exist.json",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "manifest 文件不存在必须被拒",
+      "launcher_message": "val-split-manifest=/tmp/does_not_exist.json: 文件不存在"
+    },
+    {
+      "config": "C1",
+      "override": "train-dir=/tmp/no_such_train_dir",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "train 目录不存在必须被拒",
+      "launcher_message": "train-dir='/tmp/no_such_train_dir': 目录不存在"
+    },
+    {
+      "config": "C1",
+      "override": "arm=C0R",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "arm 与 factual-path 必须自洽",
+      "launcher_message": "arm/factual-path 组合非法: ('C0R', 'recursive')；只允许 ('C1','recursive') 或 ('C0R','direct')"
+    },
+    {
+      "config": "C1",
+      "override": "factual-path=direct",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "arm 与 factual-path 必须自洽",
+      "launcher_message": "arm/factual-path 组合非法: ('C1', 'direct')；只允许 ('C1','recursive') 或 ('C0R','direct')"
+    },
+    {
+      "config": "C1",
+      "override": "totally-bogus-flag=1",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "trainer 不存在的 flag 必须被拒",
+      "launcher_message": "totally-bogus-flag: trainer 没有这个 flag（拼错或 trainer 已改）"
+    },
+    {
+      "config": "C1",
+      "override": "output-dir=/tmp/x",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "output-dir 由 launcher 注入，不得写进 YAML",
+      "launcher_message": "output-dir: 由 launcher 注入，不能写在 YAML 里"
+    }
+  ],
+  "n_negative": 23,
+  "n_negative_rejected": 23,
+  "all_negative_rejected": true,
+  "smoke_derivation": {
+    "config": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml",
+    "sha256": "d8ab36586f7313173c2f1f7d3fc0bc31d78dd282e9a7a817e9b7b60a1bc1be4e",
+    "changed_flags": {
+      "lambda-z": {
+        "from": 0.0,
+        "to": 0.1
+      },
+      "lambda-y": {
+        "from": 0.0,
+        "to": 1.0
+      },
+      "lambda-pair": {
+        "from": 0.0,
+        "to": 0.0
+      },
+      "lambda-nc": {
+        "from": 0.0,
+        "to": 0.01
+      },
+      "allow-nonzero-lambdas": {
+        "from": false,
+        "to": true
+      },
+      "stop-after-step": {
+        "from": 0,
+        "to": 32
+      }
+    },
+    "inherited_flag_count": 35
+  },
+  "note": "全部 --dry-run，未启动任何训练进程，CUDA_VISIBLE_DEVICES 置空"
+}

@@ -1,0 +1,447 @@
+{
+  "schema": "candidate_c_design_contract_v1",
+  "frozen_at_utc": "2026-08-21T09:07:59.975870Z",
+  "hostname": "csy-zg01-gnode39",
+  "model": {
+    "arch": "TerraStateCandidateC",
+    "route_version": "candidate_c_v1",
+    "parent_arch": "TerraStateV2",
+    "n_tensors": 255,
+    "adds_no_new_parameters": true,
+    "new_module_whitelist": [],
+    "contract_keys_must_match": [
+      "state_dim",
+      "cond_dim",
+      "dw",
+      "dg",
+      "dh",
+      "lc_min",
+      "lc_max"
+    ],
+    "factual_endpoints": [
+      10,
+      15,
+      20
+    ],
+    "note": "direct 与 composed 共享同一个 F（transition/fuse/weather_enc/time_emb），只走不同计算图，因此 semigroup 一致性是可检验的非平凡性质；Candidate C 不新增任何参数。"
+  },
+  "parent": {
+    "alias": "terrastate/v2/default-training-anchor",
+    "logical_id": "terrastate/v2/verified-resume14880@v1",
+    "file_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+    "value_sha16": "aa98fbd2fa302727",
+    "n_tensors": 255,
+    "step": 14880,
+    "arch": "TerraStateV2",
+    "route": "terrastate_v2",
+    "object_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt"
+  },
+  "fork_semantics": {
+    "kind": "weights_only_phase_II_fork",
+    "is_exact_resume_of_parent": false,
+    "loads_parent_weights": true,
+    "loads_parent_optimizer": false,
+    "loads_parent_scheduler": false,
+    "loads_parent_rng": false,
+    "phase_step_starts_at": 0,
+    "statement": "Candidate C 必须是 weights-only Phase-II fork：新 optimizer、新 scheduler、新 RNG、phase step 从 0 开始；绝不加载父权重那次 14,880-update 训练留下的旧 optimizer/scheduler，也绝不称为 exact resume。（两个臂自身的预算同样是 14,880 update，与父权重同构，但那是一条从 0 重新开始的新 schedule。）"
+  },
+  "data": {
+    "train_dir": "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train",
+    "val_dir": "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped",
+    "eo_split_manifest": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json",
+      "sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b"
+    },
+    "q4_partition_manifest": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json",
+      "sha256": "d0a4c6564516ea62f7eda9ebc4018433d1357391ad3a2a3bd8070de1a54e1e0e"
+    },
+    "train_n": 23816,
+    "train_ids_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+    "val_n": 952,
+    "val_ids_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+    "val_dev_n": 476,
+    "val_locked_n": 476,
+    "val_dev_tiles": 40,
+    "val_locked_tiles": 40,
+    "no_geo_group_crosses_splits": true
+  },
+  "q4_partitions": {
+    "train": {
+      "10": [
+        [
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          3,
+          2
+        ]
+      ],
+      "15": [
+        [
+          15
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          4,
+          4
+        ]
+      ],
+      "20": [
+        [
+          20
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          10,
+          5,
+          5
+        ],
+        [
+          5,
+          5,
+          5,
+          5
+        ]
+      ]
+    },
+    "heldout": {
+      "10": [
+        [
+          3,
+          7
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "15": [
+        [
+          4,
+          11
+        ],
+        [
+          3,
+          5,
+          7
+        ]
+      ],
+      "20": [
+        [
+          8,
+          12
+        ],
+        [
+          2,
+          18
+        ],
+        [
+          2,
+          6,
+          12
+        ],
+        [
+          1,
+          4,
+          6,
+          9
+        ]
+      ]
+    },
+    "train_partitions_n": 10,
+    "heldout_partitions_n": 9,
+    "fully_disjoint": true,
+    "control_seed": 4242,
+    "endpoints_steps": [
+      10,
+      15,
+      20
+    ]
+  },
+  "loss": {
+    "form": "L = L_EO + lambda_z*L_cmp_z + lambda_y*L_cmp_y + lambda_pair*L_pair + lambda_nc*L_noncollapse",
+    "formal_arms_lambdas": {
+      "lambda_z": 0.0,
+      "lambda_y": 0.0,
+      "lambda_pair": 0.0,
+      "lambda_nc": 0.0
+    },
+    "smoke_only_lambdas": {
+      "lambda_z": 0.1,
+      "lambda_y": 1.0,
+      "lambda_pair": 0.0,
+      "lambda_nc": 0.01
+    },
+    "formal_requires_all_lambdas_zero": true,
+    "nonzero_lambdas_need_explicit_flag": "--allow-nonzero-lambdas",
+    "lambda_pair_gate": {
+      "value_allowed": 0.0,
+      "enforced_unconditionally_by_trainer": true,
+      "not_relaxed_by": "--allow-nonzero-lambdas",
+      "reason": "L_pair 需要 paired simulator truth；本轮 simulator 情景库不存在",
+      "smoke_coverage_gap": "smoke 只覆盖 z/y/nc 三个辅助项；L_pair 的数值行为本轮无法验证，也不得声称已验证。正式臂四 λ 全为 0，因此该缺口不影响 C1/C0R 的结论。"
+    },
+    "eo_traj_weight": 1.0,
+    "eo_endpoint_weight": 1.0,
+    "rationale": "本轮正式臂只检验 recursive vs direct 的 EO 拟合差异，四个辅助项全部关闭，避免把辅助项调参混进主结论；smoke 才开非零λ，仅用于验证这些项能算、能回传、不产生 NaN。"
+  },
+  "budget": {
+    "world_size": 8,
+    "per_gpu_batch": 8,
+    "grad_accum": 1,
+    "global_batch": 64,
+    "max_epochs": 40,
+    "updates_per_epoch": 372,
+    "total_updates": 14880,
+    "ckpt_interval": 372,
+    "val_interval": 372,
+    "lr_warmup_steps": 300,
+    "main_checkpoint_at_update": 14880,
+    "arithmetic": "23816 train cubes // global_batch 64 = 372 updates/epoch x 40 epochs = 14880 updates",
+    "parent_alignment": "预算与父权重 TerraState v2 的真实 schedule 严格对齐：40 epoch / 14880 update / warmup 300。原记录的 8 epoch / 2,976 update / warmup 100 已确认为事实错误并作废；11,904 仅是父 schedule 中 epoch-32 的中途 checkpoint，不是独立预算。",
+    "oom_fallback_rule": "若 per-GPU 8 触发 OOM：改用 per-GPU 4 + accum 2（global batch 仍为 64），并且必须对两个臂同时冻结同一设置，再重跑 resume/parity 测试后才能进入正式 run。"
+  },
+  "arms": {
+    "C1": {
+      "factual_path": "recursive",
+      "seed": 42,
+      "role": "recursive-only 正式臂",
+      "lambdas": {
+        "lambda_z": 0.0,
+        "lambda_y": 0.0,
+        "lambda_pair": 0.0,
+        "lambda_nc": 0.0
+      }
+    },
+    "C0R": {
+      "factual_path": "direct",
+      "seed": 42,
+      "role": "同预算 direct Phase-II 对照臂",
+      "lambdas": {
+        "lambda_z": 0.0,
+        "lambda_y": 0.0,
+        "lambda_pair": 0.0,
+        "lambda_nc": 0.0
+      },
+      "not_c0s": "C0R 不是 C0S。C0S 专指未来与 C4/C5 匹配 simulator 监督量的控制臂，本轮不得伪造。"
+    }
+  },
+  "simulator_status": {
+    "status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+    "c4_c5_runnable": false,
+    "reason": "仓库和环境中没有正式 WOFOST/PCSE/SCOPE simulator 情景库、EO<->simulator mapping 或 scenario manifest。不得用 Q3 donor、随机合成数据或伪造轨迹冒充 paired simulator truth。",
+    "max_allowed_this_round": [
+      "C1",
+      "C0R"
+    ]
+  },
+  "cpu_acceptance_tests": {
+    "contract": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/logs/cpu_test_contract.json",
+      "sha256": "4a9b76cb69945ffc08fb165676bf7a90326b6c0d8045f9869f6c24955c9a904e",
+      "verdict": "PASS",
+      "suite": "candidate_c_contract_T01_T11",
+      "n_checks": 51,
+      "n_pass": 51,
+      "n_fail": 0,
+      "n_fatal_fail": 0,
+      "ids": [
+        "T01",
+        "T01b",
+        "T02",
+        "T02b",
+        "T02c",
+        "T03",
+        "T03b",
+        "T04_setup",
+        "T04",
+        "T04b",
+        "T04c",
+        "T04d",
+        "T05_direct",
+        "T05_two_seg",
+        "T05_three_seg",
+        "T05_four_seg",
+        "T06",
+        "T06b",
+        "T06c",
+        "T06_switch_5-5@1",
+        "T06_switch_5-3-2@1",
+        "T06_switch_5-3-2@2",
+        "T06_switch_5-5-5-5@2",
+        "T07_nc",
+        "T07_ep",
+        "T07_pair",
+        "T07_cmp_direct",
+        "T08",
+        "T08b",
+        "T08c",
+        "T09",
+        "T09b",
+        "T09c",
+        "T09_weather_order_shuffled",
+        "T09_segment_weather_mismatched",
+        "T09_identity_state",
+        "T09_constant_state",
+        "T09d",
+        "T09e",
+        "T10",
+        "T10b",
+        "T10c",
+        "T10d",
+        "T10e",
+        "T10f",
+        "T11",
+        "T11b",
+        "T11c",
+        "T11_reduce_11",
+        "T11_reduce_10",
+        "T11_reduce_00"
+      ],
+      "git_head": "c9503030e498e8ec86fffe9105998c3a2a540d68",
+      "cuda_visible_devices": ""
+    },
+    "resume": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/logs/cpu_test_resume.json",
+      "sha256": "3639dcb167426de745df8057d88084c43d29cca8176d43c955a9fa9881f9025a",
+      "verdict": "PASS",
+      "suite": "candidate_c_resume_T12_T13_T15_T16_T17_T18",
+      "n_checks": 59,
+      "n_pass": 59,
+      "n_fail": 0,
+      "n_fatal_fail": 0,
+      "ids": [
+        "T12a",
+        "T12b",
+        "T12c",
+        "T12d",
+        "T12e",
+        "T12f",
+        "T12g",
+        "T12h",
+        "T13a",
+        "T13b",
+        "T13c",
+        "T13d",
+        "T13e",
+        "T13f",
+        "T13g",
+        "T13h",
+        "T13i_total_steps",
+        "T13i_global_batch",
+        "T13i_arm",
+        "T13i_lambda",
+        "T15a",
+        "T15b",
+        "T15c",
+        "T15d",
+        "T15e",
+        "T15f",
+        "T15g",
+        "T15h",
+        "T15i",
+        "T16a",
+        "T16b",
+        "T16c",
+        "T16d",
+        "T16e_missing_key",
+        "T16e_unexpected_key",
+        "T16e_wrong_arch",
+        "T16e_no_contract_cfg",
+        "T16e_no_state_dict",
+        "T17a",
+        "T17b",
+        "T17c",
+        "T17d",
+        "T17e",
+        "T17f",
+        "T17g",
+        "T17h_val_locked",
+        "T17h_ood_t",
+        "T17h_test",
+        "T18a",
+        "T18b",
+        "T18c",
+        "T18d",
+        "T18e",
+        "T18f",
+        "T18g",
+        "T18h",
+        "T18i",
+        "T18j",
+        "T18k"
+      ],
+      "git_head": "c9503030e498e8ec86fffe9105998c3a2a540d68",
+      "cuda_visible_devices": ""
+    },
+    "ddp": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/logs/cpu_test_ddp.json",
+      "sha256": "68c8310fe3d11b71ebc1b9558283aad78f5d6285355d3482304956c550ecf6c8",
+      "verdict": "PASS",
+      "suite": "candidate_c_ddp_cpu_T14",
+      "n_checks": 9,
+      "n_pass": 9,
+      "n_fail": 0,
+      "n_fatal_fail": 0,
+      "ids": [
+        "T14a",
+        "T14b",
+        "T14c",
+        "T14d",
+        "T14e",
+        "T14f",
+        "T14g",
+        "T14h",
+        "T14i"
+      ],
+      "git_head": "c9503030e498e8ec86fffe9105998c3a2a540d68",
+      "cuda_visible_devices": ""
+    },
+    "totals": {
+      "n_pass": 119,
+      "n_fail": 0,
+      "n_fatal_fail": 0,
+      "n_checks": 119,
+      "all_green": true
+    }
+  },
+  "e0_v3_gate": {
+    "a03_sha256": "59b5851b7d0ebace2934306bb37128a61353bdaa7d40bf8c6348eb3a66b603d5",
+    "acceptance": "ACCEPTED",
+    "integrity_audit": "PASS",
+    "n_checks": 732,
+    "n_failed": 0,
+    "reproduction": {
+      "n_formal_metric_keys": 57,
+      "n_pass": 57,
+      "n_bit_exact": 57,
+      "scope": "仅 11,904 侧复现历史参考；14,880 侧无历史参考可比"
+    }
+  },
+  "prohibitions": [
+    "不得把 smoke/pilot 结果写成正式结果",
+    "不得基于 C1 结果决定是否运行预注册的 C0R",
+    "不得用 val_locked / OOD / test 做调参或 checkpoint 选择",
+    "不得把临时 Stage1.5 checkpoint 注册为 TerraState 权重",
+    "正式 run 不得使用 --allow-unverified-parent / --allow-nonzero-lambdas"
+  ]
+}

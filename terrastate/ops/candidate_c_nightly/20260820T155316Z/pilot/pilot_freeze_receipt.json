@@ -1,0 +1,196 @@
+{
+  "schema": "candidate_c_pilot_freeze_receipt_v1",
+  "frozen_at_utc": "2026-08-21T03:02:50.106993Z",
+  "hostname": "csy-zg01-gnode39",
+  "parent": {
+    "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml",
+    "sha256": "d8ab36586f7313173c2f1f7d3fc0bc31d78dd282e9a7a817e9b7b60a1bc1be4e"
+  },
+  "pilot": {
+    "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/configs/candidate_c_pilot_config_v1.yaml",
+    "sha256": "151a065b57e5a8975cdc756664361f26f11b7e92bea5712fe9e05902806812c6",
+    "bytes": 3024
+  },
+  "representativeness": {
+    "n_flags": 41,
+    "changed": [
+      "stop-after-step"
+    ],
+    "identical": 40,
+    "representativeness_critical_checked": 33,
+    "all_lambdas_zero": true,
+    "selector": "validation_subsplit.val_dev.ids"
+  },
+  "pilot_contract": {
+    "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/pilot_contract.json",
+    "sha256": "4473020075acf24e74eb09ae9efd860807aa9b5a61978d134fc050db9cdad561"
+  },
+  "positive": [
+    {
+      "config": "pilot",
+      "rc": 0,
+      "accepted": true,
+      "stderr_tail": []
+    }
+  ],
+  "negative": [
+    {
+      "config": "pilot",
+      "override": "per-gpu-batch=4",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 不得改 batch size（改了就要停下汇报，不得自行调整）",
+      "launcher_message": "per-gpu-batch: 派生配置擅自偏离父配置（8 -> 4），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    },
+    {
+      "config": "pilot",
+      "override": "global-batch=32",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 不得改 global batch",
+      "launcher_message": "global-batch: 派生配置擅自偏离父配置（64 -> 32），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    },
+    {
+      "config": "pilot",
+      "override": "branch-lr=0.0001",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 不得改学习率",
+      "launcher_message": "branch-lr: 派生配置擅自偏离父配置（3e-05 -> 0.0001），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    },
+    {
+      "config": "pilot",
+      "override": "q-lr-scale=0.1",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 不得改学习率缩放",
+      "launcher_message": "q-lr-scale: 派生配置擅自偏离父配置（0.033 -> 0.1），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    },
+    {
+      "config": "pilot",
+      "override": "lambda-z=0.1",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 不得改损失权重（这是 smoke 才做的事）",
+      "launcher_message": "lambda-z: 派生配置擅自偏离父配置（0.0 -> 0.1），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    },
+    {
+      "config": "pilot",
+      "override": "lambda-y=1.0",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 不得改损失权重",
+      "launcher_message": "lambda-y: 派生配置擅自偏离父配置（0.0 -> 1.0），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    },
+    {
+      "config": "pilot",
+      "override": "lambda-nc=0.01",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 不得改损失权重",
+      "launcher_message": "lambda-nc: 派生配置擅自偏离父配置（0.0 -> 0.01），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    },
+    {
+      "config": "pilot",
+      "override": "lambda-pair=0.5",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "λ_pair 恒被拒：需要 paired simulator truth",
+      "launcher_message": "lambda-pair=0.5: 必须为 0 —— L_pair 需要 paired simulator truth，本轮 simulator 情景库不存在（trainer 无条件拒绝，--allow-nonzero-lambdas 也放不开）"
+    },
+    {
+      "config": "pilot",
+      "override": "max-epochs=1",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 不得改计划长度（total_steps 必须仍是 2976）",
+      "launcher_message": "max-epochs: 派生配置擅自偏离父配置（8 -> 1），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    },
+    {
+      "config": "pilot",
+      "override": "seed=7",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 必须用正式 seed=42",
+      "launcher_message": "seed: 派生配置擅自偏离父配置（42 -> 7），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    },
+    {
+      "config": "pilot",
+      "override": "factual-path=direct",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 派生自 C1，不得变成 C0R 的路径",
+      "launcher_message": "arm/factual-path 组合非法: ('C1', 'direct')；只允许 ('C1','recursive') 或 ('C0R','direct')"
+    },
+    {
+      "config": "pilot",
+      "override": "arm=C0R",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 派生自 C1，不得改臂",
+      "launcher_message": "arm/factual-path 组合非法: ('C0R', 'recursive')；只允许 ('C1','recursive') 或 ('C0R','direct')"
+    },
+    {
+      "config": "pilot",
+      "override": "val-split-selector=validation_subsplit.val_locked.ids",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "锁定门不得进 pilot 观测",
+      "launcher_message": "val-split-selector='validation_subsplit.val_locked.ids': val_locked 是最终锁定门，训练期不得作为观测 split"
+    },
+    {
+      "config": "pilot",
+      "override": "val-split-selector=splits.val_dev.ids",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "attempt 2 的错误 selector 必须仍被拒",
+      "launcher_message": "val-split-selector=splits.val_dev.ids: 在 candidate_c_eo_split_manifest_v1.json 里解析不到（\"选择器 'splits.val_dev.ids' 在 'splits' 处不存在\"）。逐 flag 校验发现不了这种错，必须跨工件解析。"
+    },
+    {
+      "config": "pilot",
+      "override": "verify-data-manifest=false",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 必须校验数据指纹",
+      "launcher_message": "verify-data-manifest: 派生配置擅自偏离父配置（True -> False），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    },
+    {
+      "config": "pilot",
+      "override": "allow-unverified-parent=true",
+      "expected": "reject",
+      "rc": 3,
+      "rejected": true,
+      "why": "pilot 不得跳过父权重校验",
+      "launcher_message": "allow-unverified-parent: 派生配置擅自偏离父配置（False -> True），而 derived_from.changed_flags 没有声明这一项。若确实需要改动 batch size / 学习率 / 损失权重 / 训练步数，必须停下汇报并由用户决定，不得自行调整后继续"
+    }
+  ],
+  "n_negative": 16,
+  "n_negative_rejected": 16,
+  "all_negative_rejected": true,
+  "observation_limits": {
+    "allowed_split": "val_dev",
+    "forbidden": [
+      "val_locked",
+      "ood_t",
+      "test"
+    ],
+    "rule": "不得使用 OOD/test 选模；val_locked 在 FORMAL_READY 之后才开"
+  },
+  "parameter_change_policy": "pilot 未通过，或需要改变 batch size / 学习率 / 损失权重 / 训练步数时，立即停止并汇报，不得自行调整后继续。决定权在用户。",
+  "note": "全部 --dry-run，未启动任何训练进程，CUDA_VISIBLE_DEVICES 置空"
+}

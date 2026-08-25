@@ -1,0 +1,52 @@
+arm: C1
+design_contract_sha256: d5e80cafe3998b4c220f1190e451881d7fac6017866b250a15eb0caffbc8c6d9
+expected_total_updates: 14880
+flags:
+  allow-existing-out: false
+  allow-nonzero-lambdas: false
+  allow-unverified-parent: false
+  arm: C1
+  branch-lr: 3.0e-05
+  ckpt-interval: 372
+  days-per-transition-step: 5
+  deterministic: false
+  device: cuda
+  eo-endpoint-weight: 1.0
+  eo-traj-weight: 1.0
+  expect-train-manifest-sha: 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554
+  expect-val-manifest-sha: 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9
+  factual-path: recursive
+  global-batch: 64
+  grad-clip: 1.0
+  lambda-nc: 0.0
+  lambda-pair: 0.0
+  lambda-y: 0.0
+  lambda-z: 0.0
+  log-interval: 10
+  lr-warmup-steps: 300
+  max-epochs: 40
+  max-steps: 0
+  num-workers: 8
+  parent-alias: terrastate/v2/default-training-anchor
+  parent-ckpt: ''
+  per-gpu-batch: 8
+  q-lr-scale: 0.033
+  q4-partition-manifest: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json
+  seed: 42
+  state-dim: 256
+  stop-after-step: 0
+  train-dir: /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train
+  unfreeze-q-prefixes: core.blocks.2.
+  val-dir: /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped
+  val-interval: 372
+  val-split-manifest: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json
+  val-split-selector: validation_subsplit.val_dev.ids
+  verify-data-manifest: true
+  weight-decay: 0.0
+frozen_at_utc: '2026-08-21T09:08:00.272145Z'
+frozen_formal_arm: true
+launcher: train/launch_candidate_c.py
+name: candidate_c_c1_v1
+schema: candidate_c_arm_config_v1
+trainer: train/train_terrastate_candidate_c.py
+world_size: 8

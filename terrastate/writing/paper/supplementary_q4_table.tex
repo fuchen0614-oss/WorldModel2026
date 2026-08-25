@@ -1,7 +1,6 @@
-% Optional Q4 result table.
-% This file is intentionally not included by paper/main.tex while Q4 has no
-% real result package. Restore it only if the final optional evidence is strong
-% enough for the main paper; otherwise use it in the Supplementary Document.
+% Optional Q4 locked-result table.
+% This table reports qualified compositional-stability evidence. It must not be
+% described as Q4 overall success because the cross-arm endpoint guard fails.
 \begin{table*}[!t]
 \centering
 \small
@@ -12,29 +11,27 @@
 Partition & $E^{\rm dir}$ & $E^{\rm cmp}$ & Joint guard &
 $\delta_z$ & $\delta_y$ & $\delta_y^{\rm broken}$ & $A_{\rm comp}$\\
 \midrule
-3+7 & TBD & TBD & TBD & TBD & TBD & TBD & TBD\\
-6+4 & TBD & TBD & TBD & TBD & TBD & TBD & TBD\\
-4+11 & TBD & TBD & TBD & TBD & TBD & TBD & TBD\\
-8+12 & TBD & TBD & TBD & TBD & TBD & TBD & TBD\\
-2+18 & TBD & TBD & TBD & TBD & TBD & TBD & TBD\\
+3+7 & 0.0190 & 0.0189 & pass & 0.2037 & 0.0123 & 0.0118 & -0.0005\\
+6+4 & 0.0190 & 0.0190 & fail & 0.1953 & 0.0129 & 0.0150 & 0.0020\\
+4+11 & 0.0255 & 0.0259 & fail & 0.1988 & 0.0129 & 0.0137 & 0.0007\\
+8+12 & 0.0262 & 0.0264 & fail & 0.2191 & 0.0163 & 0.0198 & 0.0034\\
+2+18 & 0.0262 & 0.0266 & pass & 0.2160 & 0.0126 & 0.0122 & -0.0005\\
 \midrule
 \multicolumn{8}{l}{\emph{B. Anti-collapse summaries by direct-query horizon}}\\
 Horizon & $M_h$ & $S_h/S_t$ & $r_{\rm eff,h}/r_{\rm eff,t}$ &
 \multicolumn{4}{c}{Validation-frozen degeneracy check}\\
 \midrule
-1 & TBD & TBD & TBD & \multicolumn{4}{c}{TBD}\\
-5 & TBD & TBD & TBD & \multicolumn{4}{c}{TBD}\\
-10 & TBD & TBD & TBD & \multicolumn{4}{c}{TBD}\\
-20 & TBD & TBD & TBD & \multicolumn{4}{c}{TBD}\\
+10 & 4.583 & 1.0109 & 0.9777 & \multicolumn{4}{c}{PASS}\\
+15 & 4.684 & 1.0130 & 0.9806 & \multicolumn{4}{c}{PASS}\\
+20 & 4.617 & 1.0148 & 0.9828 & \multicolumn{4}{c}{PASS}\\
 \bottomrule
 \end{tabular}
-\caption{Optional post-training Q4 separates partition-level path evidence
-(A) from horizon-level anti-collapse evidence (B). No Q4 quantity is a
-training loss or selection criterion. Panel A reports endpoint MSE, the joint
-guard, state/output gaps, the broken-path gap, and
-$A_{\mathrm{comp}}=\delta_y^{\mathrm{broken}}-\delta_y$. Panel B reports
-movement, standard-deviation retention, effective-rank retention, and the
-validation-frozen degeneracy check. Positive interpretation requires a passing
-joint guard and cannot compensate for failed Q2.}
+\caption{Locked Q4 supplementary evidence for Candidate C. Panel A reports C1
+partition-level path quantities under the primary eligibility rule
+($n_{\mathrm{valid}}\ge64$); the guard column is the cross-arm endpoint
+non-inferiority gate against C0R for that partition. Panel B reports C1
+horizon-level state quantities only. C1 passes all single-arm Q4 gates and is
+substantially more stable under composed partitions than C0R, but the overall
+cross-arm endpoint guard is 4/19 and therefore fails.}
 \label{tab:composition}
 \end{table*}

@@ -1,0 +1,66 @@
+{
+  "schema": "candidate_c_source_hashes_v1",
+  "captured_at_utc": "2026-08-21T09:08:01.908795Z",
+  "terrastate_root": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+  "git_head": "c9503030e498e8ec86fffe9105998c3a2a540d68",
+  "n_files": 11,
+  "trainer_flag_count": 43,
+  "files": {
+    "eval/eval_terrastate_candidate_c_q4.py": {
+      "sha256": "42e07a33f5c70e6d4ba00e86ca16e1cfdfe56386d5b4ff34130723a50c4aa6d7",
+      "bytes": 51296,
+      "category": "new"
+    },
+    "models/plan_b_b4.py": {
+      "sha256": "83a3766d6c2e84ac4099f307c47147ff60521af1ae5784d1f1f15230011c23ff",
+      "bytes": 23026,
+      "category": "frozen_dependency"
+    },
+    "models/plan_b_b4_exclusive.py": {
+      "sha256": "20e3d9cdf5ceae883af7b601acad64a3f183742d876ddd48b9e8f9e3b3ed29ff",
+      "bytes": 13778,
+      "category": "frozen_dependency"
+    },
+    "models/terrastate_candidate_c.py": {
+      "sha256": "6a53643245bde4daad7a19a208ff18f2f8b99ab9ae5e6238ec2a83eabde01807",
+      "bytes": 34017,
+      "category": "new"
+    },
+    "models/terrastate_v2.py": {
+      "sha256": "25251928a28320e8dcd8b8b07e870eabad34ae994ff9659d26cedf664bef52f1",
+      "bytes": 10162,
+      "category": "frozen_dependency"
+    },
+    "tests/candidate_c_fixtures.py": {
+      "sha256": "41a4f575c04b89e69a8b42628618088a89604cc27ed8d44eb88c0cbcc28d1648",
+      "bytes": 5162,
+      "category": "new"
+    },
+    "tests/test_candidate_c_contract.py": {
+      "sha256": "97c922653577889b6512c547b8abae42702db277d06c58d66ba30b1fe2f2ac0a",
+      "bytes": 24382,
+      "category": "new"
+    },
+    "tests/test_candidate_c_ddp_cpu.py": {
+      "sha256": "44ec60b0d0307ae2f09fb4000fbbec2a752a175ac72b8711f5fccbac7313873e",
+      "bytes": 22860,
+      "category": "new"
+    },
+    "tests/test_candidate_c_resume.py": {
+      "sha256": "ceb24e7392d54a6d58c8267e6671bbbce3bfabdacab632c7a601af9039ce1db9",
+      "bytes": 56065,
+      "category": "new"
+    },
+    "train/launch_candidate_c.py": {
+      "sha256": "e083bc060c5a24e35e6213348716c21c8e71d0885280b845c807aaebe3f609ba",
+      "bytes": 17847,
+      "category": "support"
+    },
+    "train/train_terrastate_candidate_c.py": {
+      "sha256": "e1c4af71f1cb1732f67f958fcdec288d0724527c03fe5a80f4276a90d76f6d44",
+      "bytes": 37860,
+      "category": "new"
+    }
+  },
+  "aggregate_sha256": "b7f4451c63d312f8730546b1d48f3afbc1797d60c61399e3ef4702b594feef97"
+}

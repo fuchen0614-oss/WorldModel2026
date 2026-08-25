@@ -1,0 +1,4536 @@
+{
+  "schema": "e0_acceptance_report_v3",
+  "generated_at_utc": "2026-08-20T14:33:48.362754Z",
+  "generated_by": "verify_and_aggregate_retry_v3.py",
+  "verdict": "ACCEPTED",
+  "fail_closed": true,
+  "n_gates": 6,
+  "n_checks": 732,
+  "n_failed": 0,
+  "gate_summary": [
+    {
+      "gate": "A",
+      "title": "作业清单、启动记录与 checkpoint 身份",
+      "ok": true,
+      "n_checks": 111,
+      "n_failed": 0
+    },
+    {
+      "gate": "B",
+      "title": "四份 Q1/Q2 结果：状态、契约、绑定、数值有限性与 Q2 schema 完整性",
+      "ok": true,
+      "n_checks": 185,
+      "n_failed": 0
+    },
+    {
+      "gate": "C",
+      "title": "两份 Q3 结果：证据角色、配对数、协议绑定、CI 完整性与 sidecar 身份",
+      "ok": true,
+      "n_checks": 180,
+      "n_failed": 0
+    },
+    {
+      "gate": "D",
+      "title": "11,904 复现历史参考：57 个正式指标逐项比对",
+      "ok": true,
+      "n_checks": 119,
+      "n_failed": 0
+    },
+    {
+      "gate": "E",
+      "title": "完整性：无 smoke/partial/中断混入、无幽灵结果、ground truth 归属、口径边界",
+      "ok": true,
+      "n_checks": 42,
+      "n_failed": 0
+    },
+    {
+      "gate": "F",
+      "title": "sanity anchor、M9 验收、参数审计与 evaluator 源码指纹交叉核对",
+      "ok": true,
+      "n_checks": 95,
+      "n_failed": 0
+    }
+  ],
+  "failed_checks": [],
+  "gates": [
+    {
+      "gate": "A",
+      "title": "作业清单、启动记录与 checkpoint 身份",
+      "n_checks": 111,
+      "n_failed": 0,
+      "ok": true,
+      "checks": [
+        {
+          "name": "allowlist_exact_six",
+          "ok": true,
+          "detail": "带最终结果 JSON 的目录=['gpu0_v14880_val_q1q2', 'gpu1_v14880_oodt_q1q2', 'gpu2_v14880_oodt_q3', 'gpu3_legacy11904_val_q1q2', 'gpu4_legacy11904_oodt_q1q2', 'gpu5_legacy11904_oodt_q3']",
+          "evidence": ""
+        },
+        {
+          "name": "runs_dirs_are_six_plus_three_partial",
+          "ok": true,
+          "detail": "runs/ 全部子目录=['gpu0_v14880_val_q1q2', 'gpu1_v14880_oodt_q1q2', 'gpu2_v14880_oodt_q1q2', 'gpu2_v14880_oodt_q3', 'gpu3_legacy11904_val_q1q2', 'gpu4_legacy11904_oodt_q1q2', 'gpu5_legacy11904_oodt_q3', 'gpu5_v14880_val_q1q2', 'gpu6_legacy11904_val_q1q2']",
+          "evidence": ""
+        },
+        {
+          "name": "no_unexpected_run_dir",
+          "ok": true,
+          "detail": "意外目录=[]",
+          "evidence": ""
+        },
+        {
+          "name": "partial_dir_preserved:gpu2_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu2_v14880_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "partial_dir_has_no_final_json:gpu2_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "无效 partial 目录不得含最终结果 JSON",
+          "evidence": ""
+        },
+        {
+          "name": "partial_dir_preserved:gpu5_v14880_val_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu5_v14880_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "partial_dir_has_no_final_json:gpu5_v14880_val_q1q2",
+          "ok": true,
+          "detail": "无效 partial 目录不得含最终结果 JSON",
+          "evidence": ""
+        },
+        {
+          "name": "partial_dir_preserved:gpu6_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu6_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "partial_dir_has_no_final_json:gpu6_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "无效 partial 目录不得含最终结果 JSON",
+          "evidence": ""
+        },
+        {
+          "name": "raw_json_sha256:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=229918a49a42887614d1cfce99dae70c2f0ccdc3590490bce73d5a2e8434314f want=229918a49a42887614d1cfce99dae70c2f0ccdc3590490bce73d5a2e8434314f",
+          "evidence": ""
+        },
+        {
+          "name": "raw_json_sha256:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=965a46d249f816c0b17df903185a74bc3c6c371ca10b5ef7472d4459e31c9670 want=965a46d249f816c0b17df903185a74bc3c6c371ca10b5ef7472d4459e31c9670",
+          "evidence": ""
+        },
+        {
+          "name": "raw_json_sha256:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=10a903185fd14c16d0fec49b2e730a2bd451d3ff25b2fcaef40cf242f4960354 want=10a903185fd14c16d0fec49b2e730a2bd451d3ff25b2fcaef40cf242f4960354",
+          "evidence": ""
+        },
+        {
+          "name": "raw_json_sha256:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=d0ebbbbea74de549bba481ae5e3ee40fd478a8b5552cbfff09c84ec0e115f7c0 want=d0ebbbbea74de549bba481ae5e3ee40fd478a8b5552cbfff09c84ec0e115f7c0",
+          "evidence": ""
+        },
+        {
+          "name": "raw_json_sha256:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=4a51ce5d2877305df1f10fe4c3e278945c4decca657ffcfc6d0f242ebf7bcc43 want=4a51ce5d2877305df1f10fe4c3e278945c4decca657ffcfc6d0f242ebf7bcc43",
+          "evidence": ""
+        },
+        {
+          "name": "raw_json_sha256:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=ccd1a9a107237bc409c96b92032497a84e5d8153d76270f04665153bab6a00fa want=ccd1a9a107237bc409c96b92032497a84e5d8153d76270f04665153bab6a00fa",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_exists:boundary11904",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_sha_matches_filename:boundary11904",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_bytes:boundary11904",
+          "ok": true,
+          "detail": "got=37972401 want=37972401",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_mode_readonly:boundary11904",
+          "ok": true,
+          "detail": "got='0o444' want='0o444'",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_exists:verified14880",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_sha_matches_filename:verified14880",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_bytes:verified14880",
+          "ok": true,
+          "detail": "got=44302057 want=44302057",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_mode_readonly:verified14880",
+          "ok": true,
+          "detail": "got='0o444' want='0o444'",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_exists:historical14880",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/99/99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b.pt",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_sha_matches_filename:historical14880",
+          "ok": true,
+          "detail": "got='99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b' want='99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b'",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_bytes:historical14880",
+          "ok": true,
+          "detail": "got=44300969 want=44300969",
+          "evidence": ""
+        },
+        {
+          "name": "ckpt_mode_readonly:historical14880",
+          "ok": true,
+          "detail": "got='0o444' want='0o444'",
+          "evidence": ""
+        },
+        {
+          "name": "registry_exists",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/weight_registry.json",
+          "evidence": ""
+        },
+        {
+          "name": "registry_revision",
+          "ok": true,
+          "detail": "got='a7fd2763935a26d1' want='a7fd2763935a26d1'",
+          "evidence": ""
+        },
+        {
+          "name": "registry_has:boundary11904",
+          "ok": true,
+          "detail": "terrastate/v2/legacy-boundary11904@v1",
+          "evidence": ""
+        },
+        {
+          "name": "registry_sha:boundary11904",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "registry_step:boundary11904",
+          "ok": true,
+          "detail": "got=11904 want=11904",
+          "evidence": ""
+        },
+        {
+          "name": "registry_has:verified14880",
+          "ok": true,
+          "detail": "terrastate/v2/verified-resume14880@v1",
+          "evidence": ""
+        },
+        {
+          "name": "registry_sha:verified14880",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "registry_step:verified14880",
+          "ok": true,
+          "detail": "got=14880 want=14880",
+          "evidence": ""
+        },
+        {
+          "name": "registry_has:historical14880",
+          "ok": true,
+          "detail": "terrastate/v2/historical-full14880@v1",
+          "evidence": ""
+        },
+        {
+          "name": "registry_sha:historical14880",
+          "ok": true,
+          "detail": "got='99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b' want='99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b'",
+          "evidence": ""
+        },
+        {
+          "name": "registry_step:historical14880",
+          "ok": true,
+          "detail": "got=14880 want=14880",
+          "evidence": ""
+        },
+        {
+          "name": "registry_reserved_empty",
+          "ok": true,
+          "detail": "reserved={}（空 dict 与空 list 均视为空）",
+          "evidence": ""
+        },
+        {
+          "name": "registry_11904_b4_state_sha_matches_m9",
+          "ok": true,
+          "detail": "got='aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7' want='aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7'",
+          "evidence": ""
+        },
+        {
+          "name": "registry_verified_parent_id",
+          "ok": true,
+          "detail": "got='terrastate/v2/legacy-boundary11904@v1' want='terrastate/v2/legacy-boundary11904@v1'",
+          "evidence": ""
+        },
+        {
+          "name": "registry_verified_parent_sha",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "registry_historical_has_no_parent_pointer",
+          "ok": true,
+          "detail": "历史 14,880 由同一次未中断原始训练产出，不是 resume 产物",
+          "evidence": ""
+        },
+        {
+          "name": "alias_logical_id",
+          "ok": true,
+          "detail": "got='terrastate/v2/verified-resume14880@v1' want='terrastate/v2/verified-resume14880@v1'",
+          "evidence": ""
+        },
+        {
+          "name": "alias_target_sha",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "shard_exists:pgpu2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/launch_record_shard_pgpu2.json",
+          "evidence": ""
+        },
+        {
+          "name": "shard_physical_gpu:pgpu2",
+          "ok": true,
+          "detail": "got=2 want=2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_in_allowlist:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "pgpu2 -> gpu1_v14880_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_unique:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "首次出现=None 重复出现=2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_pgpu:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=2 want=2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_exit_code:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0 want=0",
+          "evidence": ""
+        },
+        {
+          "name": "shard_ckpt_sha:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "shard_output_dir:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu1_v14880_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_expected_targets:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1904 want=1904",
+          "evidence": ""
+        },
+        {
+          "name": "shard_exists:pgpu4",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/launch_record_shard_pgpu4.json",
+          "evidence": ""
+        },
+        {
+          "name": "shard_physical_gpu:pgpu4",
+          "ok": true,
+          "detail": "got=4 want=4",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_in_allowlist:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "pgpu4 -> gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_unique:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "首次出现=None 重复出现=4",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_pgpu:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=4 want=4",
+          "evidence": ""
+        },
+        {
+          "name": "shard_exit_code:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0 want=0",
+          "evidence": ""
+        },
+        {
+          "name": "shard_ckpt_sha:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "shard_output_dir:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_expected_targets:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1904 want=1904",
+          "evidence": ""
+        },
+        {
+          "name": "shard_exists:pgpu5",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/launch_record_shard_pgpu5.json",
+          "evidence": ""
+        },
+        {
+          "name": "shard_physical_gpu:pgpu5",
+          "ok": true,
+          "detail": "got=5 want=5",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_in_allowlist:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "pgpu5 -> gpu0_v14880_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_unique:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "首次出现=None 重复出现=5",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_pgpu:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=5 want=5",
+          "evidence": ""
+        },
+        {
+          "name": "shard_exit_code:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=0 want=0",
+          "evidence": ""
+        },
+        {
+          "name": "shard_ckpt_sha:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "shard_output_dir:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu0_v14880_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_expected_targets:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=952 want=952",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_in_allowlist:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "pgpu5 -> gpu2_v14880_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_unique:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "首次出现=None 重复出现=5",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_pgpu:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=5 want=5",
+          "evidence": ""
+        },
+        {
+          "name": "shard_exit_code:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=0 want=0",
+          "evidence": ""
+        },
+        {
+          "name": "shard_ckpt_sha:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "shard_output_dir:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu2_v14880_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "shard_kind_q3:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='q3' want='q3'",
+          "evidence": ""
+        },
+        {
+          "name": "shard_expected_pairs:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "shard_exists:pgpu6",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/launch_record_shard_pgpu6.json",
+          "evidence": ""
+        },
+        {
+          "name": "shard_physical_gpu:pgpu6",
+          "ok": true,
+          "detail": "got=6 want=6",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_in_allowlist:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "pgpu6 -> gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_unique:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "首次出现=None 重复出现=6",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_pgpu:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=6 want=6",
+          "evidence": ""
+        },
+        {
+          "name": "shard_exit_code:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=0 want=0",
+          "evidence": ""
+        },
+        {
+          "name": "shard_ckpt_sha:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "shard_output_dir:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "shard_expected_targets:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=952 want=952",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_in_allowlist:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "pgpu6 -> gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_unique:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "首次出现=None 重复出现=6",
+          "evidence": ""
+        },
+        {
+          "name": "shard_job_pgpu:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=6 want=6",
+          "evidence": ""
+        },
+        {
+          "name": "shard_exit_code:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=0 want=0",
+          "evidence": ""
+        },
+        {
+          "name": "shard_ckpt_sha:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "shard_output_dir:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "shard_kind_q3:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='q3' want='q3'",
+          "evidence": ""
+        },
+        {
+          "name": "shard_expected_pairs:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "shard_covers_all_six",
+          "ok": true,
+          "detail": "got=['gpu0_v14880_val_q1q2', 'gpu1_v14880_oodt_q1q2', 'gpu2_v14880_oodt_q3', 'gpu3_legacy11904_val_q1q2', 'gpu4_legacy11904_oodt_q1q2', 'gpu5_legacy11904_oodt_q3'] want=['gpu0_v14880_val_q1q2', 'gpu1_v14880_oodt_q1q2', 'gpu2_v14880_oodt_q3', 'gpu3_legacy11904_val_q1q2', 'gpu4_legacy11904_oodt_q1q2', 'gpu5_legacy11904_oodt_q3']",
+          "evidence": ""
+        },
+        {
+          "name": "provenance_gap_registered:gpu2",
+          "ok": true,
+          "detail": "jobs=[]（空是已知缺口，必须登记而非掩盖）",
+          "evidence": ""
+        },
+        {
+          "name": "provenance_gap_registered:gpu4",
+          "ok": true,
+          "detail": "jobs=[]（空是已知缺口，必须登记而非掩盖）",
+          "evidence": ""
+        },
+        {
+          "name": "provenance_gap_registered:gpu5",
+          "ok": true,
+          "detail": "jobs=[]（空是已知缺口，必须登记而非掩盖）",
+          "evidence": ""
+        },
+        {
+          "name": "provenance_gap_registered:gpu6",
+          "ok": true,
+          "detail": "jobs=[]（空是已知缺口，必须登记而非掩盖）",
+          "evidence": ""
+        },
+        {
+          "name": "launch_manifest_exists",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/launch_manifest.json",
+          "evidence": ""
+        },
+        {
+          "name": "launch_manifest_sha256",
+          "ok": true,
+          "detail": "got='500e5031335c366ed06819dd9af8679dcf0318301d559aa7bfd573688c6cdd08' want='500e5031335c366ed06819dd9af8679dcf0318301d559aa7bfd573688c6cdd08'",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_carries_registry_revision",
+          "ok": true,
+          "detail": "revision a7fd2763935a26d1 出现在冻结 manifest 中",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_carries_ckpt_sha:boundary11904",
+          "ok": true,
+          "detail": "terrastate/v2/legacy-boundary11904@v1",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_carries_ckpt_sha:verified14880",
+          "ok": true,
+          "detail": "terrastate/v2/verified-resume14880@v1",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_carries_data_manifest_sha:val",
+          "ok": true,
+          "detail": "val",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_carries_data_manifest_sha:oodt",
+          "ok": true,
+          "detail": "oodt",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_carries_evaluator_sha:eval/eval_b4_exclusive_contract.py",
+          "ok": true,
+          "detail": "eval/eval_b4_exclusive_contract.py",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_carries_evaluator_sha:eval/extreme_state_audit.py",
+          "ok": true,
+          "detail": "eval/extreme_state_audit.py",
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "gate": "B",
+      "title": "四份 Q1/Q2 结果：状态、契约、绑定、数值有限性与 Q2 schema 完整性",
+      "n_checks": 185,
+      "n_failed": 0,
+      "ok": true,
+      "checks": [
+        {
+          "name": "exists:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu0_v14880_val_q1q2/state_contract_exclusive.json",
+          "evidence": ""
+        },
+        {
+          "name": "status:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got='COMPLETE' want='COMPLETE'",
+          "evidence": ""
+        },
+        {
+          "name": "incomplete_reasons_empty:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=[] want=[]",
+          "evidence": ""
+        },
+        {
+          "name": "formal:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "split:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got='val' want='val'",
+          "evidence": ""
+        },
+        {
+          "name": "sections:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=['q1', 'q2'] want=['q1', 'q2']",
+          "evidence": ""
+        },
+        {
+          "name": "n_targets:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=952 want=952",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_unchanged:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "route_version:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got='exclusive_v1' want='exclusive_v1'",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_stage:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=3 want=3",
+          "evidence": ""
+        },
+        {
+          "name": "prov_checkpoint_sha256:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_is_path_string:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "type=str",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_path_contains_sha:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+          "evidence": ""
+        },
+        {
+          "name": "shard_vs_json_ckpt:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "data_manifest_sha256:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got='d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e' want='d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e'",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_count_matches_n_targets:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=952 want=952",
+          "evidence": ""
+        },
+        {
+          "name": "evaluator_commit_present:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "repo:c950303+official:a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+          "evidence": ""
+        },
+        {
+          "name": "q1_schema_complete:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "缺失或非数值=[]",
+          "evidence": ""
+        },
+        {
+          "name": "q2_schema_complete:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "缺失或非数值=[]",
+          "evidence": ""
+        },
+        {
+          "name": "alpha0_pred_equals_context_prior:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "T_identity_is_state_identity:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "live_weights_restored:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "dr2_floor_pass:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "verdict:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got='LOAD_BEARING' want='LOAD_BEARING'",
+          "evidence": ""
+        },
+        {
+          "name": "dr2_floor:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=0.005 want=0.005",
+          "evidence": ""
+        },
+        {
+          "name": "official_delta_a0_consistent:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=0.012262368767968657 want=0.012262368767968657 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "official_delta_tid_consistent:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=0.013003911900879295 want=0.013003911900879295 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu0_v14880_val_q1q2.R2",
+          "ok": true,
+          "detail": "got=0.49709355615470024 want=0.49709355615470024 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu0_v14880_val_q1q2.rmse",
+          "ok": true,
+          "detail": "got=0.15733399506089182 want=0.15733399506089182 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu0_v14880_val_q1q2.nse",
+          "ok": true,
+          "detail": "got=-0.1559974291116175 want=-0.1559974291116175 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu0_v14880_val_q1q2.biasabs",
+          "ok": true,
+          "detail": "got=0.09972860331501403 want=0.09972860331501403 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_paired_counts_sum:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=589 want=589",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_bootstrap_n_matches_paired:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=589 want=589",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_mean_matches_paired:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=0.017161451390961775 want=0.01716145139096177 tol=1e-09 |Δ|=3.469e-18",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_ci_ordered:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "ci_low=0.007361646057823341 mean=0.017161451390961775 ci_high=0.026962576309940138",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_significance_consistent:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_frac_pos_in_unit:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "frac_pos=0.5806451612903226",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_paired_counts_sum:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=589 want=589",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_bootstrap_n_matches_paired:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=589 want=589",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_mean_matches_paired:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=0.01837900511623503 want=0.01837900511623503 tol=1e-09 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_ci_ordered:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "ci_low=0.008767226648296022 mean=0.01837900511623503 ci_high=0.02792789450996492",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_significance_consistent:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_frac_pos_in_unit:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "frac_pos=0.5959252971137521",
+          "evidence": ""
+        },
+        {
+          "name": "transition_margin_clean_is_false:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=False want=False",
+          "evidence": ""
+        },
+        {
+          "name": "transition_margin_confound_note_present:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "必须保留 T-identity 冻结 z_t 的 confound 说明",
+          "evidence": ""
+        },
+        {
+          "name": "all_values_finite:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "非有限值路径=[]",
+          "evidence": ""
+        },
+        {
+          "name": "exists:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu1_v14880_oodt_q1q2/state_contract_exclusive.json",
+          "evidence": ""
+        },
+        {
+          "name": "status:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got='COMPLETE' want='COMPLETE'",
+          "evidence": ""
+        },
+        {
+          "name": "incomplete_reasons_empty:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=[] want=[]",
+          "evidence": ""
+        },
+        {
+          "name": "formal:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "split:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got='ood-t_chopped' want='ood-t_chopped'",
+          "evidence": ""
+        },
+        {
+          "name": "sections:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=['q1', 'q2'] want=['q1', 'q2']",
+          "evidence": ""
+        },
+        {
+          "name": "n_targets:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1904 want=1904",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_unchanged:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "route_version:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got='exclusive_v1' want='exclusive_v1'",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_stage:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=3 want=3",
+          "evidence": ""
+        },
+        {
+          "name": "prov_checkpoint_sha256:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_is_path_string:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "type=str",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_path_contains_sha:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+          "evidence": ""
+        },
+        {
+          "name": "shard_vs_json_ckpt:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "data_manifest_sha256:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got='58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49' want='58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49'",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_count_matches_n_targets:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1904 want=1904",
+          "evidence": ""
+        },
+        {
+          "name": "evaluator_commit_present:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "repo:c950303+official:a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+          "evidence": ""
+        },
+        {
+          "name": "q1_schema_complete:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "缺失或非数值=[]",
+          "evidence": ""
+        },
+        {
+          "name": "q2_schema_complete:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "缺失或非数值=[]",
+          "evidence": ""
+        },
+        {
+          "name": "alpha0_pred_equals_context_prior:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "T_identity_is_state_identity:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "live_weights_restored:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "dr2_floor_pass:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "verdict:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got='LOAD_BEARING' want='LOAD_BEARING'",
+          "evidence": ""
+        },
+        {
+          "name": "dr2_floor:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0.005 want=0.005",
+          "evidence": ""
+        },
+        {
+          "name": "official_delta_a0_consistent:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0.020331851347380803 want=0.020331851347380803 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "official_delta_tid_consistent:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0.02194290250388109 want=0.02194290250388109 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu1_v14880_oodt_q1q2.R2",
+          "ok": true,
+          "detail": "got=0.5692781483135535 want=0.5692781483135535 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu1_v14880_oodt_q1q2.rmse",
+          "ok": true,
+          "detail": "got=0.15062711918297353 want=0.15062711918297353 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu1_v14880_oodt_q1q2.nse",
+          "ok": true,
+          "detail": "got=-0.09975306029983821 want=-0.09975306029983821 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu1_v14880_oodt_q1q2.biasabs",
+          "ok": true,
+          "detail": "got=0.10080980043117554 want=0.10080980043117554 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_paired_counts_sum:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1019 want=1019",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_bootstrap_n_matches_paired:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1019 want=1019",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_mean_matches_paired:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0.02224764814218487 want=0.02224764814218487 tol=1e-09 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_ci_ordered:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "ci_low=0.014365401181430417 mean=0.02224764814218487 ci_high=0.03049188689730075",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_significance_consistent:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_frac_pos_in_unit:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "frac_pos=0.5721295387634936",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_paired_counts_sum:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1019 want=1019",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_bootstrap_n_matches_paired:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1019 want=1019",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_mean_matches_paired:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0.024177310177535438 want=0.024177310177535438 tol=1e-09 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_ci_ordered:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "ci_low=0.016206975701721582 mean=0.024177310177535438 ci_high=0.03235836167269342",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_significance_consistent:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_frac_pos_in_unit:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "frac_pos=0.5819430814524044",
+          "evidence": ""
+        },
+        {
+          "name": "transition_margin_clean_is_false:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=False want=False",
+          "evidence": ""
+        },
+        {
+          "name": "transition_margin_confound_note_present:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "必须保留 T-identity 冻结 z_t 的 confound 说明",
+          "evidence": ""
+        },
+        {
+          "name": "all_values_finite:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "非有限值路径=[]",
+          "evidence": ""
+        },
+        {
+          "name": "exists:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu3_legacy11904_val_q1q2/state_contract_exclusive.json",
+          "evidence": ""
+        },
+        {
+          "name": "status:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got='COMPLETE' want='COMPLETE'",
+          "evidence": ""
+        },
+        {
+          "name": "incomplete_reasons_empty:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=[] want=[]",
+          "evidence": ""
+        },
+        {
+          "name": "formal:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "split:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got='val' want='val'",
+          "evidence": ""
+        },
+        {
+          "name": "sections:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=['q1', 'q2'] want=['q1', 'q2']",
+          "evidence": ""
+        },
+        {
+          "name": "n_targets:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=952 want=952",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_unchanged:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "route_version:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got='exclusive_v1' want='exclusive_v1'",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_stage:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=2 want=2",
+          "evidence": ""
+        },
+        {
+          "name": "prov_checkpoint_sha256:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_is_path_string:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "type=str",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_path_contains_sha:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+          "evidence": ""
+        },
+        {
+          "name": "shard_vs_json_ckpt:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "data_manifest_sha256:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got='d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e' want='d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e'",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_count_matches_n_targets:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=952 want=952",
+          "evidence": ""
+        },
+        {
+          "name": "evaluator_commit_present:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "repo:c950303+official:a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+          "evidence": ""
+        },
+        {
+          "name": "q1_schema_complete:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "缺失或非数值=[]",
+          "evidence": ""
+        },
+        {
+          "name": "q2_schema_complete:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "缺失或非数值=[]",
+          "evidence": ""
+        },
+        {
+          "name": "alpha0_pred_equals_context_prior:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "T_identity_is_state_identity:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "live_weights_restored:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "dr2_floor_pass:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "verdict:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got='LOAD_BEARING' want='LOAD_BEARING'",
+          "evidence": ""
+        },
+        {
+          "name": "dr2_floor:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=0.005 want=0.005",
+          "evidence": ""
+        },
+        {
+          "name": "official_delta_a0_consistent:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=0.011214424211727803 want=0.011214424211727803 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "official_delta_tid_consistent:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=0.011905889808750292 want=0.011905889808750292 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu3_legacy11904_val_q1q2.R2",
+          "ok": true,
+          "detail": "got=0.49732196418835595 want=0.49732196418835595 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu3_legacy11904_val_q1q2.rmse",
+          "ok": true,
+          "detail": "got=0.1572881669325748 want=0.1572881669325748 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu3_legacy11904_val_q1q2.nse",
+          "ok": true,
+          "detail": "got=-0.15475482758989223 want=-0.15475482758989223 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu3_legacy11904_val_q1q2.biasabs",
+          "ok": true,
+          "detail": "got=0.0997195960230769 want=0.0997195960230769 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_paired_counts_sum:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=589 want=589",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_bootstrap_n_matches_paired:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=589 want=589",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_mean_matches_paired:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=0.01616252595360122 want=0.01616252595360122 tol=1e-09 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_ci_ordered:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "ci_low=0.006432408120151691 mean=0.01616252595360122 ci_high=0.02590229577842624",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_significance_consistent:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_frac_pos_in_unit:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "frac_pos=0.5806451612903226",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_paired_counts_sum:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=589 want=589",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_bootstrap_n_matches_paired:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=589 want=589",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_mean_matches_paired:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=0.017417428921451206 want=0.017417428921451206 tol=1e-09 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_ci_ordered:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "ci_low=0.007824839508750908 mean=0.017417428921451206 ci_high=0.026960749441100905",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_significance_consistent:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_frac_pos_in_unit:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "frac_pos=0.5942275042444821",
+          "evidence": ""
+        },
+        {
+          "name": "transition_margin_clean_is_false:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=False want=False",
+          "evidence": ""
+        },
+        {
+          "name": "transition_margin_confound_note_present:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "必须保留 T-identity 冻结 z_t 的 confound 说明",
+          "evidence": ""
+        },
+        {
+          "name": "all_values_finite:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "非有限值路径=[]",
+          "evidence": ""
+        },
+        {
+          "name": "exists:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu4_legacy11904_oodt_q1q2/state_contract_exclusive.json",
+          "evidence": ""
+        },
+        {
+          "name": "status:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got='COMPLETE' want='COMPLETE'",
+          "evidence": ""
+        },
+        {
+          "name": "incomplete_reasons_empty:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=[] want=[]",
+          "evidence": ""
+        },
+        {
+          "name": "formal:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "split:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got='ood-t_chopped' want='ood-t_chopped'",
+          "evidence": ""
+        },
+        {
+          "name": "sections:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=['q1', 'q2'] want=['q1', 'q2']",
+          "evidence": ""
+        },
+        {
+          "name": "n_targets:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1904 want=1904",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_unchanged:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "route_version:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got='exclusive_v1' want='exclusive_v1'",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_stage:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=2 want=2",
+          "evidence": ""
+        },
+        {
+          "name": "prov_checkpoint_sha256:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_is_path_string:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "type=str",
+          "evidence": ""
+        },
+        {
+          "name": "checkpoint_path_contains_sha:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+          "evidence": ""
+        },
+        {
+          "name": "shard_vs_json_ckpt:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "data_manifest_sha256:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got='58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49' want='58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49'",
+          "evidence": ""
+        },
+        {
+          "name": "manifest_count_matches_n_targets:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1904 want=1904",
+          "evidence": ""
+        },
+        {
+          "name": "evaluator_commit_present:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "repo:c950303+official:a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+          "evidence": ""
+        },
+        {
+          "name": "q1_schema_complete:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "缺失或非数值=[]",
+          "evidence": ""
+        },
+        {
+          "name": "q2_schema_complete:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "缺失或非数值=[]",
+          "evidence": ""
+        },
+        {
+          "name": "alpha0_pred_equals_context_prior:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "T_identity_is_state_identity:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "live_weights_restored:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "dr2_floor_pass:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "verdict:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got='LOAD_BEARING' want='LOAD_BEARING'",
+          "evidence": ""
+        },
+        {
+          "name": "dr2_floor:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0.005 want=0.005",
+          "evidence": ""
+        },
+        {
+          "name": "official_delta_a0_consistent:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0.019972010271822827 want=0.019972010271822827 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "official_delta_tid_consistent:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0.021685122441562066 want=0.021685122441562066 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu4_legacy11904_oodt_q1q2.R2",
+          "ok": true,
+          "detail": "got=0.5693493611664086 want=0.5693493611664086 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu4_legacy11904_oodt_q1q2.rmse",
+          "ok": true,
+          "detail": "got=0.1505941190915099 want=0.1505941190915099 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu4_legacy11904_oodt_q1q2.nse",
+          "ok": true,
+          "detail": "got=-0.09865601980139305 want=-0.09865601980139305 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "q2_full_mirrors_q1:gpu4_legacy11904_oodt_q1q2.biasabs",
+          "ok": true,
+          "detail": "got=0.10082906836242285 want=0.10082906836242285 tol=0 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_paired_counts_sum:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1019 want=1019",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_bootstrap_n_matches_paired:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1019 want=1019",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_mean_matches_paired:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0.021997768589881533 want=0.021997768589881533 tol=1e-09 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_ci_ordered:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "ci_low=0.014219898623411737 mean=0.021997768589881533 ci_high=0.03017606928017251",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_significance_consistent:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "closure_cut_alpha0_frac_pos_in_unit:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "frac_pos=0.5691854759568205",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_paired_counts_sum:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1019 want=1019",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_bootstrap_n_matches_paired:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1019 want=1019",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_mean_matches_paired:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=0.024015932710944276 want=0.024015932710944276 tol=1e-09 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_ci_ordered:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "ci_low=0.016086752271438905 mean=0.024015932710944276 ci_high=0.032169788967835664",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_significance_consistent:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "transition_identity_frac_pos_in_unit:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "frac_pos=0.5760549558390579",
+          "evidence": ""
+        },
+        {
+          "name": "transition_margin_clean_is_false:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=False want=False",
+          "evidence": ""
+        },
+        {
+          "name": "transition_margin_confound_note_present:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "必须保留 T-identity 冻结 z_t 的 confound 说明",
+          "evidence": ""
+        },
+        {
+          "name": "all_values_finite:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "非有限值路径=[]",
+          "evidence": ""
+        },
+        {
+          "name": "evaluator_commit_unique_across_q1q2",
+          "ok": true,
+          "detail": "取值=['repo:c950303+official:a0329636631371a4aaa9a95c75ed0a37d27b8c4f']",
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "gate": "C",
+      "title": "两份 Q3 结果：证据角色、配对数、协议绑定、CI 完整性与 sidecar 身份",
+      "n_checks": 180,
+      "n_failed": 0,
+      "ok": true,
+      "checks": [
+        {
+          "name": "q3_protocol_dir_exists",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_n_files_on_disk",
+          "ok": true,
+          "detail": "got=8 want=8",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_sha_prefix:climatology_train.json",
+          "ok": true,
+          "detail": "got=0123a0166485ac651e38ba4bbef610528a3bcf01d2606f86f80fdffeafe93f24 期望前缀=0123a016",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_sha:hotdry_manifest.json",
+          "ok": true,
+          "detail": "got='f8db1ccbb39120c78723d203655e506f5ac13790e11e59e4c6fbb96e5f2d09c7' want='f8db1ccbb39120c78723d203655e506f5ac13790e11e59e4c6fbb96e5f2d09c7'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_sha:matched_normal_manifest.json",
+          "ok": true,
+          "detail": "got='84a09421ff5b43c5b5529a3e7e9a0b40e3e999c170f1cd365d0509c73e9c2ccf' want='84a09421ff5b43c5b5529a3e7e9a0b40e3e999c170f1cd365d0509c73e9c2ccf'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_sha:protocol.json",
+          "ok": true,
+          "detail": "got='570a0c36c3d1ceb83d0b2294fc7998b55443ae8a3ccc73f05f92c4e45a792ae5' want='570a0c36c3d1ceb83d0b2294fc7998b55443ae8a3ccc73f05f92c4e45a792ae5'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_sha:provenance.json",
+          "ok": true,
+          "detail": "got='d658211a2fe1832bd30e238eaa592541b33d935dd06cb7ee804510976fc3d0ea' want='d658211a2fe1832bd30e238eaa592541b33d935dd06cb7ee804510976fc3d0ea'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_sha:thresholds.json",
+          "ok": true,
+          "detail": "got='1c20cd71e6b30207aa6b1816607a6ba402e600b92abceb06a52bf8a1577fa790' want='1c20cd71e6b30207aa6b1816607a6ba402e600b92abceb06a52bf8a1577fa790'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_manifest_exists",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1/MANIFEST.SHA256",
+          "evidence": ""
+        },
+        {
+          "name": "q3_manifest_all_lines_parsed",
+          "ok": true,
+          "detail": "无法解析的行=[]",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_n_files_in_manifest",
+          "ok": true,
+          "detail": "got=7 want=7",
+          "evidence": ""
+        },
+        {
+          "name": "q3_manifest_excludes_itself",
+          "ok": true,
+          "detail": "清单自身不应列入自身",
+          "evidence": ""
+        },
+        {
+          "name": "q3_manifest_matches_disk",
+          "ok": true,
+          "detail": "不一致={}",
+          "evidence": ""
+        },
+        {
+          "name": "q3_manifest_covers_disk",
+          "ok": true,
+          "detail": "磁盘多出未列入清单的文件=[]",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_json_exists",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1/protocol.json",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_n_primary_84",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_n_broad_84",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_n_strict_36",
+          "ok": true,
+          "detail": "got=36 want=36",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_n_control_unique_45",
+          "ok": true,
+          "detail": "got=45 want=45",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_frozen_not_dirty",
+          "ok": true,
+          "detail": "got=False want=False",
+          "evidence": ""
+        },
+        {
+          "name": "exists:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu2_v14880_oodt_q3/extreme_state_audit.json",
+          "evidence": ""
+        },
+        {
+          "name": "evidence_role:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='final' want='final'",
+          "evidence": ""
+        },
+        {
+          "name": "n_pairs:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_n_pairs:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "n_extreme:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "n_control_unique:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=45 want=45",
+          "evidence": ""
+        },
+        {
+          "name": "n_boot:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=10000 want=10000",
+          "evidence": ""
+        },
+        {
+          "name": "limit_is_none:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=None want=None",
+          "evidence": ""
+        },
+        {
+          "name": "note_present:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "B4 and exclusive numbers are DIAGNOSTIC and are NOT merged into one claim (weath",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_dir_is_official:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "记录=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1 官方=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_sha_binds_five:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=['hotdry_manifest.json', 'matched_normal_manifest.json', 'protocol.json', 'provenance.json', 'thresholds.json'] want=['hotdry_manifest.json', 'matched_normal_manifest.json', 'protocol.json', 'provenance.json', 'thresholds.json']",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_sha_matches_disk:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "不一致={}",
+          "evidence": ""
+        },
+        {
+          "name": "q3_json_has_no_native_checkpoint:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "已确认的 schema 缺口：Q3 结果 JSON 不记录 checkpoint SHA",
+          "evidence": ""
+        },
+        {
+          "name": "q3_json_has_no_evaluator_commit:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "已确认的 schema 缺口：Q3 结果 JSON 不记录 evaluator commit",
+          "evidence": ""
+        },
+        {
+          "name": "q3_checkpoint_via_shard:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_lacks_checkpoint_sha:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "已确认缺口：运行日志不含 checkpoint SHA（/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu2_v14880_oodt_q3.log）",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_binds_result_path:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "日志 [audit] wrote 行指向本 job 的结果文件",
+          "evidence": ""
+        },
+        {
+          "name": "q3_run_dir_encodes_ckpt_role:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "run 目录名含 checkpoint 角色标记 v14880",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu2_v14880_oodt_q3:weather_in_base",
+          "ok": true,
+          "detail": "got='False' want='False'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu2_v14880_oodt_q3:n_extreme",
+          "ok": true,
+          "detail": "got='84' want='84'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu2_v14880_oodt_q3:n_control_unique",
+          "ok": true,
+          "detail": "got='45' want='45'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu2_v14880_oodt_q3:n_pairs",
+          "ok": true,
+          "detail": "got='84' want='84'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu2_v14880_oodt_q3:role",
+          "ok": true,
+          "detail": "got='final' want='final'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu2_v14880_oodt_q3:uf_differs_all",
+          "ok": true,
+          "detail": "got='True' want='True'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu2_v14880_oodt_q3:endpoint",
+          "ok": true,
+          "detail": "got='PASS' want='PASS'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu2_v14880_oodt_q3:enhancement",
+          "ok": true,
+          "detail": "got='FAIL' want='FAIL'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu2_v14880_oodt_q3:raw",
+          "ok": true,
+          "detail": "got='Q3_RESPONSE_FIDELITY_ONLY' want='Q3_RESPONSE_FIDELITY_ONLY'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu2_v14880_oodt_q3:overall",
+          "ok": true,
+          "detail": "got='Q3_RESPONSE_FIDELITY_ONLY' want='Q3_RESPONSE_FIDELITY_ONLY'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_metric_completeness:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "缺失或非数值=[]",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.paired_bootstrap.n:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.paired_bootstrap.ci_ordered:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.0011951253688104251, 0.003987763251158564] mean=0.0025695093652410876",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.paired_bootstrap.significance_consistent:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.paired_bootstrap.mean_matches_point:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=0.0025695093652410876 want=0.0025695093652410876 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.geo_cluster_bootstrap.n:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.geo_cluster_bootstrap.n_clusters:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=31 want=31",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.geo_cluster_bootstrap.ci_ordered:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.0011268149171079383, 0.003986807599386983] mean=0.0025695093652410876",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.geo_cluster_bootstrap.significance_consistent:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.geo_cluster_bootstrap.mean_matches_point:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=0.0025695093652410876 want=0.0025695093652410876 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.reused_control_cluster_bootstrap.n:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.reused_control_cluster_bootstrap.n_clusters:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=45 want=45",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.reused_control_cluster_bootstrap.ci_ordered:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.0009959744667960482, 0.004141273665947641] mean=0.0025695093652410876",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.reused_control_cluster_bootstrap.significance_consistent:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.reused_control_cluster_bootstrap.mean_matches_point:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=0.0025695093652410876 want=0.0025695093652410876 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.paired_frac_pos_in_unit:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "frac_pos=0.6547619047619048",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.paired_bootstrap.n:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.paired_bootstrap.ci_ordered:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.0076451200372719625, 0.015450009475136452] mean=0.011389337176556833",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.paired_bootstrap.significance_consistent:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.paired_bootstrap.mean_matches_point:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=0.011389337176556833 want=0.011389337176556833 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.geo_cluster_bootstrap.n:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.geo_cluster_bootstrap.n_clusters:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=31 want=31",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.geo_cluster_bootstrap.ci_ordered:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.005548044197817492, 0.017265939159405365] mean=0.011389337176556833",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.geo_cluster_bootstrap.significance_consistent:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.geo_cluster_bootstrap.mean_matches_point:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=0.011389337176556833 want=0.011389337176556833 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.reused_control_cluster_bootstrap.n:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.reused_control_cluster_bootstrap.n_clusters:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=45 want=45",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.reused_control_cluster_bootstrap.ci_ordered:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.005319221199795531, 0.017873479602548904] mean=0.011389337176556833",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.reused_control_cluster_bootstrap.significance_consistent:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.reused_control_cluster_bootstrap.mean_matches_point:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=0.011389337176556833 want=0.011389337176556833 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.paired_frac_pos_in_unit:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "frac_pos=0.8095238095238095",
+          "evidence": ""
+        },
+        {
+          "name": "endpoint_fidelity_status:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='PASS' want='PASS'",
+          "evidence": ""
+        },
+        {
+          "name": "hotdry_enhancement_status:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='FAIL' want='FAIL'",
+          "evidence": ""
+        },
+        {
+          "name": "primary_criterion:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='geo_cluster_bootstrap_ci_low_gt0' want='geo_cluster_bootstrap_ci_low_gt0'",
+          "evidence": ""
+        },
+        {
+          "name": "raw_status:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='Q3_RESPONSE_FIDELITY_ONLY' want='Q3_RESPONSE_FIDELITY_ONLY'",
+          "evidence": ""
+        },
+        {
+          "name": "overall_status:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='Q3_RESPONSE_FIDELITY_ONLY' want='Q3_RESPONSE_FIDELITY_ONLY'",
+          "evidence": ""
+        },
+        {
+          "name": "df_evidence_role:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='final' want='final'",
+          "evidence": ""
+        },
+        {
+          "name": "df_n_pairs:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "uf_differs_all_pairs:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "df_weather_in_base:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=False want=False",
+          "evidence": ""
+        },
+        {
+          "name": "diagnostic_only:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=False want=False",
+          "evidence": ""
+        },
+        {
+          "name": "models_n_extreme:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "models_n_control:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=45 want=45",
+          "evidence": ""
+        },
+        {
+          "name": "endpoint_pass_is_earned:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "R2 actual=0.6268869270900711 donor=0.588811144247435 mean=0.5426842405882577（PASS 要求 actual 同时优于两者）",
+          "evidence": ""
+        },
+        {
+          "name": "hotdry_fail_is_earned:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "主判据 geo_cluster ci_low=-0.002173025324078599 ≤ 0，故 hotdry 增强判 FAIL 与数值一致",
+          "evidence": ""
+        },
+        {
+          "name": "per_cube_effects_count:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=129 want=129",
+          "evidence": ""
+        },
+        {
+          "name": "q3_donor_rows_count:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "stratum_accuracy_is_dict:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "dict",
+          "evidence": ""
+        },
+        {
+          "name": "stratum_accuracy_cohorts:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=['hotdry', 'matched_normal'] want=['hotdry', 'matched_normal']",
+          "evidence": ""
+        },
+        {
+          "name": "stratum_accuracy_arms_consistent:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "两 cohort 的臂集合={'hotdry': ['closure_zero_scale', 'full', 't_identity', 'weather_in_base'], 'matched_normal': ['closure_zero_scale', 'full', 't_identity', 'weather_in_base']}",
+          "evidence": ""
+        },
+        {
+          "name": "stratum_accuracy_arms:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got=['closure_zero_scale', 'full', 't_identity', 'weather_in_base'] want=['closure_zero_scale', 'full', 't_identity', 'weather_in_base']",
+          "evidence": ""
+        },
+        {
+          "name": "all_values_finite:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "非有限值路径=[]",
+          "evidence": ""
+        },
+        {
+          "name": "exists:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu5_legacy11904_oodt_q3/extreme_state_audit.json",
+          "evidence": ""
+        },
+        {
+          "name": "evidence_role:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='final' want='final'",
+          "evidence": ""
+        },
+        {
+          "name": "n_pairs:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_n_pairs:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "n_extreme:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "n_control_unique:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=45 want=45",
+          "evidence": ""
+        },
+        {
+          "name": "n_boot:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=10000 want=10000",
+          "evidence": ""
+        },
+        {
+          "name": "limit_is_none:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=None want=None",
+          "evidence": ""
+        },
+        {
+          "name": "note_present:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "B4 and exclusive numbers are DIAGNOSTIC and are NOT merged into one claim (weath",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_dir_is_official:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "记录=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1 官方=/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_sha_binds_five:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=['hotdry_manifest.json', 'matched_normal_manifest.json', 'protocol.json', 'provenance.json', 'thresholds.json'] want=['hotdry_manifest.json', 'matched_normal_manifest.json', 'protocol.json', 'provenance.json', 'thresholds.json']",
+          "evidence": ""
+        },
+        {
+          "name": "protocol_sha_matches_disk:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "不一致={}",
+          "evidence": ""
+        },
+        {
+          "name": "q3_json_has_no_native_checkpoint:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "已确认的 schema 缺口：Q3 结果 JSON 不记录 checkpoint SHA",
+          "evidence": ""
+        },
+        {
+          "name": "q3_json_has_no_evaluator_commit:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "已确认的 schema 缺口：Q3 结果 JSON 不记录 evaluator commit",
+          "evidence": ""
+        },
+        {
+          "name": "q3_checkpoint_via_shard:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_lacks_checkpoint_sha:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "已确认缺口：运行日志不含 checkpoint SHA（/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu5_legacy11904_oodt_q3.log）",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_binds_result_path:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "日志 [audit] wrote 行指向本 job 的结果文件",
+          "evidence": ""
+        },
+        {
+          "name": "q3_run_dir_encodes_ckpt_role:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "run 目录名含 checkpoint 角色标记 legacy11904",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu5_legacy11904_oodt_q3:weather_in_base",
+          "ok": true,
+          "detail": "got='False' want='False'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu5_legacy11904_oodt_q3:n_extreme",
+          "ok": true,
+          "detail": "got='84' want='84'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu5_legacy11904_oodt_q3:n_control_unique",
+          "ok": true,
+          "detail": "got='45' want='45'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu5_legacy11904_oodt_q3:n_pairs",
+          "ok": true,
+          "detail": "got='84' want='84'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu5_legacy11904_oodt_q3:role",
+          "ok": true,
+          "detail": "got='final' want='final'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu5_legacy11904_oodt_q3:uf_differs_all",
+          "ok": true,
+          "detail": "got='True' want='True'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu5_legacy11904_oodt_q3:endpoint",
+          "ok": true,
+          "detail": "got='PASS' want='PASS'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu5_legacy11904_oodt_q3:enhancement",
+          "ok": true,
+          "detail": "got='FAIL' want='FAIL'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu5_legacy11904_oodt_q3:raw",
+          "ok": true,
+          "detail": "got='Q3_RESPONSE_FIDELITY_ONLY' want='Q3_RESPONSE_FIDELITY_ONLY'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_log_json_agree:gpu5_legacy11904_oodt_q3:overall",
+          "ok": true,
+          "detail": "got='Q3_RESPONSE_FIDELITY_ONLY' want='Q3_RESPONSE_FIDELITY_ONLY'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_metric_completeness:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "缺失或非数值=[]",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.paired_bootstrap.n:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.paired_bootstrap.ci_ordered:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.0011953603675855058, 0.003982677219236003] mean=0.002565468112672014",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.paired_bootstrap.significance_consistent:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.paired_bootstrap.mean_matches_point:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=0.002565468112672014 want=0.002565468112672014 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.geo_cluster_bootstrap.n:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.geo_cluster_bootstrap.n_clusters:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=31 want=31",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.geo_cluster_bootstrap.ci_ordered:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.0011187122087714869, 0.003987491067301663] mean=0.002565468112672014",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.geo_cluster_bootstrap.significance_consistent:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.geo_cluster_bootstrap.mean_matches_point:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=0.002565468112672014 want=0.002565468112672014 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.reused_control_cluster_bootstrap.n:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.reused_control_cluster_bootstrap.n_clusters:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=45 want=45",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.reused_control_cluster_bootstrap.ci_ordered:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.0010028157455885883, 0.004140386835031964] mean=0.002565468112672014",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.reused_control_cluster_bootstrap.significance_consistent:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.reused_control_cluster_bootstrap.mean_matches_point:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=0.002565468112672014 want=0.002565468112672014 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_donor.paired_frac_pos_in_unit:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "frac_pos=0.6666666666666666",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.paired_bootstrap.n:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.paired_bootstrap.ci_ordered:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.007529678631856639, 0.015303447515283812] mean=0.011261332329706334",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.paired_bootstrap.significance_consistent:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.paired_bootstrap.mean_matches_point:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=0.011261332329706334 want=0.011261332329706334 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.geo_cluster_bootstrap.n:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.geo_cluster_bootstrap.n_clusters:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=31 want=31",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.geo_cluster_bootstrap.ci_ordered:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.005465624536528642, 0.0170799320898515] mean=0.011261332329706334",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.geo_cluster_bootstrap.significance_consistent:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.geo_cluster_bootstrap.mean_matches_point:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=0.011261332329706334 want=0.011261332329706334 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.reused_control_cluster_bootstrap.n:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.reused_control_cluster_bootstrap.n_clusters:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=45 want=45",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.reused_control_cluster_bootstrap.ci_ordered:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "ci=[0.005212267390684386, 0.017714386102466874] mean=0.011261332329706334",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.reused_control_cluster_bootstrap.significance_consistent:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.reused_control_cluster_bootstrap.mean_matches_point:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=0.011261332329706334 want=0.011261332329706334 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "extreme_actual_vs_mean.paired_frac_pos_in_unit:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "frac_pos=0.8214285714285714",
+          "evidence": ""
+        },
+        {
+          "name": "endpoint_fidelity_status:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='PASS' want='PASS'",
+          "evidence": ""
+        },
+        {
+          "name": "hotdry_enhancement_status:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='FAIL' want='FAIL'",
+          "evidence": ""
+        },
+        {
+          "name": "primary_criterion:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='geo_cluster_bootstrap_ci_low_gt0' want='geo_cluster_bootstrap_ci_low_gt0'",
+          "evidence": ""
+        },
+        {
+          "name": "raw_status:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='Q3_RESPONSE_FIDELITY_ONLY' want='Q3_RESPONSE_FIDELITY_ONLY'",
+          "evidence": ""
+        },
+        {
+          "name": "overall_status:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='Q3_RESPONSE_FIDELITY_ONLY' want='Q3_RESPONSE_FIDELITY_ONLY'",
+          "evidence": ""
+        },
+        {
+          "name": "df_evidence_role:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='final' want='final'",
+          "evidence": ""
+        },
+        {
+          "name": "df_n_pairs:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "uf_differs_all_pairs:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "df_weather_in_base:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=False want=False",
+          "evidence": ""
+        },
+        {
+          "name": "diagnostic_only:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=False want=False",
+          "evidence": ""
+        },
+        {
+          "name": "models_n_extreme:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "models_n_control:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=45 want=45",
+          "evidence": ""
+        },
+        {
+          "name": "endpoint_pass_is_earned:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "R2 actual=0.6253516462782711 donor=0.5893404938146756 mean=0.5430064798749749（PASS 要求 actual 同时优于两者）",
+          "evidence": ""
+        },
+        {
+          "name": "hotdry_fail_is_earned:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "主判据 geo_cluster ci_low=-0.0021624635347345066 ≤ 0，故 hotdry 增强判 FAIL 与数值一致",
+          "evidence": ""
+        },
+        {
+          "name": "per_cube_effects_count:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=129 want=129",
+          "evidence": ""
+        },
+        {
+          "name": "q3_donor_rows_count:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=84 want=84",
+          "evidence": ""
+        },
+        {
+          "name": "stratum_accuracy_is_dict:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "dict",
+          "evidence": ""
+        },
+        {
+          "name": "stratum_accuracy_cohorts:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=['hotdry', 'matched_normal'] want=['hotdry', 'matched_normal']",
+          "evidence": ""
+        },
+        {
+          "name": "stratum_accuracy_arms_consistent:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "两 cohort 的臂集合={'hotdry': ['closure_zero_scale', 'full', 't_identity', 'weather_in_base'], 'matched_normal': ['closure_zero_scale', 'full', 't_identity', 'weather_in_base']}",
+          "evidence": ""
+        },
+        {
+          "name": "stratum_accuracy_arms:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got=['closure_zero_scale', 'full', 't_identity', 'weather_in_base'] want=['closure_zero_scale', 'full', 't_identity', 'weather_in_base']",
+          "evidence": ""
+        },
+        {
+          "name": "all_values_finite:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "非有限值路径=[]",
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "gate": "D",
+      "title": "11,904 复现历史参考：57 个正式指标逐项比对",
+      "n_checks": 119,
+      "n_failed": 0,
+      "ok": true,
+      "checks": [
+        {
+          "name": "hist_ref_exists",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/historical_11904_reference.json",
+          "evidence": ""
+        },
+        {
+          "name": "hist_ref_sha256_unchanged",
+          "ok": true,
+          "detail": "got=0b97406c3bd44cd68bb3f098b6ee2fb5da914f1198bd4684a1a55c813bd493f4 want=0b97406c3bd44cd68bb3f098b6ee2fb5da914f1198bd4684a1a55c813bd493f4（不一致说明冻结参考被改动，必须停止）",
+          "evidence": ""
+        },
+        {
+          "name": "formal_metric_count_is_57",
+          "ok": true,
+          "detail": "正式指标键=57，元数据键=8：['_checkpoint', '_generated_at', '_generated_by', '_note', '_sources', '_tolerance', '_tolerance_rationale', '_tolerances']",
+          "evidence": ""
+        },
+        {
+          "name": "metadata_keys_excluded",
+          "ok": true,
+          "detail": "排除的元数据键=['_checkpoint', '_generated_at', '_generated_by', '_note', '_sources', '_tolerance', '_tolerance_rationale', '_tolerances']",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q1_forecast.full.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q1_forecast.full.R2",
+          "ok": true,
+          "detail": "ref=0.49732196418835595 got=0.49732196418835595 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q1_forecast.full.biasabs",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q1_forecast.full.biasabs",
+          "ok": true,
+          "detail": "ref=0.0997195960230769 got=0.0997195960230769 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q1_forecast.full.nse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q1_forecast.full.nse",
+          "ok": true,
+          "detail": "ref=-0.15475482758989223 got=-0.15475482758989223 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q1_forecast.full.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q1_forecast.full.rmse",
+          "ok": true,
+          "detail": "ref=0.1572881669325748 got=0.1572881669325748 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.T_identity.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.T_identity.R2",
+          "ok": true,
+          "detail": "ref=0.48541607437960566 got=0.48541607437960566 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.T_identity.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.T_identity.rmse",
+          "ok": true,
+          "detail": "ref=0.26101825809538115 got=0.26101825809538115 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.alpha0.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.alpha0.R2",
+          "ok": true,
+          "detail": "ref=0.48610753997662814 got=0.48610753997662814 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.alpha0.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.alpha0.rmse",
+          "ok": true,
+          "detail": "ref=0.17101334735930204 got=0.17101334735930204 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_high",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_high",
+          "ok": true,
+          "detail": "ref=0.02590229577842624 got=0.02590229577842624 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_low",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_low",
+          "ok": true,
+          "detail": "ref=0.006432408120151691 got=0.006432408120151691 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.mean",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.mean",
+          "ok": true,
+          "detail": "ref=0.01616252595360122 got=0.01616252595360122 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.paired.n",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.closure_cut_alpha0.paired.n",
+          "ok": true,
+          "detail": "ref=589 got=589 Δ=0.000e+00 tol=0",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.full.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.full.R2",
+          "ok": true,
+          "detail": "ref=0.49732196418835595 got=0.49732196418835595 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.full.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.full.rmse",
+          "ok": true,
+          "detail": "ref=0.1572881669325748 got=0.1572881669325748 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.official_R2_full_minus_Tid",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.official_R2_full_minus_Tid",
+          "ok": true,
+          "detail": "ref=0.011905889808750292 got=0.011905889808750292 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.official_R2_full_minus_alpha0",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.official_R2_full_minus_alpha0",
+          "ok": true,
+          "detail": "ref=0.011214424211727803 got=0.011214424211727803 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_high",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_high",
+          "ok": true,
+          "detail": "ref=0.026960749441100905 got=0.026960749441100905 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_low",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_low",
+          "ok": true,
+          "detail": "ref=0.007824839508750908 got=0.007824839508750908 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu3_legacy11904_val_q1q2:Q2_load_bearing.transition_identity.bootstrap95.mean",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu3_legacy11904_val_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu3_legacy11904_val_q1q2:Q2_load_bearing.transition_identity.bootstrap95.mean",
+          "ok": true,
+          "detail": "ref=0.017417428921451206 got=0.017417428921451206 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.R2",
+          "ok": true,
+          "detail": "ref=0.5693493611664086 got=0.5693493611664086 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.biasabs",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.biasabs",
+          "ok": true,
+          "detail": "ref=0.10082906836242285 got=0.10082906836242285 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.nse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.nse",
+          "ok": true,
+          "detail": "ref=-0.09865601980139305 got=-0.09865601980139305 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.rmse",
+          "ok": true,
+          "detail": "ref=0.1505941190915099 got=0.1505941190915099 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.T_identity.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.T_identity.R2",
+          "ok": true,
+          "detail": "ref=0.5476642387248465 got=0.5476642387248465 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.T_identity.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.T_identity.rmse",
+          "ok": true,
+          "detail": "ref=0.2583161903165088 got=0.2583161903165088 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.alpha0.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.alpha0.R2",
+          "ok": true,
+          "detail": "ref=0.5493773508945857 got=0.5493773508945857 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.alpha0.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.alpha0.rmse",
+          "ok": true,
+          "detail": "ref=0.16518774015828974 got=0.16518774015828974 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_high",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_high",
+          "ok": true,
+          "detail": "ref=0.03017606928017251 got=0.03017606928017251 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_low",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.ci_low",
+          "ok": true,
+          "detail": "ref=0.014219898623411737 got=0.014219898623411737 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.mean",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.bootstrap95.mean",
+          "ok": true,
+          "detail": "ref=0.021997768589881533 got=0.021997768589881533 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.paired.n",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.closure_cut_alpha0.paired.n",
+          "ok": true,
+          "detail": "ref=1019 got=1019 Δ=0.000e+00 tol=0",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.full.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.full.R2",
+          "ok": true,
+          "detail": "ref=0.5693493611664086 got=0.5693493611664086 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.full.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.full.rmse",
+          "ok": true,
+          "detail": "ref=0.1505941190915099 got=0.1505941190915099 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.official_R2_full_minus_Tid",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.official_R2_full_minus_Tid",
+          "ok": true,
+          "detail": "ref=0.021685122441562066 got=0.021685122441562066 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.official_R2_full_minus_alpha0",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.official_R2_full_minus_alpha0",
+          "ok": true,
+          "detail": "ref=0.019972010271822827 got=0.019972010271822827 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_high",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_high",
+          "ok": true,
+          "detail": "ref=0.032169788967835664 got=0.032169788967835664 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_low",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.transition_identity.bootstrap95.ci_low",
+          "ok": true,
+          "detail": "ref=0.016086752271438905 got=0.016086752271438905 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.transition_identity.bootstrap95.mean",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu4_legacy11904_oodt_q1q2",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu4_legacy11904_oodt_q1q2:Q2_load_bearing.transition_identity.bootstrap95.mean",
+          "ok": true,
+          "detail": "ref=0.024015932710944276 got=0.024015932710944276 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.n_control",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.n_control",
+          "ok": true,
+          "detail": "ref=45 got=45 Δ=0.000e+00 tol=0",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.n_extreme",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.n_extreme",
+          "ok": true,
+          "detail": "ref=84 got=84 Δ=0.000e+00 tol=0",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.actual.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.actual.R2",
+          "ok": true,
+          "detail": "ref=0.6253516462782711 got=0.6253516462782711 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.actual.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.actual.rmse",
+          "ok": true,
+          "detail": "ref=0.14915162604727777 got=0.14915162604727777 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.donor.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.donor.R2",
+          "ok": true,
+          "detail": "ref=0.5893404938146756 got=0.5893404938146756 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.donor.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.donor.rmse",
+          "ok": true,
+          "detail": "ref=0.15841893205313404 got=0.15841893205313404 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.mean.R2",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.mean.R2",
+          "ok": true,
+          "detail": "ref=0.5430064798749749 got=0.5430064798749749 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.mean.rmse",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_aggregate_extreme.mean.rmse",
+          "ok": true,
+          "detail": "ref=0.19709368956822035 got=0.19709368956822035 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.delta_loss_mean",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.delta_loss_mean",
+          "ok": true,
+          "detail": "ref=0.002565468112672014 got=0.002565468112672014 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.geo_cluster_bootstrap.ci_high",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.geo_cluster_bootstrap.ci_high",
+          "ok": true,
+          "detail": "ref=0.003987491067301663 got=0.003987491067301663 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.geo_cluster_bootstrap.ci_low",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.geo_cluster_bootstrap.ci_low",
+          "ok": true,
+          "detail": "ref=0.0011187122087714869 got=0.0011187122087714869 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.paired_bootstrap.ci_high",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.paired_bootstrap.ci_high",
+          "ok": true,
+          "detail": "ref=0.003982677219236003 got=0.003982677219236003 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.paired_bootstrap.ci_low",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_donor.paired_bootstrap.ci_low",
+          "ok": true,
+          "detail": "ref=0.0011953603675855058 got=0.0011953603675855058 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.delta_loss_mean",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.delta_loss_mean",
+          "ok": true,
+          "detail": "ref=0.011261332329706334 got=0.011261332329706334 Δ=0.000e+00 tol=1e-05",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.geo_cluster_bootstrap.ci_high",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.geo_cluster_bootstrap.ci_high",
+          "ok": true,
+          "detail": "ref=0.0170799320898515 got=0.0170799320898515 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.geo_cluster_bootstrap.ci_low",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.geo_cluster_bootstrap.ci_low",
+          "ok": true,
+          "detail": "ref=0.005465624536528642 got=0.005465624536528642 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.paired_bootstrap.ci_high",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.paired_bootstrap.ci_high",
+          "ok": true,
+          "detail": "ref=0.015303447515283812 got=0.015303447515283812 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.paired_bootstrap.ci_low",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.endpoint_fidelity.extreme_actual_vs_mean.paired_bootstrap.ci_low",
+          "ok": true,
+          "detail": "ref=0.007529678631856639 got=0.007529678631856639 Δ=0.000e+00 tol=0.0001",
+          "evidence": ""
+        },
+        {
+          "name": "ref_key_job_known:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.n_pairs",
+          "ok": true,
+          "detail": "历史参考键必须指向 11,904 作业，实际 job=gpu5_legacy11904_oodt_q3",
+          "evidence": ""
+        },
+        {
+          "name": "reproduce:gpu5_legacy11904_oodt_q3:models.exclusive.q3_donor_fidelity.n_pairs",
+          "ok": true,
+          "detail": "ref=84 got=84 Δ=0.000e+00 tol=0",
+          "evidence": ""
+        },
+        {
+          "name": "reproduction_pass_count",
+          "ok": true,
+          "detail": "通过 57/57，逐位相同 57/57",
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "gate": "E",
+      "title": "完整性：无 smoke/partial/中断混入、无幽灵结果、ground truth 归属、口径边界",
+      "n_checks": 42,
+      "n_failed": 0,
+      "ok": true,
+      "checks": [
+        {
+          "name": "no_interrupt_marker:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "发现标记文件=[]",
+          "evidence": ""
+        },
+        {
+          "name": "no_smoke_marker:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "正式作业名不得含 smoke",
+          "evidence": ""
+        },
+        {
+          "name": "no_interrupt_marker:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "发现标记文件=[]",
+          "evidence": ""
+        },
+        {
+          "name": "no_smoke_marker:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "正式作业名不得含 smoke",
+          "evidence": ""
+        },
+        {
+          "name": "no_interrupt_marker:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "发现标记文件=[]",
+          "evidence": ""
+        },
+        {
+          "name": "no_smoke_marker:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "正式作业名不得含 smoke",
+          "evidence": ""
+        },
+        {
+          "name": "no_interrupt_marker:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "发现标记文件=[]",
+          "evidence": ""
+        },
+        {
+          "name": "no_smoke_marker:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "正式作业名不得含 smoke",
+          "evidence": ""
+        },
+        {
+          "name": "no_interrupt_marker:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "发现标记文件=[]",
+          "evidence": ""
+        },
+        {
+          "name": "no_smoke_marker:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "正式作业名不得含 smoke",
+          "evidence": ""
+        },
+        {
+          "name": "no_interrupt_marker:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "发现标记文件=[]",
+          "evidence": ""
+        },
+        {
+          "name": "no_smoke_marker:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "正式作业名不得含 smoke",
+          "evidence": ""
+        },
+        {
+          "name": "excluded_not_in_allowlist:smoke@20260818_154859",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/smoke 的子项与正式作业名无交集",
+          "evidence": ""
+        },
+        {
+          "name": "excluded_not_in_allowlist:selftest@20260818_154859",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/selftest 的子项与正式作业名无交集",
+          "evidence": ""
+        },
+        {
+          "name": "interrupted_attempt_status_not_ready",
+          "ok": true,
+          "detail": "got='NOT_READY' want='NOT_READY'",
+          "evidence": ""
+        },
+        {
+          "name": "interrupted_attempt_has_three_markers",
+          "ok": true,
+          "detail": "标记=['runs/gpu0_v14880_val_q1q2/INTERRUPTED.json', 'runs/gpu1_v14880_oodt_q1q2/INTERRUPTED.json', 'runs/gpu2_v14880_oodt_q3/INTERRUPTED.json']",
+          "evidence": ""
+        },
+        {
+          "name": "interrupted_attempt_preserved",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859 作为审计证据保留，未被删除或覆盖",
+          "evidence": ""
+        },
+        {
+          "name": "every_result_has_launch_record",
+          "ok": true,
+          "detail": "got=[] want=[]",
+          "evidence": ""
+        },
+        {
+          "name": "every_launch_record_has_result",
+          "ok": true,
+          "detail": "got=[] want=[]",
+          "evidence": ""
+        },
+        {
+          "name": "result_set_equals_allowlist",
+          "ok": true,
+          "detail": "got=['gpu0_v14880_val_q1q2', 'gpu1_v14880_oodt_q1q2', 'gpu2_v14880_oodt_q3', 'gpu3_legacy11904_val_q1q2', 'gpu4_legacy11904_oodt_q1q2', 'gpu5_legacy11904_oodt_q3'] want=['gpu0_v14880_val_q1q2', 'gpu1_v14880_oodt_q1q2', 'gpu2_v14880_oodt_q3', 'gpu3_legacy11904_val_q1q2', 'gpu4_legacy11904_oodt_q1q2', 'gpu5_legacy11904_oodt_q3']",
+          "evidence": ""
+        },
+        {
+          "name": "frozen_manifest_sha:val",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/artifacts/protocols/b4_eval/val_chopped.manifest.json",
+          "evidence": ""
+        },
+        {
+          "name": "frozen_manifest_count:val",
+          "ok": true,
+          "detail": "got=952 want=952",
+          "evidence": ""
+        },
+        {
+          "name": "frozen_manifest_sha:oodt",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+          "evidence": ""
+        },
+        {
+          "name": "frozen_manifest_count:oodt",
+          "ok": true,
+          "detail": "got=1904 want=1904",
+          "evidence": ""
+        },
+        {
+          "name": "q3_protocol_frozen_before_eval",
+          "ok": true,
+          "detail": "协议冻结 2026-07-26T00:00:00Z，最早评测启动 2026-08-20T03:27:18Z，早于评测 25.1 天",
+          "evidence": ""
+        },
+        {
+          "name": "q3_thresholds_come_from_frozen_file",
+          "ok": true,
+          "detail": "hot/dry 阈值取自 thresholds.json（冻结），不由本轮结果反推",
+          "evidence": ""
+        },
+        {
+          "name": "result_counts_follow_protocol:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "结果计数必须等于协议计数 n_primary=84 n_control_unique=45",
+          "evidence": ""
+        },
+        {
+          "name": "result_counts_follow_protocol:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "结果计数必须等于协议计数 n_primary=84 n_control_unique=45",
+          "evidence": ""
+        },
+        {
+          "name": "n_targets_follows_frozen_manifest:gpu0_v14880_val_q1q2",
+          "ok": true,
+          "detail": "got=952 want=952",
+          "evidence": ""
+        },
+        {
+          "name": "n_targets_follows_frozen_manifest:gpu1_v14880_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1904 want=1904",
+          "evidence": ""
+        },
+        {
+          "name": "n_targets_follows_frozen_manifest:gpu3_legacy11904_val_q1q2",
+          "ok": true,
+          "detail": "got=952 want=952",
+          "evidence": ""
+        },
+        {
+          "name": "n_targets_follows_frozen_manifest:gpu4_legacy11904_oodt_q1q2",
+          "ok": true,
+          "detail": "got=1904 want=1904",
+          "evidence": ""
+        },
+        {
+          "name": "three_checkpoint_file_shas_distinct",
+          "ok": true,
+          "detail": "{'boundary11904': '644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd', 'verified14880': 'a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f', 'historical14880': '99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b'}",
+          "evidence": ""
+        },
+        {
+          "name": "value_identity_scoped_to_14880_pair",
+          "ok": true,
+          "detail": "registry provenance_notes 明确：值一致性只在 verified 与历史 14,880 之间成立",
+          "evidence": ""
+        },
+        {
+          "name": "file_identity_explicitly_not_conflated",
+          "ok": true,
+          "detail": "同一条 note 同时声明文件身份不同，二者不得混为一谈",
+          "evidence": ""
+        },
+        {
+          "name": "registry_warns_against_relabelling",
+          "ok": true,
+          "detail": "registry 明确禁止把 11,904 的历史数字改标为 14,880",
+          "evidence": ""
+        },
+        {
+          "name": "hist_ref_note_warns_against_relabelling",
+          "ok": true,
+          "detail": "历史参考 _note=Reproduction target for the 11,904 RERUN only (jobs gpu3/gpu4/gpu5).  Same checkpoint + sa",
+          "evidence": ""
+        },
+        {
+          "name": "11904_and_14880_differ_on:val",
+          "ok": true,
+          "detail": "11904 R2=0.49732196418835595 vs 14880 R2=0.49709355615470024（数值不同，二者模型状态不可等同）",
+          "evidence": ""
+        },
+        {
+          "name": "11904_and_14880_differ_on:oodt",
+          "ok": true,
+          "detail": "11904 R2=0.5693493611664086 vs 14880 R2=0.5692781483135535（数值不同，二者模型状态不可等同）",
+          "evidence": ""
+        },
+        {
+          "name": "q3_claim_scope:gpu2_v14880_oodt_q3",
+          "ok": true,
+          "detail": "got='Q3_RESPONSE_FIDELITY_ONLY' want='Q3_RESPONSE_FIDELITY_ONLY'",
+          "evidence": ""
+        },
+        {
+          "name": "q3_claim_scope:gpu5_legacy11904_oodt_q3",
+          "ok": true,
+          "detail": "got='Q3_RESPONSE_FIDELITY_ONLY' want='Q3_RESPONSE_FIDELITY_ONLY'",
+          "evidence": ""
+        },
+        {
+          "name": "a03_stray_q2_values_absent_from_all_raw",
+          "ok": true,
+          "detail": "在六份一手结果中命中的臆造值={}（应为空，证明这批数字无任何工件来源）",
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "gate": "F",
+      "title": "sanity anchor、M9 验收、参数审计与 evaluator 源码指纹交叉核对",
+      "n_checks": 95,
+      "n_failed": 0,
+      "ok": true,
+      "checks": [
+        {
+          "name": "anchor:gpu3_legacy11904_val_q1q2:Q1_forecast.full.R2",
+          "ok": true,
+          "detail": "got=0.49732196418835595 want=0.49732196418835595 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "anchor:gpu0_v14880_val_q1q2:Q1_forecast.full.R2",
+          "ok": true,
+          "detail": "got=0.49709355615470024 want=0.49709355615470024 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "anchor:gpu4_legacy11904_oodt_q1q2:Q1_forecast.full.R2",
+          "ok": true,
+          "detail": "got=0.5693493611664086 want=0.5693493611664086 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "anchor:gpu1_v14880_oodt_q1q2:Q1_forecast.full.R2",
+          "ok": true,
+          "detail": "got=0.5692781483135535 want=0.5692781483135535 tol=1e-12 |Δ|=0.000e+00",
+          "evidence": ""
+        },
+        {
+          "name": "m9_report_exists",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/resume11904_to14880/20260818_112933/m9_acceptance_report.json",
+          "evidence": ""
+        },
+        {
+          "name": "m9_accepted",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "m9_n_checks_31",
+          "ok": true,
+          "detail": "got=31 want=31",
+          "evidence": ""
+        },
+        {
+          "name": "m9_all_checks_ok",
+          "ok": true,
+          "detail": "got=31 want=31",
+          "evidence": ""
+        },
+        {
+          "name": "m9_final_step",
+          "ok": true,
+          "detail": "got=14880 want=14880",
+          "evidence": ""
+        },
+        {
+          "name": "m9_stage",
+          "ok": true,
+          "detail": "got=3 want=3",
+          "evidence": ""
+        },
+        {
+          "name": "m9_checkpoint_last_sha256",
+          "ok": true,
+          "detail": "got='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f' want='a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f'",
+          "evidence": ""
+        },
+        {
+          "name": "m9_parent_file_sha256",
+          "ok": true,
+          "detail": "got='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd' want='644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd'",
+          "evidence": ""
+        },
+        {
+          "name": "m9_parent_step",
+          "ok": true,
+          "detail": "got=11904 want=11904",
+          "evidence": ""
+        },
+        {
+          "name": "m9_parent_stage_recorded",
+          "ok": true,
+          "detail": "got=2 want=2",
+          "evidence": ""
+        },
+        {
+          "name": "m9_resume_stage_applied",
+          "ok": true,
+          "detail": "got=3 want=3",
+          "evidence": ""
+        },
+        {
+          "name": "m9_parent_b4_state_sha256",
+          "ok": true,
+          "detail": "got='aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7' want='aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7'",
+          "evidence": ""
+        },
+        {
+          "name": "m9_resumed",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "m9_historical_bit_exact_ok",
+          "ok": true,
+          "detail": "value_sha hist=aa98fbd2fa302727 resume=aa98fbd2fa302727 keys_equal=True max_abs_diff=0.000e+00 over 255 tensors",
+          "evidence": ""
+        },
+        {
+          "name": "m9_value_digest_matches_both_sides",
+          "ok": true,
+          "detail": "255 张量值摘要两侧一致：value_sha hist=aa98fbd2fa302727 resume=aa98fbd2fa302727 keys_equal=True max_abs_diff=0.000e+00 over 255 tensors",
+          "evidence": ""
+        },
+        {
+          "name": "m9_tensor_count_255",
+          "ok": true,
+          "detail": "value_sha hist=aa98fbd2fa302727 resume=aa98fbd2fa302727 keys_equal=True max_abs_diff=0.000e+00 over 255 tensors",
+          "evidence": ""
+        },
+        {
+          "name": "m9_loss_log_2976",
+          "ok": true,
+          "detail": "2976 entries (expect 2976 = 14880 - 11904)",
+          "evidence": ""
+        },
+        {
+          "name": "m9_check:all_updates_stage_3",
+          "ok": true,
+          "detail": "all 2976 updates in stage 3",
+          "evidence": ""
+        },
+        {
+          "name": "m9_check:trainer_asserted_teacher_unchanged",
+          "ok": true,
+          "detail": "done line: teacher_unchanged=True stage3_qgrad_seen=True out=runs/resume11904_to14880/20260818_112933",
+          "evidence": ""
+        },
+        {
+          "name": "m9_check:trainable_q_count_12",
+          "ok": true,
+          "detail": "12 trainable q tensors (expect 12 for core.blocks.2.*)",
+          "evidence": ""
+        },
+        {
+          "name": "m9_check:optimizer_state_present",
+          "ok": true,
+          "detail": "42 param states",
+          "evidence": ""
+        },
+        {
+          "name": "m9_check:scheduler_last_epoch_14880",
+          "ok": true,
+          "detail": "last_epoch=14880",
+          "evidence": ""
+        },
+        {
+          "name": "m9_check:b4_state_dict_present",
+          "ok": true,
+          "detail": "255 model keys",
+          "evidence": ""
+        },
+        {
+          "name": "m9_check:no_duplicate_boundary80",
+          "ok": true,
+          "detail": "checkpoint_boundary80.pt absent (parent already saved it)",
+          "evidence": ""
+        },
+        {
+          "name": "m9_check:loss_log_first_step_11905",
+          "ok": true,
+          "detail": "first_step=11905",
+          "evidence": ""
+        },
+        {
+          "name": "m9_check:loss_log_last_step_14880",
+          "ok": true,
+          "detail": "last_step=14880",
+          "evidence": ""
+        },
+        {
+          "name": "param_audit_exists",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/resume11904_to14880/20260818_112933/parameter_audit.json",
+          "evidence": ""
+        },
+        {
+          "name": "param_audit_n_rows_49",
+          "ok": true,
+          "detail": "got=49 want=49",
+          "evidence": ""
+        },
+        {
+          "name": "param_audit_rows_len_49",
+          "ok": true,
+          "detail": "got=49 want=49",
+          "evidence": ""
+        },
+        {
+          "name": "param_audit_all_consistent",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "param_audit_no_inconsistent",
+          "ok": true,
+          "detail": "got=[] want=[]",
+          "evidence": ""
+        },
+        {
+          "name": "param_audit_no_missing_runbook_literal",
+          "ok": true,
+          "detail": "got=[] want=[]",
+          "evidence": ""
+        },
+        {
+          "name": "param_audit_every_row_consistent",
+          "ok": true,
+          "detail": "不一致行=[]",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:per_gpu_batch",
+          "ok": true,
+          "detail": "got=8 want=8",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:global_batch",
+          "ok": true,
+          "detail": "got=64 want=64",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:world_size",
+          "ok": true,
+          "detail": "got=8 want=8",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:accum",
+          "ok": true,
+          "detail": "got=1 want=1",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:max_epochs",
+          "ok": true,
+          "detail": "got=40 want=40",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:total_steps",
+          "ok": true,
+          "detail": "got=14880 want=14880",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:updates_per_epoch",
+          "ok": true,
+          "detail": "got=372 want=372",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:boundary80",
+          "ok": true,
+          "detail": "got=11904 want=11904",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:branch_lr",
+          "ok": true,
+          "detail": "got=3e-05 want=3e-05",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:q_lr_scale",
+          "ok": true,
+          "detail": "got=0.033 want=0.033",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:weight_decay",
+          "ok": true,
+          "detail": "got=0.0 want=0.0",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:grad_clip",
+          "ok": true,
+          "detail": "got=1.0 want=1.0",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:lr_warmup_steps",
+          "ok": true,
+          "detail": "got=300 want=300",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:unfreeze_q_prefixes",
+          "ok": true,
+          "detail": "got='core.blocks.2.' want='core.blocks.2.'",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:seed",
+          "ok": true,
+          "detail": "got=42 want=42",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:state_dim",
+          "ok": true,
+          "detail": "got=256 want=256",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:val_interval",
+          "ok": true,
+          "detail": "got=1000 want=1000",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:ckpt_interval",
+          "ok": true,
+          "detail": "got=2000 want=2000",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:deterministic",
+          "ok": true,
+          "detail": "got=False want=False",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:alpha",
+          "ok": true,
+          "detail": "got=1.0 want=1.0",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:loss_weights.gt",
+          "ok": true,
+          "detail": "got=1.0 want=1.0",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:loss_weights.kd",
+          "ok": true,
+          "detail": "got=0.5 want=0.5",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:lambda_state@11904",
+          "ok": true,
+          "detail": "got=0.01 want=0.01",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:resume.step",
+          "ok": true,
+          "detail": "got=11904 want=11904",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:resume.epoch",
+          "ok": true,
+          "detail": "got=31 want=31",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:resume.micro_in_epoch",
+          "ok": true,
+          "detail": "got=372 want=372",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:resume.stage",
+          "ok": true,
+          "detail": "got=2 want=2",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparam:resume.best_val",
+          "ok": true,
+          "detail": "got=0.31334985432787643 want=0.31334985432787643",
+          "evidence": ""
+        },
+        {
+          "name": "hyperparams_no_placeholder_left",
+          "ok": true,
+          "detail": "A03 的训练超参必须全部有值，不得残留 <待补充>",
+          "evidence": ""
+        },
+        {
+          "name": "arith_2976_updates",
+          "ok": true,
+          "detail": "got=2976 want=2976",
+          "evidence": ""
+        },
+        {
+          "name": "arith_remaining_updates",
+          "ok": true,
+          "detail": "got=2976 want=2976",
+          "evidence": ""
+        },
+        {
+          "name": "arith_ok",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "boundary80_formula_holds",
+          "ok": true,
+          "detail": "got=11904 want=11904",
+          "evidence": ""
+        },
+        {
+          "name": "stage_at_11904_is_3",
+          "ok": true,
+          "detail": "got=3 want=3",
+          "evidence": ""
+        },
+        {
+          "name": "recorded_stage_in_parent_is_2",
+          "ok": true,
+          "detail": "got=2 want=2",
+          "evidence": ""
+        },
+        {
+          "name": "stage_discrepancy_documented",
+          "ok": true,
+          "detail": "边界 checkpoint 记录 stage=2 而下一次更新属 stage=3，须如实说明而非抹平",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check_exists",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/resume11904_to14880/20260818_112933/state_sha_check.json",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check:all_match",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check:q_projector_match",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check:student_init_match",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check:teacher_match",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check:teacher_load_exact",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check:warm_start_exact",
+          "ok": true,
+          "detail": "got=True want=True",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check:teacher_load_missing",
+          "ok": true,
+          "detail": "got=0 want=0",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check:teacher_load_unexpected",
+          "ok": true,
+          "detail": "got=0 want=0",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check:warm_start_missing",
+          "ok": true,
+          "detail": "got=0 want=0",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check:warm_start_unexpected",
+          "ok": true,
+          "detail": "got=0 want=0",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check_parent_b4_state",
+          "ok": true,
+          "detail": "got='aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7' want='aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7'",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check_parent_step",
+          "ok": true,
+          "detail": "got=11904 want=11904",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check_parent_stage",
+          "ok": true,
+          "detail": "got=2 want=2",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check_matches_expected:q_projector_init_sha256",
+          "ok": true,
+          "detail": "got='da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d' want='da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d'",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check_matches_expected:student_init_sha256",
+          "ok": true,
+          "detail": "got='488052d97c7d1c8a2e805d9838f344daef7ad02e5f185d3025031a5f1c026338' want='488052d97c7d1c8a2e805d9838f344daef7ad02e5f185d3025031a5f1c026338'",
+          "evidence": ""
+        },
+        {
+          "name": "state_sha_check_matches_expected:teacher_sha256",
+          "ok": true,
+          "detail": "got='bbe2c3ee6de540ae6eabeb7798f331388112ad370dbcae9533187344f2f8a302' want='bbe2c3ee6de540ae6eabeb7798f331388112ad370dbcae9533187344f2f8a302'",
+          "evidence": ""
+        },
+        {
+          "name": "evaluator_source_sha:eval/eval_b4_exclusive_contract.py",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/eval_b4_exclusive_contract.py",
+          "evidence": ""
+        },
+        {
+          "name": "evaluator_source_sha:eval/extreme_state_audit.py",
+          "ok": true,
+          "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/extreme_state_audit.py",
+          "evidence": ""
+        },
+        {
+          "name": "train_manifests_distinct_from_eval_manifests",
+          "ok": true,
+          "detail": "训练侧 {'sha.train_manifest_sha256': '17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554', 'sha.val_manifest_sha256': '555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9'} vs 评测侧 {'val': 'd9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e', 'oodt': '58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49'}；交集=set()（必须为空）",
+          "evidence": ""
+        },
+        {
+          "name": "cpu_and_gpu_nodes_recorded",
+          "ok": true,
+          "detail": "CPU 封账节点=csy-zg01-gnode68，GPU 执行节点（取自 attempt_manifest 记录）=csy-zg01-gnode39",
+          "evidence": ""
+        },
+        {
+          "name": "cpu_only_env_enforced",
+          "ok": true,
+          "detail": "CUDA_VISIBLE_DEVICES=''（必须为空串）",
+          "evidence": ""
+        }
+      ]
+    }
+  ],
+  "reproduction": {
+    "n_formal_metric_keys": 57,
+    "n_pass": 57,
+    "n_bit_exact": 57,
+    "scope": "仅 11,904 侧复现历史参考；14,880 侧无历史参考可比"
+  },
+  "sanity_anchors": [
+    {
+      "job": "gpu3_legacy11904_val_q1q2",
+      "path": "Q1_forecast.full.R2",
+      "expected": 0.49732196418835595,
+      "observed": 0.49732196418835595
+    },
+    {
+      "job": "gpu0_v14880_val_q1q2",
+      "path": "Q1_forecast.full.R2",
+      "expected": 0.49709355615470024,
+      "observed": 0.49709355615470024
+    },
+    {
+      "job": "gpu4_legacy11904_oodt_q1q2",
+      "path": "Q1_forecast.full.R2",
+      "expected": 0.5693493611664086,
+      "observed": 0.5693493611664086
+    },
+    {
+      "job": "gpu1_v14880_oodt_q1q2",
+      "path": "Q1_forecast.full.R2",
+      "expected": 0.5692781483135535,
+      "observed": 0.5692781483135535
+    }
+  ],
+  "policy": "任一检查失败即整体 BLOCKED；不得在存在失败项时写「正式封账」"
+}

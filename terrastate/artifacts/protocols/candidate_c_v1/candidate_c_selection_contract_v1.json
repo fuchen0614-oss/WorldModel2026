@@ -1,0 +1,102 @@
+{
+  "schema": "candidate_c_selection_contract_v1",
+  "frozen_at_utc": "2026-08-21T09:08:00.067149Z",
+  "splits": {
+    "primary_tuning": {
+      "name": "val_dev",
+      "selector": "validation_subsplit.val_dev.ids",
+      "n": 476,
+      "tiles": 40,
+      "allowed_uses": [
+        "调参",
+        "smoke/pilot 观测",
+        "训练期 val 监控"
+      ]
+    },
+    "locked_gate": {
+      "name": "val_locked",
+      "selector": "validation_subsplit.val_locked.ids",
+      "n": 476,
+      "tiles": 40,
+      "opened_when": "FORMAL_READY 写入之后才打开",
+      "allowed_uses": [
+        "最终锁定门评估（一次）"
+      ]
+    },
+    "forbidden": {
+      "names": [
+        "ood_t",
+        "test"
+      ],
+      "reason": "禁止用于调参或 checkpoint 选择"
+    },
+    "selector_resolution": {
+      "val_dev": {
+        "selector": "validation_subsplit.val_dev.ids",
+        "n": 476,
+        "first_id": "JAS20/minicube_0_29SND_39.29_-8.56.nc",
+        "last_id": "SON20/minicube_85_31UES_50.62_3.97.nc",
+        "resolved_with": "trainer.load_val_split"
+      },
+      "val_locked": {
+        "selector": "validation_subsplit.val_locked.ids",
+        "n": 476,
+        "first_id": "JAS20/minicube_3_29SPC_38.68_-7.65.nc",
+        "last_id": "SON20/minicube_190_33VWE_58.41_15.13.nc",
+        "resolved_with": "trainer.load_val_split"
+      },
+      "disjoint": true,
+      "split_manifest_sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b"
+    },
+    "selector_lesson": "smoke attempt 2 因 selector 'splits.val_dev.ids' 在冻结 manifest 中解析不到而失败（该值抄自 trainer argparse 默认值）。此后：任何指向另一工件内部的字符串，冻结时与 launcher dry-run 时都必须真的解析一次。"
+  },
+  "checkpoint_preregistration": {
+    "rule": "两个臂的主 checkpoint 都预注册在第 14,880 个 update",
+    "C1_main_update": 14880,
+    "C0R_main_update": 14880,
+    "no_result_based_reselection": true,
+    "statement": "不得在看到 loss/指标后改选别的 checkpoint；中途 checkpoint 仅用于故障恢复与诊断，不进入主结论。"
+  },
+  "uncertainty": {
+    "ci_level": 0.95,
+    "method": "minicube 级 geo-clustered bootstrap",
+    "n_resamples": 2000,
+    "cluster_unit": "geo_group（tile）",
+    "rationale": "同一 tile 内的 minicube 高度相关，按 minicube 独立重采样会把置信区间做得虚假地窄；按 geo group 聚类重采样才诚实。"
+  },
+  "gates": {
+    "primary": [
+      {
+        "name": "LCB_delta_r2",
+        "statistic": "LCB(ΔR²) = LCB(R²_C1 - R²_C0R)",
+        "comparator": ">=",
+        "threshold": -0.02,
+        "meaning": "recursive 相对 direct 的 R² 变化下界不低于 -0.02"
+      },
+      {
+        "name": "UCB_rmse_ratio",
+        "statistic": "UCB(RMSE_C1 / RMSE_C0R)",
+        "comparator": "<=",
+        "threshold": 1.05,
+        "meaning": "recursive 的 RMSE 相对 direct 的上界不超过 1.05 倍"
+      }
+    ],
+    "evaluated_on": "val_locked",
+    "both_must_pass": true
+  },
+  "arm_comparison": {
+    "treatment": "C1",
+    "control": "C0R",
+    "compute_matched": true,
+    "matched_on": [
+      "world_size",
+      "per_gpu_batch",
+      "global_batch",
+      "total_updates",
+      "seed",
+      "parent_weights",
+      "lambdas",
+      "lr_schedule"
+    ]
+  }
+}

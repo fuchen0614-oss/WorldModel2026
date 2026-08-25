@@ -1,0 +1,47 @@
+{
+ "schema": "e0_comparison_v1",
+ "pairs": {
+  "validation_q1": {
+   "11904": {
+    "r2": 0.49732196418835595,
+    "rmse": 0.1572881669325748
+   },
+   "14880": {
+    "r2": 0.49709355615470024,
+    "rmse": 0.15733399506089182
+   }
+  },
+  "oodt_q1": {
+   "11904": {
+    "r2": 0.5693493611664086,
+    "rmse": 0.1505941190915099
+   },
+   "14880": {
+    "r2": 0.5692781483135535,
+    "rmse": 0.15062711918297353
+   }
+  },
+  "oodt_q3": {
+   "11904": {
+    "n_pairs": 84,
+    "endpoint_fidelity_status": "PASS",
+    "hotdry_enhancement_status": "FAIL",
+    "overall_status": "Q3_RESPONSE_FIDELITY_ONLY",
+    "evidence_role": "final"
+   },
+   "14880": {
+    "n_pairs": 84,
+    "endpoint_fidelity_status": "PASS",
+    "hotdry_enhancement_status": "FAIL",
+    "overall_status": "Q3_RESPONSE_FIDELITY_ONLY",
+    "evidence_role": "final"
+   }
+  }
+ },
+ "interpretation": [
+  "0.01 仅为描述性阈值，非选择门",
+  "14,880 已固定为后续 anchor",
+  "不根据 OOD 结果回选",
+  "Q3 hot-dry FAIL 是科学结果"
+ ]
+}

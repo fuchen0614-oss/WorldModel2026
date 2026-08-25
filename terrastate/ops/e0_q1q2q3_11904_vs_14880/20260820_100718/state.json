@@ -1,0 +1,15 @@
+{
+  "status": "ACCEPTED",
+  "timestamp": "2026-08-20T08:45:41.468141Z",
+  "verification": {
+    "acceptance": "PASS",
+    "historical_reproduction": "PASS",
+    "failed_checks": 0
+  },
+  "artifacts": {
+    "acceptance_report": "e0_acceptance_report.json",
+    "comparison": "e0_comparison_11904_vs_14880.json",
+    "provenance": "e0_provenance.json",
+    "artifact_index": "e0_artifact_index.json"
+  }
+}

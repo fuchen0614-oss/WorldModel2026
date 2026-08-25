@@ -1,0 +1,110 @@
+{
+  "milestone": "M2",
+  "purpose": "resume 失败回归测试：在未修改的 trainer 上必须失败，修复后必须全绿",
+  "generated_utc": "2026-08-18T04:06:21.263536Z",
+  "test_file": "terrastate/tests/test_resume_boundary11904.py",
+  "test_file_sha256": "024d09d91187ad8083c1e7cdcd3a2d92532f2a304c9ceffe77728e560070c87d",
+  "trainer_under_test": "terrastate/train/train_terrastate_v2.py",
+  "trainer_sha256_at_baseline": "14b8b07040ab2b74b396d4c0b59034b081edc2782814aa3ad6bc864e8c90c8fe",
+  "log": "ops/resume11904_to14880/20260818_112933/m2_prefix_run.log",
+  "log_sha256": "d31d6222e24b92ac1b2b36c028c9b1d82350f94bc087b9c536c614daf3464adb",
+  "summary": "==== RESUME-BOUNDARY REGRESSION 5/13 PASSED ====",
+  "passed": 5,
+  "failed": 8,
+  "total": 13,
+  "checks": [
+    {
+      "id": "R1",
+      "status": "PASS",
+      "title": "reference run reaches the schedule end with the boundary saved",
+      "detail": "step=10 boundary80=8 stage=3"
+    },
+    {
+      "id": "R2",
+      "status": "PASS",
+      "title": "parent checkpoint reproduces the real 11,904 shape (step==boundary, stage RECORDED as 2, micro==full epoch, q fully frozen)",
+      "detail": "step=8 stage=2 epoch=3 micro=2 trainable_q=0"
+    },
+    {
+      "id": "R3",
+      "status": "PASS",
+      "title": "in the reference, update boundary+1 already runs in stage 3",
+      "detail": "stage(step 9)=3 all={8: 2, 9: 3, 10: 3}"
+    },
+    {
+      "id": "R4",
+      "status": "PASS",
+      "title": "resumed run executes EXACTLY the remaining updates (no extra update)",
+      "detail": "step=10 logged_steps=[9, 10] expected=[9, 10]"
+    },
+    {
+      "id": "R5",
+      "status": "FAIL",
+      "title": "FIRST post-resume update runs in stage 3 (no extra stage-2 update)",
+      "detail": "stage(step 9)=2 all=[(9, 2), (10, 3)]",
+      "root_cause_bug": "B1"
+    },
+    {
+      "id": "R6",
+      "status": "FAIL",
+      "title": "resumed run does NOT re-write a boundary80 checkpoint",
+      "detail": "exists=True",
+      "root_cause_bug": "B2"
+    },
+    {
+      "id": "R7",
+      "status": "PASS",
+      "title": "exactly the unfreeze-prefix q tensors are trainable and get gradient",
+      "detail": "q_grad_seen=True n_trainable_q=12 (ref 12)"
+    },
+    {
+      "id": "R8",
+      "status": "FAIL",
+      "title": "resumed loss trajectory matches the uninterrupted reference",
+      "detail": "9:0.44619384vs0.44619384 10:!0.36174861vs0.36168817",
+      "root_cause_bug": "B1"
+    },
+    {
+      "id": "R8b",
+      "status": "FAIL",
+      "title": "resumed FINAL weights match the uninterrupted reference bit-exactly",
+      "detail": "resume=1a55e960514bee40 ref=e6d4ca3fda535f61",
+      "root_cause_bug": "B1"
+    },
+    {
+      "id": "R9",
+      "status": "FAIL",
+      "title": "resuming a COMPLETED checkpoint is a no-op (0 updates, no checkpoint written)",
+      "detail": "step=11 n_logged=1 wrote=['checkpoint_last.pt']",
+      "root_cause_bug": "B3"
+    },
+    {
+      "id": "R10",
+      "status": "FAIL",
+      "title": "refuses to write into a directory that already contains checkpoints",
+      "detail": "no exception raised — historical outputs would be overwritten",
+      "root_cause_bug": "B4"
+    },
+    {
+      "id": "R10b",
+      "status": "FAIL",
+      "title": "pre-existing checkpoints in that directory are byte-identical afterwards",
+      "detail": "boundary80_stable=False last_stable=False",
+      "root_cause_bug": "B4"
+    },
+    {
+      "id": "R11",
+      "status": "FAIL",
+      "title": "child checkpoints record parent path + sha256 + step (provenance chain)",
+      "detail": "lineage={}",
+      "root_cause_bug": "B5"
+    }
+  ],
+  "notes": [
+    "R4 通过：恢复后确实只跑了 step 9,10 两次 update，步数本身没有多算。",
+    "R5 失败是核心缺陷：checkpoint 记录 stage=2，代码直接沿用，导致第一次 post-resume update 仍在 stage 2，比参考轨迹晚一步进入 stage 3。",
+    "R8/R8b 是 R5 的下游后果：step 10 的 loss 与最终权重与不中断参考不一致（0.36174861 vs 0.36168817）。",
+    "R10 当前会直接写入已有 checkpoint 的目录，本次把 fixture 里的 ref/ 参考输出覆盖了（scratch fixture，非历史结果）；修复后应在写入前抛错，fixture 不会再被覆盖。",
+    "R7 在基线已通过：一旦进入 stage 3，可训练 q 张量确为 12 个 core.blocks.2.*；B6 的显式断言仍需在修复中补上。"
+  ]
+}

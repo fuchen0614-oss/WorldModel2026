@@ -1,0 +1,68 @@
+{
+  "schema": "e0_provenance_v2",
+  "attempt": {
+    "dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718",
+    "timestamp_dirname": "20260820_100718",
+    "manifest_sha256": "aed1f2298b348a7a55e83acbf8beae3df5b6483b9f449ced50ebeefa16e0ca47",
+    "parent_manifest": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/launch_manifest.json",
+      "sha256": "500e5031335c366ed06819dd9af8679dcf0318301d559aa7bfd573688c6cdd08"
+    }
+  },
+  "checkpoints": {
+    "terrastate/v2/verified-resume14880@v1": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+      "sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f"
+    },
+    "terrastate/v2/legacy-boundary11904@v1": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+      "sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd"
+    }
+  },
+  "protocols": {
+    "validation": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/artifacts/protocols/b4_eval/val_chopped.manifest.json",
+      "sha256": "d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e"
+    },
+    "ood-t": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+      "sha256": "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49"
+    }
+  },
+  "results": {
+    "gpu0_v14880_val_q1q2": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu0_v14880_val_q1q2/state_contract_exclusive.json",
+      "sha256": "229918a49a42887614d1cfce99dae70c2f0ccdc3590490bce73d5a2e8434314f",
+      "size_bytes": 7479
+    },
+    "gpu1_v14880_oodt_q1q2": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu1_v14880_oodt_q1q2/state_contract_exclusive.json",
+      "sha256": "965a46d249f816c0b17df903185a74bc3c6c371ca10b5ef7472d4459e31c9670",
+      "size_bytes": 7535
+    },
+    "gpu2_v14880_oodt_q3": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu2_v14880_oodt_q3/extreme_state_audit.json",
+      "sha256": "4a51ce5d2877305df1f10fe4c3e278945c4decca657ffcfc6d0f242ebf7bcc43",
+      "size_bytes": 135432
+    },
+    "gpu3_legacy11904_val_q1q2": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu3_legacy11904_val_q1q2/state_contract_exclusive.json",
+      "sha256": "10a903185fd14c16d0fec49b2e730a2bd451d3ff25b2fcaef40cf242f4960354",
+      "size_bytes": 7313
+    },
+    "gpu4_legacy11904_oodt_q1q2": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu4_legacy11904_oodt_q1q2/state_contract_exclusive.json",
+      "sha256": "d0ebbbbea74de549bba481ae5e3ee40fd478a8b5552cbfff09c84ec0e115f7c0",
+      "size_bytes": 7361
+    },
+    "gpu5_legacy11904_oodt_q3": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu5_legacy11904_oodt_q3/extreme_state_audit.json",
+      "sha256": "ccd1a9a107237bc409c96b92032497a84e5d8153d76270f04665153bab6a00fa",
+      "size_bytes": 135430
+    }
+  },
+  "historical_reference": {
+    "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/historical_11904_reference.json",
+    "sha256": "0b97406c3bd44cd68bb3f098b6ee2fb5da914f1198bd4684a1a55c813bd493f4"
+  }
+}

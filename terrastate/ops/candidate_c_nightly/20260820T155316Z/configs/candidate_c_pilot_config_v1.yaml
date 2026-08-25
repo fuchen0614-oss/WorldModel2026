@@ -1,0 +1,78 @@
+arm: C1
+derived_from:
+  changed_flags:
+    stop-after-step:
+      from: 0
+      to: 128
+  config: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml
+  inherited_flag_count: 40
+  sha256: d8ab36586f7313173c2f1f7d3fc0bc31d78dd282e9a7a817e9b7b60a1bc1be4e
+design_contract_sha256: 4613ab9ef34ac51e67d069c8eee1fd32c67b7e2cafdaded523a5ea328c6c7e6b
+expected_total_updates: 2976
+flags:
+  allow-existing-out: false
+  allow-nonzero-lambdas: false
+  allow-unverified-parent: false
+  arm: C1
+  branch-lr: 3.0e-05
+  ckpt-interval: 372
+  days-per-transition-step: 5
+  deterministic: false
+  device: cuda
+  eo-endpoint-weight: 1.0
+  eo-traj-weight: 1.0
+  expect-train-manifest-sha: 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554
+  expect-val-manifest-sha: 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9
+  factual-path: recursive
+  global-batch: 64
+  grad-clip: 1.0
+  lambda-nc: 0.0
+  lambda-pair: 0.0
+  lambda-y: 0.0
+  lambda-z: 0.0
+  log-interval: 10
+  lr-warmup-steps: 100
+  max-epochs: 8
+  max-steps: 0
+  num-workers: 8
+  parent-alias: terrastate/v2/default-training-anchor
+  parent-ckpt: ''
+  per-gpu-batch: 8
+  q-lr-scale: 0.033
+  q4-partition-manifest: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json
+  seed: 42
+  state-dim: 256
+  stop-after-step: 128
+  train-dir: /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train
+  unfreeze-q-prefixes: core.blocks.2.
+  val-dir: /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped
+  val-interval: 372
+  val-split-manifest: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json
+  val-split-selector: validation_subsplit.val_dev.ids
+  verify-data-manifest: true
+  weight-decay: 0.0
+frozen_at_utc: '2026-08-21T02:59:46.558912Z'
+frozen_formal_arm: false
+launcher: train/launch_candidate_c.py
+must_hold:
+  all_lambdas_zero: true
+  not_a_formal_result: true
+  observation_split: val_dev
+  stop_after_step: 128
+  total_steps: 2976
+  world_size: 8
+name: candidate_c_pilot_from_c1_v1
+observation_limits:
+  allowed_split: val_dev
+  forbidden:
+  - val_locked
+  - ood_t
+  - test
+  rule: 不得使用 OOD/test 选模；val_locked 在 FORMAL_READY 之后才开
+parameter_change_policy: pilot 未通过，或需要改变 batch size / 学习率 / 损失权重 / 训练步数时，立即停止并汇报，不得自行调整后继续。决定权在用户。
+pilot_intent: 用正式 C1 的**完全相同**参数跑 128 个 update，只看 val_dev。目的是在起 2,976 update 正式 run
+  之前，确认 loss 有限、量级合理、optimizer/scheduler 行为正常、checkpoint 可落盘可加载、吞吐可外推。total_steps
+  仍是 2,976：stop-after-step 只是提前停，不改变计划长度。
+schema: candidate_c_pilot_config_v1
+trainer: train/train_terrastate_candidate_c.py
+world_size: 8

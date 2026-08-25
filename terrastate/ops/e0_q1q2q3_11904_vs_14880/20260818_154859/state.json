@@ -1,0 +1,248 @@
+{
+  "schema": "e0_ops_state_v1",
+  "task": "E0: 11,904 vs verified 14,880 same-protocol Q1/Q2/Q3 formal evaluation",
+  "ops_dir": "ops/e0_q1q2q3_11904_vs_14880/20260818_154859",
+  "updated_at_cst": "2026-08-18",
+  "overall_status": "WAITING_FOR_SHARED_GPU",
+  "t0_complete": false,
+  "t0_note": "T0 is NOT complete. The six formal GPU evaluations have not started; only the launch hard gate, the frozen manifest, the plumbing smokes and the CPU-side acceptance tooling are done.",
+
+  "milestones": {
+    "m10_publish_register_alias": "DONE",
+    "q1q2_gpu_smoke": "DONE_PLUMBING_ONLY",
+    "q3_cpu_smoke": "DONE_PLUMBING_ONLY",
+    "launch_manifest_frozen": "DONE",
+    "frozen_inputs_reverified": "DONE",
+    "acceptance_aggregation_script": "DONE",
+    "historical_reproduction_reference": "DONE",
+    "six_formal_gpu_jobs": "NOT_STARTED"
+  },
+
+  "m10": {
+    "status": "DONE",
+    "reconfirmed_read_only_this_round": true,
+    "object_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+    "object_mode": "0444",
+    "object_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+    "source_preserved": true,
+    "publish_method": "tmpfile -> fsync -> re-hash written bytes -> chmod 0444 -> os.replace -> fsync parent dir (copy-only, never mv)",
+    "registry_revision_before": "ebc374b34b2e818a",
+    "registry_revision_after": "a7fd2763935a26d1",
+    "registry_backup": "weight_registry.before_m10.ebc374b34b2e818a.json",
+    "publish_conditions_discharged": "6/6 by named M9 checks",
+    "resolved_ids": {
+      "terrastate/v2/verified-resume14880@v1": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "terrastate/v2/legacy-boundary11904@v1": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "terrastate/v2/historical-full14880@v1": "99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b"
+    },
+    "alias": {
+      "name": "terrastate/v2/default-training-anchor",
+      "target_logical_id": "terrastate/v2/verified-resume14880@v1",
+      "resolves_to_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "matches_required_sha": true
+    },
+    "no_changes_made_this_round": "read-only re-check only; no republish, no alias rewrite, no registry change (no inconsistency found)"
+  },
+
+  "dual_sourcing": {
+    "legacy_11904": {
+      "file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "step": 11904,
+      "role": "legacy evidence checkpoint AND exact-resume parent; source of the frozen Q1/Q2/Q3 evidence",
+      "value_sha": "aba100c138119bc0"
+    },
+    "verified_14880": {
+      "file_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "step": 14880,
+      "role": "anchor for later legacy-model evaluation and for initialising later stages",
+      "value_sha": "aa98fbd2fa302727"
+    },
+    "invariants": [
+      "11,904's historical Q1/Q2/Q3 numbers must NEVER be relabelled as coming from 14,880.",
+      "verified 14,880 and historical 14,880 have BYTE-IDENTICAL weights (value_sha aa98fbd2fa302727 on both, max abs diff 0 over 255 tensors) but DIFFERENT file sha256 (a5d2a0cc vs 99f15a35, because of the B5 lineage block and this run's args/timestamps). Both statements are true; do not conflate them.",
+      "11,904 and 14,880 have DIFFERENT weights (max abs diff 1.9256e-03), so a metric difference between them is a genuine state difference."
+    ]
+  },
+
+  "gpu": {
+    "shared_node_status": "OCCUPIED_BY_OTHER_USER",
+    "occupying_user": "xddu2",
+    "observed": "8/8 H200 busy, 16 compute processes, ~74 GB used per card",
+    "our_gpu_actions_this_round": "NONE",
+    "constraints_honoured": [
+      "no GPU program started",
+      "no other user's process killed, paused, modified, or inspected for private content",
+      "no partial preemption of the node",
+      "momentary 0% utilisation is never treated as idle",
+      "all CPU work ran with CUDA_VISIBLE_DEVICES=\"\" and --device cpu",
+      "CPU work capped at <=8 workers; no full-data CPU evaluation"
+    ]
+  },
+
+  "watcher": {
+    "pid": 2834736,
+    "ppid": 1,
+    "detached_session": true,
+    "script": "ops/e0_q1q2q3_11904_vs_14880/20260818_154859/e0_watcher.py",
+    "args": "--interval 60 --required-streak 5 --deadline-hours 72",
+    "logs": [
+      "ops/e0_q1q2q3_11904_vs_14880/20260818_154859/e0_watcher.log",
+      "ops/e0_q1q2q3_11904_vs_14880/20260818_154859/e0_watcher.nohup.log"
+    ],
+    "state_file": "ops/e0_q1q2q3_11904_vs_14880/20260818_154859/e0_watcher_state.json",
+    "snapshots": "ops/e0_q1q2q3_11904_vs_14880/20260818_154859/gpu_snapshots.jsonl",
+    "lock": ".e0_watcher.lock",
+    "status": "WAITING_FOR_SHARED_GPU",
+    "jobs_launched": false,
+    "release_gate": {
+      "expect_gpus": 8,
+      "mem_used_mib_max": 100,
+      "util_pct_max": 5,
+      "compute_processes_allowed": 0,
+      "required_consecutive_idle_polls": 5,
+      "poll_interval_s": 60,
+      "recheck_immediately_before_launch": true,
+      "fail_closed": true,
+      "never_launch_partial_gpu_subset": true
+    },
+    "tests_passed": [
+      "py_compile",
+      "real-node busy detection",
+      "fake-idle detection",
+      "foreign-application negative",
+      "gpu-count-mismatch negative",
+      "partial-release negative",
+      "flock single-instance",
+      "full dry-run (its empty output dirs were cleaned up)"
+    ],
+    "read_only": "nvidia-smi query only; never imports torch, never creates a CUDA context",
+    "note": "Running in the background is NOT task completion."
+  },
+
+  "smoke": {
+    "q1q2_gpu": {
+      "dir": "smoke/q1q2",
+      "status": "COMPLETE",
+      "limit": 2,
+      "gpu": 0,
+      "checkpoint_unchanged": true,
+      "arch_clean_load": "TerraStateV2, no missing/unexpected keys",
+      "q2_verdict_in_output": "NOT_LOAD_BEARING (significant=False)",
+      "load_bearing_as_evidence": false,
+      "note": "The NOT_LOAD_BEARING verdict is NOT a research result -- only 2 samples. It proves only that load -> data -> forward -> intervention -> JSON runs."
+    },
+    "q3_cpu": {
+      "dir": "smoke/q3_cpu",
+      "device": "cpu",
+      "cuda_visible_devices": "",
+      "limit": 2,
+      "n_boot": 200,
+      "n_pairs": 2,
+      "evidence_role": "diagnostic",
+      "checks_passed": "8/8 plumbing",
+      "uf_differs_all_pairs": true,
+      "two_sample_metrics_interpreted": false,
+      "note": "Plumbing only; two-sample metrics are deliberately not interpreted."
+    },
+    "usable_as_paper_evidence": false
+  },
+
+  "launch_manifest": {
+    "path": "launch_manifest.json",
+    "sha256": "500e5031335c366ed06819dd9af8679dcf0318301d559aa7bfd573688c6cdd08",
+    "mode": "0444",
+    "frozen": true,
+    "executed": false,
+    "gpus_used": [0, 1, 2, 3, 4, 5],
+    "gpus_left_free": [6, 7],
+    "batching": "batch A = GPU 0/1/2 (verified 14,880) first; verify alive + scan logs; then batch B = GPU 3/4/5 (legacy 11,904)",
+    "change_policy": "never silently modified; a change requires saving the old file as launch_manifest.rejected_<why>.json plus an explanation in STATUS.md (make_launch_manifest.py refuses to overwrite)"
+  },
+
+  "jobs": [
+    {"name": "gpu0_v14880_val_q1q2", "gpu": 0, "ckpt": "a5d2a0cc", "kind": "q1q2", "split": "val", "expected_targets": 952, "status": "NOT_STARTED"},
+    {"name": "gpu1_v14880_oodt_q1q2", "gpu": 1, "ckpt": "a5d2a0cc", "kind": "q1q2", "split": "ood-t_chopped", "expected_targets": 1904, "status": "NOT_STARTED"},
+    {"name": "gpu2_v14880_oodt_q3", "gpu": 2, "ckpt": "a5d2a0cc", "kind": "q3", "expected_pairs": 84, "evidence_role": "final", "status": "NOT_STARTED"},
+    {"name": "gpu3_legacy11904_val_q1q2", "gpu": 3, "ckpt": "644deaac", "kind": "q1q2", "split": "val", "expected_targets": 952, "status": "NOT_STARTED"},
+    {"name": "gpu4_legacy11904_oodt_q1q2", "gpu": 4, "ckpt": "644deaac", "kind": "q1q2", "split": "ood-t_chopped", "expected_targets": 1904, "status": "NOT_STARTED"},
+    {"name": "gpu5_legacy11904_oodt_q3", "gpu": 5, "ckpt": "644deaac", "kind": "q3", "expected_pairs": 84, "evidence_role": "final", "status": "NOT_STARTED"}
+  ],
+
+  "frozen_inputs_reverified": {
+    "validation_manifest_sha256": "d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e",
+    "validation_num_files": 952,
+    "oodt_manifest_sha256": "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49",
+    "oodt_num_files": 1904,
+    "q3_protocol_gate": "artifacts/protocols/extreme_audit_oodt_v1: sha256sum -c MANIFEST.SHA256 -> 7/7 OK",
+    "regenerated_or_resampled": false
+  },
+
+  "acceptance_tooling": {
+    "script": "verify_and_aggregate.py",
+    "selftest": "19/19 passed",
+    "real_state_run": "NOT_READY (e0_launch_record.json absent -> the six formal jobs have not been launched)",
+    "gates": [
+      "exit code 0 per job",
+      "not INTERRUPTED",
+      "checkpoint file SHA unchanged before/after (hashed directly, not read from the result JSON)",
+      "manifest SHAs match the frozen values",
+      "expected target counts 952 / 1904",
+      "Q3 exactly 84 frozen pairs",
+      "evidence_role == final",
+      "non-smoke limit",
+      "protocol_sha pinned"
+    ],
+    "refuses_to_aggregate": ["smoke dirs", "dirs containing INTERRUPTED.json"]
+  },
+
+  "historical_reproduction_reference": {
+    "file": "historical_11904_reference.json",
+    "sha256": "0b97406c3bd44cd68bb3f098b6ee2fb5da914f1198bd4684a1a55c813bd493f4",
+    "generator": "make_historical_reference.py",
+    "n_metrics": 57,
+    "applies_to_jobs": ["gpu3_legacy11904_val_q1q2", "gpu4_legacy11904_oodt_q1q2", "gpu5_legacy11904_oodt_q3"],
+    "extracted_not_transcribed": "values read out of the frozen raw result JSONs, never copied from TERRASTATE_V2_EVIDENCE.md",
+    "sources": {
+      "val_q1q2": {"sha256": "33b40d3e6bf6e0190c9415a9e0421e9809063356dcba2350890defeeed35f2d9", "checkpoint_proof": "in_json", "copies_agree": true},
+      "oodt_q1q2": {"sha256": "7ebc0569d705a9991ac8b8d17c42113c9da052b2bec73f7c28d021e28a65a051", "checkpoint_proof": "in_json", "copies_agree": true},
+      "oodt_q3": {"sha256": "9dae43b9a8a4fcdf0a73ef91daa58c189a88e769541ce295046cd0e938497041", "checkpoint_proof": "sidecar", "copies_agree": true, "witnesses": 9}
+    },
+    "q3_schema_gap": "extreme_state_audit.json records protocol_sha but NO checkpoint sha. Q3's 11,904 identity is established by: (1) the release copy being byte-identical to the producing run's JSON, (2) that run dir's checkpoint_sha256.txt = 644deaac..., (3) 9 per-stratum exclusive/*/*/pred/provenance.json embedding ckpt_sha=644deaac.... This is weaker than in-JSON pinning, so it is recorded explicitly and the Q3 job's SHA check hashes the checkpoint file directly.",
+    "tolerances": {
+      "counts": "0.0 (exact match required; a changed count is manifest/dataloader drift by definition)",
+      "point_metrics": "1e-5 (GPU reduction order is not bit-stable across driver/library versions)",
+      "bootstrap_ci_bounds": "1e-4 (seeded default_rng, so deterministic, but per-sample perturbations propagate into quantiles)"
+    },
+    "drift_rule": "Anything outside tolerance is DRIFT_TO_DIAGNOSE: trace evaluator / manifest / scorer / dataloader FIRST. Both sides of this gate are the SAME checkpoint (644deaac, step 11,904), so the model cannot be the cause. This is unrelated to the 11,904-vs-14,880 comparison, where the weights genuinely differ.",
+    "gate_selftests": ["exact replay -> reproduced", "1e-7 noise -> tolerated", "0.01 shift -> DRIFT_TO_DIAGNOSE", "n_pairs 84->83 -> DRIFT_TO_DIAGNOSE", "missing job -> DRIFT_TO_DIAGNOSE"]
+  },
+
+  "interpretation_constraints_fixed_in_advance": [
+    "The 0.01 OOD-t point gap is descriptive alignment only and must never drive checkpoint selection or switching.",
+    "Regardless of how 14,880 scores, never switch back to 11,904. 11,904 stays the historical evidence source; 14,880 stays the anchor.",
+    "No paper-claim changes.",
+    "No smoke or incomplete number may enter the paper."
+  ],
+
+  "forbidden_this_round": [
+    "Candidate C",
+    "continuing old-model training",
+    "Q4",
+    "any CUDA smoke while others occupy the GPU",
+    "killing or affecting other users' processes",
+    "modifying the frozen manifest / scorer",
+    "re-selecting a checkpoint based on OOD results",
+    "overwriting old checkpoints, old evidence, or existing formal results",
+    "git commit or push",
+    "putting smoke/incomplete results into the paper",
+    "stopping the whole task early because of GPU waiting"
+  ],
+
+  "git": {"committed": false, "pushed": false},
+
+  "next_action": {
+    "automatic": "the watcher (PID 2834736) launches batch A (GPU 0/1/2), verifies liveness and scans logs, then batch B (GPU 3/4/5), once all 8 GPUs are idle for 5 consecutive 60s polls and pass an immediate re-check",
+    "then": "monitor to completion, then run verify_and_aggregate.py for acceptance + reproduction gate + paired comparison",
+    "stop_condition_reached": "B (watcher CPU-tested and running stably; all safely completable CPU work done while the GPU remains occupied)"
+  }
+}

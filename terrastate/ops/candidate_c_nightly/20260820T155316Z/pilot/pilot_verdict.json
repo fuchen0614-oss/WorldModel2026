@@ -1,0 +1,111 @@
+{
+  "schema": "candidate_c_pilot_verdict_v1",
+  "ts_utc": "2026-08-21T04:23:58.477136Z",
+  "run_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/pilot/run_20260821T040602Z",
+  "criteria_file": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/pilot/pilot_pass_criteria.json",
+  "criteria_sha256": "ae15f001b7d012face3bc406fe7b8476cf7aa71f2752f0758afb3badfac590d3",
+  "criteria_registered_before_results": true,
+  "elapsed_sec": 109.42069411277771,
+  "step": 128,
+  "model_value_sha16": "53b1a1f7fdd6ed5c",
+  "n_counted": 9,
+  "n_passed": 9,
+  "n_failed": 0,
+  "n_unsatisfiable": 1,
+  "checks": [
+    {
+      "id": "P1_runs_to_128",
+      "ok": true,
+      "fatal": true,
+      "detail": "step=128 rows=128 reason=stop_after_step status=COMPLETE"
+    },
+    {
+      "id": "P2_no_oom",
+      "ok": true,
+      "fatal": true,
+      "detail": "per_gpu_batch=8 accum=1 global=64; OOM 行=0"
+    },
+    {
+      "id": "P3_no_nan_inf",
+      "ok": true,
+      "fatal": true,
+      "detail": "检查 128×3 个值；非有限=[]"
+    },
+    {
+      "id": "P4_no_divergence",
+      "ok": true,
+      "fatal": true,
+      "detail": "首20均值=0.029335 末20均值=0.024009 比值=0.818 阈值=3.0"
+    },
+    {
+      "id": "P5_lr_matches_schedule",
+      "ok": true,
+      "fatal": true,
+      "detail": "base=3.0e-05 warmup=100 total=2976；逐点偏差>1e-12 的步=[]；lr(1)=3.000e-07 lr(128)=2.999e-05"
+    },
+    {
+      "id": "P6_val_dev_computable",
+      "ok": false,
+      "fatal": true,
+      "status": "UNSATISFIABLE_BY_DESIGN",
+      "counted_in_pass_fail": false,
+      "detail": "trainer 触发条件 train/train_terrastate_candidate_c.py:582 为 `step % val_interval == 0 or step == total_steps`；val_interval=372、pilot 停在 128、total_steps=2976，故 128%372!=0 且 128!=2976，val 永不触发。summary.best_val_dev_endpoint_mse=None 予以佐证。",
+      "root_cause": "我写判据时的疏忽：P6 与被授权的 ~128 步 pilot 长度 + 冻结的 val_interval=372 三者互斥。",
+      "why_not_self_fixed": "val_interval 在 pilot_contract.json 的 must_inherit_unchanged 内；延长到 372 步属于改训练步数。两者都在用户明示的『立即停止汇报，不得自行调整后继续』范围内。",
+      "partial_evidence_val_path_not_untested": [
+        "启动时 val split 已解析加载（validation_subsplit.val_dev.ids，476/952）",
+        "data manifest 现场校验通过（train=17c645d92e9dd4c3 val=555d44c0d59ab390）",
+        "val 计算路径由 CPU contract 套件覆盖并通过",
+        "未被覆盖的仅剩：8-rank GPU 上一次真实 val forward pass"
+      ],
+      "decision_owner": "user"
+    },
+    {
+      "id": "P7_ckpt_loadable",
+      "ok": true,
+      "fatal": true,
+      "detail": "tensors=255 phase_step=128 step=128 total_steps=2976 world_size=8 opt_sd=dict sched_sd=dict rng_states_by_rank=8"
+    },
+    {
+      "id": "P8_params_unchanged",
+      "ok": true,
+      "fatal": true,
+      "detail": "不符项={} 非零λ={} overrides=[] λ={'nc': 0.0, 'pair': 0.0, 'y': 0.0, 'z': 0.0}"
+    },
+    {
+      "id": "P9_no_forbidden_split",
+      "ok": true,
+      "fatal": true,
+      "detail": "可疑行=0: []"
+    },
+    {
+      "id": "P10_grad_finite",
+      "ok": true,
+      "fatal": true,
+      "evidence_kind": "indirect",
+      "detail": "非有限窗 WARN=0 次；loss 行 step 序列连续 1..128=True（无静默跳过）；checkpoint 非有限张量=0/255",
+      "caveat": "grad_norm 本身未被 trainer 记录（clip_grad_norm_ 返回值在 :545 被丢弃），本条为间接证据而非直接测量。正式 run 若要直接测量需改 trainer——属于改动冻结代码，本轮不做。"
+    },
+    {
+      "id": "OBS_grad_norm_not_logged",
+      "ok": true,
+      "fatal": false,
+      "counted_in_pass_fail": false,
+      "detail": "已登记的可观测性缺口：正式 C1/C0R 同样不会有 grad_norm 记录。"
+    }
+  ],
+  "warnings": [
+    {
+      "id": "W1_warmup_dominates",
+      "note": "warmup=100 vs pilot 128 步 → 仅约 28 步接近满 lr（lr(128)=2.999e-05 = base×0.9998）。短 pilot 的固有代表性局限，未为此改动任何参数。"
+    },
+    {
+      "id": "W2_lr_label_defect",
+      "note": "trainer 打印的 base_lr 实为 LambdaLR 构造即 step 一次后的当前 lr，warmup 期显示 0.00e+00；标签缺陷，非训练缺陷，P5 已逐点证明 schedule 正确。"
+    }
+  ],
+  "verdict": "PASS_EXCEPT_P6_UNSATISFIABLE",
+  "blocks_formal_launch": true,
+  "not_a_formal_result": "pilot 只是工程闸门，不得写成正式结果，也不用于选模。",
+  "criteria_were_not_relaxed_after_seeing_results": true
+}

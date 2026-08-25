@@ -1,0 +1,16 @@
+{
+  "utc": "2026-08-18T16:46:18.031322+00:00",
+  "pid": 2834736,
+  "status": "WAITING_FOR_SHARED_GPU",
+  "polls": 486,
+  "consecutive_idle": 5,
+  "required_streak": 5,
+  "bar": {
+    "mem_used_mib_max": 100,
+    "util_pct_max": 5,
+    "n_gpu": 8
+  },
+  "last_reason": "all 8 GPUs idle",
+  "foreign_users": [],
+  "jobs_launched": false
+}

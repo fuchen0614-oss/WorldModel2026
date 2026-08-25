@@ -1,0 +1,148 @@
+{
+  "utc": "2026-08-18T16:48:57.238317+00:00",
+  "jobs": [
+    {
+      "name": "gpu0_v14880_val_q1q2",
+      "gpu": 0,
+      "cmd": [
+        "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/eval_b4_exclusive_contract.py",
+        "--ckpt",
+        "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+        "--val-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped",
+        "--data-manifest",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/artifacts/protocols/b4_eval/val_chopped.manifest.json",
+        "--dataset-root",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet",
+        "--split",
+        "val",
+        "--sections",
+        "q1q2",
+        "--batch-size",
+        "1",
+        "--num-data-workers",
+        "2",
+        "--workers",
+        "4",
+        "--device",
+        "cuda",
+        "--output-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu0_v14880_val_q1q2"
+      ],
+      "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu0_v14880_val_q1q2",
+      "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu0_v14880_val_q1q2.log",
+      "cuda_visible_devices": "0",
+      "started_utc": "2026-08-18T16:46:20.029565+00:00",
+      "pid": 1053774,
+      "pgid": 1053774,
+      "batch_a_alive_check": true,
+      "stopped_utc": "2026-08-18T16:48:56.379679+00:00",
+      "stopped_reason": "foreign compute process(es) appeared: [{'pid': '1057914', 'mem': '4752', 'user': 'xddu2'}, {'pid': '1057916', 'mem': '5814', 'user': 'xddu2'}, {'pid': '1057917', 'mem': '5814', 'user': 'xddu2'}]"
+    },
+    {
+      "name": "gpu1_v14880_oodt_q1q2",
+      "gpu": 1,
+      "cmd": [
+        "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/eval_b4_exclusive_contract.py",
+        "--ckpt",
+        "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+        "--val-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/ood-t_chopped",
+        "--data-manifest",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/evaluations/greenearthnet_oodt_20260719_214234/greenearthnet_oodt_chopped_manifest.json",
+        "--dataset-root",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet",
+        "--split",
+        "ood-t_chopped",
+        "--sections",
+        "q1q2",
+        "--batch-size",
+        "1",
+        "--num-data-workers",
+        "2",
+        "--workers",
+        "4",
+        "--device",
+        "cuda",
+        "--output-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu1_v14880_oodt_q1q2"
+      ],
+      "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu1_v14880_oodt_q1q2",
+      "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu1_v14880_oodt_q1q2.log",
+      "cuda_visible_devices": "1",
+      "started_utc": "2026-08-18T16:46:20.664873+00:00",
+      "pid": 1053792,
+      "pgid": 1053792,
+      "batch_a_alive_check": true,
+      "stopped_utc": "2026-08-18T16:48:56.574144+00:00",
+      "stopped_reason": "foreign compute process(es) appeared: [{'pid': '1057914', 'mem': '4752', 'user': 'xddu2'}, {'pid': '1057916', 'mem': '5814', 'user': 'xddu2'}, {'pid': '1057917', 'mem': '5814', 'user': 'xddu2'}]"
+    },
+    {
+      "name": "gpu2_v14880_oodt_q3",
+      "gpu": 2,
+      "cmd": [
+        "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/extreme_state_audit.py",
+        "--protocol-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1",
+        "--dataset-root",
+        "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet",
+        "--ckpt-exclusive",
+        "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+        "--batch-size",
+        "1",
+        "--num-data-workers",
+        "2",
+        "--workers",
+        "4",
+        "--n-boot",
+        "10000",
+        "--evidence-role",
+        "final",
+        "--device",
+        "cuda",
+        "--dump-per-cube",
+        "--output-dir",
+        "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu2_v14880_oodt_q3"
+      ],
+      "output_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu2_v14880_oodt_q3",
+      "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/runs/gpu2_v14880_oodt_q3.log",
+      "cuda_visible_devices": "2",
+      "started_utc": "2026-08-18T16:46:21.223072+00:00",
+      "pid": 1053913,
+      "pgid": 1053913,
+      "batch_a_alive_check": true,
+      "stopped_utc": "2026-08-18T16:48:56.741315+00:00",
+      "stopped_reason": "foreign compute process(es) appeared: [{'pid': '1057914', 'mem': '4752', 'user': 'xddu2'}, {'pid': '1057916', 'mem': '5814', 'user': 'xddu2'}, {'pid': '1057917', 'mem': '5814', 'user': 'xddu2'}]"
+    }
+  ],
+  "yielded_to": [
+    {
+      "pid": "1057914",
+      "mem": "4752",
+      "user": "xddu2"
+    },
+    {
+      "pid": "1057916",
+      "mem": "5814",
+      "user": "xddu2"
+    },
+    {
+      "pid": "1057917",
+      "mem": "5814",
+      "user": "xddu2"
+    },
+    {
+      "pid": "1057918",
+      "mem": "5814",
+      "user": "xddu2"
+    },
+    {
+      "pid": "1057919",
+      "mem": "5814",
+      "user": "xddu2"
+    }
+  ]
+}

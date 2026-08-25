@@ -1,0 +1,12 @@
+{
+  "verdict": "FAIL",
+  "factual_endpoint_gate": {
+    "direct_all_pass": false,
+    "composed_all_pass": false,
+    "n_direct_combos": 3,
+    "n_composed_combos": 16,
+    "rule": "direct 与 composed 均须通过 G_abs（冻结件 factual_endpoint_gate）",
+    "passes": false
+  },
+  "output": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/results/q4_eval_locked_4gpu_20260824T101119Z/compare"
+}

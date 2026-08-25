@@ -1,0 +1,209 @@
+{
+  "accepted": true,
+  "n_checks": 31,
+  "checks": [
+    {
+      "name": "output_dir_exists",
+      "ok": true,
+      "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/runs/resume11904_to14880/20260818_112933",
+      "evidence": ""
+    },
+    {
+      "name": "checkpoint_last_exists",
+      "ok": true,
+      "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/runs/resume11904_to14880/20260818_112933/checkpoint_last.pt",
+      "evidence": ""
+    },
+    {
+      "name": "final_step_is_14880",
+      "ok": true,
+      "detail": "step=14880",
+      "evidence": ""
+    },
+    {
+      "name": "candidate_is_last",
+      "ok": true,
+      "detail": "candidate=last",
+      "evidence": ""
+    },
+    {
+      "name": "total_steps_14880",
+      "ok": true,
+      "detail": "total_steps=14880",
+      "evidence": ""
+    },
+    {
+      "name": "lineage_resumed_true",
+      "ok": true,
+      "detail": "resumed=True",
+      "evidence": ""
+    },
+    {
+      "name": "lineage_parent_step_11904",
+      "ok": true,
+      "detail": "parent_step=11904",
+      "evidence": ""
+    },
+    {
+      "name": "lineage_parent_sha256",
+      "ok": true,
+      "detail": "parent_file_sha256=644deaac0b1578cd...",
+      "evidence": ""
+    },
+    {
+      "name": "lineage_data_order_exact",
+      "ok": true,
+      "detail": "data_order_restoration=exact: DistributedSampler(seed, epoch) fully determines the ...",
+      "evidence": ""
+    },
+    {
+      "name": "final_stage_is_3",
+      "ok": true,
+      "detail": "stage=3",
+      "evidence": ""
+    },
+    {
+      "name": "no_duplicate_boundary80",
+      "ok": true,
+      "detail": "checkpoint_boundary80.pt absent (parent already saved it)",
+      "evidence": ""
+    },
+    {
+      "name": "loss_log_exists",
+      "ok": true,
+      "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/runs/resume11904_to14880/20260818_112933/loss_log.jsonl",
+      "evidence": ""
+    },
+    {
+      "name": "loss_log_count_2976",
+      "ok": true,
+      "detail": "2976 entries (expect 2976 = 14880 - 11904)",
+      "evidence": ""
+    },
+    {
+      "name": "all_updates_stage_3",
+      "ok": true,
+      "detail": "all 2976 updates in stage 3",
+      "evidence": ""
+    },
+    {
+      "name": "loss_log_first_step_11905",
+      "ok": true,
+      "detail": "first_step=11905",
+      "evidence": ""
+    },
+    {
+      "name": "loss_log_last_step_14880",
+      "ok": true,
+      "detail": "last_step=14880",
+      "evidence": ""
+    },
+    {
+      "name": "trainable_q_count_12",
+      "ok": true,
+      "detail": "12 trainable q tensors (expect 12 for core.blocks.2.*)",
+      "evidence": ""
+    },
+    {
+      "name": "trainable_q_all_core_blocks_2",
+      "ok": true,
+      "detail": "all prefixed with 'core.blocks.2.'",
+      "evidence": ""
+    },
+    {
+      "name": "teacher_digest_parent_matches_child",
+      "ok": true,
+      "detail": "parent=bbe2c3ee6de540ae... child=bbe2c3ee6de540ae... (parent record predates this task -> independent witness)",
+      "evidence": ""
+    },
+    {
+      "name": "teacher_path_divergence_explained",
+      "ok": true,
+      "detail": "parent path=checkpoint_best.pt child path=2c5d084236716d84d1ed11289248a501a7cb906675a32ccb8fd73e1f2a26881c.pt (differ by design: M1 republished into the artifact store; digests match above)",
+      "evidence": ""
+    },
+    {
+      "name": "teacher_artifact_content_addressed",
+      "ok": true,
+      "detail": "file sha256=2c5d084236716d84... == filename=2c5d084236716d84... == frozen 2c5d084236716d84...",
+      "evidence": ""
+    },
+    {
+      "name": "trainer_asserted_teacher_unchanged",
+      "ok": true,
+      "detail": "done line: teacher_unchanged=True stage3_qgrad_seen=True out=runs/resume11904_to14880/20260818_112933",
+      "evidence": ""
+    },
+    {
+      "name": "optimizer_state_present",
+      "ok": true,
+      "detail": "42 param states",
+      "evidence": ""
+    },
+    {
+      "name": "scheduler_state_present",
+      "ok": true,
+      "detail": "last_epoch=14880",
+      "evidence": ""
+    },
+    {
+      "name": "scheduler_last_epoch_14880",
+      "ok": true,
+      "detail": "last_epoch=14880",
+      "evidence": ""
+    },
+    {
+      "name": "best_val_finite",
+      "ok": true,
+      "detail": "best_val=0.31288",
+      "evidence": ""
+    },
+    {
+      "name": "b4_state_dict_present",
+      "ok": true,
+      "detail": "255 model keys",
+      "evidence": ""
+    },
+    {
+      "name": "expected_artifacts_present",
+      "ok": true,
+      "detail": "expected subset present: {'checkpoint_last.pt', 'checkpoint_fsval_best.pt', 'loss_log.jsonl'} (actual: {'checkpoint_step12000.pt', 'checkpoint_last.pt', 'loss_log.jsonl', 'checkpoint_step14000.pt', 'checkpoint_fsval_best.pt'})",
+      "evidence": ""
+    },
+    {
+      "name": "no_forbidden_artifacts",
+      "ok": true,
+      "detail": "no boundary80 duplicate",
+      "evidence": ""
+    },
+    {
+      "name": "historical_bit_exact",
+      "ok": true,
+      "detail": "value_sha hist=aa98fbd2fa302727 resume=aa98fbd2fa302727 keys_equal=True max_abs_diff=0.000e+00 over 255 tensors",
+      "evidence": ""
+    },
+    {
+      "name": "historical_arch_tag_matches",
+      "ok": true,
+      "detail": "state_sha (dtype/shape/stride only) hist=d050ea390d4cc815 resume=d050ea390d4cc815 -- arch tag, NOT weight proof",
+      "evidence": ""
+    }
+  ],
+  "checkpoint_last_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/runs/resume11904_to14880/20260818_112933/checkpoint_last.pt",
+  "checkpoint_last_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+  "final_step": 14880,
+  "best_val": 0.312876478202057,
+  "stage": 3,
+  "lineage": {
+    "resumed": true,
+    "parent_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+    "parent_file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+    "parent_step": 11904,
+    "parent_epoch": 31,
+    "parent_micro_in_epoch": 372,
+    "parent_stage_recorded": 2,
+    "parent_b4_state_sha256": "aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7",
+    "resume_stage_applied": 3,
+    "data_order_restoration": "exact: DistributedSampler(seed, epoch) fully determines the order"
+  }
+}

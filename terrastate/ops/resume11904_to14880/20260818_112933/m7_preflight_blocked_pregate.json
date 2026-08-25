@@ -1,0 +1,170 @@
+{
+  "utc": "2026-08-18T05:07:34.692874+00:00",
+  "launched": false,
+  "n_checks": 31,
+  "failures": [
+    {
+      "name": "gpu_ready_record_exists",
+      "ok": false,
+      "detail": "watcher has not confirmed stable idle yet"
+    }
+  ],
+  "checks": [
+    {
+      "name": "manifest_exists",
+      "ok": true,
+      "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/resume11904_to14880/20260818_112933/launch_manifest.json"
+    },
+    {
+      "name": "manifest_sha256_unchanged",
+      "ok": true,
+      "detail": "1c7ea6c862a177d8... (expected 1c7ea6c862a177d8...)"
+    },
+    {
+      "name": "manifest_immutable_mode",
+      "ok": true,
+      "detail": "mode=0o444 (expect no write bits)"
+    },
+    {
+      "name": "key_file:train/train_terrastate_v2.py",
+      "ok": true,
+      "detail": "d0e4051bc86f8116... vs frozen d0e4051bc86f8116..."
+    },
+    {
+      "name": "key_file:train/terrastate_v2_common.py",
+      "ok": true,
+      "detail": "53695c9e5f8c96d4... vs frozen 53695c9e5f8c96d4..."
+    },
+    {
+      "name": "key_file:train/terrastate_future_state_cache.py",
+      "ok": true,
+      "detail": "cafb70ba92a52748... vs frozen cafb70ba92a52748..."
+    },
+    {
+      "name": "key_file:models/terrastate_v2.py",
+      "ok": true,
+      "detail": "25251928a28320e8... vs frozen 25251928a28320e8..."
+    },
+    {
+      "name": "key_file:models/encoders/pvt_contextformer_q.py",
+      "ok": true,
+      "detail": "e0566c704845ede9... vs frozen e0566c704845ede9..."
+    },
+    {
+      "name": "key_file:data/greenearthnet_contextformer_dataset.py",
+      "ok": true,
+      "detail": "8c0f9961353d31a3... vs frozen 8c0f9961353d31a3..."
+    },
+    {
+      "name": "key_file:tests/test_resume_boundary11904.py",
+      "ok": true,
+      "detail": "51a45c13ce71e66f... vs frozen 51a45c13ce71e66f..."
+    },
+    {
+      "name": "key_file:tests/smoke_terrastate_v2.py",
+      "ok": true,
+      "detail": "61f1c47b9ed80d96... vs frozen 61f1c47b9ed80d96..."
+    },
+    {
+      "name": "key_file:tests/smoke_terrastate_v2_ddp.py",
+      "ok": true,
+      "detail": "d5c0fa8d2a159c32... vs frozen d5c0fa8d2a159c32..."
+    },
+    {
+      "name": "key_file:tools/resolve_artifact.py",
+      "ok": true,
+      "detail": "31366ec08981c189... vs frozen 31366ec08981c189..."
+    },
+    {
+      "name": "key_file:artifacts/weight_registry.json",
+      "ok": true,
+      "detail": "9a4178fc2b810083... vs frozen 9a4178fc2b810083..."
+    },
+    {
+      "name": "only_trainer_modified",
+      "ok": true,
+      "detail": "tracked modifications = ['train/train_terrastate_v2.py']"
+    },
+    {
+      "name": "git_head_unchanged",
+      "ok": true,
+      "detail": "c9503030e498 vs frozen c9503030e498"
+    },
+    {
+      "name": "output_dir_absent",
+      "ok": true,
+      "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/runs/resume11904_to14880/20260818_112933 does not exist"
+    },
+    {
+      "name": "no_allow_existing_out",
+      "ok": true,
+      "detail": "overwrite protection active"
+    },
+    {
+      "name": "future_state_scale_is_1.0",
+      "ok": true,
+      "detail": "--future-state-scale 1.0"
+    },
+    {
+      "name": "nproc_per_node_is_8",
+      "ok": true,
+      "detail": "all 8 GPUs, never a subset"
+    },
+    {
+      "name": "artifact:resume_parent",
+      "ok": true,
+      "detail": "terrastate/v2/legacy-boundary11904@v1 sha=644deaac0b1578cd... verified=True"
+    },
+    {
+      "name": "artifact:student_init",
+      "ok": true,
+      "detail": "obsworld/b4-exclusive/student-main-last-step14880@v1 sha=42420f88a6aa631b... verified=True"
+    },
+    {
+      "name": "artifact:teacher_b4",
+      "ok": true,
+      "detail": "obsworld/b4/teacher-best-step13000@v1 sha=2c5d084236716d84... verified=True"
+    },
+    {
+      "name": "artifact:historical_reference",
+      "ok": true,
+      "detail": "terrastate/v2/historical-full14880@v1 sha=99f15a35fb9a3569... verified=True"
+    },
+    {
+      "name": "artifact:train_cache",
+      "ok": true,
+      "detail": "terrastate/v2/future-state-cache-train@v1 sha=fba52e9798a9e82f... verified=True"
+    },
+    {
+      "name": "artifact:val_cache",
+      "ok": true,
+      "detail": "terrastate/v2/future-state-cache-val@v1 sha=561efd577a5e979f... verified=True"
+    },
+    {
+      "name": "no_existing_trainer_of_mine",
+      "ok": true,
+      "detail": "0 found: []"
+    },
+    {
+      "name": "gpu_ready_record_exists",
+      "ok": false,
+      "detail": "watcher has not confirmed stable idle yet"
+    },
+    {
+      "name": "nvidia_smi_readable",
+      "ok": true,
+      "detail": "8 GPUs: g0=4MiB/0%, g1=4MiB/0%, g2=4MiB/0%, g3=4MiB/0%, g4=4MiB/0%, g5=4MiB/0%, g6=4MiB/0%, g7=4MiB/0%"
+    },
+    {
+      "name": "all_8_gpus_idle_right_now",
+      "ok": true,
+      "detail": "all idle"
+    },
+    {
+      "name": "no_compute_apps",
+      "ok": true,
+      "detail": "none"
+    }
+  ],
+  "note": "fail-closed: nothing was launched; no process was signalled; the idle bar was NOT lowered"
+}

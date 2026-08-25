@@ -1,0 +1,103 @@
+{
+  "audit_version": "v3",
+  "audit_date": "2026-08-20",
+  "auditor": "independent_audit_v3.py",
+  "a03_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/思路整理进展/A03_TerraState_关键实验结果与决策总账.md",
+  "a03_size_chars": 45306,
+  "n_checks": 18,
+  "n_match": 18,
+  "n_discrepancy": 0,
+  "overall_status": "PASS",
+  "findings": [
+    {
+      "status": "MATCH",
+      "section": "§2.1 边界11904 SHA",
+      "needle": "644deaac"
+    },
+    {
+      "status": "MATCH",
+      "section": "§2.1 边界11904 步数",
+      "needle": "11904"
+    },
+    {
+      "status": "MATCH",
+      "section": "§2.1 verified14880 SHA",
+      "needle": "a5d2a0cc"
+    },
+    {
+      "status": "MATCH",
+      "section": "§2.1 verified14880 步数",
+      "needle": "14880"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 Val R2",
+      "needle": "0.497094"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 Val biasabs",
+      "needle": "0.099729"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 Val forest R²",
+      "needle": "0.465644"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 Val shrub R²",
+      "needle": "0.451080"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 Val grass R²",
+      "needle": "0.516679"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 Val crop R²",
+      "needle": "0.554972"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 OOD-t R2",
+      "needle": "0.569278"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 OOD-t biasabs",
+      "needle": "0.100810"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 OOD-t forest R²",
+      "needle": "0.551455"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 OOD-t shrub R²",
+      "needle": "0.555644"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 OOD-t grass R²",
+      "needle": "0.584881"
+    },
+    {
+      "status": "MATCH",
+      "section": "§3.1 OOD-t crop R²",
+      "needle": "0.585132"
+    },
+    {
+      "status": "MATCH",
+      "section": "provenance vs launch_record",
+      "detail": "attempt_id 一致: "
+    },
+    {
+      "status": "MATCH",
+      "section": "manifest n_jobs",
+      "detail": "6个任务"
+    }
+  ]
+}

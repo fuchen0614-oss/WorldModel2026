@@ -1,0 +1,171 @@
+{
+  "artifacts": {
+    "obsworld/b4-exclusive/student-main-last-step14880@v1": {
+      "arch": "ObsWorldB4Exclusive",
+      "asserted_as": "sha.student_init_sha256 in every TerraState-V2 checkpoint",
+      "b4_state_sha256": "488052d97c7d1c8a2e805d9838f344daef7ad02e5f185d3025031a5f1c026338",
+      "file_bytes": 28847063,
+      "file_sha256": "42420f88a6aa631b14bf48551ee5cfb3645734ae8143bc3998a9c16dacdcd13c",
+      "immutable": true,
+      "kind": "object",
+      "object_relpath": "objects/sha256/42/42420f88a6aa631b14bf48551ee5cfb3645734ae8143bc3998a9c16dacdcd13c.pt",
+      "original_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/runs/planb_excl_tournament/stageA_rescue_20260726_173149/MAIN/checkpoint_last.pt",
+      "provenance_notes": [
+        "warm_start_terrastate_v2 loads it with missing==0 and unexpected==0 (verified on the published object, source=ObsWorldB4Exclusive).",
+        "A raw Phase-I B4 is NOT a substitute (it lacks the alpha buffer)."
+      ],
+      "role": "--student-init warm start for the TerraState-V2 training line",
+      "warm_start_exact": true
+    },
+    "obsworld/b4/teacher-best-step13000@v1": {
+      "arch": "ObsWorldB4",
+      "asserted_as": "sha.teacher_sha256 in every TerraState-V2 checkpoint",
+      "file_bytes": 28846423,
+      "file_sha256": "2c5d084236716d84d1ed11289248a501a7cb906675a32ccb8fd73e1f2a26881c",
+      "immutable": true,
+      "kind": "object",
+      "object_relpath": "objects/sha256/2c/2c5d084236716d84d1ed11289248a501a7cb906675a32ccb8fd73e1f2a26881c.pt",
+      "original_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb/checkpoints/plan_b_b4a/checkpoint_best.pt",
+      "provenance_notes": [
+        "223 q.* tensors load into a fresh PVTContextformerQ with missing==0 and unexpected==0; the resulting state_sha equals the value the parent checkpoint recorded, so the resume teacher assertion passes.",
+        "The trainer re-asserts this SHA is unchanged at the end of the run."
+      ],
+      "role": "--teacher-b4 frozen KD teacher (only its q.* is loaded)",
+      "teacher_load_exact": true,
+      "teacher_q_keys": 223,
+      "teacher_state_sha256_after_q_load": "bbe2c3ee6de540ae6eabeb7798f331388112ad370dbcae9533187344f2f8a302"
+    },
+    "terrastate/v2/future-state-cache-train@v1": {
+      "config_sha256": "2a14f0a4c3653f38ee52155d38c38f76d01cc234a5fb301a3dfb512ee0101a66",
+      "coverage": 0.46889302359758145,
+      "data_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "file_bytes": 12526305603,
+      "file_sha256": "fba52e9798a9e82f626ec16a42f52b5e973eb9e9a0cffac8dbe389164c66d8f3",
+      "horizon_h": 20,
+      "immutable": true,
+      "kind": "path-registered",
+      "mask_sha256": "197a611a809bbc419d8e1499914ccc720f8a48c12f46f4f4aed5779023e27aea",
+      "n_cubes": 23816,
+      "n_cubes_expected": 23816,
+      "patch_size": 4,
+      "patches_per_cube": 1024,
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/cache/train_future_state_cache.pt",
+      "provenance_notes": [
+        "NOT copied into the object store (12.5GB / 0.5GB); registered in place.",
+        "config_sha256 is a PROTOCOL fingerprint (schema/field order/horizon/patch rule/q-projector SHA) and is therefore IDENTICAL for train and val by construction; content identity is data_manifest_sha256 + mask_sha256.",
+        "recorded data_root /tmp/zjliu17_mix_stage_v2/train was a /tmp staging dir that no longer exists; /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train reproduces the SAME data_manifest_sha256, so the relpath keys still resolve."
+      ],
+      "q_projector_sha256": "da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d",
+      "recorded_data_root": "/tmp/zjliu17_mix_stage_v2/train",
+      "resolved_data_root": "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train",
+      "resolved_data_root_manifest_match": true,
+      "role": "frozen future-state target cache (train split)",
+      "schema": "terrastate_future_state_cache_v1",
+      "split": "train",
+      "state_dim": 256
+    },
+    "terrastate/v2/future-state-cache-val@v1": {
+      "config_sha256": "2a14f0a4c3653f38ee52155d38c38f76d01cc234a5fb301a3dfb512ee0101a66",
+      "coverage": 0.31557227383140757,
+      "data_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+      "file_bytes": 500664743,
+      "file_sha256": "561efd577a5e979f11951999f186ff28077ac6bc76ccb5b8bfc4828c67287243",
+      "horizon_h": 20,
+      "immutable": true,
+      "kind": "path-registered",
+      "mask_sha256": "b68046c24edd0737110f30cc84f3828f3aed8d2c8fa9da11dee804eb0eb54dca",
+      "n_cubes": 952,
+      "n_cubes_expected": 952,
+      "patch_size": 4,
+      "patches_per_cube": 1024,
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/cache/val_future_state_cache.pt",
+      "provenance_notes": [
+        "NOT copied into the object store (12.5GB / 0.5GB); registered in place.",
+        "config_sha256 is a PROTOCOL fingerprint (schema/field order/horizon/patch rule/q-projector SHA) and is therefore IDENTICAL for train and val by construction; content identity is data_manifest_sha256 + mask_sha256.",
+        "recorded data_root /tmp/zjliu17_mix_stage_v2/val_chopped was a /tmp staging dir that no longer exists; /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped reproduces the SAME data_manifest_sha256, so the relpath keys still resolve."
+      ],
+      "q_projector_sha256": "da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d",
+      "recorded_data_root": "/tmp/zjliu17_mix_stage_v2/val_chopped",
+      "resolved_data_root": "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped",
+      "resolved_data_root_manifest_match": true,
+      "role": "frozen future-state target cache (val split)",
+      "schema": "terrastate_future_state_cache_v1",
+      "split": "val",
+      "state_dim": 256
+    },
+    "terrastate/v2/historical-full14880@v1": {
+      "arch": "TerraStateV2",
+      "candidate": "last",
+      "epoch": 40,
+      "file_bytes": 44300969,
+      "file_sha256": "99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b",
+      "immutable": true,
+      "kind": "object",
+      "object_relpath": "objects/sha256/99/99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b.pt",
+      "original_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_last.pt",
+      "provenance_notes": [
+        "Produced by the SAME uninterrupted original run as the boundary80 parent (train.log: 'done step=14880 best_val=0.31288 teacher_unchanged=True stage3_qgrad_seen=True').",
+        "This artifact must never be overwritten, and the resume run must write to a DIFFERENT output directory.",
+        "Its provenance is NOT interchangeable with a resumed 14,880 checkpoint even if metrics coincide."
+      ],
+      "role": "HISTORICAL original-run 40-epoch / 14,880-update result. READ-ONLY comparison target for the resume run. Its binary EXISTS (this record supersedes the earlier 'binary missing' claim in WEIGHTS_INDEX.md).",
+      "route_version": "terrastate_v2",
+      "stage_recorded_in_file": 3,
+      "step": 14880,
+      "total_steps": 14880
+    },
+    "terrastate/v2/legacy-boundary11904@v1": {
+      "arch": "TerraStateV2",
+      "b4_state_sha256": "aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7",
+      "best_val": 0.31334985432787643,
+      "candidate": "stage2_end_boundary80",
+      "epoch": 31,
+      "evidence_doc": "TERRASTATE_V2_EVIDENCE.md",
+      "file_bytes": 37972401,
+      "file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+      "immutable": true,
+      "kind": "object",
+      "micro_in_epoch": 372,
+      "object_relpath": "objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+      "original_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_boundary80.pt",
+      "provenance_notes": [
+        "Written by the original run at step 11904 BEFORE the stage 2->3 switch, so the recorded stage is 2 while the next scheduled update belongs to stage 3.",
+        "Complete resume state: optimizer_state_dict (2 groups / 30 Adam entries), scheduler_state_dict (last_epoch=11904), scaler record (FP32, disabled), rng_state + rng_states_by_rank (8 ranks), q_freeze."
+      ],
+      "role": "EXACT-RESUME PARENT for the 11,904 -> 14,880 continuation. Also the checkpoint that produced the FROZEN Q1/Q2/Q3 evidence in TERRASTATE_V2_EVIDENCE.md.",
+      "route_version": "terrastate_v2",
+      "stage_of_next_update": 3,
+      "stage_recorded_in_file": 2,
+      "step": 11904,
+      "total_steps": 14880
+    }
+  },
+  "generated_at": "2026-08-18T11:53:33+08:00",
+  "generated_by": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/resume11904_to14880/20260818_112933/make_registry.py",
+  "policy": {
+    "aliases": "only <store>/aliases/*.json are mutable; re-pointing an anchor is an operational act with its own record.",
+    "immutability": "objects/ entries are content-addressed and mode 0444; originals are never moved or deleted; historical results are never overwritten.",
+    "selection": "Launchers, tests and eval scripts must name a LOGICAL ID and resolve it with tools/resolve_artifact.py. Selecting a weight by basename (checkpoint_last.pt / _best.pt / _boundary80.pt) is forbidden: three of those share a byte count in the same dir.",
+    "verification": "resolve_artifact re-hashes the object and fails closed on mismatch."
+  },
+  "reserved": {
+    "terrastate/v2/default-training-anchor": {
+      "note": "mutable alias, lives at <store>/aliases/; will point at the verified resume artifact only after M9 acceptance passes",
+      "status": "RESERVED alias — not created"
+    },
+    "terrastate/v2/verified-resume14880@v1": {
+      "publish_conditions": [
+        "an exact resume from terrastate/v2/legacy-boundary11904@v1 reaches step 14880",
+        "exactly 2976 updates executed, the first one in stage 3",
+        "no duplicate boundary80 checkpoint, no extra stage-2 update",
+        "only core.blocks.2.* q tensors trainable, receiving grad and Adam state",
+        "optimizer/scheduler/RNG continuity verified",
+        "teacher weights unchanged; no NaN; no historical output overwritten"
+      ],
+      "status": "RESERVED — not published"
+    }
+  },
+  "revision": "ebc374b34b2e818a",
+  "schema": "terrastate_weight_registry_v1",
+  "store": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts"
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "candidate_c_env_identity_v1",
+  "frozen_at_utc": "2026-08-21T03:12:00Z",
+  "why": "本轮所有通过的收据（3 套 CPU 测试、3 次 preflight）都是在同一个解释器下产生的。之前的脚本一律写 PY = sys.executable，把运行绑定到『谁启动了脚本』这个隐含事实上；用 base conda 启动就会静默换掉整个环境。这份文件把那个隐含事实变成显式的、可机械核验的冻结项。",
+  "discovered_by": "2026-08-21 用 base conda（3.13.12）跑三套 CPU 测试，全部 ModuleNotFoundError: No module named 'timm'（rc=2）。代码没坏，是解释器错了。",
+  "required": {
+    "python_executable": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+    "python_version": "3.11.15",
+    "torch": "2.12.0+cu130",
+    "numpy": "2.4.6"
+  },
+  "evidence": {
+    "logs/cpu_test_contract.json": "python 3.11.15 / torch 2.12.0+cu130 / numpy 2.4.6, 51 passed",
+    "logs/cpu_test_resume.json": "同上, 59 passed",
+    "logs/cpu_test_ddp.json": "同上, 9 passed",
+    "preflight/20260820T201024Z": "python envs/WorldModel/bin/python, torch 2.12.0+cu130",
+    "preflight/20260820T204218Z": "同上",
+    "preflight/20260821T024415Z": "同上（授权后深度 preflight，PASS）"
+  },
+  "recorded_test_invocation": "python tests/test_candidate_c_<suite>.py --report ops/candidate_c_nightly/20260820T155316Z/logs/cpu_test_<suite>.json",
+  "invocation_note": "收据记录的是直接脚本调用并自带 --report，不是 pytest。用 pytest 复跑不会写收据，也不等价于原始验收路径。",
+  "enforcement": "ccn_lib.require_frozen_env() 对 sys.executable、python/torch/numpy 版本逐项比对，不符即 SystemExit(4)。在启动任何 GPU 运行前必须通过。",
+  "rationale_fail_closed": "不做静默替换（不把 sys.executable 偷偷换成冻结解释器）。若脚本本身已在错误解释器下运行，它的 import 行为已经不同，静默替换只会把不一致藏到更深处。fail closed 更安全。"
+}

@@ -1,0 +1,2 @@
+{"step": 9, "stage": 3, "future_state_scale": 1.0, "lambda_state_raw": 0.01, "lambda_state": 0.01, "effective_lambda_state": 0.01, "total": 0.4461938440799713, "gt": 0.3377441465854645, "kd": 0.20756922662258148, "future_state": 0.4665086269378662}
+{"step": 10, "stage": 3, "future_state_scale": 1.0, "lambda_state_raw": 0.01, "lambda_state": 0.01, "effective_lambda_state": 0.01, "total": 0.36168816685676575, "gt": 0.28908541798591614, "kd": 0.13693933188915253, "future_state": 0.41330623626708984}

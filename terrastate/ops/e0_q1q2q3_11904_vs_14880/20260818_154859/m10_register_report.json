@@ -1,0 +1,109 @@
+{
+  "utc": "2026-08-18T07:52:30.034349+00:00",
+  "previous_revision": "ebc374b34b2e818a",
+  "publish_conditions": [
+    {
+      "condition": "an exact resume from terrastate/v2/legacy-boundary11904@v1 reaches step 14880",
+      "discharged_by": [
+        [
+          "final_step_is_14880",
+          true
+        ],
+        [
+          "lineage_parent_sha256",
+          true
+        ],
+        [
+          "lineage_parent_step_11904",
+          true
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "condition": "exactly 2976 updates executed, the first one in stage 3",
+      "discharged_by": [
+        [
+          "loss_log_count_2976",
+          true
+        ],
+        [
+          "loss_log_first_step_11905",
+          true
+        ],
+        [
+          "all_updates_stage_3",
+          true
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "condition": "no duplicate boundary80 checkpoint, no extra stage-2 update",
+      "discharged_by": [
+        [
+          "no_duplicate_boundary80",
+          true
+        ],
+        [
+          "all_updates_stage_3",
+          true
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "condition": "only core.blocks.2.* q tensors trainable, receiving grad and Adam state",
+      "discharged_by": [
+        [
+          "trainable_q_count_12",
+          true
+        ],
+        [
+          "trainable_q_all_core_blocks_2",
+          true
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "condition": "optimizer/scheduler/RNG continuity verified",
+      "discharged_by": [
+        [
+          "optimizer_state_present",
+          true
+        ],
+        [
+          "scheduler_last_epoch_14880",
+          true
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "condition": "teacher weights unchanged; no NaN; no historical output overwritten",
+      "discharged_by": [
+        [
+          "teacher_digest_parent_matches_child",
+          true
+        ],
+        [
+          "teacher_artifact_content_addressed",
+          true
+        ],
+        [
+          "trainer_asserted_teacher_unchanged",
+          true
+        ],
+        [
+          "best_val_finite",
+          true
+        ]
+      ],
+      "ok": true
+    }
+  ],
+  "new_revision": "a7fd2763935a26d1",
+  "alias_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/aliases/terrastate__v2__default-training-anchor.json",
+  "ok": true
+}

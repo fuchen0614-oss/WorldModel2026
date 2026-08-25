@@ -1,0 +1,88 @@
+arm: C1
+derived_from:
+  changed_flags:
+    allow-nonzero-lambdas:
+      from: false
+      to: true
+    lambda-nc:
+      from: 0.0
+      to: 0.01
+    lambda-pair:
+      from: 0.0
+      to: 0.0
+    lambda-y:
+      from: 0.0
+      to: 1.0
+    lambda-z:
+      from: 0.0
+      to: 0.1
+    stop-after-step:
+      from: 0
+      to: 32
+  config: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml
+  inherited_flag_count: 35
+  sha256: d8ab36586f7313173c2f1f7d3fc0bc31d78dd282e9a7a817e9b7b60a1bc1be4e
+design_contract_sha256: 4613ab9ef34ac51e67d069c8eee1fd32c67b7e2cafdaded523a5ea328c6c7e6b
+expected_total_updates: 2976
+flags:
+  allow-existing-out: false
+  allow-nonzero-lambdas: true
+  allow-unverified-parent: false
+  arm: C1
+  branch-lr: 3.0e-05
+  ckpt-interval: 372
+  days-per-transition-step: 5
+  deterministic: false
+  device: cuda
+  eo-endpoint-weight: 1.0
+  eo-traj-weight: 1.0
+  expect-train-manifest-sha: 17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554
+  expect-val-manifest-sha: 555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9
+  factual-path: recursive
+  global-batch: 64
+  grad-clip: 1.0
+  lambda-nc: 0.01
+  lambda-pair: 0.0
+  lambda-y: 1.0
+  lambda-z: 0.1
+  log-interval: 10
+  lr-warmup-steps: 100
+  max-epochs: 8
+  max-steps: 0
+  num-workers: 8
+  parent-alias: terrastate/v2/default-training-anchor
+  parent-ckpt: ''
+  per-gpu-batch: 8
+  q-lr-scale: 0.033
+  q4-partition-manifest: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json
+  seed: 42
+  state-dim: 256
+  stop-after-step: 32
+  train-dir: /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train
+  unfreeze-q-prefixes: core.blocks.2.
+  val-dir: /csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped
+  val-interval: 372
+  val-split-manifest: /csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json
+  val-split-selector: validation_subsplit.val_dev.ids
+  verify-data-manifest: true
+  weight-decay: 0.0
+frozen_at_utc: '2026-08-20T20:38:37.097651Z'
+frozen_formal_arm: false
+lambda_pair_forced_zero: λ_pair 被强制为 0：L_pair 需要 paired simulator truth，本轮 simulator
+  情景库不存在（trainer L280 无条件拒绝非零值）。smoke 因此只覆盖 z/y/nc 三个辅助项，L_pair 的数值行为本轮无法验证，也不得声称已验证。
+launcher: train/launch_candidate_c.py
+must_hold:
+  not_a_formal_result: true
+  stop_after_step: 32
+  total_steps: 2976
+  world_size: 8
+name: candidate_c_smoke_from_c1_v1
+schema: candidate_c_smoke_config_v1
+smoke_coverage_gap:
+  consequence: 本轮不得声称 L_pair 的数值行为已验证。正式臂四 λ 全为 0，因此这个缺口不影响 C1/C0R 的结论。
+  reason: BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST
+  uncovered_term: L_pair
+smoke_intent: 用即将正式训练的同一条代码路径跑 32 个 update：验证 8 卡能起、显存够、z/y/nc 三个辅助 λ 的计算图能前向+回传且不出
+  NaN、checkpoint 能落盘且可加载。total_steps 仍必须是 2,976 —— stop-after-step 不改变计划长度。
+trainer: train/train_terrastate_candidate_c.py
+world_size: 8

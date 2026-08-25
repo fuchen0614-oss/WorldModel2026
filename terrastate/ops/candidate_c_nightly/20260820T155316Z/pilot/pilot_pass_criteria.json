@@ -1,0 +1,29 @@
+{
+  "schema": "candidate_c_pilot_pass_criteria_v1",
+  "registered_at_utc": "2026-08-21T04:05:00Z",
+  "registered_before_seeing_results": true,
+  "why_now": "pilot_contract.json 定了『不得改什么』与『看哪个 split』，但没定『什么叫通过』。判据必须在看到任何 pilot 数字之前写下来，否则就是事后立标准。",
+  "what_pilot_is_for": "在正式 C1 参数下验证优化与 loss scale 的机械健全性（不发散、不 OOM、val 可算、checkpoint 可续），不是选模、不是效果结论。pilot 的任何数字都不得写成正式结果。",
+  "fatal_criteria": {
+    "P1_runs_to_128": "跑满 128 updates，completion_reason=stop_after_step，step=128，total_steps 仍为 2976",
+    "P2_no_oom": "无 CUDA OOM。若需 per-GPU 4 + accum 2 才能跑 -> 属『改变 batch size』，立即停止汇报",
+    "P3_no_nan_inf": "128 行 loss 中 total / eo_traj / eo_endpoint 全部有限，无 NaN/Inf",
+    "P4_no_divergence": "末 20 步 total 的均值 <= 首 20 步 total 均值 × 3.0。这是发散哨兵而非效果门槛——warmup=100 意味着前 100 步 lr 几乎为 0，loss 本来不该大动",
+    "P5_lr_matches_schedule": "128 步 lr 与 lr_factor(step, warmup=100, total=2976) × 3e-5 逐点相符（容差 1e-12）",
+    "P6_val_dev_computable": "至少产生 1 个 val_dev 评估且数值有限；选择器为 validation_subsplit.val_dev.ids（476 cubes）",
+    "P7_ckpt_loadable": "checkpoint 可 CPU map_location 加载，b4_state_dict 255 张量，not_exact_resume_of_parent=True，optimizer/scheduler state 均在",
+    "P8_params_unchanged": "run 记录里的 per_gpu=8 / global=64 / accum=1 / seed=42 / 四 λ=0 / arm=C1 / factual_path=recursive 与冻结 C1 一致；未使用任何 --set",
+    "P9_no_forbidden_split": "日志与 summary 中不出现 val_locked / ood_t / test 的评估",
+    "P10_grad_finite": "无 grad_clip 触发到非有限梯度的记录；若 trainer 记录 grad_norm，则全部有限"
+  },
+  "warning_criteria_not_fatal": {
+    "W1_warmup_dominates": "warmup=100 而 pilot 只跑 128 步，意味着仅约 28 步处在接近满 lr（3e-5）的区间。这是 128-update pilot 的固有代表性局限，由冻结 C1 的 lr-warmup-steps=100 与授权的 pilot 步数共同决定。**不得为此改动 warmup 或 pilot 步数**——按合同那属于『改变学习率/训练步数』，须停下汇报。此处仅登记，供用户判断 pilot 证据强度。",
+    "W2_lr_label_defect": "trainer 打印的 `base_lr` 实为 LambdaLR 构造后立即 step 一次的当前 lr，warmup 期显示 0.00e+00。标签缺陷，非训练缺陷（smoke 已实测 lr 逐点相符）。运行中不改冻结文件。"
+  },
+  "verdict_rule": "任一 fatal_criteria 不满足 -> pilot FAIL -> 立即停止并汇报，不得自行调参后继续、不得跳过 pilot 直接 formal。全部 fatal 满足 -> pilot PASS -> 进入 FORMAL_READY。",
+  "explicitly_not_a_criterion": [
+    "loss 必须下降（warmup 期 lr≈0，128 步内不构成有效学习信号，要求它下降是无根据的）",
+    "val_dev 指标达到某个数值（那是选模，本轮选择合同规定只在正式 run 完成后按预注册规则做）",
+    "与父锚点 14,880 的任何指标比较（pilot 不是正式臂，比了也不能当结论）"
+  ]
+}

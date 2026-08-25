@@ -1,0 +1,53 @@
+{
+  "schema": "candidate_c_config_pointer_v1",
+  "captured_at_utc": "2026-08-21T09:08:02.431518Z",
+  "canonical_locations": [
+    "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/candidate_c_v1",
+    "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c"
+  ],
+  "note": "正本在 artifacts/protocols/candidate_c_v1/ 与 configs/candidate_c/；此处只登记路径与 sha256，避免两份可分叉的副本。",
+  "artifacts": {
+    "design_contract_json": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/candidate_c_v1/candidate_c_design_contract_v1.json",
+      "sha256": "d5e80cafe3998b4c220f1190e451881d7fac6017866b250a15eb0caffbc8c6d9",
+      "bytes": 12423,
+      "sidecar": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/candidate_c_v1/candidate_c_design_contract_v1.json.sha256"
+    },
+    "design_contract_md": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/candidate_c_v1/candidate_c_design_contract_v1.md",
+      "sha256": "ffd2e963b574b7b0f423d30b13f2287465f27adf3121a057a112f22ed29304d5",
+      "bytes": 5611,
+      "sidecar": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/candidate_c_v1/candidate_c_design_contract_v1.md.sha256"
+    },
+    "selection_contract": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/candidate_c_v1/candidate_c_selection_contract_v1.json",
+      "sha256": "9ae8173adf26b03bbd969c64c54568d6494342118e5f2efe88ee426eec6b57e9",
+      "bytes": 3372,
+      "sidecar": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/candidate_c_v1/candidate_c_selection_contract_v1.json.sha256"
+    },
+    "formal_queue": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/candidate_c_v1/candidate_c_formal_queue_v1.json",
+      "sha256": "511907a2ebeccaba7f1196c4337932506c7d8d073d84418d3c94fd96aec35da7",
+      "bytes": 1310,
+      "sidecar": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/candidate_c_v1/candidate_c_formal_queue_v1.json.sha256"
+    },
+    "config_C1": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml",
+      "sha256": "593f790c4520136b53efcc0e1e33481e3f104db7d2497649902696752a780811",
+      "bytes": 1843,
+      "sidecar": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c1_config_v1.yaml.sha256"
+    },
+    "config_C0R": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c0r_config_v1.yaml",
+      "sha256": "4dfa913797ba1155b5ce295c9491daa362ca598dab786cd9882d48bb175868eb",
+      "bytes": 1843,
+      "sidecar": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/configs/candidate_c/candidate_c_c0r_config_v1.yaml.sha256"
+    },
+    "source_hashes": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/source_hashes.json",
+      "sha256": "260d791c7ac48c9c5a3fec0e5c84be93b196be9bdcb4553e208781705ca989f3",
+      "bytes": 2386,
+      "sidecar": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/source_hashes.json.sha256"
+    }
+  }
+}

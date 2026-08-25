@@ -1,0 +1,723 @@
+{
+  "schema": "e0_provenance_v3",
+  "generated_at_utc": "2026-08-20T13:39:41.442334Z",
+  "generated_by": "verify_and_aggregate_retry_v3.py",
+  "closeout_environment": {
+    "now_utc": "2026-08-20T13:39:41.442334Z",
+    "closeout_hostname": "csy-zg01-gnode68",
+    "closeout_role": "CPU-only 封账与审计（不执行任何 GPU 计算）",
+    "gpu_exec_hostname": "csy-zg01-gnode39",
+    "gpu_exec_hostname_source": "attempt_manifest.json 的 hostname 字段（GPU 执行时写入）",
+    "cuda_visible_devices": "",
+    "python": "3.13.12",
+    "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718",
+    "torch_imported": false,
+    "git_head": "<git error: fatal: not a git repository (or any parent up to mount point /)\nStopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FI>",
+    "git_branch": "<git error: fatal: not a git repository (or any parent up to mount point /)\nStopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FI>",
+    "git_worktree_dirty": false,
+    "git_dirty_entry_count": null,
+    "git_note": "工作树可能存在其他会话的并发修改；本脚本只读 git，不执行任何写操作"
+  },
+  "trusted_sources": {
+    "raw_results": {
+      "gpu0_v14880_val_q1q2": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu0_v14880_val_q1q2/state_contract_exclusive.json",
+        "sha256": "229918a49a42887614d1cfce99dae70c2f0ccdc3590490bce73d5a2e8434314f"
+      },
+      "gpu1_v14880_oodt_q1q2": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu1_v14880_oodt_q1q2/state_contract_exclusive.json",
+        "sha256": "965a46d249f816c0b17df903185a74bc3c6c371ca10b5ef7472d4459e31c9670"
+      },
+      "gpu2_v14880_oodt_q3": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu2_v14880_oodt_q3/extreme_state_audit.json",
+        "sha256": "4a51ce5d2877305df1f10fe4c3e278945c4decca657ffcfc6d0f242ebf7bcc43"
+      },
+      "gpu3_legacy11904_val_q1q2": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu3_legacy11904_val_q1q2/state_contract_exclusive.json",
+        "sha256": "10a903185fd14c16d0fec49b2e730a2bd451d3ff25b2fcaef40cf242f4960354"
+      },
+      "gpu4_legacy11904_oodt_q1q2": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu4_legacy11904_oodt_q1q2/state_contract_exclusive.json",
+        "sha256": "d0ebbbbea74de549bba481ae5e3ee40fd478a8b5552cbfff09c84ec0e115f7c0"
+      },
+      "gpu5_legacy11904_oodt_q3": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/runs/gpu5_legacy11904_oodt_q3/extreme_state_audit.json",
+        "sha256": "ccd1a9a107237bc409c96b92032497a84e5d8153d76270f04665153bab6a00fa"
+      }
+    },
+    "launch_shards": [
+      "launch_record_shard_pgpu2.json",
+      "launch_record_shard_pgpu4.json",
+      "launch_record_shard_pgpu5.json",
+      "launch_record_shard_pgpu6.json"
+    ],
+    "frozen_launch_manifest": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/launch_manifest.json",
+      "sha256": "500e5031335c366ed06819dd9af8679dcf0318301d559aa7bfd573688c6cdd08",
+      "top_keys": [
+        "artifacts",
+        "forbidden",
+        "frozen_at",
+        "frozen_inputs",
+        "gpu_policy",
+        "jobs",
+        "ops_dir",
+        "registry_revision",
+        "schema"
+      ]
+    },
+    "historical_reference": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/historical_11904_reference.json",
+      "sha256": "0b97406c3bd44cd68bb3f098b6ee2fb5da914f1198bd4684a1a55c813bd493f4",
+      "n_formal": 57,
+      "metadata_keys": [
+        "_checkpoint",
+        "_generated_at",
+        "_generated_by",
+        "_note",
+        "_sources",
+        "_tolerance",
+        "_tolerance_rationale",
+        "_tolerances"
+      ],
+      "default_tolerance": 1e-06,
+      "per_pattern_tolerances": {
+        ".R2": 1e-05,
+        ".biasabs": 1e-05,
+        ".nse": 1e-05,
+        ".paired.n": 0.0,
+        ".rmse": 1e-05,
+        "_bootstrap.ci_": 0.0001,
+        "bootstrap95.": 0.0001,
+        "delta_loss_mean": 1e-05,
+        "n_control": 0.0,
+        "n_extreme": 0.0,
+        "n_pairs": 0.0,
+        "official_R2_": 1e-05
+      },
+      "tolerance_rationale": [
+        "Counts (n, n_pairs, n_extreme, n_control) must match EXACTLY -- a changed count means a changed manifest or dataloader, which is harness drift by definition.",
+        "Point metrics carry 1e-5: the frozen numbers were measured on GPU, and cuDNN/TF32 reduction order is not bit-stable across driver/library versions.  Real harness drift (different scorer, mask, manifest or split) moves these by orders of magnitude more.",
+        "Bootstrap CI bounds carry 1e-4: both evaluators seed np.random.default_rng(--seed, default 0), so resampling is deterministic given identical inputs, but tiny per-sample perturbations propagate into the quantiles.",
+        "These tolerances bound FLOAT NOISE only.  They are not a licence to wave through a mismatch: anything outside them is reported as DRIFT_TO_DIAGNOSE and must be traced to evaluator / manifest / scorer / dataloader before any comparison is read."
+      ],
+      "note": "Reproduction target for the 11,904 RERUN only (jobs gpu3/gpu4/gpu5).  Same checkpoint + same frozen protocol => same numbers, so a mismatch means the harness moved, not the model.  These are 11,904's numbers and must never be relabelled as 14,880's.",
+      "sources": {
+        "oodt_q1q2": {
+          "checkpoint_proof": "in_json",
+          "ckpt_sha256_in_json": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+          "copies_agree": true,
+          "path": "writing/evidence_workspace/raw/release/oodt_q1q2_state_contract_exclusive.json",
+          "second_copy": "archive/04_RESULTS_EVIDENCE/historical_release_provenance/oodt_q1q2_state_contract_exclusive.json",
+          "sha256": "7ebc0569d705a9991ac8b8d17c42113c9da052b2bec73f7c28d021e28a65a051"
+        },
+        "oodt_q3": {
+          "checkpoint_proof": "sidecar",
+          "copies_agree": true,
+          "path": "writing/evidence_workspace/raw/release/q3_extreme_state_audit.json",
+          "per_stratum_provenance_witnesses": 9,
+          "run_dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/selection/q3_final_boundary80_20260727_230029",
+          "run_json_sha256_equals_release_copy": true,
+          "schema_gap_note": "extreme_state_audit.json records protocol_sha but NOT the checkpoint sha; identity comes from the run dir.  The Q3 acceptance check must therefore verify the checkpoint file SHA directly, not expect it inside the result JSON.",
+          "second_copy": "archive/04_RESULTS_EVIDENCE/historical_release_provenance/q3_extreme_state_audit.json",
+          "sha256": "9dae43b9a8a4fcdf0a73ef91daa58c189a88e769541ce295046cd0e938497041",
+          "sidecar_checkpoint_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_boundary80.pt",
+          "sidecar_checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd"
+        },
+        "val_q1q2": {
+          "checkpoint_proof": "in_json",
+          "ckpt_sha256_in_json": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+          "copies_agree": true,
+          "path": "writing/evidence_workspace/raw/release/val_q2_state_contract_exclusive.json",
+          "second_copy": "archive/04_RESULTS_EVIDENCE/historical_release_provenance/val_q2_state_contract_exclusive.json",
+          "sha256": "33b40d3e6bf6e0190c9415a9e0421e9809063356dcba2350890defeeed35f2d9"
+        }
+      },
+      "generated_at": "2026-08-18T08:37:03.646969+00:00",
+      "generated_by": "ops/e0_q1q2q3_11904_vs_14880/20260818_154859/make_historical_reference.py"
+    },
+    "weight_registry": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/weight_registry.json",
+      "sha256": "a087670624e367d8c64d2b23ae6a2452b8dab07aac3ae4fc014765bc91a74907",
+      "revision": "a7fd2763935a26d1",
+      "schema": "terrastate_weight_registry_v1",
+      "n_artifacts": 7,
+      "aliases": {
+        "terrastate/v2/default-training-anchor": {
+          "location": "<store>/aliases/terrastate__v2__default-training-anchor.json",
+          "mutable": true,
+          "note": "Re-pointing this anchor is an operational act; the previous registry revision is preserved at ops/.../weight_registry.before_m10.ebc374b34b2e818a.json.",
+          "set_at": "2026-08-18T07:52:30.144961+00:00",
+          "target": "terrastate/v2/verified-resume14880@v1"
+        }
+      },
+      "policy": {
+        "aliases": "only <store>/aliases/*.json are mutable; re-pointing an anchor is an operational act with its own record.",
+        "immutability": "objects/ entries are content-addressed and mode 0444; originals are never moved or deleted; historical results are never overwritten.",
+        "selection": "Launchers, tests and eval scripts must name a LOGICAL ID and resolve it with tools/resolve_artifact.py. Selecting a weight by basename (checkpoint_last.pt / _best.pt / _boundary80.pt) is forbidden: three of those share a byte count in the same dir.",
+        "verification": "resolve_artifact re-hashes the object and fails closed on mismatch."
+      },
+      "store": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts"
+    },
+    "alias": {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/aliases/terrastate__v2__default-training-anchor.json",
+      "sha256": "fc57cbbb0ae00f3371b94bb846aa36160a1db74e8a3706220b75e053c8370b8c",
+      "logical_id": "terrastate/v2/verified-resume14880@v1",
+      "target_file_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "set_at": "2026-08-18T07:52:30.155074+00:00",
+      "set_by": "M10 (ops/e0_q1q2q3_11904_vs_14880/20260818_154859/m10_register.py)"
+    },
+    "checkpoints": {
+      "boundary11904": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+        "bytes": 37972401,
+        "mode": "0o444",
+        "file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+        "logical_id": "terrastate/v2/legacy-boundary11904@v1",
+        "step": 11904
+      },
+      "verified14880": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+        "bytes": 44302057,
+        "mode": "0o444",
+        "file_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+        "logical_id": "terrastate/v2/verified-resume14880@v1",
+        "step": 14880
+      },
+      "historical14880": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/99/99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b.pt",
+        "bytes": 44300969,
+        "mode": "0o444",
+        "file_sha256": "99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b",
+        "logical_id": "terrastate/v2/historical-full14880@v1",
+        "step": 14880
+      }
+    },
+    "registry_entries": {
+      "boundary11904": {
+        "role": "EXACT-RESUME PARENT for the 11,904 -> 14,880 continuation. Also the checkpoint that produced the FROZEN Q1/Q2/Q3 evidence in TERRASTATE_V2_EVIDENCE.md.",
+        "arch": "TerraStateV2",
+        "candidate": "stage2_end_boundary80",
+        "step": 11904,
+        "total_steps": 14880,
+        "epoch": 31,
+        "micro_in_epoch": 372,
+        "stage_recorded_in_file": 2,
+        "stage_of_next_update": 3,
+        "route_version": "terrastate_v2",
+        "file_bytes": 37972401,
+        "file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+        "object_relpath": "objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+        "original_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_boundary80.pt",
+        "b4_state_sha256": "aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7",
+        "best_val": 0.31334985432787643,
+        "immutable": true,
+        "evidence_doc": "TERRASTATE_V2_EVIDENCE.md",
+        "provenance_notes": [
+          "Written by the original run at step 11904 BEFORE the stage 2->3 switch, so the recorded stage is 2 while the next scheduled update belongs to stage 3.",
+          "Complete resume state: optimizer_state_dict (2 groups / 30 Adam entries), scheduler_state_dict (last_epoch=11904), scaler record (FP32, disabled), rng_state + rng_states_by_rank (8 ranks), q_freeze."
+        ]
+      },
+      "verified14880": {
+        "role": "VERIFIED exact-resume result: legacy-boundary11904@v1 -> 14,880 (2,976 updates, all in stage 3).  Anchor for subsequent legacy-model evaluation and for initialising later stages.",
+        "arch": "TerraStateV2",
+        "candidate": "last",
+        "step": 14880,
+        "total_steps": 14880,
+        "epoch": 40,
+        "stage_recorded_in_file": 3,
+        "route_version": "terrastate_v2",
+        "file_bytes": 44302057,
+        "file_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+        "object_relpath": "objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+        "original_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/runs/resume11904_to14880/20260818_112933/checkpoint_last.pt",
+        "parent_id": "terrastate/v2/legacy-boundary11904@v1",
+        "parent_file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+        "immutable": true,
+        "m9_checks_passed": "31/31",
+        "m9_report": "ops/resume11904_to14880/20260818_112933/m9_acceptance_report.json",
+        "provenance_notes": [
+          "Model WEIGHTS are byte-identical to terrastate/v2/historical-full14880@v1: value_sha (sha256 over key-ordered raw tensor bytes) = aa98fbd2fa302727 on both, max abs diff = 0 across all 255 tensors.",
+          "The FILE sha256 nevertheless differs from historical-full14880@v1 (a5d2a0cc... vs 99f15a35...) because this checkpoint additionally carries the B5 lineage block and this run's own args/timestamps.  Byte-equal weights, independent file identity -- both statements are true and must not be conflated.",
+          "Historical Q1/Q2/Q3 numbers measured on the 11,904 checkpoint must NOT be relabelled as coming from 14,880."
+        ]
+      },
+      "historical14880": {
+        "role": "HISTORICAL original-run 40-epoch / 14,880-update result. READ-ONLY comparison target for the resume run. Its binary EXISTS (this record supersedes the earlier 'binary missing' claim in WEIGHTS_INDEX.md).",
+        "arch": "TerraStateV2",
+        "candidate": "last",
+        "step": 14880,
+        "total_steps": 14880,
+        "epoch": 40,
+        "stage_recorded_in_file": 3,
+        "route_version": "terrastate_v2",
+        "file_bytes": 44300969,
+        "file_sha256": "99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b",
+        "object_relpath": "objects/sha256/99/99f15a35fb9a356901c995bb0f48280a4da236f6970d0dd06343a28857fe2b8b.pt",
+        "original_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_last.pt",
+        "immutable": true,
+        "provenance_notes": [
+          "Produced by the SAME uninterrupted original run as the boundary80 parent (train.log: 'done step=14880 best_val=0.31288 teacher_unchanged=True stage3_qgrad_seen=True').",
+          "This artifact must never be overwritten, and the resume run must write to a DIFFERENT output directory.",
+          "Its provenance is NOT interchangeable with a resumed 14,880 checkpoint even if metrics coincide."
+        ]
+      }
+    },
+    "data_manifests": {
+      "val": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/manifests/val_952.json",
+        "sha256": "d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e",
+        "n_files": 952
+      },
+      "oodt": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/manifests/oodt_1904.json",
+        "sha256": "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49",
+        "n_files": 1904
+      }
+    },
+    "evaluator_sources": {
+      "eval/eval_b4_exclusive_contract.py": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/eval_b4_exclusive_contract.py",
+        "sha256": "c6759dec60ede433f99a97b1ba3191d9427210cd907a08d6d8776dfb8efec9b4",
+        "frozen_expected": "c6759dec60ede433f99a97b1ba3191d9427210cd907a08d6d8776dfb8efec9b4"
+      },
+      "eval/extreme_state_audit.py": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/extreme_state_audit.py",
+        "sha256": "10ef9e40f1f668a3b12c34e70accefae98ca4c419c7f122829f5531c5cd9f838",
+        "frozen_expected": "10ef9e40f1f668a3b12c34e70accefae98ca4c419c7f122829f5531c5cd9f838"
+      }
+    },
+    "q3_protocol": {
+      "dir": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/protocols/extreme_audit_oodt_v1",
+      "n_files_on_disk": 8,
+      "file_sha256": {
+        "MANIFEST.SHA256": "95f50ad30c5263db809a645e7cf22e94435586a35ce1a6c9a67728d64616e9f0",
+        "README.md": "e750fb1237302bdc0351a324ac9a74f70e359d8358fea6b4743453a0979758b4",
+        "climatology_train.json": "0123a0166485ac651e38ba4bbef610528a3bcf01d2606f86f80fdffeafe93f24",
+        "hotdry_manifest.json": "f8db1ccbb39120c78723d203655e506f5ac13790e11e59e4c6fbb96e5f2d09c7",
+        "matched_normal_manifest.json": "84a09421ff5b43c5b5529a3e7e9a0b40e3e999c170f1cd365d0509c73e9c2ccf",
+        "protocol.json": "570a0c36c3d1ceb83d0b2294fc7998b55443ae8a3ccc73f05f92c4e45a792ae5",
+        "provenance.json": "d658211a2fe1832bd30e238eaa592541b33d935dd06cb7ee804510976fc3d0ea",
+        "thresholds.json": "1c20cd71e6b30207aa6b1816607a6ba402e600b92abceb06a52bf8a1577fa790"
+      },
+      "n_files_in_manifest": 7,
+      "manifest_sha256": "95f50ad30c5263db809a645e7cf22e94435586a35ce1a6c9a67728d64616e9f0",
+      "counts": {
+        "n_strict": 36,
+        "n_broad": 84,
+        "n_primary": 84,
+        "n_control_unique": 45
+      },
+      "config": {
+        "valid_fraction_min": 0.8,
+        "min_cohort_n": 30,
+        "lat_bin_deg": 3.0,
+        "lon_bin_deg": 3.0,
+        "lat_band_deg": 6.0,
+        "strict_q": 0.9,
+        "broad_q": 0.8,
+        "normal_band": 0.75,
+        "caliper": 1.5,
+        "reuse_cap": 5,
+        "seed": 42
+      },
+      "geometry": {
+        "context_days": 50,
+        "total_days": 150,
+        "future_slice": [
+          50,
+          150
+        ]
+      },
+      "frozen_provenance": {
+        "git_commit": "83e62e9d9e58a4705f0e7dcec74df97a1acaad21",
+        "git_dirty": false,
+        "frozen_utc": "2026-07-26T00:00:00Z",
+        "seed": 42,
+        "n_train_used": 22749,
+        "n_oodt_valid": 1704
+      },
+      "thresholds": {
+        "kind": "frozen_thresholds",
+        "strict": {
+          "hot": 1.2117177042830387,
+          "dry": 1.0949437827259716
+        },
+        "broad": {
+          "hot": 0.845641263662687,
+          "dry": 0.820555570556644
+        },
+        "q": {
+          "strict": 0.9,
+          "broad": 0.8
+        },
+        "note": "frozen from the TRAIN anomaly distribution; applied unchanged to OOD-t (correction 2).",
+        "climatology_sha256": "0123a0166485ac651e38ba4bbef610528a3bcf01d2606f86f80fdffeafe93f24"
+      }
+    },
+    "training_side_records": {
+      "m9_acceptance": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/resume11904_to14880/20260818_112933/m9_acceptance_report.json",
+        "sha256": "93eb9561e098a9a2fb47d71460e88ed26dd5dce3df6b4e8cbbecca784206cdb8",
+        "accepted": true,
+        "n_checks": 31,
+        "final_step": 14880,
+        "stage": 3,
+        "best_val": 0.312876478202057,
+        "lineage": {
+          "resumed": true,
+          "parent_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+          "parent_file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+          "parent_step": 11904,
+          "parent_epoch": 31,
+          "parent_micro_in_epoch": 372,
+          "parent_stage_recorded": 2,
+          "parent_b4_state_sha256": "aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7",
+          "resume_stage_applied": 3,
+          "data_order_restoration": "exact: DistributedSampler(seed, epoch) fully determines the order"
+        },
+        "historical_bit_exact_detail": "value_sha hist=aa98fbd2fa302727 resume=aa98fbd2fa302727 keys_equal=True max_abs_diff=0.000e+00 over 255 tensors",
+        "value_digest_16hex": "aa98fbd2fa302727"
+      },
+      "parameter_audit": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/resume11904_to14880/20260818_112933/parameter_audit.json",
+        "sha256": "24465586b2b3bd8f2267db43cefc90c42e38d5e6377eb5ac645f9126a8804cc5",
+        "n_rows": 49,
+        "all_consistent": true,
+        "arithmetic_self_consistency": {
+          "total_steps_minus_parent_step": 2976,
+          "remaining_updates": 2976,
+          "updates_per_epoch": 372,
+          "remaining_epochs": 8.0,
+          "epochs_range": "32..39 inclusive (start_epoch index 31 fully consumed)",
+          "boundary80_formula": "int(0.80 * 14880) == 11904",
+          "ok": true
+        },
+        "stage_boundary_semantics": {
+          "stage_at_11904": 3,
+          "recorded_stage_in_parent": 2,
+          "evidence": "train.log: '[boundary80] forced checkpoint saved at step 11904' immediately followed by '[stage] 2 -> 3 at step 11904; trainable_q=12'",
+          "requirement": "the first post-resume update (#11905) must run in stage 3 with exactly the 12 core.blocks.2.* q tensors trainable, and the run must NOT re-save checkpoint_boundary80.pt"
+        },
+        "sources": {
+          "checkpoint": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/checkpoint_boundary80.pt",
+          "checkpoint_file_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+          "train_log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026-planb-v2train/runs/terrastate_v2/run1/train.log",
+          "runbook": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/TERRASTATE_V2_RUNBOOK.md"
+        },
+        "witness_columns": [
+          "checkpoint",
+          "runbook",
+          "train_log"
+        ]
+      },
+      "state_sha_check": {
+        "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/resume11904_to14880/20260818_112933/state_sha_check.json",
+        "sha256": "3ac7d5e734cd6741b9bd78aeecaf25c941062710a2e9a4af583a5602b8bae5d2",
+        "all_match": true,
+        "parent_b4_state_sha256": "aba100c138119bc0fc4412082412596dcf31090410643aa0736b5705b04feaa7",
+        "parent_object": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/64/644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd.pt",
+        "parent_stage": 2,
+        "parent_step": 11904,
+        "q_projector_init_sha256": "da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d",
+        "q_projector_init_sha256_expected": "da978b0243c8dae070d8a9a3db8e09b889ba9e4c91b36724370c5d747593243d",
+        "q_projector_match": true,
+        "student_init_arch": "ObsWorldB4Exclusive",
+        "student_init_match": true,
+        "student_init_sha256": "488052d97c7d1c8a2e805d9838f344daef7ad02e5f185d3025031a5f1c026338",
+        "student_init_sha256_expected": "488052d97c7d1c8a2e805d9838f344daef7ad02e5f185d3025031a5f1c026338",
+        "student_object": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/42/42420f88a6aa631b14bf48551ee5cfb3645734ae8143bc3998a9c16dacdcd13c.pt",
+        "teacher_arch": "ObsWorldB4",
+        "teacher_load_exact": true,
+        "teacher_load_missing": 0,
+        "teacher_load_unexpected": 0,
+        "teacher_match": true,
+        "teacher_object": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/2c/2c5d084236716d84d1ed11289248a501a7cb906675a32ccb8fd73e1f2a26881c.pt",
+        "teacher_q_keys": 223,
+        "teacher_sha256": "bbe2c3ee6de540ae6eabeb7798f331388112ad370dbcae9533187344f2f8a302",
+        "teacher_sha256_expected": "bbe2c3ee6de540ae6eabeb7798f331388112ad370dbcae9533187344f2f8a302",
+        "warm_start_exact": true,
+        "warm_start_missing": 0,
+        "warm_start_source": "ObsWorldB4Exclusive",
+        "warm_start_unexpected": 0
+      }
+    }
+  },
+  "explicitly_not_used_as_source": [
+    "思路整理进展/A03_TerraState_关键实验结果与决策总账.md（待本轮重写的文档本身）",
+    "e0_comparison_11904_vs_14880.json / _v2.json / _v2_comprehensive.json",
+    "e0_acceptance_report.json / _v2.json",
+    "closeout_audit_v2.json"
+  ],
+  "evaluator_commit": {
+    "q1q2": "repo:c950303+official:a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+    "q3": null,
+    "q3_gap_note": "Q3 结果 JSON 的 schema 不记录 evaluator commit；Q3 评测脚本身份改由 eval/extreme_state_audit.py 的实测 SHA-256 与冻结 manifest 记录值比对来确定"
+  },
+  "q3_checkpoint_identity": {
+    "binding": "sidecar",
+    "per_job": {
+      "gpu2_v14880_oodt_q3": {
+        "checkpoint_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+        "proof": "sidecar",
+        "sources": [
+          "launch_record_shard",
+          "runner_log",
+          "run_dir_name"
+        ],
+        "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu2_v14880_oodt_q3.log"
+      },
+      "gpu5_legacy11904_oodt_q3": {
+        "checkpoint_sha256": "644deaac0b1578cd153eaffb65bddd6c5ac55d30e0bc09b595111588471e1acd",
+        "proof": "sidecar",
+        "sources": [
+          "launch_record_shard",
+          "runner_log",
+          "run_dir_name"
+        ],
+        "log": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu5_legacy11904_oodt_q3.log"
+      }
+    },
+    "gap_note": "extreme_state_audit.json 记录 protocol_sha，但不记录 checkpoint SHA；身份由 run 目录名、launch shard 的 checkpoint_sha256 与 runner 日志首行的加载记录三方共同确定，并直接校验磁盘上的 checkpoint 文件 SHA"
+  },
+  "provenance_gaps": [
+    {
+      "artifact": "e0_launch_record.gpu2.json",
+      "schema": "e0_launch_record_v1",
+      "gpu": 2,
+      "n_jobs": 0,
+      "sha256": "f3c16a49f302f685bcfa149d0f6f311b108241980b4127571d43ea341bbe09f7",
+      "empty_as_expected": true,
+      "gap": "jobs 列表为空；真实启动记录只存在于 launch_record_shard_pgpu*.json，本文件不可作为启动证据"
+    },
+    {
+      "artifact": "e0_launch_record.gpu4.json",
+      "schema": "e0_launch_record_v1",
+      "gpu": 4,
+      "n_jobs": 0,
+      "sha256": "5681c92afe761609f5c6b6386d928db5acb912a94f0f2849c1ce791e20321587",
+      "empty_as_expected": true,
+      "gap": "jobs 列表为空；真实启动记录只存在于 launch_record_shard_pgpu*.json，本文件不可作为启动证据"
+    },
+    {
+      "artifact": "e0_launch_record.gpu5.json",
+      "schema": "e0_launch_record_v1",
+      "gpu": 5,
+      "n_jobs": 0,
+      "sha256": "5551442be2a3a9dd0389a9614e61905a672ef8627d7902640789027d56773d15",
+      "empty_as_expected": true,
+      "gap": "jobs 列表为空；真实启动记录只存在于 launch_record_shard_pgpu*.json，本文件不可作为启动证据"
+    },
+    {
+      "artifact": "e0_launch_record.gpu6.json",
+      "schema": "e0_launch_record_v1",
+      "gpu": 6,
+      "n_jobs": 0,
+      "sha256": "4dc43ac0c0dd1669465d02587c8e5ce2f88c720f5e7520c645abad417737bbf1",
+      "empty_as_expected": true,
+      "gap": "jobs 列表为空；真实启动记录只存在于 launch_record_shard_pgpu*.json，本文件不可作为启动证据"
+    },
+    {
+      "artifact": "e0_launch_record.json",
+      "sha256": "f1bd3b79c03f5e4f83b148dc0e17a12edd84dd885bcd71822a70c82ae4ff91d8",
+      "n_jobs": 6,
+      "gap": "合并产物；job 名称字段曾缺失，v2 阶段以 e0_launch_record_reconstructed.json 补齐，v3 直接改用 shard 为准"
+    }
+  ],
+  "manifest_disambiguation": {
+    "training_side": {
+      "sha.train_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "sha.val_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9"
+    },
+    "evaluation_side": {
+      "val": "d9bd91d6e2aafbf66b38afca7576516823fc710b6cc3ca44ea25d2e31152bf8e",
+      "oodt": "58c8d64897193e9cffff5bc6c8524909707ebae5376b5d4dee68597ef08e1e49"
+    },
+    "note": "训练用 train/val manifest 与评测用 val_952 / oodt_1904 冻结清单是不同文件，A03 中不得互相替代"
+  },
+  "ground_truth_binding": {
+    "q3_protocol_frozen_utc": "2026-07-26T00:00:00Z",
+    "earliest_eval_start_utc": "2026-08-20T03:27:18Z",
+    "frozen_lead_days": 25.14
+  },
+  "excluded_evidence": [
+    {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/smoke",
+      "children": [
+        "q1q2",
+        "q1q2.log",
+        "q3",
+        "q3_cpu",
+        "q3_cpu.log"
+      ],
+      "reason": "smoke 产物：永久保留为审计证据，绝不进入正式结果集"
+    },
+    {
+      "path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260818_154859/selftest",
+      "children": [
+        "fixture_clean",
+        "fixture_interrupted",
+        "smi_6gpu.sh",
+        "smi_foreign.sh",
+        "smi_idle.sh",
+        "smi_partial.sh"
+      ],
+      "reason": "selftest 产物：永久保留为审计证据，绝不进入正式结果集"
+    }
+  ],
+  "interrupted_attempt": {
+    "attempt": "20260818_154859",
+    "interrupted_markers": [
+      "runs/gpu0_v14880_val_q1q2/INTERRUPTED.json",
+      "runs/gpu1_v14880_oodt_q1q2/INTERRUPTED.json",
+      "runs/gpu2_v14880_oodt_q3/INTERRUPTED.json"
+    ],
+    "n_interrupted": 3,
+    "acceptance_status": "NOT_READY",
+    "acceptance_sha256": "70db57616c672ebca653e050c69fdf880064cca55593ae18e1ebc9339ee4734a",
+    "watcher_state": null,
+    "watcher_polls": 486,
+    "jobs_launched": false,
+    "launch_record_n_jobs": 3,
+    "yielded_to": [
+      {
+        "pid": "1057914",
+        "mem": "4752",
+        "user": "xddu2"
+      },
+      {
+        "pid": "1057916",
+        "mem": "5814",
+        "user": "xddu2"
+      },
+      {
+        "pid": "1057917",
+        "mem": "5814",
+        "user": "xddu2"
+      },
+      {
+        "pid": "1057918",
+        "mem": "5814",
+        "user": "xddu2"
+      },
+      {
+        "pid": "1057919",
+        "mem": "5814",
+        "user": "xddu2"
+      }
+    ]
+  },
+  "corrected_defects": [
+    {
+      "defect": "A03 v2 的 Q2 对照表数字无来源",
+      "values": [
+        0.556762,
+        0.556617,
+        0.556546,
+        0.484868,
+        0.012454,
+        0.013196,
+        0.012587,
+        0.012732
+      ],
+      "evidence": "对六份一手结果全部浮点值做 |Δ|<5e-7 搜索，命中集合为空",
+      "resolution": "v3 一律从 raw JSON 重新推导 Q2 三臂与官方 Δ"
+    }
+  ],
+  "timeline_log_provable": {
+    "convention": "全部为 UTC。job_started 取自 launch shard；result_json_written 取自结果文件 mtime。二者是不同性质的证据，不得相减当作单作业耗时。",
+    "events": [
+      {
+        "event": "job_started",
+        "job": "gpu0_v14880_val_q1q2",
+        "utc": "2026-08-20T03:27:18Z",
+        "pid": 3859325,
+        "physical_gpu": 5,
+        "evidence": "launch_record_shard_pgpu5.json 的 started_utc 字段"
+      },
+      {
+        "event": "result_json_written",
+        "job": "gpu0_v14880_val_q1q2",
+        "utc": "2026-08-20T03:29:45.156176Z",
+        "evidence": "runs/gpu0_v14880_val_q1q2/state_contract_exclusive.json 的文件 mtime"
+      },
+      {
+        "event": "job_started",
+        "job": "gpu1_v14880_oodt_q1q2",
+        "utc": "2026-08-20T03:40:08Z",
+        "pid": 3859216,
+        "physical_gpu": 2,
+        "evidence": "launch_record_shard_pgpu2.json 的 started_utc 字段"
+      },
+      {
+        "event": "job_started",
+        "job": "gpu3_legacy11904_val_q1q2",
+        "utc": "2026-08-20T03:40:23Z",
+        "pid": 3859405,
+        "physical_gpu": 6,
+        "evidence": "launch_record_shard_pgpu6.json 的 started_utc 字段"
+      },
+      {
+        "event": "result_json_written",
+        "job": "gpu1_v14880_oodt_q1q2",
+        "utc": "2026-08-20T03:42:35.610052Z",
+        "evidence": "runs/gpu1_v14880_oodt_q1q2/state_contract_exclusive.json 的文件 mtime"
+      },
+      {
+        "event": "result_json_written",
+        "job": "gpu3_legacy11904_val_q1q2",
+        "utc": "2026-08-20T03:42:50.566358Z",
+        "evidence": "runs/gpu3_legacy11904_val_q1q2/state_contract_exclusive.json 的文件 mtime"
+      },
+      {
+        "event": "job_started",
+        "job": "gpu2_v14880_oodt_q3",
+        "utc": "2026-08-20T03:46:39Z",
+        "pid": 3933274,
+        "physical_gpu": 5,
+        "evidence": "launch_record_shard_pgpu5.json 的 started_utc 字段"
+      },
+      {
+        "event": "result_json_written",
+        "job": "gpu2_v14880_oodt_q3",
+        "utc": "2026-08-20T03:49:06.048221Z",
+        "evidence": "runs/gpu2_v14880_oodt_q3/extreme_state_audit.json 的文件 mtime"
+      },
+      {
+        "event": "job_started",
+        "job": "gpu5_legacy11904_oodt_q3",
+        "utc": "2026-08-20T03:57:49Z",
+        "pid": 3949454,
+        "physical_gpu": 6,
+        "evidence": "launch_record_shard_pgpu6.json 的 started_utc 字段"
+      },
+      {
+        "event": "result_json_written",
+        "job": "gpu5_legacy11904_oodt_q3",
+        "utc": "2026-08-20T04:00:16.708652Z",
+        "evidence": "runs/gpu5_legacy11904_oodt_q3/extreme_state_audit.json 的文件 mtime"
+      },
+      {
+        "event": "job_started",
+        "job": "gpu4_legacy11904_oodt_q1q2",
+        "utc": "2026-08-20T04:10:01Z",
+        "pid": 3859304,
+        "physical_gpu": 4,
+        "evidence": "launch_record_shard_pgpu4.json 的 started_utc 字段"
+      },
+      {
+        "event": "result_json_written",
+        "job": "gpu4_legacy11904_oodt_q1q2",
+        "utc": "2026-08-20T04:12:28.251210Z",
+        "evidence": "runs/gpu4_legacy11904_oodt_q1q2/state_contract_exclusive.json 的文件 mtime"
+      }
+    ],
+    "earliest_job_start_utc": "2026-08-20T03:27:18Z",
+    "latest_result_write_utc": "2026-08-20T04:12:28.251210Z",
+    "not_log_provable": [
+      "单个作业的精确 wall-clock 时长（runner 日志未记录逐作业结束时刻）",
+      "六作业总耗时的精确值（存在 GPU 共享与排队，不能由首启到末写直接相减）"
+    ],
+    "span_note": "最早启动 2026-08-20T03:27:18Z 至最后一份结果落盘 2026-08-20T04:12:28.251210Z 之间的跨度可由文件系统证明，但该跨度包含 GPU 共享等待，不等于计算耗时"
+  }
+}

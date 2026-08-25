@@ -26,6 +26,7 @@ SHAs / teacher+student-init SHAs.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -55,6 +56,58 @@ from train.terrastate_v2_common import (  # noqa: E402
 # doc-88 default schedule fractions / lambda_s values (frozen; not CLI-tunable).
 STAGE1_FRAC, STAGE3_FRAC = 0.20, 0.80
 LAM_WARM_TARGET, LAM_MID, LAM_LATE = 0.02, 0.02, 0.01
+
+
+CKPT_GLOB = "checkpoint*.pt"
+
+
+def _sha256_file(path, chunk=1 << 20) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for blk in iter(lambda: f.read(chunk), b""):
+            h.update(blk)
+    return h.hexdigest()
+
+
+def guard_output_dir(out: Path, allow_existing: bool) -> None:
+    """B4: never write a new run on top of an existing run's checkpoints.
+
+    Fails closed BEFORE any process-group init so every rank raises identically.
+    `--allow-existing-out` is the only escape hatch and is never used by the formal run.
+    """
+    if allow_existing or not out.exists():
+        return
+    existing = sorted(p.name for p in out.glob(CKPT_GLOB))
+    if existing:
+        raise FileExistsError(
+            f"output-dir {out} already contains {len(existing)} checkpoint(s): "
+            f"{existing[:5]}{'...' if len(existing) > 5 else ''}. Refusing to write into it "
+            f"(historical results must never be overwritten). Use a fresh --output-dir, or pass "
+            f"--allow-existing-out if you really intend to write alongside them.")
+
+
+def resume_data_order_note(world: int, deterministic: bool, resume_micro: int,
+                           updates_per_epoch: int, accum: int) -> str:
+    """Honest statement of how exactly the data order is restored (no over-claiming).
+
+    - world > 1: DistributedSampler derives its permutation from (seed, epoch) alone, so the
+      order is reproduced exactly once sampler.set_epoch(epoch) is called.
+    - world == 1 with shuffle: DataLoader's permutation came from a generator whose state at
+      the interrupt is NOT part of the checkpoint, so the intra-epoch order is NOT exactly
+      restorable. It is exact only when the resume point sits on an epoch boundary (nothing
+      left to skip) or with --deterministic (shuffle disabled).
+    """
+    micro_per_epoch = updates_per_epoch * accum
+    on_epoch_boundary = (resume_micro == 0 or resume_micro >= micro_per_epoch)
+    if world > 1:
+        return "exact: DistributedSampler(seed, epoch) fully determines the order"
+    if deterministic:
+        return "exact: shuffle disabled (--deterministic), order is the sorted dataset order"
+    if on_epoch_boundary:
+        return "exact: single-rank resume lands on an epoch boundary, no intra-epoch skip needed"
+    return ("approximate: single-rank shuffled resume mid-epoch — the DataLoader generator "
+            "state at the interrupt is not checkpointed, so the remaining intra-epoch order "
+            "differs from the uninterrupted run (model/optimizer/scheduler/RNG are still exact)")
 
 
 # ------------------------------------------------------------------ schedules
@@ -202,7 +255,8 @@ def validate_v2(model, loader, cache, dev):
 # ------------------------------------------------------------------ checkpoint schema
 def make_checkpoint(raw, opt, sched, *, epoch, step, micro_in_epoch, stage, trainable_q,
                     unfreeze_prefixes, best_val, total_steps, accum, world, global_batch,
-                    shas, args, lambda_state_raw, lambda_state_effective, gathered_rng):
+                    shas, args, lambda_state_raw, lambda_state_effective, gathered_rng,
+                    lineage=None):
     return {
         "arch": raw.ARCH, "route_version": raw.ROUTE_VERSION,
         "b4_state_dict": raw.state_dict(), "contract_cfg": raw.config(),
@@ -222,6 +276,9 @@ def make_checkpoint(raw, opt, sched, *, epoch, step, micro_in_epoch, stage, trai
         "future_state_scale": float(args.future_state_scale),
         "total_steps": total_steps, "accum": accum, "world_size": world, "global_batch": global_batch,
         "alpha": float(raw.alpha), "sha": shas, "args": vars(args),
+        # B5: parent->child provenance chain. {} for a from-scratch run; for a resumed run it
+        # pins the exact parent file (path + sha256 + step) this weight descends from.
+        "lineage": dict(lineage or {}),
         "loss_weights": {"gt": raw.W_GT, "kd": raw.W_KD,
                          "future_state_scale": float(args.future_state_scale)},
         "selection_note": ("This checkpoint is NOT automatically final. Final selection (doc 88 "
@@ -253,6 +310,9 @@ def run_training(args, dataset_factory=None) -> dict:
         raise ValueError("--future-state-scale must be finite and >= 0")
     if args.stop_after_step < 0:
         raise ValueError("--stop-after-step must be >= 0")
+    # B4: checked BEFORE init_process_group so every rank fails identically (a rank-0-only
+    # raise after init would hang the others in a collective).
+    guard_output_dir(Path(args.output_dir), args.allow_existing_out)
 
     local_rank = int(os.environ.get("LOCAL_RANK", 0))
     world = int(os.environ.get("WORLD_SIZE", 1))
@@ -356,6 +416,8 @@ def run_training(args, dataset_factory=None) -> dict:
     start_epoch, step, resume_micro = 0, 0, 0
     best_val = float("inf")
     current_stage = 1
+    lineage: dict = {}
+    boundary80_saved_by_parent = False
     if args.resume:
         rk = torch.load(args.resume, map_location="cpu", weights_only=False)
         assert rk["arch"] == student.ARCH, "resume arch mismatch"
@@ -376,20 +438,79 @@ def run_training(args, dataset_factory=None) -> dict:
         assert resume_scale == float(args.future_state_scale), (
             f"resume future_state_scale mismatch: checkpoint={resume_scale} "
             f"CLI={args.future_state_scale}")
-        current_stage = int(rk["stage"])
-        apply_stage(student, current_stage, unfreeze_prefixes)   # restore freeze-set BEFORE loading opt
+        step = int(rk["step"])
+        recorded_stage = int(rk["stage"])
+        # B1: the checkpoint's `stage` is the stage the SAVED update ran in, NOT the stage the
+        # NEXT update belongs to.  At an exact 80% boundary save (step == boundary80) the parent
+        # records stage 2, but the uninterrupted run had already transitioned to stage 3 before
+        # its next update.  Trusting rk["stage"] therefore replays one extra stage-2 update with q
+        # fully frozen and diverges from the reference trajectory forever.  The schedule is the
+        # single source of truth: derive the stage from (step, total_steps).
+        current_stage = stage_at(step, total_steps)
+        trainable_q_now = apply_stage(student, current_stage, unfreeze_prefixes)  # BEFORE opt load / DDP
+        if current_stage != recorded_stage:
+            log(f"  [resume] stage recomputed from schedule: recorded={recorded_stage} -> "
+                f"{current_stage} (step {step}/{total_steps}, boundary80={boundary80}); the next "
+                f"update belongs to stage {current_stage}")
+        # B6: the stage-3 trainable q set must be exactly the unfreeze-prefix tensors, and the
+        # parent's own record (when it is also stage 3) must agree.
+        if current_stage >= 3:
+            expected_q = sorted(n for n, _ in student.q.named_parameters()
+                                if any(n.startswith(pre) for pre in unfreeze_prefixes))
+            assert trainable_q_now == expected_q, (
+                f"resume stage-3 trainable q mismatch: got {len(trainable_q_now)} "
+                f"expected {len(expected_q)} for prefixes {unfreeze_prefixes}")
+            parent_qf = rk.get("q_freeze") or {}
+            assert list(parent_qf.get("unfreeze_prefixes") or unfreeze_prefixes) == unfreeze_prefixes, (
+                f"resume unfreeze_prefixes mismatch: checkpoint="
+                f"{parent_qf.get('unfreeze_prefixes')} CLI={unfreeze_prefixes}")
+            if recorded_stage >= 3 and parent_qf.get("trainable_q"):
+                assert sorted(parent_qf["trainable_q"]) == trainable_q_now, (
+                    "resume trainable_q set differs from the parent stage-3 record")
+            log(f"  [resume] stage 3 trainable q tensors = {len(trainable_q_now)} "
+                f"(prefixes {unfreeze_prefixes})")
         student.load_state_dict(rk["b4_state_dict"], strict=True)
         opt.load_state_dict(rk["optimizer_state_dict"])
         sched.load_state_dict(rk["scheduler_state_dict"])
-        start_epoch = int(rk["epoch"]); step = int(rk["step"]); resume_micro = int(rk["micro_in_epoch"])
+        start_epoch = int(rk["epoch"]); resume_micro = int(rk["micro_in_epoch"])
         best_val = float(rk["best_val"])
         rng_by_rank = rk.get("rng_states_by_rank") or [rk["rng_state"]]
         restore_rng_state(rng_by_rank[min(local_rank, len(rng_by_rank) - 1)])
+        # B2: the parent already wrote the forced 80% boundary checkpoint at this exact step, so
+        # the child must not write a second one (it would be a different, later-step file under
+        # the same pre-registered candidate name).
+        boundary80_saved_by_parent = (step == boundary80)
+        # B5: pin the exact parent this run descends from.
+        lineage = {
+            "resumed": True,
+            "parent_path": str(Path(args.resume).resolve()),
+            "parent_file_sha256": _sha256_file(args.resume),
+            "parent_step": step,
+            "parent_epoch": start_epoch,
+            "parent_micro_in_epoch": resume_micro,
+            "parent_stage_recorded": recorded_stage,
+            "parent_b4_state_sha256": state_sha(rk["b4_state_dict"]),
+            "resume_stage_applied": current_stage,
+            "data_order_restoration": resume_data_order_note(
+                world, args.deterministic, resume_micro, updates_per_epoch, accum),
+        }
         log(f"RESUME step={step} epoch={start_epoch} micro={resume_micro} stage={current_stage} "
             f"best_val={best_val:.5f}")
+        log(f"  [resume] parent sha256={lineage['parent_file_sha256'][:16]} "
+            f"data_order={lineage['data_order_restoration'].split(':')[0]}")
     else:
         current_stage = stage_at(step, total_steps)
         apply_stage(student, current_stage, unfreeze_prefixes)
+
+    # B3: a checkpoint that has already reached the end of the schedule (or the requested stop)
+    # has nothing left to do.  The old code only tested `step >= total_steps` AFTER an update, so
+    # resuming a finished run silently performed one extra update and rewrote checkpoint_last.pt.
+    # This is identical on every rank (step/total_steps come from the checkpoint + CLI), so no
+    # collective can desync.
+    resume_completed = bool(args.resume) and step >= stop_after_step
+    if resume_completed:
+        log(f"RESUME-COMPLETE step={step} >= stop_after_step={stop_after_step} "
+            f"(total_steps={total_steps}); nothing to train, writing no checkpoint")
 
     student.train()
     # DDP device_ids must be None on CPU/gloo (only set on CUDA/nccl).
@@ -413,7 +534,8 @@ def run_training(args, dataset_factory=None) -> dict:
                              best_val=best_val, total_steps=total_steps, accum=accum, world=world,
                              global_batch=args.global_batch, shas=shas, args=args,
                              lambda_state_raw=lambda_raw,
-                             lambda_state_effective=lambda_effective, gathered_rng=gathered_rng)
+                             lambda_state_effective=lambda_effective, gathered_rng=gathered_rng,
+                             lineage=lineage)
         ck["candidate"] = candidate                                  # which pre-registered candidate this is
         if rank0():
             atomic_torch_save(ck, path)
@@ -422,7 +544,9 @@ def run_training(args, dataset_factory=None) -> dict:
         nonlocal model, current_stage
         if new_stage != current_stage:
             # FORCED 80% boundary checkpoint at the stage2->3 unfreeze edge (doc 88 §4.3).
-            if current_stage == 2 and new_stage == 3:
+            # B2: skipped when the parent checkpoint IS that boundary — re-saving would emit a
+            # second, later-step file under the same pre-registered candidate name.
+            if current_stage == 2 and new_stage == 3 and not boundary80_saved_by_parent:
                 save(out / "checkpoint_boundary80.pt", epoch, micro_in_epoch, None,
                      candidate="stage2_end_boundary80")
                 log(f"  [boundary80] forced checkpoint saved at step {step}")
@@ -439,7 +563,7 @@ def run_training(args, dataset_factory=None) -> dict:
             log(f"  [stage] {current_stage} -> {new_stage} at step {step}; trainable_q={len(trainable_q)}")
             current_stage = new_stage
 
-    done = False
+    done = resume_completed            # B3: a finished checkpoint enters no epoch at all
     t0 = time.time(); t_prev, step_prev = t0, step
     micro_in_epoch = resume_micro
     for epoch in range(start_epoch, 10_000_000):
@@ -542,9 +666,12 @@ def run_training(args, dataset_factory=None) -> dict:
 
     # checkpoint_last: ALL ranks call save() (it does a collective _gather_rng internally,
     # only rank0 writes the file). Gating this behind `if rank0()` would deadlock DDP.
-    save(out / "checkpoint_last.pt", epoch, micro_in_epoch, None, candidate="last")
-    if rank0():
-        log_path.write_text("\n".join(json.dumps(r) for r in loss_log))
+    # B3: a completed-resume no-op writes NOTHING (no checkpoint_last.pt, no loss_log) so that
+    # pointing the trainer at a finished run can never mutate or re-date its outputs.
+    if not resume_completed:
+        save(out / "checkpoint_last.pt", epoch, micro_in_epoch, None, candidate="last")
+        if rank0():
+            log_path.write_text("\n".join(json.dumps(r) for r in loss_log))
     assert state_sha(teacher.state_dict()) == teacher_sha0, "teacher weights changed during training!"
     raw_m = model.module if hasattr(model, "module") else model
     tq = {n: p for n, p in raw_m.q.named_parameters() if p.requires_grad}
@@ -596,6 +723,9 @@ def build_argparser():
     ap.add_argument("--cache-fail-closed-gb", type=float, default=4.0,
                     help="if a cache exceeds this size AND cannot be mmap'd, refuse to load (per-rank OOM guard)")
     ap.add_argument("--deterministic", action="store_true", help="shuffle=False for exact resume tests")
+    ap.add_argument("--allow-existing-out", action="store_true",
+                    help="permit writing into an --output-dir that already holds checkpoints "
+                         "(OFF by default so a run can never overwrite historical results)")
     return ap
 
 

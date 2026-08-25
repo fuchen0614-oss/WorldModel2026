@@ -1,0 +1,44 @@
+{
+  "schema": "candidate_c_selected_profile_v1",
+  "locked_at_utc": "2026-08-22T11:09:29.646024Z",
+  "hostname": "csy-zg01-gnode39",
+  "profile": "A",
+  "gpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "nproc_per_node": 8,
+  "per_gpu_batch": 8,
+  "global_batch": 64,
+  "trigger_source": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/monitor_trigger.json",
+  "monitor_suggestion": {
+    "suggested_profile": "A",
+    "suggested_gpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "stable_free_gpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "n_stable": 8
+  }
+}

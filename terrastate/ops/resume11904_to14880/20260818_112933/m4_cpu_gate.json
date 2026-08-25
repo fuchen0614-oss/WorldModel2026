@@ -1,0 +1,65 @@
+{
+  "milestone": "M4",
+  "generated_utc": "2026-08-18T04:35:00.397655Z",
+  "env": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4",
+    "NUMEXPR_NUM_THREADS": "4",
+    "TOKENIZERS_PARALLELISM": "false",
+    "device": "cpu",
+    "no_cuda_context": true,
+    "no_network": true
+  },
+  "trainer_sha256": "d0e4051bc86f8116603ba687eb7f7814191362213dff5eec11ae7a73dce090d6",
+  "suites": {
+    "resume_boundary_regression": {
+      "log": "m3_postfix_run.log",
+      "log_sha256": "6931098d706a601cf0eff1a334d8dc60a996f8c58bc99bf914621523cee40b33",
+      "summary": "==== RESUME-BOUNDARY REGRESSION 13/13 PASSED ====",
+      "passed": 13,
+      "failed": 0,
+      "failures": []
+    },
+    "smoke_terrastate_v2_single": {
+      "log": "m4_smoke_single2.log",
+      "log_sha256": "df88511e997354f25523f6144b05dc0a3993d1f6b1ba929ef6d61cd80e5507e4",
+      "summary": "==== SMOKE 19/20 PASSED ====",
+      "passed": 19,
+      "failed": 1,
+      "failures": [
+        "13/iso"
+      ]
+    },
+    "smoke_terrastate_v2_ddp": {
+      "log": "m4_smoke_ddp.log",
+      "log_sha256": "9be2e244b8123c3b5065903e84ac2e5906972baa97ee3266358319a6fc352a0c",
+      "summary": "==== DDP SMOKE 7/7 PASSED ====",
+      "passed": 7,
+      "failed": 0,
+      "failures": []
+    }
+  },
+  "gate_verdict": "PASS (with one documented pre-existing environmental failure)",
+  "only_failure": "smoke_terrastate_v2.py check '13/iso'",
+  "only_failure_analysis": "13/iso asserts the B-session evaluator/protocol files are absent from this worktree, but they are COMMITTED repo state (commit e4c1158, author luzheng, 2026-08-14 terrastate/obsworld split) with zero working-tree modifications from this task. Deleting another session's committed work would violate the shared-resource constraints, so the condition is recorded as-is and NOT 'fixed'.",
+  "fixture_note": "The single smoke first crashed in check 1's f-string (sanity['effective_rank']) because the runbook fixture runs/smoke_v2/data/{train,val} is now empty -> 0 cubes -> _Sanity.report() returns the short dict {n_patches:0,n_nan:0}. Rebuilt the fixture inside the ops dir with 4 train + 2 val SYMLINKS to the read-only data roots (no copy, no write to real data); check 1 then reported cov train=0.7495 eff_rank=6.18.",
+  "resume_relevant_checks_green": [
+    "12",
+    "12b",
+    "12c",
+    "12d",
+    "D6",
+    "D7",
+    "R4",
+    "R5",
+    "R6",
+    "R7",
+    "R8",
+    "R8b",
+    "R9",
+    "R10",
+    "R10b",
+    "R11"
+  ]
+}

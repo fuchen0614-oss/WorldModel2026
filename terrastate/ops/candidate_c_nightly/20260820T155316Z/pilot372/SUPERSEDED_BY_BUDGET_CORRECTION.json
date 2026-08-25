@@ -1,0 +1,36 @@
+{
+  "schema": "candidate_c_supersession_marker_v1",
+  "recorded_at_utc": "2026-08-21T09:10:19.352514Z",
+  "status": "SUPERSEDED_BY_BUDGET_CORRECTION",
+  "superseded_subject": "372-step validation-capable pilot (pilot372)",
+  "ruling_by": "user",
+  "ruling": "预算修正后（8 epoch / 2,976 update -> 40 epoch / 14,880 update，warmup 100 -> 300），val_interval=372 与 total_steps=14880 不再矛盾：正式 run 在 step 372 会自然触发第一次 val_dev，pilot372 原本唯一要验证的『真实 8 卡 val forward』(P6) 在正式 run 第一个 epoch 末尾即可得到。故 372-step pilot 已无必要，取消，不执行。",
+  "trigger_evidence": {
+    "file": "train/train_terrastate_candidate_c.py",
+    "line": 582,
+    "condition": "step % val_interval == 0 or step == total_steps",
+    "under_corrected_budget": "val_interval=372, total_steps=14880 -> 372 % 372 == 0 -> 第一个 val_dev 在 step 372 触发",
+    "n_natural_val_points": 40
+  },
+  "preservation_rules": [
+    "pilot372/ 目录及其全部文件保留为历史记录，不得删除、改名或重写",
+    "candidate_c_pilot372_config_v1.yaml 作废但保留文件，不得删除",
+    "不得把 pilot372 伪装成已通过；它从未执行，verdict 为 NOT_RUN",
+    "本标记文件是新增文件，未修改上述任何既有文件的任何字节"
+  ],
+  "pilot372_execution_status": "NOT_RUN",
+  "still_valid_and_not_re_run": [
+    "第 3 次 8-rank 32-update smoke（已通过，工程门已关闭）",
+    "128-update pilot 的工程结论（已通过）"
+  ],
+  "preserved_artifacts_sha256": {
+    "pilot372_authorization.json": "648365c3b5805c6018c19e351103e5fa7d436be20b3a482ea59a4bfa65c0d036",
+    "pilot372_contract.json": "882cde68a49e164a395ec8c6a6643f204a163be96b5fe144a83c9f29784b8ecc",
+    "pilot372_pass_criteria.json": "1b5d057b7f6fdc4975171d578c355f39587b8f04fca694d3f1dd75150950f860",
+    "candidate_c_pilot372_config_v1.yaml": "af9b80d7416d08cb694ab4ff9a062c12f4c8cc4cb7908783353daab60cd01870"
+  },
+  "budget_correction_reference": {
+    "design_contract": "artifacts/protocols/candidate_c_v1/candidate_c_design_contract_v1.json",
+    "run_queue": "ops/candidate_c_nightly/20260820T155316Z/run_queue.json"
+  }
+}

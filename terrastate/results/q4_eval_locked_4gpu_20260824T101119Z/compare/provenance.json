@@ -1,0 +1,45 @@
+{
+  "utc": "2026-08-24T11:45:12Z",
+  "hostname": "csy-zg01-gnode68",
+  "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+  "repo_root": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate",
+  "argv": [
+    "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/eval/eval_terrastate_candidate_c_q4.py",
+    "compare",
+    "--candidate",
+    "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/results/q4_eval_locked_4gpu_20260824T101119Z/c1_score",
+    "--control",
+    "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/results/q4_eval_locked_4gpu_20260824T101119Z/c0r_score",
+    "--output",
+    "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/results/q4_eval_locked_4gpu_20260824T101119Z/compare",
+    "--allow-locked"
+  ],
+  "python": "3.11.15",
+  "python_executable": "/csy-opt/cog8/zjliu17/miniconda3/envs/WorldModel/bin/python",
+  "torch": "2.12.0+cu130",
+  "numpy": "2.4.6",
+  "cuda_available": false,
+  "cuda_visible_devices": "",
+  "git_head": "e42b0722cc83f279cc99d5d05144d5a47491d79e",
+  "git_dirty": true,
+  "source_sha256": {
+    "eval/eval_terrastate_candidate_c_q4.py": "eb591c5895c4b5c76b3d593ca98382901690afd7a2bac87a4abc7529d28492ae",
+    "models/terrastate_candidate_c.py": "6a53643245bde4daad7a19a208ff18f2f8b99ab9ae5e6238ec2a83eabde01807",
+    "models/terrastate_v2.py": "25251928a28320e8dcd8b8b07e870eabad34ae994ff9659d26cedf664bef52f1",
+    "models/plan_b_b4_exclusive.py": "20e3d9cdf5ceae883af7b601acad64a3f183742d876ddd48b9e8f9e3b3ed29ff",
+    "models/plan_b_b4.py": "83a3766d6c2e84ac4099f307c47147ff60521af1ae5784d1f1f15230011c23ff",
+    "train/terrastate_v2_common.py": "53695c9e5f8c96d4e65229553f9cb969095b1f92167a2da579642f86ace5f73f",
+    "data/greenearthnet_contextformer_dataset.py": "8c0f9961353d31a36b1810aebc42e51e8948b1102027879a39607737fd014a93"
+  },
+  "control_seed": 4242,
+  "bootstrap_B": 10000,
+  "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+  "gate_constants": {
+    "eps_r2": 0.02,
+    "eps_rmse": 0.05,
+    "composed_vs_direct_tol": 0.05,
+    "retention_min": 0.5
+  },
+  "eval_mode": "compare",
+  "q4_compare_sha256": "ca132c1b73a376005e1b7c27bfe357b053baa0abf5d66aa5d655b336564ab129"
+}

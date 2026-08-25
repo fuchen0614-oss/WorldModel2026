@@ -1,0 +1,30 @@
+[v3] attempt=20260820_100718 封账节点=csy-zg01-gnode68 GPU 执行节点=csy-zg01-gnode39
+[gate A] 作业清单、启动记录与 checkpoint 身份: 111/111 通过
+    [t] gate A: 3.3s
+[gate B] 四份 Q1/Q2 结果：状态、契约、绑定、数值有限性与 Q2 schema 完整性: 185/185 通过
+    [t] gate B: 0.0s
+[gate C] 两份 Q3 结果：证据角色、配对数、协议绑定、CI 完整性与 sidecar 身份: 180/180 通过
+    [t] gate C: 1.0s
+[gate D] 11,904 复现历史参考：57 个正式指标逐项比对: 119/119 通过
+    [t] gate D: 0.0s
+[gate E] 完整性：无 smoke/partial/中断混入、无幽灵结果、ground truth 归属、口径边界: 42/42 通过
+    [t] gate E: 2.9s
+[gate F] sanity anchor、M9 验收、参数审计与 evaluator 源码指纹交叉核对: 95/95 通过
+    [t] gate F: 1.3s
+    [t] build_timeline: 0.4s
+    [t] comparison+headline: 0.0s
+    [t] metric_inventory: 0.0s
+    [t] artifact_index: 1038.1s
+    [t] provenance: 0.0s
+    [t] launch_record+attempt_manifest: 0.0s
+    [t] acceptance_report: 0.0s
+[write] e0_comparison_11904_vs_14880_v3.json  240571 B  sha256=2e1529ca4e24b3ef…
+[write] e0_metric_inventory_v3.json  82211 B  sha256=e1b1c8c902d00426…
+[write] e0_artifact_index_v3.json  42046 B  sha256=59365d48c9c2be6c…
+[write] e0_provenance_v3.json  37491 B  sha256=719975c53699fa6a…
+[write] e0_launch_record_v3.json  8827 B  sha256=9e07243ed156c085…
+[write] attempt_manifest_v3.json  9675 B  sha256=41cee90e3d60dcd1…
+[write] e0_acceptance_report_v3.json  166619 B  sha256=f53232870def9ff2…
+[write] closeout_audit_v3.json  sha256=00337d15e846cfdf…
+
+[verdict] ACCEPTED  检查 732 项，失败 0 项；历史复现 57/57（逐位相同 57）

@@ -1,0 +1,161 @@
+{
+  "schema": "closeout_audit_v3",
+  "generated_at_utc": "2026-08-20T13:39:41.442334Z",
+  "generated_by": "verify_and_aggregate_retry_v3.py",
+  "verdict": "BLOCKED",
+  "n_checks": 706,
+  "failed_checks": [
+    {
+      "gate": "B",
+      "name": "split:gpu1_v14880_oodt_q1q2",
+      "ok": false,
+      "detail": "got='ood-t_chopped' want='oodt'",
+      "evidence": ""
+    },
+    {
+      "gate": "B",
+      "name": "split:gpu4_legacy11904_oodt_q1q2",
+      "ok": false,
+      "detail": "got='ood-t_chopped' want='oodt'",
+      "evidence": ""
+    },
+    {
+      "gate": "C",
+      "name": "q3_checkpoint_via_log:gpu2_v14880_oodt_q3",
+      "ok": false,
+      "detail": "运行日志 head 行含 checkpoint SHA：/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu2_v14880_oodt_q3.log",
+      "evidence": ""
+    },
+    {
+      "gate": "C",
+      "name": "stratum_accuracy_arm_count:gpu2_v14880_oodt_q3",
+      "ok": false,
+      "detail": "got=4 want=3",
+      "evidence": ""
+    },
+    {
+      "gate": "C",
+      "name": "q3_checkpoint_via_log:gpu5_legacy11904_oodt_q3",
+      "ok": false,
+      "detail": "运行日志 head 行含 checkpoint SHA：/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718/logs/gpu5_legacy11904_oodt_q3.log",
+      "evidence": ""
+    },
+    {
+      "gate": "C",
+      "name": "stratum_accuracy_arm_count:gpu5_legacy11904_oodt_q3",
+      "ok": false,
+      "detail": "got=4 want=3",
+      "evidence": ""
+    },
+    {
+      "gate": "E",
+      "name": "frozen_manifest_sha:val",
+      "ok": false,
+      "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/manifests/val_952.json",
+      "evidence": ""
+    },
+    {
+      "gate": "E",
+      "name": "frozen_manifest_sha:oodt",
+      "ok": false,
+      "detail": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/artifacts/manifests/oodt_1904.json",
+      "evidence": ""
+    }
+  ],
+  "n_failed": 8,
+  "gate_groups": {
+    "A": "作业清单、启动记录与 checkpoint 身份",
+    "B": "四份 Q1/Q2 结果契约与 schema 完整性",
+    "C": "两份 Q3 极端态审计与协议绑定",
+    "D": "11,904 复现历史参考 57 个正式指标",
+    "E": "完整性、ground truth 归属与口径边界",
+    "F": "sanity anchor 与训练侧记录交叉核对"
+  },
+  "closeout_environment": {
+    "now_utc": "2026-08-20T13:39:41.442334Z",
+    "closeout_hostname": "csy-zg01-gnode68",
+    "closeout_role": "CPU-only 封账与审计（不执行任何 GPU 计算）",
+    "gpu_exec_hostname": "csy-zg01-gnode39",
+    "gpu_exec_hostname_source": "attempt_manifest.json 的 hostname 字段（GPU 执行时写入）",
+    "cuda_visible_devices": "",
+    "python": "3.13.12",
+    "cwd": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/e0_q1q2q3_11904_vs_14880/20260820_100718",
+    "torch_imported": false,
+    "git_head": "<git error: fatal: not a git repository (or any parent up to mount point /)\nStopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FI>",
+    "git_branch": "<git error: fatal: not a git repository (or any parent up to mount point /)\nStopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FI>",
+    "git_worktree_dirty": false,
+    "git_dirty_entry_count": null,
+    "git_note": "工作树可能存在其他会话的并发修改；本脚本只读 git，不执行任何写操作"
+  },
+  "artifacts_written": {
+    "e0_comparison_11904_vs_14880_v3.json": {
+      "sha256": "1c61781d0efcdad8f3632332634e624482c206517b18c727fce81b3343157a49",
+      "bytes": 240571
+    },
+    "e0_metric_inventory_v3.json": {
+      "sha256": "a76052ab56fdb82b88fb308b261299f33ed4627757380067c42f13923f021328",
+      "bytes": 82211
+    },
+    "e0_artifact_index_v3.json": {
+      "sha256": "e61b71f1f23d963905852494af62876d2aaa7dcbe9a998225b458c20f97512b4",
+      "bytes": 40337
+    },
+    "e0_provenance_v3.json": {
+      "sha256": "738c4b3c013ae9c0a77fc5fdb42dbb5062cf90c5c900ff361ee7138fea70ca02",
+      "bytes": 35706
+    },
+    "e0_launch_record_v3.json": {
+      "sha256": "f15a5de857e4afe4dbad51f43453c2b50122f4817410b8fb79540e14d1563507",
+      "bytes": 8827
+    },
+    "attempt_manifest_v3.json": {
+      "sha256": "bae584a88096128faa8597ae521c2ca8117a8b664b8bf18013af27270d14fcfe",
+      "bytes": 9675
+    },
+    "e0_acceptance_report_v3.json": {
+      "sha256": "769908919155fd5468a04714d619fa35987f2a07947103d4cb85d3862e411b86",
+      "bytes": 163027
+    },
+    "verify_and_aggregate_retry_v3.py": {
+      "sha256": "1b353627e2d6ddec6fd964cda5e576620679859b34c4b5b7e6c134f20c42a93c",
+      "bytes": 105596
+    }
+  },
+  "evidence_preserved": {
+    "v1_v2_artifacts": "全部保留，未删除未覆盖；本轮仅新增 _v3 文件",
+    "invalid_partial_dirs": [
+      "gpu2_v14880_oodt_q1q2",
+      "gpu5_v14880_val_q1q2",
+      "gpu6_legacy11904_val_q1q2"
+    ],
+    "interrupted_attempt": "20260818_154859",
+    "raw_results": "六份一手结果只读校验，SHA-256 与清点值一致"
+  },
+  "corrected_defects": [
+    {
+      "defect": "A03 v2 的 Q2 对照表数字无来源",
+      "values": [
+        0.556762,
+        0.556617,
+        0.556546,
+        0.484868,
+        0.012454,
+        0.013196,
+        0.012587,
+        0.012732
+      ],
+      "evidence": "对六份一手结果全部浮点值做 |Δ|<5e-7 搜索，命中集合为空",
+      "resolution": "v3 一律从 raw JSON 重新推导 Q2 三臂与官方 Δ"
+    }
+  ],
+  "known_gaps_recorded_honestly": [
+    "e0_launch_record.gpu{2,4,5,6}.json 的 jobs 列表为空",
+    "Q3 结果 JSON 不记录 checkpoint SHA 与 evaluator commit（sidecar 绑定）",
+    "Q3 协议文件计数三个口径不同：磁盘 8 / MANIFEST 7 / 结果 JSON 绑定 5",
+    "单作业 wall-clock 时长不可由现有日志证明",
+    "边界 checkpoint 记录 stage=2，而其后第一次更新属 stage=3"
+  ],
+  "next_action": "FIX_FAILED_CHECKS",
+  "e0_closeout_v3": "BLOCKED",
+  "t0_status": "PROVISIONAL"
+}

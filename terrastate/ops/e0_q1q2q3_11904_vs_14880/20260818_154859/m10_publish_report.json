@@ -1,0 +1,42 @@
+{
+  "utc": "2026-08-18T07:50:09.236338+00:00",
+  "steps": [
+    {
+      "source": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/runs/resume11904_to14880/20260818_112933/checkpoint_last.pt"
+    },
+    {
+      "source_bytes": 44302057
+    },
+    {
+      "source_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f"
+    },
+    {
+      "m9_accepted": true
+    },
+    {
+      "m9_n_checks": 31
+    },
+    {
+      "object_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt"
+    },
+    {
+      "published_bytes_verified": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f"
+    },
+    {
+      "object_final_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f"
+    },
+    {
+      "object_mode": "0o444"
+    },
+    {
+      "source_still_present": true
+    }
+  ],
+  "object": {
+    "path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+    "relpath": "objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+    "sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+    "bytes": 44302057,
+    "mode": "0o444"
+  }
+}

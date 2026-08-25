@@ -1,0 +1,25 @@
+{
+  "all_match": true,
+  "train": {
+    "data_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+    "data_manifest_sha256_expected": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+    "first_relpath": "29SND/29SND_2017-06-10_2017-11-06_2105_2233_2873_3001_32_112_44_124.nc",
+    "last_relpath": "34VFQ/34VFQ_2018-06-11_2018-11-07_57_185_1465_1593_0_80_22_102.nc",
+    "match": true,
+    "n_cubes": 23816,
+    "n_cubes_expected": 23816,
+    "n_cubes_match": true,
+    "root": "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/train"
+  },
+  "val": {
+    "data_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+    "data_manifest_sha256_expected": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+    "first_relpath": "JAS20/minicube_0_29SND_39.29_-8.56.nc",
+    "last_relpath": "SON20/minicube_9_29TNE_40.49_-7.88.nc",
+    "match": true,
+    "n_cubes": 952,
+    "n_cubes_expected": 952,
+    "n_cubes_match": true,
+    "root": "/csy-mix02/cog8/zjliu17/Agent/TrainData/GreenEarthNet/val_chopped"
+  }
+}
