@@ -97,4 +97,5 @@ terrastate/eval/_backup/
 
 # 评测的逐 cube 打分明细（parquet，单次运行约 1GB）可由 pred/ 重算，不入库；
 # 结论性的 state_contract_exclusive.json 与 manifests 照常入库。
-terrastate/evaluations/*/*/*/score/
+terrastate/evaluations/**/score/
+terrastate/evaluations/**/*.parquet
