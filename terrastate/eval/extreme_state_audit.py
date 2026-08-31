@@ -69,7 +69,16 @@ def load_model(ckpt_path, device, arch_hint=None):
         raise ValueError(f"{ckpt_path} has no b4_state_dict")
     arch = (ck.get("contract_cfg", {}) or {}).get("arch") or ck.get("arch")
     cfg = ck.get("contract_cfg", {"state_dim": 256})
-    if arch in ("ObsWorldB4Exclusive", "TerraStateV2"):
+    if arch == "TerraStateCandidateC":
+        # Candidate C's shared segment transition would be silently dropped by the exclusive
+        # shell, so build the real class and demand an exact key match.
+        from models.terrastate_candidate_c import TerraStateCandidateC
+        model = TerraStateCandidateC(hp, contract_cfg=cfg)
+        miss, unexp = model.load_state_dict(ck["b4_state_dict"], strict=True)
+        if miss or unexp:
+            raise ValueError(f"{ckpt_path}: Candidate C load NOT clean: "
+                             f"missing={list(miss)} unexpected={list(unexp)}")
+    elif arch in ("ObsWorldB4Exclusive", "TerraStateV2"):
         model = ObsWorldB4Exclusive(hp, contract_cfg=cfg)
         miss, unexp = load_exclusive_from_b4(model, ck["b4_state_dict"])
         if miss or unexp:

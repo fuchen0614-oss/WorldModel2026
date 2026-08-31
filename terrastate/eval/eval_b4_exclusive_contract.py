@@ -44,11 +44,23 @@ def load_exclusive(ckpt_path, device):
         raise ValueError(f"{ckpt_path} has no b4_state_dict")
     arch = (ck.get("contract_cfg", {}) or {}).get("arch") or ck.get("arch")
     hp = contextformer6m_hparams(pvt_pretrained=False)
-    model = ObsWorldB4Exclusive(hp, contract_cfg=ck.get("contract_cfg", {"state_dim": 256}))
-    if arch == "ObsWorldB4Exclusive":
-        model.load_state_dict(ck["b4_state_dict"], strict=False)
-    else:                                                              # allow evaluating a Phase-I warm-start too
-        load_exclusive_from_b4(model, ck["b4_state_dict"])
+    cfg = ck.get("contract_cfg", {"state_dim": 256})
+    if arch == "TerraStateCandidateC":
+        # Candidate C adds the shared segment transition F_theta on top of V2. Loading it into a
+        # plain exclusive shell would silently DROP those params and score a different model, so
+        # build the real class and demand an exact key match.
+        from models.terrastate_candidate_c import TerraStateCandidateC
+        model = TerraStateCandidateC(hp, contract_cfg=cfg)
+        miss, unexp = model.load_state_dict(ck["b4_state_dict"], strict=True)
+        if miss or unexp:
+            raise ValueError(f"{ckpt_path}: Candidate C load NOT clean: "
+                             f"missing={list(miss)} unexpected={list(unexp)}")
+    else:
+        model = ObsWorldB4Exclusive(hp, contract_cfg=cfg)
+        if arch == "ObsWorldB4Exclusive":
+            model.load_state_dict(ck["b4_state_dict"], strict=False)
+        else:                                                          # allow evaluating a Phase-I warm-start too
+            load_exclusive_from_b4(model, ck["b4_state_dict"])
     print(f"[excl] loaded {ckpt_path} arch={arch} alpha={float(model.alpha):.3f} route={model.ROUTE_VERSION}")
     return model.to(device).eval()
 
