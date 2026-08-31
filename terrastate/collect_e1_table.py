@@ -134,8 +134,11 @@ def main():
     lines += ["", "---", "", "## 进度", "",
               f"- 基线：**{done}/{done+pend}** 个配置已出分",
               f"- TerraState-C1：**{ts_done}/4** 个 split 已出分",
-              "- 非 ML 基线（Persistence / Climatology / Previous year）：**未接入**，"
-              "官方实现在 `third_party/greenearthnet/model_pixelwise/`，待办",
+              "- 非 ML 基线：**Persistence 已跑**（官方实现 + NumPy 2 兼容 wrapper）；"
+              "**Climatology / Previous year 阻塞** —— 官方脚本要一个名为 `iidx` 的参考轨道来取"
+              "历史 NDVI，该前缀在官方 S3 上不存在（顶层只有 iid / iid_chopped / ood-t / ood-s / "
+              "ood-st / extreme / seasonal / train / val_chopped）。疑似是未切片 `iid` 轨道的别名，"
+              "但猜错会静默产出错误基线，故标 n.a. 待人工确认。",
               "- Earthformer：**权重不在官方发布包内**，标 n.a.（论文中最弱的学习型方法）",
               ""]
     if pending:
