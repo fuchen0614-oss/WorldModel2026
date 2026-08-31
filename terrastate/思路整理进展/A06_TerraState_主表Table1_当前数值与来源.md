@@ -121,8 +121,11 @@ pooled RMSE 则是混合的（shrub +0.0018 拖累），这正是 §2.3 那条�
 
 ## 5. 待办
 
-- [ ] **E1：基线同协议重跑**（§2.1）。缺 `iid_chopped` / `ood-s_chopped` / `ood-st_chopped`
-      三个 split，且需 Contextformer 等的可复现实现。这是 Table 1 站得住的前提。
+- [ ] **E1：基线同协议重跑**（§2.1）。这是 Table 1 站得住的前提。
+      **家底已盘清，见 [A07](./A07_E1基线家底_权重代码数据在哪怎么取.md)**：四个基线的官方权重
+      （3 seeds 齐）、官方配置、非 ML 基线实现、四个 chopped split **全部就绪**；
+      唯一待做的是把 ConvLSTM / PredRNN / SimVP 三个 `nn.Module` 移植到现代 torch
+      （Contextformer 已有成功模板）。纯推理，不需要 GPU。
 - [ ] **四 split 覆盖**。当前只有 OOD-t 一列；A01 §3.2 要求 IID / OOD-t / OOD-s / OOD-st。
 - [ ] **多 seed**（§2.2）。至少 C1 补 1–2 个种子。
 - [ ] **`outperform climatology` 一列缺失**。源表有此列，我们的评测器不产出该指标；
