@@ -1276,11 +1276,25 @@ def _align(series_a, ids_a, series_b, ids_b, key):
 
 
 def g_abs_block(W, sa, sb, elig):
-    """G_abs：LCB(ΔR²) >= -eps_R2 且 UCB(RMSE_a/RMSE_b) <= 1+eps_RMSE。"""
+    """G_abs：LCB(ΔR²) >= -eps_R2 且 UCB(RMSE_a/RMSE_b) <= 1+eps_RMSE。
+
+    【R² 腿口径更正 2026-08-31，见 A04 §19】
+    原实现对**逐 cube** R² 取平均。逐 cube R²=1−SSE/SST 的分母是该 cube 的待解释方差，
+    在 SST→0 时无下界；对它取算术平均在 SST 高度异质的数据上不是有效聚合。在
+    `val_locked` 上它产出了 ΔR²=−35.489、CI 下界 −116.744 这类非物理取值，而同一道门的
+    RMSE 腿（本来就 pooled）同期 19/19 通过——一道门两条腿用两种聚合，本身就是规格缺陷。
+
+    现改为 pooled R²（`wpooled` 的第二个返回值，此前被算出后丢弃），与 RMSE 腿口径一致。
+    逐 cube 版仍以 `legacy_percube_*` 全量记录，供复现历史结果与敏感性对照；它不再参与判定。
+    """
     _ma, ra, _s1, _e1 = per_cube_metrics(sa)
     _mb, rb, _s2, _e2 = per_cube_metrics(sb)
-    d_r2 = wmean(W, ra - rb, elig)
+    _msea, r2a = wpooled(W, sa, elig)
+    _mseb, r2b = wpooled(W, sb, elig)
+    d_r2 = r2a - r2b                                  # pooled，与 RMSE 腿同口径
     lo_r2, hi_r2 = ci_from_draws(d_r2)
+    d_r2_legacy = wmean(W, ra - rb, elig)             # 逐 cube，仅记录
+    lo_r2_legacy, hi_r2_legacy = ci_from_draws(d_r2_legacy)
     pa, _ = wpooled(W, sa, elig)
     pb, _ = wpooled(W, sb, elig)
     with np.errstate(divide="ignore", invalid="ignore"):
@@ -1290,12 +1304,17 @@ def g_abs_block(W, sa, sb, elig):
     pmse_a = float((sa["sse"] * m).sum() / max((sa["n"] * m).sum(), 1e-12))
     pmse_b = float((sb["sse"] * m).sum() / max((sb["n"] * m).sum(), 1e-12))
     point_ratio = float(np.sqrt(pmse_a) / max(np.sqrt(pmse_b), 1e-300))
-    d_point = float(np.nanmean(np.where(elig, ra - rb, np.nan)))
+    d_point = float(np.nanmedian(d_r2))
     return {
         "n_paired_cubes": int(elig.sum()),
+        "r2_aggregation": "pooled",
         "delta_r2_mean": d_point, "delta_r2_ci95": [lo_r2, hi_r2],
         "delta_r2_lcb": lo_r2, "eps_r2": EPS_R2,
         "lcb_ge_neg_eps": bool(lo_r2 >= -EPS_R2),
+        "legacy_percube_delta_r2_mean": float(np.nanmean(np.where(elig, ra - rb, np.nan))),
+        "legacy_percube_delta_r2_ci95": [lo_r2_legacy, hi_r2_legacy],
+        "legacy_percube_lcb_ge_neg_eps": bool(lo_r2_legacy >= -EPS_R2),
+        "legacy_percube_note": "mis-specified aggregation, recorded only; see A04 §19",
         "rmse_ratio_point": point_ratio, "rmse_ratio_ci95": [lo_rt, hi_rt],
         "rmse_ratio_ucb": hi_rt, "eps_rmse": EPS_RMSE,
         "ucb_le_1_plus_eps": bool(hi_rt <= 1.0 + EPS_RMSE),

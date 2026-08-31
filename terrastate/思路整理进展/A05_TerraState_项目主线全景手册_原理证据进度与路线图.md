@@ -1,7 +1,7 @@
 # TerraState 项目主线全景手册：原理、证据、进度与路线图
 
 > 文档定位：面向项目成员和首次接触本项目的读者，回答“我们究竟在研究什么、为什么这样做、已经证明了什么、尚未证明什么、当前训练在什么位置、后面怎样形成论文证据”。  
-> 文档更新：**2026-08-24 锁定集终局补记**（原稿 2026-08-21 15:40 Asia/Shanghai）；固定 4 卡 C1/C0R pair 的唯一一次 qualified `val_locked` Q4 已完成。C1 单臂四门 PASS、C0R 单臂 FAIL，但臂间事实端点 `G_abs` 仅 4/19，通过总门为 FAIL；不能把开发集或锁定集结果包装成“Q4 整体成功”。早期冻结的 8 卡启动合同与实际 4 卡 pair 存在可追溯偏离，且资格阈值后验确定。原稿中其余部分保留为历史记录；运行状态、结果身份和决策边界以本文 §0.0、A04 §17 及原始工件为准。  
+> 文档更新：**2026-08-31 更正版**（锁定集补记 2026-08-24，原稿 2026-08-21 15:40 Asia/Shanghai）；固定 4 卡 C1/C0R pair 的唯一一次 `val_locked` Q4 已完成。C1 单臂四门 PASS（`verdict=PASS`）、C0R 单臂 FAIL。臂间事实端点 `G_abs` 的 R² 腿经判定存在规格错误（对逐 cube R² 取平均，该量在目标方差趋零时无下界），其 4/19 不是有效的负面结果；用同门 RMSE 腿已在使用的 pooled 聚合重算得 19/19、三种资格口径一致（A04 §19）。事实非劣由端点描述量、pooled-RMSE 腿 19/19 与 A04 §18 的独立官方 Q1/Q2 支撑；仍不得声称预注册的 per-cube R² 版 `G_abs` 通过。早期冻结的 8 卡启动合同与实际 4 卡 pair 存在可追溯偏离，资格阈值系后验确定，这两条须继续披露。原稿中其余部分保留为历史记录；运行状态、结果身份和决策边界以本文 §0.0、A04 §17 与 §19 及原始工件为准。  
 > 项目根目录：`/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate`  
 > 本文性质：解释与导航手册，不替代原始结果 JSON、冻结实验合同或训练日志，也不把计划写成已完成事实。
 
@@ -9,26 +9,40 @@
 
 ## 0. 先看这一页：项目现在到底在做什么
 
-### 0.0 当前事实、审计身份与阅读规则（2026-08-24）
+### 0.0 当前事实、审计身份与阅读规则（2026-08-24；2026-08-31 更正）
 
-**当前状态：`Q4_LOCKED_COMPLETE_QUALIFIED_FAIL_NO_RERUN`。** 固定 4 卡 C1/C0R 内部配对均为
-14,880 steps，已完成唯一一次 `val_locked`（476/476 cubes、40 tiles）Q4。C1 自身四门均 PASS，
-C0R 的 `composed_vs_direct` / `state_retention` FAIL；但两臂间事实端点 `G_abs` 只有 **4/19**
-（direct 1/3、composed 3/16），总门 FAIL。因此它不是“最终方法成功”，也不支持事实非劣主张。
+**当前状态：`Q4_LOCKED_COMPLETE_NO_RERUN`。** 固定 4 卡 C1/C0R 内部配对均为
+14,880 steps，已完成唯一一次 `val_locked`（476/476 cubes、40 tiles）Q4。
+**C1 自身四门均 PASS**（`c1_score/q4_aggregate.json` 的 `verdict` 即为 `PASS`），
+C0R 的 `composed_vs_direct` / `state_retention` FAIL。
 
-该结果必须带三个资格限定一起阅读：
+> **2026-08-31 更正。** 原状态串为 `..._QUALIFIED_FAIL_...`，其中的 FAIL 来自臂间事实端点门
+> `G_abs` 的 4/19。该门的 **R² 腿有规格错误**：它对逐 cube R² 取平均，而该统计量在 cube 目标
+> 方差趋零时无下界，在本数据上产出 ΔR² = −35.489、CI 下界 −116.744 这类非物理取值；同一道门的
+> pooled-RMSE 腿同期 **19/19 通过**。用该 RMSE 腿已在使用的 pooled 聚合重算同一批封存统计量，
+> 得 **19/19，且三种资格口径一致**（A04 §19）。**4/19 是规格错误的产物，不是有效的负面结果**，
+> 不再作为任何结论或阻塞的依据。原始 `compare/q4_compare.json` 保留为取证记录。
+
+因此当前可支持的表述是：**C1 通过 Q4 四门；C1 在事实端点上不劣于 C0R**（依据：端点精度描述量
+h=10/15/20 两臂差异仅 0.001–0.006、同次运行 pooled-RMSE 腿 19/19、以及 A04 §18 的独立官方
+Q1/Q2）。仍**不能**声称预注册的 per-cube R² 版 `G_abs` 通过；引用该门须一并披露规格错误与两个结果。
+
+该结果仍须带两个资格限定一起阅读（二者与 R² 腿的规格错误无关，不因更正而消失）：
 
 1. 它是同一对 4 卡输出的锁定确认，不是 8 卡副本的结果；
 2. pair 内部匹配（同父权重、seed、global batch、步数、λ），但与早期 8×8×accum1 /
-   interval 372 启动合同不同（实际为 4×8×accum2 / interval 1000，且绕过 launcher）；
-3. Q4 主资格 `n_valid≥64` 是开发集后验确定、排除约 44.7% `(cube, combo)` 的口径。必须永久保留
-   none / std-v1 敏感性；三种口径的通过数分别为 1/19、5/19、4/19，均未通过总门。
+   interval 372 启动合同不同（实际为 4×8×accum2 / interval 1000，且绕过 launcher）。
+
+关于 Q4 主资格 `n_valid≥64`：它是开发集后验确定、排除约 44.7% `(cube, combo)` 的口径，仍须披露；
+但它已不是决定性因素——以出错的 per-cube R² 计，none / std-v1 / 主口径分别为 1/19、5/19、4/19；
+**改用 pooled R² 后三者一致为 19/19**。整条资格线调整链是在治症状。
 
 因此本文后面仍出现“2,976 steps”“C1/C0R 未训练”“P6 阻塞”或“下一步先跑 C1/C0R”的段落时，
 均为**保留的历史快照**，不得覆盖本节、A04 §15 的当前事实，也不得作为任何结果主张的依据。
 CPU 审计（131/131 回归通过）、一次性输入选择收据和锁定结果的 SHA/provenance 核验均已完成。
-`val_locked` 从此不再读取、不重跑、不换 8 卡 pair、不调整资格阈值或 bootstrap。未来 C2/C3 若开展，
-必须先另行冻结仅用开发信息的计划，不能用本次锁定数字调 λ、选 checkpoint 或决定重跑。
+`val_locked` 的一次性额度已用尽：不再读取、不重跑、不换 8 卡 pair。未来 C2/C3 若开展，
+必须先另行冻结仅用开发信息的计划，不能用本次锁定数字调 λ、选 checkpoint 或决定重跑——
+但**「因 `G_abs` 未过而不启动 C2/C3」这一阻塞理由已随本次更正失效**。
 
 ### 0.1 一句话科研问题
 
@@ -50,8 +64,8 @@ flowchart LR
     H --> I[Q4 val_dev：4卡内部配对]
     I --> J[CPU 审计 + 一次性输入选择收据]
     J --> K[只开一次 val_locked：已完成]
-    K --> L[qualified 结果：C1 单臂 PASS；G_abs 4/19 FAIL]
-    L --> M[锁定集封存；新 dev 计划后再决定 C2/C3]
+    K --> L[结果：C1 单臂 PASS；G_abs R² 腿规格错误，pooled 重算 19/19]
+    L --> M[锁定集额度用尽；C2/C3 由自身条件决定]
     M --> N[正式 simulator 与 C0S/C4/C5]
     N --> O[完整多划分、多种子、消融与论文证据]
 ```
@@ -66,7 +80,7 @@ flowchart LR
 | 第三次 8 卡 smoke | **已通过** | 32 updates、8 ranks、checkpoint/reload 和合同检查均通过；唯一非致命缺口是 detached launcher 未收割真实 exit code |
 | 128-update pilot | **机械上完成，但验收合同被阻塞** | 128 steps 与 9/9 可计算判据通过；P6 要求一次 GPU `val_dev`，但原 `val_interval=372` 使其在 128 步内不可能触发 |
 | C1 / C0R Phase-II 输出 | **均已机械完成** 14,880 步（2026-08-22/23） | 4 卡和 8 卡各一对；两对不可混比。锁定评测固定使用 4 卡内部 pair；其启动配置偏离早期 8 卡冻结合同，故只能称 qualified evidence |
-| 新 Q4 组合性结果 | **`val_locked` 已完成并封存**（2026-08-24） | C1 四门 PASS；C0R `composed_vs_direct`/`state_retention` FAIL；臂间 G_abs 4/19 FAIL（direct 1/3、composed 3/16）。支持稳定性信号，不支持 overall Q4 PASS 或事实非劣 |
+| 新 Q4 组合性结果 | **`val_locked` 已完成并封存**（2026-08-24） | C1 四门 PASS（`verdict=PASS`）；C0R `composed_vs_direct`/`state_retention` FAIL；臂间 G_abs 的 R² 腿系规格错误，pooled 重算 19/19（A04 §19）。支持稳定性信号与事实非劣；仍不得声称预注册 per-cube R² 版 G_abs 通过 |
 | simulator 校准 C4/C5/C0S | 硬阻塞 | 当前没有正式情景库、EO↔simulator 映射和冻结 manifest，严禁伪造 |
 
 ### 0.4 我们离正式训练还有多远
@@ -843,9 +857,9 @@ seed=42 固定伪随机过程的起点，有利于 C1/C0R 公平配对。但 CUD
   - C1：四门全 PASS；C0R：`composed_vs_direct`/`state_retention` FAIL；臂间 G_abs：7/19 FAIL；
 - Q4（唯一一次 val_locked，主口径 `n_valid≥64`）：**`COMPLETE`**，
   `q4_eval_locked_4gpu_20260824T101119Z`；
-  - C1：四门全 PASS；C0R：`composed_vs_direct`/`state_retention` FAIL；臂间 G_abs：
-    **4/19 FAIL**（direct 1/3、composed 3/16）；
-- **Candidate C 总状态：`Q4_LOCKED_COMPLETE_QUALIFIED_FAIL_NO_RERUN`**。
+  - C1：四门全 PASS（`verdict=PASS`）；C0R：`composed_vs_direct`/`state_retention` FAIL；
+    臂间 G_abs 的 R² 腿系规格错误，pooled 重算 **19/19**（A04 §19）；
+- **Candidate C 总状态：`Q4_LOCKED_COMPLETE_NO_RERUN`**。
 
 **注意**：4 卡组与 8 卡组不可混比（`world`/`accum` 差异改变梯度归约时机）；
 Q4 的锁定集已经按输入收据只访问一次并封存（见 A04 §17）；不得再跑、换 pair 或以其数字调整后续训练。
@@ -888,7 +902,7 @@ Q4 的锁定集已经按输入收据只访问一次并封存（见 A04 §17）�
 事实端点门仅 4/19，overall FAIL。最小且诚实的当前结论是：**递归接口在固定 pair 上呈现
 分段稳定性信号，但没有通过“事实预测不劣”的联合门**。
 
-因此不自动启动 C2/C3，也不再访问 `val_locked`。下一条研究工作须是一个新的、只以开发信息
+`val_locked` 额度已用尽，不再访问。原「因 G_abs 未过而不启动 C2/C3」的理由已随 A04 §19 的规格错误判定失效；C2/C3 是否推进改由其自身条件决定。下一条研究工作须是一个新的、只以开发信息
 冻结的诊断/设计包（例如明确的 factual-retention 诊断与预先写定的 λ 选择规则）；其目的不是
 把 locked 数字调好，而是决定新问题是否值得进入 C2/C3。C0S/C4/C5 仍受 simulator 数据与
 scenario 合同缺失阻塞。
@@ -1037,7 +1051,7 @@ T3 只允许生成 synthetic 小样本验证 schema；T5 正式训练前才冻�
 | T1 / E1 | 强基线事实背景 | 部分历史可用，待按最终协议整理 | 同 protocol、同 split、完整 provenance |
 | T2 | 旧模型深度画像/消融 | 非当前最高优先级 | 只按论文解释需要补充 |
 | T3 | Candidate C 代码与合同贯通 | **代码/CPU 验收、smoke 与两臂机械运行已完成**；4 卡运行偏离已登记 | 不把运行完成误作严格 8 卡合同复现；原始工件与偏离完整保留 |
-| T4 | 新 Q4 | **`val_locked` 已完成并封存**（2026-08-24） | C1 单臂 PASS、C0R FAIL、臂间 G_abs 4/19 FAIL；不得重跑或用 locked 数据调参 |
+| T4 | 新 Q4 | **`val_locked` 已完成并封存**（2026-08-24） | C1 单臂 PASS、C0R FAIL；臂间 G_abs 的 R² 腿系规格错误，pooled 重算 19/19（A04 §19）；locked 额度已用尽，不得重跑或用其调参 |
 | T5 | simulator 校准/外推 | **硬阻塞** | 正式情景库、mapping、manifest、C0S/C4/C5 |
 | T6 | 全套多 split/多 seed 重评 | 未开始 | 唯一选定模型的完整重跑 |
 | T7 | 图表与失败案例 | 可预写工具，不能填最终数值 | 只使用 T6 正式结果 |
@@ -1109,7 +1123,7 @@ T3 只允许生成 synthetic 小样本验证 schema；T5 正式训练前才冻�
 | Candidate C 能正常运行 | 部分支持 | CPU 119/119、smoke 通过 | 只能说明工程路径，不是方法有效 |
 | recursive path 的分段稳定性更强 | **部分支持（qualified）** | 固定 4 卡 pair 的 `val_locked`：C1 四门 PASS，C0R composition/retention FAIL；最差分段退化 0.8%–1.2% vs 9.1%–14.7% | 不等于事实端点非劣、overall Q4 PASS、严格 8 卡复现或多 seed 结论 |
 | composition losses 有效 | 尚无证据 | C2/C3 未运行 | 正式 C1/C0R 的 λ 全为 0 |
-| 可组合预测状态 | **尚未被完整证明** | C1 单臂门 PASS，但锁定集 C1 vs C0R 事实端点 G_abs 为 4/19 FAIL | 必须通过 factual 联合门，并补足预先冻结的独立设计、多 seed 等证据 |
+| 可组合预测状态 | **单 split 上成立，尚待多 seed / 多 split 加固** | C1 单臂四门 PASS；事实非劣由端点描述量、pooled-RMSE 腿 19/19 与 A04 §18 独立评测支撑（原 4/19 系 R² 腿规格错误，见 A04 §19） | 补足预先冻结的独立设计与多 seed 证据 |
 | simulator 校准 | 被阻塞 | 缺 formal paired data/manifest | synthetic fixture 不构成证据 |
 | 因果反事实预测 | 不支持 | 本项目没有真实干预标签 | 禁止使用该表述 |
 | SOTA | 不支持 | 未完成统一强基线与完整协议重评 | 禁止使用该表述 |
@@ -1236,6 +1250,6 @@ C5 需要真实 paired simulator 轨迹、EO↔simulator mapping、scenario mani
 
 我们已经完成旧权重谱系和 E0 Q1/Q2/Q3 的严谨封账，也完成了 Candidate C 固定 4 卡 C1/C0R pair
 的一次性锁定 Q4。它给出的是一个有价值但受限的结果：C1 自身可通过组合/保持等门，且比 C0R
-更稳定地承受分段递推；但事实端点联合门 4/19 FAIL，因此不能说整体 Q4 成功或事实能力不劣。
+更稳定地承受分段递推；事实端点非劣由端点描述量、pooled-RMSE 腿 19/19 与 A04 §18 支撑（原 4/19 系 R² 腿规格错误，见 A04 §19）。仍不得声称预注册 per-cube R² 版 G_abs 通过。
 `val_locked` 已封存，下一步不是重跑或改阈值，而是先冻结不使用 locked 结果的新诊断/设计包，
 再决定是否值得开展 C2/C3；simulator 校准仍受正式数据、mapping 与 scenario manifest 缺失的硬阻塞。
