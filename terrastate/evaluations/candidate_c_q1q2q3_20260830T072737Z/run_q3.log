@@ -1,0 +1,6 @@
+===== Q3 start 04:04:51Z =====
+[audit] exclusive: arch=exclusive weather_in_base=False n_extreme=84 n_control_unique=45 n_pairs=84 role=final
+[audit] exclusive: Q3 endpoint(donor) geo-cluster CI=[0.000761,0.003452] sig>0=True | uf_differs_all=True
+[audit] exclusive: Q3 endpoint=PASS enhancement=FAIL raw=Q3_RESPONSE_FIDELITY_ONLY -> overall=Q3_RESPONSE_FIDELITY_ONLY
+[audit] wrote evaluations/candidate_c_q1q2q3_20260830T072737Z/q3/extreme_state_audit.json
+rc=0  done 04:18:29Z

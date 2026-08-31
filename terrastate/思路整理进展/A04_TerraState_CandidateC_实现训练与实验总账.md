@@ -1114,3 +1114,89 @@ pooled     direct 3/3    composed 16/16   总门 = PASS
 - 产物：`results/q4_gabs_r2_diagnostic/gabs_r2_diagnostic.json`，
   首字段即 `IS_DIAGNOSTIC_NOT_A_VERDICT: true`。
 - 另需记录：C0R 未纳入论文，故 G_abs 作为跨模型内部诊断，不构成论文主张的一部分（§18.6）。
+
+---
+
+## 20. C1 的官方 Q3：天气响应保真（2026-08-31）
+
+至此 C1 的 Q1/Q2/Q3/Q4 全部在官方协议上完成，不再有任何一项沿用 TerraState-V2 的数字。
+
+### 20.1 执行身份
+
+| 项 | 值 |
+|---|---|
+| 权重 | `run_c1_20260822T131006Z/checkpoint_main.pt`，`arch=TerraStateCandidateC`，`route=candidate_c_v1` |
+| 加载核验 | 实际类 `TerraStateCandidateC`（MRO：`TerraStateCandidateC ← TerraStateV2 ← ObsWorldB4Exclusive ← ObsWorldB4`）。日志中的 `arch=exclusive` 是 `audit_adapters.arch_of()` 在标注**推理路由**（有 `alpha` buffer、无 `gate` 参数），不是类名 |
+| 冻结协议 | `artifacts/protocols/extreme_audit_oodt_v1`，四个 SHA 与 V2 冻结证据逐一吻合：hotdry `f8db1ccb…`、matched_normal `84a09421…`、protocol `570a0c36…`、thresholds `1c20cd71…` |
+| 证据身份 | `--evidence-role final`；`--dump-per-cube` **已开启**（V2 那次因未开启而无 per-cube 路径，无法作空间图） |
+| 样本 | `n_pairs=84`、`n_control_unique=45`、`n_geo_clusters=31`，与 V2 完全相同的 84 对 |
+| 不变量 | `uf_differs_all_pairs=True`（donor 确实改变了 full24 未来天气）、`weather_in_base=False`（T-only） |
+| 执行资源 | CPU-only：`CUDA_VISIBLE_DEVICES=""`、`nice -n 10`、OMP/MKL 各 8 线程；未占用 GPU。耗时 14 分钟 |
+| 输出 | `evaluations/candidate_c_q1q2q3_20260830T072737Z/q3/` |
+
+### 20.2 endpoint fidelity（主判据）
+
+| arm | ΔLoss | paired 95% CI | geo-cluster 95% CI | reused-control 95% CI |
+|---|---|---|---|---|
+| actual vs **donor**（季节/地理匹配的错误天气） | **+0.002053** | [+0.000793, +0.003352] | [+0.000761, +0.003452] | [+0.000715, +0.003361] |
+| actual vs **mean**（气候均值天气） | **+0.010140** | [+0.006782, +0.013770] | [+0.004839, +0.015558] | [+0.004760, +0.015883] |
+
+**三种 bootstrap 口径全部显著大于 0 → `endpoint_fidelity_status = PASS`。**
+
+### 20.3 极端分层的预测成绩
+
+| 天气输入 | R² | RMSE |
+|---|---|---|
+| actual | **0.634493** | **0.147289** |
+| donor | 0.588372 | 0.156135 |
+| mean | 0.557833 | 0.192398 |
+
+顺序 actual > donor > mean 正确。
+
+### 20.4 hot-dry 特异增强：FAIL（与 V2 同）
+
+预注册的增强判据是 `dloss_donor` 的 hot-dry × matched-normal 交互：
+
+| 统计量 | 值 | geo-cluster 95% CI | 显著 |
+|---|---|---|---|
+| `dloss_donor` 交互 | −0.000302 | [−0.002841, +0.002582] | **否** |
+
+→ `hotdry_enhancement_status = FAIL`，`overall_status = Q3_RESPONSE_FIDELITY_ONLY`。
+
+> **一个必须小心处理的观察。** 若干**描述性**响应量的交互项确实显著偏向 hot-dry：
+> `contrib_state` +0.009349 CI [+0.001416, +0.017004] 显著；`state_move` +0.006534
+> CI [+0.001248, +0.011118] 显著；分层内 closure 也呈 hot-dry +0.0435 对 matched-normal −0.0037。
+> 这只说明**状态在热旱下动得更多、贡献更大**，不说明它动得**更对**——预注册的正确性判据是
+> `dloss_donor`，它不显著。A01 §12.1 将「hot-dry 特异增强」列为禁止主张，本节不越界。
+
+### 20.5 与 V2 冻结证据的同协议对照
+
+| 量 | TerraState-V2 | **C1** |
+|---|---|---|
+| actual vs donor ΔLoss | +0.00257 [+0.00112, +0.00399] | +0.002053 [+0.000761, +0.003452] |
+| actual vs mean ΔLoss | +0.01126 [+0.00547, +0.01708] | +0.010140 [+0.004839, +0.015558] |
+| 极端分层 actual R² | 0.6254 | 0.634493 |
+| 极端分层 donor R² | 0.5893 | 0.588372 |
+| 极端分层 mean R² | 0.5430 | 0.557833 |
+| endpoint fidelity | PASS | **PASS** |
+| hot-dry enhancement | FAIL | **FAIL** |
+| overall | `Q3_RESPONSE_FIDELITY_ONLY` | **`Q3_RESPONSE_FIDELITY_ONLY`** |
+
+**同一判定类别，量级相近。** 所有差异均无跨模型配对检验，只能写「同类结论」，
+不得写「C1 的响应保真优于 V2」。
+
+### 20.6 C1 四问汇总（截至 2026-08-31）
+
+| | 结论 | 依据 |
+|---|---|---|
+| **Q1** 事实预测 | OOD-t R² 0.572604 / RMSE 0.150941 **过内部线**；val R² 0.498127 短 0.0019（与 V2 同一模式） | §18 |
+| **Q2** 状态承载 | **LOAD_BEARING**，val closure +0.021321、OOD-t +0.017077，CI 均排除 0 | §18 |
+| **Q3** 天气响应 | **endpoint fidelity PASS**；hot-dry 增强 FAIL → `RESPONSE_FIDELITY_ONLY` | 本节 |
+| **Q4** 组合一致性 | C1 单臂四门 **PASS**（`verdict=PASS`）；事实端点不劣于 C0R | §17、§19 |
+
+**可支持的整体表述：** TerraState-C1 形成了一个在验证集与时间-OOD 下都显著服务最终预测的内部状态，
+该状态能被共享分段转移在未见时间分段上一致推进而不坍塌，并且更忠实地使用真实未来天气——
+真实天气显著优于季节/地理匹配的错误 donor 天气与气候均值天气。
+
+**仍不可支持：** SOTA；hot-dry 特异增强；因果反事实；预注册的 per-cube R² 版 `G_abs` 通过；
+C0S/C4/C5 的任何结论。
