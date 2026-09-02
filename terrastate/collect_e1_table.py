@@ -94,6 +94,10 @@ def main():
                 lines.append(f"| **{label}** | **3-seed 均值** | " +
                              " | ".join(f"**{cell(mean[k])}**" for k in METRICS) +
                              f" | {params} |")
+        # non-ML: no seeds, scored from the upstream implementation's own predictions
+        p = baseline("persistence", split)
+        lines.append("| Persistence | 确定性 | " +
+                     " | ".join(cell(p[k] if p else None) for k in METRICS) + " | 0 |")
         ts = terrastate(split)
         lines.append("| **TerraState-C1** | 1 | " +
                      " | ".join(f"**{cell(ts[k] if ts else None)}**" for k in METRICS) +
@@ -131,11 +135,13 @@ def main():
                     pend += 1
                     pending.append(f"{fam}_seed{s}__{split}")
     ts_done = sum(1 for sp in SPLITS if terrastate(sp))
+    pers_done = sum(1 for sp in SPLITS if baseline("persistence", sp))
     lines += ["", "---", "", "## 进度", "",
-              f"- 基线：**{done}/{done+pend}** 个配置已出分",
+              f"- 学习型基线：**{done}/{done+pend}** 个配置已出分",
+              f"- Persistence：**{pers_done}/4** 个 split 已出分"
+              "（官方实现的预测，用我们的 scorer 重新打分，与其余行同口径）",
               f"- TerraState-C1：**{ts_done}/4** 个 split 已出分",
-              "- 非 ML 基线：**Persistence 已跑**（官方实现 + NumPy 2 兼容 wrapper）；"
-              "**Climatology / Previous year 阻塞** —— 官方脚本要一个名为 `iidx` 的参考轨道来取"
+              "- **Climatology / Previous year 阻塞** —— 官方脚本要一个名为 `iidx` 的参考轨道来取"
               "历史 NDVI，该前缀在官方 S3 上不存在（顶层只有 iid / iid_chopped / ood-t / ood-s / "
               "ood-st / extreme / seasonal / train / val_chopped）。疑似是未切片 `iid` 轨道的别名，"
               "但猜错会静默产出错误基线，故标 n.a. 待人工确认。",
