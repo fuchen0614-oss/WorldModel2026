@@ -40,7 +40,14 @@ declare -A EXPECT=(
 )
 
 unset http_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY
-command -v aria2c >/dev/null || { echo "need aria2c"; exit 1; }
+if command -v aria2c >/dev/null; then
+  XFER=aria2c
+elif command -v curl >/dev/null; then
+  XFER=curl
+  echo "[warn] 没有 aria2c，改用 curl（较慢，但同样断点续传）。装上 aria2c 会快不少。"
+else
+  echo "need aria2c or curl"; exit 1
+fi
 
 WORK="$(mktemp -d)"; trap 'rm -rf "$WORK"' EXIT
 LIST="$WORK/objects.tsv"; : > "$LIST"
@@ -94,7 +101,27 @@ with open(out, "w") as w:
 print(f"[plan] {todo} to fetch ({tb/2**30:.2f} GB); {skip} already complete -> {dest}")
 PY
 
-exec aria2c -i "$IN" --dir="$DEST" --continue=true --auto-file-renaming=false \
-  --max-concurrent-downloads=4 --max-connection-per-server=2 --split=2 \
-  --max-tries=10 --retry-wait=10 --timeout=120 --connect-timeout=45 \
-  --summary-interval=60 --console-log-level=warn
+if [ "$XFER" = aria2c ]; then
+  exec aria2c -i "$IN" --dir="$DEST" --continue=true --auto-file-renaming=false \
+    --max-concurrent-downloads=4 --max-connection-per-server=2 --split=2 \
+    --max-tries=10 --retry-wait=10 --timeout=120 --connect-timeout=45 \
+    --summary-interval=60 --console-log-level=warn
+fi
+
+# curl fallback. The aria2 input file is url / dir= / out= triplets; fold it into
+# "url<TAB>path" lines and fetch four at a time. -C - resumes a partial file, which
+# matters on links that drop mid-transfer -- just re-run the script until it is quiet.
+awk '/^http/{u=$0; next} /dir=/{sub(/^ *dir=/,""); d=$0; next}
+     /out=/{sub(/^ *out=/,""); print u"\t"d"/"$0}' "$IN" > "$IN.tsv"
+echo "[curl] $(wc -l < "$IN.tsv") 个文件，4 路并发"
+export DEST
+fetch_one () {
+  url="${1%%$'\t'*}"; path="${1#*$'\t'}"
+  mkdir -p "$(dirname "$path")"
+  curl -sS -C - --retry 12 --retry-delay 5 --retry-all-errors \
+       --connect-timeout 45 --max-time 900 -o "$path" "$url" \
+    || { echo "[fail] $path"; return 1; }
+}
+export -f fetch_one
+tr '\n' '\0' < "$IN.tsv" | xargs -0 -P 4 -I{} bash -c 'fetch_one "$@"' _ {}
+echo "[curl] 本轮结束。若有 [fail]，直接重跑本脚本续传。"
