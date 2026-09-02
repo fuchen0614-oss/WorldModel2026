@@ -121,12 +121,19 @@ pooled RMSE 则是混合的（shrub +0.0018 拖累），这正是 §2.3 那条�
 
 ## 5. 待办
 
-- [ ] **E1：基线同协议重跑**（§2.1）。这是 Table 1 站得住的前提。
+- [x] **E1：基线同协议重跑**（§2.1）。**已完成**，结果见
+      [A08](./A08_E1主表_同协议重跑结果.md)：四个学习型基线各 3 seeds × 4 split（48/48）
+      + Persistence + TerraState-C1，全部同一 manifest / mask / scorer。
+      关键发现：同协议下四个基线的 R² 一律比文献低 0.028–0.038、NSE 低 0.06–0.10，
+      而 RMSE / bias / RMSE25 贴合——是 LC-balanced vs pooled 的聚合口径差，不是复现失败。
+- [ ] ~~E1 原待办~~（保留原文供追溯）：这是 Table 1 站得住的前提。
       **家底已盘清，见 [A07](./A07_E1基线家底_权重代码数据在哪怎么取.md)**：四个基线的官方权重
       （3 seeds 齐）、官方配置、非 ML 基线实现、四个 chopped split **全部就绪**；
       唯一待做的是把 ConvLSTM / PredRNN / SimVP 三个 `nn.Module` 移植到现代 torch
       （Contextformer 已有成功模板）。纯推理，不需要 GPU。
-- [ ] **四 split 覆盖**。当前只有 OOD-t 一列；A01 §3.2 要求 IID / OOD-t / OOD-s / OOD-st。
+- [x] **四 split 覆盖**。**已完成** —— IID / OOD-t / OOD-s / OOD-st 四列齐全。
+      C1 在四个 split 上按 R² 一律排第 3/5（PredRNN > Contextformer > **C1** > 另两个），
+      排位高度一致，不是单一 split 的偶然。
 - [ ] **多 seed**（§2.2）。至少 C1 补 1–2 个种子。
 - [ ] **`outperform climatology` 一列缺失**。源表有此列，我们的评测器不产出该指标；
       要么补实现，要么在表中明确标 `n.a.` 并说明原因。
