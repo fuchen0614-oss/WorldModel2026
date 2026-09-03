@@ -44,6 +44,7 @@ build/
 venv/
 env/
 .venv/
+.venv-worldmodel/
 .conda/
 
 # ---------- 系统与编辑器 ----------

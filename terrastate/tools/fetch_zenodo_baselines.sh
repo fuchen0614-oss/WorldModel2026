@@ -22,6 +22,10 @@ WANT_SHA=00b7d86ef7aef8f47ff9247dacf3d9f7320b9a750734337f4d7d91f9ef0a5ce1
 WANT_SIZE=2452814122
 ZIP="$DEST/model_weights.zip"
 mkdir -p "$DEST"
+TMPDIR="${TMPDIR:-$DEST/.tmp-fetch}"
+mkdir -p "$TMPDIR"
+CURL_RETRY_ALL_ERRORS=()
+curl --help all 2>/dev/null | grep -q -- "--retry-all-errors" && CURL_RETRY_ALL_ERRORS=(--retry-all-errors)
 
 unset http_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY
 
@@ -38,7 +42,7 @@ for attempt in $(seq 1 40); do
   fi
   pct=$(( have * 100 / WANT_SIZE ))
   echo "[$attempt/40] 续传中… 已有 $((have/1024/1024)) MB / 2339 MB (${pct}%)"
-  curl -sS -C - --retry 8 --retry-delay 5 --retry-all-errors \
+  curl -sS -C - --retry 8 --retry-delay 5 "${CURL_RETRY_ALL_ERRORS[@]}" \
        --connect-timeout 45 --speed-time 60 --speed-limit 10240 \
        -o "$ZIP" "$URL" || true          # 掉线就进下一轮继续续传
   sleep 3

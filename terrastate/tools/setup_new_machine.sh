@@ -18,7 +18,13 @@ cd "$REPO"
 DATA_ROOT="${1:-$(cd "$REPO/../.." && pwd)/TrainData/EarthNet2021/earthnet2021x}"
 DL="$(cd "$REPO/../.." && pwd)/_downloads"
 VENV="$(cd "$REPO/.." && pwd)/.venv-worldmodel"
-mkdir -p "$DL"
+TMP_ROOT="$(cd "$REPO/../.." && pwd)/tmp"
+mkdir -p "$DL" "$TMP_ROOT" "$TMP_ROOT/pip" "$TMP_ROOT/cache"
+export TMPDIR="$TMP_ROOT"
+export TEMP="$TMP_ROOT"
+export TMP="$TMP_ROOT"
+export PIP_CACHE_DIR="$TMP_ROOT/pip"
+export XDG_CACHE_HOME="$TMP_ROOT/cache"
 
 STAGE=0
 ok ()   { printf '  \033[32mOK\033[0m   %s\n' "$*"; }
@@ -70,12 +76,14 @@ else
     || "$PY" -m virtualenv "$VENV" 2>/dev/null \
     || { "$PY" -m pip install -q --user virtualenv && "$PY" -m virtualenv "$VENV"; } \
     || die "建 venv 失败" "python3-venv 没装且 virtualenv 也拿不到；apt install python3-venv 或 pip install --user virtualenv"
-  PKGS="torch torchvision numpy>=2 xarray netCDF4 zarr dask[array] pyproj timm einops
+  PKGS=(
+        torch torchvision "numpy>=2" xarray netCDF4 zarr "dask[array]" pyproj timm einops
         pyyaml tqdm bottleneck segmentation-models-pytorch earthnet==0.3.9 lightning torchmetrics
-        matplotlib"
-  "$VENV/bin/pip" install -q --disable-pip-version-check $PKGS 2>/dev/null \
+        matplotlib
+  )
+  "$VENV/bin/pip" install -q --disable-pip-version-check "${PKGS[@]}" 2>/dev/null \
    || "$VENV/bin/pip" install -q --disable-pip-version-check \
-        -i https://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com $PKGS \
+        -i https://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com "${PKGS[@]}" \
    || die "pip 安装失败" "手动跑一次看报错：$VENV/bin/pip install torch earthnet==0.3.9 ..."
 fi
 "$VENV/bin/python" - <<'PYEOF' || die "依赖导入失败" "看上面缺哪个包，单独 pip install"
@@ -90,7 +98,7 @@ step "官方基线权重（Zenodo 2.3GB —— 可选，失败不阻塞后续）
 GEN_CK=checkpoints/greenearthnet_official
 if [ -f "$GEN_CK/contextformer/contextformer6M/seed42.ckpt" ]; then
   skip "基线权重"
-elif bash tools/fetch_zenodo_baselines.sh "$DL"; then
+elif [ "${FETCH_OPTIONAL_BASELINES:-0}" = "1" ] && bash tools/fetch_zenodo_baselines.sh "$DL"; then
   for m in contextformer/contextformer6M convlstm/convlstm1M predrnn/predrnn1M simvp/simvp6M; do
     mkdir -p "$GEN_CK/$m"
     unzip -j -o -q "$DL/model_weights.zip" "model_weights/$m/*" -d "$GEN_CK/$m" \

@@ -28,6 +28,15 @@ set -uo pipefail
 ENDPOINT="https://s3.bgc-jena.mpg.de:9000"
 BUCKET="earthnet"
 DEST="${1:?usage: fetch_earthnet_splits.sh <dest-root> [split ...]}"; shift
+TMPDIR="${TMPDIR:-$(dirname "$DEST")/.tmp-fetch}"
+mkdir -p "$TMPDIR"
+CURL_RETRY_ALL_ERRORS=()
+curl --help all 2>/dev/null | grep -q -- "--retry-all-errors" && CURL_RETRY_ALL_ERRORS=(--retry-all-errors)
+CURL_TLS_FLAGS=""
+if [ "${EARTHNET_STRICT_TLS:-0}" != "1" ]; then
+  CURL_TLS_FLAGS="--insecure"
+fi
+export CURL_TLS_FLAGS
 SPLITS=("$@")
 [ ${#SPLITS[@]} -eq 0 ] && SPLITS=(val_chopped ood-t_chopped iid_chopped ood-s_chopped ood-st_chopped)
 
@@ -49,7 +58,7 @@ else
   echo "need aria2c or curl"; exit 1
 fi
 
-WORK="$(mktemp -d)"; trap 'rm -rf "$WORK"' EXIT
+WORK="$(mktemp -d "$TMPDIR/fetch-earthnet.XXXXXX")"; trap 'rm -rf "$WORK"' EXIT
 LIST="$WORK/objects.tsv"; : > "$LIST"
 
 for split in "${SPLITS[@]}"; do
@@ -58,7 +67,7 @@ for split in "${SPLITS[@]}"; do
     url="$ENDPOINT/$BUCKET?list-type=2&prefix=earthnet2021x/$split/&max-keys=1000"
     [ -n "$token" ] && url="$url&continuation-token=$(python3 -c \
         'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1],safe=""))' "$token")"
-    xml=$(curl -s --retry 8 --retry-delay 5 --retry-all-errors --max-time 120 "$url") || exit 1
+    xml=$(curl -s ${CURL_TLS_FLAGS:+$CURL_TLS_FLAGS} --retry 8 --retry-delay 5 "${CURL_RETRY_ALL_ERRORS[@]}" --max-time 120 "$url") || exit 1
     token=$(printf '%s' "$xml" | python3 -c '
 import sys, xml.etree.ElementTree as ET
 NS = "{http://s3.amazonaws.com/doc/2006-03-01/}"
@@ -96,7 +105,7 @@ with open(out, "w") as w:
             skip += 1
             continue
         w.write(f"{base}/{key}\n  dir={os.path.join(dest, os.path.dirname(rel))}\n"
-                f"  out={os.path.basename(rel)}\n")
+                f"  out={os.path.basename(rel)}\n  x-size={size}\n")
         todo += 1; tb += size
 print(f"[plan] {todo} to fetch ({tb/2**30:.2f} GB); {skip} already complete -> {dest}")
 PY
@@ -112,15 +121,28 @@ fi
 # "url<TAB>path" lines and fetch four at a time. -C - resumes a partial file, which
 # matters on links that drop mid-transfer -- just re-run the script until it is quiet.
 awk '/^http/{u=$0; next} /dir=/{sub(/^ *dir=/,""); d=$0; next}
-     /out=/{sub(/^ *out=/,""); print u"\t"d"/"$0}' "$IN" > "$IN.tsv"
+     /out=/{sub(/^ *out=/,""); o=$0; next}
+     /x-size=/{sub(/^ *x-size=/,""); print u"\t"d"/"o"\t"$0}' "$IN" > "$IN.tsv"
 echo "[curl] $(wc -l < "$IN.tsv") 个文件，4 路并发"
 export DEST
 fetch_one () {
-  url="${1%%$'\t'*}"; path="${1#*$'\t'}"
+  url="${1%%$'\t'*}"
+  rest="${1#*$'\t'}"
+  path="${rest%%$'\t'*}"
+  size="${rest#*$'\t'}"
   mkdir -p "$(dirname "$path")"
-  curl -sS -C - --retry 12 --retry-delay 5 --retry-all-errors \
+  if [ -f "$path" ]; then
+    have=$(stat -c %s "$path" 2>/dev/null || echo 0)
+    if [ "$have" = "$size" ]; then
+      return 0
+    fi
+    if [ "$have" -gt "$size" ]; then
+      rm -f "$path"
+    fi
+  fi
+  curl -sS -f -C - ${CURL_TLS_FLAGS:+$CURL_TLS_FLAGS} --retry 12 --retry-delay 5 "${CURL_RETRY_ALL_ERRORS[@]}" \
        --connect-timeout 45 --max-time 900 -o "$path" "$url" \
-    || { echo "[fail] $path"; return 1; }
+    || { [ -s "$path" ] || rm -f "$path"; echo "[fail] $path"; return 1; }
 }
 export -f fetch_one
 tr '\n' '\0' < "$IN.tsv" | xargs -0 -P 4 -I{} bash -c 'fetch_one "$@"' _ {}
