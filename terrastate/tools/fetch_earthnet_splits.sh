@@ -122,15 +122,21 @@ fi
 # matters on links that drop mid-transfer -- just re-run the script until it is quiet.
 awk '/^http/{u=$0; next} /dir=/{sub(/^ *dir=/,""); d=$0; next}
      /out=/{sub(/^ *out=/,""); o=$0; next}
-     /x-size=/{sub(/^ *x-size=/,""); print u"\t"d"/"o"\t"$0}' "$IN" > "$IN.tsv"
+     /x-size=/{sub(/^ *x-size=/,""); print u"\t"d"/"o"\t"$0}' "$IN" | sort -u > "$IN.tsv"
 echo "[curl] $(wc -l < "$IN.tsv") 个文件，4 路并发"
-export DEST
+LOCK_ROOT="$TMPDIR/fetch-locks"; mkdir -p "$LOCK_ROOT"
+export DEST LOCK_ROOT
 fetch_one () {
   url="${1%%$'\t'*}"
   rest="${1#*$'\t'}"
   path="${rest%%$'\t'*}"
   size="${rest#*$'\t'}"
   mkdir -p "$(dirname "$path")"
+  lock="$LOCK_ROOT/$(printf '%s' "$path" | sha256sum | cut -d' ' -f1)"
+  if ! mkdir "$lock" 2>/dev/null; then
+    return 0
+  fi
+  trap 'rmdir "$lock" 2>/dev/null || true' RETURN
   if [ -f "$path" ]; then
     have=$(stat -c %s "$path" 2>/dev/null || echo 0)
     if [ "$have" = "$size" ]; then
