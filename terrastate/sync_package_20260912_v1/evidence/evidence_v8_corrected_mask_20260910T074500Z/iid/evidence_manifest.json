@@ -1,0 +1,51 @@
+{
+  "split": "iid_corrected_mask",
+  "source_csv": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/merged/iid/plot_data/formal_common_suffix_per_cube_horizon.csv",
+  "source_rows": 20780,
+  "total_cubes": 2078,
+  "usable_cubes_by_scope": {
+    "full_suffix_1_to_10": 2066,
+    "endpoint_h10": 1214
+  },
+  "excluded_by_scope": {
+    "full_suffix_1_to_10:no_common_valid_horizon": 12,
+    "endpoint_h10:no_common_valid_horizon": 864
+  },
+  "scopes": {
+    "full_suffix_1_to_10": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "endpoint_h10": [
+      10
+    ]
+  },
+  "conditions": {
+    "D20": "direct query from initial state",
+    "A": "[10] to step 10 then shared 10->20 suffix",
+    "B": "[5,5] to step 10 then shared 10->20 suffix",
+    "donor": "matched intermediate-state replacement with receiver prior/geo/weather"
+  },
+  "donor_rule": "A14B frozen same-year-month matched donor; standardized first-10 observed NDVI summaries plus 0.5*Hellinger ESA WorldCover histogram; deterministic path tie-break; no future target or model outcome used; reuse cap 1",
+  "matched_manifest": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/merged/iid/manifests/matched_donor_manifest.csv",
+  "matched_manifest_rows": 2078,
+  "match_distance_quantiles": {
+    "0.0": 0.0,
+    "0.25": 0.16476638278086284,
+    "0.5": 0.26462599840396783,
+    "0.75": 0.45694641948386505,
+    "1.0": 24.892846037848123
+  },
+  "excluded_reasons": {
+    "full_suffix_1_to_10:no_common_valid_horizon": 12,
+    "endpoint_h10:no_common_valid_horizon": 864
+  }
+}

@@ -1,0 +1,724 @@
+{
+  "schema": "leaveout_q4_formal_report_v1",
+  "scope": "dev476",
+  "aggregate": "leaveout_q4_formal_dev476_v1_20260909T141500Z/q4_aggregate.json",
+  "n_cubes": 476,
+  "n_geo_clusters": 40,
+  "n_rows": 9,
+  "n_path_gate_fail": 0,
+  "n_q2_combo_pass": 9,
+  "gates": {
+    "broken_control": {
+      "pooled_a_comp_mean": 0.013629944917147748,
+      "pooled_a_comp_ci95": [
+        0.012751428198706293,
+        0.014537432226744975
+      ],
+      "lcb_gt_0": true,
+      "n_partition_control_pairs": 73,
+      "n_ratio_lt_1": 71,
+      "frac_ratio_lt_1": 0.9726027397260274,
+      "at_least_half_ratio_lt_1": true,
+      "geo_cluster_sensitivity_ci95": [
+        0.012454537322906117,
+        0.014768916117858705
+      ],
+      "geo_cluster_lcb_gt_0": true,
+      "passes": true
+    },
+    "composed_vs_direct": {
+      "tol": 0.05,
+      "rows": [
+        {
+          "combo": "ep10|3-7",
+          "direct_combo": "ep10|10",
+          "endpoint": 10,
+          "partition": [
+            3,
+            7
+          ],
+          "composed_pooled_mse": 0.023819314020631647,
+          "direct_pooled_mse": 0.02350439689896994,
+          "ratio": 1.013398221746141,
+          "within_tol": true
+        },
+        {
+          "combo": "ep10|6-4",
+          "direct_combo": "ep10|10",
+          "endpoint": 10,
+          "partition": [
+            6,
+            4
+          ],
+          "composed_pooled_mse": 0.02393076777408019,
+          "direct_pooled_mse": 0.02350439689896994,
+          "ratio": 1.018140047453374,
+          "within_tol": true
+        },
+        {
+          "combo": "ep10|2-3-5",
+          "direct_combo": "ep10|10",
+          "endpoint": 10,
+          "partition": [
+            2,
+            3,
+            5
+          ],
+          "composed_pooled_mse": 0.023752755362616382,
+          "direct_pooled_mse": 0.02350439689896994,
+          "ratio": 1.0105664682533217,
+          "within_tol": true
+        },
+        {
+          "combo": "ep15|4-11",
+          "direct_combo": "ep15|15",
+          "endpoint": 15,
+          "partition": [
+            4,
+            11
+          ],
+          "composed_pooled_mse": 0.0268653113257123,
+          "direct_pooled_mse": 0.02640710097455249,
+          "ratio": 1.0173517854762388,
+          "within_tol": true
+        },
+        {
+          "combo": "ep15|3-5-7",
+          "direct_combo": "ep15|15",
+          "endpoint": 15,
+          "partition": [
+            3,
+            5,
+            7
+          ],
+          "composed_pooled_mse": 0.026652460199762792,
+          "direct_pooled_mse": 0.02640710097455249,
+          "ratio": 1.0092914108764437,
+          "within_tol": true
+        },
+        {
+          "combo": "ep20|8-12",
+          "direct_combo": "ep20|20",
+          "endpoint": 20,
+          "partition": [
+            8,
+            12
+          ],
+          "composed_pooled_mse": 0.02559760459900821,
+          "direct_pooled_mse": 0.02558430497291432,
+          "ratio": 1.0005198353485847,
+          "within_tol": true
+        },
+        {
+          "combo": "ep20|2-18",
+          "direct_combo": "ep20|20",
+          "endpoint": 20,
+          "partition": [
+            2,
+            18
+          ],
+          "composed_pooled_mse": 0.026215172648448967,
+          "direct_pooled_mse": 0.02558430497291432,
+          "ratio": 1.0246583863115506,
+          "within_tol": true
+        },
+        {
+          "combo": "ep20|2-6-12",
+          "direct_combo": "ep20|20",
+          "endpoint": 20,
+          "partition": [
+            2,
+            6,
+            12
+          ],
+          "composed_pooled_mse": 0.025934708741438675,
+          "direct_pooled_mse": 0.02558430497291432,
+          "ratio": 1.0136960440744949,
+          "within_tol": true
+        },
+        {
+          "combo": "ep20|1-4-6-9",
+          "direct_combo": "ep20|20",
+          "endpoint": 20,
+          "partition": [
+            1,
+            4,
+            6,
+            9
+          ],
+          "composed_pooled_mse": 0.026287800873976308,
+          "direct_pooled_mse": 0.02558430497291432,
+          "ratio": 1.0274971667906072,
+          "within_tol": true
+        }
+      ],
+      "n_heldout_compared": 9,
+      "passes": true
+    },
+    "state_retention": {
+      "retention_min": 0.5,
+      "batch_level": {
+        "std_retention": 1.0287398243710362,
+        "effective_rank_retention": 0.9603230845783611,
+        "retention_min": 0.5,
+        "passes": true
+      },
+      "split_level": {
+        "n_tokens_zt": 487424,
+        "n_tokens_zep": 487424,
+        "state_std_zt": 0.7345401009187754,
+        "state_std_zep": 0.7647647250732537,
+        "effective_rank_zt": 13.541818245234868,
+        "effective_rank_zep": 13.189952384663755,
+        "std_retention": 1.0411476842675746,
+        "effective_rank_retention": 0.9740163503748894,
+        "passes": true
+      },
+      "noncollapse_gate": {
+        "state_dim": 256,
+        "state_std_zt": 0.7132712006568909,
+        "effective_rank_zt": 14.147079225381498,
+        "state_std_zep": 0.733770489692688,
+        "effective_rank_zep": 13.585766759492811,
+        "movement_zt_to_zep": 8.680055618286133,
+        "relative_movement": 0.4952090660107775,
+        "reasons": [],
+        "verdict": "PASS",
+        "thresholds": {
+          "min_std": 0.001,
+          "min_effective_rank": 2.0,
+          "min_movement": 0.0001
+        }
+      },
+      "constant_state_caught_by_gate": {
+        "state_dim": 256,
+        "state_std_zt": 0.0,
+        "effective_rank_zt": 0.0,
+        "state_std_zep": 0.0,
+        "effective_rank_zep": 0.0,
+        "movement_zt_to_zep": 0.0,
+        "relative_movement": 0.0,
+        "reasons": [
+          "zt_std_below_min(constant_like)",
+          "zep_std_below_min(constant_like)",
+          "zt_effective_rank_below_min(collapsed)",
+          "zep_effective_rank_below_min(collapsed)",
+          "no_state_movement(identity_like)"
+        ],
+        "verdict": "FAIL",
+        "thresholds": {
+          "min_std": 0.001,
+          "min_effective_rank": 2.0,
+          "min_movement": 0.0001
+        }
+      },
+      "constant_state_correctly_failed": true,
+      "q2_removal_arms": [
+        {
+          "combo": "ep10|10",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0008888876683321329,
+            0.002756219529775914
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|10",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.027195099472196026,
+            0.03060967361215678
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|5-5",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0003632799866506512,
+            0.0023450104665770693
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|5-5",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.02659451847486947,
+            0.030265626583398028
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|5-3-2",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0003655100268799684,
+            0.0023904854865300484
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|5-3-2",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.026624227161308796,
+            0.03032234698140971
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|3-7",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.00037834839351622165,
+            0.0024697667954272705
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|3-7",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.02665410038924682,
+            0.03034915322119484
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|6-4",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0004509829851101045,
+            0.0024025613679102427
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|6-4",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.02668864431025312,
+            0.030328419891608668
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|2-3-5",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.00045753858622254144,
+            0.002538965057708343
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep10|2-3-5",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.026735731064442173,
+            0.030417800955989317
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep15|15",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.002472106369222905,
+            0.006395411119366145
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep15|15",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.02963794885450176,
+            0.034138339831412505
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep15|7-8",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0019483480146836425,
+            0.006022050123855237
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep15|7-8",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.029041892942013085,
+            0.03382026307655365
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep15|7-4-4",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.002122370547603655,
+            0.0061806317715046265
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep15|7-4-4",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.029205636648832467,
+            0.03401456756201985
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep15|4-11",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0020263394352109105,
+            0.005897226145224208
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep15|4-11",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.02910176610840341,
+            0.03369472834102679
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep15|3-5-7",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0018939347691954533,
+            0.006198051558734248
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep15|3-5-7",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.028990289942136326,
+            0.034025621430463344
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|20",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0044256964944517346,
+            0.008904749645774153
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|20",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.031503075956065815,
+            0.03606031490199321
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|10-10",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.004385783060634921,
+            0.008629048548400896
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|10-10",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.03146530046454824,
+            0.03573026634431869
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|10-5-5",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.004362953980255003,
+            0.008416135482326637
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|10-5-5",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.03140353936765005,
+            0.03557412738150858
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|5-5-5-5",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.004239852397756599,
+            0.008319664483604956
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|5-5-5-5",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.03127276055589785,
+            0.03545266091094527
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|8-12",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0044292654478036,
+            0.008860311495279813
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|8-12",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.03150693792436493,
+            0.036011386086176746
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|2-18",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0040199956792713164,
+            0.008400405720729207
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|2-18",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.03099685950191582,
+            0.03565569466565623
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|2-6-12",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0042385009583006915,
+            0.008567852227201585
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|2-6-12",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.031257130459969425,
+            0.03573640749645791
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|1-4-6-9",
+          "removal_arm": "alpha0",
+          "a_comp_ci95": [
+            0.0037913929282107775,
+            0.007963965648884432
+          ],
+          "lcb_gt_0": true
+        },
+        {
+          "combo": "ep20|1-4-6-9",
+          "removal_arm": "identity_state",
+          "a_comp_ci95": [
+            0.03087835565928811,
+            0.035075618990602575
+          ],
+          "lcb_gt_0": true
+        }
+      ],
+      "q2_holds": true,
+      "passes": true
+    },
+    "semigroup_bit_exact": {
+      "one_segment_equals_direct": true,
+      "two_segment_equals_composed": true,
+      "recursive_nontrivial": true,
+      "weather_switch_pre_identical": true,
+      "weather_switch_post_changed": true,
+      "passes": true
+    }
+  },
+  "checkpoint": {
+    "ckpt_path": "/data/zs/WorldModel2026/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_c1_20260822T131006Z/checkpoint_main.pt",
+    "ckpt_file_sha256": "474f94340763e9ba5b7373316ff4d09b69fa398d3fac2df291b9bf9846a93819",
+    "loaded_value_sha16": "a87f972b8a093b61",
+    "ckpt_value_sha16": "a87f972b8a093b61",
+    "n_tensors_loaded": 255,
+    "strict": true,
+    "arch": "TerraStateCandidateC",
+    "route_version": "candidate_c_v1",
+    "step": 14880,
+    "phase_step": 14880,
+    "arm": "C1",
+    "factual_path": "recursive",
+    "lambdas": {
+      "z": 0.0,
+      "y": 0.0,
+      "pair": 0.0,
+      "nc": 0.0
+    },
+    "completion_reason": "schedule_complete",
+    "lineage": {
+      "fork_kind": "weights_only_phase_ii_fork",
+      "is_exact_resume": false,
+      "not_exact_resume_reason": "新 optimizer / 新 scheduler / 新 RNG / phase_step 从 0 开始",
+      "parent_alias": "terrastate/v2/default-training-anchor",
+      "parent_logical_id": "terrastate/v2/verified-resume14880@v1",
+      "parent_path": "/csy-mix02/cog8/zjliu17/Agent/model-artifacts/objects/sha256/a5/a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f.pt",
+      "parent_file_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "parent_arch": "TerraStateV2",
+      "parent_route_version": "terrastate_v2",
+      "parent_step": 14880,
+      "parent_n_tensors": 255,
+      "inherited_n_tensors": 255,
+      "inherited_value_sha16": "aa98fbd2fa302727",
+      "parent_value_sha16": "aa98fbd2fa302727",
+      "expected_value_sha16": "aa98fbd2fa302727",
+      "max_abs_diff_vs_parent": 0.0,
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "new_module_whitelist": [],
+      "child_arch": "TerraStateCandidateC",
+      "child_route_version": "candidate_c_v1",
+      "child_n_state_dict_tensors": 255,
+      "child_n_parameters": 253,
+      "child_numel": 7180896,
+      "phase_step": 0,
+      "loaded_optimizer_state": false,
+      "loaded_scheduler_state": false,
+      "loaded_rng_state": false,
+      "parent_had_optimizer_state": true,
+      "parent_had_scheduler_state": true,
+      "parent_optimizer_scheduler_deliberately_discarded": true
+    },
+    "sha": {
+      "parent_alias": "terrastate/v2/default-training-anchor",
+      "parent_logical_id": "terrastate/v2/verified-resume14880@v1",
+      "parent_file_sha256": "a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f",
+      "parent_value_sha16": "aa98fbd2fa302727",
+      "inherited_value_sha16": "aa98fbd2fa302727",
+      "warm_start_state_sha256": "aa98fbd2fa302727bc3375dff17e1c414c652c19d0919c4fbcdcd05a0a5d28aa",
+      "val_split_manifest_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json",
+      "val_split_manifest_sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b",
+      "val_split_selector": "validation_subsplit.val_dev.ids",
+      "val_split_n_ids": 476,
+      "q4_partition_manifest_path": "/csy-mix02/cog8/zjliu17/Agent/WorldModel2026v2/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_q4_partition_manifest_v1.json",
+      "q4_partition_manifest_sha256": "d0a4c6564516ea62f7eda9ebc4018433d1357391ad3a2a3bd8070de1a54e1e0e",
+      "config_sha256": "86b319c457704460994811072ff0ee8fe0c650003f5b9db9da9e3b5836696711",
+      "source_sha256": {
+        "models/terrastate_candidate_c.py": "6a53643245bde4daad7a19a208ff18f2f8b99ab9ae5e6238ec2a83eabde01807",
+        "train/train_terrastate_candidate_c.py": "47a31064a8a9a087279436220477e75e32b16c3b598245bdedd951bda86c6987",
+        "models/terrastate_v2.py": "25251928a28320e8dcd8b8b07e870eabad34ae994ff9659d26cedf664bef52f1",
+        "models/plan_b_b4_exclusive.py": "20e3d9cdf5ceae883af7b601acad64a3f183742d876ddd48b9e8f9e3b3ed29ff",
+        "models/plan_b_b4.py": "83a3766d6c2e84ac4099f307c47147ff60521af1ae5784d1f1f15230011c23ff",
+        "train/train_terrastate_v2.py": "d0e4051bc86f8116603ba687eb7f7814191362213dff5eec11ae7a73dce090d6",
+        "train/terrastate_v2_common.py": "53695c9e5f8c96d4e65229553f9cb969095b1f92167a2da579642f86ace5f73f"
+      },
+      "train_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "val_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9"
+    },
+    "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST"
+  },
+  "split": {
+    "manifest": "/data/zs/WorldModel2026/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json",
+    "selector": "validation_subsplit.val_dev.ids",
+    "n_ids_in_manifest": 476,
+    "n_scored": 476,
+    "allow_locked": false,
+    "usage_contract": {
+      "ood_t_and_test": "禁止用于调参或 checkpoint 选择",
+      "val_dev": "唯一允许的调参/pilot/checkpoint 观察 split",
+      "val_locked": "锁定门，FORMAL_READY 写入前不打开"
+    }
+  },
+  "provenance": {
+    "utc": "2026-09-09T13:45:52Z",
+    "hostname": "dilab",
+    "cwd": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z",
+    "repo_root": "/data/zs/WorldModel2026/terrastate",
+    "argv": [
+      "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/run_q4_isolated_cuda_v1.py",
+      "score",
+      "--ckpt",
+      "/data/zs/WorldModel2026/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_c1_20260822T131006Z/checkpoint_main.pt",
+      "--data-root",
+      "/data/zs/TrainData/EarthNet2021/earthnet2021x/val_chopped",
+      "--split-manifest",
+      "/data/zs/WorldModel2026/terrastate/ops/candidate_c_nightly/20260820T155316Z/manifests/candidate_c_eo_split_manifest_v1.json",
+      "--split-selector",
+      "validation_subsplit.val_dev.ids",
+      "--output",
+      "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/leaveout_q4_formal_dev476_v1_20260909T141500Z",
+      "--batch-size",
+      "2",
+      "--num-workers",
+      "0",
+      "--device",
+      "cuda:0",
+      "--max-cubes",
+      "0"
+    ],
+    "python": "3.10.14",
+    "python_executable": "/data/zs/WorldModel2026/.venv-worldmodel/bin/python",
+    "torch": "2.14.0+cu130",
+    "numpy": "2.2.6",
+    "cuda_available": true,
+    "cuda_visible_devices": "<unset>",
+    "git_head": "58c04f3d748ab6a55ddc0b9f0104011c973ddc60",
+    "git_dirty": true,
+    "source_sha256": {
+      "eval/eval_terrastate_candidate_c_q4.py": "d9afce7a3576e10bc230a25bd5e7d930a57fa3543f691a6e6b1e5f1957d1f1b1",
+      "models/terrastate_candidate_c.py": "6a53643245bde4daad7a19a208ff18f2f8b99ab9ae5e6238ec2a83eabde01807",
+      "models/terrastate_v2.py": "25251928a28320e8dcd8b8b07e870eabad34ae994ff9659d26cedf664bef52f1",
+      "models/plan_b_b4_exclusive.py": "20e3d9cdf5ceae883af7b601acad64a3f183742d876ddd48b9e8f9e3b3ed29ff",
+      "models/plan_b_b4.py": "83a3766d6c2e84ac4099f307c47147ff60521af1ae5784d1f1f15230011c23ff",
+      "train/terrastate_v2_common.py": "53695c9e5f8c96d4e65229553f9cb969095b1f92167a2da579642f86ace5f73f",
+      "data/greenearthnet_contextformer_dataset.py": "8c0f9961353d31a36b1810aebc42e51e8948b1102027879a39607737fd014a93"
+    },
+    "control_seed": 4242,
+    "bootstrap_B": 10000,
+    "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+    "gate_constants": {
+      "eps_r2": 0.02,
+      "eps_rmse": 0.05,
+      "composed_vs_direct_tol": 0.05,
+      "retention_min": 0.5
+    },
+    "eval_mode": "score",
+    "device": "cuda:0",
+    "batch_size": 2,
+    "data_root": "/data/zs/TrainData/EarthNet2021/earthnet2021x/val_chopped"
+  },
+  "caveat": "Historical dev scope and evaluator partition exposure are preserved; this is not an IID-independent generalization claim."
+}

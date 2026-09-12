@@ -1,0 +1,58 @@
+{
+  "schema": "corrected_mask_evidence_provenance_v1",
+  "split": "iid",
+  "status": "STATISTICALLY_REBUILT_FROM_COMPLETE_MERGED_PER_ROW_DATA",
+  "calibration_path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/calibration_train_v2_corrected_mask_20260909T134000Z/calibration.json",
+  "calibration_sha256": "56f6212b5ccf00ae58119b6ecb7f1ee4e0f852b868d29eb25d1a1451f4b9eefc",
+  "merged_input": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/merged/iid/plot_data/formal_common_suffix_per_cube_horizon.csv",
+  "merged_manifest": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/merged/iid/manifests/matched_donor_manifest.csv",
+  "merge_provenance": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/merged/iid/manifests/merge_provenance.json",
+  "changed_pairs_recomputed": 88,
+  "unchanged_pairs_reused": 1990,
+  "scope_counts": {
+    "full_suffix_1_to_10": 2066,
+    "endpoint_h10": 1214
+  },
+  "excluded_by_scope": {
+    "full_suffix_1_to_10:no_common_valid_horizon": 12,
+    "endpoint_h10:no_common_valid_horizon": 864
+  },
+  "donor_minus_A_full": {
+    "split": "iid_corrected_mask",
+    "scope": "full_suffix_1_to_10",
+    "comparison": "donor-A",
+    "left": "donor",
+    "right": "A",
+    "n_cubes": "2066",
+    "excluded_cubes": "12",
+    "n_cube_horizon_pairs": "12455",
+    "mean_cube_rmse_difference": "0.011161941845528765",
+    "median_cube_rmse_difference": "0.007545016478958999",
+    "mean_cube_mse_difference": "0.00319203393815653",
+    "median_cube_mse_difference": "0.0018970427726759873",
+    "geo_groups": "80",
+    "geo_cluster_bootstrap_ci95_low": "0.00964615140742068",
+    "geo_cluster_bootstrap_ci95_high": "0.012519719525659714",
+    "geo_cluster_mse_ci95_low": "0.0024279585211699484",
+    "geo_cluster_mse_ci95_high": "0.0039032768732136154"
+  },
+  "donor_minus_A_endpoint": {
+    "split": "iid_corrected_mask",
+    "scope": "endpoint_h10",
+    "comparison": "donor-A",
+    "left": "donor",
+    "right": "A",
+    "n_cubes": "1214",
+    "excluded_cubes": "864",
+    "n_cube_horizon_pairs": "1214",
+    "mean_cube_rmse_difference": "0.012470851550075083",
+    "median_cube_rmse_difference": "0.008618497846323236",
+    "mean_cube_mse_difference": "0.004109052851979534",
+    "median_cube_mse_difference": "0.00207514804668317",
+    "geo_groups": "80",
+    "geo_cluster_bootstrap_ci95_low": "0.0085886728668992",
+    "geo_cluster_bootstrap_ci95_high": "0.01366285077238677",
+    "geo_cluster_mse_ci95_low": "0.002381860542194127",
+    "geo_cluster_mse_ci95_high": "0.004970903300065952"
+  }
+}

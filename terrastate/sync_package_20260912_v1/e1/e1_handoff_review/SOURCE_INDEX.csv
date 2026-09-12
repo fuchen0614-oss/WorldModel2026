@@ -1,0 +1,14 @@
+role,path,review_status,notes
+formal_entry,/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/REVIEW_START_HERE.md,accepted,Formal delivery entry
+main_table,/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_TABLE_DELIVERY.md,accepted,E1 q1_full standard prediction table; four splits; C1 seeds 27/42/97
+per_seed_values,/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_per_seed_values.csv,accepted,Seed-level values and checkpoint hashes
+summary_values,/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_summary_values.csv,accepted,Mean and ddof=1 sample standard deviation; not CI
+table_sources,/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_table_sources.csv,accepted,Source and exclusion records
+checksums,/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/SHA256SUMS.txt,accepted_with_path_caveat,Passes when checked from multiseed root; relative paths fail from delivery directory
+protocol,/data/zs/multiseed_standard_eval_20260910T074115Z/protocol_freeze.json,accepted,Scope and frozen q1_full protocol
+coverage_status,/data/zs/multiseed_standard_eval_20260910T074115Z/seed_split_status.csv,accepted,12 rows; exact requested/actual/unique coverage; no missing/unexpected
+per_seed_metrics,/data/zs/multiseed_standard_eval_20260910T074115Z/per_seed_metrics.csv,accepted,Primary C1 per-seed metric source
+checkpoint_inventory,/data/zs/multiseed_standard_eval_20260910T074115Z/checkpoint_inventory.tsv,accepted_with_schema_caveat,Header order does not match data rows
+checkpoint_hashes,/data/zs/multiseed_standard_eval_20260910T074115Z/checkpoint_sha256.txt,accepted,Three checkpoint hashes independently verified
+baseline_source,/data/zs/WorldModel2026/terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md,accepted_as_declared_source,A08 same-protocol measured baselines; not rerun in this review
+postprocessor,/data/zs/multiseed_standard_eval_20260910T074115Z/postprocess_multiseed.py,reviewed,Documents masked per-pixel nonfinite handling and official aggregate acceptance

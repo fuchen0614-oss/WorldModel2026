@@ -1,0 +1,4 @@
+source_id,source_type,path,note
+C1_seed27_42_97,formal_standard_eval,/data/zs/multiseed_standard_eval_20260910T074115Z/per_seed_metrics.csv,12/12 COMPLETE; values linked to per-split state_contract_exclusive.json and checkpoint provenance
+A08_baselines,same_protocol_measured_baseline,/data/zs/WorldModel2026/terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md,"ConvLSTM, PredRNN, SimVP, Contextformer, Persistence; values transcribed from A08 same-protocol table"
+not_included,unverified_or_incomplete,/data/zs/WorldModel2026/terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md,"Climatology/Previous year blocked; Earthformer weights unavailable; omitted, not treated as zero"
