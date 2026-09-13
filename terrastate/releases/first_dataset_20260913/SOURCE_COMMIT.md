@@ -6,8 +6,8 @@
 |---|---|
 | Git 仓库 | `git@github.com:fuchen0614-oss/WorldModel2026.git` |
 | 分支 | `q4-eval-percube-eligibility` |
-| 提交 | `dc743eb75616a52c8bea6c2188c35a3c9ee8e61d` |
-| 打包时间（UTC） | 2026-09-13T09:10:26Z |
+| 提交 | `7a1223ac80da69801243ed31676bd346b7e59fe7` |
+| 打包时间（UTC） | 2026-09-13T09:20:12Z |
 
 本发布包中的每一项材料都**复制**自下列来源；来源目录**未被修改、未被移动、未被删除**。
 

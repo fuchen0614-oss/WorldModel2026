@@ -3,9 +3,9 @@
 本目录是 **TerraState 第一数据集** 的一次性发布快照：代码索引、两份主文、终稿图、关键表格与
 统计、必要的复现数组，以及来源与哈希。**只收录关键结果，不收中间产物。**
 
-- 生成时间（UTC）：2026-09-13T09:10:26Z
-- 基线提交：`dc743eb75616`（分支 `q4-eval-percube-eligibility`，远端 `git@github.com:fuchen0614-oss/WorldModel2026.git`）
-- 规模：**219 个文件，66.2 MiB**
+- 生成时间（UTC）：2026-09-13T09:20:12Z
+- 基线提交：`7a1223ac80da`（分支 `q4-eval-percube-eligibility`，远端 `git@github.com:fuchen0614-oss/WorldModel2026.git`）
+- 规模：**266 个文件，66.8 MiB**
 - 完整性：`SHA256SUMS.txt`（逐文件）；`QA_REPORT.md`（本轮验收）
 
 ## 怎么读
@@ -66,3 +66,30 @@ reproduction/             选定样本的数组与候选清单
 - 不是论文正文，也不是完整审计日志；它是**成果快照 + 来源索引**。
 - 不包含第二数据集结论；只覆盖第一数据集。
 - 不重跑实验：包内所有数字都来自已验收的冻结结果，本包只做整理与校验。
+
+## 核对哈希（含 Windows 行尾说明）
+
+Linux / macOS：
+
+```bash
+cd terrastate/releases/first_dataset_20260913
+sha256sum -c SHA256SUMS.txt          # 应逐条 OK
+```
+
+**Windows 请注意**：本目录中有 **101 个文本文件在仓库里本身就是 CRLF 行尾**
+（源包如此，本包逐字节复制、未做改动）。若本地 `core.autocrlf=true`（Windows 默认），
+检出时会再次转换行尾，于是**这些文件的原始哈希会与 `SHA256SUMS.txt` 不一致**——
+这是行尾转换，不是内容损坏。两种可靠的核对方式：
+
+```powershell
+# 方式一（权威，推荐）：让 git 自己判定
+git -C <repo> status --porcelain -- terrastate/releases/first_dataset_20260913
+# 输出为空 = 本地内容与已提交内容完全一致
+
+# 方式二：关闭行尾转换后再检出并逐条核对
+git -C <repo> -c core.autocrlf=false rm --cached -r --quiet terrastate/releases/first_dataset_20260913
+git -C <repo> -c core.autocrlf=false checkout -- terrastate/releases/first_dataset_20260913
+```
+
+> `core.autocrlf` 影响整个仓库的检出行为；如只需核对本包，用方式一即可。
+> 另外 19 个文本文件带 UTF-8 BOM，同样来自源包、原样保留。
