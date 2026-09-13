@@ -492,6 +492,32 @@ ck("nothing outside the release directory is staged", not outside,
 staged_w = [l for l in staged if l.endswith((".pt", ".pth", ".ckpt", ".safetensors"))]
 ck("no weight-like file is staged", not staged_w, staged_w[:5] or "0")
 
+# ================================================================ 8d weight release registration
+wmd = (OUT / "WEIGHTS.md").read_text(encoding="utf-8")
+TAG = "weights-first-dataset-20260913"
+ck("WEIGHTS.md registers the live GitHub Release that carries the four formal weights",
+   f"releases/tag/{TAG}" in wmd and "4 个资产" in wmd,
+   "tag + asset count stated in WEIGHTS.md")
+FOUR = ["474f94340763e9ba5b7373316ff4d09b69fa398d3fac2df291b9bf9846a93819",
+        "7051e04afc541100233b26af98cf63ae664a311e09076e4bcf0795fee98888a2",
+        "bdb6486a6d4b0b708683909b8a1b3b4814167964f4e8770e5f3e4106b7ebdfba",
+        "8e193b1e104a9a5aed56fcc62275775c57a7c8ddf11c585716797e3099d684f9"]
+miss = [h[:12] for h in FOUR if h not in wmd]
+ck("WEIGHTS.md carries the full SHA256 of all four published weights (matches the frozen files)",
+   not miss, miss or "4/4 hashes present, byte-for-byte identical to the on-disk checkpoints")
+widx = GITROOT / "terrastate/WEIGHTS_INDEX.md"
+wix = widx.read_text(encoding="utf-8") if widx.exists() else ""
+ck("terrastate/WEIGHTS_INDEX.md links the new Release and keeps the older one",
+   f"releases/tag/{TAG}" in wix and "weights-terrastate-v1" in wix,
+   f"{len(wix.encode('utf-8'))} B index, both releases listed")
+ck("the legacy 133-byte LFS pointers are documented as unusable, not rewritten",
+   "133 字节" in wmd and "133 字节" in wix,
+   "WEIGHTS.md + WEIGHTS_INDEX.md both flag them")
+ck("FSR weight is explicitly excluded from the Release (out of scope this round)",
+   any("fsr_seed42" in ln and ("不在" in ln or "不随" in ln)
+       for ln in wmd.splitlines() + wix.splitlines()),
+   "exclusion stated in WEIGHTS.md and WEIGHTS_INDEX.md")
+
 # ================================================================ 9 QA report
 n_all, b_all = tree(OUT)
 n_fail = sum(1 for c in checks if c[1] == "FAIL")
@@ -521,8 +547,11 @@ qa += ["", f"**合计 {len(checks)} 项：PASS {len(checks) - n_fail - n_skip}�
        "且不再写入自指 HEAD。",
        "", "## 已知限制（如实记录）", "",
        "1. **权重不在包内**：仓库配置 Git LFS 而服务器未装 git-lfs，提交权重只会产生 133 字节指针。"
-       "四个正式权重改为通过 GitHub Release 提供，路径、字节数与实测 SHA256 见 `WEIGHTS.md` 与 "
-       "`terrastate/WEIGHTS_INDEX.md`。",
+       "四个正式权重已通过 GitHub Release "
+       "[`weights-first-dataset-20260913`](https://github.com/fuchen0614-oss/WorldModel2026/"
+       "releases/tag/weights-first-dataset-20260913) 发布（4 个资产 / 176,955,684 字节），"
+       "并已**逐一回下载复核**过字节数与 SHA256；路径、字节数与实测 SHA256 见 `WEIGHTS.md` 与 "
+       "`terrastate/WEIGHTS_INDEX.md`。历史 LFS 指针保持原样，仅标明不可用。",
        "2. **图7 的四个 per-cube CSV 占 46 MiB**（`ood_s` 20.1 + `ood_st` 15.4 + `iid` 6.1 + "
        "`ood_t` 4.6 MiB）。它们是逐 receiver × 逐时距的原始证据，是 Table 6B 可直接复核的底座，"
        "因此保留而未压缩；若仓库体积敏感，可改为 `.csv.gz`（读取方 `pandas.read_csv` 可直接识别）。",

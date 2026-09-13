@@ -78,7 +78,7 @@
 | `code/build_release.sh` | 5810 | `037547e1f0007181…` | 从只读来源目录**复制**（绝不移动）材料，组装出本包 |
 | `code/check_links2.py` | 3354 | `7d3b962e1473edf3…` | 全包 markdown 相对链接解析检查 |
 | `code/fix_links.py` | 4129 | `2ec39cac5b5121c5…` | 把叙事稿中的绝对符号链接改写为 `../figures/` 相对路径 |
-| `code/gen_release_docs.py` | 20247 | `5fc9408b171587cd…` | 生成 README / SOURCE_COMMIT / CODE_AND_CONFIG_INDEX / WEIGHTS |
+| `code/gen_release_docs.py` | 22439 | `047087d26bf26fe2…` | 生成 README / SOURCE_COMMIT / CODE_AND_CONFIG_INDEX / WEIGHTS |
 | `code/p1_fallback.py` | 3575 | `61aa09df355e4bb7…` | 为图3 / 图8 的绘图脚本加入数组回退路径 |
 | `code/p1b_readmes.py` | 4229 | `707e2f762b492b9c…` | 重写图3 / 图8 的 code/README.md，标注历史脚本 |
 | `code/p1c_redraw.py` | 4471 | `83d1a7c54152c303…` | 在瘦身副本中重绘全部六张图并与 selected/ 逐像素比对 |

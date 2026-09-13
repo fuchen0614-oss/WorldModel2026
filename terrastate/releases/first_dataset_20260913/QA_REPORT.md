@@ -43,11 +43,16 @@
 | 36 | redrawn PDFs are identical to selected/ apart from the embedded creation date | PASS | 9/9 identical after blanking /CreationDate |
 | 37 | SHA256SUMS.txt written | PASS | 274 entries |
 | 38 | sha256sum -c SHA256SUMS.txt passes with no failures and no warnings | PASS | 274 entries OK |
-| 39 | no mode 120000 (symlink) entries in the git index for the release dir | PASS | 266 index entries, all regular |
+| 39 | no mode 120000 (symlink) entries in the git index for the release dir | PASS | 277 index entries, all regular |
 | 40 | nothing outside the release directory is staged | PASS | 0 staged, all inside the release dir |
 | 41 | no weight-like file is staged | PASS | 0 |
+| 42 | WEIGHTS.md registers the live GitHub Release that carries the four formal weights | PASS | tag + asset count stated in WEIGHTS.md |
+| 43 | WEIGHTS.md carries the full SHA256 of all four published weights (matches the frozen files) | PASS | 4/4 hashes present, byte-for-byte identical to the on-disk checkpoints |
+| 44 | terrastate/WEIGHTS_INDEX.md links the new Release and keeps the older one | PASS | 8007 B index, both releases listed |
+| 45 | the legacy 133-byte LFS pointers are documented as unusable, not rewritten | PASS | WEIGHTS.md + WEIGHTS_INDEX.md both flag them |
+| 46 | FSR weight is explicitly excluded from the Release (out of scope this round) | PASS | exclusion stated in WEIGHTS.md and WEIGHTS_INDEX.md |
 
-**合计 41 项：PASS 41，FAIL 0，SKIP 0。**
+**合计 46 项：PASS 46，FAIL 0，SKIP 0。**
 
 ## 包概况
 
@@ -65,7 +70,7 @@
 
 ## 已知限制（如实记录）
 
-1. **权重不在包内**：仓库配置 Git LFS 而服务器未装 git-lfs，提交权重只会产生 133 字节指针。四个正式权重改为通过 GitHub Release 提供，路径、字节数与实测 SHA256 见 `WEIGHTS.md` 与 `terrastate/WEIGHTS_INDEX.md`。
+1. **权重不在包内**：仓库配置 Git LFS 而服务器未装 git-lfs，提交权重只会产生 133 字节指针。四个正式权重已通过 GitHub Release [`weights-first-dataset-20260913`](https://github.com/fuchen0614-oss/WorldModel2026/releases/tag/weights-first-dataset-20260913) 发布（4 个资产 / 176,955,684 字节），并已**逐一回下载复核**过字节数与 SHA256；路径、字节数与实测 SHA256 见 `WEIGHTS.md` 与 `terrastate/WEIGHTS_INDEX.md`。历史 LFS 指针保持原样，仅标明不可用。
 2. **图7 的四个 per-cube CSV 占 46 MiB**（`ood_s` 20.1 + `ood_st` 15.4 + `iid` 6.1 + `ood_t` 4.6 MiB）。它们是逐 receiver × 逐时距的原始证据，是 Table 6B 可直接复核的底座，因此保留而未压缩；若仓库体积敏感，可改为 `.csv.gz`（读取方 `pandas.read_csv` 可直接识别）。
 3. **候选图库未收录**：60 个预测候选与 12 个天气候选只保留终稿实际使用的 P42 / W02；完整候选图库仍在运行目录 `first_dataset_showcase_20260912T062326Z`。
 4. **图3 的四个官方基线已包含在正式图中**（ConvLSTM 1M / PredRNN 1M / SimVP 6M / Contextformer 6M，来自匹配的 GreenEarthNet 官方 seed-42 checkpoint），复现数组见 `reproduction/P42_official_baselines.npz`，来源见 `reproduction/P42_provenance.json`。**本包不含四个官方 checkpoint 本体**（体积原因），获取方式见该 provenance 的 `official_release` 字段。
