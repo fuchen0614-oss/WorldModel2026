@@ -1,5 +1,5 @@
 # SHA256SUMS — first_dataset_20260913
-# regenerated 2026-09-13T10:45:00Z after integrating the Figure 7 layout update
+# regenerated 2026-09-13T10:50:00Z after integrating the Figure 7 layout update
 # paths are relative to this directory; verify with:  sha256sum -c SHA256SUMS.txt
 #
 # NOTE (Windows): 101 text files are CRLF in the repository itself, so with
@@ -218,7 +218,7 @@ eb003a16eabfc8f165260d34401726a747605b56f11e0d1e4320cb3fe7363883  narrative/refe
 e41de64ea1b5059bb34dbb7342f0da968d908706721239aaddcba7020958aab7  narrative/references/A14_训练端执行总纲与监督契约.md
 121926da95e7c3b4c59a2aba3bed92ee871d13bc4e6b657997ebb8d08f6df833  narrative/references/README.md
 cc57b4e8f7049ff2dadf6adbefe07622cc2029d24a3c3a0cb8ee8372d5e2d62a  narrative/references/REVIEW_A13_A14_TIP_主线与叙事建议_20260908.md
-ddc8e048ee1b421e769478ce04fbd91cc426e425d33bfd44632e2c37f105c657  narrative/reports/MAIN_FILES_SHA256.txt
+b9282847a70a9bc0b60793cea0d896d0c5123fc1ea89a216d397cb9f7b4f0aca  narrative/reports/MAIN_FILES_SHA256.txt
 0c21970bca12507cb267da198a79dc268075be4bc928c0689a5cc5b76cf00359  narrative/reports/NARRATIVE_QA.md
 06dc0975db63357ffbfd647be0ed8cedcdf1fa1e05214de60395b0df6409b73c  narrative/supplement/README.md
 73114c25dd6fde903642ca9846cfbee7d0762d6f48942017cc7b620cea80e283  narrative/tables/Table1_standard_prediction.csv
