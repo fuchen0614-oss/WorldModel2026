@@ -56,7 +56,7 @@
 ### 7.3b 分阶段成本（**逐阶段单独测量，不合并成一个倍率**）
 
 阶段定义（与运行时适配器的函数一一对应）：
-`history_encoding` = `initialize()`（把 130 步历史编码成状态）；
+`history_encoding` = `initialize()`（把 10 个五日步历史编码成状态）；
 `shared_prefix` = `advance(..., 10)`（推进到中间时刻，**四个查询共用**）；
 `suffix_per_branch` = `branch()` + `advance(..., 20)` + `decode()`（**每个分支各算一次**）；
 `model_hash` = `model_state_hash()`（身份校验）；`save` / `restore` = `save_state()` / `load_state()`。

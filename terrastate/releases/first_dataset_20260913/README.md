@@ -112,3 +112,20 @@ git -C <repo> -c core.autocrlf=false checkout -- terrastate/releases/first_datas
 
 > `core.autocrlf` 影响整个仓库的检出行为；如只需核对本包，用方式一即可。
 > 另外 19 个文本文件带 UTF-8 BOM，同样来自源包、原样保留。
+
+## 文字勘误轮（2026-09-13 晚）
+
+在不动任何图片、数值与统计口径的前提下，本轮只修正已证实的**事实 / 范围 / 转写**错误：
+
+- `history 130 → forecast 20` 更正为 **`history 10 → forecast 20（均为五日步）`**：GreenEarthNet 官方配置为 `context_length=10`，终稿图 3 的实际张量为 `context (10,128,128)` 与 `gt (20,128,128)`。`tables/`、`narrative/tables/` 与两份主文同步更正。
+- 九个留出分段的 `composed/direct` 比值**按集合分列**：IID2856 `0.9923–1.0234`、dev476 `1.0005–1.0275`，不再合并成单一范围（dev476 为开发诊断集，报告方式必须与独立确认集分开）。
+- C1 三种子 R²_LC 样本标准差范围更正为 **`2.9e-5 至 1.9e-4`**（原写 `6.5e-5 到 2.2e-4`，与冻结的 `Table1_standard_prediction.csv` 不符）。
+- 图 3 行序、图 7A 布局描述、图 9A 阶段清单与图 8A 区间口径**按实际成图**改写；图 7 的验收记录与尺寸按 18:45 的重绘结果更新（2192×1810 / 476051 B）。
+- 分段对照不再写“显著改善”，并明示本轮未做比值层面的配对显著性检验。
+
+同时**删除**了此前位于本目录根部、未被 git 跟踪的 `02_TerraState_中文论文叙事稿.pdf`（约 4.1 MB）：
+它是修正前文字的排版产物，保留会与 `narrative/02_TerraState_中文论文叙事稿.md` 不一致。
+
+改动逐条登记在 `provenance/RELEASE_EDITS.csv`（`edit_kind = wording_correction_20260913`），
+`SHA256SUMS.txt` 已按同一约定刷新（更新 20 条，并补入此前遗漏的 `QA_REPORT.md` 与
+`figures/reports/SHA256SUMS.txt`，共 276 条）。

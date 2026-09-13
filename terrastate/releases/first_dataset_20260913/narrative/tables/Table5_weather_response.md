@@ -7,7 +7,7 @@
 
 ## 5.0 本表统一的实际时间窗口（已按源码核实，全表一致）
 
-本表**所有** ΔLoss 与精度数字都是**完整 20 步目标窗口**（history 130 → forecast 20）上按有效像素求掩码 MSE 的结果，
+本表**所有** ΔLoss 与精度数字都是**完整 20 步目标窗口**（history 10 → forecast 20，均为五日步）上按有效像素求掩码 MSE 的结果，
 **不是**第 20 步单帧误差。核实依据：`eval/extreme_state_audit.py` 的函数 `_endpoint_masked_mse(pred, data, model, mask)` 使用 `cl, tl = model.context_len, model.target_len`。
 历史字段名 `endpoint_fidelity` / `loss_e_*` 是**旧命名**，与它实际计算的窗口不一致；引用时按本节的窗口表述。
 

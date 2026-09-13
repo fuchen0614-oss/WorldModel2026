@@ -1,7 +1,7 @@
 # Table 1. GreenEarthNet 第一数据集标准预测（同协议）
 
 来源：`multiseed_standard_eval_20260910T074115Z/E1_table_delivery/`（已验收）。
-指标：官方 GreenEarthNet chopped LC-balanced scorer；history 130 → forecast 20。
+指标：官方 GreenEarthNet chopped LC-balanced scorer；history 10 → forecast 20（均为五日步）。
 C1 为三个训练 seed（27/42/97）；基线为官方发布的三个权重种子同协议重评。
 
 | 方法 | split | n(seed) | R²_LC (mean ± 样本std) | RMSE_LC (mean ± 样本std) |
