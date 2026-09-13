@@ -126,6 +126,15 @@ git -C <repo> -c core.autocrlf=false checkout -- terrastate/releases/first_datas
 同时**删除**了此前位于本目录根部、未被 git 跟踪的 `02_TerraState_中文论文叙事稿.pdf`（约 4.1 MB）：
 它是修正前文字的排版产物，保留会与 `narrative/02_TerraState_中文论文叙事稿.md` 不一致。
 
+### 第二轮：图注/表注下统一增加"用途与效果"段落
+
+在前一轮纯勘误之后，给**每一张图和每一个表**的图注/表注下方各加了一段统一的
+`> **用途与效果｜** …` 说明，回答同一组问题：这张图/表要说明什么、判据是什么、实测结果如何。
+
+- 两份主文：01 共 17 处（9 图 + 7 表 + 图 7 机制主例 M05），02 共 11 处（9 图 + 表 1 + 表 2/图 4 预留位）。
+- 图包：9 个图目录的 `CAPTION_ZH.md`、`reports/FIGURE_CAPTIONS_ZH.md` 与 `OVERVIEW.md` 同步（11 个文件）。
+- 段落中的数字全部取自本包已冻结的表格与图件，没有新增统计或换算。
+
 改动逐条登记在 `provenance/RELEASE_EDITS.csv`（`edit_kind = wording_correction_20260913`），
 `SHA256SUMS.txt` 已按同一约定刷新（23 条内容文件 + 3 条元数据文件，并补入此前遗漏的
 `QA_REPORT.md` 与 `figures/reports/SHA256SUMS.txt`，共 276 条；全部条目已逐条对照索引内容复核）。
