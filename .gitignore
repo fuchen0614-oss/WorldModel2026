@@ -100,3 +100,11 @@ terrastate/eval/_backup/
 # 结论性的 state_contract_exclusive.json 与 manifests 照常入库。
 terrastate/evaluations/**/score/
 terrastate/evaluations/**/*.parquet
+
+# 编辑器/笔记软件的本地配置，不入版本库
+.obsidian/
+
+# 交付包的**上游源目录**体积约 1.2 GB（含 449 MB 终稿图与候选图库），
+# 只在本机与服务器运行目录保留；精编后的成果快照走
+# terrastate/releases/first_dataset_20260913/ 入库。
+terrastate/思路整理进展/交付包/
