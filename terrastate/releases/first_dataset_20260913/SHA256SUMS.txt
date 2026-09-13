@@ -2,14 +2,15 @@
 # generated 2026-09-13T12:47:44Z (entries for the 2026-09-13 wording-correction round refreshed)
 # paths are relative to this directory; verify with:  sha256sum -c SHA256SUMS.txt
 #
-# NOTE (Windows): text files are hashed in LF-normalised form (the repository form).
-# With core.autocrlf=true a local checkout re-converts line endings, so raw
-# working-copy hashes then differ. Use `git status --porcelain -- <this dir>`
+# NOTE (Windows): each entry is the SHA256 of the file as stored in the repository
+# (i.e. the bytes a Linux/macOS checkout writes), so `sha256sum -c` passes there.
+# With core.autocrlf=true a Windows checkout may re-convert line endings and the
+# raw working-copy hashes then differ. Use `git status --porcelain -- <this dir>`
 # (authoritative) or check out with core.autocrlf=false.
 #
 38bd5adbc30b4ca9cca37813fc8ce648031308828720b172fd16260cc5d3a16b  CODE_AND_CONFIG_INDEX.md
-deecc2f2250b79b843aabbafc3949d5a529be77a7a407dd12f493c4f785ea5c7  QA_REPORT.md
-fc65808c1685944de6807cdb044e4a3d7b52fcd4020d0af4816f992c7931a6dd  README.md
+2b99d78ef70973e7fb3cf264600a4d55dfe55a4959db6fcf7fe0991e56c7ce7c  QA_REPORT.md
+c80c55435a66be027b4f891d17862eb6f30efe7939ec27eee70b8e05333f0cca  README.md
 07a695bd50d3dd1119de411deab51bb8421ed82164a3b0537436ee1a26cc6834  SOURCE_COMMIT.md
 0af3a71d227aadd2e5eb7a7204296b1501b80422d2e7371d557fc864acea0e87  WEIGHTS.md
 037547e1f0007181fbe193308b491be5dfd7118dece18b8439e37ca409acf0c7  code/build_release.sh
@@ -181,7 +182,7 @@ bc0546534a3b76f12d4767aaeceb51f2666ea1be4c0885da9997c627dffb797b  figures/图9_�
 ea8b0efcdfcb247dc72b4a8b7c888e0f9ffc14cda340fd17ab6edc58062f12e4  figures/图9_状态复用成本/code/render_final.py
 4eb2221d3b04ec60c70860823381c3b65bfd8aaeb4e8dea863cf9477699575b7  figures/图9_状态复用成本/data/D6_cost_model_recomputed.csv
 77e0039e5dead83d9de7806ac012ea14a13ca67d15ea8038471724678f5772a8  figures/图9_状态复用成本/data/T7_c1_runtime.json
-6458892d10b04ee5f10339e0c4e4009bebaf606c054e4da4814ad1221c63f3e1  figures/图9_状态复用成本/data/Table7_efficiency_state_reuse.csv
+b33fca3821f6f69d4371761e5891d70976c3faeab154deb290ae78ef86855030  figures/图9_状态复用成本/data/Table7_efficiency_state_reuse.csv
 7a384c7a19b01542a998bb842a3011b9c7c3a4f82e04b7e3164d666cc36c4483  figures/图9_状态复用成本/data/Table7_efficiency_state_reuse.md
 958b4eb0997229a50f793f987d285448c11dcd634ab0a26d61e0f1da7dd75638  figures/图9_状态复用成本/selected/图9_状态复用成本_最终.pdf
 d247d2736f1de160d048a51264fadcf592a156fc752d8f1e67bb198d6f422677  figures/图9_状态复用成本/selected/图9_状态复用成本_最终.png
@@ -237,9 +238,9 @@ f2f488a003ca45c0f8d8f13449c64e5a88bcda114f93432a23750c0a2f1e6430  narrative/tabl
 bd35d4789ad72eea90060bb7bde45e759456d91f0fe2c594f99c8affdd0a580d  narrative/tables/Table6A_leaveout_partitions.md
 022b33ecb9f5bb567071e85e65dbeeecad4b15acd72c20b1835c7f71bbaa3e95  narrative/tables/Table6B_common_suffix.csv
 e720e624b13712bd1ffe740934eb468ccf335b52d714180818e3cc56a208bba9  narrative/tables/Table6B_common_suffix.md
-6458892d10b04ee5f10339e0c4e4009bebaf606c054e4da4814ad1221c63f3e1  narrative/tables/Table7_efficiency_state_reuse.csv
+b33fca3821f6f69d4371761e5891d70976c3faeab154deb290ae78ef86855030  narrative/tables/Table7_efficiency_state_reuse.csv
 7a384c7a19b01542a998bb842a3011b9c7c3a4f82e04b7e3164d666cc36c4483  narrative/tables/Table7_efficiency_state_reuse.md
-13e890dc68e1d32d0246e8149c4ad23fd95f4b14156a99c9c93dcff11f0b1d50  provenance/RELEASE_EDITS.csv
+580df5e89a45d706a4cc25d8c069348b0edc8f54c75eeee1d17b6057c0507648  provenance/RELEASE_EDITS.csv
 ba1094c175b23169c190e3990edec487fd7f2a28937d0e5ca6954e516946f038  reports/CLAIM_EVIDENCE_MATRIX.csv
 117cb8209081de1856f824f7e282a3fc66637c2152baf082ba2a6afe2a71821a  reports/CONSISTENCY_CHECK.json
 21aea9e8bd3a0fe44cd1fcfa39fbdbbeb0ba3e13d4545241340c440c05fa9d73  reports/CONSISTENCY_CHECK.md
@@ -281,5 +282,5 @@ f2f488a003ca45c0f8d8f13449c64e5a88bcda114f93432a23750c0a2f1e6430  tables/Table5_
 bd35d4789ad72eea90060bb7bde45e759456d91f0fe2c594f99c8affdd0a580d  tables/Table6A_leaveout_partitions.md
 022b33ecb9f5bb567071e85e65dbeeecad4b15acd72c20b1835c7f71bbaa3e95  tables/Table6B_common_suffix.csv
 e720e624b13712bd1ffe740934eb468ccf335b52d714180818e3cc56a208bba9  tables/Table6B_common_suffix.md
-6458892d10b04ee5f10339e0c4e4009bebaf606c054e4da4814ad1221c63f3e1  tables/Table7_efficiency_state_reuse.csv
+b33fca3821f6f69d4371761e5891d70976c3faeab154deb290ae78ef86855030  tables/Table7_efficiency_state_reuse.csv
 7a384c7a19b01542a998bb842a3011b9c7c3a4f82e04b7e3164d666cc36c4483  tables/Table7_efficiency_state_reuse.md

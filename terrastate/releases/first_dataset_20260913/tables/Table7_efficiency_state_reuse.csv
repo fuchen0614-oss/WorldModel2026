@@ -1,23 +1,23 @@
-item,value,unit,conditions
-C1_full_forecast_median_ms,31.90945601090789,ms,"batch1 fp32 eval, A100-40GB"
-C1_state_tensor_bytes,2621440,B,z+prior+geo
-C1_state_serialized_bytes,2623985,B,torch.save
-C1_save_state_median_ms,22.992151556536555,ms,
-C1_load_state_median_ms,34.09635159187019,ms,
-branch_B1_median_ms,0.4145265556871891,ms,same initial state
-branch_B2_median_ms,0.7385250646620989,ms,same initial state
-branch_B4_median_ms,1.3777811545878649,ms,same initial state
-branch_B8_median_ms,2.642054343596101,ms,same initial state
-history_encoding_ms,29.469443019479513,ms,initialize(): 130-step history -> state
-shared_prefix_ms,0.3919785376638174,ms,advance to the shared intermediate step
-suffix_per_branch_ms,0.41151302866637707,ms,"branch + advance + decode, per branch"
-model_hash_ms,33.34616031497717,ms,model_state_hash() identity check
-save_ms,22.992151556536555,ms,save_state() to disk
-restore_gpu_ms,34.65693583711982,ms,load_state() on the same device
-restore_cpu_ms,34.09635159187019,ms,load_state() with CPU map_location
-cost_model_B1_ratio,1.0,x,"analytic ratio reencode/reuse; varies with B, not a single speedup"
-cost_model_B2_ratio,1.9731777456881945,x,"analytic ratio reencode/reuse; varies with B, not a single speedup"
-cost_model_B4_ratio,3.84327031753057,x,"analytic ratio reencode/reuse; varies with B, not a single speedup"
-cost_model_B8_ratio,7.304908631626785,x,"analytic ratio reencode/reuse; varies with B, not a single speedup"
-output_consistency_max_abs_diff,0.0,NDVI,"max over all queries, adapter vs pure compute"
-all_queries_consistent,True,bool,4/4 queries checked
+item,value,unit,conditions
+C1_full_forecast_median_ms,31.90945601090789,ms,"batch1 fp32 eval, A100-40GB"
+C1_state_tensor_bytes,2621440,B,z+prior+geo
+C1_state_serialized_bytes,2623985,B,torch.save
+C1_save_state_median_ms,22.992151556536555,ms,
+C1_load_state_median_ms,34.09635159187019,ms,
+branch_B1_median_ms,0.4145265556871891,ms,same initial state
+branch_B2_median_ms,0.7385250646620989,ms,same initial state
+branch_B4_median_ms,1.3777811545878649,ms,same initial state
+branch_B8_median_ms,2.642054343596101,ms,same initial state
+history_encoding_ms,29.469443019479513,ms,initialize(): 10 five-daily history steps -> state
+shared_prefix_ms,0.3919785376638174,ms,advance to the shared intermediate step
+suffix_per_branch_ms,0.41151302866637707,ms,"branch + advance + decode, per branch"
+model_hash_ms,33.34616031497717,ms,model_state_hash() identity check
+save_ms,22.992151556536555,ms,save_state() to disk
+restore_gpu_ms,34.65693583711982,ms,load_state() on the same device
+restore_cpu_ms,34.09635159187019,ms,load_state() with CPU map_location
+cost_model_B1_ratio,1.0,x,"analytic ratio reencode/reuse; varies with B, not a single speedup"
+cost_model_B2_ratio,1.9731777456881945,x,"analytic ratio reencode/reuse; varies with B, not a single speedup"
+cost_model_B4_ratio,3.84327031753057,x,"analytic ratio reencode/reuse; varies with B, not a single speedup"
+cost_model_B8_ratio,7.304908631626785,x,"analytic ratio reencode/reuse; varies with B, not a single speedup"
+output_consistency_max_abs_diff,0.0,NDVI,"max over all queries, adapter vs pure compute"
+all_queries_consistent,True,bool,4/4 queries checked

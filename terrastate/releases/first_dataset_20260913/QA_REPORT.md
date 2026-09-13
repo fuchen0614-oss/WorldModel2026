@@ -91,8 +91,9 @@
 | 图 3 行序 / 图 7A 布局 / 图 9A 阶段 / 图 8A 区间单位 | 与成图不符 | 与成图一致 |
 | 图 7 验收记录 | 2318×2094 / 449098 B | 2192×1810 / 476051 B |
 
-影响文件 20 个（见 `provenance/RELEASE_EDITS.csv` 末 20 行，`edit_kind = wording_correction_20260913`），
-`SHA256SUMS.txt` 已刷新（20 条更新 + 补入 `QA_REPORT.md`、`figures/reports/SHA256SUMS.txt`，共 276 条）。
+影响文件 23 个内容文件（含三处 `Table7_*.csv` 副本的 `conditions` 描述列，见
+`provenance/RELEASE_EDITS.csv` 末 20 行 + 本轮补记，`edit_kind = wording_correction_20260913`），
+`SHA256SUMS.txt` 已刷新（补入 `QA_REPORT.md`、`figures/reports/SHA256SUMS.txt`，共 276 条，逐条对照索引内容复核通过）。
 构建期验收的其余结论（重绘逐像素一致、包内无 LFS 文件、无符号链接、链接全部可解析等）不受本轮影响。
 
 另外删除了此前位于包根、**未被 git 跟踪**的 `02_TerraState_中文论文叙事稿.pdf`（约 4.1 MB）：
