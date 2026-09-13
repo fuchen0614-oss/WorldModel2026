@@ -1,0 +1,305 @@
+{
+  "arm": "C1",
+  "checkpoint": "/data/zs/WorldModel2026/terrastate/ops/candidate_c_nightly/20260820T155316Z/formal/run_c1_20260822T131006Z/checkpoint_main.pt",
+  "seed": 42,
+  "device": "cuda:0",
+  "gpu_name": "NVIDIA A100-SXM4-40GB",
+  "protocol": {
+    "warmup": "10 (cheap phases) / 3-5 (end-to-end phases), discarded",
+    "repeat": "10-30 depending on cost; median reported",
+    "sync": true,
+    "dtype": "fp32",
+    "batch": 1,
+    "eval_mode": true,
+    "grad_mode": "inference_mode",
+    "val_dir": "/data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped",
+    "n_queries": 4,
+    "queries_identical": true,
+    "queries_identical_note": "all four queries use the SAME fixed real future-weather segment, so the only difference between the two paths is whether the history and the shared prefix are recomputed",
+    "note": "inference only; no model code and no shared-repo file modified"
+  },
+  "shapes": {
+    "u_future_shape": [
+      1,
+      20,
+      24
+    ],
+    "pred_shape": [
+      1,
+      20,
+      1,
+      128,
+      128
+    ],
+    "z_shape": [
+      1024,
+      256
+    ],
+    "prior_shape": [
+      1,
+      20,
+      1,
+      128,
+      128
+    ],
+    "target_len": 20,
+    "context_len": 10
+  },
+  "contention": {
+    "n_compute_procs": 3,
+    "compute_procs": [
+      "2651359, 34160 MiB",
+      "2660541, 22578 MiB",
+      "3789307, 416 MiB"
+    ],
+    "note": "a shared node; this is a LIMITED measurement, not a throughput benchmark"
+  },
+  "full_forecast": {
+    "median_ms": 31.90945601090789,
+    "min_ms": 31.759235076606274,
+    "max_ms": 33.84271590039134,
+    "n": 30,
+    "warmup": 10,
+    "repeat": 30,
+    "gpu_synced": true
+  },
+  "phases": {
+    "history_encoding_ms": 29.469443019479513,
+    "shared_prefix_ms": 0.3919785376638174,
+    "suffix_per_branch_ms": 0.41151302866637707,
+    "model_hash_ms": 33.34616031497717,
+    "save_ms": 22.992151556536555,
+    "restore_gpu_ms": 34.65693583711982,
+    "restore_cpu_ms": 34.09635159187019,
+    "load_cpu_no_hash_ms": 0.5696259904652834,
+    "cpu_to_gpu_transfer_ms": 0.9323342237621546,
+    "initialize_end_to_end_ms": 62.170872930437326,
+    "advance_end_to_end_ms": 34.20855989679694,
+    "decode_end_to_end_ms": 33.710652962327,
+    "adapter_path_4_identical_queries_ms": 371.15427176468074,
+    "reencode_path_4_identical_queries_ms": 670.6916384864599,
+    "pure_compute_4_identical_queries_ms": 34.39965448342264
+  },
+  "phase_cost": {
+    "history_encoding_ms": 29.469443019479513,
+    "shared_prefix_ms": 0.3919785376638174,
+    "suffix_per_branch_ms": 0.41151302866637707,
+    "model_hash_ms": 33.34616031497717,
+    "save_ms": 22.992151556536555,
+    "restore_gpu_ms": 34.65693583711982,
+    "restore_cpu_ms": 34.09635159187019,
+    "load_cpu_no_hash_ms": 0.5696259904652834,
+    "cpu_to_gpu_transfer_ms": 0.9323342237621546,
+    "initialize_end_to_end_ms": 62.170872930437326,
+    "advance_end_to_end_ms": 34.20855989679694,
+    "decode_end_to_end_ms": 33.710652962327,
+    "adapter_path_4_identical_queries_ms": 371.15427176468074,
+    "reencode_path_4_identical_queries_ms": 670.6916384864599,
+    "pure_compute_4_identical_queries_ms": 34.39965448342264
+  },
+  "state": {
+    "tensor_bytes": 2621440,
+    "serialized_bytes": 2623985,
+    "components": {
+      "z": [
+        1024,
+        256
+      ],
+      "prior": [
+        1,
+        20,
+        1,
+        128,
+        128
+      ],
+      "geo": [
+        1024,
+        64
+      ]
+    },
+    "sample_output_sha256": "2086c889a9a0cb94b920f60ed33e2db340a4e60788f8d1dedaa683c29f204e74"
+  },
+  "save_state": {
+    "median_ms": 22.992151556536555,
+    "min_ms": 10.95629297196865,
+    "max_ms": 30.759312212467194,
+    "n": 20,
+    "warmup": 5,
+    "repeat": 20,
+    "gpu_synced": true
+  },
+  "load_state": {
+    "median_ms": 34.09635159187019,
+    "min_ms": 33.9113799855113,
+    "max_ms": 34.98764196410775,
+    "n": 20,
+    "warmup": 5,
+    "repeat": 20,
+    "gpu_synced": true
+  },
+  "load_state_no_hash": {
+    "median_ms": 0.5696259904652834,
+    "min_ms": 0.5617938004434109,
+    "max_ms": 0.5839853547513485,
+    "n": 20,
+    "warmup": 5,
+    "repeat": 20,
+    "gpu_synced": true
+  },
+  "model_state_hash": {
+    "median_ms": 33.34616031497717,
+    "min_ms": 33.23184186592698,
+    "max_ms": 34.19919824227691,
+    "n": 20,
+    "warmup": 5,
+    "repeat": 20,
+    "gpu_synced": true
+  },
+  "cpu_to_gpu_transfer": {
+    "median_ms": 0.9323342237621546,
+    "min_ms": 0.9190309792757034,
+    "max_ms": 0.9506340138614178,
+    "n": 20,
+    "warmup": 5,
+    "repeat": 20,
+    "gpu_synced": true
+  },
+  "cost_model": {
+    "B1": {
+      "reuse_ms": 30.272934585809708,
+      "reencode_ms": 30.272934585809708,
+      "ratio": 1.0
+    },
+    "B2": {
+      "reuse_ms": 30.684447614476085,
+      "reencode_ms": 60.545869171619415,
+      "ratio": 1.9731777456881945
+    },
+    "B4": {
+      "reuse_ms": 31.50747367180884,
+      "reencode_ms": 121.09173834323883,
+      "ratio": 3.84327031753057
+    },
+    "B8": {
+      "reuse_ms": 33.15352578647435,
+      "reencode_ms": 242.18347668647766,
+      "ratio": 7.304908631626785
+    }
+  },
+  "cost_model_formula": {
+    "reuse(B)": "history_encoding + shared_prefix + B * suffix_per_branch",
+    "reencode(B)": "B * (history_encoding + shared_prefix + suffix_per_branch)",
+    "ratio(B)": "reencode(B) / reuse(B)   -- depends on B, so no single ratio is a result",
+    "naming": "'reuse' means THE HISTORY AND THE SHARED PREFIX ARE COMPUTED ONCE and amortised over the B queries. It is NOT 'a saved state is faster'."
+  },
+  "branch_cost": {
+    "B1": {
+      "median_ms": 0.4145265556871891,
+      "min_ms": 0.41025271639227867,
+      "max_ms": 0.4320479929447174,
+      "n": 20,
+      "warmup": 5,
+      "repeat": 20,
+      "gpu_synced": true
+    },
+    "B2": {
+      "median_ms": 0.7385250646620989,
+      "min_ms": 0.7319971919059753,
+      "max_ms": 0.78529492020607,
+      "n": 20,
+      "warmup": 5,
+      "repeat": 20,
+      "gpu_synced": true
+    },
+    "B4": {
+      "median_ms": 1.3777811545878649,
+      "min_ms": 1.3714390806853771,
+      "max_ms": 1.4127460308372974,
+      "n": 20,
+      "warmup": 5,
+      "repeat": 20,
+      "gpu_synced": true
+    },
+    "B8": {
+      "median_ms": 2.642054343596101,
+      "min_ms": 2.607216127216816,
+      "max_ms": 2.6745437644422054,
+      "n": 20,
+      "warmup": 5,
+      "repeat": 20,
+      "gpu_synced": true
+    }
+  },
+  "branch_cost_note": "B=1/2/4/8 with DISTINCT deterministic weather suffixes -- this is a pure cost-scaling measurement, not a weather result",
+  "adapter_end_to_end": {
+    "median_ms": 371.15427176468074,
+    "min_ms": 367.00592702254653,
+    "max_ms": 377.8464440256357,
+    "n": 10,
+    "warmup": 3,
+    "repeat": 10,
+    "gpu_synced": true,
+    "n_model_hash_calls": 10,
+    "path": "runtime/candidate_c_state.py (initialize/advance/decode)"
+  },
+  "pure_compute_identity_check": {
+    "median_ms": 34.39965448342264,
+    "min_ms": 30.891121365129948,
+    "max_ms": 36.19387932121754,
+    "n": 10,
+    "warmup": 3,
+    "repeat": 10,
+    "gpu_synced": true,
+    "n_model_hash_calls": 0,
+    "path": "local copy inside this package; no hash checks"
+  },
+  "adapter_vs_pure_compute_max_abs_diff": 0.0,
+  "adapter_vs_pure_compute_identical": true,
+  "query_output_consistency": {
+    "q0": {
+      "max_abs_diff": 0.0,
+      "identical": true
+    },
+    "q1": {
+      "max_abs_diff": 0.0,
+      "identical": true
+    },
+    "q2": {
+      "max_abs_diff": 0.0,
+      "identical": true
+    },
+    "q3": {
+      "max_abs_diff": 0.0,
+      "identical": true
+    }
+  },
+  "all_queries_consistent": true,
+  "output_consistency_max_abs_diff": 0.0,
+  "reuse_vs_reencode_B4": {
+    "reuse_history_ms": {
+      "median_ms": 371.15427176468074,
+      "min_ms": 367.00592702254653,
+      "max_ms": 377.8464440256357,
+      "n": 10,
+      "warmup": 3,
+      "repeat": 10,
+      "gpu_synced": true
+    },
+    "reencode_history_ms": {
+      "median_ms": 670.6916384864599,
+      "min_ms": 655.212206300348,
+      "max_ms": 680.2359637804329,
+      "n": 10,
+      "warmup": 3,
+      "repeat": 10,
+      "gpu_synced": true
+    },
+    "speedup_reuse_over_reencode": 1.807042756904309,
+    "n_queries": 4,
+    "queries_identical": true,
+    "n_model_hash_calls_reuse_path": 10,
+    "n_model_hash_calls_reencode_path": 16,
+    "note": "MEASURED POINT under this implementation only. Both paths pay the adapter's full state-dict hash check on every advance/decode call, which the recompute path pays 4x as often. This is therefore NOT a pure compute speedup and is NOT reported as a headline number."
+  },
+  "contention_note": "see RUN_LEDGER.csv and contention above for the GPU load at measurement time"
+}

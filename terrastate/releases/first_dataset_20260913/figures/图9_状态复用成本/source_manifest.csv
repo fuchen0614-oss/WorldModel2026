@@ -1,0 +1,2 @@
+item,source,protocol
+phase measurements and cost model,/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/metrics/T7_c1_runtime.json,"A100-40GB, batch=1, fp32, inference_mode; limited shared-node measurement"

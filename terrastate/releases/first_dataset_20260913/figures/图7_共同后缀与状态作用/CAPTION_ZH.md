@@ -1,0 +1,1 @@
+图7. 共同后缀实验与状态作用。A：在一个 A 面板内部用 2×2 小图分别展示 IID、OOD-T、OOD-S 与 OOD-ST，每格包含 D20、A、B、state donor 四条后缀相对时距 1–10 的冻结轨迹。B：按 receiver 等权汇总的 donor 替换 ΔMSE 均值及 95% 区间。C：receiver 级 ΔMSE 分布。D：先按状态距离排序，再将相邻 10 个 receiver 浓缩为一个中位数点以降低过绘；标注的 Spearman ρ 仍由未浓缩原始 receiver 计算。D 仅说明状态距离与输出差距的关联，不构成因果或充分状态证明。

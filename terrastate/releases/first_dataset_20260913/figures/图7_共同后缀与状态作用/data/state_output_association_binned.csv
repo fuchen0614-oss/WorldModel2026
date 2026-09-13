@@ -1,0 +1,5 @@
+split,n_receivers,spearman_rho,spearman_p,binning
+IID,2066,0.30757572941054223,1.631461222989561e-46,8 equal-count bins; line=median; ribbon=IQR
+OOD-T,1605,0.3892544918641138,3.2681784401464297e-59,8 equal-count bins; line=median; ribbon=IQR
+OOD-S,6965,0.3978032708176829,8.131507995815125e-263,8 equal-count bins; line=median; ribbon=IQR
+OOD-ST,5437,0.34992049105812656,2.1811573858265187e-156,8 equal-count bins; line=median; ribbon=IQR

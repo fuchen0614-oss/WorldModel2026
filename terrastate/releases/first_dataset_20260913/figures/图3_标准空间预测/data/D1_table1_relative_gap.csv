@@ -1,0 +1,5 @@
+split,c1_rmse_seed42,c1_r2_seed42,c1_rmse_mean3,c1_rmse_std3,c1_r2_mean3,c1_r2_std3,best_baseline,best_baseline_rmse,best_baseline_r2,weakest_baseline,weakest_baseline_rmse,rmse_gap_pct_seed42_vs_best,rmse_gap_pct_mean3_vs_best,rmse_edge_pct_seed42_vs_weakest,c1_rmse_rank_of_5
+iid_chopped,0.155529,0.52202,0.155531,0.00000142,0.522094,0.00006489,PredRNN 1M,0.1423,0.541433,ConvLSTM 1M,0.1557,9.2966,9.2977,-0.1098,4
+ood-t_chopped,0.15094,0.5726,0.150957,0.00002742,0.572586,0.00010813,Contextformer 6M,0.1431,0.5877,ConvLSTM 1M,0.1615,5.4788,5.4904,-6.5386,4
+ood-s_chopped,0.16213,0.494875,0.16214,0.00000959,0.494908,0.00002879,PredRNN 1M,0.149367,0.508733,ConvLSTM 1M,0.162167,8.545,8.5515,-0.0226,4
+ood-st_chopped,0.154161,0.54076,0.154177,0.00002506,0.54074,0.00018833,Contextformer 6M,0.1473,0.5567,ConvLSTM 1M,0.161033,4.6582,4.6687,-4.2673,3

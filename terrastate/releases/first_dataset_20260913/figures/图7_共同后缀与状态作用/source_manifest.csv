@@ -1,0 +1,3 @@
+item,source,protocol
+per-cube-horizon paths,/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/merged,frozen corrected-mask matched-donor run
+main ΔMSE intervals,/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table4B_state_intervention_corrected.csv,"receiver-equal, B=2000"

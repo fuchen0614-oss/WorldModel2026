@@ -1,0 +1,2 @@
+item,source,protocol
+Fig5,/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/metrics/F5_window_rmse_3seed.csv,"complete frozen four-split range; 3 C1 seeds; sample SD ddof=1, not CI"

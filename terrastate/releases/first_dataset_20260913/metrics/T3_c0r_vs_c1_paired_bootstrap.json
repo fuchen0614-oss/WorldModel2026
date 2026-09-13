@@ -1,0 +1,128 @@
+{
+  "primary_grouping": {
+    "_grouping_rule": "tile_first_else_0.1deg_grid  [PRIMARY -- same grouping as all v1 numbers]",
+    "_grouping_note": "Sentinel-2 tile code when present in the record id, else a grid cell from rounding parsed degrees to 1 decimal(s)",
+    "iid_chopped": {
+      "groups": 80,
+      "pooled_rmse_c1": 0.1756205552435497,
+      "pooled_rmse_c0r": 0.17457457258686623,
+      "delta_c0r_minus_c1": -0.0010459826566834585,
+      "ci95": [
+        -0.0014412534768382327,
+        -0.000683659805944574
+      ],
+      "p_delta_lt_0": 1.0,
+      "B": 2000,
+      "seed": 20260910,
+      "statistic": "pooled RMSE difference (C0R - C1), paired spatial-group bootstrap"
+    },
+    "ood-t_chopped": {
+      "groups": 77,
+      "pooled_rmse_c1": 0.17108195342209834,
+      "pooled_rmse_c0r": 0.17067079429173362,
+      "delta_c0r_minus_c1": -0.0004111591303647133,
+      "ci95": [
+        -0.0013195203490468453,
+        0.000664721614552837
+      ],
+      "p_delta_lt_0": 0.8005,
+      "B": 2000,
+      "seed": 20260910,
+      "statistic": "pooled RMSE difference (C0R - C1), paired spatial-group bootstrap"
+    },
+    "ood-st_chopped": {
+      "groups": 641,
+      "pooled_rmse_c1": 0.1730055953928163,
+      "pooled_rmse_c0r": 0.17289435552689014,
+      "delta_c0r_minus_c1": -0.00011123986592614932,
+      "ci95": [
+        -0.00045907709139433384,
+        0.0002656495685126404
+      ],
+      "p_delta_lt_0": 0.725,
+      "B": 2000,
+      "seed": 20260910,
+      "statistic": "pooled RMSE difference (C0R - C1), paired spatial-group bootstrap"
+    },
+    "ood-s_chopped": {
+      "groups": 748,
+      "pooled_rmse_c1": 0.18702682538283666,
+      "pooled_rmse_c0r": 0.1865134432855092,
+      "delta_c0r_minus_c1": -0.0005133820973274583,
+      "ci95": [
+        -0.0008167787903189519,
+        -0.00018602116809341245
+      ],
+      "p_delta_lt_0": 1.0,
+      "B": 2000,
+      "seed": 20260910,
+      "statistic": "pooled RMSE difference (C0R - C1), paired spatial-group bootstrap"
+    }
+  },
+  "sensitivity_grouping_0.5deg": {
+    "_grouping_rule": "tile_first_else_0.5deg_grid  [SENSITIVITY -- grouping-rule check]",
+    "_grouping_note": "Sentinel-2 tile code when present in the record id, else a grid cell from multiples of 0.5 deg",
+    "iid_chopped": {
+      "groups": 80,
+      "pooled_rmse_c1": 0.1756205552435497,
+      "pooled_rmse_c0r": 0.17457457258686623,
+      "delta_c0r_minus_c1": -0.0010459826566834585,
+      "ci95": [
+        -0.0014412534768382327,
+        -0.000683659805944574
+      ],
+      "p_delta_lt_0": 1.0,
+      "B": 2000,
+      "seed": 20260910,
+      "statistic": "pooled RMSE difference (C0R - C1), paired spatial-group bootstrap"
+    },
+    "ood-t_chopped": {
+      "groups": 77,
+      "pooled_rmse_c1": 0.17108195342209834,
+      "pooled_rmse_c0r": 0.17067079429173362,
+      "delta_c0r_minus_c1": -0.0004111591303647133,
+      "ci95": [
+        -0.0013195203490468453,
+        0.000664721614552837
+      ],
+      "p_delta_lt_0": 0.8005,
+      "B": 2000,
+      "seed": 20260910,
+      "statistic": "pooled RMSE difference (C0R - C1), paired spatial-group bootstrap"
+    },
+    "ood-st_chopped": {
+      "groups": 399,
+      "pooled_rmse_c1": 0.17300559539281632,
+      "pooled_rmse_c0r": 0.17289435552689014,
+      "delta_c0r_minus_c1": -0.00011123986592617707,
+      "ci95": [
+        -0.0004785547200172907,
+        0.0002572115576967688
+      ],
+      "p_delta_lt_0": 0.732,
+      "B": 2000,
+      "seed": 20260910,
+      "statistic": "pooled RMSE difference (C0R - C1), paired spatial-group bootstrap"
+    },
+    "ood-s_chopped": {
+      "groups": 454,
+      "pooled_rmse_c1": 0.18702682538283666,
+      "pooled_rmse_c0r": 0.1865134432855092,
+      "delta_c0r_minus_c1": -0.0005133820973274583,
+      "ci95": [
+        -0.0008460976368987703,
+        -0.00016818336048742292
+      ],
+      "p_delta_lt_0": 1.0,
+      "B": 2000,
+      "seed": 20260910,
+      "statistic": "pooled RMSE difference (C0R - C1), paired spatial-group bootstrap"
+    }
+  },
+  "grouping_rule_primary": "Sentinel-2 tile code when present in the record id, else a grid cell from rounding parsed degrees to 1 decimal(s)",
+  "grouping_rule_sensitivity": "Sentinel-2 tile code when present in the record id, else a grid cell from multiples of 0.5 deg",
+  "contract_note": "A14B only requires spatial tiles / predefined geographic groups; it does not mandate a 0.5-degree grid. The v1 comment saying 0.5 degrees was inconsistent with the implemented round(1). The primary result keeps the v1 grouping so that no previously reported number changes; the 0.5-degree run is reported alongside as a sensitivity check.",
+  "statistic": "pooled RMSE difference (C0R - C1), paired spatial-group bootstrap",
+  "B": 2000,
+  "seed": 20260910
+}

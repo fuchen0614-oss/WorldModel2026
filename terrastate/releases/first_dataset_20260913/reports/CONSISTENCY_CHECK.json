@@ -1,0 +1,161 @@
+{
+  "n_checks": 31,
+  "n_fail": 0,
+  "checks": [
+    {
+      "name": "inventory has the editorial columns",
+      "result": "PASS",
+      "detail": "missing=[]"
+    },
+    {
+      "name": "every inventory item states a question and a conclusion",
+      "result": "PASS",
+      "detail": "items=19"
+    },
+    {
+      "name": "every inventory item declares an evidence role",
+      "result": "PASS",
+      "detail": "roles=['core', 'core_cost', 'core_foundation', 'core_headline', 'deferred', 'pending', 'registered_only', 'supporting']"
+    },
+    {
+      "name": "every inventory deliverable_path exists on disk",
+      "result": "PASS",
+      "detail": "[]"
+    },
+    {
+      "name": "every table .md has a .csv sibling",
+      "result": "PASS",
+      "detail": "md-only=[] csv-only=[]"
+    },
+    {
+      "name": "claim matrix declares an evidence_role and a where for every claim",
+      "result": "PASS",
+      "detail": "claims=12"
+    },
+    {
+      "name": "claim matrix uses the agreed role vocabulary",
+      "result": "PASS",
+      "detail": "roles=['core', 'core_foundation', 'core_headline', 'counter_evidence', 'discipline', 'not_tested', 'out_of_scope', 'supporting']"
+    },
+    {
+      "name": "every claim 'where' pointer resolves to a table or figure",
+      "result": "PASS",
+      "detail": "[]"
+    },
+    {
+      "name": "T4B primary (receiver-equal) point estimates reproduce the v8 table",
+      "result": "PASS",
+      "detail": "iid/ood_t/ood_s/ood_st full-suffix receiver-equal values present in the table"
+    },
+    {
+      "name": "T4B CSV marks receiver-equal as main and the other two as sensitivity",
+      "result": "PASS",
+      "detail": "roles=['geo_equal:sensitivity', 'pixel_pooled:sensitivity', 'receiver_equal:main']"
+    },
+    {
+      "name": "T4B OOD-st endpoint: receiver-equal CI above 0 while geo-equal CI crosses 0",
+      "result": "PASS",
+      "detail": "receiver_equal=True geo_equal=False"
+    },
+    {
+      "name": "T4B states the mandated exception in words",
+      "result": "PASS",
+      "detail": "the table itself names the forbidden over-claim"
+    },
+    {
+      "name": "Table 3.3 range is quoted consistently in the table and in the claim matrix",
+      "result": "PASS",
+      "detail": "both the table and the claim carry the same nine-partition ratio range"
+    },
+    {
+      "name": "Table 7 reports the phase decomposition and a B-dependent cost model",
+      "result": "PASS",
+      "detail": "each runtime phase is reported separately"
+    },
+    {
+      "name": "Table 7 reports no single reuse speedup as the result",
+      "result": "PASS",
+      "detail": "the cost model is presented instead of one ratio"
+    },
+    {
+      "name": "Table 5 contains no JSON dump and no truncated content",
+      "result": "PASS",
+      "detail": "every cell is a parsed number"
+    },
+    {
+      "name": "Table 5 separates response magnitude from real loss benefit",
+      "result": "PASS",
+      "detail": "5.2/5.4b are loss-benefit sections; 5.3/5.4a are response-magnitude sections"
+    },
+    {
+      "name": "wording discipline: forbidden claims appear only inside their explicit retraction",
+      "result": "PASS",
+      "detail": "[]"
+    },
+    {
+      "name": "every figure file is registered somewhere (png/pdf twins matched by stem)",
+      "result": "PASS",
+      "detail": "[]"
+    },
+    {
+      "name": "provenance/SHA256SUMS.txt exists and is non-trivial",
+      "result": "PASS",
+      "detail": "entries=80"
+    },
+    {
+      "name": "local sync list documents its exclusions",
+      "result": "PASS",
+      "detail": "81 files to mirror"
+    },
+    {
+      "name": "every local sync entry exists",
+      "result": "PASS",
+      "detail": "[]"
+    },
+    {
+      "name": "every deliverable is either hash-listed or explicitly excluded",
+      "result": "PASS",
+      "detail": "hash coverage is asserted by finalize_package.py (step 12)"
+    },
+    {
+      "name": "run ledger rows all have the header's field count",
+      "result": "PASS",
+      "detail": "header=9 rows=[9]"
+    },
+    {
+      "name": "run ledger survives a naive comma split",
+      "result": "PASS",
+      "detail": "comma counts=[8]"
+    },
+    {
+      "name": "every ledger log_or_output path resolves (globs allowed)",
+      "result": "PASS",
+      "detail": "[]"
+    },
+    {
+      "name": "run ledger carries no stale status",
+      "result": "PASS",
+      "detail": "statuses=['done']"
+    },
+    {
+      "name": "review entry point names the final directory, the local mirror and the preserved old version",
+      "result": "PASS",
+      "detail": "final dir + local mirror + old version all named"
+    },
+    {
+      "name": "review entry point links the presentation plan and the inventory",
+      "result": "PASS",
+      "detail": "both editorial documents are reachable from the single entry point"
+    },
+    {
+      "name": "presentation plan exists and carries the main line",
+      "result": "PASS",
+      "detail": "main line stated verbatim in the plan"
+    },
+    {
+      "name": "retention record present and all deleted prediction dirs absent",
+      "result": "PASS",
+      "detail": "4 dirs recorded"
+    }
+  ]
+}

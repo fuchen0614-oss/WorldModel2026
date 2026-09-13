@@ -1,0 +1,1 @@
+图8. 天气条件响应及 W02 案例。总体图 A 汇总 84 对冻结配对的天气替换效应及 95% 区间，B 将全部天气变量压缩在同一面板中；单一两行图例的第一行为 rain、actual、donor，第二行为 mean temperature、shortwave radiation，颜色区分变量、线型区分 actual 与 donor。W02 详图展示 Ground truth、事实预测绝对误差、天气输入、actual/donor/mean 输出轨迹与事实误差；NDVI、绝对误差和带符号差值色带分别与其对应图组水平对齐。NDVI与绝对误差均由暗到亮表示低到高，带符号差值以0为中心、蓝色为负、红色为正。donor 和 mean 没有真实反事实标签，因而预测差异与事实误差分开解释。

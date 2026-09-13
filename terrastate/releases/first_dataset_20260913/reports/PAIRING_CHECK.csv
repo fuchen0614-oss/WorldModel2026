@@ -1,0 +1,5 @@
+split,status,n_c0r,n_c1,same_length,positional_keys_identical,key_sets_equal,only_in_c0r,only_in_c1,matched,aligned_after_sort,mismatch_landcover,mismatch_n_obs,mismatch_n_obs_full,total_field_mismatches,max_abs_lon_diff,max_abs_lat_diff,n_files_c0r,n_files_c1,groups_primary_tile_else_0.1deg,n_tile_records,n_grid_fallback_records,groups_0.5deg_fallback,n_tile_records_05,n_grid_fallback_records_05
+iid_chopped,checked,3561662,3561662,True,True,True,0,0,3561662,True,0,0,0,0,0.0,0.0,12,12,80,3561662,0,80,3561662,0
+ood-t_chopped,checked,2112698,2112698,True,True,True,0,0,2112698,True,0,0,0,0,0.0,0.0,8,8,77,2112698,0,77,2112698,0
+ood-st_chopped,checked,3075226,3075226,True,True,True,0,0,3075226,True,0,0,0,0,0.0,0.0,8,8,641,0,3075226,399,0,3075226
+ood-s_chopped_repaired_v2,checked,5773852,5773852,True,True,True,0,0,5773852,True,0,0,0,0,0.0,0.0,12,12,748,0,5773852,454,0,5773852

@@ -1,0 +1,8 @@
+item,source,identity,status
+GT and validity,/data/zs/TrainData/EarthNet2021/earthnet2021x/<split>/<season>/<cube>.nc,official 30-step 5-daily grid; repaired OOD-S files take precedence,available
+TerraState-C1 spatial output,/data/zs/multiseed_standard_eval_20260910T074115Z/eval/seed42/<split>/q1_full/pred,checkpoint a87f972b8a093b61; frozen E1 output,available
+Persistence spatial output,candidate context,"last valid context observation per pixel, repeated",deterministically reconstructed
+official model-weight release,https://zenodo.org/records/10793870,model_weights.zip; DOI 10.5281/zenodo.10793870; MD5 d9f531a7e6e3e1d497af30760ca6fcf9,downloaded and checksum verified
+official experiment configurations,https://github.com/vitusbenson/greenearthnet,commit a0329636631371a4aaa9a95c75ed0a37d27b8c4f; seed=42 YAMLs,available
+official model implementation,/data/zs/_downloads/emp-v0.1.0,earthnet-models-pytorch v0.1.0; commit 268943b10f78f69a79084ddda3291c35763c3612,available
+ConvLSTM/PredRNN/SimVP/Contextformer P42 spatial outputs,图3_标准空间预测/data/baseline_predictions/P42.npz,official seed-42 config and checkpoint; strict load; 10 context + 20 target steps; inference only,generated and provenance recorded

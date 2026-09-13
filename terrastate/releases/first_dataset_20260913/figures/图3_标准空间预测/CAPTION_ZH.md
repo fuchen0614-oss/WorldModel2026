@@ -1,0 +1,1 @@
+图3. P42 案例的标准空间预测与绝对误差。A：Ground truth、Persistence、TerraState C1 及使用官方 seed-42 checkpoint 得到的 ConvLSTM、PredRNN、SimVP、Contextformer 在四个冻结窗口代表日期上的 NDVI 预测，所有方法共用 0–1 色标。B：各方法相对 Ground truth 的逐像素绝对误差，共用 0–0.4 色标；暗色表示误差较低，亮色表示误差较高，灰色仅表示无效像素。本图为单例空间展示，总体性能结论以表1为准。
