@@ -29,8 +29,26 @@ plt.rcParams.update({"font.family":"DejaVu Sans","font.size":8.0,"axes.titlesize
  "legend.edgecolor":"#BFC5CC"})
 table=read(FIG/"data"/"Table5_weather_response.csv")
 effects=[r for r in table if r["section"]=="actual_loss_benefit"]
-z=np.load(FIG/"data"/"_arrays"/"W02"/"arrays.npz")
-meta=json.loads((FIG/"data"/"_arrays"/"W02"/"metadata.json").read_text(encoding="utf-8"))
+
+# ---------------------------------------------------------------------------------------------
+# Input resolution. The curated release package stores these arrays ONCE under
+# `reproduction/` instead of duplicating them inside every figure directory. Prefer the original
+# figure-local export when it is present (full source package), otherwise fall back to the
+# release root (slim package). Nothing else about the drawing depends on which one is used.
+ROOT=FIG.parents[1]                      # .../first_dataset_20260913
+
+def _pick(*cands):
+    for c in cands:
+        if c.exists():
+            return c
+    raise SystemExit("input not found; tried:\n  " + "\n  ".join(str(c) for c in cands))
+
+_ARRAYS=_pick(FIG/"data"/"_arrays"/"W02"/"arrays.npz",
+              ROOT/"reproduction"/"W02_arrays"/"arrays.npz")
+_META=_pick(FIG/"data"/"_arrays"/"W02"/"metadata.json",
+            ROOT/"reproduction"/"W02_arrays"/"metadata.json")
+z=np.load(_ARRAYS)
+meta=json.loads(_META.read_text(encoding="utf-8"))
 x=np.arange(1,21)
 
 # Main A/B summary; B keeps all standardized weather inputs in one flat panel.

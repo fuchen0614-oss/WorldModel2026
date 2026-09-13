@@ -16,9 +16,29 @@ def save(fig,name,dpi=300):
 
 plt.rcParams.update({"font.family":"DejaVu Sans","font.size":7.8,"axes.titlesize":7.8,
                      "axes.labelsize":8.0,"axes.grid":False})
-z=np.load(FIG/"data"/"_arrays"/"P42"/"arrays.npz")
-b=np.load(FIG/"data"/"baseline_predictions"/"P42.npz")
-meta=json.loads((FIG/"data"/"_arrays"/"P42"/"metadata.json").read_text(encoding="utf-8"))
+
+# ---------------------------------------------------------------------------------------------
+# Input resolution. The curated release package stores these arrays ONCE under
+# `reproduction/` instead of duplicating them inside every figure directory. Prefer the original
+# figure-local export when it is present (full source package), otherwise fall back to the
+# release root (slim package). Nothing else about the drawing depends on which one is used.
+ROOT=FIG.parents[1]                      # .../first_dataset_20260913
+
+def _pick(*cands):
+    for c in cands:
+        if c.exists():
+            return c
+    raise SystemExit("input not found; tried:\n  " + "\n  ".join(str(c) for c in cands))
+
+_ARRAYS=_pick(FIG/"data"/"_arrays"/"P42"/"arrays.npz",
+              ROOT/"reproduction"/"P42_arrays"/"arrays.npz")
+_META=_pick(FIG/"data"/"_arrays"/"P42"/"metadata.json",
+            ROOT/"reproduction"/"P42_arrays"/"metadata.json")
+_BASELINE=_pick(FIG/"data"/"baseline_predictions"/"P42.npz",
+                ROOT/"reproduction"/"P42_official_baselines.npz")
+z=np.load(_ARRAYS)
+b=np.load(_BASELINE)
+meta=json.loads(_META.read_text(encoding="utf-8"))
 gt,c1,pers,valid=z["gt"],z["c1"],z["persistence"],z["valid"]
 hs=[]
 for start in range(0,20,5):

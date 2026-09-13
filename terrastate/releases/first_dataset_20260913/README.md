@@ -3,9 +3,12 @@
 本目录是 **TerraState 第一数据集** 的一次性发布快照：代码索引、两份主文、终稿图、关键表格与
 统计、必要的复现数组，以及来源与哈希。**只收录关键结果，不收中间产物。**
 
-- 生成时间（UTC）：2026-09-13T09:20:12Z
-- 基线提交：`7a1223ac80da`（分支 `q4-eval-percube-eligibility`，远端 `git@github.com:fuchen0614-oss/WorldModel2026.git`）
-- 规模：**266 个文件，66.8 MiB**
+- 生成时间（UTC）：2026-09-13T10:21:24Z
+- **科学基线提交**：`dc743eb75616`（产生本包全部数值与图件的代码/结果所处提交）
+- 发布分支：`q4-eval-percube-eligibility`，远端 `git@github.com:fuchen0614-oss/WorldModel2026.git`
+- **发布包提交序列**：`421f2cb` → `7a1223a` → `b19a1a1` → 后续修正；
+  现查命令 `git log --oneline -- terrastate/releases/first_dataset_20260913`
+- 规模：**277 个文件，66.9 MiB**
 - 完整性：`SHA256SUMS.txt`（逐文件）；`QA_REPORT.md`（本轮验收）
 
 ## 怎么读
@@ -18,6 +21,8 @@
 | 核对某个数字 | `tables/`（8 张表 md+csv）→ `metrics/`（聚合 JSON） |
 | 复现图与数字 | `reproduction/`（选定样本的数组与元数据）+ `figures/图*/code/` |
 | 查来源与权重 | `SOURCE_COMMIT.md`、`CODE_AND_CONFIG_INDEX.md`、`WEIGHTS.md` |
+| 核对"哪些文件被有意改过、为什么" | `provenance/RELEASE_EDITS.csv`（逐文件：原路径 / 原 sha256 / 本包 sha256 / 原因） |
+| 重新独立验收本包 | `python code/verify_release.py --with-redraw`（含重绘逐像素比对） |
 
 ## 目录
 
@@ -29,17 +34,20 @@ WEIGHTS.md                正式权重清单：路径、字节数、SHA256、获
 QA_REPORT.md              本轮验收记录
 SHA256SUMS.txt            逐文件哈希
 narrative/                两份主文 + 参考文献 + 叙事 QA
-figures/                  OVERVIEW + 9 个图目录（selected/ 终稿、code/、data/ 文本）
+figures/                  OVERVIEW + 9 个图目录（selected/ 终稿、code/、data/ 文本）+ references/
 tables/                   8 张表（md + csv）
 metrics/                  关键聚合指标（配对 bootstrap、运行时、天气审计、逐 seed 值）
 reports/                  验收 / 主张矩阵 / 证据清单 / 缺口 / 展示方案 / 候选清单
 reproduction/             选定样本的数组与候选清单
+code/                     本包的构建 / 校验 / 修复脚本（11 个，可重跑）
+provenance/               逐项来源与**有意修改**记录（RELEASE_EDITS.csv）
 ```
 
 ## 范围与排除（重要）
 
 **收录**：两份主文；9 张终稿图及其绘图代码与文本数据；8 张表的 md+csv；
-关键聚合 JSON；验收与缺口记录；**选定样本**（P42 / W02）的复现数组；正式权重清单。
+关键聚合 JSON；验收与缺口记录；**选定样本**（P42 / W02）的复现数组；正式权重清单；
+被引用的参考文档；本包的构建/校验脚本与逐项来源记录。
 
 **刻意排除**（都有理由，不是遗漏）：
 
@@ -60,6 +68,17 @@ reproduction/             选定样本的数组与候选清单
 因此这里改为在 `WEIGHTS.md` 中给出**每个权重的路径、字节数与实测 SHA256**，
 并说明获取方式。仓库历史提交 `ecb632c` 中的 `terrastate/sync_package_20260912_v1/checkpoints/`
 就是这种情况（指针），请以 `WEIGHTS.md` 为准。
+
+## 关于图3 的四个官方基线
+
+终稿 **图3 包含四个官方基线**：ConvLSTM 1M、PredRNN 1M、SimVP 6M、Contextformer 6M，
+全部来自**匹配的 GreenEarthNet 官方 seed-42 checkpoint**（协议、上游 commit 与权重校验见
+`figures/图3_标准空间预测/data/OFFICIAL_BASELINE_WEIGHT_AUDIT.md` 与
+`reproduction/P42_provenance.json`）。图中已无空行。
+
+复现数组随包提供：`reproduction/P42_official_baselines.npz`（四个基线在 P42 上的预测）。
+**四个官方 checkpoint 本体不在本包内**（体积原因）；其获取方式见
+`reproduction/P42_provenance.json` 的 `official_release` 字段。
 
 ## 这份包不是什么
 

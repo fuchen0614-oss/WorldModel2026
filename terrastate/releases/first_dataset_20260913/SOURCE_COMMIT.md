@@ -1,13 +1,28 @@
 # SOURCE_COMMIT — 来源与基线提交
 
-## 基线
+## 提交关系（两个层面，请勿混淆）
 
-| 项 | 值 |
+| 层面 | 提交 | 含义 |
+|---|---|---|
+| **科学代码与原始结果的基线** | `dc743eb75616a52c8bea6c2188c35a3c9ee8e61d` | 产生本包全部数值、表格与图件的代码与结果所处的提交 |
+| **发布包提交序列** | `421f2cb` → `7a1223a` → `b19a1a1` → 后续 | 只在 `terrastate/releases/first_dataset_20260913/**` 内增删内容 |
+
+发布提交序列：
+
+| 提交 | 说明 |
+|---|---|
+| `421f2cb` | Add first-dataset release package |
+| `7a1223a` | Fix dead figure links（绝对符号链接 → `../figures/` 相对路径） |
+| `b19a1a1` | Document hash verification, including Windows line endings |
+
+> 本文件**不记录自身的提交哈希**（自指会随下一次提交失效）。
+> 需要当前值请现查：`git log --oneline -- terrastate/releases/first_dataset_20260913`。
+
+| 其他 | 值 |
 |---|---|
 | Git 仓库 | `git@github.com:fuchen0614-oss/WorldModel2026.git` |
 | 分支 | `q4-eval-percube-eligibility` |
-| 提交 | `7a1223ac80da69801243ed31676bd346b7e59fe7` |
-| 打包时间（UTC） | 2026-09-13T09:20:12Z |
+| 打包时间（UTC） | 2026-09-13T10:21:24Z |
 
 本发布包中的每一项材料都**复制**自下列来源；来源目录**未被修改、未被移动、未被删除**。
 
