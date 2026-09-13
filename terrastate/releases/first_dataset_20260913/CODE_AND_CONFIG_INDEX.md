@@ -68,6 +68,25 @@
 | `figures/图9_状态复用成本/code/README.md` |
 | `figures/图9_状态复用成本/code/render_final.py` |
 
+## 本包自身的构建与校验脚本（`code/`，11 个文件）
+
+这些脚本**构建并独立复核**了本发布包本身；它们是随包交付的审计线索，
+不是产生科学结果的代码（后者见上表）。全部为只读检查或幂等重生成。
+
+| 路径 | 字节 | sha256(前16) | 作用 |
+|---|---:|---|---|
+| `code/build_release.sh` | 5810 | `037547e1f0007181…` | 从只读来源目录**复制**（绝不移动）材料，组装出本包 |
+| `code/check_links2.py` | 3354 | `7d3b962e1473edf3…` | 全包 markdown 相对链接解析检查 |
+| `code/fix_links.py` | 4129 | `2ec39cac5b5121c5…` | 把叙事稿中的绝对符号链接改写为 `../figures/` 相对路径 |
+| `code/gen_release_docs.py` | 22439 | `047087d26bf26fe2…` | 生成 README / SOURCE_COMMIT / CODE_AND_CONFIG_INDEX / WEIGHTS |
+| `code/p1_fallback.py` | 3575 | `61aa09df355e4bb7…` | 为图3 / 图8 的绘图脚本加入数组回退路径 |
+| `code/p1b_readmes.py` | 4229 | `707e2f762b492b9c…` | 重写图3 / 图8 的 code/README.md，标注历史脚本 |
+| `code/p1c_redraw.py` | 4471 | `83d1a7c54152c303…` | 在瘦身副本中重绘全部六张图并与 selected/ 逐像素比对 |
+| `code/p2a_fix_master.py` | 4170 | `4976d33d64dcbb0e…` | 修正历史母稿中「官方基线不可用」的过时说法 |
+| `code/p3_diag.py` | 3335 | `9def5ee18f97ebe2…` | 链接与过时表述的诊断扫描 |
+| `code/p3a_fixes.py` | 4771 | `abfd07c2c969fc64…` | 补齐被引用的四份中文参考文档并解除死链 |
+| `code/verify_release.py` | 30948 | `a589bd1ec7c7d6ea…` | 41 项独立验收 + 重绘证明，并写出 SHA256SUMS.txt 与 QA_REPORT.md |
+
 ## 运行环境
 
 | 项 | 值 |

@@ -10,4 +10,4 @@
 
 ## 当前效果与结论边界
 
-P42四个窗口都有有效观测，Persistence在变化区域出现较广的高误差，而不同学习方法呈现不同程度的平滑、纹理保留和局部偏差。四个官方基线均来自匹配的GreenEarthNet官方seed-42 checkpoint，图中已无空行。该图只说明单例空间行为，不能代替表1的总体排序。
+P42四个窗口都有有效观测，Persistence在变化区域出现较广的高误差，而不同学习方法呈现不同程度的平滑、纹理保留和局部偏差。四个官方基线（ConvLSTM 1M、PredRNN 1M、SimVP 6M、Contextformer 6M）均来自匹配的GreenEarthNet官方seed-42 checkpoint，图中已无空行。该图只说明单例空间行为，不能代替表1的总体排序。
