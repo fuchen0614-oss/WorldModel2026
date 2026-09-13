@@ -17,7 +17,7 @@
 | 10 | package file count in the expected range (250-300) | PASS | 277 files |
 | 11 | three key NPZ present and loadable | PASS | ['reproduction/P42_arrays/arrays.npz', 'reproduction/P42_official_baselines.npz', 'reproduction/W02_arrays/arrays.npz'] |
 | 12 | payload contains no weight-like / LFS-triggering files | PASS | [] |
-| 13 | source trees still hold every original file (copy, not move) | PASS | [] |
+| 13 | source trees still hold at least every original file (copy, not move) | PASS | ['first_dataset_figures_final_20260913T052645Z: 730 files (baseline 728)', 'first_dataset_narrative_dual_20260913T082412Z: 11 files (baseline 11)', 'first_dataset_closure_fix_20260911T081702Z: 130 files (baseline 130)'] |
 | 14 | every shipped file is byte-identical to a source, or recorded in RELEASE_EDITS.csv | PASS | 0 unverified: [] |
 | 15 | the two main documents differ from their source ONLY by the documented link rewrite | PASS | [] |
 | 16 | master-draft fix preserves the original text (banner + 2 sentences + 9 unlinked images) | PASS | 619/630 source lines still present verbatim; changed=11 |
@@ -44,7 +44,7 @@
 | 37 | SHA256SUMS.txt written | PASS | 274 entries |
 | 38 | sha256sum -c SHA256SUMS.txt passes with no failures and no warnings | PASS | 274 entries OK |
 | 39 | no mode 120000 (symlink) entries in the git index for the release dir | PASS | 277 index entries, all regular |
-| 40 | nothing outside the release directory is staged | PASS | 0 staged, all inside the release dir |
+| 40 | nothing outside the release directory is staged | PASS | 3 staged, all inside the release dir |
 | 41 | no weight-like file is staged | PASS | 0 |
 | 42 | WEIGHTS.md registers the live GitHub Release that carries the four formal weights | PASS | tag + asset count stated in WEIGHTS.md |
 | 43 | WEIGHTS.md carries the full SHA256 of all four published weights (matches the frozen files) | PASS | 4/4 hashes present, byte-for-byte identical to the on-disk checkpoints |
@@ -57,7 +57,7 @@
 ## 包概况
 
 - 文件数：**277**
-- 总大小：**66.9 MiB**
+- 总大小：**67.0 MiB**
 - 最大文件：`figures/图7_共同后缀与状态作用/data/ood_s_per_cube_horizon.csv`
 - 逐文件哈希：`SHA256SUMS.txt`（274 条，`sha256sum -c` 已通过）
 - 有意修改清单：`provenance/RELEASE_EDITS.csv`（9 条，逐条给出源路径与理由）

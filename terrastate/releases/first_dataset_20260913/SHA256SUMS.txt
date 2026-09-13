@@ -1,5 +1,5 @@
 # SHA256SUMS — first_dataset_20260913
-# regenerated 2026-09-13T11:15:00Z after server-environment Figure 7 redraw
+# generated 2026-09-13T10:50:01Z
 # paths are relative to this directory; verify with:  sha256sum -c SHA256SUMS.txt
 #
 # NOTE (Windows): 101 text files are CRLF in the repository itself, so with
@@ -237,7 +237,7 @@ bd35d4789ad72eea90060bb7bde45e759456d91f0fe2c594f99c8affdd0a580d  narrative/tabl
 e720e624b13712bd1ffe740934eb468ccf335b52d714180818e3cc56a208bba9  narrative/tables/Table6B_common_suffix.md
 6458892d10b04ee5f10339e0c4e4009bebaf606c054e4da4814ad1221c63f3e1  narrative/tables/Table7_efficiency_state_reuse.csv
 e0cf1e0441670dfcef9f42d8949a1353e33be7abcf777b1fee5e34f88f9f23d0  narrative/tables/Table7_efficiency_state_reuse.md
-678e04d45b9c730e50f59ef499284587a82e00a0634978c9fa32c542827fdec4  provenance/RELEASE_EDITS.csv
+13e890dc68e1d32d0246e8149c4ad23fd95f4b14156a99c9c93dcff11f0b1d50  provenance/RELEASE_EDITS.csv
 ba1094c175b23169c190e3990edec487fd7f2a28937d0e5ca6954e516946f038  reports/CLAIM_EVIDENCE_MATRIX.csv
 117cb8209081de1856f824f7e282a3fc66637c2152baf082ba2a6afe2a71821a  reports/CONSISTENCY_CHECK.json
 21aea9e8bd3a0fe44cd1fcfa39fbdbbeb0ba3e13d4545241340c440c05fa9d73  reports/CONSISTENCY_CHECK.md
