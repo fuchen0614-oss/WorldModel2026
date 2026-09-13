@@ -31,27 +31,27 @@ t4=[r for r in read(FIG/"data"/"Table4B_state_intervention_corrected.csv")
     if r["scope"]=="full_suffix_1_to_10" and r["estimand"]=="receiver_equal"]
 est={r["split"]:r for r in t4}
 
-fig=plt.figure(figsize=(7.15,7.15))
-outer=fig.add_gridspec(2,3,height_ratios=[1.42,1.0],left=.085,right=.985,top=.965,bottom=.08,hspace=.34,wspace=.38)
-top=outer[0,:].subgridspec(2,2,hspace=.26,wspace=.16)
+fig=plt.figure(figsize=(7.15,6.15))
+outer=fig.add_gridspec(2,2,width_ratios=[1.08,1.0],height_ratios=[1.0,1.0],
+                       left=.09,right=.985,top=.965,bottom=.09,hspace=.36,wspace=.34)
 paths=[("D20_rmse","D20",BLACK,"-"),("A_rmse","A",GREEN,"--"),("B_rmse","B",SKY,"-."),("donor_rmse","state donor",PURPLE,":")]
+ax=fig.add_subplot(outer[0,0])
 for idx,split in enumerate(split_order):
-    ax=fig.add_subplot(top[idx//2,idx%2])
     rr=[r for r in agg if r["split"]==split];x=np.array([int(r["suffix_horizon"]) for r in rr])
     for key,label,color,ls in paths:
         y=np.array([float(r[key]) for r in rr])
-        ax.plot(x,y,color=color,ls=ls,lw=1.25,alpha=.98,label=label)
-    ax.set_xlim(.8,10.2);ax.set_ylim(.142,.246);ax.set_xticks([1,4,7,10])
-    ax.set_title(("A. Common-suffix trajectories — " if idx==0 else "")+split_names[split],loc="left",fontweight="bold")
-    if idx//2==1: ax.set_xlabel("relative suffix horizon")
-    else: ax.tick_params(labelbottom=False)
-    if idx%2==0: ax.set_ylabel("pooled RMSE")
-    else: ax.tick_params(labelleft=False)
-    if idx==0:
-        ax.legend(loc="upper left",ncol=2,fontsize=6.2,framealpha=.95,
-                  columnspacing=.9,handlelength=2.2,borderpad=.3)
+        ax.plot(x,y,color=color,ls=ls,lw=1.15,alpha=.96,
+                label=label if idx==0 else None)
+    anchor=float(rr[-1]["D20_rmse"])
+    ax.text(10.12,anchor,split_names[split],ha="left",va="center",fontsize=6.8,
+            color="#38424A",clip_on=False)
+ax.set_xlim(.8,10.9);ax.set_ylim(.142,.246);ax.set_xticks([1,4,7,10])
+ax.set_xlabel("relative suffix horizon");ax.set_ylabel("pooled RMSE")
+ax.set_title("A. Four-split common-suffix trajectories",loc="left",fontweight="bold")
+ax.legend(loc="upper left",ncol=2,fontsize=6.4,framealpha=.97,
+          columnspacing=.9,handlelength=2.4,borderpad=.35)
 
-ax=fig.add_subplot(outer[1,0])
+ax=fig.add_subplot(outer[0,1])
 summary=[]
 for split in split_order:
     vals=np.array([float(r["delta_mse"]) for r in rec if r["split"]==split and r["delta_mse"] not in ("","nan")]);summary.append(vals[np.isfinite(vals)])
@@ -61,14 +61,14 @@ for y,split in enumerate(split_order):
 ax.axvline(0,color=BLACK,lw=1);ax.set_yticks(range(4),[split_names[s] for s in split_order]);ax.invert_yaxis()
 ax.set_xlabel("ΔMSE: donor − normal A");ax.set_title("B. Receiver-equal estimate",loc="left",fontweight="bold")
 
-ax=fig.add_subplot(outer[1,1])
+ax=fig.add_subplot(outer[1,0])
 bp=ax.boxplot(summary,patch_artist=True,widths=.55,whis=(5,95),showmeans=True,showfliers=False,
  meanprops={"marker":"D","markerfacecolor":BLUE,"markeredgecolor":"white","markersize":4},medianprops={"color":ORANGE,"linewidth":1.2})
 for patch in bp["boxes"]:patch.set_facecolor("#DDEBF4");patch.set_edgecolor("#5E6C78")
 ax.axhline(0,color=BLACK,lw=1);ax.set_xticks(range(1,5),[split_names[s] for s in split_order],rotation=20)
 ax.set_ylabel("receiver-level ΔMSE");ax.set_title("C. Receiver distribution",loc="left",fontweight="bold")
 
-ax=fig.add_subplot(outer[1,2])
+ax=fig.add_subplot(outer[1,1])
 for split in split_order:
     x=np.array([float(r["state_A_donor_l1"]) for r in rec if r["split"]==split]);y=np.array([float(r["donor_A_output_mae"]) for r in rec if r["split"]==split])
     keep=np.isfinite(x)&np.isfinite(y);x,y=x[keep],y[keep];rho,_=spearmanr(x,y);order=np.argsort(x,kind="mergesort");x,y=x[order],y[order]

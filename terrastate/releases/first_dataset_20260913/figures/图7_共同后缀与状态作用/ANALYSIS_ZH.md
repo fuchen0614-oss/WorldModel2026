@@ -2,11 +2,11 @@
 
 ## 怎么看
 
-先看A内部2×2小图：每格只对应一个划分，并比较D20、A、B与state donor四条线；再用B确认平均替换效应，用C观察receiver异质性，最后用D判断状态距离与输出变化是否共同增大。
+整图按A/B第一行、C/D第二行阅读。先看A这一张汇总图：四组纵向位置不同的轨迹分别对应IID、OOD-T、OOD-S与OOD-ST，每组比较D20、A、B与state donor四条线；再用B确认平均替换效应，用C观察receiver异质性，最后用D判断状态距离与输出变化是否共同增大。
 
 ## 横纵轴与编码
 
-A横轴为共同后缀的相对时距1–10，纵轴为pooled RMSE；线色和线型区分四条路径。B横轴为donor−normal A的receiver等权ΔMSE，纵轴为划分，误差棒为95%区间。C横轴为划分、纵轴为receiver级ΔMSE，箱体表示分布。D横轴为A与donor状态的L1距离，纵轴为未来输出MAE；每个点是按状态距离排序后相邻10个receiver的中位数，ρ仍由原始receiver计算。
+A横轴为共同后缀的相对时距1–10，纵轴为pooled RMSE；线色和线型区分D20、A、B与state donor四条路径，曲线右端文字区分四个数据划分。B横轴为donor−normal A的receiver等权ΔMSE，纵轴为划分，误差棒为95%区间。C横轴为划分、纵轴为receiver级ΔMSE，箱体表示分布。D横轴为A与donor状态的L1距离，纵轴为未来输出MAE；每个点是按状态距离排序后相邻10个receiver的中位数，ρ仍由原始receiver计算。
 
 ## 当前效果与结论边界
 
