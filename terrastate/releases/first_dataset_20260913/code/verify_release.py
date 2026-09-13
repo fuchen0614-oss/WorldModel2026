@@ -176,13 +176,16 @@ ck("payload contains no weight-like / LFS-triggering files", not lfs, lfs[:5])
 # File counts are the comparable fingerprint; the byte totals recorded by build_release.sh came
 # from `du` (allocated blocks) and are not comparable with st_size.
 PRE_COUNTS = {FF.name: 728, ND.name: 11, CF.name: 130}
-untouched = []
+missing = []
+source_counts = []
 for name, n0 in PRE_COUNTS.items():
     src = {FF.name: FF, ND.name: ND, CF.name: CF}[name]
     n1 = sum(1 for p in src.rglob("*") if p.is_file())
-    if n1 != n0:
-        untouched.append(f"{name}: file count {n0} -> {n1}")
-ck("source trees still hold every original file (copy, not move)", not untouched, untouched)
+    source_counts.append(f"{name}: {n1} files (baseline {n0})")
+    if n1 < n0:
+        missing.append(f"{name}: file count fell from {n0} to {n1}")
+ck("source trees still hold at least every original file (copy, not move)",
+   not missing, missing or source_counts)
 
 SRC_ROOTS = [FF, ND, CF, SH, N1, TF, Path("/data/zs/fsr_tmp")]
 GENERATED = {"README.md", "SOURCE_COMMIT.md", "CODE_AND_CONFIG_INDEX.md", "WEIGHTS.md",
