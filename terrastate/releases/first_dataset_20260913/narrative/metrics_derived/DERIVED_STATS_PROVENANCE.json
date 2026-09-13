@@ -1,0 +1,348 @@
+{
+  "meta": {
+    "generated_utc": "2026-09-12T11:44:33Z",
+    "narrative_dir": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_narrative_20260912T112243Z",
+    "writes": "metrics_derived/ only; every frozen package opened read-only",
+    "policy": "no new evaluation samples, no new conditions, no metric switching",
+    "protocol_note": "D1/D2 use the official GreenEarthNet chopped LC-balanced scorer; D3/D4/D5 use pooled or paired statistics as in their own frozen tables. The two protocols are never converted into one another here.",
+    "python": "3.8.10"
+  },
+  "sources": [
+    {
+      "source_path": "/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_summary_values.csv",
+      "role": "Table 1 summary values (mean +/- sample std ddof=1, n=3)",
+      "exists": true,
+      "sha256": "085f86191cf1d62e9e212bc0fe7cdbad53970ab79ad44676636130b974962f90",
+      "size_bytes": 9339
+    },
+    {
+      "source_path": "/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_per_seed_values.csv",
+      "role": "Table 1 per-seed values (verbatim)",
+      "exists": true,
+      "sha256": "2130589230e6e21137150083c6e4483983df11c26eb5b94651d58ceabdb6dbd3",
+      "size_bytes": 17484
+    },
+    {
+      "source_path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table3_training_mechanism.csv",
+      "role": "Table 3 frozen values (C0R/C1 four-card pairing, seed 42)",
+      "exists": true,
+      "sha256": "8a5b2b583239d50cee4e8bee899d0dab70cae748f60d1b5daf650e7d813b6906",
+      "size_bytes": 2356
+    },
+    {
+      "source_path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6A_leaveout_partitions.csv",
+      "role": "Table 6A frozen held-out partition ratios (IID2856 + dev476)",
+      "exists": true,
+      "sha256": "9cfab5fb799a22b6c3f0563eb2b877f8142e4055ab7e783773a33efd1ee6b7aa",
+      "size_bytes": 1847
+    },
+    {
+      "source_path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6B_common_suffix.csv",
+      "role": "Table 6B frozen common-suffix values (four splits)",
+      "exists": true,
+      "sha256": "022b33ecb9f5bb567071e85e65dbeeecad4b15acd72c20b1835c7f71bbaa3e95",
+      "size_bytes": 4380
+    },
+    {
+      "source_path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table4B_state_intervention_corrected.csv",
+      "role": "Table 4B frozen state-intervention values (three weightings)",
+      "exists": true,
+      "sha256": "2b1d678cb8c81b890ce630e19489bbefa3ee366378f42655598e728330574a9c",
+      "size_bytes": 3555
+    },
+    {
+      "source_path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table7_efficiency_state_reuse.csv",
+      "role": "Table 7 frozen efficiency / state-reuse values",
+      "exists": true,
+      "sha256": "6458892d10b04ee5f10339e0c4e4009bebaf606c054e4da4814ad1221c63f3e1",
+      "size_bytes": 1623
+    }
+  ],
+  "derived": [
+    {
+      "derived_id": "D1.rmse_gap_pct_vs_best[iid_chopped]",
+      "value": 9.2966,
+      "unit": "%",
+      "formula": "100*(RMSE_C1_seed42 / RMSE_bestbaseline_mean3 - 1)",
+      "scope": "Table 1, official LC-balanced",
+      "source": "/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_summary_values.csv"
+    },
+    {
+      "derived_id": "D1.rmse_rank_of_5[iid_chopped]",
+      "value": 4,
+      "unit": "",
+      "formula": "rank of C1 mean-3 RMSE among {C1, ConvLSTM, PredRNN, SimVP, Contextformer}",
+      "scope": "Table 1",
+      "source": "/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_summary_values.csv"
+    },
+    {
+      "derived_id": "D1.rmse_gap_pct_vs_best[ood-t_chopped]",
+      "value": 5.4788,
+      "unit": "%",
+      "formula": "100*(RMSE_C1_seed42 / RMSE_bestbaseline_mean3 - 1)",
+      "scope": "Table 1, official LC-balanced",
+      "source": "/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_summary_values.csv"
+    },
+    {
+      "derived_id": "D1.rmse_rank_of_5[ood-t_chopped]",
+      "value": 4,
+      "unit": "",
+      "formula": "rank of C1 mean-3 RMSE among {C1, ConvLSTM, PredRNN, SimVP, Contextformer}",
+      "scope": "Table 1",
+      "source": "/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_summary_values.csv"
+    },
+    {
+      "derived_id": "D1.rmse_gap_pct_vs_best[ood-s_chopped]",
+      "value": 8.545,
+      "unit": "%",
+      "formula": "100*(RMSE_C1_seed42 / RMSE_bestbaseline_mean3 - 1)",
+      "scope": "Table 1, official LC-balanced",
+      "source": "/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_summary_values.csv"
+    },
+    {
+      "derived_id": "D1.rmse_rank_of_5[ood-s_chopped]",
+      "value": 4,
+      "unit": "",
+      "formula": "rank of C1 mean-3 RMSE among {C1, ConvLSTM, PredRNN, SimVP, Contextformer}",
+      "scope": "Table 1",
+      "source": "/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_summary_values.csv"
+    },
+    {
+      "derived_id": "D1.rmse_gap_pct_vs_best[ood-st_chopped]",
+      "value": 4.6582,
+      "unit": "%",
+      "formula": "100*(RMSE_C1_seed42 / RMSE_bestbaseline_mean3 - 1)",
+      "scope": "Table 1, official LC-balanced",
+      "source": "/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_summary_values.csv"
+    },
+    {
+      "derived_id": "D1.rmse_rank_of_5[ood-st_chopped]",
+      "value": 3,
+      "unit": "",
+      "formula": "rank of C1 mean-3 RMSE among {C1, ConvLSTM, PredRNN, SimVP, Contextformer}",
+      "scope": "Table 1",
+      "source": "/data/zs/multiseed_standard_eval_20260910T074115Z/E1_table_delivery/E1_summary_values.csv"
+    },
+    {
+      "derived_id": "D2.delta_R2_range",
+      "value": [
+        0.002599,
+        0.004856
+      ],
+      "unit": "",
+      "formula": "min/max over four splits of R2_LC(C0R) - R2_LC(C1), seed 42",
+      "scope": "Table 3.2",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table3_training_mechanism.csv"
+    },
+    {
+      "derived_id": "D2.delta_R2_mean",
+      "value": 0.003605,
+      "unit": "",
+      "formula": "arithmetic mean over four splits (descriptive only)",
+      "scope": "Table 3.2",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table3_training_mechanism.csv"
+    },
+    {
+      "derived_id": "D2.delta_RMSE_range",
+      "value": [
+        -0.000834,
+        -0.000273
+      ],
+      "unit": "",
+      "formula": "min/max over four splits of RMSE_LC(C0R) - RMSE_LC(C1), seed 42",
+      "scope": "Table 3.2",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table3_training_mechanism.csv"
+    },
+    {
+      "derived_id": "D2.n_splits_C0R_lower_RMSE",
+      "value": 4,
+      "unit": "",
+      "formula": "count of splits where C0R has the lower RMSE_LC (of 4)",
+      "scope": "Table 3.2",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table3_training_mechanism.csv"
+    },
+    {
+      "derived_id": "D3.ratio_range[IID2856]",
+      "value": [
+        0.992329,
+        1.023419
+      ],
+      "unit": "",
+      "formula": "min/max of composed/direct pooled MSE ratio over the nine held-out partitions",
+      "scope": "Table 6A, IID2856",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6A_leaveout_partitions.csv"
+    },
+    {
+      "derived_id": "D3.n_within_tol[IID2856]",
+      "value": "9/9",
+      "unit": "",
+      "formula": "count of partitions with ratio <= 1.05 (MSE ratio gate)",
+      "scope": "Table 6A",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6A_leaveout_partitions.csv"
+    },
+    {
+      "derived_id": "D3.ratio_range[dev476]",
+      "value": [
+        1.00052,
+        1.027497
+      ],
+      "unit": "",
+      "formula": "min/max of composed/direct pooled MSE ratio over the nine held-out partitions",
+      "scope": "Table 6A, dev476",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6A_leaveout_partitions.csv"
+    },
+    {
+      "derived_id": "D3.n_within_tol[dev476]",
+      "value": "9/9",
+      "unit": "",
+      "formula": "count of partitions with ratio <= 1.05 (MSE ratio gate)",
+      "scope": "Table 6A",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6A_leaveout_partitions.csv"
+    },
+    {
+      "derived_id": "D4.pct_vs_D20_full_suffix[A]",
+      "value": [
+        -0.6179,
+        0.5875
+      ],
+      "unit": "%",
+      "formula": "100*(pooled RMSE_cond / pooled RMSE_D20 - 1) over four splits, full suffix scope 1..10",
+      "scope": "Table 6B",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6B_common_suffix.csv"
+    },
+    {
+      "derived_id": "D4.pct_vs_D20_full_suffix[B]",
+      "value": [
+        -0.2499,
+        0.3933
+      ],
+      "unit": "%",
+      "formula": "100*(pooled RMSE_cond / pooled RMSE_D20 - 1) over four splits, full suffix scope 1..10",
+      "scope": "Table 6B",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6B_common_suffix.csv"
+    },
+    {
+      "derived_id": "D4.pct_vs_D20_full_suffix[donor]",
+      "value": [
+        1.4517,
+        6.4225
+      ],
+      "unit": "%",
+      "formula": "100*(pooled RMSE_cond / pooled RMSE_D20 - 1) over four splits, full suffix scope 1..10",
+      "scope": "Table 6B",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6B_common_suffix.csv"
+    },
+    {
+      "derived_id": "D4.donor_excess_pct_vs_D20[iid]",
+      "value": 6.4227,
+      "unit": "%",
+      "formula": "100*(pooled RMSE_donor / pooled RMSE_D20 - 1), full suffix scope",
+      "scope": "Table 6B, iid",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6B_common_suffix.csv"
+    },
+    {
+      "derived_id": "D4.donor_excess_pct_vs_D20[ood_s]",
+      "value": 3.7575,
+      "unit": "%",
+      "formula": "100*(pooled RMSE_donor / pooled RMSE_D20 - 1), full suffix scope",
+      "scope": "Table 6B, ood_s",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6B_common_suffix.csv"
+    },
+    {
+      "derived_id": "D4.donor_excess_pct_vs_D20[ood_st]",
+      "value": 1.4517,
+      "unit": "%",
+      "formula": "100*(pooled RMSE_donor / pooled RMSE_D20 - 1), full suffix scope",
+      "scope": "Table 6B, ood_st",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6B_common_suffix.csv"
+    },
+    {
+      "derived_id": "D4.donor_excess_pct_vs_D20[ood_t]",
+      "value": 4.1777,
+      "unit": "%",
+      "formula": "100*(pooled RMSE_donor / pooled RMSE_D20 - 1), full suffix scope",
+      "scope": "Table 6B, ood_t",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table6B_common_suffix.csv"
+    },
+    {
+      "derived_id": "D5.main_weighting_rows",
+      "value": 8,
+      "unit": "",
+      "formula": "rows using the pre-declared main weighting (receiver equal weight)",
+      "scope": "Table 4B",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table4B_state_intervention_corrected.csv"
+    },
+    {
+      "derived_id": "D5.main_weighting_ci_above_zero",
+      "value": "8/8",
+      "unit": "",
+      "formula": "count of main-weighting rows whose 95% CI lower bound exceeds zero",
+      "scope": "Table 4B",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table4B_state_intervention_corrected.csv"
+    },
+    {
+      "derived_id": "D5.sensitivity_rows_ci_above_zero",
+      "value": "15/16",
+      "unit": "",
+      "formula": "count of sensitivity-weighting rows whose 95% CI lower bound exceeds zero (the single exception is named in the narrative)",
+      "scope": "Table 4B",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table4B_state_intervention_corrected.csv"
+    },
+    {
+      "derived_id": "D5.main_weighting_full_suffix_ci_above_zero",
+      "value": "4/4",
+      "unit": "",
+      "formula": "main weighting, full suffix scope 1..10, four splits",
+      "scope": "Table 4B",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table4B_state_intervention_corrected.csv"
+    },
+    {
+      "derived_id": "D5.rows_not_above_zero",
+      "value": 1,
+      "unit": "",
+      "formula": "rows whose 95% CI is not strictly above zero, with split/scope/estimand named",
+      "scope": "Table 4B",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_showcase_20260912T062326Z/tables/Table4B_state_intervention_corrected.csv"
+    },
+    {
+      "derived_id": "D6.ratio[B=1]",
+      "value": 1.0,
+      "unit": "x",
+      "formula": "reencode(B)/reuse(B); history_encoding=29.47ms, shared_prefix=0.39ms, suffix_per_branch=0.41ms (pure compute)",
+      "scope": "Table 7.3b cost model",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table7_efficiency_state_reuse.csv"
+    },
+    {
+      "derived_id": "D6.ratio[B=2]",
+      "value": 1.9733,
+      "unit": "x",
+      "formula": "reencode(B)/reuse(B); history_encoding=29.47ms, shared_prefix=0.39ms, suffix_per_branch=0.41ms (pure compute)",
+      "scope": "Table 7.3b cost model",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table7_efficiency_state_reuse.csv"
+    },
+    {
+      "derived_id": "D6.ratio[B=4]",
+      "value": 3.8438,
+      "unit": "x",
+      "formula": "reencode(B)/reuse(B); history_encoding=29.47ms, shared_prefix=0.39ms, suffix_per_branch=0.41ms (pure compute)",
+      "scope": "Table 7.3b cost model",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table7_efficiency_state_reuse.csv"
+    },
+    {
+      "derived_id": "D6.ratio[B=8]",
+      "value": 7.3072,
+      "unit": "x",
+      "formula": "reencode(B)/reuse(B); history_encoding=29.47ms, shared_prefix=0.39ms, suffix_per_branch=0.41ms (pure compute)",
+      "scope": "Table 7.3b cost model",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table7_efficiency_state_reuse.csv"
+    },
+    {
+      "derived_id": "D6.hash_share_of_adapter_gap",
+      "value": 89.86,
+      "unit": "%",
+      "formula": "100*(10 calls * 33.35ms model_hash) / 371.15ms adapter end-to-end median",
+      "scope": "Table 7.3d",
+      "source": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/first_dataset_closure_fix_20260911T081702Z/tables/Table7_efficiency_state_reuse.csv"
+    }
+  ]
+}

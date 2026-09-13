@@ -4,6 +4,7 @@
 
 | 检查 | 结果 | 细节 |
 |---|---|---|
+| QA/build tooling shipped inside the package | PASS | ['build_release.sh', 'gen_release_docs.py', 'verify_release.py', 'fix_links.py', 'check_links2.py'] |
 | all top-level documents present | PASS | [] |
 | narrative carries both main documents | PASS | 01 十二章继承更新版 + 02 中文论文叙事稿 |
 | nine figure directories present | PASS | ['图1_科学问题框架', '图2_方法与监督框架', '图3_标准空间预测', '图4_第二数据集_延期', '图5_时距与分布偏移', '图6_分段稳定性', '图7_共同后缀与状态作用', '图8_天气条件响应', '图9_状态复用成本'] |
@@ -14,16 +15,20 @@
 | payload contains no LFS-triggering weights | PASS | [] |
 | source trees still hold every original file | PASS | [] |
 | every shipped file is a byte-identical copy of a source file | PASS | 0 unverified: [] |
-| narrative copies match the narrative package's own hash file | PASS | 3 entries checked, mismatches=[] |
+| the two main documents differ from their source ONLY by the documented link rewrite | PASS | [] |
+| narrative hash file: the only entries that differ are the two intentionally rewritten docs | PASS | 3 entries; differing=['01_TerraState_第一数据集成果总览_十二章继承更新版.md', '02_TerraState_中文论文叙事稿.md']; unexpected=[] |
 | every table is byte-identical to the frozen package | PASS | [] |
-| SHA256SUMS.txt written | PASS | 222 entries |
+| release contains no symlinks at all | PASS | [] |
+| every relative reference in the narrative documents resolves | PASS | 53 checked, 0 broken: [] |
+| the figure links inside the narrative documents resolve (they were dead before the fix) | PASS | 43 figure links checked |
+| SHA256SUMS.txt written | PASS | 263 entries |
 
-**合计 13 项，FAIL 0 项。**
+**合计 18 项，FAIL 0 项。**
 
 ## 包概况
 
-- 文件数：**225**
-- 总大小：**66.3 MiB**
+- 文件数：**266**
+- 总大小：**66.8 MiB**
 - 最大文件：figures/图7_共同后缀与状态作用/data/ood_s_per_cube_horizon.csv
 
 ## 已知限制（如实记录）

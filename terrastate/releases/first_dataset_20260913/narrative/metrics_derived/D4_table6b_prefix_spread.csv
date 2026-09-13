@@ -1,0 +1,5 @@
+split,abs_A_minus_B_rmse,A_minus_B_pct_of_D20,donor_minus_best_prefix_rmse,donor_excess_pct_of_D20
+iid,0.000288,0.172,0.010098,6.4227
+ood_s,0.00039,0.194,0.006762,3.7575
+ood_st,0.000465,-0.2557,0.003514,1.4517
+ood_t,0.000573,-0.3679,0.007468,4.1777

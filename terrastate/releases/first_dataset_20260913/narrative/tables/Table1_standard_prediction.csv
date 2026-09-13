@@ -1,0 +1,25 @@
+method,split,n_seeds,R2_mean,R2_sample_std_ddof1,rmse_mean,rmse_sample_std_ddof1,std_definition
+TerraState-C1,iid_chopped,3,0.5220939507224425,6.488654133138544e-05,0.15553065656862813,1.4193866543326942e-06,sample std ddof=1 across seeds; not a confidence interval
+ConvLSTM 1M,iid_chopped,3,0.5106666666666667,0.0015044378795195706,0.1557,0.0011000000000000038,sample std ddof=1 across seeds; not a confidence interval
+PredRNN 1M,iid_chopped,3,0.5414333333333333,0.010986051762727784,0.1423,0.004503332099679082,sample std ddof=1 across seeds; not a confidence interval
+SimVP 6M,iid_chopped,3,0.49879999999999997,0.006090155991434053,0.1461,0.0017088007490635,sample std ddof=1 across seeds; not a confidence interval
+Contextformer 6M,iid_chopped,3,0.5333333333333333,0.000611010092660772,0.1484333333333333,0.000901849950564577,sample std ddof=1 across seeds; not a confidence interval
+Persistence,iid_chopped,1,0.0,,0.2213,,sample std ddof=1 across seeds; not a confidence interval
+TerraState-C1,ood-t_chopped,3,0.5725859181174409,0.0001081345442359792,0.15095680197125058,2.7423826358278265e-05,sample std ddof=1 across seeds; not a confidence interval
+ConvLSTM 1M,ood-t_chopped,3,0.5483333333333333,0.006963715483370483,0.16149999999999998,0.0018248287590894657,sample std ddof=1 across seeds; not a confidence interval
+PredRNN 1M,ood-t_chopped,3,0.5924333333333333,0.0015307950004272975,0.1474,0.0021166010488516598,sample std ddof=1 across seeds; not a confidence interval
+SimVP 6M,ood-t_chopped,3,0.5616333333333333,0.005320087718575064,0.14923333333333333,0.001913983629327411,sample std ddof=1 across seeds; not a confidence interval
+Contextformer 6M,ood-t_chopped,3,0.5877,0.004358898943540678,0.1431,0.0008185352771872549,sample std ddof=1 across seeds; not a confidence interval
+Persistence,ood-t_chopped,1,0.0,,0.2157,,sample std ddof=1 across seeds; not a confidence interval
+TerraState-C1,ood-s_chopped,3,0.4949080285564463,2.8790121222587504e-05,0.16213979306117648,9.592315171969639e-06,sample std ddof=1 across seeds; not a confidence interval
+ConvLSTM 1M,ood-s_chopped,3,0.47606666666666664,0.003728717384481345,0.16216666666666668,0.0010503967504392581,sample std ddof=1 across seeds; not a confidence interval
+PredRNN 1M,ood-s_chopped,3,0.5087333333333334,0.009258689612106791,0.14936666666666668,0.004289910643980061,sample std ddof=1 across seeds; not a confidence interval
+SimVP 6M,ood-s_chopped,3,0.46493333333333337,0.006351640208114212,0.15293333333333334,0.0012503332889007377,sample std ddof=1 across seeds; not a confidence interval
+Contextformer 6M,ood-s_chopped,3,0.5021,0.0019672315572906037,0.15493333333333334,0.0016041612554021194,sample std ddof=1 across seeds; not a confidence interval
+Persistence,ood-s_chopped,1,0.0,,0.2258,,sample std ddof=1 across seeds; not a confidence interval
+TerraState-C1,ood-st_chopped,3,0.540740050283667,0.00018833126699257103,0.15417706074272544,2.5056542564904065e-05,sample std ddof=1 across seeds; not a confidence interval
+ConvLSTM 1M,ood-st_chopped,3,0.5233666666666666,0.003208322510804236,0.16103333333333333,0.0009237604307033956,sample std ddof=1 across seeds; not a confidence interval
+PredRNN 1M,ood-st_chopped,3,0.5635,0.0016643316977093306,0.14783333333333334,0.0013316656236958687,sample std ddof=1 across seeds; not a confidence interval
+SimVP 6M,ood-st_chopped,3,0.5274666666666666,0.002112660250332098,0.15526666666666666,0.0020108041509140956,sample std ddof=1 across seeds; not a confidence interval
+Contextformer 6M,ood-st_chopped,3,0.5567000000000001,0.001299999999999985,0.14730000000000001,0.001039230484541324,sample std ddof=1 across seeds; not a confidence interval
+Persistence,ood-st_chopped,1,0.0,,0.2183,,sample std ddof=1 across seeds; not a confidence interval

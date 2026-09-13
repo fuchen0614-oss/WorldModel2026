@@ -1,0 +1,13 @@
+split,arm,R2_LC,RMSE_LC,biasabs,source_json
+iid,full,0.5220284723782518,0.15552705614709625,0.0996474884264703,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/iid/state_contract_exclusive.json
+iid,alpha0,0.48834994397210113,0.17083964148679473,0.10941202054625956,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/iid/state_contract_exclusive.json
+iid,T_identity,0.4877100047988231,0.21500354975557096,0.16394906956185715,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/iid/state_contract_exclusive.json
+ood_t,full,0.5726040492110612,0.1509409069306235,0.10134453396878612,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/oodt/state_contract_exclusive.json
+ood_t,alpha0,0.5555267348142086,0.16271534187104683,0.10782696366818716,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/oodt/state_contract_exclusive.json
+ood_t,T_identity,0.5549344425207399,0.2150294149921658,0.17036811472424954,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/oodt/state_contract_exclusive.json
+ood_s,full,0.4948743926549008,0.1621301337285836,0.10179161678829837,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/oods/state_contract_exclusive.json
+ood_s,alpha0,0.4614358857506926,0.1755138809160996,0.10995491308361541,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/oods/state_contract_exclusive.json
+ood_s,T_identity,0.4605283437211313,0.21957972406730952,0.1653163691428847,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/oods/state_contract_exclusive.json
+ood_st,full,0.540760111670379,0.15416141488484492,0.10162971883580825,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/oodst/state_contract_exclusive.json
+ood_st,alpha0,0.5237131271690815,0.1650114367650847,0.10777776038254559,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/oodst/state_contract_exclusive.json
+ood_st,T_identity,0.5232020831856353,0.21639379291505514,0.16992810430988348,/data/zs/WorldModel2026/terrastate/evaluations/candidate_c_q1q2q3_20260830T072737Z/oodst/state_contract_exclusive.json

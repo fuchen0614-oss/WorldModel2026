@@ -1,0 +1,2 @@
+split,scope,estimand,point_delta_mse,ci95_low,ci95_high,n_receivers,n_geo_groups
+ood_st,endpoint_h10,geo_equal,0.000533248413264044,-0.00022188880016588331,0.0013138172339826745,2731,854
