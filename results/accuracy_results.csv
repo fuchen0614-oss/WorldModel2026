@@ -1,0 +1,2 @@
+experiment_family,model,dataset,run_id,weights_origin,checkpoint,seed,split,scoring_protocol,metric,aggregation,n_samples,value
+baseline,Contextformer6M,GreenEarthNet2021X,20261026_seed42_4gpu,retrained,best_epoch97_step72912,42,validation,training_callback,veg_score,as_logged,,0.2473616600
