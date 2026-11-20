@@ -1,0 +1,58 @@
+{
+  "figure4_values.json": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_结果图候选_20261115\\figure4_values.json",
+    "sha256": "f09d71eeed785357e833baac53ceeeedfdd3f46194bd71fed32a30649b236a58"
+  },
+  "historical_cases.json": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_结果图候选_20261115\\historical_cases.json",
+    "sha256": "fc323212c4f16de98a17756393c56be7848ce1c17699f2215effc2f6f26c1014"
+  },
+  "plan.json": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_结果图候选_20261115\\plan.json",
+    "sha256": "e7d426fac188e3d4298d2fd38f6855b227884d057dcb9f05ef672ebe8871e19b"
+  },
+  "render_cases.py": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\releases\\spanworld_v2\\evaluation_v2_20261113\\paper_delivery_v1\\code\\render_cases.py",
+    "sha256": "f37a204fdf31320c95cdf5a3e30eed7a756a4809dac725ea9b69cd613aecc541"
+  },
+  "render_interventions.py": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\releases\\spanworld_v2\\evaluation_v2_20261113\\paper_delivery_v1\\code\\render_interventions.py",
+    "sha256": "1ecc84806b9f32ccd20fae194d34716fa4268d062b880794649ffd5e1f118041"
+  },
+  "select_cases.py": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\releases\\spanworld_v2\\evaluation_v2_20261113\\paper_delivery_v1\\code\\select_cases.py",
+    "sha256": "6432999ec0970ef89c53b0e3e0f642d6dc1e7872e9931ae3deec109b49da0b0f"
+  },
+  "worker.py": {
+    "source": "C:\\Users\\32084\\Documents\\CVPRAAAI投稿2\\_dqueue_20261114\\d_fig_worker.py",
+    "sha256": "5d220e2dffd8ec3c129cbbaf89fef2a06ed1bbb867185c4475b655b4a9f45a66"
+  },
+  "historical/P42_arrays.npz": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续写作\\附录\\图版\\源数组\\P42_arrays.npz",
+    "sha256": "c33171f0fb2380447b8882c83e3f12c6bc32e3d603e144ced796f11c0e8f24c8"
+  },
+  "historical/P42_metadata.json": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续写作\\附录\\图版\\源数组\\P42_metadata.json",
+    "sha256": "bc8cf9b6a06567ee7663862709fe6a317543ef7be71a52a77c1176aedafab05f"
+  },
+  "historical/P42_official_baselines.npz": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续写作\\附录\\图版\\源数组\\P42_official_baselines.npz",
+    "sha256": "2d8f3ad06a7445f3afeb590033d4823afc3417b1349ce0daeb17a651193f5440"
+  },
+  "historical/H1_numeric_audit.json": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续写作\\附录\\图版\\H1_数值核验.json",
+    "sha256": "dff47641577498c8a5b447d079429272d040ca36874565d5b3b0872bab631cce"
+  },
+  "unchanged_framework/figure1_motivation.png": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续写作\\ICLR2027完整稿_v16_图2拼写修正版替换_20260925\\figures\\figure1_motivation.png",
+    "sha256": "c9942d21e7af195d7b5460ac45986ab0665cf9be1c4921d5ea7c29f6a9d1e894"
+  },
+  "unchanged_framework/figure2_architecture.png": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续写作\\ICLR2027完整稿_v16_图2拼写修正版替换_20260925\\figures\\figure2_architecture.png",
+    "sha256": "df7fb8146745acd0db4973adfd45f92946aa8cfd415b145b14d6282cc7674d8f"
+  },
+  "unchanged_framework/figure2_layout.tex": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续写作\\ICLR2027完整稿_v16_图2拼写修正版替换_20260925\\figures\\figure2_layout.tex",
+    "sha256": "790a161939d99a52c9625ba1e6825cb5b378a7925f11614b9226fba2cb0ab3fd"
+  }
+}

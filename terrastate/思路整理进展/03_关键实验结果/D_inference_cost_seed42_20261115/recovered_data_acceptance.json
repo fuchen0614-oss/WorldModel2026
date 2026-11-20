@@ -1,0 +1,25 @@
+{
+  "status": "PASS_RECOVERED_TIMING_DATA_ONLY",
+  "original_worker_exit": {
+    "exit": 1,
+    "pid": 2866,
+    "time": 1794742502.5219362
+  },
+  "ssh_collection_exit": 0,
+  "samples": 8,
+  "timing_rows": 320,
+  "file_hashes_verified": true,
+  "recomputed_all_summary_metrics": true,
+  "gpu_inventory_match": "3, GPU-3e1f63df-7402-94f9-7695-d79678b39143, NVIDIA GeForce RTX 4090",
+  "shared_GPU": true,
+  "limitation": "worker failed only at GPU-name metadata; original exit1 retained; concurrent-process snapshots from failed worker not persisted; no isolated-latency claim",
+  "files_sha256": {
+    "timings.csv": "ca553f18ffd9e0a9b85fb2372f5671580240d2b5dcaae2f4fb56bcb9a90a6cce",
+    "summary.csv": "4df346a58765981990cadc1858f06e9d09a58d78f2dcb6650a40b2760a27b552",
+    "plan.json": "684c7b52f852407b59b1ad944244f3b7b791c4782d5aa0a5cec57a5ff407e376",
+    "exit.json": "aa6b16e404558d61e1a7b369cd78440356b7e51173d7984913e7629d78dd10d2",
+    "state.json": "a83070c974f07c41cbc7eeddd9a3595a56e5035ab8f7cf6a4d7bf9745142ea65",
+    "progress.json": "19270a694b0d9acb630bdbcb10a914f0308aa7738a71b1802904626fc5959227",
+    "numerical_equivalence.json": "1321d233b4a7ebb7db1b77e652614ea16a4a8ec2b2c17c5ca9f0000650add543"
+  }
+}

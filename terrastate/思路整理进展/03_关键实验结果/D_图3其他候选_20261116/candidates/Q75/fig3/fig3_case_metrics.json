@@ -1,0 +1,47 @@
+{
+  "case_id_internal": "Q75",
+  "case_selection_internal": "Frozen historical case Q75; re-evaluated with D seed42",
+  "target_step": 20,
+  "target_day": 100,
+  "target_date": "2018-08-07",
+  "continuation_from_day": 50,
+  "pre_continuation_partition_days": [
+    15,
+    35
+  ],
+  "valid_pixels": 15456,
+  "total_pixels": 16384,
+  "coverage": 0.943359375,
+  "ndvi_display_limits": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display_limits": [
+    0.0,
+    0.45
+  ],
+  "ndvi_display_saturation_fraction": {
+    "gt": 0.0,
+    "C1_direct": 6.469979296066253e-05,
+    "C1_continued": 0.0004528985507246377,
+    "C0R_direct": 0.0,
+    "C0R_continued": 0.0004528985507246377
+  },
+  "metrics": [
+    {
+      "model": "SpanWorld",
+      "direct_mse": 0.028126537799835205,
+      "continued_mse": 0.028476735576987267,
+      "direct_error_display_saturation_fraction": 0.008152173913043478,
+      "continued_error_display_saturation_fraction": 0.007246376811594203
+    },
+    {
+      "model": "Direct-endpoint control",
+      "direct_mse": 0.027455119416117668,
+      "continued_mse": 0.031398698687553406,
+      "direct_error_display_saturation_fraction": 0.006858178053830228,
+      "continued_error_display_saturation_fraction": 0.011063664596273292
+    }
+  ],
+  "metric_note": "Single target date; mean squared error over the identical valid-observation pixels. Display clipping never changes MSE."
+}

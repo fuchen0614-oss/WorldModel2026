@@ -1,0 +1,30 @@
+{
+  "status": "COMPLETE",
+  "model": {
+    "checkpoint_sha256": "f1334bb429238f84635e2a12b2ddc43c170dadd2d6f9d5c7a60d236c2606f3f8",
+    "arm": "CONSISTENCY",
+    "training_arm": "C1",
+    "endpoint_target": "detached_direct",
+    "seed": 42,
+    "variant": "D",
+    "probe": false,
+    "strict": true
+  },
+  "n_selected": 2837,
+  "sample_manifest_sha256": "53a10b3cd84a59b2127f62c8d51b19b28f2214c171150d089730c6c7f04c8f66",
+  "prefixes": {
+    "A": [
+      10
+    ],
+    "B": [
+      5,
+      5
+    ],
+    "C": [
+      3,
+      7
+    ]
+  },
+  "qualification": "identical existing C1/C0R cohort and every path/target valid count",
+  "selection_receipt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_ablation60_seed42_20261114/selection_receipt.json"
+}

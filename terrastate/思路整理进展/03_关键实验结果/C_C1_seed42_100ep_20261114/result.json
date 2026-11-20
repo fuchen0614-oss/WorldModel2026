@@ -1,0 +1,323 @@
+{
+  "status": "PASS",
+  "total_samples": 22320,
+  "probe": false,
+  "device": "cuda:0",
+  "arm": "C1",
+  "model_config": {
+    "use_adaln": true,
+    "season_encoding": "annual_sincos_v1",
+    "season_route": "tokens_and_transition",
+    "supervision_v2": true,
+    "zero_empty_history_reference": true,
+    "state_dim": 256,
+    "freeze_b0": false,
+    "dw": 128,
+    "dg": 64,
+    "dh": 64,
+    "cond_dim": 256,
+    "lc_min": 10,
+    "lc_max": 40,
+    "partitions": [
+      [
+        5,
+        5
+      ],
+      [
+        7,
+        8
+      ],
+      [
+        10,
+        10
+      ]
+    ],
+    "heldout_partitions": [
+      [
+        3,
+        7
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        4,
+        11
+      ],
+      [
+        8,
+        12
+      ],
+      [
+        2,
+        18
+      ]
+    ],
+    "arch": "SpanWorldFullBase",
+    "route_version": "spanworld_full_base_v1",
+    "driver_protocol": "full24",
+    "factual_path": "recursive",
+    "days_per_transition_step": 5,
+    "use_future_state_anchor": false,
+    "eo_traj_weight": 1.0,
+    "eo_endpoint_weight": 1.0,
+    "factual_endpoints": [
+      10,
+      15,
+      20
+    ],
+    "nc_min_std": 0.001,
+    "nc_min_effective_rank": 2.0,
+    "nc_min_movement": 0.0001,
+    "cc_train_partitions": {
+      "10": [
+        [
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          3,
+          2
+        ]
+      ],
+      "15": [
+        [
+          15
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          4,
+          4
+        ]
+      ],
+      "20": [
+        [
+          20
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          10,
+          5,
+          5
+        ],
+        [
+          5,
+          5,
+          5,
+          5
+        ]
+      ]
+    },
+    "cc_heldout_partitions": {
+      "10": [
+        [
+          3,
+          7
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "15": [
+        [
+          4,
+          11
+        ],
+        [
+          3,
+          5,
+          7
+        ]
+      ],
+      "20": [
+        [
+          8,
+          12
+        ],
+        [
+          2,
+          18
+        ],
+        [
+          2,
+          6,
+          12
+        ],
+        [
+          1,
+          4,
+          6,
+          9
+        ]
+      ]
+    },
+    "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+    "training_stage": "stage2",
+    "variant": "C"
+  },
+  "checkpoint_sha256": "4824411df908f3a3d2542ccdbb32e7bddb6e2f3fac3ecb16d74537b443235327",
+  "best_epoch": 97,
+  "best_step": 72265,
+  "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+  "seconds": 14201.427635192871,
+  "splits": {
+    "iid_chopped": {
+      "count": 2856,
+      "empty": 1369,
+      "coverage_complete": true,
+      "checkpoint_sha256": "4824411df908f3a3d2542ccdbb32e7bddb6e2f3fac3ecb16d74537b443235327",
+      "manifest_sha256": "4fb4ca86d7e19751a736835349b97785fb5b7ab5a3fcf451ec1d334bd0c74c59",
+      "relative_ids_sha256": "8a040cfe09b32eb5ff7ada683bf505c25e387069bff09005b88b82e73b4dd6f4",
+      "metrics": {
+        "nse": -0.054642222899052406,
+        "rmse": 0.1496802717447281,
+        "R2": 0.52988435622164,
+        "biasabs": 0.09558144211769104,
+        "nse_forest": -0.08091939806302229,
+        "rmse_forest": 0.14554056525230408,
+        "R2_forest": 0.4799648623728465,
+        "biasabs_forest": 0.0902276337146759,
+        "nse_shrub": -0.1499918112470664,
+        "rmse_shrub": 0.14447757601737976,
+        "R2_shrub": 0.5095699463176528,
+        "biasabs_shrub": 0.09339500963687897,
+        "nse_grass": -0.027666896942138308,
+        "rmse_grass": 0.14604464173316956,
+        "R2_grass": 0.5455832788310555,
+        "biasabs_grass": 0.09269513934850693,
+        "nse_crop": 0.031335127642400096,
+        "rmse_crop": 0.16265828907489777,
+        "R2_crop": 0.5844193373650048,
+        "biasabs_crop": 0.10600800067186356,
+        "rmse_0_5": 0.08902142196893692,
+        "rmse_5_10": 0.12743736803531647,
+        "rmse_10_15": 0.1550332009792328,
+        "rmse_15_20": 0.1658981442451477,
+        "rmse25": 0.08902142196893692
+      }
+    },
+    "ood-t_chopped": {
+      "count": 1904,
+      "empty": 885,
+      "coverage_complete": true,
+      "checkpoint_sha256": "4824411df908f3a3d2542ccdbb32e7bddb6e2f3fac3ecb16d74537b443235327",
+      "manifest_sha256": "3d710b4af988d88ba34d6dfee3e9136099ba2b918eb36b493692b15712bb13d0",
+      "relative_ids_sha256": "ce88cf797adb4103885c2453b6961117abb2e245ae2d71de310959df7d5819c8",
+      "metrics": {
+        "nse": -0.037744612441195535,
+        "rmse": 0.14628341794013977,
+        "R2": 0.5778431036573544,
+        "biasabs": 0.09690774232149124,
+        "nse_forest": -0.06381201973887718,
+        "rmse_forest": 0.14531251788139343,
+        "R2_forest": 0.5515502216365266,
+        "biasabs_forest": 0.09522787481546402,
+        "nse_shrub": -0.12040301420185351,
+        "rmse_shrub": 0.1430264413356781,
+        "R2_shrub": 0.5735853514562499,
+        "biasabs_shrub": 0.09635180234909058,
+        "nse_grass": 0.011178368461775223,
+        "rmse_grass": 0.14083532989025116,
+        "R2_grass": 0.5872951180686682,
+        "biasabs_grass": 0.09242808818817139,
+        "nse_crop": 0.015855214288307717,
+        "rmse_crop": 0.1559593379497528,
+        "R2_crop": 0.5989417234679725,
+        "biasabs_crop": 0.10362320393323898,
+        "rmse_0_5": 0.08282880485057831,
+        "rmse_5_10": 0.12529540061950684,
+        "rmse_10_15": 0.15169504284858704,
+        "rmse_15_20": 0.16406264901161194,
+        "rmse25": 0.08282880485057831
+      }
+    },
+    "ood-s_chopped": {
+      "count": 10536,
+      "empty": 7040,
+      "coverage_complete": true,
+      "checkpoint_sha256": "4824411df908f3a3d2542ccdbb32e7bddb6e2f3fac3ecb16d74537b443235327",
+      "manifest_sha256": "249d791b7570a3287d853320b312744f1b6253469d4d2821c5ef892e6ba06417",
+      "relative_ids_sha256": "91add6b73214355dff21c188d55a63c8a4ff91a47f8fc1b32dca0167a0ffb322",
+      "metrics": {
+        "nse": -0.1020545166464486,
+        "rmse": 0.15676330029964447,
+        "R2": 0.4974507648685803,
+        "biasabs": 0.09773936122655869,
+        "nse_forest": -0.15504540925489962,
+        "rmse_forest": 0.15652203559875488,
+        "R2_forest": 0.44879344709384983,
+        "biasabs_forest": 0.09620696306228638,
+        "nse_shrub": -0.14849883948364218,
+        "rmse_shrub": 0.1422504037618637,
+        "R2_shrub": 0.49798870694600167,
+        "biasabs_shrub": 0.09103478491306305,
+        "nse_grass": -0.1126655673442043,
+        "rmse_grass": 0.15549594163894653,
+        "R2_grass": 0.4916899047119072,
+        "biasabs_grass": 0.09548459202051163,
+        "nse_crop": 0.00038306527305920213,
+        "rmse_crop": 0.17278482019901276,
+        "R2_crop": 0.5513310007225624,
+        "biasabs_crop": 0.1082310900092125,
+        "rmse_0_5": 0.09486109018325806,
+        "rmse_5_10": 0.13079261779785156,
+        "rmse_10_15": 0.16075874865055084,
+        "rmse_15_20": 0.17520520091056824,
+        "rmse25": 0.09486109018325806
+      }
+    },
+    "ood-st_chopped": {
+      "count": 7024,
+      "empty": 4836,
+      "coverage_complete": true,
+      "checkpoint_sha256": "4824411df908f3a3d2542ccdbb32e7bddb6e2f3fac3ecb16d74537b443235327",
+      "manifest_sha256": "485f6927d606842df3a7b87d2f89a2a29a6fdae0e3e2e00911b5cad35f5e86d6",
+      "relative_ids_sha256": "a0f8cadb2768c655e246be06dacadecc094ec3bad8cf3a429173b6da7f54a068",
+      "metrics": {
+        "nse": -0.10857838627522565,
+        "rmse": 0.15129144489765167,
+        "R2": 0.5474604382971795,
+        "biasabs": 0.1004382073879242,
+        "nse_forest": -0.14268663544355498,
+        "rmse_forest": 0.14981773495674133,
+        "R2_forest": 0.5235442432496312,
+        "biasabs_forest": 0.09875655919313431,
+        "nse_shrub": -0.1908900524790873,
+        "rmse_shrub": 0.14693030714988708,
+        "R2_shrub": 0.540895778006022,
+        "biasabs_shrub": 0.10078608989715576,
+        "nse_grass": -0.08377015827916612,
+        "rmse_grass": 0.14603562653064728,
+        "R2_grass": 0.542772286087089,
+        "biasabs_grass": 0.09504970163106918,
+        "nse_crop": -0.024398288628999953,
+        "rmse_crop": 0.1623821258544922,
+        "R2_crop": 0.5826294458459758,
+        "biasabs_crop": 0.10716049373149872,
+        "rmse_0_5": 0.08725886791944504,
+        "rmse_5_10": 0.12988179922103882,
+        "rmse_10_15": 0.15706345438957214,
+        "rmse_15_20": 0.1691734492778778,
+        "rmse25": 0.08725886791944504
+      }
+    }
+  }
+}

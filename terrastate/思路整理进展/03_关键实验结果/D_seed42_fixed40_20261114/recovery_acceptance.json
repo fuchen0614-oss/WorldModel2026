@@ -1,0 +1,520 @@
+{
+  "launch.json": {
+    "pid": 3431368,
+    "time": 1794643983.8185596
+  },
+  "state.json": {
+    "status": "running",
+    "pid": 3431368,
+    "children": {},
+    "adopted": {
+      "standard_C1_ood-s_chopped": {
+        "pid": 3423208,
+        "uuid": "GPU-9865b664-8f6f-5e91-ab81-bdac60b61b62",
+        "slot": 1,
+        "kind": "standard",
+        "arm": "C1",
+        "command": [
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+          "-B",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/code/eval/eval_fixed40_standard.py",
+          "--run",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen",
+          "--out",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/standard/C1/ood-s_chopped",
+          "--device",
+          "cuda:0",
+          "--data-root",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/stage2_dc_eval_20261113_01",
+          "--expected-checkpoint-sha256",
+          "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+          "--split",
+          "ood-s_chopped",
+          "--frozen-checkpoint",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/C1.pt",
+          "--frozen-receipt",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/C1.json",
+          "--controller",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/standard/C1/ood-s_chopped"
+        ],
+        "status": "running",
+        "started": 1794642668.6668322,
+        "protocol_pass": true,
+        "protocol_check": {
+          "status": "PASS",
+          "pid": 3423208,
+          "split": "ood-s_chopped",
+          "ids": [
+            "JAS17/minicube_0_36.25_-5.75.nc",
+            "JAS17/minicube_100_42.25_14.05.nc",
+            "JAS17/minicube_101_42.25_19.05.nc",
+            "JAS17/minicube_102_42.75_-8.75.nc"
+          ],
+          "expected_prefix": [
+            "JAS17/minicube_0_36.25_-5.75.nc",
+            "JAS17/minicube_100_42.25_14.05.nc",
+            "JAS17/minicube_101_42.25_19.05.nc",
+            "JAS17/minicube_102_42.75_-8.75.nc"
+          ],
+          "expected_count": 10536,
+          "checkpoint_sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+          "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+          "metric_abs_errors": {
+            "nse": 0.0,
+            "rmse": 0.0,
+            "R2": 0.0,
+            "biasabs": 0.0,
+            "nse_forest": 0.0,
+            "rmse_forest": 0.0,
+            "R2_forest": 0.0,
+            "biasabs_forest": 0.0,
+            "nse_shrub": 0.0,
+            "rmse_shrub": 0.0,
+            "R2_shrub": 0.0,
+            "biasabs_shrub": 0.0,
+            "nse_grass": 0.0,
+            "rmse_grass": 0.0,
+            "R2_grass": 0.0,
+            "biasabs_grass": 0.0,
+            "nse_crop": 0.0,
+            "rmse_crop": 0.0,
+            "R2_crop": 0.0,
+            "biasabs_crop": 0.0,
+            "rmse_0_5": 0.0,
+            "rmse_5_10": 0.0,
+            "rmse_10_15": 0.0,
+            "rmse_15_20": 0.0,
+            "rmse25": 0.0
+          },
+          "peak_cuda_bytes": 625845760,
+          "seconds": 4.437237739562988
+        },
+        "progress": {
+          "split": "ood-s_chopped",
+          "done": 101,
+          "total": 10536,
+          "seconds": 53.528950929641724
+        },
+        "exit_receipt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/standard_C1_ood-s_chopped_exit.json"
+      },
+      "standard_C0R_ood-s_chopped": {
+        "pid": 3423540,
+        "uuid": "GPU-3e1f63df-7402-94f9-7695-d79678b39143",
+        "slot": 3,
+        "kind": "standard",
+        "arm": "C0R",
+        "command": [
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+          "-B",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/code/eval/eval_fixed40_standard.py",
+          "--run",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen",
+          "--out",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/standard/C0R/ood-s_chopped",
+          "--device",
+          "cuda:0",
+          "--data-root",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/stage2_dc_eval_20261113_01",
+          "--expected-checkpoint-sha256",
+          "2fd2bebddf7b1eef9d7cdca8ab97203be7b60a9aec723ccb8e1aaf1f8d3d8cef",
+          "--split",
+          "ood-s_chopped",
+          "--frozen-checkpoint",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/C0R.pt",
+          "--frozen-receipt",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/C0R.json",
+          "--controller",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/standard/C0R/ood-s_chopped"
+        ],
+        "status": "running",
+        "started": 1794642717.4298666,
+        "progress": {
+          "split": "ood-s_chopped",
+          "done": 4,
+          "total": 10536,
+          "seconds": 5.767274379730225
+        },
+        "protocol_pass": true,
+        "protocol_check": {
+          "status": "PASS",
+          "pid": 3423540,
+          "split": "ood-s_chopped",
+          "ids": [
+            "JAS17/minicube_0_36.25_-5.75.nc",
+            "JAS17/minicube_100_42.25_14.05.nc",
+            "JAS17/minicube_101_42.25_19.05.nc",
+            "JAS17/minicube_102_42.75_-8.75.nc"
+          ],
+          "expected_prefix": [
+            "JAS17/minicube_0_36.25_-5.75.nc",
+            "JAS17/minicube_100_42.25_14.05.nc",
+            "JAS17/minicube_101_42.25_19.05.nc",
+            "JAS17/minicube_102_42.75_-8.75.nc"
+          ],
+          "expected_count": 10536,
+          "checkpoint_sha256": "2fd2bebddf7b1eef9d7cdca8ab97203be7b60a9aec723ccb8e1aaf1f8d3d8cef",
+          "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+          "metric_abs_errors": {
+            "nse": 0.0,
+            "rmse": 0.0,
+            "R2": 0.0,
+            "biasabs": 0.0,
+            "nse_forest": 0.0,
+            "rmse_forest": 0.0,
+            "R2_forest": 0.0,
+            "biasabs_forest": 0.0,
+            "nse_shrub": 0.0,
+            "rmse_shrub": 0.0,
+            "R2_shrub": 0.0,
+            "biasabs_shrub": 0.0,
+            "nse_grass": 0.0,
+            "rmse_grass": 0.0,
+            "R2_grass": 0.0,
+            "biasabs_grass": 0.0,
+            "nse_crop": 0.0,
+            "rmse_crop": 0.0,
+            "R2_crop": 0.0,
+            "biasabs_crop": 0.0,
+            "rmse_0_5": 0.0,
+            "rmse_5_10": 0.0,
+            "rmse_10_15": 0.0,
+            "rmse_15_20": 0.0,
+            "rmse25": 0.0
+          },
+          "peak_cuda_bytes": 625845760,
+          "seconds": 4.254496812820435
+        },
+        "exit_receipt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/standard_C0R_ood-s_chopped_exit.json"
+      },
+      "standard_CONSISTENCY_ood-s_chopped": {
+        "pid": 3429909,
+        "uuid": "GPU-6b066b99-857d-37d3-41ef-b5f7ddcfab04",
+        "slot": 0,
+        "arm": "CONSISTENCY",
+        "split": "ood-s_chopped",
+        "status": "running",
+        "command": [
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+          "-B",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/code/eval/eval_fixed40_standard.py",
+          "--run",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen",
+          "--out",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/recovery_v1/standard/CONSISTENCY/ood-s_chopped",
+          "--device",
+          "cuda:0",
+          "--data-root",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/stage2_dc_eval_20261113_01",
+          "--expected-checkpoint-sha256",
+          "198d983bc8b205c1477f82f280090e08ceec6ca0d749acef7be8d64cc37b8d7a",
+          "--split",
+          "ood-s_chopped",
+          "--frozen-checkpoint",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/CONSISTENCY.pt",
+          "--frozen-receipt",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/CONSISTENCY.json",
+          "--controller",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/recovery_v1/standard/CONSISTENCY/ood-s_chopped"
+        ],
+        "started": 1794643777.5912588,
+        "exit_receipt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/recovery_v1/standard_CONSISTENCY_ood-s_chopped_exit.json"
+      },
+      "standard_BASELINE_ood-s_chopped": {
+        "pid": 3429912,
+        "uuid": "GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf",
+        "slot": 2,
+        "arm": "BASELINE",
+        "split": "ood-s_chopped",
+        "status": "running",
+        "command": [
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+          "-B",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/recovery_v1/baseline_code/eval/eval_fixed40_standard.py",
+          "--run",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen",
+          "--out",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/recovery_v1/standard/BASELINE/ood-s_chopped",
+          "--device",
+          "cuda:0",
+          "--data-root",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/stage2_dc_eval_20261113_01",
+          "--expected-checkpoint-sha256",
+          "79307c23917b2bcd33fb867fd68ca9acbe582da28da7bd71004d08c1237d2e7d",
+          "--split",
+          "ood-s_chopped",
+          "--frozen-checkpoint",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/BASELINE.pt",
+          "--frozen-receipt",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/BASELINE.json",
+          "--controller",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/recovery_v1/standard/BASELINE/ood-s_chopped"
+        ],
+        "started": 1794643777.6872272,
+        "exit_receipt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/recovery_v1/standard_BASELINE_ood-s_chopped_exit.json"
+      }
+    },
+    "time": 1794644041.0244136,
+    "pending_tasks": 12
+  },
+  "resource_lease.json": {
+    "status": "active",
+    "pid": 3431368,
+    "gpu_uuids": [
+      "GPU-6b066b99-857d-37d3-41ef-b5f7ddcfab04",
+      "GPU-9865b664-8f6f-5e91-ab81-bdac60b61b62",
+      "GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf",
+      "GPU-3e1f63df-7402-94f9-7695-d79678b39143"
+    ],
+    "guard_recognition_prefix": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code",
+    "purpose": "recovery; old controller drains only; no duplicate inference"
+  },
+  "suffix_merge_exit.json": {
+    "pid": 3431369,
+    "exit": 0,
+    "time": 1794643989.945659
+  },
+  "suffix_tables_exit.json": {
+    "pid": 3431398,
+    "exit": 0,
+    "time": 1794643994.4393952
+  },
+  "suffix_tables/A_suffix.csv": "model,seed,path,path_days,primary,n_receivers,direct_suffix_MSE,continuation_MSE,degradation_vs_own_direct,fixed_epoch\nC1,42,C,15+35,True,2837,0.0412139096987431,0.04174649900988656,0.0005325893111434651,40\nC1,42,A,50,False,2837,0.0412139096987431,0.04143540529766581,0.00022149559892271214,40\nC1,42,B,25+25,False,2837,0.0412139096987431,0.041837919484676994,0.0006240097859338961,40\nC0R,42,C,15+35,True,2837,0.04361874147420111,0.04869256029981726,0.005073818825616146,40\nC0R,42,A,50,False,2837,0.04361874147420111,0.04399701238928542,0.00037827091508430694,40\nC0R,42,B,25+25,False,2837,0.04361874147420111,0.04965236826594964,0.006033626791748528,40\nCONSISTENCY,42,C,15+35,True,2837,0.04284155421729439,0.04311991402100608,0.0002783598037116933,40\nCONSISTENCY,42,A,50,False,2837,0.04284155421729439,0.042991784790606065,0.0001502305733116771,40\nCONSISTENCY,42,B,25+25,False,2837,0.04284155421729439,0.04317601230493281,0.0003344580876384201,40\n",
+  "suffix_tables/A_model_differences.csv": "path,reference,comparison,n_receivers,C1_minus_other_direct_MSE,C1_minus_other_continuation_MSE,C1_minus_other_degradation\nC,C1,C0R,2837,-0.0024048317754580134,-0.006946061289930694,-0.0045412295144726805\nC,C1,CONSISTENCY,2837,-0.0016276445185512897,-0.0013734150111195179,0.00025422950743177186\nA,C1,C0R,2837,-0.0024048317754580134,-0.002561607091619608,-0.0001567753161615948\nA,C1,CONSISTENCY,2837,-0.0016276445185512897,-0.0015563794929402547,7.126502561103504e-05\nB,C1,C0R,2837,-0.0024048317754580134,-0.007814448781272645,-0.005409617005814632\nB,C1,CONSISTENCY,2837,-0.0016276445185512897,-0.0013380928202558137,0.000289551698295476\n",
+  "suffix_tables/A_geographic_CI.csv": "model,path,metric,n_receivers,n_groups,mean,ci95_low,ci95_high,ci_crosses_zero\nC1,C,direct_MSE,2837,80,0.0412139096987431,0.035441218886919895,0.047836134912768835,False\nC1,C,continued_MSE,2837,80,0.04174649900988656,0.035983493653456836,0.048329535815625366,False\nC1,C,degradation,2837,80,0.0005325893111434629,0.00018764878355764913,0.0008459829283260753,False\nC1,A,direct_MSE,2837,80,0.0412139096987431,0.035441218886919895,0.047836134912768835,False\nC1,A,continued_MSE,2837,80,0.04143540529766581,0.03569374089430864,0.048022331289464454,False\nC1,A,degradation,2837,80,0.00022149559892274437,2.066095062249199e-06,0.0004141828898815142,False\nC1,B,direct_MSE,2837,80,0.0412139096987431,0.035441218886919895,0.047836134912768835,False\nC1,B,continued_MSE,2837,80,0.041837919484676994,0.03606565054373939,0.048475059841358956,False\nC1,B,degradation,2837,80,0.0006240097859340167,0.00029997645783573994,0.0009332760234530309,False\nC0R,C,direct_MSE,2837,80,0.04361874147420111,0.03730576978868638,0.05061875710857664,False\nC0R,C,continued_MSE,2837,80,0.04869256029981726,0.04309172030199733,0.05496469495145322,False\nC0R,C,degradation,2837,80,0.00507381882561622,0.0036998526255984992,0.006501118233067948,False\nC0R,A,direct_MSE,2837,80,0.04361874147420111,0.03730576978868638,0.05061875710857664,False\nC0R,A,continued_MSE,2837,80,0.04399701238928542,0.03819726673954226,0.0504295350974824,False\nC0R,A,degradation,2837,80,0.0003782709150842723,-0.00039595041426876616,0.0011473564243827366,True\nC0R,B,direct_MSE,2837,80,0.04361874147420111,0.03730576978868638,0.05061875710857664,False\nC0R,B,continued_MSE,2837,80,0.04965236826594964,0.04400764908989303,0.05594316092817001,False\nC0R,B,degradation,2837,80,0.006033626791748569,0.004669730352327276,0.007462953936814097,False\nCONSISTENCY,C,direct_MSE,2837,80,0.04284155421729439,0.03664691422478065,0.049888790100553346,False\nCONSISTENCY,C,continued_MSE,2837,80,0.04311991402100608,0.036880986993044235,0.05029817793999963,False\nCONSISTENCY,C,degradation,2837,80,0.00027835980371178825,5.371632963141658e-05,0.0004947001788468969,False\nCONSISTENCY,A,direct_MSE,2837,80,0.04284155421729439,0.03664691422478065,0.049888790100553346,False\nCONSISTENCY,A,continued_MSE,2837,80,0.042991784790606065,0.03678731978609784,0.05006735239711409,False\nCONSISTENCY,A,degradation,2837,80,0.00015023057331175533,-2.788825906604431e-06,0.000305690113071556,True\nCONSISTENCY,B,direct_MSE,2837,80,0.04284155421729439,0.03664691422478065,0.049888790100553346,False\nCONSISTENCY,B,continued_MSE,2837,80,0.04317601230493281,0.036931420658144455,0.050389810844553115,False\nCONSISTENCY,B,degradation,2837,80,0.0003344580876384833,0.00012146566488062753,0.0005391454686884355,False\nC1-minus-C0R,C,direct_MSE_diff,2837,80,-0.0024048317754580724,-0.0032441189821316207,-0.0016269255763085475,False\nC1-minus-C0R,C,continued_MSE_diff,2837,80,-0.0069460612899308275,-0.008330271285010224,-0.005658635879796311,False\nC1-minus-C0R,C,degradation_diff,2837,80,-0.004541229514472752,-0.006052202951848144,-0.003128882389607813,False\nC1-minus-CONSISTENCY,C,direct_MSE_diff,2837,80,-0.0016276445185512641,-0.00240807280072131,-0.0009142737659127687,False\nC1-minus-CONSISTENCY,C,continued_MSE_diff,2837,80,-0.0013734150111195888,-0.002162025874112326,-0.0007239659483589887,False\nC1-minus-CONSISTENCY,C,degradation_diff,2837,80,0.00025422950743167445,-5.532312185351035e-05,0.0005514984914306188,True\nC1-minus-C0R,A,direct_MSE_diff,2837,80,-0.0024048317754580724,-0.0032441189821316207,-0.0016269255763085475,False\nC1-minus-C0R,A,continued_MSE_diff,2837,80,-0.0025616070916196017,-0.0032355144064775115,-0.0018523079480629425,False\nC1-minus-C0R,A,degradation_diff,2837,80,-0.00015677531616152215,-0.000994375701898321,0.0006809696089714731,True\nC1-minus-CONSISTENCY,A,direct_MSE_diff,2837,80,-0.0016276445185512641,-0.00240807280072131,-0.0009142737659127687,False\nC1-minus-CONSISTENCY,A,continued_MSE_diff,2837,80,-0.001556379492940272,-0.0022847984543595008,-0.00088308386188877,False\nC1-minus-CONSISTENCY,A,degradation_diff,2837,80,7.126502561098884e-05,-0.00014171093529913566,0.000275222999689998,True\nC1-minus-C0R,B,direct_MSE_diff,2837,80,-0.0024048317754580724,-0.0032441189821316207,-0.0016269255763085475,False\nC1-minus-C0R,B,continued_MSE_diff,2837,80,-0.00781444878127261,-0.009145574529920465,-0.006479206163468109,False\nC1-minus-C0R,B,degradation_diff,2837,80,-0.005409617005814571,-0.0069223028620753035,-0.004002846921321695,False\nC1-minus-CONSISTENCY,B,direct_MSE_diff,2837,80,-0.0016276445185512641,-0.00240807280072131,-0.0009142737659127687,False\nC1-minus-CONSISTENCY,B,continued_MSE_diff,2837,80,-0.0013380928202557298,-0.002120290129288697,-0.0006872794302041906,False\nC1-minus-CONSISTENCY,B,degradation_diff,2837,80,0.00028955169829553346,-2.619553910197962e-05,0.000596402029384125,True\n",
+  "suffix_tables/receipt.json": "{\n  \"status\": \"PASS\",\n  \"receivers\": 2837,\n  \"source_sha256\": [\n    {\n      \"file\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/suffix/PER_RECEIVER_HORIZON.csv\",\n      \"sha256\": \"04a1a395a4d140482dc3c98f11a88060908d3dec27294d56af16b79084e7f949\"\n    }\n  ],\n  \"bootstrap\": \"unchanged legacy2000\",\n  \"fixed_epoch\": 40\n}",
+  "suffix_acceptance.json": "{\n  \"status\": \"PASS\",\n  \"receivers\": 2837,\n  \"rows\": 340440,\n  \"no_inference_repeated\": true\n}",
+  "logs": {
+    "suffix_tables.log": "",
+    "controller.log": "",
+    "suffix_merge.log": ""
+  },
+  "C1": {
+    "progress.json": {
+      "split": "ood-s_chopped",
+      "done": 2801,
+      "total": 10536,
+      "seconds": 1341.272203207016
+    },
+    "protocol_check.json": {
+      "status": "PASS",
+      "pid": 3423208,
+      "split": "ood-s_chopped",
+      "ids": [
+        "JAS17/minicube_0_36.25_-5.75.nc",
+        "JAS17/minicube_100_42.25_14.05.nc",
+        "JAS17/minicube_101_42.25_19.05.nc",
+        "JAS17/minicube_102_42.75_-8.75.nc"
+      ],
+      "expected_prefix": [
+        "JAS17/minicube_0_36.25_-5.75.nc",
+        "JAS17/minicube_100_42.25_14.05.nc",
+        "JAS17/minicube_101_42.25_19.05.nc",
+        "JAS17/minicube_102_42.75_-8.75.nc"
+      ],
+      "expected_count": 10536,
+      "checkpoint_sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+      "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+      "metric_abs_errors": {
+        "nse": 0.0,
+        "rmse": 0.0,
+        "R2": 0.0,
+        "biasabs": 0.0,
+        "nse_forest": 0.0,
+        "rmse_forest": 0.0,
+        "R2_forest": 0.0,
+        "biasabs_forest": 0.0,
+        "nse_shrub": 0.0,
+        "rmse_shrub": 0.0,
+        "R2_shrub": 0.0,
+        "biasabs_shrub": 0.0,
+        "nse_grass": 0.0,
+        "rmse_grass": 0.0,
+        "R2_grass": 0.0,
+        "biasabs_grass": 0.0,
+        "nse_crop": 0.0,
+        "rmse_crop": 0.0,
+        "R2_crop": 0.0,
+        "biasabs_crop": 0.0,
+        "rmse_0_5": 0.0,
+        "rmse_5_10": 0.0,
+        "rmse_10_15": 0.0,
+        "rmse_15_20": 0.0,
+        "rmse25": 0.0
+      },
+      "peak_cuda_bytes": 625845760,
+      "seconds": 4.437237739562988
+    }
+  },
+  "C0R": {
+    "progress.json": {
+      "split": "ood-s_chopped",
+      "done": 2801,
+      "total": 10536,
+      "seconds": 1291.5542678833008
+    },
+    "protocol_check.json": {
+      "status": "PASS",
+      "pid": 3423540,
+      "split": "ood-s_chopped",
+      "ids": [
+        "JAS17/minicube_0_36.25_-5.75.nc",
+        "JAS17/minicube_100_42.25_14.05.nc",
+        "JAS17/minicube_101_42.25_19.05.nc",
+        "JAS17/minicube_102_42.75_-8.75.nc"
+      ],
+      "expected_prefix": [
+        "JAS17/minicube_0_36.25_-5.75.nc",
+        "JAS17/minicube_100_42.25_14.05.nc",
+        "JAS17/minicube_101_42.25_19.05.nc",
+        "JAS17/minicube_102_42.75_-8.75.nc"
+      ],
+      "expected_count": 10536,
+      "checkpoint_sha256": "2fd2bebddf7b1eef9d7cdca8ab97203be7b60a9aec723ccb8e1aaf1f8d3d8cef",
+      "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+      "metric_abs_errors": {
+        "nse": 0.0,
+        "rmse": 0.0,
+        "R2": 0.0,
+        "biasabs": 0.0,
+        "nse_forest": 0.0,
+        "rmse_forest": 0.0,
+        "R2_forest": 0.0,
+        "biasabs_forest": 0.0,
+        "nse_shrub": 0.0,
+        "rmse_shrub": 0.0,
+        "R2_shrub": 0.0,
+        "biasabs_shrub": 0.0,
+        "nse_grass": 0.0,
+        "rmse_grass": 0.0,
+        "R2_grass": 0.0,
+        "biasabs_grass": 0.0,
+        "nse_crop": 0.0,
+        "rmse_crop": 0.0,
+        "R2_crop": 0.0,
+        "biasabs_crop": 0.0,
+        "rmse_0_5": 0.0,
+        "rmse_5_10": 0.0,
+        "rmse_10_15": 0.0,
+        "rmse_15_20": 0.0,
+        "rmse25": 0.0
+      },
+      "peak_cuda_bytes": 625845760,
+      "seconds": 4.254496812820435
+    }
+  },
+  "CONSISTENCY": {
+    "progress.json": {
+      "split": "ood-s_chopped",
+      "done": 501,
+      "total": 10536,
+      "seconds": 241.9067416191101
+    },
+    "protocol_check.json": {
+      "status": "PASS",
+      "pid": 3429909,
+      "split": "ood-s_chopped",
+      "ids": [
+        "JAS17/minicube_0_36.25_-5.75.nc",
+        "JAS17/minicube_100_42.25_14.05.nc",
+        "JAS17/minicube_101_42.25_19.05.nc",
+        "JAS17/minicube_102_42.75_-8.75.nc"
+      ],
+      "expected_prefix": [
+        "JAS17/minicube_0_36.25_-5.75.nc",
+        "JAS17/minicube_100_42.25_14.05.nc",
+        "JAS17/minicube_101_42.25_19.05.nc",
+        "JAS17/minicube_102_42.75_-8.75.nc"
+      ],
+      "expected_count": 10536,
+      "checkpoint_sha256": "198d983bc8b205c1477f82f280090e08ceec6ca0d749acef7be8d64cc37b8d7a",
+      "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+      "metric_abs_errors": {
+        "nse": 0.0,
+        "rmse": 0.0,
+        "R2": 0.0,
+        "biasabs": 0.0,
+        "nse_forest": 0.0,
+        "rmse_forest": 0.0,
+        "R2_forest": 0.0,
+        "biasabs_forest": 0.0,
+        "nse_shrub": 0.0,
+        "rmse_shrub": 0.0,
+        "R2_shrub": 0.0,
+        "biasabs_shrub": 0.0,
+        "nse_grass": 0.0,
+        "rmse_grass": 0.0,
+        "R2_grass": 0.0,
+        "biasabs_grass": 0.0,
+        "nse_crop": 0.0,
+        "rmse_crop": 0.0,
+        "R2_crop": 0.0,
+        "biasabs_crop": 0.0,
+        "rmse_0_5": 0.0,
+        "rmse_5_10": 0.0,
+        "rmse_10_15": 0.0,
+        "rmse_15_20": 0.0,
+        "rmse25": 0.0
+      },
+      "peak_cuda_bytes": 625845760,
+      "seconds": 4.381738185882568
+    }
+  },
+  "BASELINE": {
+    "progress.json": {
+      "split": "ood-s_chopped",
+      "done": 501,
+      "total": 10536,
+      "seconds": 234.24570178985596
+    },
+    "protocol_check.json": {
+      "status": "PASS",
+      "pid": 3429912,
+      "split": "ood-s_chopped",
+      "ids": [
+        "JAS17/minicube_0_36.25_-5.75.nc",
+        "JAS17/minicube_100_42.25_14.05.nc",
+        "JAS17/minicube_101_42.25_19.05.nc",
+        "JAS17/minicube_102_42.75_-8.75.nc"
+      ],
+      "expected_prefix": [
+        "JAS17/minicube_0_36.25_-5.75.nc",
+        "JAS17/minicube_100_42.25_14.05.nc",
+        "JAS17/minicube_101_42.25_19.05.nc",
+        "JAS17/minicube_102_42.75_-8.75.nc"
+      ],
+      "expected_count": 10536,
+      "checkpoint_sha256": "79307c23917b2bcd33fb867fd68ca9acbe582da28da7bd71004d08c1237d2e7d",
+      "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+      "metric_abs_errors": {
+        "nse": 0.0,
+        "rmse": 0.0,
+        "R2": 0.0,
+        "biasabs": 0.0,
+        "nse_forest": 0.0,
+        "rmse_forest": 0.0,
+        "R2_forest": 0.0,
+        "biasabs_forest": 0.0,
+        "nse_shrub": 0.0,
+        "rmse_shrub": 0.0,
+        "R2_shrub": 0.0,
+        "biasabs_shrub": 0.0,
+        "nse_grass": 0.0,
+        "rmse_grass": 0.0,
+        "R2_grass": 0.0,
+        "biasabs_grass": 0.0,
+        "nse_crop": 0.0,
+        "rmse_crop": 0.0,
+        "R2_crop": 0.0,
+        "biasabs_crop": 0.0,
+        "rmse_0_5": 0.0,
+        "rmse_5_10": 0.0,
+        "rmse_10_15": 0.0,
+        "rmse_15_20": 0.0,
+        "rmse25": 0.0
+      },
+      "peak_cuda_bytes": 576086016,
+      "seconds": 7.352593421936035
+    }
+  },
+  "time": 1794644041.3405852
+}

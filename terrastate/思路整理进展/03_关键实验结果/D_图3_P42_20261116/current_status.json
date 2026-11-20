@@ -1,0 +1,24 @@
+{
+  "launch": {
+    "pid": 343562,
+    "gpu": 0,
+    "time": 1794776705.6160867,
+    "runtime": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_figure3_P42_20261116",
+    "output": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/figure_candidates/D_figure3_P42_20261116/raw",
+    "scope": "P42 only, standalone import fix, no training code edit"
+  },
+  "alive": false,
+  "state": {
+    "pid": 343562,
+    "stage": "failed",
+    "time": 1794776710.7352922,
+    "elapsed_seconds": 4.948270797729492,
+    "error": "Traceback (most recent call last):\n  File \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_figure3_P42_20261116/worker.py\", line 39, in <module>\n    assert sha(spec['checkpoint'])==spec['sha256'];ck=torch.load(spec['checkpoint'],map_location='cpu',weights_only=False);assert (ck['variant'],ck['arm'],ck['args']['seed'])==('D',arm,42)\n  File \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_figure3_P42_20261116/worker.py\", line 4, in sha\n    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()\n  File \"/usr/lib/python3.10/pathlib.py\", line 1126, in read_bytes\n    with self.open(mode='rb') as f:\n  File \"/usr/lib/python3.10/pathlib.py\", line 1119, in open\n    return self._accessor.open(self, mode, buffering, encoding, errors,\nFileNotFoundError: [Errno 2] No such file or directory: '/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt'\n"
+  },
+  "receipt": {
+    "status": "FAILED",
+    "business_exit": 1,
+    "error": "Traceback (most recent call last):\n  File \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_figure3_P42_20261116/worker.py\", line 39, in <module>\n    assert sha(spec['checkpoint'])==spec['sha256'];ck=torch.load(spec['checkpoint'],map_location='cpu',weights_only=False);assert (ck['variant'],ck['arm'],ck['args']['seed'])==('D',arm,42)\n  File \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_figure3_P42_20261116/worker.py\", line 4, in sha\n    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()\n  File \"/usr/lib/python3.10/pathlib.py\", line 1126, in read_bytes\n    with self.open(mode='rb') as f:\n  File \"/usr/lib/python3.10/pathlib.py\", line 1119, in open\n    return self._accessor.open(self, mode, buffering, encoding, errors,\nFileNotFoundError: [Errno 2] No such file or directory: '/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt'\n"
+  },
+  "log_tail": "Traceback (most recent call last):\n  File \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_figure3_P42_20261116/worker.py\", line 39, in <module>\n    assert sha(spec['checkpoint'])==spec['sha256'];ck=torch.load(spec['checkpoint'],map_location='cpu',weights_only=False);assert (ck['variant'],ck['arm'],ck['args']['seed'])==('D',arm,42)\n  File \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_figure3_P42_20261116/worker.py\", line 4, in sha\n    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()\n  File \"/usr/lib/python3.10/pathlib.py\", line 1126, in read_bytes\n    with self.open(mode='rb') as f:\n  File \"/usr/lib/python3.10/pathlib.py\", line 1119, in open\n    return self._accessor.open(self, mode, buffering, encoding, errors,\nFileNotFoundError: [Errno 2] No such file or directory: '/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt'\n"
+}

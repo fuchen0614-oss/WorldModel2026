@@ -1,0 +1,9 @@
+{
+  "status": "PARTIAL_AUDIT",
+  "statistical_reaggregation": "PASS",
+  "remote_checkpoint_metadata": "5 read; seed42 C1 original path missing",
+  "final_selection_identity": "UNRESOLVED",
+  "cross_protocol_cause": "UNRESOLVED",
+  "report": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A52_D表1与标准精度差异初审_20261116.md",
+  "evidence_sha256": "c0b521abb2bd19f0c566d4de2ddd21459fe35c7b612073591b24b52d3822bed4"
+}

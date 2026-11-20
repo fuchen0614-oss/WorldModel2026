@@ -1,0 +1,2527 @@
+{
+  "progress.json": {
+    "done": 84,
+    "total": 84,
+    "seconds": 76.88898921012878,
+    "time": 1794746615.009232
+  },
+  "protocol_PASS.json": {
+    "status": "PASS",
+    "data_sha_verified": true,
+    "pairs": 84,
+    "donors": 45,
+    "geo_groups": 31,
+    "fixed_base_prediction": true,
+    "receiver_season_preserved": true,
+    "intervention": "24 weather channels of state branch only; baseline retains factual future weather",
+    "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb"
+  },
+  "result.json": {
+    "status": "PASS",
+    "variant": "D",
+    "pairs": 84,
+    "seconds": 76.89782762527466,
+    "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+    "per_pair_sha256": "e0ae83332e5f6817cd8b4a2424d2de01d9be7a888d30b3f519ac2ead25109aca"
+  },
+  "per_pair.json": [
+    {
+      "extreme": "ood-t_chopped/JAS21/minicube_103_32TPR_45.49_10.47.nc",
+      "control": "ood-t_chopped/JAS21/minicube_97_32TNR_45.45_9.59.nc",
+      "tile": "32TPR",
+      "loss_e": {
+        "actual": 0.05702708661556244,
+        "donor": 0.0546620711684227,
+        "mean": 0.05307542532682419
+      },
+      "loss_c": {
+        "actual": 0.04421224817633629,
+        "donor": 0.04412796348333359,
+        "mean": 0.04359375685453415
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS21/minicube_111_32TQM_42.08_12.44.nc",
+      "control": "ood-t_chopped/JAS21/minicube_99_32TPP_43.78_10.94.nc",
+      "tile": "32TQM",
+      "loss_e": {
+        "actual": 0.012553822249174118,
+        "donor": 0.01171933114528656,
+        "mean": 0.01253464724868536
+      },
+      "loss_c": {
+        "actual": 0.008625642396509647,
+        "donor": 0.009097008965909481,
+        "mean": 0.009704860858619213
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS21/minicube_112_32TQM_42.36_12.39.nc",
+      "control": "ood-t_chopped/JAS21/minicube_150_33TWE_40.38_15.12.nc",
+      "tile": "32TQM",
+      "loss_e": {
+        "actual": 0.014757949858903885,
+        "donor": 0.014555532485246658,
+        "mean": 0.014377208426594734
+      },
+      "loss_c": {
+        "actual": 0.00344547675922513,
+        "donor": 0.0034614657051861286,
+        "mean": 0.0033181176986545324
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS21/minicube_197_34SEJ_39.50_21.71.nc",
+      "control": "ood-t_chopped/JAS21/minicube_151_33TWE_40.62_16.18.nc",
+      "tile": "34SEJ",
+      "loss_e": {
+        "actual": 0.01917695254087448,
+        "donor": 0.0184873566031456,
+        "mean": 0.018915027379989624
+      },
+      "loss_c": {
+        "actual": 0.007303898222744465,
+        "donor": 0.007234012708067894,
+        "mean": 0.0071561322547495365
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS21/minicube_199_34SEJ_39.49_21.83.nc",
+      "control": "ood-t_chopped/JAS22/minicube_146_33TVF_40.88_14.87.nc",
+      "tile": "34SEJ",
+      "loss_e": {
+        "actual": 0.024383947253227234,
+        "donor": 0.024368152022361755,
+        "mean": 0.023315144702792168
+      },
+      "loss_c": {
+        "actual": 0.0026693486142903566,
+        "donor": 0.0031860077288001776,
+        "mean": 0.002928667701780796
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS22/minicube_18_29TQF_40.76_-6.24.nc",
+      "control": "ood-t_chopped/JAS22/minicube_0_29SND_39.29_-8.56.nc",
+      "tile": "29TQF",
+      "loss_e": {
+        "actual": 0.0016094788443297148,
+        "donor": 0.001603438751772046,
+        "mean": 0.0016144952969625592
+      },
+      "loss_c": {
+        "actual": 0.026330482214689255,
+        "donor": 0.024680547416210175,
+        "mean": 0.025078270584344864
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS22/minicube_19_29TQF_40.87_-5.90.nc",
+      "control": "ood-t_chopped/JAS21/minicube_27_30TWK_39.68_-2.64.nc",
+      "tile": "29TQF",
+      "loss_e": {
+        "actual": 0.0014340386260300875,
+        "donor": 0.00135268853046,
+        "mean": 0.0012521829921752214
+      },
+      "loss_c": {
+        "actual": 0.004597290884703398,
+        "donor": 0.00455089146271348,
+        "mean": 0.004239795263856649
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS22/minicube_22_30STJ_38.85_-5.31.nc",
+      "control": "ood-t_chopped/SON22/minicube_22_30STJ_38.85_-5.31.nc",
+      "tile": "30STJ",
+      "loss_e": {
+        "actual": 0.0016733744414523244,
+        "donor": 0.0017847931012511253,
+        "mean": 0.0012040127767249942
+      },
+      "loss_c": {
+        "actual": 0.0007968572899699211,
+        "donor": 0.0008607310592196882,
+        "mean": 0.0007973303436301649
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS22/minicube_23_30STJ_39.19_-5.73.nc",
+      "control": "ood-t_chopped/JAS22/minicube_64_31TCG_41.73_1.24.nc",
+      "tile": "30STJ",
+      "loss_e": {
+        "actual": 0.001550010871142149,
+        "donor": 0.0017707021906971931,
+        "mean": 0.0011359968921169639
+      },
+      "loss_c": {
+        "actual": 0.0019004815258085728,
+        "donor": 0.0019970356952399015,
+        "mean": 0.0020317044109106064
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS22/minicube_27_30TWK_39.68_-2.64.nc",
+      "control": "ood-t_chopped/JAS21/minicube_27_30TWK_39.68_-2.64.nc",
+      "tile": "30TWK",
+      "loss_e": {
+        "actual": 0.0011148126795887947,
+        "donor": 0.0011633430840447545,
+        "mean": 0.00137119903229177
+      },
+      "loss_c": {
+        "actual": 0.004597290884703398,
+        "donor": 0.004565721843391657,
+        "mean": 0.004239795263856649
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS22/minicube_28_30TWK_39.82_-2.94.nc",
+      "control": "ood-t_chopped/JAS21/minicube_60_31TBF_41.35_-0.04.nc",
+      "tile": "30TWK",
+      "loss_e": {
+        "actual": 0.0015494826948270202,
+        "donor": 0.0006817326066084206,
+        "mean": 0.001955766696482897
+      },
+      "loss_c": {
+        "actual": 0.002382836304605007,
+        "donor": 0.00225116522051394,
+        "mean": 0.0021434673108160496
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS22/minicube_33_30TXR_45.17_-0.36.nc",
+      "control": "ood-t_chopped/JAS22/minicube_44_30TYQ_44.48_-0.46.nc",
+      "tile": "30TXR",
+      "loss_e": {
+        "actual": 0.01202668622136116,
+        "donor": 0.01153042633086443,
+        "mean": 0.0068222819827497005
+      },
+      "loss_c": {
+        "actual": 0.012978702783584595,
+        "donor": 0.013366463594138622,
+        "mean": 0.008070919662714005
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS22/minicube_38_30TXS_45.96_-0.42.nc",
+      "control": "ood-t_chopped/JAS22/minicube_77_31TDK_44.81_3.09.nc",
+      "tile": "30TXS",
+      "loss_e": {
+        "actual": 0.010746649466454983,
+        "donor": 0.010698431171476841,
+        "mean": 0.010649941861629486
+      },
+      "loss_c": {
+        "actual": 0.006473628804087639,
+        "donor": 0.00667458726093173,
+        "mean": 0.006268706172704697
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS22/minicube_61_31TBF_41.20_-0.55.nc",
+      "control": "ood-t_chopped/SON21/minicube_61_31TBF_41.20_-0.55.nc",
+      "tile": "31TBF",
+      "loss_e": {
+        "actual": 0.0017552757635712624,
+        "donor": 0.0021285805851221085,
+        "mean": 0.0018031173385679722
+      },
+      "loss_c": {
+        "actual": 0.007724072318524122,
+        "donor": 0.008017771877348423,
+        "mean": 0.006975578609853983
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/JAS22/minicube_8_29SQB_37.77_-5.77.nc",
+      "control": "ood-t_chopped/JAS21/minicube_27_30TWK_39.68_-2.64.nc",
+      "tile": "29SQB",
+      "loss_e": {
+        "actual": 0.0004816622531507164,
+        "donor": 0.00046735251089558005,
+        "mean": 0.0005753518780693412
+      },
+      "loss_c": {
+        "actual": 0.004597290884703398,
+        "donor": 0.004539297427982092,
+        "mean": 0.004239795263856649
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MAM21/minicube_6_29SQB_37.12_-5.86.nc",
+      "control": "ood-t_chopped/MAM21/minicube_29_30TWK_40.05_-2.43.nc",
+      "tile": "29SQB",
+      "loss_e": {
+        "actual": 0.05703459307551384,
+        "donor": 0.05698521435260773,
+        "mean": 0.0562763586640358
+      },
+      "loss_c": {
+        "actual": 0.01299344003200531,
+        "donor": 0.012384562753140926,
+        "mean": 0.013525662943720818
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MAM21/minicube_8_29SQB_37.77_-5.77.nc",
+      "control": "ood-t_chopped/MAM21/minicube_21_30STJ_39.42_-5.68.nc",
+      "tile": "29SQB",
+      "loss_e": {
+        "actual": 0.005577439442276955,
+        "donor": 0.005638778675347567,
+        "mean": 0.005452048499137163
+      },
+      "loss_c": {
+        "actual": 0.02029380016028881,
+        "donor": 0.019979435950517654,
+        "mean": 0.020927250385284424
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MAM22/minicube_147_33TVF_41.18_14.17.nc",
+      "control": "ood-t_chopped/MAM22/minicube_74_31TDJ_43.31_2.71.nc",
+      "tile": "33TVF",
+      "loss_e": {
+        "actual": 0.019977949559688568,
+        "donor": 0.018631858751177788,
+        "mean": 0.020302729681134224
+      },
+      "loss_c": {
+        "actual": 0.016539810225367546,
+        "donor": 0.015997545793652534,
+        "mean": 0.015777913853526115
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MAM22/minicube_197_34SEJ_39.50_21.71.nc",
+      "control": "ood-t_chopped/MAM22/minicube_228_34TFL_40.92_22.43.nc",
+      "tile": "34SEJ",
+      "loss_e": {
+        "actual": 0.01772446371614933,
+        "donor": 0.016487164422869682,
+        "mean": 0.01728600449860096
+      },
+      "loss_c": {
+        "actual": 0.010872683487832546,
+        "donor": 0.010670840740203857,
+        "mean": 0.010142537765204906
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MAM22/minicube_198_34SEJ_39.24_21.03.nc",
+      "control": "ood-t_chopped/MAM21/minicube_30_30TWM_41.96_-1.70.nc",
+      "tile": "34SEJ",
+      "loss_e": {
+        "actual": 0.01696915365755558,
+        "donor": 0.014489858411252499,
+        "mean": 0.01753036305308342
+      },
+      "loss_c": {
+        "actual": 0.017225682735443115,
+        "donor": 0.016402876004576683,
+        "mean": 0.016513068228960037
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MAM22/minicube_199_34SEJ_39.49_21.83.nc",
+      "control": "ood-t_chopped/MAM22/minicube_228_34TFL_40.92_22.43.nc",
+      "tile": "34SEJ",
+      "loss_e": {
+        "actual": 0.02907221019268036,
+        "donor": 0.027954213321208954,
+        "mean": 0.02919037640094757
+      },
+      "loss_c": {
+        "actual": 0.010872683487832546,
+        "donor": 0.010673172771930695,
+        "mean": 0.010142537765204906
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ21/minicube_101_32TPR_45.53_11.26.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_98_32TPP_43.52_11.19.nc",
+      "tile": "32TPR",
+      "loss_e": {
+        "actual": 0.018560117110610008,
+        "donor": 0.01793123036623001,
+        "mean": 0.016639357432723045
+      },
+      "loss_c": {
+        "actual": 0.028079399839043617,
+        "donor": 0.029752422124147415,
+        "mean": 0.027176763862371445
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ21/minicube_103_32TPR_45.49_10.47.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_99_32TPP_43.78_10.94.nc",
+      "tile": "32TPR",
+      "loss_e": {
+        "actual": 0.07829304039478302,
+        "donor": 0.07900986820459366,
+        "mean": 0.08024317026138306
+      },
+      "loss_c": {
+        "actual": 0.015161754563450813,
+        "donor": 0.015769509598612785,
+        "mean": 0.015180093236267567
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ21/minicube_224_34TET_47.72_21.24.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_238_34TFT_47.29_22.46.nc",
+      "tile": "34TET",
+      "loss_e": {
+        "actual": 0.01714055985212326,
+        "donor": 0.01663932576775551,
+        "mean": 0.015081353485584259
+      },
+      "loss_c": {
+        "actual": 0.03331492841243744,
+        "donor": 0.03350341320037842,
+        "mean": 0.03356022760272026
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ21/minicube_225_34TET_47.37_22.05.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_236_34TFT_47.42_23.07.nc",
+      "tile": "34TET",
+      "loss_e": {
+        "actual": 0.024394286796450615,
+        "donor": 0.023987874388694763,
+        "mean": 0.024393871426582336
+      },
+      "loss_c": {
+        "actual": 0.03279450535774231,
+        "donor": 0.0332634299993515,
+        "mean": 0.03303074464201927
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ21/minicube_226_34TET_46.98_21.74.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_99_32TPP_43.78_10.94.nc",
+      "tile": "34TET",
+      "loss_e": {
+        "actual": 0.01808246411383152,
+        "donor": 0.017658384516835213,
+        "mean": 0.017132310196757317
+      },
+      "loss_c": {
+        "actual": 0.015161754563450813,
+        "donor": 0.015592423267662525,
+        "mean": 0.015180093236267567
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ21/minicube_28_30TWK_39.82_-2.94.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_9_29TNE_40.49_-7.88.nc",
+      "tile": "30TWK",
+      "loss_e": {
+        "actual": 0.018237441778182983,
+        "donor": 0.01885817013680935,
+        "mean": 0.017435787245631218
+      },
+      "loss_c": {
+        "actual": 0.0166773721575737,
+        "donor": 0.016323359683156013,
+        "mean": 0.012376246973872185
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ21/minicube_30_30TWM_41.96_-1.70.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_147_33TVF_41.18_14.17.nc",
+      "tile": "30TWM",
+      "loss_e": {
+        "actual": 0.024773679673671722,
+        "donor": 0.024599449709057808,
+        "mean": 0.025380950421094894
+      },
+      "loss_c": {
+        "actual": 0.01825561560690403,
+        "donor": 0.018413854762911797,
+        "mean": 0.01645597256720066
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_0_29SND_39.29_-8.56.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_2_29SND_38.90_-8.35.nc",
+      "tile": "29SND",
+      "loss_e": {
+        "actual": 0.03395183011889458,
+        "donor": 0.03374551609158516,
+        "mean": 0.031139349564909935
+      },
+      "loss_c": {
+        "actual": 0.008798982948064804,
+        "donor": 0.009238531813025475,
+        "mean": 0.005747986491769552
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_101_32TPR_45.53_11.26.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_112_32TQM_42.36_12.39.nc",
+      "tile": "32TPR",
+      "loss_e": {
+        "actual": 0.014822050929069519,
+        "donor": 0.015423248521983624,
+        "mean": 0.012685894966125488
+      },
+      "loss_c": {
+        "actual": 0.017844585701823235,
+        "donor": 0.017074231058359146,
+        "mean": 0.01623525470495224
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_103_32TPR_45.49_10.47.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_112_32TQM_42.36_12.39.nc",
+      "tile": "32TPR",
+      "loss_e": {
+        "actual": 0.034796953201293945,
+        "donor": 0.032890401780605316,
+        "mean": 0.036253511905670166
+      },
+      "loss_c": {
+        "actual": 0.017844585701823235,
+        "donor": 0.01699940115213394,
+        "mean": 0.01623525470495224
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_128_32UPC_52.07_11.73.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_116_32UMC_52.08_8.88.nc",
+      "tile": "32UPC",
+      "loss_e": {
+        "actual": 0.0119697330519557,
+        "donor": 0.012310215272009373,
+        "mean": 0.012727220542728901
+      },
+      "loss_c": {
+        "actual": 0.011721397750079632,
+        "donor": 0.012062089517712593,
+        "mean": 0.012166705913841724
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_12_29TPE_39.71_-6.82.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_14_29TPE_40.38_-6.74.nc",
+      "tile": "29TPE",
+      "loss_e": {
+        "actual": 0.007201312109827995,
+        "donor": 0.00739125395193696,
+        "mean": 0.01092800684273243
+      },
+      "loss_c": {
+        "actual": 0.007102207746356726,
+        "donor": 0.007132219150662422,
+        "mean": 0.006644511595368385
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_131_32UQC_51.73_12.23.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_116_32UMC_52.08_8.88.nc",
+      "tile": "32UQC",
+      "loss_e": {
+        "actual": 0.03970098868012428,
+        "donor": 0.03821856155991554,
+        "mean": 0.03977719694375992
+      },
+      "loss_c": {
+        "actual": 0.011721397750079632,
+        "donor": 0.011919528245925903,
+        "mean": 0.012166705913841724
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_133_32UQC_51.92_12.17.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_116_32UMC_52.08_8.88.nc",
+      "tile": "32UQC",
+      "loss_e": {
+        "actual": 0.02001495100557804,
+        "donor": 0.019889576360583305,
+        "mean": 0.021006150171160698
+      },
+      "loss_c": {
+        "actual": 0.011721397750079632,
+        "donor": 0.012091575190424919,
+        "mean": 0.012166705913841724
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_13_29TPE_39.88_-7.17.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_9_29TNE_40.49_-7.88.nc",
+      "tile": "29TPE",
+      "loss_e": {
+        "actual": 0.01840951107442379,
+        "donor": 0.01848638616502285,
+        "mean": 0.017627937719225883
+      },
+      "loss_c": {
+        "actual": 0.0166773721575737,
+        "donor": 0.01643809676170349,
+        "mean": 0.012376246973872185
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_158_33TYM_46.41_18.67.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_154_33TXJ_43.62_16.81.nc",
+      "tile": "33TYM",
+      "loss_e": {
+        "actual": 0.022225918248295784,
+        "donor": 0.021778440102934837,
+        "mean": 0.02166575752198696
+      },
+      "loss_c": {
+        "actual": 0.015695711597800255,
+        "donor": 0.01612015813589096,
+        "mean": 0.015680084004998207
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_159_33TYM_46.57_18.14.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_237_34TFT_47.24_22.89.nc",
+      "tile": "33TYM",
+      "loss_e": {
+        "actual": 0.015429732389748096,
+        "donor": 0.014522267505526543,
+        "mean": 0.015589255839586258
+      },
+      "loss_c": {
+        "actual": 0.02720789797604084,
+        "donor": 0.02797147072851658,
+        "mean": 0.027604185044765472
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_160_33TYM_46.19_17.62.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_154_33TXJ_43.62_16.81.nc",
+      "tile": "33TYM",
+      "loss_e": {
+        "actual": 0.02381136082112789,
+        "donor": 0.024020753800868988,
+        "mean": 0.022431451827287674
+      },
+      "loss_c": {
+        "actual": 0.015695711597800255,
+        "donor": 0.01599261350929737,
+        "mean": 0.015680084004998207
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_162_33TYN_46.95_18.60.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_236_34TFT_47.42_23.07.nc",
+      "tile": "33TYN",
+      "loss_e": {
+        "actual": 0.015116349793970585,
+        "donor": 0.015041605569422245,
+        "mean": 0.014361515641212463
+      },
+      "loss_c": {
+        "actual": 0.03279450535774231,
+        "donor": 0.03297840803861618,
+        "mean": 0.03303074464201927
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_163_33TYN_47.01_18.77.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_236_34TFT_47.42_23.07.nc",
+      "tile": "33TYN",
+      "loss_e": {
+        "actual": 0.01808011345565319,
+        "donor": 0.01854265294969082,
+        "mean": 0.019301189109683037
+      },
+      "loss_c": {
+        "actual": 0.03279450535774231,
+        "donor": 0.03301190957427025,
+        "mean": 0.03303074464201927
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_18_29TQF_40.76_-6.24.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_14_29TPE_40.38_-6.74.nc",
+      "tile": "29TQF",
+      "loss_e": {
+        "actual": 0.007257091347128153,
+        "donor": 0.007282464765012264,
+        "mean": 0.0072467694990336895
+      },
+      "loss_c": {
+        "actual": 0.007102207746356726,
+        "donor": 0.007122899405658245,
+        "mean": 0.006644511595368385
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_19_29TQF_40.87_-5.90.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_14_29TPE_40.38_-6.74.nc",
+      "tile": "29TQF",
+      "loss_e": {
+        "actual": 0.007263469509780407,
+        "donor": 0.007225505076348782,
+        "mean": 0.006234960164874792
+      },
+      "loss_c": {
+        "actual": 0.007102207746356726,
+        "donor": 0.007108369842171669,
+        "mean": 0.006644511595368385
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_1_29SND_39.34_-8.53.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_1_29SND_39.34_-8.53.nc",
+      "tile": "29SND",
+      "loss_e": {
+        "actual": 0.047444891184568405,
+        "donor": 0.049199555069208145,
+        "mean": 0.045995622873306274
+      },
+      "loss_c": {
+        "actual": 0.04996861517429352,
+        "donor": 0.05019030347466469,
+        "mean": 0.05024342983961105
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_20_29TQF_40.81_-5.66.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_25_30TTK_40.30_-5.51.nc",
+      "tile": "29TQF",
+      "loss_e": {
+        "actual": 0.004306834191083908,
+        "donor": 0.0045393481850624084,
+        "mean": 0.004910483490675688
+      },
+      "loss_c": {
+        "actual": 0.027239564806222916,
+        "donor": 0.026723923161625862,
+        "mean": 0.0303919930011034
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_219_34TDQ_45.04_20.93.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_208_34TCQ_44.74_18.50.nc",
+      "tile": "34TDQ",
+      "loss_e": {
+        "actual": 0.014680115506052971,
+        "donor": 0.01410737819969654,
+        "mean": 0.01222233660519123
+      },
+      "loss_c": {
+        "actual": 0.049672700464725494,
+        "donor": 0.05087580159306526,
+        "mean": 0.04533345252275467
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_21_30STJ_39.42_-5.68.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_9_29TNE_40.49_-7.88.nc",
+      "tile": "30STJ",
+      "loss_e": {
+        "actual": 0.013843821361660957,
+        "donor": 0.012819689698517323,
+        "mean": 0.014197003096342087
+      },
+      "loss_c": {
+        "actual": 0.0166773721575737,
+        "donor": 0.016264935955405235,
+        "mean": 0.012376246973872185
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_224_34TET_47.72_21.24.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_208_34TCQ_44.74_18.50.nc",
+      "tile": "34TET",
+      "loss_e": {
+        "actual": 0.013341636396944523,
+        "donor": 0.013587028719484806,
+        "mean": 0.01820000819861889
+      },
+      "loss_c": {
+        "actual": 0.049672700464725494,
+        "donor": 0.05209209769964218,
+        "mean": 0.04533345252275467
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_225_34TET_47.37_22.05.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_208_34TCQ_44.74_18.50.nc",
+      "tile": "34TET",
+      "loss_e": {
+        "actual": 0.02294519916176796,
+        "donor": 0.022268235683441162,
+        "mean": 0.019355643540620804
+      },
+      "loss_c": {
+        "actual": 0.049672700464725494,
+        "donor": 0.05175589770078659,
+        "mean": 0.04533345252275467
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_226_34TET_46.98_21.74.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_236_34TFT_47.42_23.07.nc",
+      "tile": "34TET",
+      "loss_e": {
+        "actual": 0.01603572815656662,
+        "donor": 0.01501766499131918,
+        "mean": 0.015400849282741547
+      },
+      "loss_c": {
+        "actual": 0.03279450535774231,
+        "donor": 0.03411496803164482,
+        "mean": 0.03303074464201927
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_22_30STJ_38.85_-5.31.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_9_29TNE_40.49_-7.88.nc",
+      "tile": "30STJ",
+      "loss_e": {
+        "actual": 0.010101486928761005,
+        "donor": 0.010525783523917198,
+        "mean": 0.011003440245985985
+      },
+      "loss_c": {
+        "actual": 0.0166773721575737,
+        "donor": 0.016291333362460136,
+        "mean": 0.012376246973872185
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_238_34TFT_47.29_22.46.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_208_34TCQ_44.74_18.50.nc",
+      "tile": "34TFT",
+      "loss_e": {
+        "actual": 0.019917918369174004,
+        "donor": 0.020152326673269272,
+        "mean": 0.019644195213913918
+      },
+      "loss_c": {
+        "actual": 0.049672700464725494,
+        "donor": 0.05034949257969856,
+        "mean": 0.04533345252275467
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_23_30STJ_39.19_-5.73.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_14_29TPE_40.38_-6.74.nc",
+      "tile": "30STJ",
+      "loss_e": {
+        "actual": 0.0038693570531904697,
+        "donor": 0.003931136801838875,
+        "mean": 0.0047054290771484375
+      },
+      "loss_c": {
+        "actual": 0.007102207746356726,
+        "donor": 0.007229950278997421,
+        "mean": 0.006644511595368385
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_24_30TTK_39.99_-6.07.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_9_29TNE_40.49_-7.88.nc",
+      "tile": "30TTK",
+      "loss_e": {
+        "actual": 0.011257265694439411,
+        "donor": 0.01109013706445694,
+        "mean": 0.013627653010189533
+      },
+      "loss_c": {
+        "actual": 0.0166773721575737,
+        "donor": 0.016313746571540833,
+        "mean": 0.012376246973872185
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_26_30TTK_39.70_-6.41.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_29_30TWK_40.05_-2.43.nc",
+      "tile": "30TTK",
+      "loss_e": {
+        "actual": 0.0021770959720015526,
+        "donor": 0.002357137855142355,
+        "mean": 0.003638244466856122
+      },
+      "loss_c": {
+        "actual": 0.008925638161599636,
+        "donor": 0.008898143656551838,
+        "mean": 0.009271731600165367
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_27_30TWK_39.68_-2.64.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_14_29TPE_40.38_-6.74.nc",
+      "tile": "30TWK",
+      "loss_e": {
+        "actual": 0.00714056845754385,
+        "donor": 0.0072508687153458595,
+        "mean": 0.006415039300918579
+      },
+      "loss_c": {
+        "actual": 0.007102207746356726,
+        "donor": 0.007266000844538212,
+        "mean": 0.006644511595368385
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_28_30TWK_39.82_-2.94.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_29_30TWK_40.05_-2.43.nc",
+      "tile": "30TWK",
+      "loss_e": {
+        "actual": 0.015966027975082397,
+        "donor": 0.01609421893954277,
+        "mean": 0.013924483209848404
+      },
+      "loss_c": {
+        "actual": 0.008925638161599636,
+        "donor": 0.008883542381227016,
+        "mean": 0.009271731600165367
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_29_30TWK_40.05_-2.43.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_29_30TWK_40.05_-2.43.nc",
+      "tile": "30TWK",
+      "loss_e": {
+        "actual": 0.01756953075528145,
+        "donor": 0.016649482771754265,
+        "mean": 0.0203566774725914
+      },
+      "loss_c": {
+        "actual": 0.008925638161599636,
+        "donor": 0.00888065155595541,
+        "mean": 0.009271731600165367
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_30_30TWM_41.96_-1.70.nc",
+      "control": "ood-t_chopped/MAM21/minicube_1_29SND_39.34_-8.53.nc",
+      "tile": "30TWM",
+      "loss_e": {
+        "actual": 0.013914245180785656,
+        "donor": 0.01287001557648182,
+        "mean": 0.012994000688195229
+      },
+      "loss_c": {
+        "actual": 0.04319315403699875,
+        "donor": 0.04194587096571922,
+        "mean": 0.042666587978601456
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_31_30TWM_41.81_-2.42.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_62_31TBF_41.07_0.71.nc",
+      "tile": "30TWM",
+      "loss_e": {
+        "actual": 0.007756616920232773,
+        "donor": 0.007774869911372662,
+        "mean": 0.007451663725078106
+      },
+      "loss_c": {
+        "actual": 0.030687451362609863,
+        "donor": 0.0316895917057991,
+        "mean": 0.015824684873223305
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_32_30TWM_42.08_-2.23.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_62_31TBF_41.07_0.71.nc",
+      "tile": "30TWM",
+      "loss_e": {
+        "actual": 0.012254252098500729,
+        "donor": 0.013710025697946548,
+        "mean": 0.011690666899085045
+      },
+      "loss_c": {
+        "actual": 0.030687451362609863,
+        "donor": 0.031914953142404556,
+        "mean": 0.015824684873223305
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_33_30TXR_45.17_-0.36.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_66_31TCN_47.02_1.44.nc",
+      "tile": "30TXR",
+      "loss_e": {
+        "actual": 0.04602180793881416,
+        "donor": 0.03699008747935295,
+        "mean": 0.022534048184752464
+      },
+      "loss_c": {
+        "actual": 0.018636075779795647,
+        "donor": 0.018808644264936447,
+        "mean": 0.017894713208079338
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_36_30TXS_46.61_-0.73.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_66_31TCN_47.02_1.44.nc",
+      "tile": "30TXS",
+      "loss_e": {
+        "actual": 0.024247506633400917,
+        "donor": 0.02444305270910263,
+        "mean": 0.023386608809232712
+      },
+      "loss_c": {
+        "actual": 0.018636075779795647,
+        "donor": 0.018719902262091637,
+        "mean": 0.017894713208079338
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_37_30TXS_46.65_-0.52.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_66_31TCN_47.02_1.44.nc",
+      "tile": "30TXS",
+      "loss_e": {
+        "actual": 0.01872263476252556,
+        "donor": 0.0182117260992527,
+        "mean": 0.017362132668495178
+      },
+      "loss_c": {
+        "actual": 0.018636075779795647,
+        "donor": 0.01859576255083084,
+        "mean": 0.017894713208079338
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_38_30TXS_45.96_-0.42.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_66_31TCN_47.02_1.44.nc",
+      "tile": "30TXS",
+      "loss_e": {
+        "actual": 0.022111868485808372,
+        "donor": 0.023646915331482887,
+        "mean": 0.026606230065226555
+      },
+      "loss_c": {
+        "actual": 0.018636075779795647,
+        "donor": 0.01879887841641903,
+        "mean": 0.017894713208079338
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_42_30TYQ_44.96_-0.34.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_60_31TBF_41.35_-0.04.nc",
+      "tile": "30TYQ",
+      "loss_e": {
+        "actual": 0.011910836212337017,
+        "donor": 0.012013259343802929,
+        "mean": 0.01420521829277277
+      },
+      "loss_c": {
+        "actual": 0.020471632480621338,
+        "donor": 0.022297009825706482,
+        "mean": 0.022353535518050194
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_43_30TYQ_44.35_0.09.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_25_30TTK_40.30_-5.51.nc",
+      "tile": "30TYQ",
+      "loss_e": {
+        "actual": 0.014861064031720161,
+        "donor": 0.015280462801456451,
+        "mean": 0.013311965391039848
+      },
+      "loss_c": {
+        "actual": 0.027239564806222916,
+        "donor": 0.02560233697295189,
+        "mean": 0.0303919930011034
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_44_30TYQ_44.48_-0.46.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_25_30TTK_40.30_-5.51.nc",
+      "tile": "30TYQ",
+      "loss_e": {
+        "actual": 0.041770290583372116,
+        "donor": 0.04240161180496216,
+        "mean": 0.02852870523929596
+      },
+      "loss_c": {
+        "actual": 0.027239564806222916,
+        "donor": 0.025370242074131966,
+        "mean": 0.0303919930011034
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_46_30TYR_45.49_0.70.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_66_31TCN_47.02_1.44.nc",
+      "tile": "30TYR",
+      "loss_e": {
+        "actual": 0.02842589095234871,
+        "donor": 0.026644719764590263,
+        "mean": 0.021790549159049988
+      },
+      "loss_c": {
+        "actual": 0.018636075779795647,
+        "donor": 0.018669402226805687,
+        "mean": 0.017894713208079338
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_47_30TYR_45.79_0.69.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_98_32TPP_43.52_11.19.nc",
+      "tile": "30TYR",
+      "loss_e": {
+        "actual": 0.018064474686980247,
+        "donor": 0.01632508635520935,
+        "mean": 0.018105529248714447
+      },
+      "loss_c": {
+        "actual": 0.028079399839043617,
+        "donor": 0.027188288047909737,
+        "mean": 0.027176763862371445
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_56_30UYU_47.75_-0.16.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_118_32UMC_51.86_7.58.nc",
+      "tile": "30UYU",
+      "loss_e": {
+        "actual": 0.026408571749925613,
+        "donor": 0.025671672075986862,
+        "mean": 0.02545846253633499
+      },
+      "loss_c": {
+        "actual": 0.013067597523331642,
+        "donor": 0.01352087501436472,
+        "mean": 0.013199853710830212
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_5_29SPC_38.81_-6.73.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_29_30TWK_40.05_-2.43.nc",
+      "tile": "29SPC",
+      "loss_e": {
+        "actual": 0.004905621986836195,
+        "donor": 0.004806931130588055,
+        "mean": 0.005003865342587233
+      },
+      "loss_c": {
+        "actual": 0.008925638161599636,
+        "donor": 0.00887294951826334,
+        "mean": 0.009271731600165367
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_67_31TCN_47.31_1.00.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_127_32UNU_48.68_10.25.nc",
+      "tile": "31TCN",
+      "loss_e": {
+        "actual": 0.015560035593807697,
+        "donor": 0.015345673076808453,
+        "mean": 0.015143925324082375
+      },
+      "loss_c": {
+        "actual": 0.019794972613453865,
+        "donor": 0.019878685474395752,
+        "mean": 0.02191750518977642
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_68_31TCN_47.21_0.93.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_127_32UNU_48.68_10.25.nc",
+      "tile": "31TCN",
+      "loss_e": {
+        "actual": 0.019986841827630997,
+        "donor": 0.020061088725924492,
+        "mean": 0.019840536639094353
+      },
+      "loss_c": {
+        "actual": 0.019794972613453865,
+        "donor": 0.01986333727836609,
+        "mean": 0.02191750518977642
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_6_29SQB_37.12_-5.86.nc",
+      "control": "ood-t_chopped/MJJ21/minicube_29_30TWK_40.05_-2.43.nc",
+      "tile": "29SQB",
+      "loss_e": {
+        "actual": 0.02355831116437912,
+        "donor": 0.02303653582930565,
+        "mean": 0.02254386991262436
+      },
+      "loss_c": {
+        "actual": 0.008925638161599636,
+        "donor": 0.008934162557125092,
+        "mean": 0.009271731600165367
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_78_31TEJ_43.47_3.31.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_74_31TDJ_43.31_2.71.nc",
+      "tile": "31TEJ",
+      "loss_e": {
+        "actual": 0.0075766476802527905,
+        "donor": 0.007652012165635824,
+        "mean": 0.006353980395942926
+      },
+      "loss_c": {
+        "actual": 0.007930331863462925,
+        "donor": 0.007819142192602158,
+        "mean": 0.0071512432768940926
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_86_31UFP_48.13_5.44.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_127_32UNU_48.68_10.25.nc",
+      "tile": "31UFP",
+      "loss_e": {
+        "actual": 0.021572373807430267,
+        "donor": 0.021960048004984856,
+        "mean": 0.021247580647468567
+      },
+      "loss_c": {
+        "actual": 0.019794972613453865,
+        "donor": 0.020547593012452126,
+        "mean": 0.02191750518977642
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_87_31UFP_48.13_5.44.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_127_32UNU_48.68_10.25.nc",
+      "tile": "31UFP",
+      "loss_e": {
+        "actual": 0.021572373807430267,
+        "donor": 0.021960048004984856,
+        "mean": 0.021247580647468567
+      },
+      "loss_c": {
+        "actual": 0.019794972613453865,
+        "donor": 0.020547593012452126,
+        "mean": 0.02191750518977642
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_95_32TNR_45.18_9.23.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_154_33TXJ_43.62_16.81.nc",
+      "tile": "32TNR",
+      "loss_e": {
+        "actual": 0.03475365415215492,
+        "donor": 0.03321993723511696,
+        "mean": 0.02834283746778965
+      },
+      "loss_c": {
+        "actual": 0.015695711597800255,
+        "donor": 0.01668720133602619,
+        "mean": 0.015680084004998207
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_96_32TNR_45.27_9.19.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_154_33TXJ_43.62_16.81.nc",
+      "tile": "32TNR",
+      "loss_e": {
+        "actual": 0.027520801872015,
+        "donor": 0.026345908641815186,
+        "mean": 0.02398182451725006
+      },
+      "loss_c": {
+        "actual": 0.015695711597800255,
+        "donor": 0.016625499352812767,
+        "mean": 0.015680084004998207
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/MJJ22/minicube_99_32TPP_43.78_10.94.nc",
+      "control": "ood-t_chopped/MJJ22/minicube_111_32TQM_42.08_12.44.nc",
+      "tile": "32TPP",
+      "loss_e": {
+        "actual": 0.007232191041111946,
+        "donor": 0.007323616649955511,
+        "mean": 0.00827877502888441
+      },
+      "loss_c": {
+        "actual": 0.013210855424404144,
+        "donor": 0.013265629298985004,
+        "mean": 0.014041703194379807
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/SON22/minicube_28_30TWK_39.82_-2.94.nc",
+      "control": "ood-t_chopped/SON21/minicube_28_30TWK_39.82_-2.94.nc",
+      "tile": "30TWK",
+      "loss_e": {
+        "actual": 0.0011905435239896178,
+        "donor": 0.0009570493712089956,
+        "mean": 0.0027211285196244717
+      },
+      "loss_c": {
+        "actual": 0.005009217653423548,
+        "donor": 0.005615630652755499,
+        "mean": 0.00834901724010706
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/SON22/minicube_30_30TWM_41.96_-1.70.nc",
+      "control": "ood-t_chopped/SON21/minicube_30_30TWM_41.96_-1.70.nc",
+      "tile": "30TWM",
+      "loss_e": {
+        "actual": 0.003178358543664217,
+        "donor": 0.0030604368075728416,
+        "mean": 0.004064233973622322
+      },
+      "loss_c": {
+        "actual": 0.00999519508332014,
+        "donor": 0.010332214646041393,
+        "mean": 0.011542252264916897
+      },
+      "weather_differs": true
+    },
+    {
+      "extreme": "ood-t_chopped/SON22/minicube_60_31TBF_41.35_-0.04.nc",
+      "control": "ood-t_chopped/SON21/minicube_63_31TCG_41.48_0.66.nc",
+      "tile": "31TBF",
+      "loss_e": {
+        "actual": 0.0026429062709212303,
+        "donor": 0.004343132022768259,
+        "mean": 0.0029701844323426485
+      },
+      "loss_c": {
+        "actual": 0.007594062481075525,
+        "donor": 0.0074446541257202625,
+        "mean": 0.006706497631967068
+      },
+      "weather_differs": true
+    }
+  ],
+  "architecture.json": {
+    "checkpoint": {
+      "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_BD_original_E2_20261115_01/frozen_D_C1.pt",
+      "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb"
+    },
+    "config": {
+      "use_adaln": true,
+      "season_encoding": "annual_sincos_v1",
+      "season_route": "tokens_and_transition",
+      "supervision_v2": true,
+      "zero_empty_history_reference": true,
+      "state_dim": 256,
+      "freeze_b0": false,
+      "dw": 128,
+      "dg": 64,
+      "dh": 64,
+      "cond_dim": 256,
+      "lc_min": 10,
+      "lc_max": 40,
+      "partitions": [
+        [
+          5,
+          5
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          10,
+          10
+        ]
+      ],
+      "heldout_partitions": [
+        [
+          3,
+          7
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          4,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          2,
+          18
+        ]
+      ],
+      "arch": "SpanWorldFullBase",
+      "route_version": "spanworld_full_base_v1",
+      "driver_protocol": "full24",
+      "factual_path": "recursive",
+      "days_per_transition_step": 5,
+      "use_future_state_anchor": false,
+      "eo_traj_weight": 1.0,
+      "eo_endpoint_weight": 1.0,
+      "factual_endpoints": [
+        10,
+        15,
+        20
+      ],
+      "nc_min_std": 0.001,
+      "nc_min_effective_rank": 2.0,
+      "nc_min_movement": 0.0001,
+      "cc_train_partitions": {
+        "10": [
+          [
+            10
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3,
+            2
+          ]
+        ],
+        "15": [
+          [
+            15
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            4,
+            4
+          ]
+        ],
+        "20": [
+          [
+            20
+          ],
+          [
+            10,
+            10
+          ],
+          [
+            10,
+            5,
+            5
+          ],
+          [
+            5,
+            5,
+            5,
+            5
+          ]
+        ]
+      },
+      "cc_heldout_partitions": {
+        "10": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            2,
+            3,
+            5
+          ]
+        ],
+        "15": [
+          [
+            4,
+            11
+          ],
+          [
+            3,
+            5,
+            7
+          ]
+        ],
+        "20": [
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ],
+          [
+            2,
+            6,
+            12
+          ],
+          [
+            1,
+            4,
+            6,
+            9
+          ]
+        ]
+      },
+      "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+      "training_stage": "stage2",
+      "variant": "D"
+    },
+    "args": {
+      "continuation_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/continuation_manifest.json",
+      "history_state_only": true,
+      "migration_checkpoint": "",
+      "migration_checkpoint_sha256": "",
+      "migration_best": "",
+      "migration_best_sha256": "",
+      "handoff_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/handoff",
+      "handoff_token": "5f65162685b240569a8f61584b667b2c",
+      "handoff_timeout": 120.0,
+      "runtime_per_gpu_batch": null,
+      "runtime_world_size": 4,
+      "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage2_D.json",
+      "stage": "stage2",
+      "variant": "D",
+      "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "arm": "C1",
+      "factual_path": "recursive",
+      "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+      "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+      "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+      "val_split_selector": "validation_subsplit.val_dev.ids",
+      "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+      "output_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal",
+      "resume": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/last.pt",
+      "parent_alias": "terrastate/v2/default-training-anchor",
+      "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "allow_unverified_parent": false,
+      "state_dim": 256,
+      "per_gpu_batch": 8,
+      "global_batch": 32,
+      "num_workers": 4,
+      "max_epochs": 100,
+      "max_steps": 0,
+      "stop_after_step": 0,
+      "lambda_z": 0.0,
+      "lambda_y": 0.0,
+      "lambda_pair": 0.0,
+      "lambda_nc": 0.0,
+      "allow_nonzero_lambdas": false,
+      "eo_traj_weight": 1.0,
+      "eo_endpoint_weight": 1.0,
+      "days_per_transition_step": 5,
+      "branch_lr": 3e-05,
+      "q_lr_scale": 0.33333333333333337,
+      "weight_decay": 0.0,
+      "grad_clip": 1.0,
+      "lr_warmup_steps": 600,
+      "use_adaln": true,
+      "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+      "seed": 42,
+      "log_interval": 10,
+      "val_interval": 745,
+      "ckpt_interval": 372,
+      "device": "cuda",
+      "deterministic": false,
+      "allow_existing_out": true,
+      "verify_data_manifest": true,
+      "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+      "stage_epochs": 100,
+      "stage_total_steps": 74500
+    },
+    "epoch": 51,
+    "step": 37995,
+    "parameters": 7313504,
+    "representation": "SpanWorldFullBase(\n  (q): PVTContextformerQ(\n    (core): ContextFormer(\n      (embed_images): PVT_embed(\n        (pvt): FeatureListNet(\n          (patch_embed): OverlapPatchEmbed(\n            (proj): Conv2d(8, 32, kernel_size=(7, 7), stride=(4, 4), padding=(3, 3))\n            (norm): LayerNorm((32,), eps=1e-05, elementwise_affine=True)\n          )\n          (stages_0): PyramidVisionTransformerStage(\n            (blocks): ModuleList(\n              (0): Block(\n                (norm1): LayerNorm((32,), eps=1e-06, elementwise_affine=True)\n                (attn): Attention(\n                  (q): Linear(in_features=32, out_features=32, bias=True)\n                  (kv): Linear(in_features=32, out_features=64, bias=True)\n                  (attn_drop): Dropout(p=0.0, inplace=False)\n                  (proj): Linear(in_features=32, out_features=32, bias=True)\n                  (proj_drop): Dropout(p=0.0, inplace=False)\n                  (sr): Conv2d(32, 32, kernel_size=(8, 8), stride=(8, 8))\n                  (norm): LayerNorm((32,), eps=1e-05, elementwise_affine=True)\n                )\n                (drop_path1): Identity()\n                (norm2): LayerNorm((32,), eps=1e-06, elementwise_affine=True)\n                (mlp): MlpWithDepthwiseConv(\n                  (fc1): Linear(in_features=32, out_features=256, bias=True)\n                  (relu): Identity()\n                  (dwconv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)\n                  (act): GELU(approximate='none')\n                  (fc2): Linear(in_features=256, out_features=32, bias=True)\n                  (drop): Dropout(p=0.0, inplace=False)\n                )\n                (drop_path2): Identity()\n              )\n              (1): Block(\n                (norm1): LayerNorm((32,), eps=1e-06, elementwise_affine=True)\n                (attn): Attention(\n                  (q): Linear(in_features=32, out_features=32, bias=True)\n                  (kv): Linear(in_features=32, out_features=64, bias=True)\n                  (attn_drop): Dropout(p=0.0, inplace=False)\n                  (proj): Linear(in_features=32, out_features=32, bias=True)\n                  (proj_drop): Dropout(p=0.0, inplace=False)\n                  (sr): Conv2d(32, 32, kernel_size=(8, 8), stride=(8, 8))\n                  (norm): LayerNorm((32,), eps=1e-05, elementwise_affine=True)\n                )\n                (drop_path1): Identity()\n                (norm2): LayerNorm((32,), eps=1e-06, elementwise_affine=True)\n                (mlp): MlpWithDepthwiseConv(\n                  (fc1): Linear(in_features=32, out_features=256, bias=True)\n                  (relu): Identity()\n                  (dwconv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)\n                  (act): GELU(approximate='none')\n                  (fc2): Linear(in_features=256, out_features=32, bias=True)\n                  (drop): Dropout(p=0.0, inplace=False)\n                )\n                (drop_path2): Identity()\n              )\n            )\n            (norm): LayerNorm((32,), eps=1e-06, elementwise_affine=True)\n          )\n          (stages_1): PyramidVisionTransformerStage(\n            (downsample): OverlapPatchEmbed(\n              (proj): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n              (norm): LayerNorm((64,), eps=1e-05, elementwise_affine=True)\n            )\n            (blocks): ModuleList(\n              (0): Block(\n                (norm1): LayerNorm((64,), eps=1e-06, elementwise_affine=True)\n                (attn): Attention(\n                  (q): Linear(in_features=64, out_features=64, bias=True)\n                  (kv): Linear(in_features=64, out_features=128, bias=True)\n                  (attn_drop): Dropout(p=0.0, inplace=False)\n                  (proj): Linear(in_features=64, out_features=64, bias=True)\n                  (proj_drop): Dropout(p=0.0, inplace=False)\n                  (sr): Conv2d(64, 64, kernel_size=(4, 4), stride=(4, 4))\n                  (norm): LayerNorm((64,), eps=1e-05, elementwise_affine=True)\n                )\n                (drop_path1): Identity()\n                (norm2): LayerNorm((64,), eps=1e-06, elementwise_affine=True)\n                (mlp): MlpWithDepthwiseConv(\n                  (fc1): Linear(in_features=64, out_features=512, bias=True)\n                  (relu): Identity()\n                  (dwconv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)\n                  (act): GELU(approximate='none')\n                  (fc2): Linear(in_features=512, out_features=64, bias=True)\n                  (drop): Dropout(p=0.0, inplace=False)\n                )\n                (drop_path2): Identity()\n              )\n              (1): Block(\n                (norm1): LayerNorm((64,), eps=1e-06, elementwise_affine=True)\n                (attn): Attention(\n                  (q): Linear(in_features=64, out_features=64, bias=True)\n                  (kv): Linear(in_features=64, out_features=128, bias=True)\n                  (attn_drop): Dropout(p=0.0, inplace=False)\n                  (proj): Linear(in_features=64, out_features=64, bias=True)\n                  (proj_drop): Dropout(p=0.0, inplace=False)\n                  (sr): Conv2d(64, 64, kernel_size=(4, 4), stride=(4, 4))\n                  (norm): LayerNorm((64,), eps=1e-05, elementwise_affine=True)\n                )\n                (drop_path1): Identity()\n                (norm2): LayerNorm((64,), eps=1e-06, elementwise_affine=True)\n                (mlp): MlpWithDepthwiseConv(\n                  (fc1): Linear(in_features=64, out_features=512, bias=True)\n                  (relu): Identity()\n                  (dwconv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)\n                  (act): GELU(approximate='none')\n                  (fc2): Linear(in_features=512, out_features=64, bias=True)\n                  (drop): Dropout(p=0.0, inplace=False)\n                )\n                (drop_path2): Identity()\n              )\n            )\n            (norm): LayerNorm((64,), eps=1e-06, elementwise_affine=True)\n          )\n          (stages_2): PyramidVisionTransformerStage(\n            (downsample): OverlapPatchEmbed(\n              (proj): Conv2d(64, 160, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n              (norm): LayerNorm((160,), eps=1e-05, elementwise_affine=True)\n            )\n            (blocks): ModuleList(\n              (0): Block(\n                (norm1): LayerNorm((160,), eps=1e-06, elementwise_affine=True)\n                (attn): Attention(\n                  (q): Linear(in_features=160, out_features=160, bias=True)\n                  (kv): Linear(in_features=160, out_features=320, bias=True)\n                  (attn_drop): Dropout(p=0.0, inplace=False)\n                  (proj): Linear(in_features=160, out_features=160, bias=True)\n                  (proj_drop): Dropout(p=0.0, inplace=False)\n                  (sr): Conv2d(160, 160, kernel_size=(2, 2), stride=(2, 2))\n                  (norm): LayerNorm((160,), eps=1e-05, elementwise_affine=True)\n                )\n                (drop_path1): Identity()\n                (norm2): LayerNorm((160,), eps=1e-06, elementwise_affine=True)\n                (mlp): MlpWithDepthwiseConv(\n                  (fc1): Linear(in_features=160, out_features=640, bias=True)\n                  (relu): Identity()\n                  (dwconv): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=640)\n                  (act): GELU(approximate='none')\n                  (fc2): Linear(in_features=640, out_features=160, bias=True)\n                  (drop): Dropout(p=0.0, inplace=False)\n                )\n                (drop_path2): Identity()\n              )\n              (1): Block(\n                (norm1): LayerNorm((160,), eps=1e-06, elementwise_affine=True)\n                (attn): Attention(\n                  (q): Linear(in_features=160, out_features=160, bias=True)\n                  (kv): Linear(in_features=160, out_features=320, bias=True)\n                  (attn_drop): Dropout(p=0.0, inplace=False)\n                  (proj): Linear(in_features=160, out_features=160, bias=True)\n                  (proj_drop): Dropout(p=0.0, inplace=False)\n                  (sr): Conv2d(160, 160, kernel_size=(2, 2), stride=(2, 2))\n                  (norm): LayerNorm((160,), eps=1e-05, elementwise_affine=True)\n                )\n                (drop_path1): Identity()\n                (norm2): LayerNorm((160,), eps=1e-06, elementwise_affine=True)\n                (mlp): MlpWithDepthwiseConv(\n                  (fc1): Linear(in_features=160, out_features=640, bias=True)\n                  (relu): Identity()\n                  (dwconv): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=640)\n                  (act): GELU(approximate='none')\n                  (fc2): Linear(in_features=640, out_features=160, bias=True)\n                  (drop): Dropout(p=0.0, inplace=False)\n                )\n                (drop_path2): Identity()\n              )\n            )\n            (norm): LayerNorm((160,), eps=1e-06, elementwise_affine=True)\n          )\n          (stages_3): PyramidVisionTransformerStage(\n            (downsample): OverlapPatchEmbed(\n              (proj): Conv2d(160, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n              (norm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)\n            )\n            (blocks): ModuleList(\n              (0): Block(\n                (norm1): LayerNorm((256,), eps=1e-06, elementwise_affine=True)\n                (attn): Attention(\n                  (q): Linear(in_features=256, out_features=256, bias=True)\n                  (kv): Linear(in_features=256, out_features=512, bias=True)\n                  (attn_drop): Dropout(p=0.0, inplace=False)\n                  (proj): Linear(in_features=256, out_features=256, bias=True)\n                  (proj_drop): Dropout(p=0.0, inplace=False)\n                )\n                (drop_path1): Identity()\n                (norm2): LayerNorm((256,), eps=1e-06, elementwise_affine=True)\n                (mlp): MlpWithDepthwiseConv(\n                  (fc1): Linear(in_features=256, out_features=1024, bias=True)\n                  (relu): Identity()\n                  (dwconv): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1024)\n                  (act): GELU(approximate='none')\n                  (fc2): Linear(in_features=1024, out_features=256, bias=True)\n                  (drop): Dropout(p=0.0, inplace=False)\n                )\n                (drop_path2): Identity()\n              )\n              (1): Block(\n                (norm1): LayerNorm((256,), eps=1e-06, elementwise_affine=True)\n                (attn): Attention(\n                  (q): Linear(in_features=256, out_features=256, bias=True)\n                  (kv): Linear(in_features=256, out_features=512, bias=True)\n                  (attn_drop): Dropout(p=0.0, inplace=False)\n                  (proj): Linear(in_features=256, out_features=256, bias=True)\n                  (proj_drop): Dropout(p=0.0, inplace=False)\n                )\n                (drop_path1): Identity()\n                (norm2): LayerNorm((256,), eps=1e-06, elementwise_affine=True)\n                (mlp): MlpWithDepthwiseConv(\n                  (fc1): Linear(in_features=256, out_features=1024, bias=True)\n                  (relu): Identity()\n                  (dwconv): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1024)\n                  (act): GELU(approximate='none')\n                  (fc2): Linear(in_features=1024, out_features=256, bias=True)\n                  (drop): Dropout(p=0.0, inplace=False)\n                )\n                (drop_path2): Identity()\n              )\n            )\n            (norm): LayerNorm((256,), eps=1e-06, elementwise_affine=True)\n          )\n        )\n        (pvt_project): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1))\n      )\n      (embed_weather): Mlp(\n        (fc1): Linear(in_features=24, out_features=256, bias=True)\n        (act): GELU(approximate='none')\n        (drop1): Dropout(p=0.0, inplace=False)\n        (fc2): Linear(in_features=256, out_features=256, bias=True)\n        (drop2): Dropout(p=0.0, inplace=False)\n      )\n      (season_proj): Linear(in_features=2, out_features=256, bias=False)\n      (blocks): ModuleList(\n        (0): Block(\n          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)\n          (attn): Attention(\n            (qkv): Linear(in_features=256, out_features=768, bias=True)\n            (q_norm): Identity()\n            (k_norm): Identity()\n            (attn_drop): Dropout(p=0.0, inplace=False)\n            (proj): Linear(in_features=256, out_features=256, bias=True)\n            (proj_drop): Dropout(p=0.0, inplace=False)\n          )\n          (ls1): Identity()\n          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)\n          (mlp): Mlp(\n            (fc1): Linear(in_features=256, out_features=1024, bias=True)\n            (act): GELU(approximate='none')\n            (drop1): Dropout(p=0.0, inplace=False)\n            (fc2): Linear(in_features=1024, out_features=256, bias=True)\n            (drop2): Dropout(p=0.0, inplace=False)\n          )\n          (ls2): Identity()\n        )\n        (1): Block(\n          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)\n          (attn): Attention(\n            (qkv): Linear(in_features=256, out_features=768, bias=True)\n            (q_norm): Identity()\n            (k_norm): Identity()\n            (attn_drop): Dropout(p=0.0, inplace=False)\n            (proj): Linear(in_features=256, out_features=256, bias=True)\n            (proj_drop): Dropout(p=0.0, inplace=False)\n          )\n          (ls1): Identity()\n          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)\n          (mlp): Mlp(\n            (fc1): Linear(in_features=256, out_features=1024, bias=True)\n            (act): GELU(approximate='none')\n            (drop1): Dropout(p=0.0, inplace=False)\n            (fc2): Linear(in_features=1024, out_features=256, bias=True)\n            (drop2): Dropout(p=0.0, inplace=False)\n          )\n          (ls2): Identity()\n        )\n        (2): Block(\n          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)\n          (attn): Attention(\n            (qkv): Linear(in_features=256, out_features=768, bias=True)\n            (q_norm): Identity()\n            (k_norm): Identity()\n            (attn_drop): Dropout(p=0.0, inplace=False)\n            (proj): Linear(in_features=256, out_features=256, bias=True)\n            (proj_drop): Dropout(p=0.0, inplace=False)\n          )\n          (ls1): Identity()\n          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)\n          (mlp): Mlp(\n            (fc1): Linear(in_features=256, out_features=1024, bias=True)\n            (act): GELU(approximate='none')\n            (drop1): Dropout(p=0.0, inplace=False)\n            (fc2): Linear(in_features=1024, out_features=256, bias=True)\n            (drop2): Dropout(p=0.0, inplace=False)\n          )\n          (ls2): Identity()\n        )\n      )\n      (head): Mlp(\n        (fc1): Linear(in_features=256, out_features=256, bias=True)\n        (act): GELU(approximate='none')\n        (drop1): Dropout(p=0.0, inplace=False)\n        (fc2): Linear(in_features=256, out_features=16, bias=True)\n        (drop2): Dropout(p=0.0, inplace=False)\n      )\n    )\n  )\n  (projector): SpatialStateProjector(\n    (net): Sequential(\n      (0): LayerNorm((256,), eps=1e-05, elementwise_affine=True)\n      (1): Linear(in_features=256, out_features=512, bias=True)\n      (2): GELU(approximate='none')\n      (3): Linear(in_features=512, out_features=256, bias=True)\n      (4): LayerNorm((256,), eps=1e-05, elementwise_affine=True)\n    )\n  )\n  (weather_enc): WeatherEncoder24(\n    (gru): GRU(24, 128, batch_first=True)\n  )\n  (geo_enc): GeoEncoder(\n    (mlp): Sequential(\n      (0): Linear(in_features=3, out_features=64, bias=True)\n      (1): GELU(approximate='none')\n      (2): Linear(in_features=64, out_features=64, bias=True)\n    )\n  )\n  (time_emb): TimeEmbedding()\n  (season_condition): Linear(in_features=2, out_features=256, bias=False)\n  (fuse): Sequential(\n    (0): Linear(in_features=256, out_features=256, bias=True)\n    (1): GELU(approximate='none')\n    (2): Linear(in_features=256, out_features=256, bias=True)\n  )\n  (transition): HorizonTransition(\n    (ln): LayerNorm((256,), eps=1e-05, elementwise_affine=True)\n    (adaln): Linear(in_features=256, out_features=512, bias=True)\n    (net): Sequential(\n      (0): Linear(in_features=512, out_features=512, bias=True)\n      (1): GELU(approximate='none')\n      (2): Linear(in_features=512, out_features=512, bias=True)\n      (3): GELU(approximate='none')\n      (4): Linear(in_features=512, out_features=256, bias=True)\n    )\n  )\n  (o_delta): Linear(in_features=256, out_features=16, bias=True)\n  (ndvi_loss): MaskedL2NDVILoss()\n)",
+    "tensor_shapes": {
+      "alpha": [],
+      "q.core.mask_token": [
+        256
+      ],
+      "q.core.embed_images.pvt.patch_embed.proj.weight": [
+        32,
+        8,
+        7,
+        7
+      ],
+      "q.core.embed_images.pvt.patch_embed.proj.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.patch_embed.norm.weight": [
+        32
+      ],
+      "q.core.embed_images.pvt.patch_embed.norm.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.norm1.weight": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.norm1.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.attn.q.weight": [
+        32,
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.attn.q.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.attn.kv.weight": [
+        64,
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.attn.kv.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.attn.proj.weight": [
+        32,
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.attn.proj.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.attn.sr.weight": [
+        32,
+        32,
+        8,
+        8
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.attn.sr.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.attn.norm.weight": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.attn.norm.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.norm2.weight": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.norm2.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.mlp.fc1.weight": [
+        256,
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.mlp.fc1.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.mlp.dwconv.weight": [
+        256,
+        1,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.mlp.dwconv.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.mlp.fc2.weight": [
+        32,
+        256
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.0.mlp.fc2.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.norm1.weight": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.norm1.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.attn.q.weight": [
+        32,
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.attn.q.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.attn.kv.weight": [
+        64,
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.attn.kv.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.attn.proj.weight": [
+        32,
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.attn.proj.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.attn.sr.weight": [
+        32,
+        32,
+        8,
+        8
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.attn.sr.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.attn.norm.weight": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.attn.norm.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.norm2.weight": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.norm2.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.mlp.fc1.weight": [
+        256,
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.mlp.fc1.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.mlp.dwconv.weight": [
+        256,
+        1,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.mlp.dwconv.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.mlp.fc2.weight": [
+        32,
+        256
+      ],
+      "q.core.embed_images.pvt.stages_0.blocks.1.mlp.fc2.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.norm.weight": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_0.norm.bias": [
+        32
+      ],
+      "q.core.embed_images.pvt.stages_1.downsample.proj.weight": [
+        64,
+        32,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_1.downsample.proj.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.downsample.norm.weight": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.downsample.norm.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.norm1.weight": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.norm1.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.attn.q.weight": [
+        64,
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.attn.q.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.attn.kv.weight": [
+        128,
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.attn.kv.bias": [
+        128
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.attn.proj.weight": [
+        64,
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.attn.proj.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.attn.sr.weight": [
+        64,
+        64,
+        4,
+        4
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.attn.sr.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.attn.norm.weight": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.attn.norm.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.norm2.weight": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.norm2.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.mlp.fc1.weight": [
+        512,
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.mlp.fc1.bias": [
+        512
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.mlp.dwconv.weight": [
+        512,
+        1,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.mlp.dwconv.bias": [
+        512
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.mlp.fc2.weight": [
+        64,
+        512
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.0.mlp.fc2.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.norm1.weight": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.norm1.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.attn.q.weight": [
+        64,
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.attn.q.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.attn.kv.weight": [
+        128,
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.attn.kv.bias": [
+        128
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.attn.proj.weight": [
+        64,
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.attn.proj.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.attn.sr.weight": [
+        64,
+        64,
+        4,
+        4
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.attn.sr.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.attn.norm.weight": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.attn.norm.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.norm2.weight": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.norm2.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.mlp.fc1.weight": [
+        512,
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.mlp.fc1.bias": [
+        512
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.mlp.dwconv.weight": [
+        512,
+        1,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.mlp.dwconv.bias": [
+        512
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.mlp.fc2.weight": [
+        64,
+        512
+      ],
+      "q.core.embed_images.pvt.stages_1.blocks.1.mlp.fc2.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.norm.weight": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_1.norm.bias": [
+        64
+      ],
+      "q.core.embed_images.pvt.stages_2.downsample.proj.weight": [
+        160,
+        64,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_2.downsample.proj.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.downsample.norm.weight": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.downsample.norm.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.norm1.weight": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.norm1.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.attn.q.weight": [
+        160,
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.attn.q.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.attn.kv.weight": [
+        320,
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.attn.kv.bias": [
+        320
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.attn.proj.weight": [
+        160,
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.attn.proj.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.attn.sr.weight": [
+        160,
+        160,
+        2,
+        2
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.attn.sr.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.attn.norm.weight": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.attn.norm.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.norm2.weight": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.norm2.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.mlp.fc1.weight": [
+        640,
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.mlp.fc1.bias": [
+        640
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.mlp.dwconv.weight": [
+        640,
+        1,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.mlp.dwconv.bias": [
+        640
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.mlp.fc2.weight": [
+        160,
+        640
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.0.mlp.fc2.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.norm1.weight": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.norm1.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.attn.q.weight": [
+        160,
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.attn.q.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.attn.kv.weight": [
+        320,
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.attn.kv.bias": [
+        320
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.attn.proj.weight": [
+        160,
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.attn.proj.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.attn.sr.weight": [
+        160,
+        160,
+        2,
+        2
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.attn.sr.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.attn.norm.weight": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.attn.norm.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.norm2.weight": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.norm2.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.mlp.fc1.weight": [
+        640,
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.mlp.fc1.bias": [
+        640
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.mlp.dwconv.weight": [
+        640,
+        1,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.mlp.dwconv.bias": [
+        640
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.mlp.fc2.weight": [
+        160,
+        640
+      ],
+      "q.core.embed_images.pvt.stages_2.blocks.1.mlp.fc2.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.norm.weight": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_2.norm.bias": [
+        160
+      ],
+      "q.core.embed_images.pvt.stages_3.downsample.proj.weight": [
+        256,
+        160,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_3.downsample.proj.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.downsample.norm.weight": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.downsample.norm.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.norm1.weight": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.norm1.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.attn.q.weight": [
+        256,
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.attn.q.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.attn.kv.weight": [
+        512,
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.attn.kv.bias": [
+        512
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.attn.proj.weight": [
+        256,
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.attn.proj.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.norm2.weight": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.norm2.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.mlp.fc1.weight": [
+        1024,
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.mlp.fc1.bias": [
+        1024
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.mlp.dwconv.weight": [
+        1024,
+        1,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.mlp.dwconv.bias": [
+        1024
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.mlp.fc2.weight": [
+        256,
+        1024
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.0.mlp.fc2.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.norm1.weight": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.norm1.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.attn.q.weight": [
+        256,
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.attn.q.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.attn.kv.weight": [
+        512,
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.attn.kv.bias": [
+        512
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.attn.proj.weight": [
+        256,
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.attn.proj.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.norm2.weight": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.norm2.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.mlp.fc1.weight": [
+        1024,
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.mlp.fc1.bias": [
+        1024
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.mlp.dwconv.weight": [
+        1024,
+        1,
+        3,
+        3
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.mlp.dwconv.bias": [
+        1024
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.mlp.fc2.weight": [
+        256,
+        1024
+      ],
+      "q.core.embed_images.pvt.stages_3.blocks.1.mlp.fc2.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.norm.weight": [
+        256
+      ],
+      "q.core.embed_images.pvt.stages_3.norm.bias": [
+        256
+      ],
+      "q.core.embed_images.pvt_project.weight": [
+        256,
+        512,
+        1,
+        1
+      ],
+      "q.core.embed_images.pvt_project.bias": [
+        256
+      ],
+      "q.core.embed_weather.fc1.weight": [
+        256,
+        24
+      ],
+      "q.core.embed_weather.fc1.bias": [
+        256
+      ],
+      "q.core.embed_weather.fc2.weight": [
+        256,
+        256
+      ],
+      "q.core.embed_weather.fc2.bias": [
+        256
+      ],
+      "q.core.season_proj.weight": [
+        256,
+        2
+      ],
+      "q.core.blocks.0.norm1.weight": [
+        256
+      ],
+      "q.core.blocks.0.norm1.bias": [
+        256
+      ],
+      "q.core.blocks.0.attn.qkv.weight": [
+        768,
+        256
+      ],
+      "q.core.blocks.0.attn.qkv.bias": [
+        768
+      ],
+      "q.core.blocks.0.attn.proj.weight": [
+        256,
+        256
+      ],
+      "q.core.blocks.0.attn.proj.bias": [
+        256
+      ],
+      "q.core.blocks.0.norm2.weight": [
+        256
+      ],
+      "q.core.blocks.0.norm2.bias": [
+        256
+      ],
+      "q.core.blocks.0.mlp.fc1.weight": [
+        1024,
+        256
+      ],
+      "q.core.blocks.0.mlp.fc1.bias": [
+        1024
+      ],
+      "q.core.blocks.0.mlp.fc2.weight": [
+        256,
+        1024
+      ],
+      "q.core.blocks.0.mlp.fc2.bias": [
+        256
+      ],
+      "q.core.blocks.1.norm1.weight": [
+        256
+      ],
+      "q.core.blocks.1.norm1.bias": [
+        256
+      ],
+      "q.core.blocks.1.attn.qkv.weight": [
+        768,
+        256
+      ],
+      "q.core.blocks.1.attn.qkv.bias": [
+        768
+      ],
+      "q.core.blocks.1.attn.proj.weight": [
+        256,
+        256
+      ],
+      "q.core.blocks.1.attn.proj.bias": [
+        256
+      ],
+      "q.core.blocks.1.norm2.weight": [
+        256
+      ],
+      "q.core.blocks.1.norm2.bias": [
+        256
+      ],
+      "q.core.blocks.1.mlp.fc1.weight": [
+        1024,
+        256
+      ],
+      "q.core.blocks.1.mlp.fc1.bias": [
+        1024
+      ],
+      "q.core.blocks.1.mlp.fc2.weight": [
+        256,
+        1024
+      ],
+      "q.core.blocks.1.mlp.fc2.bias": [
+        256
+      ],
+      "q.core.blocks.2.norm1.weight": [
+        256
+      ],
+      "q.core.blocks.2.norm1.bias": [
+        256
+      ],
+      "q.core.blocks.2.attn.qkv.weight": [
+        768,
+        256
+      ],
+      "q.core.blocks.2.attn.qkv.bias": [
+        768
+      ],
+      "q.core.blocks.2.attn.proj.weight": [
+        256,
+        256
+      ],
+      "q.core.blocks.2.attn.proj.bias": [
+        256
+      ],
+      "q.core.blocks.2.norm2.weight": [
+        256
+      ],
+      "q.core.blocks.2.norm2.bias": [
+        256
+      ],
+      "q.core.blocks.2.mlp.fc1.weight": [
+        1024,
+        256
+      ],
+      "q.core.blocks.2.mlp.fc1.bias": [
+        1024
+      ],
+      "q.core.blocks.2.mlp.fc2.weight": [
+        256,
+        1024
+      ],
+      "q.core.blocks.2.mlp.fc2.bias": [
+        256
+      ],
+      "q.core.head.fc1.weight": [
+        256,
+        256
+      ],
+      "q.core.head.fc1.bias": [
+        256
+      ],
+      "q.core.head.fc2.weight": [
+        16,
+        256
+      ],
+      "q.core.head.fc2.bias": [
+        16
+      ],
+      "projector.net.0.weight": [
+        256
+      ],
+      "projector.net.0.bias": [
+        256
+      ],
+      "projector.net.1.weight": [
+        512,
+        256
+      ],
+      "projector.net.1.bias": [
+        512
+      ],
+      "projector.net.3.weight": [
+        256,
+        512
+      ],
+      "projector.net.3.bias": [
+        256
+      ],
+      "projector.net.4.weight": [
+        256
+      ],
+      "projector.net.4.bias": [
+        256
+      ],
+      "weather_enc.gru.weight_ih_l0": [
+        384,
+        24
+      ],
+      "weather_enc.gru.weight_hh_l0": [
+        384,
+        128
+      ],
+      "weather_enc.gru.bias_ih_l0": [
+        384
+      ],
+      "weather_enc.gru.bias_hh_l0": [
+        384
+      ],
+      "geo_enc.mlp.0.weight": [
+        64,
+        3
+      ],
+      "geo_enc.mlp.0.bias": [
+        64
+      ],
+      "geo_enc.mlp.2.weight": [
+        64,
+        64
+      ],
+      "geo_enc.mlp.2.bias": [
+        64
+      ],
+      "time_emb.table": [
+        65,
+        64
+      ],
+      "season_condition.weight": [
+        256,
+        2
+      ],
+      "fuse.0.weight": [
+        256,
+        256
+      ],
+      "fuse.0.bias": [
+        256
+      ],
+      "fuse.2.weight": [
+        256,
+        256
+      ],
+      "fuse.2.bias": [
+        256
+      ],
+      "transition.ln.weight": [
+        256
+      ],
+      "transition.ln.bias": [
+        256
+      ],
+      "transition.adaln.weight": [
+        512,
+        256
+      ],
+      "transition.adaln.bias": [
+        512
+      ],
+      "transition.net.0.weight": [
+        512,
+        512
+      ],
+      "transition.net.0.bias": [
+        512
+      ],
+      "transition.net.2.weight": [
+        512,
+        512
+      ],
+      "transition.net.2.bias": [
+        512
+      ],
+      "transition.net.4.weight": [
+        256,
+        512
+      ],
+      "transition.net.4.bias": [
+        256
+      ],
+      "o_delta.weight": [
+        16,
+        256
+      ],
+      "o_delta.bias": [
+        16
+      ]
+    }
+  },
+  "exit": {
+    "pid": 31007,
+    "exit": 0,
+    "time": 1794746620.3655386
+  },
+  "log_tail": "PASS D\n"
+}

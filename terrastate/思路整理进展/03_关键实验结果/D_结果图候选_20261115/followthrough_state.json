@@ -1,0 +1,8 @@
+{
+  "pid": 39032,
+  "time": 1794749308.8056593,
+  "status": "waiting_network_retry",
+  "interval_seconds": 10800,
+  "next_attempt": 1794760108.805657,
+  "reason": "foreground SSH banner exchange failures; no remote launch confirmed"
+}

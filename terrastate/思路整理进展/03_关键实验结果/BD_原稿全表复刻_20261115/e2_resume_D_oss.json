@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"pid\": 3747130, \"controller_exit\": null, \"checkpoint\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_BD_original_E2_20261115_01/frozen_D_C1.pt\", \"sha256\": \"a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb\", \"archive\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_BD_original_E2_20261115_01/failed_D_missing_checkpoint_1794692284\", \"state\": {\"pid\": 3747130, \"status\": \"running_verified_full_splits\", \"time\": 1794692305.1237228, \"running\": {\"('D', 'iid_chopped')\": {\"pid\": 3747131, \"slot\": 0}, \"('D', 'ood-t_chopped')\": {\"pid\": 3747306, \"slot\": 1}, \"('D', 'ood-s_chopped')\": {\"pid\": 3747307, \"slot\": 2}, \"('D', 'ood-st_chopped')\": {\"pid\": 3747308, \"slot\": 3}}, \"completed\": [], \"pending\": []}, \"gate\": {\"status\": \"PASS\", \"pid\": 3747131, \"checkpoint_sha256\": \"a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb\", \"variant\": \"D\", \"split\": \"iid_chopped\", \"factual_reconstruction_max_error\": 1.7881393432617188e-07, \"aggregation_errors\": {\"no_state_correction\": {\"nse\": 0.0, \"rmse\": 0.0, \"R2\": 0.0, \"biasabs\": 0.0, \"rmse25\": 0.0}, \"identity_transition\": {\"nse\": 0.0, \"rmse\": 0.0, \"R2\": 0.0, \"biasabs\": 0.0, \"rmse25\": 0.0}}, \"intervention_scope\": \"same trained model, same base, identity all transitions retains initial state; full20dates\", \"scorer_commit\": \"a0329636631371a4aaa9a95c75ed0a37d27b8c4f\"}}\n",
+  "stderr": "",
+  "host": "909",
+  "started": 1794692261.7384076,
+  "seconds": 56.89437794685364
+}

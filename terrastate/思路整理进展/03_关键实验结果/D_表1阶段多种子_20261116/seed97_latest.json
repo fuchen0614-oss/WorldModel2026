@@ -1,0 +1,85 @@
+{
+  "state": {
+    "status": "complete",
+    "pid": 223489,
+    "time": 1794767551.8121607
+  },
+  "progress": {
+    "0": {
+      "pid": 223492,
+      "done": 952,
+      "total": 952,
+      "receivers": 949,
+      "seconds": 873.9337532520294,
+      "time": 1794767360.3176384
+    },
+    "1": {
+      "pid": 223493,
+      "done": 952,
+      "total": 952,
+      "receivers": 945,
+      "seconds": 1049.388946056366,
+      "time": 1794767535.6937351
+    },
+    "2": {
+      "pid": 223495,
+      "done": 952,
+      "total": 952,
+      "receivers": 943,
+      "seconds": 1042.7192409038544,
+      "time": 1794767529.0144558
+    }
+  },
+  "receipt": {
+    "status": "PASS",
+    "business_exit": 0,
+    "seed": 97,
+    "receivers": 2837,
+    "rows": 226960,
+    "qualification": "interim selected weights; not all runs final",
+    "models": {
+      "C1": {
+        "sha256": "bcf423992db4cffad96f5ce7aa3917c205553542d334556056bec2eef5f81356",
+        "epoch": 42,
+        "selection_kind": "interim_validation_best",
+        "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/bcf423992db4cffad96f5ce7aa3917c205553542d334556056bec2eef5f81356/next/best_frozen.pt"
+      },
+      "C0R": {
+        "sha256": "9b5d115be43a18a682408df4e37b565b904d6a486f9f83c1ea1b2bcbdccac771",
+        "epoch": 42,
+        "selection_kind": "final_validation_best",
+        "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/9b5d115be43a18a682408df4e37b565b904d6a486f9f83c1ea1b2bcbdccac771/next/best_frozen.pt"
+      }
+    },
+    "oss": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/table1_multiseed_interim_20261116/seed97",
+    "hashes": {
+      "plan.json": "7795bdb0c1550a42361af8bd29381029514b0e1e77528f7c66b70e0b990eaa0b",
+      "worker_exits.json": "9ee5d663c996edf540914e1451e5dead1ad4596ffe2dceaa95d98c5a16a85820",
+      "statistics/receipt.json": "47fd36c0d3b59393a12e87a25d0070830c0ba8b3aee04d2268bb0f76c8d34682",
+      "statistics/spatial_ci/A2_DEGRADATION_CI.csv": "a49bc8b5aa4f4416decf2fb85c46b8cebe82c65a0a5e4cb11b0f9fc643297b8b",
+      "statistics/spatial_ci/A2_DEGRADATION_MODEL_DIFF_CI.csv": "efef560d5ae89e26d9c811cd7bb07a8f5248a915cdc6073fbe8f6de3bd75a718",
+      "statistics/spatial_ci/A2_ENDPOINT_K10_CI.csv": "e7f2f67a910ec48f1f099ed2f4d76a7f9efff7f4a81d8e6655c36ad88818a45e",
+      "statistics/spatial_ci/A2_ENDPOINT_K10_DELTA_CI.csv": "80c55a7c686176e82cc3ec852434a78555acf7e17f39751bd5e4654977bffe27",
+      "statistics/spatial_ci/A2_MAIN_DELTA_CI.csv": "59ac58b6a93eda5b5dc8fa97f278527f756716ff7841087f69780b2c4570df7d",
+      "statistics/spatial_ci/A2_MSE_CI.csv": "3e5cd7be8f201ad8ebbb9e3dfb8644f11a1df36325e96b48018c8e8fa13991fb",
+      "statistics/spatial_ci/A2_POINT_ESTIMATES_RECHECK.csv": "2ea399a9c8de01e46f496506a619ba747eb36c5ab089136c34fac159033fdc90",
+      "statistics/spatial_ci/A2_RUN_METADATA.json": "92e4f0a345169fa54105c43288ee55ca21f318878de0f89ed5d51b2e211f6ec4",
+      "statistics/spatial_ci/GROUP_SIZE_DISTRIBUTION.csv": "817f612a2029f4813be9787e59ab9241e7c2cd668ad7b8ee456b2a2c32a228bb",
+      "statistics/spatial_ci/RECEIVER_GROUP_MAP.csv": "6a28ae3075d9c0b882a08e2f2dd56461e91610adbae75db5829844333b201b89",
+      "statistics/work/COVERAGE_SUMMARY.csv": "36e06407ff97ef1f0dcc196e20c749c45761d925f03fda58807e12ce469e70ea",
+      "statistics/work/DEGRADATION_VS_DIRECT.csv": "7d18f505a49f51d0d4a9112ae30d06c6f34d98087c1b273c841240e0483fc679",
+      "statistics/work/ENDPOINT_K10.csv": "8b20afa358decd175c82edb85d4e32824677a42ce489c8233d59db5e6dc11777",
+      "statistics/work/MAIN_DELTA.csv": "84c317868e2a1426c717ad10746aa666580287cff2c2eb7efdb1228c20b5942e",
+      "statistics/work/PER_RECEIVER_HORIZON.csv": "e0cc125e03524be1dae43ee7af12420699d3b64b2f031596d9de9fb502e63f8e",
+      "statistics/work/RUN_METADATA.json": "8739d5e496be7a58321edece048e02dddad00afbddfb855dd8ada48d5a5f8534",
+      "statistics/work/SAMPLE_MANIFEST.csv": "e681d3331c27a2e7fef48dccdde7f24fcb6b5c9687a9a29bd37ff6776c00bf85",
+      "statistics/work/SUMMARY_CORRECTED.csv": "039c68b6d4f0e25e652144cd2ce9ad6c0d94bf7357b3a818c1bff287283e634c",
+      "statistics/work/postprocess.py": "aeb0ed614222a59cd23c2b13e1e220f48a269951b45494b9102eb3bb5167a7a9",
+      "suffix/OUTPUT_GAPS.csv": "12592896945b88e878998168a5581ea81ac9a7cf79a8646a7d52a7877b3078da",
+      "suffix/PER_RECEIVER_HORIZON.csv": "e0cc125e03524be1dae43ee7af12420699d3b64b2f031596d9de9fb502e63f8e",
+      "suffix/RUN_METADATA.json": "3390161aaa5c892fb59f4d676d4ad449a6150c60a939ce8fe8f3650a934331c7",
+      "suffix/SAMPLE_MANIFEST.csv": "e681d3331c27a2e7fef48dccdde7f24fcb6b5c9687a9a29bd37ff6776c00bf85"
+    }
+  },
+  "table_csv": "path,prefix,n_paired_receivers,n_groups,mean_c0r,mean_c1,mean_delta_c1_minus_c0r,ci95_low,ci95_high,ci_crosses_zero\nD20,D_direct_11_20,2837,80,0.041745369264809123,0.042101375276012057,0.00035600601120283284,-0.00017277470206993907,0.00097315072095147115,True\nA,A,2837,80,0.043823106663250636,0.04256223520161944,-0.0012608714616311732,-0.002260968005198078,-0.00015853501029861625,False\nB,B,2837,80,0.05057543278805432,0.043239372167027369,-0.0073360606210268733,-0.0088841351391496844,-0.0058841140806769358,False\nC,C,2837,80,0.050058151655165362,0.043043328411527387,-0.0070148232436378685,-0.0086374338467784962,-0.0055462359978207107,False\n"
+}

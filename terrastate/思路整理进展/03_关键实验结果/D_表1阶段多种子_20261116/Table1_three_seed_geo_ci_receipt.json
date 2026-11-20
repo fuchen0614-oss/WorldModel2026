@@ -1,0 +1,84 @@
+{
+  "status": "PASS",
+  "protocol": "paired geographic-cluster bootstrap of equal-seed average; 2000 draws, seed 20260914, receiver-equal within each seed",
+  "source": [
+    {
+      "seed": 27,
+      "rows": 226960,
+      "receivers": 2837,
+      "groups": 80,
+      "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_table1_multiseed_interim_20261116/seed27/suffix/PER_RECEIVER_HORIZON.csv",
+      "source_sha256": "18b920b6fc6e67b6f4ae74888380aa7149f17c8823ccb677c2c2fab1878a7c90"
+    },
+    {
+      "seed": 42,
+      "rows": 226960,
+      "receivers": 2837,
+      "groups": 80,
+      "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_six_tables_seed42_20261114/suffix/PER_RECEIVER_HORIZON.csv",
+      "source_sha256": "4ee641a2e06ce55331040badc7f433abec0d64b5f49e5d4b24089158a220aa88"
+    },
+    {
+      "seed": 97,
+      "rows": 226960,
+      "receivers": 2837,
+      "groups": 80,
+      "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_table1_multiseed_interim_20261116/seed97/suffix/PER_RECEIVER_HORIZON.csv",
+      "source_sha256": "e0cc125e03524be1dae43ee7af12420699d3b64b2f031596d9de9fb502e63f8e"
+    }
+  ],
+  "rows": [
+    {
+      "path": "D20",
+      "n_seeds": 3,
+      "n_groups": 80,
+      "n_receivers_per_seed": 2837,
+      "draws": 2000,
+      "bootstrap_seed": 20260914,
+      "mean_delta_c1_minus_c0r": 0.0006573717786690124,
+      "ci95_low": 0.00017677457813186637,
+      "ci95_high": 0.001187480208126375,
+      "ci_crosses_zero": false,
+      "scope": "geographic uncertainty conditional on three fixed selected seeds; seed sample SD separately reported"
+    },
+    {
+      "path": "A",
+      "n_seeds": 3,
+      "n_groups": 80,
+      "n_receivers_per_seed": 2837,
+      "draws": 2000,
+      "bootstrap_seed": 20260914,
+      "mean_delta_c1_minus_c0r": -0.001300277369536604,
+      "ci95_low": -0.0021493706620619724,
+      "ci95_high": -0.0003695631049656853,
+      "ci_crosses_zero": false,
+      "scope": "geographic uncertainty conditional on three fixed selected seeds; seed sample SD separately reported"
+    },
+    {
+      "path": "B",
+      "n_seeds": 3,
+      "n_groups": 80,
+      "n_receivers_per_seed": 2837,
+      "draws": 2000,
+      "bootstrap_seed": 20260914,
+      "mean_delta_c1_minus_c0r": -0.006414657823386524,
+      "ci95_low": -0.007756428396798132,
+      "ci95_high": -0.005130236590237425,
+      "ci_crosses_zero": false,
+      "scope": "geographic uncertainty conditional on three fixed selected seeds; seed sample SD separately reported"
+    },
+    {
+      "path": "C",
+      "n_seeds": 3,
+      "n_groups": 80,
+      "n_receivers_per_seed": 2837,
+      "draws": 2000,
+      "bootstrap_seed": 20260914,
+      "mean_delta_c1_minus_c0r": -0.005865521388109497,
+      "ci95_low": -0.007198648350367556,
+      "ci95_high": -0.004603087759678458,
+      "ci_crosses_zero": false,
+      "scope": "geographic uncertainty conditional on three fixed selected seeds; seed sample SD separately reported"
+    }
+  ]
+}

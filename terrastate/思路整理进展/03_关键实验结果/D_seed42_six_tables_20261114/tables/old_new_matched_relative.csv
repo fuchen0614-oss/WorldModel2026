@@ -1,0 +1,5 @@
+path,old_relative_improvement_percent,new_relative_improvement_percent,change_percentage_points,qualification_exactly_equal,scope
+D20,0.46963312856564055,-2.642485067897203,-3.112118196462844,True,each version versus its own matched control; architecture/training/parent/weather baseline changed; not isolated mechanism effect
+A,4.6331774078255235,2.640893891192692,-1.9922835166328317,True,each version versus its own matched control; architecture/training/parent/weather baseline changed; not isolated mechanism effect
+B,10.652762099850513,9.920792562485858,-0.7319695373646553,True,each version versus its own matched control; architecture/training/parent/weather baseline changed; not isolated mechanism effect
+C,10.958640053250585,8.75552099693733,-2.2031190563132554,True,each version versus its own matched control; architecture/training/parent/weather baseline changed; not isolated mechanism effect

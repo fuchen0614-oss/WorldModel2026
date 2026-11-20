@@ -1,0 +1,27 @@
+{
+  "status": "RENDERED_PENDING_VISUAL_QA",
+  "cases": 8,
+  "ids": [
+    "new_Q10",
+    "new_Q2",
+    "new_Q50",
+    "new_Q90",
+    "new_Q95",
+    "new_Q98",
+    "Q75",
+    "Q90"
+  ],
+  "source_script": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A25_SpanWorld_正文实验图_紧凑排版_20260924\\code\\build_experiment_figures.py",
+  "source_script_sha256": "20a51535427fc22e4af862c5daa37b01f4fea794aebb2a785f2b3442076b19a9",
+  "fixed_scales": {
+    "ndvi": [
+      -0.6,
+      0.9
+    ],
+    "error": [
+      0,
+      0.45
+    ]
+  },
+  "P42_excluded": true
+}

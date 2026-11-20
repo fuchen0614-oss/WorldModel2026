@@ -1,0 +1,13 @@
+{
+  "status": "TRANSCRIPTION_CHECKED",
+  "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续写作\\ICLR2027完整稿_v16_图2拼写修正版替换_20260925\\sections\\appendix.tex",
+  "source_sha256": "52ba97f4dd06fd810f82f4ae618baf375311b3aabe38760c7bc302743b8a0e7e",
+  "row_counts": {
+    "B1": 4,
+    "B4": 4,
+    "B3": 20,
+    "B2": 24
+  },
+  "new_inference": false,
+  "scope": "B1/B4 and B2/B3 external rows reused from original v16; own new single seed rows retained separately"
+}

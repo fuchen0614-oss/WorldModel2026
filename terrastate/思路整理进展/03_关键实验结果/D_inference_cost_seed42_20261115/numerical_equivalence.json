@@ -1,0 +1,97 @@
+{
+  "status": "PASS",
+  "samples": [
+    "JAS17/minicube_0_29SND_39.29_-8.56.nc",
+    "JAS17/minicube_100_32TPP_43.28_10.58.nc",
+    "JAS17/minicube_101_32TPR_45.53_11.26.nc",
+    "JAS17/minicube_102_32TPR_45.81_10.98.nc",
+    "JAS17/minicube_103_32TPR_45.49_10.47.nc",
+    "JAS17/minicube_104_32TPS_46.09_10.99.nc",
+    "JAS17/minicube_105_32TPS_46.20_11.26.nc",
+    "JAS17/minicube_106_32TPS_46.17_11.16.nc"
+  ],
+  "checks": [
+    {
+      "sample": "JAS17/minicube_0_29SND_39.29_-8.56.nc",
+      "mode": "direct",
+      "max_abs_diff": 1.1920928955078125e-07
+    },
+    {
+      "sample": "JAS17/minicube_0_29SND_39.29_-8.56.nc",
+      "mode": "partitioned",
+      "max_abs_diff": 1.1920928955078125e-07
+    },
+    {
+      "sample": "JAS17/minicube_100_32TPP_43.28_10.58.nc",
+      "mode": "direct",
+      "max_abs_diff": 8.940696716308594e-08
+    },
+    {
+      "sample": "JAS17/minicube_100_32TPP_43.28_10.58.nc",
+      "mode": "partitioned",
+      "max_abs_diff": 1.1920928955078125e-07
+    },
+    {
+      "sample": "JAS17/minicube_101_32TPR_45.53_11.26.nc",
+      "mode": "direct",
+      "max_abs_diff": 5.960464477539063e-08
+    },
+    {
+      "sample": "JAS17/minicube_101_32TPR_45.53_11.26.nc",
+      "mode": "partitioned",
+      "max_abs_diff": 5.960464477539063e-08
+    },
+    {
+      "sample": "JAS17/minicube_102_32TPR_45.81_10.98.nc",
+      "mode": "direct",
+      "max_abs_diff": 5.960464477539063e-08
+    },
+    {
+      "sample": "JAS17/minicube_102_32TPR_45.81_10.98.nc",
+      "mode": "partitioned",
+      "max_abs_diff": 5.960464477539063e-08
+    },
+    {
+      "sample": "JAS17/minicube_103_32TPR_45.49_10.47.nc",
+      "mode": "direct",
+      "max_abs_diff": 1.1920928955078125e-07
+    },
+    {
+      "sample": "JAS17/minicube_103_32TPR_45.49_10.47.nc",
+      "mode": "partitioned",
+      "max_abs_diff": 1.1920928955078125e-07
+    },
+    {
+      "sample": "JAS17/minicube_104_32TPS_46.09_10.99.nc",
+      "mode": "direct",
+      "max_abs_diff": 5.960464477539063e-08
+    },
+    {
+      "sample": "JAS17/minicube_104_32TPS_46.09_10.99.nc",
+      "mode": "partitioned",
+      "max_abs_diff": 1.1920928955078125e-07
+    },
+    {
+      "sample": "JAS17/minicube_105_32TPS_46.20_11.26.nc",
+      "mode": "direct",
+      "max_abs_diff": 5.960464477539063e-08
+    },
+    {
+      "sample": "JAS17/minicube_105_32TPS_46.20_11.26.nc",
+      "mode": "partitioned",
+      "max_abs_diff": 1.1920928955078125e-07
+    },
+    {
+      "sample": "JAS17/minicube_106_32TPS_46.17_11.16.nc",
+      "mode": "direct",
+      "max_abs_diff": 5.960464477539063e-08
+    },
+    {
+      "sample": "JAS17/minicube_106_32TPS_46.17_11.16.nc",
+      "mode": "partitioned",
+      "max_abs_diff": 1.1920928955078125e-07
+    }
+  ],
+  "timing_valid": false,
+  "reason": "numerical validation only on shared GPU"
+}

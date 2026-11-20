@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"controller_pid\": 31006, \"exit\": null, \"runtime\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_F1_seed42_20261115_01\", \"state\": {\"pid\": 31006, \"time\": 1794746555.2326405, \"running\": {\"D\": 31007, \"B\": 31008}, \"finished\": [], \"status\": \"running\"}, \"D\": {\"protocol_PASS.json\": {\"status\": \"PASS\", \"data_sha_verified\": true, \"pairs\": 84, \"donors\": 45, \"geo_groups\": 31, \"fixed_base_prediction\": true, \"receiver_season_preserved\": true, \"intervention\": \"24 weather channels of state branch only; baseline retains factual future weather\", \"checkpoint_sha256\": \"a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb\"}, \"progress.json\": {\"done\": 20, \"total\": 84, \"seconds\": 21.596994638442993, \"time\": 1794746559.7172377}, \"log_tail\": \"\"}, \"B\": {\"protocol_PASS.json\": {\"status\": \"PASS\", \"data_sha_verified\": true, \"pairs\": 84, \"donors\": 45, \"geo_groups\": 31, \"fixed_base_prediction\": true, \"receiver_season_preserved\": true, \"intervention\": \"24 weather channels of state branch only; baseline retains factual future weather\", \"checkpoint_sha256\": \"0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46\"}, \"progress.json\": {\"done\": 21, \"total\": 84, \"seconds\": 21.766021966934204, \"time\": 1794746559.8862724}, \"log_tail\": \"\"}}\n",
+  "stderr": "",
+  "host": "909",
+  "started": 1794746464.936169,
+  "seconds": 100.26278018951416
+}

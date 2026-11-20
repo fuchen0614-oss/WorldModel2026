@@ -1,0 +1,270 @@
+{
+  "cases": [
+    {
+      "id": "Q10",
+      "receiver_id": "MJJ19/minicube_91_31UGS_50.56_5.89.nc",
+      "dates": [
+        "2019-05-01",
+        "2019-05-06",
+        "2019-05-11",
+        "2019-05-16",
+        "2019-05-21",
+        "2019-05-26",
+        "2019-05-31",
+        "2019-06-05",
+        "2019-06-10",
+        "2019-06-15",
+        "2019-06-20",
+        "2019-06-25",
+        "2019-06-30",
+        "2019-07-05",
+        "2019-07-10",
+        "2019-07-15",
+        "2019-07-20",
+        "2019-07-25",
+        "2019-07-30",
+        "2019-08-04"
+      ],
+      "selection": "Frozen historical case Q10; re-evaluated with D seed42"
+    },
+    {
+      "id": "Q25",
+      "receiver_id": "JAS19/minicube_157_33TXN_46.91_17.39.nc",
+      "dates": [
+        "2019-07-02",
+        "2019-07-07",
+        "2019-07-12",
+        "2019-07-17",
+        "2019-07-22",
+        "2019-07-27",
+        "2019-08-01",
+        "2019-08-06",
+        "2019-08-11",
+        "2019-08-16",
+        "2019-08-21",
+        "2019-08-26",
+        "2019-08-31",
+        "2019-09-05",
+        "2019-09-10",
+        "2019-09-15",
+        "2019-09-20",
+        "2019-09-25",
+        "2019-09-30",
+        "2019-10-05"
+      ],
+      "selection": "Frozen historical case Q25; re-evaluated with D seed42"
+    },
+    {
+      "id": "Q50",
+      "receiver_id": "JAS18/minicube_59_30UYV_48.77_0.56.nc",
+      "dates": [
+        "2018-07-03",
+        "2018-07-08",
+        "2018-07-13",
+        "2018-07-18",
+        "2018-07-23",
+        "2018-07-28",
+        "2018-08-02",
+        "2018-08-07",
+        "2018-08-12",
+        "2018-08-17",
+        "2018-08-22",
+        "2018-08-27",
+        "2018-09-01",
+        "2018-09-06",
+        "2018-09-11",
+        "2018-09-16",
+        "2018-09-21",
+        "2018-09-26",
+        "2018-10-01",
+        "2018-10-06"
+      ],
+      "selection": "Frozen historical case Q50; re-evaluated with D seed42"
+    },
+    {
+      "id": "Q75",
+      "receiver_id": "MJJ18/minicube_103_32TPR_45.49_10.47.nc",
+      "dates": [
+        "2018-05-04",
+        "2018-05-09",
+        "2018-05-14",
+        "2018-05-19",
+        "2018-05-24",
+        "2018-05-29",
+        "2018-06-03",
+        "2018-06-08",
+        "2018-06-13",
+        "2018-06-18",
+        "2018-06-23",
+        "2018-06-28",
+        "2018-07-03",
+        "2018-07-08",
+        "2018-07-13",
+        "2018-07-18",
+        "2018-07-23",
+        "2018-07-28",
+        "2018-08-02",
+        "2018-08-07"
+      ],
+      "selection": "Frozen historical case Q75; re-evaluated with D seed42"
+    },
+    {
+      "id": "Q90",
+      "receiver_id": "MJJ17/minicube_22_30STJ_38.85_-5.31.nc",
+      "dates": [
+        "2017-05-02",
+        "2017-05-07",
+        "2017-05-12",
+        "2017-05-17",
+        "2017-05-22",
+        "2017-05-27",
+        "2017-06-01",
+        "2017-06-06",
+        "2017-06-11",
+        "2017-06-16",
+        "2017-06-21",
+        "2017-06-26",
+        "2017-07-01",
+        "2017-07-06",
+        "2017-07-11",
+        "2017-07-16",
+        "2017-07-21",
+        "2017-07-26",
+        "2017-07-31",
+        "2017-08-05"
+      ],
+      "selection": "Frozen historical case Q90; re-evaluated with D seed42"
+    },
+    {
+      "id": "new_Q2",
+      "receiver_id": "MAM19/minicube_239_34VCL_59.24_18.52.nc",
+      "selection": "D outcome-selected benefit quantile 0.02; coverage >= 40%",
+      "selection_metrics": {
+        "dataset_index": 1340,
+        "receiver_id": "MAM19/minicube_239_34VCL_59.24_18.52.nc",
+        "coverage": 0.4069091796875,
+        "c1_mse": 0.0653590659056112,
+        "c0r_mse": 0.04905636875475076,
+        "benefit": -0.016302697150860447,
+        "candidate_alias": "new_Q2",
+        "quantile": 0.02
+      }
+    },
+    {
+      "id": "new_Q10",
+      "receiver_id": "MJJ19/minicube_221_34TEL_40.70_21.85.nc",
+      "selection": "D outcome-selected benefit quantile 0.1; coverage >= 40%",
+      "selection_metrics": {
+        "dataset_index": 2035,
+        "receiver_id": "MJJ19/minicube_221_34TEL_40.70_21.85.nc",
+        "coverage": 0.884259033203125,
+        "c1_mse": 0.02236595905020401,
+        "c0r_mse": 0.01862283107367586,
+        "benefit": -0.003743127976528149,
+        "candidate_alias": "new_Q10",
+        "quantile": 0.1
+      }
+    },
+    {
+      "id": "new_Q25",
+      "receiver_id": "JAS19/minicube_203_34TCL_41.47_19.52.nc",
+      "selection": "D outcome-selected benefit quantile 0.25; coverage >= 40%",
+      "selection_metrics": {
+        "dataset_index": 587,
+        "receiver_id": "JAS19/minicube_203_34TCL_41.47_19.52.nc",
+        "coverage": 0.544818115234375,
+        "c1_mse": 0.01442110012435601,
+        "c0r_mse": 0.014038948318144518,
+        "benefit": -0.0003821518062114924,
+        "candidate_alias": "new_Q25",
+        "quantile": 0.25
+      }
+    },
+    {
+      "id": "new_Q50",
+      "receiver_id": "MJJ18/minicube_89_31UGS_50.75_7.36.nc",
+      "selection": "D outcome-selected benefit quantile 0.5; coverage >= 40%",
+      "selection_metrics": {
+        "dataset_index": 1891,
+        "receiver_id": "MJJ18/minicube_89_31UGS_50.75_7.36.nc",
+        "coverage": 0.574481201171875,
+        "c1_mse": 0.015634198752791394,
+        "c0r_mse": 0.018029023894691406,
+        "benefit": 0.0023948251419000123,
+        "candidate_alias": "new_Q50",
+        "quantile": 0.5
+      }
+    },
+    {
+      "id": "new_Q75",
+      "receiver_id": "JAS19/minicube_230_34TFN_42.76_22.81.nc",
+      "selection": "D outcome-selected benefit quantile 0.75; coverage >= 40%",
+      "selection_metrics": {
+        "dataset_index": 617,
+        "receiver_id": "JAS19/minicube_230_34TFN_42.76_22.81.nc",
+        "coverage": 0.639129638671875,
+        "c1_mse": 0.014286987338566776,
+        "c0r_mse": 0.02063358631834387,
+        "benefit": 0.006346598979777095,
+        "candidate_alias": "new_Q75",
+        "quantile": 0.75
+      }
+    },
+    {
+      "id": "new_Q90",
+      "receiver_id": "MJJ17/minicube_15_29TPH_42.42_-7.23.nc",
+      "selection": "D outcome-selected benefit quantile 0.9; coverage >= 40%",
+      "selection_metrics": {
+        "dataset_index": 1491,
+        "receiver_id": "MJJ17/minicube_15_29TPH_42.42_-7.23.nc",
+        "coverage": 0.556512451171875,
+        "c1_mse": 0.009136795071312237,
+        "c0r_mse": 0.0225041614425325,
+        "benefit": 0.013367366371220261,
+        "candidate_alias": "new_Q90",
+        "quantile": 0.9
+      }
+    },
+    {
+      "id": "new_Q95",
+      "receiver_id": "SON17/minicube_223_34TEL_40.70_21.54.nc",
+      "selection": "D outcome-selected benefit quantile 0.95; coverage >= 40%",
+      "selection_metrics": {
+        "dataset_index": 2275,
+        "receiver_id": "SON17/minicube_223_34TEL_40.70_21.54.nc",
+        "coverage": 0.497137451171875,
+        "c1_mse": 0.007813753480901069,
+        "c0r_mse": 0.029403365200901338,
+        "benefit": 0.02158961172000027,
+        "candidate_alias": "new_Q95",
+        "quantile": 0.95
+      }
+    },
+    {
+      "id": "new_Q98",
+      "receiver_id": "JAS19/minicube_29_30TWK_40.05_-2.43.nc",
+      "selection": "D outcome-selected benefit quantile 0.98; coverage >= 40%",
+      "selection_metrics": {
+        "dataset_index": 635,
+        "receiver_id": "JAS19/minicube_29_30TWK_40.05_-2.43.nc",
+        "coverage": 0.684051513671875,
+        "c1_mse": 0.003732411075909436,
+        "c0r_mse": 0.03997653924591861,
+        "benefit": 0.036244128170009174,
+        "candidate_alias": "new_Q98",
+        "quantile": 0.98
+      }
+    }
+  ],
+  "duplicate_aliases": [],
+  "models": {
+    "C1": {
+      "checkpoint": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+      "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb"
+    },
+    "C0R": {
+      "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+      "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "matched_donor_calibration_v2_corrected_mask",
+  "status": "COMPLETE",
+  "train_root": "/data/zs/TrainData/EarthNet2021/earthnet2021x/train",
+  "n_files": 23816,
+  "n_valid": 22723,
+  "n_invalid": 1093,
+  "invalid_reason_counts": {
+    "ValueError:non-finite scalar feature": 1093
+  },
+  "mask_source_counts_valid": {
+    "s2_dlmask": 22723
+  },
+  "file_list_sha256": "2bd2e7c81e84f6e2a804e437d2c71d712728d4f892c1bd1372a4522f57873ec1",
+  "feature_schema": [
+    "history_ndvi_mean",
+    "history_ndvi_std",
+    "history_last_mean",
+    "history_valid_frame_fraction"
+  ],
+  "history_window": "time[0:10] only; s2_B04/s2_B8A, selected clear mask, s2_avail; no future target/weather",
+  "mask_selection_contract": "prefer s2_dlmask when present (EarthNet2021x: 0=clear); fallback to s2_mask only when s2_dlmask is absent",
+  "median": [
+    0.5645753778804535,
+    0.004269307171688164,
+    0.5677885664598611,
+    0.2
+  ],
+  "iqr": [
+    0.2651911000876689,
+    0.015737699388935406,
+    0.2696075812273031,
+    0.1
+  ],
+  "zero_or_nonfinite_iqr_replaced_by": 1.0,
+  "landcover_vocabulary": [
+    10,
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100
+  ],
+  "per_file_features_csv": "calibration_train_v2_corrected_mask_20260909T134000Z/per_file_features.csv",
+  "valid_features_npz": "calibration_train_v2_corrected_mask_20260909T134000Z/valid_features.npz",
+  "elapsed_seconds": 1127.2135980129242
+}

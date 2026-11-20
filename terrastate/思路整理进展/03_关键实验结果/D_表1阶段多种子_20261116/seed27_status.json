@@ -1,0 +1,96 @@
+{
+  "status": "complete",
+  "result": {
+    "state": {
+      "status": "complete",
+      "pid": 679363,
+      "time": 1794768208.592087
+    },
+    "progress": {
+      "0": {
+        "pid": 679364,
+        "done": 714,
+        "total": 714,
+        "receivers": 710,
+        "seconds": 708.8974018096924,
+        "time": 1794766548.8663998
+      },
+      "1": {
+        "pid": 679365,
+        "done": 714,
+        "total": 714,
+        "receivers": 706,
+        "seconds": 524.3968386650085,
+        "time": 1794766364.2247586
+      },
+      "2": {
+        "pid": 679366,
+        "done": 714,
+        "total": 714,
+        "receivers": 711,
+        "seconds": 751.4605736732483,
+        "time": 1794766591.5503755
+      },
+      "3": {
+        "pid": 679367,
+        "done": 714,
+        "total": 714,
+        "receivers": 710,
+        "seconds": 2340.690283060074,
+        "time": 1794768189.563173
+      }
+    },
+    "receipt": {
+      "status": "PASS",
+      "business_exit": 0,
+      "seed": 27,
+      "receivers": 2837,
+      "rows": 226960,
+      "qualification": "interim selected weights; not all runs final",
+      "models": {
+        "C1": {
+          "sha256": "7065e020626ea497185ef00b87a01ce246603e61fa07bc5ac79da114c3e5d38a",
+          "epoch": 34,
+          "selection_kind": "interim_validation_best",
+          "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/7065e020626ea497185ef00b87a01ce246603e61fa07bc5ac79da114c3e5d38a/next/best_frozen.pt"
+        },
+        "C0R": {
+          "sha256": "250786eff46469053e89b685ee56246882251a13a743c1e7166a5e2b0158c05e",
+          "epoch": 34,
+          "selection_kind": "interim_validation_best",
+          "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/250786eff46469053e89b685ee56246882251a13a743c1e7166a5e2b0158c05e/next/best_frozen.pt"
+        }
+      },
+      "oss": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/table1_multiseed_interim_20261116/seed27",
+      "hashes": {
+        "plan.json": "3295afedb481d31ce05654b10d868a3efc4eb580d25e32f4b8f734df9be157b3",
+        "worker_exits.json": "4982726e796ec0418356f6ece0f8131cb7c11c95e3a4b0498b16cc8f4005252b",
+        "statistics/receipt.json": "cb637ffa789271b02e135ceefff124a7ebf2f70b7730132cd5cb8822c44bdb08",
+        "statistics/spatial_ci/A2_DEGRADATION_CI.csv": "e4882bbd51edd4088b09df80022d5336282ea15a7ac036e19328ea52ca59f4eb",
+        "statistics/spatial_ci/A2_DEGRADATION_MODEL_DIFF_CI.csv": "5a222dd554f2f2ba2ab58a10ce167c0ea6bb65c92fd98a28d345e3482b76c91a",
+        "statistics/spatial_ci/A2_ENDPOINT_K10_CI.csv": "946c54bde67642eec54d0089d6658f98609f5f23dda243d5d90edd7740f48379",
+        "statistics/spatial_ci/A2_ENDPOINT_K10_DELTA_CI.csv": "181fcec5a6eb63e7cf395eb6ff0a0d35314e16f85fa72db200b3c89539b0fe7c",
+        "statistics/spatial_ci/A2_MAIN_DELTA_CI.csv": "98946ecceee4f0d00d9e181f4a308bac5439fe1228dc30d938f29d2020d1b4aa",
+        "statistics/spatial_ci/A2_MSE_CI.csv": "b38f8bf3074a45beac36d2b5dd6e16246abe25b6f450d73536a5368a0f7113c0",
+        "statistics/spatial_ci/A2_POINT_ESTIMATES_RECHECK.csv": "52da212789834468120d38fdb94da987203e145f7d842e5b8013dc52fae106f1",
+        "statistics/spatial_ci/A2_RUN_METADATA.json": "2064b585ba6e5817223cfea3709d4d9e3cfeec00c2c8f2dfe79bae8ef47f34b1",
+        "statistics/spatial_ci/GROUP_SIZE_DISTRIBUTION.csv": "817f612a2029f4813be9787e59ab9241e7c2cd668ad7b8ee456b2a2c32a228bb",
+        "statistics/spatial_ci/RECEIVER_GROUP_MAP.csv": "6a28ae3075d9c0b882a08e2f2dd56461e91610adbae75db5829844333b201b89",
+        "statistics/work/COVERAGE_SUMMARY.csv": "36e06407ff97ef1f0dcc196e20c749c45761d925f03fda58807e12ce469e70ea",
+        "statistics/work/DEGRADATION_VS_DIRECT.csv": "b50d90fd6fb18325a12b69c437ddaf575baad6d4e2d716f005f239c453625e3f",
+        "statistics/work/ENDPOINT_K10.csv": "5d53fe6bf054fa5cdee186dda01755a300ceaa6c956fe68044955477262b9c46",
+        "statistics/work/MAIN_DELTA.csv": "2e384dd25dd298e6bda373147c5d78a7dfc7285c7f6bd0dc73fa734a1f162879",
+        "statistics/work/PER_RECEIVER_HORIZON.csv": "18b920b6fc6e67b6f4ae74888380aa7149f17c8823ccb677c2c2fab1878a7c90",
+        "statistics/work/RUN_METADATA.json": "a5d748ec0dbd27976b34f23d1e294db120a13c481b68320bf5f2b86b3bafe556",
+        "statistics/work/SAMPLE_MANIFEST.csv": "298f053f21e5ab9298fc748f975de7051b3ae82400fabb9faa337a30608c4268",
+        "statistics/work/SUMMARY_CORRECTED.csv": "048822135014544f36584b98526e7315432365fddbf997985667776ed07e8edb",
+        "statistics/work/postprocess.py": "aeb0ed614222a59cd23c2b13e1e220f48a269951b45494b9102eb3bb5167a7a9",
+        "suffix/OUTPUT_GAPS.csv": "9f5abaebced9bff7df9023f6720e0351020e3b51278b6aa6ff161a038045c55b",
+        "suffix/PER_RECEIVER_HORIZON.csv": "18b920b6fc6e67b6f4ae74888380aa7149f17c8823ccb677c2c2fab1878a7c90",
+        "suffix/RUN_METADATA.json": "df8c393ebdd41e217bfcc3c3918f155d42e0396b91eb74ed1dbcfec8d8c40874",
+        "suffix/SAMPLE_MANIFEST.csv": "298f053f21e5ab9298fc748f975de7051b3ae82400fabb9faa337a30608c4268"
+      }
+    },
+    "table_csv": "path,prefix,n_paired_receivers,n_groups,mean_c0r,mean_c1,mean_delta_c1_minus_c0r,ci95_low,ci95_high,ci_crosses_zero\nD20,D_direct_11_20,2837,80,0.042096979956320543,0.042600061612583479,0.00050308165626304158,3.1771906157838867e-05,0.0010118999096935051,False\nA,A,2837,80,0.044132747449344721,0.042676533950787084,-0.0014562134985575325,-0.0023133042642605826,-0.0005241448114439635,False\nB,B,2837,80,0.050038852932510501,0.042984242929913721,-0.0070546100025968899,-0.0084587894077839225,-0.0057239781740271618,False\nC,C,2837,80,0.049285772785140083,0.04291274573464348,-0.0063730270504965738,-0.0077067753555241881,-0.0051189072413162767,False\n"
+  }
+}

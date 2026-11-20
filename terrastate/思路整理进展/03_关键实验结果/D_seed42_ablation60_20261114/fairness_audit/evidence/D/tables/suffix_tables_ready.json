@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "qualification_comparable": true,
+  "new_target_keys": 28370,
+  "old_target_keys": 28370,
+  "note": "Single seed42; spatial confidence intervals, not seed SD."
+}

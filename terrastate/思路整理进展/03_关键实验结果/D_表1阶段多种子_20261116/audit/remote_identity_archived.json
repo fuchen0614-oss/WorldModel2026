@@ -1,0 +1,1893 @@
+{
+  "plans": {
+    "27": {
+      "python": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+      "gpu_uuid": "GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf",
+      "guard_recognition_prefix": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code",
+      "data_root": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/stage2_dc_eval_20261113_01/iid_chopped",
+      "parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "models": {
+        "C1": {
+          "sha256": "7065e020626ea497185ef00b87a01ce246603e61fa07bc5ac79da114c3e5d38a",
+          "epoch": 34,
+          "selection_kind": "interim_validation_best",
+          "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/7065e020626ea497185ef00b87a01ce246603e61fa07bc5ac79da114c3e5d38a/next/best_frozen.pt"
+        },
+        "C0R": {
+          "sha256": "250786eff46469053e89b685ee56246882251a13a743c1e7166a5e2b0158c05e",
+          "epoch": 34,
+          "selection_kind": "interim_validation_best",
+          "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/250786eff46469053e89b685ee56246882251a13a743c1e7166a5e2b0158c05e/next/best_frozen.pt"
+        }
+      },
+      "standard_results": {
+        "C1": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/evaluation/spanworld_D909_fast4x8_20261113_01/D/result.json",
+        "C0R": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/old/result.json"
+      },
+      "seed": 27,
+      "code": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_six_tables_seed42_20261114/code",
+      "gpus": [
+        "GPU-dac680e7-bd4a-c2c7-ac55-9686c1787044",
+        "GPU-d60cca88-8fed-5afa-3892-b94d2c91f146",
+        "GPU-a3c002b6-36ad-3a5f-f805-d92f7cb80d3c",
+        "GPU-64322da3-75b5-c1b8-260b-6fd038efab7f"
+      ],
+      "reference_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_six_tables_seed42_20261114/suffix/SAMPLE_MANIFEST.csv",
+      "reference_rows": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_six_tables_seed42_20261114/suffix/PER_RECEIVER_HORIZON.csv",
+      "oss": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/table1_multiseed_interim_20261116/seed27"
+    },
+    "97": {
+      "python": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+      "gpu_uuid": "GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf",
+      "guard_recognition_prefix": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code",
+      "data_root": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/stage2_dc_eval_20261113_01/iid_chopped",
+      "parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "models": {
+        "C1": {
+          "sha256": "bcf423992db4cffad96f5ce7aa3917c205553542d334556056bec2eef5f81356",
+          "epoch": 42,
+          "selection_kind": "interim_validation_best",
+          "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/bcf423992db4cffad96f5ce7aa3917c205553542d334556056bec2eef5f81356/next/best_frozen.pt"
+        },
+        "C0R": {
+          "sha256": "9b5d115be43a18a682408df4e37b565b904d6a486f9f83c1ea1b2bcbdccac771",
+          "epoch": 42,
+          "selection_kind": "final_validation_best",
+          "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/9b5d115be43a18a682408df4e37b565b904d6a486f9f83c1ea1b2bcbdccac771/next/best_frozen.pt"
+        }
+      },
+      "standard_results": {
+        "C1": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/evaluation/spanworld_D909_fast4x8_20261113_01/D/result.json",
+        "C0R": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/old/result.json"
+      },
+      "seed": 97,
+      "code": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_six_tables_seed42_20261114/code",
+      "gpus": [
+        "GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf",
+        "GPU-6b066b99-857d-37d3-41ef-b5f7ddcfab04",
+        "GPU-9865b664-8f6f-5e91-ab81-bdac60b61b62"
+      ],
+      "reference_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_six_tables_seed42_20261114/suffix/SAMPLE_MANIFEST.csv",
+      "reference_rows": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_six_tables_seed42_20261114/suffix/PER_RECEIVER_HORIZON.csv",
+      "oss": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/table1_multiseed_interim_20261116/seed97"
+    },
+    "42": {
+      "python": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+      "gpu_uuid": "GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf",
+      "guard_recognition_prefix": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code",
+      "data_root": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/stage2_dc_eval_20261113_01/iid_chopped",
+      "parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "models": {
+        "C1": {
+          "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+          "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb"
+        },
+        "C0R": {
+          "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+          "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b"
+        }
+      },
+      "standard_results": {
+        "C1": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/evaluation/spanworld_D909_fast4x8_20261113_01/D/result.json",
+        "C0R": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/old/result.json"
+      }
+    }
+  },
+  "checkpoints": {
+    "27C1": {
+      "epoch": 34,
+      "step": 25330,
+      "args": {
+        "continuation_manifest": "",
+        "history_state_only": true,
+        "migration_checkpoint": "",
+        "migration_checkpoint_sha256": "",
+        "migration_best": "",
+        "migration_best_sha256": "",
+        "handoff_dir": "",
+        "handoff_token": "",
+        "handoff_timeout": 120.0,
+        "runtime_per_gpu_batch": null,
+        "runtime_world_size": 2,
+        "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_991_D_C1_s27_20261114_01/topology_2x8a2_20261114/next_code/configs/spanworld_full_base/stage2_D_C1_s27_2gpu.json",
+        "stage": "stage2",
+        "variant": "D",
+        "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "arm": "C1",
+        "factual_path": "recursive",
+        "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+        "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+        "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+        "val_split_selector": "validation_subsplit.val_dev.ids",
+        "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+        "output_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D_C1_seed27_991_2x8a2_20261114/formal",
+        "resume": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D_C1_seed27_991_2x8a2_20261114/formal/last.pt",
+        "parent_alias": "terrastate/v2/default-training-anchor",
+        "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "allow_unverified_parent": false,
+        "state_dim": 256,
+        "per_gpu_batch": 8,
+        "global_batch": 32,
+        "num_workers": 4,
+        "max_epochs": 100,
+        "max_steps": 0,
+        "stop_after_step": 0,
+        "lambda_z": 0.0,
+        "lambda_y": 0.0,
+        "lambda_pair": 0.0,
+        "lambda_nc": 0.0,
+        "allow_nonzero_lambdas": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "days_per_transition_step": 5,
+        "branch_lr": 3e-05,
+        "q_lr_scale": 0.33333333333333337,
+        "weight_decay": 0.0,
+        "grad_clip": 1.0,
+        "lr_warmup_steps": 600,
+        "use_adaln": true,
+        "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+        "seed": 27,
+        "log_interval": 10,
+        "val_interval": 745,
+        "ckpt_interval": 372,
+        "device": "cuda",
+        "deterministic": false,
+        "allow_existing_out": true,
+        "verify_data_manifest": true,
+        "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+        "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+        "stage_epochs": 100,
+        "stage_total_steps": 74500
+      },
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "recursive",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      },
+      "lineage": {
+        "parent_alias": "selected_stage1",
+        "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "parent_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_n_tensors": 257,
+        "max_abs_diff_vs_parent": 0.0,
+        "missing_keys": [
+          "transition.adaln.bias",
+          "transition.adaln.weight"
+        ],
+        "unexpected_keys": [],
+        "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "fork_kind": "weights_only_full_base_stage2",
+        "is_exact_resume": false,
+        "parent_optimizer_scheduler_deliberately_discarded": true,
+        "resumed_within_phase": true,
+        "resume_parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D_C1_seed27_991_2x8a2_20261114/formal/last.pt",
+        "resume_parent_file_sha256": "f40ed53eb2ac3900556837ec0c4ae013c0db49a4e8339035cba75619540bd66f"
+      },
+      "variant": "D",
+      "arm": "C1",
+      "actual_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/7065e020626ea497185ef00b87a01ce246603e61fa07bc5ac79da114c3e5d38a/next/best_frozen.pt",
+      "actual_sha256": "7065e020626ea497185ef00b87a01ce246603e61fa07bc5ac79da114c3e5d38a",
+      "expected_sha256": "7065e020626ea497185ef00b87a01ce246603e61fa07bc5ac79da114c3e5d38a"
+    },
+    "27C0R": {
+      "epoch": 34,
+      "step": 25330,
+      "args": {
+        "continuation_manifest": "",
+        "history_state_only": true,
+        "migration_checkpoint": "",
+        "migration_checkpoint_sha256": "",
+        "migration_best": "",
+        "migration_best_sha256": "",
+        "handoff_dir": "",
+        "handoff_token": "",
+        "handoff_timeout": 120.0,
+        "runtime_per_gpu_batch": null,
+        "runtime_world_size": 4,
+        "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_946_D_C0R_s27_20261114_01/next_code/configs/spanworld_full_base/stage2_D_C0R_s27.json",
+        "stage": "stage2",
+        "variant": "D",
+        "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "arm": "C0R",
+        "factual_path": "direct",
+        "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+        "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+        "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+        "val_split_selector": "validation_subsplit.val_dev.ids",
+        "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+        "output_dir": "/tmp/chenzhisheng/spanworld_storage_recovery_20261115/outputs/946_b",
+        "resume": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D_multiseed_946_D_C0R_s27_20261114_01/D/formal/last.pt",
+        "parent_alias": "terrastate/v2/default-training-anchor",
+        "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "allow_unverified_parent": false,
+        "state_dim": 256,
+        "per_gpu_batch": 8,
+        "global_batch": 32,
+        "num_workers": 4,
+        "max_epochs": 100,
+        "max_steps": 0,
+        "stop_after_step": 0,
+        "lambda_z": 0.0,
+        "lambda_y": 0.0,
+        "lambda_pair": 0.0,
+        "lambda_nc": 0.0,
+        "allow_nonzero_lambdas": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "days_per_transition_step": 5,
+        "branch_lr": 3e-05,
+        "q_lr_scale": 0.33333333333333337,
+        "weight_decay": 0.0,
+        "grad_clip": 1.0,
+        "lr_warmup_steps": 600,
+        "use_adaln": true,
+        "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+        "seed": 27,
+        "log_interval": 10,
+        "val_interval": 745,
+        "ckpt_interval": 372,
+        "device": "cuda",
+        "deterministic": false,
+        "allow_existing_out": true,
+        "verify_data_manifest": true,
+        "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+        "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+        "stage_epochs": 100,
+        "stage_total_steps": 74500
+      },
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "direct",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      },
+      "lineage": {
+        "parent_alias": "selected_stage1",
+        "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "parent_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_n_tensors": 257,
+        "max_abs_diff_vs_parent": 0.0,
+        "missing_keys": [
+          "transition.adaln.bias",
+          "transition.adaln.weight"
+        ],
+        "unexpected_keys": [],
+        "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "fork_kind": "weights_only_full_base_stage2",
+        "is_exact_resume": false,
+        "parent_optimizer_scheduler_deliberately_discarded": true,
+        "resumed_within_phase": true,
+        "resume_parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D_multiseed_946_D_C0R_s27_20261114_01/D/formal/last.pt",
+        "resume_parent_file_sha256": "041aaa5f3db5e50fd7448c8b6516e6b7b7d8fc0d834be8b96579695f3b0fc012",
+        "storage_relocation": {
+          "original_best_sha256": "92200a624a683e39a7a63dd0fe9a8a449f4dcd98516ab59cc15ba29a6c478396",
+          "source": "/tmp/chenzhisheng/spanworld_storage_recovery_20261115/outputs/946_b/storage_source_best.pt",
+          "model_weights_unchanged": true
+        }
+      },
+      "variant": "D",
+      "arm": "C0R",
+      "actual_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/250786eff46469053e89b685ee56246882251a13a743c1e7166a5e2b0158c05e/next/best_frozen.pt",
+      "actual_sha256": "250786eff46469053e89b685ee56246882251a13a743c1e7166a5e2b0158c05e",
+      "expected_sha256": "250786eff46469053e89b685ee56246882251a13a743c1e7166a5e2b0158c05e"
+    },
+    "97C1": {
+      "epoch": 42,
+      "step": 31290,
+      "args": {
+        "continuation_manifest": "",
+        "history_state_only": true,
+        "migration_checkpoint": "",
+        "migration_checkpoint_sha256": "",
+        "migration_best": "",
+        "migration_best_sha256": "",
+        "handoff_dir": "",
+        "handoff_token": "",
+        "handoff_timeout": 120.0,
+        "runtime_per_gpu_batch": null,
+        "runtime_world_size": 4,
+        "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_946_D_C1_s97_20261114_01/next_code/configs/spanworld_full_base/stage2_D_C1_s97.json",
+        "stage": "stage2",
+        "variant": "D",
+        "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "arm": "C1",
+        "factual_path": "recursive",
+        "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+        "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+        "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+        "val_split_selector": "validation_subsplit.val_dev.ids",
+        "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+        "output_dir": "/tmp/chenzhisheng/spanworld_storage_recovery_20261115/outputs/916",
+        "resume": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D_multiseed_946_D_C1_s97_20261114_01/D/formal/last.pt",
+        "parent_alias": "terrastate/v2/default-training-anchor",
+        "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "allow_unverified_parent": false,
+        "state_dim": 256,
+        "per_gpu_batch": 8,
+        "global_batch": 32,
+        "num_workers": 4,
+        "max_epochs": 100,
+        "max_steps": 0,
+        "stop_after_step": 0,
+        "lambda_z": 0.0,
+        "lambda_y": 0.0,
+        "lambda_pair": 0.0,
+        "lambda_nc": 0.0,
+        "allow_nonzero_lambdas": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "days_per_transition_step": 5,
+        "branch_lr": 3e-05,
+        "q_lr_scale": 0.33333333333333337,
+        "weight_decay": 0.0,
+        "grad_clip": 1.0,
+        "lr_warmup_steps": 600,
+        "use_adaln": true,
+        "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+        "seed": 97,
+        "log_interval": 10,
+        "val_interval": 745,
+        "ckpt_interval": 372,
+        "device": "cuda",
+        "deterministic": false,
+        "allow_existing_out": true,
+        "verify_data_manifest": true,
+        "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+        "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+        "stage_epochs": 100,
+        "stage_total_steps": 74500
+      },
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "recursive",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      },
+      "lineage": {
+        "parent_alias": "selected_stage1",
+        "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "parent_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_n_tensors": 257,
+        "max_abs_diff_vs_parent": 0.0,
+        "missing_keys": [
+          "transition.adaln.bias",
+          "transition.adaln.weight"
+        ],
+        "unexpected_keys": [],
+        "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "fork_kind": "weights_only_full_base_stage2",
+        "is_exact_resume": false,
+        "parent_optimizer_scheduler_deliberately_discarded": true,
+        "resumed_within_phase": true,
+        "resume_parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D_multiseed_946_D_C1_s97_20261114_01/D/formal/last.pt",
+        "resume_parent_file_sha256": "5a312a39c3096f8d5a36c2953ac8aa4c587599c7acab519fb9390cbe2fd38ad7",
+        "storage_relocation": {
+          "original_best_sha256": "de5bad0b3ab154e763a073fa0c6099d11b5c3f87ac506b2cf0b1e3c31434ca26",
+          "source": "/tmp/chenzhisheng/spanworld_storage_recovery_20261115/outputs/916/storage_source_best.pt",
+          "model_weights_unchanged": true
+        }
+      },
+      "variant": "D",
+      "arm": "C1",
+      "actual_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/bcf423992db4cffad96f5ce7aa3917c205553542d334556056bec2eef5f81356/next/best_frozen.pt",
+      "actual_sha256": "bcf423992db4cffad96f5ce7aa3917c205553542d334556056bec2eef5f81356",
+      "expected_sha256": "bcf423992db4cffad96f5ce7aa3917c205553542d334556056bec2eef5f81356"
+    },
+    "97C0R": {
+      "epoch": 42,
+      "step": 31290,
+      "args": {
+        "continuation_manifest": "",
+        "history_state_only": true,
+        "migration_checkpoint": "",
+        "migration_checkpoint_sha256": "",
+        "migration_best": "",
+        "migration_best_sha256": "",
+        "handoff_dir": "",
+        "handoff_token": "",
+        "handoff_timeout": 120.0,
+        "runtime_per_gpu_batch": null,
+        "runtime_world_size": 4,
+        "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/next_code/configs/spanworld_full_base/stage2_D_C0R_s97.json",
+        "stage": "stage2",
+        "variant": "D",
+        "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "arm": "C0R",
+        "factual_path": "direct",
+        "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+        "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+        "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+        "val_split_selector": "validation_subsplit.val_dev.ids",
+        "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+        "output_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/D/formal",
+        "resume": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/D/formal/last.pt",
+        "parent_alias": "terrastate/v2/default-training-anchor",
+        "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "allow_unverified_parent": false,
+        "state_dim": 256,
+        "per_gpu_batch": 8,
+        "global_batch": 32,
+        "num_workers": 4,
+        "max_epochs": 100,
+        "max_steps": 0,
+        "stop_after_step": 0,
+        "lambda_z": 0.0,
+        "lambda_y": 0.0,
+        "lambda_pair": 0.0,
+        "lambda_nc": 0.0,
+        "allow_nonzero_lambdas": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "days_per_transition_step": 5,
+        "branch_lr": 3e-05,
+        "q_lr_scale": 0.33333333333333337,
+        "weight_decay": 0.0,
+        "grad_clip": 1.0,
+        "lr_warmup_steps": 600,
+        "use_adaln": true,
+        "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+        "seed": 97,
+        "log_interval": 10,
+        "val_interval": 745,
+        "ckpt_interval": 372,
+        "device": "cuda",
+        "deterministic": false,
+        "allow_existing_out": true,
+        "verify_data_manifest": true,
+        "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+        "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+        "stage_epochs": 100,
+        "stage_total_steps": 74500
+      },
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "direct",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      },
+      "lineage": {
+        "parent_alias": "selected_stage1",
+        "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "parent_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_n_tensors": 257,
+        "max_abs_diff_vs_parent": 0.0,
+        "missing_keys": [
+          "transition.adaln.bias",
+          "transition.adaln.weight"
+        ],
+        "unexpected_keys": [],
+        "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "fork_kind": "weights_only_full_base_stage2",
+        "is_exact_resume": false,
+        "parent_optimizer_scheduler_deliberately_discarded": true,
+        "resumed_within_phase": true,
+        "resume_parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/D/formal/last.pt",
+        "resume_parent_file_sha256": "5085696c8a3b43b1eea428a21903bad0f83d63b77035c93316db1258be404c07"
+      },
+      "variant": "D",
+      "arm": "C0R",
+      "actual_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/9b5d115be43a18a682408df4e37b565b904d6a486f9f83c1ea1b2bcbdccac771/next/best_frozen.pt",
+      "actual_sha256": "9b5d115be43a18a682408df4e37b565b904d6a486f9f83c1ea1b2bcbdccac771",
+      "expected_sha256": "9b5d115be43a18a682408df4e37b565b904d6a486f9f83c1ea1b2bcbdccac771"
+    },
+    "42C1": {
+      "epoch": 51,
+      "step": 37995,
+      "args": {
+        "continuation_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/continuation_manifest.json",
+        "history_state_only": true,
+        "migration_checkpoint": "",
+        "migration_checkpoint_sha256": "",
+        "migration_best": "",
+        "migration_best_sha256": "",
+        "handoff_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/handoff",
+        "handoff_token": "5f65162685b240569a8f61584b667b2c",
+        "handoff_timeout": 120.0,
+        "runtime_per_gpu_batch": null,
+        "runtime_world_size": 4,
+        "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage2_D.json",
+        "stage": "stage2",
+        "variant": "D",
+        "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "arm": "C1",
+        "factual_path": "recursive",
+        "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+        "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+        "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+        "val_split_selector": "validation_subsplit.val_dev.ids",
+        "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+        "output_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal",
+        "resume": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/last.pt",
+        "parent_alias": "terrastate/v2/default-training-anchor",
+        "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "allow_unverified_parent": false,
+        "state_dim": 256,
+        "per_gpu_batch": 8,
+        "global_batch": 32,
+        "num_workers": 4,
+        "max_epochs": 100,
+        "max_steps": 0,
+        "stop_after_step": 0,
+        "lambda_z": 0.0,
+        "lambda_y": 0.0,
+        "lambda_pair": 0.0,
+        "lambda_nc": 0.0,
+        "allow_nonzero_lambdas": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "days_per_transition_step": 5,
+        "branch_lr": 3e-05,
+        "q_lr_scale": 0.33333333333333337,
+        "weight_decay": 0.0,
+        "grad_clip": 1.0,
+        "lr_warmup_steps": 600,
+        "use_adaln": true,
+        "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+        "seed": 42,
+        "log_interval": 10,
+        "val_interval": 745,
+        "ckpt_interval": 372,
+        "device": "cuda",
+        "deterministic": false,
+        "allow_existing_out": true,
+        "verify_data_manifest": true,
+        "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+        "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+        "stage_epochs": 100,
+        "stage_total_steps": 74500
+      },
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "recursive",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      },
+      "lineage": {
+        "parent_alias": "selected_stage1",
+        "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "parent_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_n_tensors": 257,
+        "max_abs_diff_vs_parent": 0.0,
+        "missing_keys": [
+          "transition.adaln.bias",
+          "transition.adaln.weight"
+        ],
+        "unexpected_keys": [],
+        "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "fork_kind": "weights_only_full_base_stage2",
+        "is_exact_resume": false,
+        "parent_optimizer_scheduler_deliberately_discarded": true,
+        "efficiency_continuation": {
+          "checkpoint_source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/last.pt",
+          "checkpoint_sha256": "5f60366128505f08e2ad96f553538c112a8464b67364ee0250147a4a7bac5f6c",
+          "manifest_sha256": "2ce2ff5a391fd1ae7fce6377593846386b6d0de74c2cf1301937155dbcc29fd6",
+          "manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/continuation_manifest.json",
+          "previous_continuation": null,
+          "source_sha_pairs": {
+            "train/train_spanworld_full_base.py": [
+              "150bebfc865eaacd8706731d770de5ecf495a3f8ce8c32871fb93d9ce53e501d",
+              "ee63fc6ba41cce09fbd8fae19dc0388743a82ffe475a9f51969f1460d9d88397"
+            ],
+            "models/encoders/pvt_contextformer_q.py": [
+              null,
+              "57b74bdf05af716604b515d5e166ec316020742199013d3e92de77836d5fae3f"
+            ],
+            "models/encoders/contextformer_official.py": [
+              "ad577fe8d6f054c66fc9668128df0861392e0649807a817fdf9660158514931f",
+              "ca379e01e0609752fb9794ec1db29fc754b04e08031c7122b9138f8aa9bfc6c3"
+            ],
+            "train/topology_migration.py": [
+              "556c656efad17ff419b14f542d92e0df84c36bc10dd04c879cd70da8189ce15f",
+              "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6"
+            ],
+            "train/c1_checkpoint.py": [
+              "7ae1badbcd3994febaa0cec678458d01ba6ba3a46ceb0c9fd880520d309770e9",
+              "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4"
+            ],
+            "models/spanworld_full_base.py": [
+              "b19b9db319f77d661281577e30f0ea6e4dc2a51583ca0d41d9a0eddc1456b96c",
+              "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625"
+            ],
+            "train/efficiency_continuation.py": [
+              null,
+              "44d24e48b9448d9e0e4c55ab2634ec9040d63b48502b6d90e837aa87f809dc5c"
+            ],
+            "train/progress_io.py": [
+              null,
+              "73db3ba974e8d80bc204a072533bce3f36e3fac1abed80e6f64093971f547d1b"
+            ]
+          },
+          "argument_changes": {
+            "handoff_dir": [
+              "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_stage2_DC_micro4_accum2_20261113_02/handoff/D_train",
+              "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/handoff"
+            ],
+            "output_dir": [
+              "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage2_DC_seed42_micro4_accum2_20261113_02/D/formal",
+              "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal"
+            ],
+            "handoff_token": [
+              "61ec77b8e8b74a2ab9b541a64beaf266",
+              "5f65162685b240569a8f61584b667b2c"
+            ],
+            "per_gpu_batch": [
+              4,
+              8
+            ],
+            "allow_existing_out": [
+              false,
+              true
+            ],
+            "history_state_only": [
+              null,
+              true
+            ],
+            "runtime_per_gpu_batch": [
+              4,
+              null
+            ],
+            "resume": [
+              "",
+              "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/last.pt"
+            ],
+            "continuation_manifest": [
+              null,
+              "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/continuation_manifest.json"
+            ],
+            "config": [
+              "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_stage2_DC_micro4_accum2_20261113_02/code/configs/spanworld_full_base/stage2_D.json",
+              "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage2_D.json"
+            ]
+          },
+          "path_changes": {},
+          "is_bitwise_exact_historical_resume": false,
+          "topology": {
+            "source": [
+              4,
+              4,
+              2
+            ],
+            "target": [
+              4,
+              8,
+              1
+            ],
+            "global_batch": 32
+          },
+          "numerical_note": "Same global batch and samples; changed FP32 reduction grouping, not bitwise exact.",
+          "cuda_rng_note": "Legacy source CUDA RNG may be empty; no missing historical RNG is fabricated.",
+          "remaining_effective_steps": 46935,
+          "inherited_best": {
+            "source_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/best_val.pt",
+            "sha256": "1ae75ec885198b3e32519d1b5353cfd4e1516011c3bbf4ecac6cec33e128506e",
+            "original_sha": {
+              "parent_alias": "selected_stage1",
+              "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+              "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+              "parent_value_sha16": "fde2d8f9ff18b3f6",
+              "inherited_value_sha16": "fde2d8f9ff18b3f6",
+              "warm_start_state_sha256": "f488b7d7a8676f810124280bc93d188d0b74c1822a988bf27223fa28e6ab0cd0",
+              "val_split_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+              "val_split_manifest_sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b",
+              "val_split_selector": "validation_subsplit.val_dev.ids",
+              "val_split_n_ids": 476,
+              "selection_metric": "GreenEarthNet RMSE_LC HQ",
+              "scorer_reference_sha256": "cfbc6722174981daeabd880e27afaa90dce0de11269ecbba8365fe54de29bd2f",
+              "q4_partition_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+              "q4_partition_manifest_sha256": "d0a4c6564516ea62f7eda9ebc4018433d1357391ad3a2a3bd8070de1a54e1e0e",
+              "selected_config_sha256": "8602357a061586d41e0333752711ae4f8af9ba0195e09117a63ca808282242dd",
+              "selected_config_content": {
+                "stage": "stage2",
+                "variant": "D",
+                "trainer": "train/train_spanworld_full_base.py",
+                "parent_ckpt": null,
+                "expected_parent_sha256": null,
+                "status": "requires verified parent path; no launch",
+                "global_batch": 32,
+                "world_size": 4,
+                "per_gpu_batch": 8,
+                "effective_updates": 74500,
+                "epochs_equivalent": 100,
+                "branch_peak_lr": 3e-05,
+                "token_season_lr": 3e-05,
+                "q_peak_lr": 1e-05,
+                "q_blocks": [
+                  1,
+                  2
+                ],
+                "adaln": true,
+                "traj_weight": 1,
+                "endpoint_weight": 1,
+                "warmup": 600,
+                "decay_start": 600,
+                "final_factor": 0.1,
+                "selection": "val_dev476 official RMSE_LC minimum; first tie",
+                "stage2_parent": "same selected stage1 best_val.pt for all variants",
+                "arm": "C1",
+                "factual_path": "recursive",
+                "seed": 42,
+                "branch_final_lr": 3e-06,
+                "q_final_lr": 1.0000000000000002e-06,
+                "token_season_final_lr": 3e-06,
+                "transition_season_peak_lr": 3e-05,
+                "transition_season_final_lr": 3e-06,
+                "adaln_peak_lr": 3e-05,
+                "adaln_final_lr": 3e-06
+              },
+              "config_sha256": "5eb3f456ebc36a2bcde2f0bfff8d7a4fab42c161581fd47c7f74d13f1fb2c885",
+              "source_sha256": {
+                "models/terrastate_candidate_c.py": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c",
+                "train/train_spanworld_full_base.py": "150bebfc865eaacd8706731d770de5ecf495a3f8ce8c32871fb93d9ce53e501d",
+                "train/full_base_policy.py": "944170e2d348ab86d00f6fef4464be04e29447c0f2e51022adf93c4e1338b712",
+                "train/topology_migration.py": "556c656efad17ff419b14f542d92e0df84c36bc10dd04c879cd70da8189ce15f",
+                "models/spanworld_full_base.py": "b19b9db319f77d661281577e30f0ea6e4dc2a51583ca0d41d9a0eddc1456b96c",
+                "train/train_terrastate_candidate_c.py": "1d6ddd49fb6469e1267c203b78ac7a002b0ecd84530b7a9a81516456e357b294",
+                "models/losses/supervision_v2.py": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9",
+                "models/encoders/contextformer_official.py": "ad577fe8d6f054c66fc9668128df0861392e0649807a817fdf9660158514931f",
+                "data/calendar_features.py": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc",
+                "data/weather_contract.py": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e",
+                "data/greenearthnet_contextformer_dataset.py": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7",
+                "train/c1_validation.py": "f3ef83a0e763123919ace04fd3404bdf351704a501b4710997270d9c650c203b",
+                "train/c1_checkpoint.py": "7ae1badbcd3994febaa0cec678458d01ba6ba3a46ceb0c9fd880520d309770e9",
+                "models/terrastate_v2.py": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+                "models/plan_b_b4_exclusive.py": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+                "models/plan_b_b4.py": "9728a6ad8102041c75b1278a1ad01f4961ceabadd5315ecb7e9011119ee05032",
+                "train/train_terrastate_v2.py": "167a22969e9c664434f6135465778ee28524ce4c565dbcec793023794a28ac37",
+                "train/terrastate_v2_common.py": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f"
+              },
+              "train_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+              "val_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9"
+            },
+            "rmse_best": {
+              "score": 0.1494287146170551,
+              "epoch": 35,
+              "step": 26075
+            },
+            "step": 26075,
+            "epoch": 35
+          }
+        },
+        "resumed_within_phase": true,
+        "resume_parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/last.pt",
+        "resume_parent_file_sha256": "5f60366128505f08e2ad96f553538c112a8464b67364ee0250147a4a7bac5f6c"
+      },
+      "variant": "D",
+      "arm": "C1",
+      "actual_path": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+      "actual_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+      "expected_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb"
+    },
+    "42C0R": {
+      "epoch": 19,
+      "step": 14155,
+      "args": {
+        "continuation_manifest": "",
+        "history_state_only": true,
+        "migration_checkpoint": "",
+        "migration_checkpoint_sha256": "",
+        "migration_best": "",
+        "migration_best_sha256": "",
+        "handoff_dir": "",
+        "handoff_token": "",
+        "handoff_timeout": 120.0,
+        "runtime_per_gpu_batch": null,
+        "runtime_world_size": 4,
+        "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/configs/spanworld_full_base/stage2_D_C0R.json",
+        "stage": "stage2",
+        "variant": "D",
+        "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "arm": "C0R",
+        "factual_path": "direct",
+        "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+        "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+        "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+        "val_split_selector": "validation_subsplit.val_dev.ids",
+        "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+        "output_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal",
+        "resume": "",
+        "parent_alias": "terrastate/v2/default-training-anchor",
+        "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "allow_unverified_parent": false,
+        "state_dim": 256,
+        "per_gpu_batch": 8,
+        "global_batch": 32,
+        "num_workers": 4,
+        "max_epochs": 100,
+        "max_steps": 0,
+        "stop_after_step": 0,
+        "lambda_z": 0.0,
+        "lambda_y": 0.0,
+        "lambda_pair": 0.0,
+        "lambda_nc": 0.0,
+        "allow_nonzero_lambdas": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "days_per_transition_step": 5,
+        "branch_lr": 3e-05,
+        "q_lr_scale": 0.33333333333333337,
+        "weight_decay": 0.0,
+        "grad_clip": 1.0,
+        "lr_warmup_steps": 600,
+        "use_adaln": true,
+        "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+        "seed": 42,
+        "log_interval": 10,
+        "val_interval": 745,
+        "ckpt_interval": 372,
+        "device": "cuda",
+        "deterministic": false,
+        "allow_existing_out": false,
+        "verify_data_manifest": true,
+        "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+        "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+        "stage_epochs": 100,
+        "stage_total_steps": 74500
+      },
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "direct",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      },
+      "lineage": {
+        "parent_alias": "selected_stage1",
+        "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+        "parent_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_value_sha16": "fde2d8f9ff18b3f6",
+        "inherited_n_tensors": 257,
+        "max_abs_diff_vs_parent": 0.0,
+        "missing_keys": [
+          "transition.adaln.bias",
+          "transition.adaln.weight"
+        ],
+        "unexpected_keys": [],
+        "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+        "fork_kind": "weights_only_full_base_stage2",
+        "is_exact_resume": false,
+        "parent_optimizer_scheduler_deliberately_discarded": true
+      },
+      "variant": "D",
+      "arm": "C0R",
+      "actual_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+      "actual_sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+      "expected_sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b"
+    }
+  },
+  "code": {
+    "eval/eval_full_base_suffix.py": {
+      "sha": "670d6c960a7f9b6bd1acd3fecea44d72ce8d412c24872bbdab86b40344bad920",
+      "text": "#!/usr/bin/env python3\n\"\"\"R02-A1 streaming common-suffix evaluator; shared model semantics are untouched.\"\"\"\nimport argparse, csv, hashlib, json, time\nfrom pathlib import Path\nimport sys\nROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))\nimport xarray\nimport torch\nfrom torch.utils.data import DataLoader, Subset\n\nPREFIXES = {\"A\": (10,), \"B\": (5, 5), \"C\": (3, 7)}\nPATHS = (\"D20\", \"A\", \"B\", \"C\")\nABS_H = tuple(range(11, 21))\nQUALITY_TOL = 1e-5\n\ndef sha256_file(p):\n    h=hashlib.sha256()\n    with open(p,\"rb\") as f:\n        for b in iter(lambda:f.read(1<<20),b\"\"): h.update(b)\n    return h.hexdigest()\n\ndef query_plan(prefix):\n    if sum(prefix)!=10: raise ValueError(prefix)\n    return [(k, 10+k, tuple(prefix), (k,)) for k in range(1,11)]\n\ndef masked_stats(pred, target, valid):\n    m=valid.bool(); n=int(m.sum().item())\n    if n==0: return 0, float(\"nan\"), \"no_valid_pixels\"\n    if not torch.isfinite(target[m]).all().item(): raise RuntimeError(\"nonfinite_valid_target\")\n    if not torch.isfinite(pred[m]).all().item(): raise RuntimeError(\"nonfinite_valid_prediction\")\n    d=(pred-target)[m]\n    return n, float((d*d).sum().item()), \"\"\n\ndef geo_group(name):\n    # The frozen manifest has no formal spatial-group mapping; retain the\n    # source receiver prefix only as an explicit, non-authoritative field.\n    s=Path(str(name)).name.split(\"_\")\n    return s[2] if len(s)>=3 and s[0]==\"minicube\" else \"UNCONFIRMED\"\n\ndef write_csv(p, rows, fields):\n    with open(p,\"w\",newline=\"\",encoding=\"utf-8\") as f:\n        w=csv.DictWriter(f,fieldnames=fields); w.writeheader(); w.writerows(rows)\n\ndef load_ids(manifest,selector=\"validation_subsplit.ids\",split_prefix=\"iid_chopped\") :\n    d=json.loads(Path(manifest).read_text(encoding=\"utf-8\"))\n    ids=d\n    for key in selector.split(\".\"): ids=ids[key]\n    if not isinstance(ids,list) or not all(isinstance(x,str) for x in ids) or len(ids)!=len(set(ids)):raise ValueError(\"manifest IDs invalid or duplicated\")\n    return [x[len(split_prefix)+1:] if x.startswith(split_prefix+\"/\") else x for x in ids], d\n\n@torch.no_grad()\ndef model_rows(model, items, device, model_name, ckmeta):\n    from train.terrastate_v2_common import collate_with_ids, to_device_with_ids\n    data=to_device_with_ids(collate_with_ids(items),device)\n    pred, prior, _res, z0, geo, u=model.forecast(data,want_parts=True)\n    B,H,W=pred.shape[0],pred.shape[-2],pred.shape[-1]; cl=int(model.context_len)\n    states={p:model.segment_state(z0,u,geo,part) for p,part in PREFIXES.items()}\n    rows=[]; gaps=[]; per_key={}\n    lc_mask=((data[\"landcover\"]>=model.lc_min)&(data[\"landcover\"]<=model.lc_max))\n    for k,h,prefix,step in query_plan((10,)):\n        outs={\"D20\":pred[:,h-1,0]}\n        for key in (\"A\",\"B\",\"C\"):\n            z=model.segment_state(states[key],u[:,10:10+k],geo,(k,))\n            y=prior[:,h-1]+model.alpha*model._decode_state(z,B,H,W)\n            outs[key]=y[:,0]\n        for bi,item in enumerate(items):\n            cube=str(item.get(\"cubename\",item.get(\"filepath\",\"\"))); gid=geo_group(cube)\n            targ=data[\"dynamic\"][0][bi,cl+h-1,0]\n            valid=(data[\"dynamic_mask\"][0][bi,cl+h-1,0]<1.0)&lc_mask[bi,0]\n            stats={name:masked_stats(outs[name][bi],targ,valid) for name in PATHS}\n            for name in PATHS:\n                n,sse,reason=stats[name]\n                if len({v[0] for v in stats.values()}) != 1: raise RuntimeError(\"model_path_mask_count_mismatch\")\n                row={\"dataset_index\":int(item[\"_dataset_index\"]),\"cube\":cube,\"geo_group\":gid,\"model\":model_name,\"path\":name,\"prefix\":(\"D_direct_11_20\" if name==\"D20\" else name),\"b\":10,\"k\":k,\"absolute_h\":h,\"n_valid\":n,\"sse\":sse,\"mse\":(sse/n if n else float(\"nan\")),\"nonfinite\":False,\"exclude_reason\":reason,\"checkpoint_sha256\":ckmeta[\"checkpoint_sha256\"]}\n                rows.append(row); per_key[(int(item[\"_dataset_index\"]),name,k)]=(n,sse)\n            for a,b,label in ((\"A\",\"B\",\"A_B\"),(\"A\",\"C\",\"A_C\"),(\"A\",\"D20\",\"A_D20\")):\n                d=(outs[a][bi]-outs[b][bi])[valid]\n                gaps.append({\"dataset_index\":int(item[\"_dataset_index\"]),\"cube\":cube,\"model\":model_name,\"k\":k,\"absolute_h\":h,\"n_valid\":int(d.numel()),\"output_mae\":(float(d.abs().mean().item()) if d.numel() else float(\"nan\")),\"comparison\":label})\n    return rows,gaps,per_key\n\ndef main():\n    ap=argparse.ArgumentParser(); ap.add_argument(\"--repo\",required=True); ap.add_argument(\"--data-root\",required=True); ap.add_argument(\"--iid-manifest\",required=True); ap.add_argument(\"--c0r\",required=True); ap.add_argument(\"--c1\",required=True); ap.add_argument(\"--out\",required=True); ap.add_argument(\"--device\",default=\"cuda:0\"); ap.add_argument(\"--batch-size\",type=int,default=8); ap.add_argument(\"--max-cubes\",type=int,default=2856)\n    ap.add_argument('--ids-selector',default='validation_subsplit.ids');ap.add_argument('--split-prefix',default='iid_chopped');ap.add_argument('--probe',action='store_true');ap.add_argument('--c1-sha');ap.add_argument('--c0r-sha');a=ap.parse_args(); out=Path(a.out); out.mkdir(parents=True,exist_ok=False)\n    ids,man=load_ids(a.iid_manifest,a.ids_selector,a.split_prefix)\n    from data.greenearthnet_contextformer_dataset import GreenEarthNetContextformerDataset\n    from eval.full_base_loader import load_candidate_c_strict\n    ds=GreenEarthNetContextformerDataset(a.data_root,dl_cloudmask=True); index={str(Path(fp).relative_to(a.data_root)).replace(\"\\\\\",\"/\"):i for i,fp in enumerate(ds.filepaths)}\n    # Load both models before selection so the qualification uses the actual\n    # compatible configured land-cover range, not a duplicated literal.\n    device=torch.device(a.device); models=[]; metas=[]\n    for name,ck in ((\"C0R\",a.c0r),(\"C1\",a.c1)):\n        model,_,meta=load_candidate_c_strict(ck,device=device,probe=a.probe,expected_sha=a.c1_sha if name=='C1' else a.c0r_sha)\n        if meta['arm']!=name:raise RuntimeError('input label disagrees with checkpoint arm')\n        meta={\"checkpoint_sha256\":sha256_file(ck),\"arm\":meta[\"arm\"],\"factual_path\":meta[\"factual_path\"],\"strict\":True,\"step\":meta[\"step\"],\"lc_min\":int(model.lc_min),\"lc_max\":int(model.lc_max),\"training\":meta}\n        models.append((name,model)); metas.append({\"model\":name,**meta})\n    if len({(m[\"training\"][\"variant\"],m[\"training\"][\"seed\"]) for m in metas})!=1:raise ValueError(\"paired variant/seed mismatch\")\n    if len({(m[1].lc_min,m[1].lc_max) for m in models}) != 1: raise RuntimeError(\"incompatible_landcover_ranges\")\n    lc_min,lc_max=int(models[0][1].lc_min),int(models[0][1].lc_max)\n    chosen=[]; excluded=[]; old32=[]; old32_qual=[]\n    for cid in sorted(set(ids)):\n        j=index.get(cid)\n        if j is None: excluded.append({\"id\":cid,\"reason\":\"not_found_in_data_root\"}); continue\n        item=ds[j]; item[\"_dataset_index\"]=j\n        cl=int(models[0][1].context_len); y=item[\"dynamic\"][0][cl+10:cl+20,0]; m=item[\"dynamic_mask\"][0][cl+10:cl+20,0]<1.0; lc=item[\"landcover\"]; valid=m&((lc>=lc_min)&(lc<=lc_max))[0]\n        old_y=item[\"dynamic\"][0][10:,0]; old_m=item[\"dynamic_mask\"][0][10:]<1.0; old_valid=old_m[:,0]&((lc>=lc_min)&(lc<=lc_max))[0]\n        old32.append(cid); old32_qual.append(int(old_valid.sum())>0)\n        if int(valid.sum())==0: excluded.append({\"id\":cid,\"reason\":\"no_valid_target_pixels_suffix_11_20\",\"old_full_suffix_qualifies\":int(old_valid.sum())>0}); continue\n        chosen.append((cid,j,item))\n        if len(chosen)>=a.max_cubes: break\n    if len(chosen)<a.max_cubes: print(f\"selection_shortfall {len(chosen)}/{a.max_cubes}\")\n    write_csv(out/\"SAMPLE_MANIFEST.csv\",[{\"rank\":r+1,\"dataset_index\":j,\"receiver_id\":cid,\"cube\":str(it.get(\"cubename\",it.get(\"filepath\",\"\"))),\"selection\":\"stable_id_sorted_first32_with_full_suffix_valid\"} for r,(cid,j,it) in enumerate(chosen)]+[{\"rank\":\"\",\"dataset_index\":\"\",\"receiver_id\":x[\"id\"],\"cube\":\"\",\"selection\":\"EXCLUDED:\"+x[\"reason\"]} for x in excluded],[\"rank\",\"dataset_index\",\"receiver_id\",\"cube\",\"selection\"])\n    start=time.time(); allrows=[]; allgaps=[]; per_model={}\n    for name,model in models:\n        items=[it for _,_,it in chosen]\n        for q in range(0,len(items),a.batch_size):\n            ckmeta=next(x for x in metas if x[\"model\"]==name)\n            rr,gg,pk=model_rows(model,items[q:q+a.batch_size],device,name,ckmeta)\n            allrows+=rr; allgaps+=gg; per_model.update({(name,)+k:v for k,v in pk.items()})\n        del model; torch.cuda.empty_cache()\n    expected={(int(j),name,path,k) for name,_ in models for _,j,_ in chosen for path in PATHS for k in range(1,11)}\n    observed=[(int(r[\"dataset_index\"]),r[\"model\"],r[\"path\"],int(r[\"k\"])) for r in allrows]\n    observed_set=set(observed)\n    if len(observed)!=len(observed_set): raise RuntimeError(\"duplicate_key\")\n    if expected != observed_set: raise RuntimeError(f\"missing_or_extra_rows missing={len(expected-observed_set)} extra={len(observed_set-expected)}\")\n    if any(bool(r.get(\"nonfinite\")) for r in allrows): raise RuntimeError(\"nonfinite_prediction_flag\")\n    fields=list(allrows[0]) if allrows else []\n    write_csv(out/\"PER_RECEIVER_HORIZON.csv\",allrows,fields); write_csv(out/\"OUTPUT_GAPS.csv\",allgaps,list(allgaps[0]) if allgaps else [])\n    # compact receiver/path summaries, preserving descriptive per-receiver primary unit\n    sums=[]\n    for model in (\"C0R\",\"C1\"):\n        for path in PATHS:\n            sub=[r for r in allrows if r[\"model\"]==model and r[\"path\"]==path and r[\"n_valid\"]>0]\n            by={}\n            for r in sub:\n                by.setdefault(int(r[\"dataset_index\"]),[0.0,0,0])\n                by[int(r[\"dataset_index\"])][0]+=float(r[\"sse\"])\n                by[int(r[\"dataset_index\"])][1]+=int(r[\"n_valid\"])\n                by[int(r[\"dataset_index\"])][2]+=1\n            qualified=[v for v in by.values() if v[1] and v[2]==10]\n            vals=[v[0]/v[1] for v in qualified]\n            sums.append({\"model\":model,\"path\":path,\"n_receivers\":len(vals),\"mean_receiver_full_mse\":(sum(vals)/len(vals) if vals else float(\"nan\")),\"pooled_mse\":(sum(v[0] for v in qualified)/sum(v[1] for v in qualified) if vals else float(\"nan\"))})\n    write_csv(out/\"SUMMARY.csv\",sums,list(sums[0]) if sums else [])\n    (out/\"RUN_METADATA.json\").write_text(json.dumps({\"status\":\"COMPLETE\",\"probe\":a.probe,\"n_selected\":len(chosen),\"dataset_total\":len(ds),\"manifest\":str(a.iid_manifest),\"manifest_id_list_sha256\":hashlib.sha256(\"\\n\".join(ids).encode()).hexdigest(),\"manifest_file_sha256\":sha256_file(a.iid_manifest),\"ids_selector\":a.ids_selector,\"split_prefix\":a.split_prefix,\"prefixes\":{k:list(v) for k,v in PREFIXES.items()},\"models\":metas,\"elapsed_seconds\":time.time()-start,\"device\":str(device),\"future_labels_used_for_scoring_only\":True,\"quality_gate\":{\"duplicate_keys\":0,\"missing_or_extra_rows\":0,\"nonfinite_valid_predictions\":0,\"mask_count_mismatch\":0}},ensure_ascii=False,indent=2),encoding=\"utf-8\")\n\nif __name__==\"__main__\": main()\n"
+    },
+    "models/spanworld_full_base.py": {
+      "sha": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625",
+      "text": "\"\"\"Independent full-weather baseline + context-only state route.\nConstructors never reset inherited readout; stage initialization is explicit.\n\"\"\"\nfrom contextlib import nullcontext\nimport hashlib\nfrom pathlib import Path\nimport torch\nfrom models.terrastate_candidate_c import TerraStateCandidateC\n\n\nclass SpanWorldFullBase(TerraStateCandidateC):\n    ARCH = \"SpanWorldFullBase\"\n    ROUTE_VERSION = \"spanworld_full_base_v1\"\n\n    def __init__(self, hparams=None, contract_cfg=None):\n        cfg = contract_cfg or {}\n        self.training_stage = cfg.get(\"training_stage\", \"stage2\")\n        self.variant = cfg.get(\"variant\", \"A\")\n        if self.training_stage not in (\"stage1\", \"stage2\"):\n            raise ValueError(\"unknown training stage\")\n        super().__init__(hparams, contract_cfg)\n        self.history_state_only = False  # Runtime optimization; absent from config/state_dict.\n\n    def config(self):\n        cfg = super().config()\n        cfg.update(training_stage=self.training_stage, variant=self.variant)\n        return cfg\n\n    def loss_candidate_c(self, data, lambdas, endpoint_plan=None, rng=None, want_diagnostics=False):\n        if self.training_stage == \"stage1\":\n            if self.eo_endpoint_weight != 0 or any(float(getattr(lambdas, k, 0)) != 0 for k in self.LAMBDA_FIELDS):\n                raise ValueError(\"stage1 is trajectory-only: endpoint weight and auxiliary lambdas must be zero\")\n            if endpoint_plan:\n                raise ValueError(\"stage1 endpoint_plan must be empty\")\n            endpoint_plan = []\n        return super().loss_candidate_c(data, lambdas, endpoint_plan=endpoint_plan,\n                                        rng=rng, want_diagnostics=want_diagnostics)\n\n    def _prior_state(self, data):\n        core = self.q.core\n        was = core.training\n        core.eval()\n        try:\n            with torch.no_grad() if self.freeze_b0 else nullcontext():\n                # Capture each result immediately: q hook storage is overwritten per call.\n                prior, _ = self.q.encode(data, pred_start=self.context_len,\n                                         preds_length=self.target_len)\n                if self.history_state_only:\n                    z_ctx = self.q.encode_state(self._context_only_data(data),\n                                                pred_start=self.context_len,\n                                                preds_length=self.target_len)\n                else:\n                    _, z_ctx = self.q.encode(self._context_only_data(data),\n                                             pred_start=self.context_len,\n                                             preds_length=self.target_len)\n        finally:\n            core.train(was)\n        if self.freeze_b0:\n            prior, z_ctx = prior.detach(), z_ctx.detach()\n        return prior, self.projector(z_ctx[:, self.context_len - 1])\n\n\ndef initialize_stage1(model):\n    \"\"\"Call once AFTER official q loading, never during stage2 or resume.\"\"\"\n    if model.use_adaln:\n        raise ValueError(\"stage1 must disable AdaLN\")\n    model.freeze_b0 = True\n    for p in model.q.parameters():\n        p.requires_grad_(False)\n    torch.nn.init.zeros_(model.o_delta.weight)\n    torch.nn.init.zeros_(model.o_delta.bias)\n\n\ndef _verified_checkpoint(path, expected_sha256):\n    if not expected_sha256 or len(expected_sha256) != 64:\n        raise ValueError(\"explicit expected SHA256 required\")\n    digest = hashlib.sha256()\n    with Path(path).open('rb') as f:\n        for chunk in iter(lambda: f.read(1024 * 1024), b''):\n            digest.update(chunk)\n    if digest.hexdigest() != expected_sha256.lower():\n        raise ValueError(\"checkpoint SHA256 mismatch\")\n    return torch.load(path, map_location='cpu', weights_only=False)\n\n\ndef _inherit(module, sd, allowed_missing):\n    own = module.state_dict()\n    missing, extra = set(own) - set(sd), set(sd) - set(own)\n    if missing != set(allowed_missing) or extra:\n        raise ValueError(f\"checkpoint keys mismatch missing={sorted(missing)} extra={sorted(extra)}\")\n    for k, v in sd.items():\n        if own[k].shape != v.shape:\n            raise ValueError(f\"checkpoint shape mismatch: {k}\")\n    module.load_state_dict(sd, strict=not allowed_missing)\n    after = module.state_dict()\n    if any(not torch.equal(after[k].cpu(), v.cpu()) for k, v in sd.items()):\n        raise ValueError(\"inherited tensor values differ\")\n    return {'inherited_tensors': len(sd), 'missing': sorted(missing)}\n\n\ndef load_official_baseline(model, path, *, expected_sha256, schema='lightning_model'):\n    \"\"\"Explicit schema: lightning_model(state_dict/model.*), core_state_dict, bare_core.\"\"\"\n    ck = _verified_checkpoint(path, expected_sha256)\n    if schema == 'lightning_model':\n        raw = ck['state_dict']\n        if not raw or not all(k.startswith('model.') for k in raw):\n            raise ValueError('expected exclusively model.* state_dict keys')\n        sd = {k[len('model.'):]: v for k, v in raw.items()}\n    elif schema == 'core_state_dict':\n        sd = ck['core_state_dict']\n    elif schema == 'bare_core':\n        sd = ck\n    else:\n        raise ValueError(f'unsupported explicit schema: {schema}')\n    result = _inherit(model.q.core, sd, {'season_proj.weight'})\n    torch.nn.init.zeros_(model.q.core.season_proj.weight)\n    return result\n\n\ndef load_stage1_parent(model, path, *, expected_sha256):\n    \"\"\"Stage2 weights-only inheritance; never reset o_delta or any inherited tensor.\"\"\"\n    ck = _verified_checkpoint(path, expected_sha256)\n    cfg = ck.get('contract_cfg') or {}\n    if cfg.get('arch') != model.ARCH or cfg.get('route_version') != model.ROUTE_VERSION:\n        raise ValueError('parent is not the full-baseline route')\n    if cfg.get('training_stage') != 'stage1':\n        raise ValueError('parent is not a stage1 checkpoint')\n    if cfg.get('use_adaln', False):\n        raise ValueError('stage1 parent must not contain AdaLN')\n    for k in ('state_dim', 'cond_dim', 'dw', 'dg', 'dh', 'lc_min', 'lc_max'):\n        if cfg.get(k) != model.config().get(k):\n            raise ValueError(f'parent contract mismatch: {k}')\n    if cfg.get('freeze_b0') is not True:\n        raise ValueError('stage1 parent must freeze the baseline')\n    sd = ck['b4_state_dict']\n    if 'q.core.season_proj.weight' not in sd or torch.count_nonzero(sd['q.core.season_proj.weight']).item() != 0:\n        raise ValueError('stage1 parent token season must remain zero')\n    missing = {'transition.adaln.weight', 'transition.adaln.bias'} if model.use_adaln else set()\n    report = _inherit(model, ck['b4_state_dict'], missing)\n    if model.use_adaln:\n        # Explicitly initialize ONLY new tensors; constructor/resume retain originals.\n        torch.nn.init.zeros_(model.transition.adaln.weight)\n        torch.nn.init.zeros_(model.transition.adaln.bias)\n    return report\n"
+    },
+    "eval/full_base_loader.py": {
+      "sha": "177e39fd6571b2f2ee82ad34ee1a3f1b00561c056c70a36699de8757a6782f25",
+      "text": "\"\"\"Full-base strict evaluation loader; incomplete runs only with explicit probe.\"\"\"\nfrom pathlib import Path\nimport hashlib,json,sys,math\nimport xarray,numpy as np,torch\nfrom models.spanworld_full_base import SpanWorldFullBase\nfrom models.encoders.pvt_contextformer_q import contextformer6m_hparams\nsys.modules.setdefault('numpy._core',np.core);sys.modules.setdefault('numpy._core.multiarray',np.core.multiarray)\ndef validate_full_base_selection(ck, summary, best_path=None, last=None):\n if ck.get(\"contract_cfg\", {}).get(\"arch\") != \"SpanWorldFullBase\": return\n if summary.get(\"training_stage\") != \"stage2\" or summary.get(\"completion_reason\") != \"schedule_complete\" or summary.get(\"step\") != 74500:\n  raise ValueError(\"full-base standard evaluation requires completed stage2\")\n cfg=ck[\"contract_cfg\"]\n for key in (\"training_stage\", \"variant\", \"factual_path\"):\n  if key not in summary or ck.get(key) != summary[key] or cfg.get(key) != summary[key]:\n   raise ValueError(\"checkpoint/summary/config mismatch: \" + key)\n for key in (\"arm\", \"total_steps\"):\n  if key not in summary or ck.get(key) != summary[key]:\n   raise ValueError(\"checkpoint/summary mismatch: \" + key)\n if ck.get(\"sha\") != summary.get(\"sha\"):\n  from train.efficiency_continuation import inherited_best_matches\n  if last is None or best_path is None or last.get(\"sha\") != summary.get(\"sha\") or last.get(\"step\") != 74500 or not inherited_best_matches(last,ck,best_path):\n   raise ValueError(\"unverified inherited best selection\")\n best=summary.get(\"best_val_dev_RMSE_LC\")\n if not isinstance(best,dict) or set(best) != {\"score\",\"epoch\",\"step\"} or not math.isfinite(best[\"score\"]):\n  raise ValueError(\"invalid selected best record\")\n if ck.get(\"rmse_best\") != best or ck.get(\"epoch\") != best[\"epoch\"] or ck.get(\"step\") != best[\"step\"]:\n  raise ValueError(\"best checkpoint metadata disagrees with completed run\")\n if ck.get(\"args\",{}).get(\"seed\") != summary.get(\"seed\"):\n  raise ValueError(\"checkpoint seed mismatch\")\ndef load_candidate_c_strict(ckpt_path,device='cpu',probe=False,expected_sha=None):\n p=Path(ckpt_path);raw=p.read_bytes();sha=hashlib.sha256(raw).hexdigest()\n if expected_sha and sha!=expected_sha:raise ValueError('checkpoint SHA mismatch')\n ck=torch.load(__import__('io').BytesIO(raw),map_location='cpu',weights_only=False);cfg=ck.get('contract_cfg',{})\n if cfg.get('arch')!='SpanWorldFullBase' or ck.get('arch')!=cfg['arch']:raise ValueError('unsupported architecture: do not relabel missing consistency/baseline implementations')\n if cfg.get('route_version')!=SpanWorldFullBase.ROUTE_VERSION:raise ValueError('route mismatch')\n if ck.get('arm') not in ('C1','C0R'):raise ValueError('unregistered supervision arm')\n if cfg.get('factual_path')!={'C1':'recursive','C0R':'direct'}[ck['arm']]:raise ValueError('arm/path mismatch')\n if not probe:\n  if not expected_sha:raise ValueError('formal evaluation requires expected SHA')\n  summary=json.loads((p.parent/'summary.json').read_text());last=torch.load(p.parent/'last.pt',map_location='cpu',weights_only=False);validate_full_base_selection(ck,summary,best_path=p,last=last)\n m=SpanWorldFullBase(contextformer6m_hparams(pvt_pretrained=False),cfg);m.load_state_dict(ck['b4_state_dict'],strict=True);m.history_state_only=True;m.to(device).eval()\n return m,ck,{'checkpoint_sha256':sha,'step':ck['step'],'arm':ck['arm'],'factual_path':cfg['factual_path'],'variant':cfg['variant'],'seed':ck.get('args',{}).get('seed'),'probe':probe,'strict':True}\n"
+    },
+    "models/terrastate_candidate_c.py": {
+      "sha": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c",
+      "text": "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"TerraState Candidate C：可变跨度共享分段转移（A01 §4.2）。\n\n与 AAAI 版 TerraStateV2 的唯一结构差别是**接口**，不是参数：\n\n    z_t = q(H_t, u^past_<=t, g)                     # weather-free context prior\n    z_b = F(z_a, u_{a+1:b}, g, dt=b-a)              # 可变跨度，参数共享\n    y_b = O(z_b) + b_b(H_t, u^past_<=t, g)\n\n因此 Candidate C 继承父 checkpoint 的**全部 255 个张量**且不新增任何参数\n（whitelist 为空）。这不是巧合，而是本轮的控制性质：C1 与 C0R 参数量完全\n相同，任何差异都不能归因于容量。\n\n本轮硬边界：\n  * L_pair 需要正式 simulator 情景库；仓库中不存在，故只提供 schema/adapter/\n    合成 fixture，状态记为 BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST；\n  * 旧 future-state anchor 默认 OFF（不接 z_star，不读 cache）；\n  * 不使用 teacher/KD：L_EO 是纯真实 EO 监督。\n\"\"\"\nfrom __future__ import annotations\n\nimport hashlib\nfrom types import SimpleNamespace\nfrom typing import Dict, List, Optional, Sequence\n\nimport torch\nimport torch.nn.functional as F\n\nfrom .terrastate_v2 import TerraStateV2\n\n# 与 ops/candidate_c_nightly/<ts>/manifests/candidate_c_q4_partition_manifest_v1.json 一致。\n# 模型侧只作默认值；正式运行由 config 显式传入并与 manifest SHA 交叉校验。\nCC_TRAIN_PARTITIONS = {\n    10: [(10,), (5, 5), (5, 3, 2)],\n    15: [(15,), (7, 8), (7, 4, 4)],\n    20: [(20,), (10, 10), (10, 5, 5), (5, 5, 5, 5)],\n}\nCC_HELDOUT_PARTITIONS = {\n    10: [(3, 7), (6, 4), (2, 3, 5)],\n    15: [(4, 11), (3, 5, 7)],\n    20: [(8, 12), (2, 18), (2, 6, 12), (1, 4, 6, 9)],\n}\n\nSIMULATOR_STATUS = \"BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST\"\ndef value_sha16(sd: Dict[str, torch.Tensor]) -> str:\n    \"\"\"与 ops/resume11904_to14880 的 value_sha 完全同一约定：\n    按 key 排序，喂入 key 与原始张量字节，取 sha256 前 16 hex。\n    A02 记录 verified-14880 的 value_sha = aa98fbd2fa302727。\"\"\"\n    h = hashlib.sha256()\n    for k in sorted(sd.keys()):\n        h.update(k.encode())\n        h.update(sd[k].detach().cpu().contiguous().numpy().tobytes())\n    return h.hexdigest()[:16]\n\n\ndef sha256_file(path, chunk: int = 1 << 20) -> str:\n    h = hashlib.sha256()\n    with open(path, \"rb\") as f:\n        for blk in iter(lambda: f.read(chunk), b\"\"):\n            h.update(blk)\n    return h.hexdigest()\n\n\ndef _as_partition_table(obj, default: dict) -> dict:\n    \"\"\"把 config 里的 {endpoint: [[...], ...]} 规整为 {int: [tuple, ...]}，并校验和。\"\"\"\n    if obj is None:\n        return {int(k): [tuple(p) for p in v] for k, v in default.items()}\n    out = {}\n    for k, v in obj.items():\n        ep = int(k)\n        parts = [tuple(int(s) for s in p) for p in v]\n        for p in parts:\n            if sum(p) != ep:\n                raise ValueError(f\"分段 {p} 之和 {sum(p)} != 端点 {ep}\")\n            if any(s < 1 for s in p):\n                raise ValueError(f\"分段 {p} 含非正跨度\")\n        out[ep] = parts\n    return out\n\n\nclass TerraStateCandidateC(TerraStateV2):\n    \"\"\"Candidate C：通用 N 段递归 rollout + 可变跨度 direct transition。\n\n    继承 TerraStateV2 的全部模块，不新增参数。direct 与 composed 共享同一个\n    F（self.transition + self.fuse + self.weather_enc + self.time_emb），但走\n    不同计算图，因此 semigroup 一致性是可检验的非平凡性质。\n    \"\"\"\n\n    ARCH = \"TerraStateCandidateC\"\n    ROUTE_VERSION = \"candidate_c_v1\"\n    # Only exact, explicitly new parameter keys may be absent from the parent.\n    NEW_MODULE_WHITELIST: tuple = (\"q.core.season_proj.weight\", \"season_condition.weight\")\n\n    def __init__(self, hparams=None, contract_cfg: Optional[dict] = None):\n        super().__init__(hparams, contract_cfg)\n        cfg = contract_cfg or {}\n        self.NEW_MODULE_WHITELIST = type(self).NEW_MODULE_WHITELIST + (\n            (\"transition.adaln.weight\", \"transition.adaln.bias\") if self.use_adaln else ())\n        self.cc_train_partitions = _as_partition_table(\n            cfg.get(\"cc_train_partitions\"), CC_TRAIN_PARTITIONS)\n        self.cc_heldout_partitions = _as_partition_table(\n            cfg.get(\"cc_heldout_partitions\"), CC_HELDOUT_PARTITIONS)\n        tr = {p for v in self.cc_train_partitions.values() for p in v}\n        ho = {p for v in self.cc_heldout_partitions.values() for p in v}\n        if tr & ho:\n            raise ValueError(f\"train/held-out 分段相交，held-out 失效：{sorted(tr & ho)}\")\n        self.days_per_step = int(cfg.get(\"days_per_transition_step\", 5))\n        # factual 端点监督走哪条路径：C1='recursive'，C0R='direct'。\n        # 这是两臂**唯一**的结构性差别。\n        self.factual_path = str(cfg.get(\"factual_path\", \"recursive\"))\n        if self.factual_path not in (\"recursive\", \"direct\"):\n            raise ValueError(f\"factual_path 只能是 recursive/direct，收到 {self.factual_path!r}\")\n        # 旧 future-state anchor 默认 OFF\n        self.use_future_state_anchor = bool(cfg.get(\"use_future_state_anchor\", False))\n        # L_EO 的两个分量权重。两臂必须相同，否则不再是单变量对照。\n        self.eo_traj_weight = float(cfg.get(\"eo_traj_weight\", 1.0))\n        self.eo_endpoint_weight = float(cfg.get(\"eo_endpoint_weight\", 1.0))\n        # 非坍缩门阈值（诊断门，不是显著性检验）\n        self.nc_min_std = float(cfg.get(\"nc_min_std\", 1e-3))\n        self.nc_min_rank = float(cfg.get(\"nc_min_effective_rank\", 2.0))\n        self.nc_min_movement = float(cfg.get(\"nc_min_movement\", 1e-4))\n\n    # ---------------- 通用 N 段递归 rollout ----------------\n    def segment_states(self, z_t, u_future, geo, partition: Sequence[int],\n                       u_switch=None, switch_after_segment: Optional[int] = None):\n        \"\"\"沿 partition 逐段推进，返回每段结束后的状态列表。\n\n        语义与父类 composed_state 严格一致：第 k 段用**该段跨度**做 time\n        embedding（不是累计 horizon），天气子窗为 u[cum : cum+span]。\n        因此 partition=(h1,h2) 与 composed_state(h1,h2) 逐位相同，\n        partition=(h,) 与 direct_state(h) 逐位相同。\n\n        u_switch/switch_after_segment 实现中途换天气：前 switch_after_segment\n        段用 u_future，其后各段改用 u_switch（时间轴绝对对齐，仍按 cum 切窗）。\n        \"\"\"\n        if not partition:\n            raise ValueError(\"partition 不能为空\")\n        if any(int(span) != span or span < 1 for span in partition):\n            raise ValueError(\"partition spans must be positive integers\")\n        self._validate_future_condition(u_future, sum(partition))\n        if u_switch is not None:\n            self._validate_future_condition(u_switch, sum(partition))\n            if u_switch.shape != u_future.shape:\n                raise ValueError(\"alternate future condition shape mismatch\")\n        b_patch = z_t.shape[0]\n        z = z_t\n        cum = 0\n        states = []\n        for k, span in enumerate(partition):\n            span = int(span)\n            src = u_future\n            if u_switch is not None and switch_after_segment is not None \\\n                    and k >= int(switch_after_segment):\n                src = u_switch\n            sub = src[:, cum:cum + span]\n            d = self._to_patch(self.weather_enc.window(sub), b_patch)\n            he = self.time_emb(torch.full((b_patch,), span, device=z.device,\n                                          dtype=torch.long))\n            z = self.transition(z, self._cond(d, geo, he, self._to_patch(u_future[:, cum + span - 1, -2:], b_patch)))\n            states.append(z)\n            cum += span\n        return states\n\n    def segment_state(self, z_t, u_future, geo, partition: Sequence[int], **kw):\n        \"\"\"只要终点状态。\"\"\"\n        return self.segment_states(z_t, u_future, geo, partition, **kw)[-1]\n    # ---------------- 端点计划（C1/C0R 的 RNG 流必须逐位一致） ----------------\n    FACTUAL_ENDPOINTS = (10, 15, 20)\n\n    def recursive_candidates(self, endpoint: int) -> List[tuple]:\n        \"\"\"该端点下的多段候选（>=2 段）。单段 (h,) 已由直接轨迹覆盖，不入此表。\"\"\"\n        cands = [p for p in self.cc_train_partitions[int(endpoint)] if len(p) >= 2]\n        if not cands:\n            raise ValueError(f\"端点 {endpoint} 没有多段候选，递归臂无法成立\")\n        return cands\n\n    def draw_endpoint_plan(self, rng, endpoints=None) -> List[dict]:\n        \"\"\"为一个 optimizer step 生成 (endpoint, partition) 计划。\n\n        关键：RNG 消耗与 factual_path **无关**。两臂对每个端点都抽一次索引；\n        direct 臂抽完后丢弃抽到的多段划分、改用 (endpoint,)。于是 C1 与 C0R 的\n        随机数流逐位一致，端点集合也完全相同，唯一差别是端点监督是否经过\n        递归分段路径。这正是本轮要单变量隔离的那个变量。\n        \"\"\"\n        eps = self.FACTUAL_ENDPOINTS if endpoints is None else tuple(int(e) for e in endpoints)\n        plan = []\n        for ep in eps:\n            cands = self.recursive_candidates(ep)\n            idx = int(torch.randint(len(cands), (1,), generator=rng).item())\n            drawn = cands[idx]\n            used = drawn if self.factual_path == \"recursive\" else (int(ep),)\n            plan.append({\"endpoint\": int(ep), \"partition\": tuple(used),\n                         \"partition_drawn\": tuple(drawn), \"n_segments\": len(used)})\n        return plan\n\n    # ---------------- 端点预测（含 Q2 状态移除臂） ----------------\n    def endpoint_prediction(self, prior, z_t, u_future, geo, partition, B, H, W,\n                            arm: str = \"full\", u_switch=None,\n                            switch_after_segment: Optional[int] = None):\n        \"\"\"ŷ_ep = prior[:, h-1] + alpha · O_δ(z_ep)，与父类 _composed_pred 同构。\n\n        arm='full'       : 完整路径\n        arm='alpha0'     : 去掉 T 的贡献（只剩 context-only prior）\n        arm='T_identity' : 把整条 transition 换成恒等（z_ep := z_t）\n        后两个是 Q2 状态承载力的移除臂，评测用，绝不参与训练梯度。\n        \"\"\"\n        h = int(sum(partition))\n        if arm == \"alpha0\":\n            return prior[:, h - 1]\n        if arm == \"T_identity\":\n            z_ep = z_t\n        elif arm == \"full\":\n            z_ep = self.segment_state(z_t, u_future, geo, partition, u_switch=u_switch,\n                                      switch_after_segment=switch_after_segment)\n        else:\n            raise ValueError(f\"未知 arm {arm!r}，只允许 full/alpha0/T_identity\")\n        return prior[:, h - 1] + self.alpha * self._decode_state(z_ep, B, H, W)\n    # ---------------- 中途换天气 ----------------\n    def _alt_weather(self, u_future, generator=None):\n        result = u_future.clone()\n        result[..., :-2] = torch.randn(u_future[..., :-2].shape, dtype=u_future.dtype,\n                                      device=u_future.device, generator=generator)\n        return result\n\n    def weather_switch_states(self, z_t, u_future, geo, partition,\n                              switch_after_segment: int, u_alt=None, generator=None):\n        \"\"\"前 k 段用原天气，第 k+1 段起改用 u_alt。返回 (base_states, switched_states)。\"\"\"\n        k = int(switch_after_segment)\n        if not (0 <= k < len(partition)):\n            raise ValueError(f\"switch_after_segment={k} 超出分段数 {len(partition)}\")\n        if u_alt is None:\n            u_alt = self._alt_weather(u_future, generator=generator)\n        base = self.segment_states(z_t, u_future, geo, partition)\n        sw = self.segment_states(z_t, u_future, geo, partition,\n                                 u_switch=u_alt, switch_after_segment=k)\n        return base, sw\n\n    @torch.no_grad()\n    def assert_weather_switch_contract(self, z_t, u_future, geo, partition,\n                                       switch_after_segment: int, u_alt=None,\n                                       generator=None) -> dict:\n        \"\"\"契约：换天气不能回溯改写已发生的过去（前 k 段逐位相同），\n        但必须改变其后（否则未来天气没真正进入 F，路由是坏的）。\"\"\"\n        k = int(switch_after_segment)\n        base, sw = self.weather_switch_states(z_t, u_future, geo, partition, k,\n                                             u_alt=u_alt, generator=generator)\n        n = len(partition)\n        pre_ok = all(torch.equal(base[i], sw[i]) for i in range(k))\n        post_changed = any(not torch.equal(base[i], sw[i]) for i in range(k, n))\n        max_pre = max([(base[i] - sw[i]).abs().max().item() for i in range(k)] or [0.0])\n        max_post = max((base[i] - sw[i]).abs().max().item() for i in range(k, n))\n        return {\"pre_switch_bit_identical\": bool(pre_ok),\n                \"post_switch_changed\": bool(post_changed),\n                \"max_abs_delta_pre\": float(max_pre),\n                \"max_abs_delta_post\": float(max_post),\n                \"n_segments\": n, \"switch_after_segment\": k,\n                \"partition\": [int(s) for s in partition]}\n    # ---------------- 数值稳健的有效秩（子类覆写，父文件一行不动） ----------------\n    #   父类 plan_b_b4.ObsWorldB4.effective_rank 走 eigvalsh(cov)。常数/坍缩状态的\n    #   cov 是（近）零矩阵、特征值高度重复，torch 的 eigvalsh 在 CPU 上会抛\n    #   _LinAlgError(\"failed to converge ... ill-conditioned or has too many repeated\n    #   eigenvalues\")。而这恰恰是非坍缩门存在的目标输入：门在自己要拦的用例上崩溃。\n    #   plan_b_b4.py 被已验收的 11,904→14,880 世代和五个 evaluator 共用，故不修改它；\n    #   只在 Candidate C 子类内换成 SVD 路径。\n    #   定义不变：s 为中心化矩阵的奇异值时 ev_i = s_i^2/(n-1) 就是同一个协方差谱，\n    #   participation ratio 公式与父类逐字一致（含 +1e-12）；零方差时父公式的极限\n    #   恰为 0.0，与早退返回值一致。test_candidate_c_contract T10e 断言两条路线在\n    #   健康输入上一致，因此\"更稳健\"没有偷偷改变被报告的量。\n    EFF_RANK_VAR_FLOOR = 1e-24\n\n    @staticmethod\n    def effective_rank(z) -> float:\n        x = z.reshape(-1, z.shape[-1]).detach().to(torch.float64)\n        n = int(x.shape[0])\n        x = x - x.mean(0, keepdim=True)\n        if n < 2 or not (float(x.pow(2).sum()) > TerraStateCandidateC.EFF_RANK_VAR_FLOOR):\n            # 常数 / 单行 / 全零：协方差为零矩阵，父公式极限 = 0.0。\n            # 返回 0.0（而非抛错）非坍缩门才能把它判成 FAIL。\n            return 0.0\n        denom = max(n - 1, 1)\n        try:\n            ev = (torch.linalg.svdvals(x).pow(2) / denom).clamp(min=0.0)\n        except Exception:                                    # noqa: BLE001\n            try:                                             # 退回父类同式的谱路径\n                cov = (x.T @ x) / denom\n                ev = torch.linalg.eigvalsh(cov).clamp(min=0.0)\n            except Exception:                                # noqa: BLE001\n                # 两条路线都算不出来：对门而言返回 0.0 是 fail-closed 方向\n                # （判为坍缩、拦下），不能因为数值失败就放行。\n                return 0.0\n        return float(ev.sum() ** 2 / (ev.pow(2).sum() + 1e-12))\n\n    # ---------------- 非坍缩诊断与门 ----------------\n    @staticmethod\n    def state_movement(z_a, z_b) -> float:\n        \"\"\"两状态间的平均 L2 位移。T 退化为恒等时恒为 0。\"\"\"\n        return (z_b - z_a).reshape(-1, z_a.shape[-1]).norm(dim=-1).mean().item()\n\n    @torch.no_grad()\n    def state_diagnostics(self, z_t, z_ep=None) -> dict:\n        \"\"\"可导出的状态运动/离散度/有效秩。三者都是 Q4 报告要求的量。\"\"\"\n        d = {\"state_dim\": int(z_t.shape[-1]),\n             \"state_std_zt\": float(self.state_std(z_t)),\n             \"effective_rank_zt\": float(self.effective_rank(z_t))}\n        if z_ep is not None:\n            base = z_t.reshape(-1, z_t.shape[-1]).norm(dim=-1).mean().item()\n            d[\"state_std_zep\"] = float(self.state_std(z_ep))\n            d[\"effective_rank_zep\"] = float(self.effective_rank(z_ep))\n            d[\"movement_zt_to_zep\"] = float(self.state_movement(z_t, z_ep))\n            d[\"relative_movement\"] = float(d[\"movement_zt_to_zep\"] / (base + 1e-12))\n        return d\n\n    def noncollapse_loss(self, z_states: Sequence[torch.Tensor]):\n        \"\"\"VICReg 形式，沿用父类 vicreg_loss，不另发明数学：方差撑开 + 去相关。\"\"\"\n        if not z_states:\n            raise ValueError(\"noncollapse_loss 需要至少一个状态\")\n        var_t = cov_t = None\n        for z in z_states:\n            v, c = self.vicreg_loss(z)\n            var_t = v if var_t is None else var_t + v\n            cov_t = c if cov_t is None else cov_t + c\n        k = len(z_states)\n        return 25.0 * (var_t / k) + (cov_t / k)\n\n    @torch.no_grad()\n    def noncollapse_gate(self, z_t, z_ep) -> dict:\n        \"\"\"把 constant / identity / collapsed 三类坏状态挡在门外；任一命中即 FAIL。\"\"\"\n        d = self.state_diagnostics(z_t, z_ep)\n        r = []\n        if d[\"state_std_zt\"] < self.nc_min_std:\n            r.append(\"zt_std_below_min(constant_like)\")\n        if d[\"state_std_zep\"] < self.nc_min_std:\n            r.append(\"zep_std_below_min(constant_like)\")\n        if d[\"effective_rank_zt\"] < self.nc_min_rank:\n            r.append(\"zt_effective_rank_below_min(collapsed)\")\n        if d[\"effective_rank_zep\"] < self.nc_min_rank:\n            r.append(\"zep_effective_rank_below_min(collapsed)\")\n        if d[\"movement_zt_to_zep\"] < self.nc_min_movement:\n            r.append(\"no_state_movement(identity_like)\")\n        d[\"reasons\"] = r\n        d[\"verdict\"] = \"PASS\" if not r else \"FAIL\"\n        d[\"thresholds\"] = {\"min_std\": self.nc_min_std, \"min_effective_rank\": self.nc_min_rank,\n                           \"min_movement\": self.nc_min_movement}\n        return d\n    # ---------------- 损失契约 ----------------\n    #   L = L_EO + λ_z·L_cmp_z + λ_y·L_cmp_y + λ_pair·L_pair + λ_nc·L_noncollapse\n    #   C1 正式臂：λ_z=λ_y=λ_pair=λ_nc=0，factual_path='recursive'\n    #   C0R 对照臂：同上四个 λ=0，factual_path='direct'\n    #   两臂唯一差别 = 端点监督是否经过递归分段路径。\n    LAMBDA_FIELDS = (\"z\", \"y\", \"pair\", \"nc\")\n\n    @staticmethod\n    def smoke_lambdas() -> SimpleNamespace:\n        \"\"\"仅 smoke 用的起始值（A02 标注为暂定，待 pilot 定标）。正式臂不得使用。\"\"\"\n        return SimpleNamespace(z=0.1, y=1.0, pair=0.5, nc=0.01)\n\n    @staticmethod\n    def formal_lambdas() -> SimpleNamespace:\n        \"\"\"C1 与 C0R 正式臂：四个 λ 全部为 0。\"\"\"\n        return SimpleNamespace(z=0.0, y=0.0, pair=0.0, nc=0.0)\n\n    def loss_candidate_c(self, data, lambdas: SimpleNamespace,\n                         endpoint_plan: Optional[List[dict]] = None,\n                         rng=None, want_diagnostics: bool = True):\n        \"\"\"Candidate C 训练损失。teacher/KD 与 future-state anchor 均已移除，\n        因此 L_EO 是纯真实 EO 监督。\"\"\"\n        lam = lambdas\n        window_counts = data.get(\"_supervision_window_counts\")\n        if window_counts is not None:\n            from models.losses.supervision_v2 import window_scaled_mean\n            if endpoint_plan is None:\n                raise ValueError(\"window supervision requires explicit shared endpoint plan\")\n            if not self.supervision_v2 or self.ndvi_loss.pred_mask_value not in (None, -1) or self.ndvi_loss.extra_aux_loss_term:\n                raise ValueError(\"window supervision supports v2 with no mask or the original -1 sentinel only\")\n            if any(float(getattr(lam, k, 0)) != 0 for k in self.LAMBDA_FIELDS):\n                raise ValueError(\"window normalization supports factual supervision only\")\n            if window_counts.ndim != 1 or window_counts.numel() != 1 + len(endpoint_plan):\n                raise ValueError(\"window supervision count layout mismatch\")\n        if float(getattr(lam, \"pair\", 0.0)) != 0.0:\n            raise RuntimeError(\n                \"L_pair 需要冻结的 paired simulator 情景库；本轮状态 = \"\n                f\"{SIMULATOR_STATUS}。禁止用 Q3 donor/随机合成数据冒充 paired truth。\")\n        pred, prior, residual, z_t, geo, u_future = self.forecast(data, want_parts=True)\n        cl, tl = self.context_len, self.target_len\n        B, H, W = pred.shape[0], pred.shape[-2], pred.shape[-1]\n        lc = data[\"landcover\"]\n        lc_mask = ((lc >= self.lc_min) & (lc <= self.lc_max)).type_as(pred)\n        targ_win = data[\"dynamic\"][0][:, cl:cl + tl, 0:1]\n        cloud_win = (data[\"dynamic_mask\"][0][:, cl:cl + tl] < 1.0).type_as(pred)\n\n        logs, total = {}, pred.new_zeros(())\n        # (a) L_EO 轨迹项：全 20 步真实 NDVI，沿用 B0 的像素协议\n        l_traj, traj_info = self.ndvi_loss(pred, data)\n        supervised_count = pred.new_zeros(())\n        if self.supervision_v2 and self.eo_traj_weight > 0:\n            supervised_count = supervised_count + traj_info[\"global_valid_pixels\"]\n        if window_counts is not None:\n            if not torch.equal(traj_info[\"global_valid_pixels\"], traj_info[\"data_global_valid_pixels\"]):\n                raise ValueError(\"prediction sentinel mask removed supervised pixels; data-only window denominator is invalid\")\n            l_traj = window_scaled_mean(l_traj, traj_info[\"global_valid_pixels\"], window_counts[0])\n        total = total + self.eo_traj_weight * l_traj\n        logs[\"eo_traj\"] = l_traj.detach()\n\n        if endpoint_plan is None:\n            if rng is None:\n                raise ValueError(\"endpoint_plan 与 rng 不能同时为 None\")\n            endpoint_plan = self.draw_endpoint_plan(rng)\n        # (b) L_EO 端点项：真实标签经 factual 路径。\n        # 同一行代码服务两臂：part=(ep,) 时 segment_state ≡ direct_state，\n        # 因此 C1/C0R 不存在两套代码分支，差别只在 partition 元组本身。\n        l_ep = pred.new_zeros(())\n        l_cmp_z = pred.new_zeros(())\n        l_cmp_y = pred.new_zeros(())\n        nc_states, ep_logs = [], []\n        want_cmp = float(getattr(lam, \"z\", 0.0)) > 0 or float(getattr(lam, \"y\", 0.0)) > 0\n        for endpoint_index, item in enumerate(endpoint_plan):\n            ep = int(item[\"endpoint\"])\n            part = tuple(int(s) for s in item[\"partition\"])\n            if sum(part) != ep:\n                raise ValueError(f\"端点计划不自洽：{part} 之和 {sum(part)} != {ep}\")\n            z_fact = self.segment_state(z_t, u_future, geo, part)\n            y_fact = prior[:, ep - 1] + self.alpha * self._decode_state(z_fact, B, H, W)\n            targ_h, cloud_h = targ_win[:, ep - 1], cloud_win[:, ep - 1]\n            l_one = self._masked_mse1(y_fact, targ_h, cloud_h, lc_mask)\n            if self.supervision_v2 and self.eo_endpoint_weight > 0:\n                supervised_count = supervised_count + self.last_endpoint_global_count\n            if window_counts is not None:\n                l_one = window_scaled_mean(l_one, self.last_endpoint_global_count, window_counts[endpoint_index + 1])\n            l_ep = l_ep + l_one\n            nc_states.append(z_fact)\n            ep_logs.append({\"endpoint\": ep, \"partition\": list(part),\n                            \"n_segments\": len(part), \"eo_endpoint\": l_one.detach()})\n            if want_cmp:\n                # 语义一致性：递归复合 vs 变跨度直接，应当逼近同一个 z_ep。\n                # factual_path='direct' 时 z_fact 就是 z_dir，两项恒为 0（应然）。\n                z_dir = self.direct_state(z_t, u_future, geo, ep)\n                y_dir = prior[:, ep - 1] + self.alpha * self._decode_state(z_dir, B, H, W)\n                l_cmp_z = l_cmp_z + F.mse_loss(z_fact, z_dir.detach())\n                l_cmp_y = l_cmp_y + self._masked_mse1(y_fact, y_dir.detach(), cloud_h, lc_mask)\n        k = max(len(endpoint_plan), 1)\n        l_ep = l_ep / k\n        total = total + self.eo_endpoint_weight * l_ep\n        logs[\"eo_endpoint\"] = l_ep.detach()\n        logs[\"eo_total\"] = (self.eo_traj_weight * l_traj + self.eo_endpoint_weight * l_ep).detach()\n\n        # (c) λ_z / λ_y 复合一致性\n        if float(getattr(lam, \"z\", 0.0)) > 0:\n            l_cmp_z = l_cmp_z / k\n            total = total + lam.z * l_cmp_z\n            logs[\"cmp_z\"] = l_cmp_z.detach()\n        if float(getattr(lam, \"y\", 0.0)) > 0:\n            l_cmp_y = l_cmp_y / k\n            total = total + lam.y * l_cmp_y\n            logs[\"cmp_y\"] = l_cmp_y.detach()\n        # (d) λ_nc 非坍缩\n        if float(getattr(lam, \"nc\", 0.0)) > 0:\n            l_nc = self.noncollapse_loss([z_t] + nc_states)\n            total = total + lam.nc * l_nc\n            logs[\"noncollapse\"] = l_nc.detach()\n        logs[\"total\"] = total.detach()\n        out = {\"total\": total, \"logs\": logs, \"endpoint_plan\": endpoint_plan,\n               \"endpoint_logs\": ep_logs, \"factual_path\": self.factual_path,\n               \"blocked\": {\"L_pair\": SIMULATOR_STATUS},\n               \"lambdas\": {f: float(getattr(lam, f, 0.0)) for f in self.LAMBDA_FIELDS}}\n        out[\"global_supervised_count\"] = supervised_count\n        if want_diagnostics:\n            with torch.no_grad():\n                out[\"diagnostics\"] = self.state_diagnostics(\n                    z_t, nc_states[-1] if nc_states else None)\n        return pred, out\n\n    # ---- 三签名 forward：DDP 下推理/训练共用一个 module ----\n    def forward(self, data, lambdas: Optional[SimpleNamespace] = None,\n                endpoint_plan: Optional[List[dict]] = None, rng=None):\n        if lambdas is None:\n            return self.forecast(data)\n        return self.loss_candidate_c(data, lambdas, endpoint_plan=endpoint_plan, rng=rng)\n\n    # ---------------- simulator 接口：本轮硬阻塞 ----------------\n    SIMULATOR_SCHEMA = {\n        \"schema_version\": \"candidate_c_simulator_v1\",\n        \"required_scenario_fields\": [\"scenario_id\", \"site_id\", \"lat\", \"lon\",\n                                     \"sim_engine\", \"sim_version\", \"t0\", \"horizon_days\",\n                                     \"weather_forcing_sha256\", \"state_vars\", \"eo_mapping_sha256\"],\n        \"required_manifest_fields\": [\"manifest_version\", \"n_scenarios\", \"scenario_ids\",\n                                     \"engine_versions\", \"canonical_json_sha256\"],\n        \"status\": SIMULATOR_STATUS,\n    }\n\n    def simulator_pairs(self, *_a, **_k):\n        \"\"\"C4/C5 的 paired simulator 接口。仓库中没有正式 WOFOST/PCSE/SCOPE 情景库、\n        EO↔simulator mapping 或 scenario manifest，故此处硬失败而不是静默返回假数据。\"\"\"\n        raise RuntimeError(\n            f\"{SIMULATOR_STATUS}: 无冻结 scenario manifest 与 EO↔simulator mapping。\"\n            \"不得用 Q3 donor、随机合成数据或伪造轨迹冒充 paired simulator truth。\"\n            \"仅允许 synthetic fixture 走 schema/adapter 的形状 smoke。\")\n\n    @staticmethod\n    def simulator_synthetic_fixture(n: int = 2, horizon: int = 20, seed: int = 0) -> dict:\n        \"\"\"形状/字段 smoke 专用的合成 fixture。显式自标记为非真实、不可用于任何结果。\"\"\"\n        g = torch.Generator().manual_seed(int(seed))\n        return {\"is_synthetic_fixture\": True, \"usable_for_results\": False,\n                \"status\": SIMULATOR_STATUS,\n                \"scenario_id\": [f\"SYNTH-{i:04d}\" for i in range(n)],\n                \"state_traj\": torch.randn(n, horizon, 4, generator=g),\n                \"eo_proxy\": torch.randn(n, horizon, 1, generator=g)}\n\n    def config(self) -> dict:\n        c = super().config()\n        c.update({\"arch\": self.ARCH, \"route_version\": self.ROUTE_VERSION,\n                  \"factual_path\": self.factual_path,\n                  \"days_per_transition_step\": self.days_per_step,\n                  \"use_future_state_anchor\": self.use_future_state_anchor,\n                  \"eo_traj_weight\": self.eo_traj_weight,\n                  \"eo_endpoint_weight\": self.eo_endpoint_weight,\n                  \"factual_endpoints\": list(self.FACTUAL_ENDPOINTS),\n                  \"nc_min_std\": self.nc_min_std,\n                  \"nc_min_effective_rank\": self.nc_min_rank,\n                  \"nc_min_movement\": self.nc_min_movement,\n                  \"cc_train_partitions\": {str(k): [list(p) for p in v]\n                                          for k, v in self.cc_train_partitions.items()},\n                  \"cc_heldout_partitions\": {str(k): [list(p) for p in v]\n                                            for k, v in self.cc_heldout_partitions.items()},\n                  \"simulator_status\": SIMULATOR_STATUS})\n        return c\n\n\n# ---------------------------------------------------------------------------\n# weights-only Phase-II fork（不是 exact resume）\n# ---------------------------------------------------------------------------\nPARENT_ALIAS = \"terrastate/v2/default-training-anchor\"\nPARENT_LOGICAL_ID = \"terrastate/v2/verified-resume14880@v1\"\nPARENT_FILE_SHA256 = \"a5d2a0cc28ad7c01c7e314fd1e02ceb5022e1a9c5733870ebe89c490a594e94f\"\nPARENT_VALUE_SHA16 = \"aa98fbd2fa302727\"\nPARENT_ARCH = \"TerraStateV2\"\nPARENT_ROUTE = \"terrastate_v2\"\nPARENT_STEP = 14880\nPARENT_N_TENSORS = 255\nCONTRACT_KEYS_MUST_MATCH = (\"state_dim\", \"cond_dim\", \"dw\", \"dg\", \"dh\", \"lc_min\", \"lc_max\")\n\n\nclass WarmStartError(RuntimeError):\n    \"\"\"warm-start 任何一项不符即抛出。绝不降级为部分加载后继续。\"\"\"\n\n\ndef resolve_parent(alias: str = PARENT_ALIAS, *, verify: bool = True):\n    \"\"\"经 tools/resolve_artifact.py 解析并重算哈希，返回 (path, logical_id)。\"\"\"\n    from tools.resolve_artifact import load_registry, resolve, resolve_alias\n    reg = load_registry()\n    lid = resolve_alias(alias, reg)\n    if lid != PARENT_LOGICAL_ID:\n        raise WarmStartError(\n            f\"锚点 alias {alias!r} 现指向 {lid!r}，与本轮冻结的父权重 \"\n            f\"{PARENT_LOGICAL_ID!r} 不一致。锚点被重指是运维事件，必须先核对再继续。\")\n    path = resolve(lid, verify=verify, reg=reg)\n    return path, lid\n\n\ndef warm_start_candidate_c(model: TerraStateCandidateC, *, alias: str = PARENT_ALIAS,\n                           ckpt_path=None, verify_file_sha: bool = True,\n                           map_location: str = \"cpu\") -> dict:\n    \"\"\"把 verified-14880 的 255 个张量按 weights-only 方式装进 Candidate C。\n\n    FAIL-CLOSED 检查清单（任一不符即抛 WarmStartError）：\n      1. alias 仍指向冻结的 logical id；对象文件重算 SHA-256 与登记一致\n      2. arch == TerraStateV2 且 route_version == terrastate_v2\n      3. step == 14,880，张量数 == 255\n      4. contract_cfg 的结构维度与本模型逐项相同\n      5. 父权重每个 key 在本模型中存在且 shape 相同\n      6. missing 只允许为精确白名单键（季节，以及启用时的 AdaLN）\n      7. unexpected 必须为空（不得有继承不下来的父张量被丢弃）\n      8. 首次 optimizer 更新之前算 inherited value_sha16，与父记录交叉核对\n      9. 明确**不**加载 optimizer/scheduler/RNG/step —— 这是 fork，不是 resume\n    \"\"\"\n    if ckpt_path is None:\n        ckpt_path, logical_id = resolve_parent(alias, verify=verify_file_sha)\n    else:\n        logical_id = f\"explicit-path:{ckpt_path}\"\n    file_sha = sha256_file(ckpt_path)\n    if verify_file_sha and file_sha != PARENT_FILE_SHA256:\n        raise WarmStartError(\n            f\"父权重文件 SHA-256 {file_sha} != 冻结值 {PARENT_FILE_SHA256}。FAIL CLOSED。\")\n\n    ck = torch.load(ckpt_path, map_location=map_location, weights_only=False)\n    arch = (ck.get(\"contract_cfg\", {}) or {}).get(\"arch\") or ck.get(\"arch\")\n    route = (ck.get(\"contract_cfg\", {}) or {}).get(\"route_version\") or ck.get(\"route_version\")\n    if arch != PARENT_ARCH:\n        raise WarmStartError(f\"父权重 arch={arch!r}，本轮只接受 {PARENT_ARCH!r}。\")\n    if route != PARENT_ROUTE:\n        raise WarmStartError(f\"父权重 route_version={route!r}，只接受 {PARENT_ROUTE!r}。\")\n    step = int(ck.get(\"step\", ck.get(\"global_step\", -1)))\n    if step != PARENT_STEP:\n        raise WarmStartError(f\"父权重 step={step} != {PARENT_STEP}。不是已验收的 14,880 锚点。\")\n    if \"b4_state_dict\" not in ck:\n        raise WarmStartError(\"父权重缺少 b4_state_dict，schema 不符。\")\n    sd = ck[\"b4_state_dict\"]\n    if len(sd) != PARENT_N_TENSORS:\n        raise WarmStartError(f\"父权重张量数 {len(sd)} != {PARENT_N_TENSORS}。\")\n\n    pcfg = ck.get(\"contract_cfg\", {}) or {}\n    mine = model.config()\n    for k in CONTRACT_KEYS_MUST_MATCH:\n        if k in pcfg and pcfg[k] != mine.get(k):\n            raise WarmStartError(\n                f\"结构维度不一致：contract_cfg[{k!r}] 父={pcfg[k]!r} 本模型={mine.get(k)!r}。\")\n    # 5) 逐 key/逐 shape 核对（在 load 之前，先把不匹配暴露成可读清单）\n    own = model.state_dict()\n    shape_mismatch, absent_in_child = [], []\n    for k, v in sd.items():\n        if k not in own:\n            absent_in_child.append(k)\n        elif tuple(own[k].shape) != tuple(v.shape):\n            shape_mismatch.append({\"key\": k, \"parent\": list(v.shape), \"child\": list(own[k].shape)})\n    if absent_in_child or shape_mismatch:\n        raise WarmStartError(\n            f\"父权重与本模型结构不兼容：child 缺 key {absent_in_child[:8]}，\"\n            f\"shape 不符 {shape_mismatch[:8]}。禁止部分加载。\")\n\n    missing, unexpected = model.load_state_dict(sd, strict=False)\n    missing, unexpected = list(missing), list(unexpected)\n    wl = tuple(model.NEW_MODULE_WHITELIST)\n    not_whitelisted = [k for k in missing if k not in wl]\n    if not_whitelisted:\n        raise WarmStartError(\n            f\"missing 中有非白名单张量 {not_whitelisted[:8]}（白名单={list(wl)}）。\"\n            \"仅允许本配置显式新增的参数缺失。\")\n    if unexpected:\n        raise WarmStartError(\n            f\"unexpected={unexpected[:8]}：父权重有张量没被继承，血统不完整。FAIL CLOSED。\")\n\n    # 8) 首次 optimizer 更新之前，算继承子集的 value_sha 并与父记录交叉核对\n    after = model.state_dict()\n    inherited = {k: after[k] for k in sd.keys()}\n    inh_sha = value_sha16(inherited)\n    parent_sha = value_sha16(sd)\n    if inh_sha != parent_sha:\n        raise WarmStartError(\n            f\"继承张量 value_sha {inh_sha} != 父权重 {parent_sha}：加载过程改变了数值。\")\n    if inh_sha != PARENT_VALUE_SHA16:\n        raise WarmStartError(\n            f\"继承张量 value_sha {inh_sha} != A02 冻结记录 {PARENT_VALUE_SHA16}。\")\n    max_abs = 0.0\n    for k, v in sd.items():\n        d = (after[k].detach().cpu().float() - v.detach().cpu().float()).abs().max().item()\n        max_abs = max(max_abs, d)\n\n    lineage = {\n        \"fork_kind\": \"weights_only_phase_ii_fork\",\n        \"is_exact_resume\": False,\n        \"not_exact_resume_reason\": \"新 optimizer / 新 scheduler / 新 RNG / phase_step 从 0 开始\",\n        \"parent_alias\": alias,\n        \"parent_logical_id\": logical_id,\n        \"parent_path\": str(ckpt_path),\n        \"parent_file_sha256\": file_sha,\n        \"parent_arch\": arch,\n        \"parent_route_version\": route,\n        \"parent_step\": step,\n        \"parent_n_tensors\": len(sd),\n        \"inherited_n_tensors\": len(inherited),\n        \"inherited_value_sha16\": inh_sha,\n        \"parent_value_sha16\": parent_sha,\n        \"expected_value_sha16\": PARENT_VALUE_SHA16,\n        \"max_abs_diff_vs_parent\": float(max_abs),\n        \"missing_keys\": missing,\n        \"unexpected_keys\": unexpected,\n        \"new_module_whitelist\": list(wl),\n        \"child_arch\": model.ARCH,\n        \"child_route_version\": model.ROUTE_VERSION,\n        \"child_n_state_dict_tensors\": len(after),\n        \"child_n_parameters\": sum(1 for _ in model.parameters()),\n        \"child_numel\": int(sum(p.numel() for p in model.parameters())),\n        \"phase_step\": 0,\n        \"loaded_optimizer_state\": False,\n        \"loaded_scheduler_state\": False,\n        \"loaded_rng_state\": False,\n        \"parent_had_optimizer_state\": \"optimizer_state_dict\" in ck,\n        \"parent_had_scheduler_state\": \"scheduler_state_dict\" in ck,\n        \"parent_optimizer_scheduler_deliberately_discarded\": True,\n    }\n    return lineage\n"
+    },
+    "models/terrastate_v2.py": {
+      "sha": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+      "text": "\"\"\"TerraState-V2 — the doc-88 UNIQUE inference/training model (frozen contract).\n\nInference chain (doc 88 §0.1 / §3, verbatim):\n    z_t      = projector(q(context-only history))          # context-only predictive state\n    b_h      = q's context-only forecast (the prior)       # reads NO future weather\n    z_{t+h}  = T(z_t, full24[t:t+h], static_geo, h)         # ONE shared transition\n    y_{t+h}  = b_h + alpha * O(z_{t+h}),   alpha == 1 (fixed, non-learnable buffer)\n\nThis REUSES the audit-approved exclusive route (models/plan_b_b4_exclusive.\nObsWorldB4Exclusive) VERBATIM for inference — that class already implements exactly this\ncontract with `alpha` a NON-learnable buffer fixed at 1.0 and a provably\nfuture-weather-free prior (`_prior_state`). We do NOT re-derive the backbone (doc 88\nconstraint 六 \"reuse existing verified backbone\").\n\nTerraState-V2 ONLY ADDS:\n  * loss_v2 — the doc-88 THREE-term loss  L = 1.0*L_GT + 0.5*L_KD + lambda_s*L_future_state\n    (exactly ONE KD; NO resid / cmp / con / state_con / vic / intervention — those live on\n    the inherited multi-term `loss()` which we DO NOT call).\n  * future_state / forecast_parts / context_state — the evaluator-facing state API\n    (doc 88 constraint 七: expose forecast, forecast parts, direct_state, context state).\n  * inference-leakage assertions — future EO frames and the future-state target/cache are\n    provably NOT in the inference graph.\n\nThe future-state target z*_{t+h} and the KD teacher prediction are ALWAYS passed IN by\nthe trainer as plain tensors; the model never reads a cache or a teacher of its own, so\ninference (`model(data)`) touches neither (doc 88 constraint 五 / 六).\n\"\"\"\nfrom __future__ import annotations\n\nfrom typing import Optional\n\nimport torch\nimport torch.nn.functional as F\n\nfrom models.plan_b_b4_exclusive import ObsWorldB4Exclusive\n\n\nclass TerraStateV2(ObsWorldB4Exclusive):\n    ARCH = \"TerraStateV2\"\n    ROUTE_VERSION = \"terrastate_v2\"\n    DRIVER_PROTOCOL = \"full24\"\n\n    # doc-88 §4.2 FIXED loss weights (not configurable): exactly one KD.\n    W_GT = 1.0\n    W_KD = 0.5\n\n    def __init__(self, hparams=None, contract_cfg: Optional[dict] = None):\n        super().__init__(hparams, contract_cfg)\n        self.route_version = self.ROUTE_VERSION\n        # alpha is inherited as a fixed buffer == 1.0. Re-assert the doc-88 hard constraint.\n        assert \"alpha\" in self._buffers, \"alpha must be a buffer (non-learnable)\"\n        assert not self.alpha.requires_grad, \"alpha must NOT be learnable\"\n        assert float(self.alpha) == 1.0, \"alpha must be fixed at 1.0\"\n\n    # ---- evaluator-facing state API (doc 88 constraint 七) --------------------------\n    def context_state(self, data) -> torch.Tensor:\n        \"\"\"z_t = context-only predictive state (no future EO, no future weather).\"\"\"\n        _, z_t = self._prior_state(data)\n        return z_t\n\n    def future_state(self, z_t, u_future, geo, h: Optional[int] = None) -> torch.Tensor:\n        \"\"\"z_{t+h} = T(z_t, full24[t:t+h], geo, h). Default h = target_len (terminal).\"\"\"\n        h = self.target_len if h is None else int(h)\n        return self.direct_state(z_t, u_future, geo, h)\n\n    def forecast_parts(self, data) -> dict:\n        \"\"\"One forward -> every part an evaluator/loss needs. `z_future` == z_{t+H}.\"\"\"\n        pred, prior, residual, z_t, geo, u_future = self.forecast(data, want_parts=True)\n        z_future = self.direct_state(z_t, u_future, geo, self.target_len)\n        return {\n            \"pred\": pred, \"prior\": prior, \"residual\": residual,\n            \"z_t\": z_t, \"z_future\": z_future, \"geo\": geo, \"u_future\": u_future,\n        }\n\n    # ---- doc-88 UNIQUE training loss -----------------------------------------------\n    def loss_v2(self, data, teacher_pred, z_star, patch_mask, lambda_state):\n        \"\"\"L = 1.0*L_GT + 0.5*L_KD + lambda_s*L_future_state  (doc 88 §0.2 / §4.2).\n\n          L_GT           : masked NDVI on the FINAL forecast (exact B0 pixel protocol).\n          L_KD           : masked (pred -> teacher.detach()); teacher = frozen full-weather\n                           B4, computed & passed IN by the trainer. Exactly ONE KD.\n          L_future_state : 1 - cos(LN z_{t+H}, LN z*_{t+H}), masked over valid patches.\n                           z*_{t+H} = frozen future-observation target (cache), passed IN.\n        \"\"\"\n        parts = self.forecast_parts(data)\n        pred, z_future = parts[\"pred\"], parts[\"z_future\"]\n        cl, tl = self.context_len, self.target_len\n\n        # valid pixels = clear cloud (<1) AND vegetation land-cover — SAME selection as GT.\n        lc = data[\"landcover\"]\n        lc_mask = ((lc >= self.lc_min) & (lc <= self.lc_max)).type_as(pred)          # (B,1,H,W)\n        cloud_win = (data[\"dynamic_mask\"][0][:, cl:cl + tl] < 1.0).type_as(pred)     # (B,tl,1,H,W)\n        valid = cloud_win * lc_mask.unsqueeze(1)\n\n        l_gt, _ = self.ndvi_loss(pred, data)                                         # L_GT\n        td = teacher_pred.detach()\n        l_kd = (((pred - td) ** 2) * valid).sum() / (valid.sum() + 1e-8)             # L_KD (single)\n        l_fs = self.future_state_loss(z_future, z_star, patch_mask)                  # L_future_state\n\n        lam = float(lambda_state)\n        total = self.W_GT * l_gt + self.W_KD * l_kd + lam * l_fs\n        logs = {\n            \"gt\": l_gt.detach(), \"kd\": l_kd.detach(), \"future_state\": l_fs.detach(),\n            \"lambda_state\": pred.new_tensor(lam), \"alpha\": self.alpha.detach().clone(),\n            \"total\": total.detach(),\n        }\n        terms = {\"gt\": l_gt, \"kd\": l_kd, \"future_state\": l_fs}\n        return pred, {\"total\": total, \"logs\": logs, \"terms\": terms}\n\n    @staticmethod\n    def future_state_loss(z_future, z_star, patch_mask=None, eps: float = 1e-6):\n        \"\"\"1 - cos(LN(z_{t+H}), LN(z*_{t+H})), averaged over valid patches.\n        z_star is a stop-grad target (frozen encoder / cache); LN is applied to BOTH.\"\"\"\n        zf = F.layer_norm(z_future, (z_future.shape[-1],))\n        zs = F.layer_norm(z_star.detach().to(z_future.dtype), (z_star.shape[-1],))\n        per = 1.0 - F.cosine_similarity(zf, zs, dim=-1)                              # (B_patch,)\n        if patch_mask is None:\n            return per.mean()\n        m = patch_mask.to(per.dtype)\n        return (per * m).sum() / (m.sum() + eps)\n\n    # ---- dual-signature forward (DDP-safe): inference vs doc-88 loss ---------------\n    def forward(self, data, teacher_pred=None, z_star=None, patch_mask=None, lambda_state=None):\n        # INFERENCE: teacher_pred None -> pure forecast. Never touches z_star / any cache.\n        if teacher_pred is None:\n            return self.forecast(data)\n        return self.loss_v2(data, teacher_pred, z_star, patch_mask, lambda_state)\n\n    # ---- inference-leakage guards (used by the smoke; cheap, no_grad) --------------\n    @torch.no_grad()\n    def assert_prior_ignores_future_weather(self, data) -> bool:\n        \"\"\"The context-only prior b_h must be invariant to future weather (doc 88 §3 ①).\"\"\"\n        d2 = self._shallow_with_weather(data, randomize_future=True)\n        p0, _ = self._prior_state(data)\n        p1, _ = self._prior_state(d2)\n        return torch.equal(p0, p1)\n\n    @torch.no_grad()\n    def assert_forecast_ignores_future_eo(self, data) -> bool:\n        \"\"\"The inference forecast must NOT read future EO frames (only future WEATHER,\n        via T). Perturbing future EO must leave the forecast byte-identical.\"\"\"\n        d2 = self._shallow_with_frames(data, randomize_future=True)\n        y0 = self.forecast(data)\n        y1 = self.forecast(d2)\n        return torch.equal(y0, y1)\n\n    # helpers that clone ONLY the perturbed tensor (leave others shared)\n    def _shallow_with_weather(self, data, randomize_future: bool):\n        w = data[\"dynamic\"][1].clone()\n        if randomize_future:\n            w[:, self.context_len:] = torch.randn_like(w[:, self.context_len:])\n        return {\"dynamic\": [data[\"dynamic\"][0], w], \"dynamic_mask\": data[\"dynamic_mask\"],\n                \"static\": data[\"static\"], \"landcover\": data[\"landcover\"]}\n\n    def _shallow_with_frames(self, data, randomize_future: bool):\n        x = data[\"dynamic\"][0].clone()\n        if randomize_future:\n            x[:, self.context_len:] = torch.randn_like(x[:, self.context_len:])\n        return {\"dynamic\": [x, data[\"dynamic\"][1]], \"dynamic_mask\": data[\"dynamic_mask\"],\n                \"static\": data[\"static\"], \"landcover\": data[\"landcover\"]}\n\n    def config(self) -> dict:\n        c = super().config()\n        c[\"arch\"] = self.ARCH\n        c[\"route_version\"] = self.ROUTE_VERSION\n        c[\"driver_protocol\"] = self.DRIVER_PROTOCOL\n        return c\n\n\ndef warm_start_terrastate_v2(model: \"TerraStateV2\", init_ck: dict, *, require_exact: bool = True):\n    \"\"\"FAIL-CLOSED warm-start of the OFFICIAL student.\n\n    doc-88 frozen weight chain: the student is initialised from the exclusive MAIN-last\n    checkpoint ONLY (arch ObsWorldB4Exclusive), or a TerraStateV2 resume. A raw Phase-I B4\n    (arch ObsWorldB4) is REJECTED as a student init — the choice is not free. With\n    `require_exact` (default), the load MUST be exact: missing == [] and unexpected == [];\n    otherwise we RAISE instead of printing and continuing. Returns (missing, unexpected, arch).\n    \"\"\"\n    sd = init_ck[\"b4_state_dict\"]\n    arch = (init_ck.get(\"contract_cfg\", {}) or {}).get(\"arch\") or init_ck.get(\"arch\")\n    if arch not in (\"ObsWorldB4Exclusive\", \"TerraStateV2\"):\n        raise RuntimeError(\n            f\"student init arch={arch!r} is NOT allowed. TerraState-V2's student MUST be the \"\n            f\"exclusive MAIN-last checkpoint (arch ObsWorldB4Exclusive) or a TerraStateV2 resume; \"\n            f\"a raw Phase-I B4 (ObsWorldB4) is not a valid student init (doc 88 frozen weight chain).\")\n    miss, unexp = model.load_state_dict(sd, strict=False)\n    miss, unexp = list(miss), list(unexp)\n    if require_exact and (miss or unexp):\n        raise RuntimeError(\n            f\"FAIL-CLOSED student load rejected: missing={miss[:8]} unexpected={unexp[:8]} \"\n            f\"(require missing==[] and unexpected==[]). Do NOT proceed on a partial load.\")\n    return miss, unexp, arch\n"
+    },
+    "models/plan_b_b4_exclusive.py": {
+      "sha": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+      "text": "\"\"\"plan-b-pvt · Phase-II EXCLUSIVE-weather-route world model (audit-approved).\n\nRoot cause fixed: in Phase-I  ŷ = B0(history, REAL future weather) + gate·O(T(...)),\nthe full-weather B0 lets future weather reach ŷ WITHOUT passing through T, so the\noptimizer bypasses the state branch (Q2 non-load-bearing).\n\nExclusive route (this file) — future weather can reach ŷ ONLY through T:\n\n    z_t      = projector(q_student(history, geo, FUTURE-WEATHER ZEROED))    # context_prior state\n    prior    = q_student forecast on the SAME context-only input           # sees NO future weather\n    z_{t+h}  = T(z_t, future_weather[t:t+h], geo, h)\n    ŷ_{t+h}  = prior_{t+h} + alpha · O(z_{t+h})\n\nKey properties (NOT claims about Q2 — Q2 must be confirmed empirically after training):\n  * `prior` is provably future-weather-free: it is q's forecast on `_context_only_data`\n    (future frames AND future weather zeroed). Changing future weather cannot change it.\n  * NO free learnable gate. `alpha` is a NON-learnable buffer FIXED at 1.0 (both stages).\n    (alpha must stay 1: L_distill wants residual≈teacher−prior while L_resid wants the same;\n    any alpha<1 would demand residual≈(teacher−prior)/alpha and make the two targets conflict.)\n  * NO teacher inside this (inference) model. The full-weather teacher is a SEPARATE\n    frozen q copy held by the trainer; it never enters this model's state_dict / params.\n\nSubclasses Phase-I ObsWorldB4 to reuse every helper (transition/O/decode/unpatchify/\nmasks/state stats) WITHOUT touching the Phase-I class or its checkpoints.\n\"\"\"\nfrom __future__ import annotations\n\nfrom contextlib import nullcontext\nfrom types import SimpleNamespace\nfrom typing import Optional\n\nimport torch\nimport torch.nn as nn\n\nfrom models.plan_b_b4 import ObsWorldB4\n\n\n# Exclusive-only composition splits (spec 五.3-4), FROZEN. TRAIN covers totals 10/15/20; HELDOUT is\n# disjoint and covers unseen split ratios + total=10 + total=20. Unused when cmp/con=0 (Stage A), so\n# Stage-A loss/forecast numerics are byte-unchanged.\nEXCL_TRAIN_PARTITIONS = [(5, 5), (7, 8), (10, 10)]                     # totals 10, 15, 20\nEXCL_HELDOUT_PARTITIONS = [(3, 7), (6, 4), (4, 11), (8, 12), (2, 18)]  # totals 10, 10, 15, 20, 20 (disjoint)\n\n\nclass ObsWorldB4Exclusive(ObsWorldB4):\n    ARCH = \"ObsWorldB4Exclusive\"\n    ROUTE_VERSION = \"exclusive_v1\"\n\n    def __init__(self, hparams=None, contract_cfg: Optional[dict] = None):\n        super().__init__(hparams, contract_cfg)\n        # Drop the free gate entirely (audit: no scalar that can shrink to 0 and bypass T).\n        if \"gate\" in self._parameters:\n            del self._parameters[\"gate\"]\n        # alpha: NON-learnable schedule value (buffer, not a Parameter). Fixed at deploy.\n        self.register_buffer(\"alpha\", torch.tensor(1.0))\n        self.route_version = self.ROUTE_VERSION\n        # exclusive composition splits (overridable via contract_cfg; unused in Stage A)\n        cfg = contract_cfg or {}\n        if \"partitions\" not in cfg:\n            self.partitions = [tuple(p) for p in EXCL_TRAIN_PARTITIONS]\n        if \"heldout_partitions\" not in cfg:\n            self.heldout_partitions = [tuple(p) for p in EXCL_HELDOUT_PARTITIONS]\n\n    # ---- dual-signature forward so DDP works: -------------------------------\n    #   model(data)                                     -> inference (NO teacher)\n    #   model(data, teacher_pred, lambdas[, interv])    -> training loss\n    def forward(self, data, teacher_pred=None, lambdas=None, intervention=None):\n        if lambdas is None:\n            return self.forecast(data)\n        return self.loss(data, teacher_pred, lambdas, intervention)\n\n    def intervention_residual_loss(self, arm_data, teacher_arm_pred):\n        \"\"\"OPTIONAL Stage-B intervention-distillation (spec 四), GATE-gated + default OFF. The student\n        residual UNDER an intervened future-weather arm fits stopgrad(teacher_arm - context_prior);\n        the weather-free prior cancels the base, so the target isolates the teacher's WEATHER response\n        and trains T to MOVE with weather. Does NOT replace L_fore. Teacher runs the SAME arm (trainer).\"\"\"\n        _, prior, residual, _, _, _ = self.forecast(arm_data, want_parts=True)\n        cl, tl = self.context_len, self.target_len\n        lc = arm_data[\"landcover\"]\n        lcm = ((lc >= self.lc_min) & (lc <= self.lc_max)).type_as(residual)\n        cloud = (arm_data[\"dynamic_mask\"][0][:, cl:cl + tl] < 1.0).type_as(residual)\n        valid = cloud * lcm.unsqueeze(1)\n        target = (teacher_arm_pred.detach() - prior).detach()\n        return (((residual - target) ** 2) * valid).sum() / (valid.sum() + 1e-8)\n\n    # Parent gate-based methods MUST NOT be used on the exclusive route.\n    def forecast_weather(self, *a, **k):\n        raise NotImplementedError(\"exclusive route: use eval.eval_b4_exclusive_contract weather intervention (T-only, alpha).\")\n\n    def composed_predictions(self, *a, **k):\n        raise NotImplementedError(\"exclusive route: use _composed_pred / the exclusive evaluator (no gate).\")\n\n\n    # ---- context prior + state (student q, NO future weather, NO teacher) ------\n    def _prior_state(self, data):\n        \"\"\"Return (prior, z_t):\n          prior = q_student forecast on CONTEXT-ONLY data (future frames+weather zeroed);\n          z_t   = projector(context-only state at t).\n        Grad flows through q_student only when it is unfrozen (Phase B); frozen in Phase A.\"\"\"\n        core = self.q.core\n        was = core.training\n        core.eval()\n        ctx = torch.no_grad() if self.freeze_b0 else nullcontext()\n        with ctx:\n            prior, z_ctx = self.q.encode(self._context_only_data(data),\n                                         pred_start=self.context_len, preds_length=self.target_len)\n        if was:\n            core.train()\n        if self.freeze_b0:\n            prior, z_ctx = prior.detach(), z_ctx.detach()\n        z_t = self.projector(z_ctx[:, self.context_len - 1])\n        return prior, z_t\n\n    # ---- exclusive forecast: prior + alpha · O(T(...)) -------------------------\n    def forecast(self, data, want_parts: bool = False):\n        prior, z_t = self._prior_state(data)\n        hr = data[\"dynamic\"][0]\n        B, H, W = hr.shape[0], hr.shape[-2], hr.shape[-1]\n        geo, u_future = self._geo_weather(data)\n        residual = self._direct_residual(z_t, u_future, geo, B, H, W)      # (B, tl, n_out, H, W)\n        pred = prior + self.alpha * residual\n        if want_parts:\n            return pred, prior, residual, z_t, geo, u_future\n        return pred\n\n    def _composed_pred(self, prior, z_t, u_future, geo, h1, h2, B, H, W):\n        \"\"\"Composed prediction on the exclusive route (prior base + alpha·decoded composed state).\"\"\"\n        z_cmp = self.composed_state(z_t, u_future, geo, h1, h2)\n        r = self._decode_state(z_cmp, B, H, W)\n        return prior[:, h1 + h2 - 1] + self.alpha * r\n\n    # ---- training loss (teacher_pred is passed IN by the trainer, NOT owned here) ----\n    def loss(self, data, teacher_pred, lambdas: SimpleNamespace, intervention=None):\n        \"\"\"Losses for the exclusive route. `teacher_pred` = stop-grad full-weather forecast\n        computed by the trainer from a SEPARATE frozen q copy (never `self` during Phase B).\n\n          L_fore  : real-label masked NDVI on the FINAL pred (chase, aims to beat teacher)\n          L_dist  : masked (pred -> teacher.detach())        (protect Table-1 accuracy)\n          L_resid : residual -> stopgrad(teacher - prior)    (NOT the old y - full_B0)\n          L_vic   : VICReg on z_t\n          + Phase-B: cmp/con on the exclusive composed path\n        \"\"\"\n        pred, prior, residual, z_t, geo, u_future = self.forecast(data, want_parts=True)\n        cl, tl = self.context_len, self.target_len\n        B, H, W = pred.shape[0], pred.shape[-2], pred.shape[-1]\n        lam = lambdas\n        lc = data[\"landcover\"]\n        lc_mask = ((lc >= self.lc_min) & (lc <= self.lc_max)).type_as(pred)             # (B,1,H,W)\n        targ_win = data[\"dynamic\"][0][:, cl:cl + tl, 0:1]\n        cloud_win = (data[\"dynamic_mask\"][0][:, cl:cl + tl] < 1.0).type_as(pred)        # (B,tl,1,H,W)\n        valid = cloud_win * lc_mask.unsqueeze(1)\n        td = teacher_pred.detach()\n        logs, terms, total = {}, {}, pred.new_zeros(())\n        # never-alone guard (spec 五.7): latent state-consistency must co-occur with real target loss\n        # AND an endpoint composition/consistency loss (else identity/collapse trivially satisfies it).\n        if float(getattr(lam, \"state_con\", 0.0)) > 0:\n            assert float(getattr(lam, \"fore\", 0.0)) > 0 and (\n                float(getattr(lam, \"cmp\", 0.0)) > 0 or float(getattr(lam, \"con\", 0.0)) > 0), \\\n                \"state_con must never train alone: require fore>0 and (cmp>0 or con>0) (spec 五.7).\"\n\n        if float(getattr(lam, \"fore\", 0.0)) > 0:                                        # real label, beat teacher\n            l_fore, _ = self.ndvi_loss(pred, data)\n            logs[\"fore\"] = l_fore.detach(); terms[\"fore\"] = l_fore; total = total + lam.fore * l_fore\n        if float(getattr(lam, \"distill\", 0.0)) > 0:                                     # protect accuracy\n            l_d = (((pred - td) ** 2) * valid).sum() / (valid.sum() + 1e-8)\n            logs[\"distill\"] = l_d.detach(); terms[\"distill\"] = l_d; total = total + lam.distill * l_d\n        if float(getattr(lam, \"resid\", 0.0)) > 0:                                       # residual -> teacher-prior\n            r_teacher = (td - prior).detach()\n            l_r = (((residual - r_teacher) ** 2) * valid).sum() / (valid.sum() + 1e-8)\n            logs[\"resid\"] = l_r.detach(); terms[\"resid\"] = l_r; total = total + lam.resid * l_r\n        # Phase-B composition: cmp (composed endpoint accuracy) / con (output consistency) / state_con\n        # (LayerNorm-normalized LATENT consistency, direct branch stop-grad). All default 0 => Stage-A unchanged.\n        if any(float(getattr(lam, k, 0.0)) > 0 for k in (\"cmp\", \"con\", \"state_con\")):\n            import torch.nn.functional as F\n            k = len(self.partitions)\n            l_cmp = pred.new_zeros(()); l_con = pred.new_zeros(()); l_state = pred.new_zeros(())\n            for (h1, h2) in self.partitions:\n                h = h1 + h2\n                y_cmp = self._composed_pred(prior, z_t, u_future, geo, h1, h2, B, H, W)\n                y_dir = pred[:, h - 1]\n                th, ch = targ_win[:, h - 1], cloud_win[:, h - 1]\n                l_cmp = l_cmp + self._masked_mse1(y_cmp, th, ch, lc_mask)\n                l_con = l_con + self._masked_mse1(y_cmp, y_dir.detach(), ch, lc_mask)\n                if float(getattr(lam, \"state_con\", 0.0)) > 0:                            # normalized latent consistency (五.5)\n                    z_cmp = self.composed_state(z_t, u_future, geo, h1, h2)\n                    z_dir = self.direct_state(z_t, u_future, geo, h).detach()            # direct branch stop-grad\n                    zc = F.layer_norm(z_cmp, (z_cmp.shape[-1],)); zd = F.layer_norm(z_dir, (z_dir.shape[-1],))\n                    l_state = l_state + ((zc - zd) ** 2).mean()\n            l_cmp, l_con, l_state = l_cmp / k, l_con / k, l_state / k\n            if float(getattr(lam, \"cmp\", 0.0)) > 0:\n                logs[\"cmp\"] = l_cmp.detach(); terms[\"cmp\"] = l_cmp; total = total + lam.cmp * l_cmp\n            if float(getattr(lam, \"con\", 0.0)) > 0:\n                logs[\"con\"] = l_con.detach(); terms[\"con\"] = l_con; total = total + lam.con * l_con\n            if float(getattr(lam, \"state_con\", 0.0)) > 0:\n                logs[\"state_con\"] = l_state.detach(); terms[\"state_con\"] = l_state; total = total + lam.state_con * l_state\n        if float(getattr(lam, \"vic\", 0.0)) > 0:\n            var_t, cov_t = self.vicreg_loss(z_t)\n            logs[\"vic_var\"] = var_t.detach(); total = total + lam.vic * (25.0 * var_t + cov_t)\n        if float(getattr(lam, \"vic_future\", 0.0)) > 0:                                   # anti-collapse on transitioned z_h (五.6)\n            l_vf = pred.new_zeros(())\n            for h in (10, self.target_len):\n                z_h = self.direct_state(z_t, u_future, geo, h)\n                var_h, cov_h = self.vicreg_loss(z_h)\n                l_vf = l_vf + (25.0 * var_h + cov_h)\n            l_vf = l_vf / 2\n            logs[\"vic_future\"] = l_vf.detach(); terms[\"vic_future\"] = l_vf; total = total + lam.vic_future * l_vf\n        # OPTIONAL intervention-distillation (spec 四): only fires when the trainer passes an arm batch\n        # AND lam.intervention>0 (both gated OFF by default => Stage-A path untouched). Never replaces L_fore.\n        if intervention is not None and float(getattr(lam, \"intervention\", 0.0)) > 0:\n            l_int = self.intervention_residual_loss(intervention[\"arm_data\"], intervention[\"teacher_arm_pred\"])\n            logs[\"intervention\"] = l_int.detach(); terms[\"intervention\"] = l_int\n            total = total + lam.intervention * l_int\n        logs[\"alpha\"] = self.alpha.detach().clone()\n        logs[\"total\"] = total.detach()\n        return pred, {\"total\": total, \"logs\": logs, \"terms\": terms}\n\n    def config(self) -> dict:\n        c = super().config(); c[\"arch\"] = self.ARCH; c[\"route_version\"] = self.ROUTE_VERSION; return c\n\n\ndef load_exclusive_from_b4(model: \"ObsWorldB4Exclusive\", b4_state_dict: dict):\n    \"\"\"Warm-start an exclusive model from a Phase-I b4_state_dict. Reuses q/projector/\n    weather_enc/geo_enc/time_emb/fuse/transition/o_delta; DROPS the old scalar `gate`;\n    `alpha` (new buffer) is left at its schedule init. Returns (missing, unexpected).\"\"\"\n    sd = {k: v for k, v in b4_state_dict.items() if k != \"gate\"}          # explicitly drop gate\n    missing, unexpected = model.load_state_dict(sd, strict=False)\n    return list(missing), list(unexpected)\n"
+    }
+  }
+}

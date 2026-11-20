@@ -1,0 +1,8 @@
+{
+  "status": "connection_failed",
+  "evidence": {
+    "exit": 255,
+    "stdout_path": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_表1阶段多种子_20261116\\deploy_97_98.stdout",
+    "stderr": "Connection closed by UNKNOWN port 65535\n"
+  }
+}

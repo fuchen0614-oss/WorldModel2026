@@ -1,0 +1,1 @@
+{"status": "waiting_first_3h_check", "ports": ["946", "909", "991", "916"], "check_interval_seconds": 10800, "max_rounds": 8, "pid": 9448, "time": 1794761445.3454459}

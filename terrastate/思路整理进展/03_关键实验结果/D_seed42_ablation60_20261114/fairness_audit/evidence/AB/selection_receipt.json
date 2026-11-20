@@ -1,0 +1,3902 @@
+{
+  "status": "PASS",
+  "models": {
+    "C1": {
+      "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+      "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+      "best_epoch": 51,
+      "best_step": 37995,
+      "validation_RMSE_LC": 0.14937308729529436,
+      "actual_training_updates": 74500,
+      "actual_training_epochs": 100,
+      "selection_window_epochs": 60,
+      "schedule_horizon_updates": 74500,
+      "lr_prefix_60_epochs_verified": true,
+      "parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "summary_sha256": "8e9817d0630aec3191706fef610b373cf1225e24caad76d46c7cc82522a808a8",
+      "validation_history_1_60": [
+        {
+          "RMSE_LC": 0.15139398565437007,
+          "best_updated": true,
+          "epoch": 1,
+          "lr": [
+            2.9999743522500603e-05,
+            9.999914507500201e-06,
+            2.9999743522500603e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 826.3654864653945,
+          "status": "ok",
+          "step": 745
+        },
+        {
+          "RMSE_LC": 0.1503948402389103,
+          "best_updated": true,
+          "epoch": 2,
+          "lr": [
+            2.9990338538080614e-05,
+            9.996779512693539e-06,
+            2.9990338538080614e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 822.819638427347,
+          "status": "ok",
+          "step": 1490
+        },
+        {
+          "RMSE_LC": 0.15054371129658328,
+          "best_updated": false,
+          "epoch": 3,
+          "lr": [
+            2.9967403174701466e-05,
+            9.989134391567155e-06,
+            2.9967403174701466e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 816.9484261870384,
+          "status": "ok",
+          "step": 2235
+        },
+        {
+          "RMSE_LC": 0.15135223367236136,
+          "best_updated": false,
+          "epoch": 4,
+          "lr": [
+            2.9930960435800558e-05,
+            9.97698681193352e-06,
+            2.9930960435800558e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 819.2970545962453,
+          "status": "ok",
+          "step": 2980
+        },
+        {
+          "RMSE_LC": 0.15086587420256808,
+          "best_updated": false,
+          "epoch": 5,
+          "lr": [
+            2.9881046872281803e-05,
+            9.960348957427268e-06,
+            2.9881046872281803e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 813.6840107366443,
+          "status": "ok",
+          "step": 3725
+        },
+        {
+          "RMSE_LC": 0.15055217393970796,
+          "best_updated": false,
+          "epoch": 6,
+          "lr": [
+            2.9817712545856238e-05,
+            9.939237515285413e-06,
+            2.9817712545856238e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 816.6848360747099,
+          "status": "ok",
+          "step": 4470
+        },
+        {
+          "RMSE_LC": 0.15023749065338962,
+          "best_updated": true,
+          "epoch": 7,
+          "lr": [
+            2.9741020978831704e-05,
+            9.91367365961057e-06,
+            2.9741020978831704e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 817.8245835416019,
+          "status": "ok",
+          "step": 5215
+        },
+        {
+          "RMSE_LC": 0.15059842503695675,
+          "best_updated": false,
+          "epoch": 8,
+          "lr": [
+            2.965104909040204e-05,
+            9.883683030134014e-06,
+            2.965104909040204e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 813.7413942627609,
+          "status": "ok",
+          "step": 5960
+        },
+        {
+          "RMSE_LC": 0.15111270629160697,
+          "best_updated": false,
+          "epoch": 9,
+          "lr": [
+            2.9547887119499544e-05,
+            9.849295706499848e-06,
+            2.9547887119499544e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 815.6327902711928,
+          "status": "ok",
+          "step": 6705
+        },
+        {
+          "RMSE_LC": 0.1508277823558024,
+          "best_updated": false,
+          "epoch": 10,
+          "lr": [
+            2.943163853428824e-05,
+            9.81054617809608e-06,
+            2.943163853428824e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 802.0621749386191,
+          "status": "ok",
+          "step": 7450
+        },
+        {
+          "RMSE_LC": 0.1506752184479889,
+          "best_updated": false,
+          "epoch": 11,
+          "lr": [
+            2.930241992838858e-05,
+            9.767473309462861e-06,
+            2.930241992838858e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 787.6125117503107,
+          "status": "ok",
+          "step": 8195
+        },
+        {
+          "RMSE_LC": 0.15037170944595143,
+          "best_updated": false,
+          "epoch": 12,
+          "lr": [
+            2.916036090393779e-05,
+            9.720120301312596e-06,
+            2.916036090393779e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 777.8196748718619,
+          "status": "ok",
+          "step": 8940
+        },
+        {
+          "RMSE_LC": 0.14968502824723806,
+          "best_updated": true,
+          "epoch": 13,
+          "lr": [
+            2.9005603941603045e-05,
+            9.668534647201016e-06,
+            2.9005603941603045e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 796.2089634984732,
+          "status": "ok",
+          "step": 9685
+        },
+        {
+          "RMSE_LC": 0.15053349396759613,
+          "best_updated": false,
+          "epoch": 14,
+          "lr": [
+            2.8838304257677928e-05,
+            9.612768085892644e-06,
+            2.8838304257677928e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 781.2334207445383,
+          "status": "ok",
+          "step": 10430
+        },
+        {
+          "RMSE_LC": 0.15053356293062117,
+          "best_updated": false,
+          "epoch": 15,
+          "lr": [
+            2.865862964840542e-05,
+            9.552876549468474e-06,
+            2.865862964840542e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 773.6395468078554,
+          "status": "ok",
+          "step": 11175
+        },
+        {
+          "RMSE_LC": 0.1506019025640894,
+          "best_updated": false,
+          "epoch": 16,
+          "lr": [
+            2.8466760321683632e-05,
+            9.488920107227877e-06,
+            2.8466760321683632e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 681.6007522903383,
+          "status": "ok",
+          "step": 11920
+        },
+        {
+          "RMSE_LC": 0.1503345942513481,
+          "best_updated": false,
+          "epoch": 17,
+          "lr": [
+            2.826288871632304e-05,
+            9.420962905441015e-06,
+            2.826288871632304e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 666.2369845621288,
+          "status": "ok",
+          "step": 12665
+        },
+        {
+          "RMSE_LC": 0.15081598589117748,
+          "best_updated": false,
+          "epoch": 18,
+          "lr": [
+            2.8047219309036505e-05,
+            9.349073103012169e-06,
+            2.8047219309036505e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 670.2920221872628,
+          "status": "ok",
+          "step": 13410
+        },
+        {
+          "RMSE_LC": 0.14992847383326763,
+          "best_updated": false,
+          "epoch": 19,
+          "lr": [
+            2.781996840935563e-05,
+            9.273322803118544e-06,
+            2.781996840935563e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 666.690228369087,
+          "status": "ok",
+          "step": 14155
+        },
+        {
+          "RMSE_LC": 0.15045530188071976,
+          "best_updated": false,
+          "epoch": 20,
+          "lr": [
+            2.758136394267924e-05,
+            9.19378798089308e-06,
+            2.758136394267924e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 664.1254748702049,
+          "status": "ok",
+          "step": 14900
+        },
+        {
+          "RMSE_LC": 0.15030578142571238,
+          "best_updated": false,
+          "epoch": 21,
+          "lr": [
+            2.7331645221671454e-05,
+            9.110548407223819e-06,
+            2.7331645221671454e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 670.9682680405676,
+          "status": "ok",
+          "step": 15645
+        },
+        {
+          "RMSE_LC": 0.15021871994281014,
+          "best_updated": false,
+          "epoch": 22,
+          "lr": [
+            2.7071062706238743e-05,
+            9.023687568746248e-06,
+            2.7071062706238743e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 680.9144250266254,
+          "status": "ok",
+          "step": 16390
+        },
+        {
+          "RMSE_LC": 0.15009283189349493,
+          "best_updated": false,
+          "epoch": 23,
+          "lr": [
+            2.679987775232661e-05,
+            8.933292584108872e-06,
+            2.679987775232661e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 669.2334065437317,
+          "status": "ok",
+          "step": 17135
+        },
+        {
+          "RMSE_LC": 0.14981004707582482,
+          "best_updated": false,
+          "epoch": 24,
+          "lr": [
+            2.6518362349787967e-05,
+            8.83945411659599e-06,
+            2.6518362349787967e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 665.136556211859,
+          "status": "ok",
+          "step": 17880
+        },
+        {
+          "RMSE_LC": 0.1502927833558515,
+          "best_updated": false,
+          "epoch": 25,
+          "lr": [
+            2.6226798849585934e-05,
+            8.742266283195311e-06,
+            2.6226798849585934e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 663.1408765278757,
+          "status": "ok",
+          "step": 18625
+        },
+        {
+          "RMSE_LC": 0.15001762011657604,
+          "best_updated": false,
+          "epoch": 26,
+          "lr": [
+            2.5925479680604878e-05,
+            8.641826560201627e-06,
+            2.5925479680604878e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 672.9270792081952,
+          "status": "ok",
+          "step": 19370
+        },
+        {
+          "RMSE_LC": 0.1502325574452518,
+          "best_updated": false,
+          "epoch": 27,
+          "lr": [
+            2.5614707056353556e-05,
+            8.538235685451187e-06,
+            2.5614707056353556e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 668.3090658709407,
+          "status": "ok",
+          "step": 20115
+        },
+        {
+          "RMSE_LC": 0.14990020114876093,
+          "best_updated": false,
+          "epoch": 28,
+          "lr": [
+            2.5294792671854626e-05,
+            8.431597557284876e-06,
+            2.5294792671854626e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 679.8521315902472,
+          "status": "ok",
+          "step": 20860
+        },
+        {
+          "RMSE_LC": 0.14992521768532024,
+          "best_updated": false,
+          "epoch": 29,
+          "lr": [
+            2.496605739102448e-05,
+            8.322019130341494e-06,
+            2.496605739102448e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 674.8015581928194,
+          "status": "ok",
+          "step": 21605
+        },
+        {
+          "RMSE_LC": 0.1501493688802556,
+          "best_updated": false,
+          "epoch": 30,
+          "lr": [
+            2.462883092485698e-05,
+            8.20961030828566e-06,
+            2.462883092485698e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 663.5018589943647,
+          "status": "ok",
+          "step": 22350
+        },
+        {
+          "RMSE_LC": 0.15029485509669585,
+          "best_updated": false,
+          "epoch": 31,
+          "lr": [
+            2.428345150073384e-05,
+            8.094483833577946e-06,
+            2.428345150073384e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 664.1423240713775,
+          "status": "ok",
+          "step": 23095
+        },
+        {
+          "RMSE_LC": 0.15036647360392766,
+          "best_updated": false,
+          "epoch": 32,
+          "lr": [
+            2.3930265523193384e-05,
+            7.976755174397795e-06,
+            2.3930265523193384e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 668.1379004009068,
+          "status": "ok",
+          "step": 23840
+        },
+        {
+          "RMSE_LC": 0.1502122522719026,
+          "best_updated": false,
+          "epoch": 33,
+          "lr": [
+            2.3569627226497843e-05,
+            7.856542408832615e-06,
+            2.3569627226497843e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 662.3981686085463,
+          "status": "ok",
+          "step": 24585
+        },
+        {
+          "RMSE_LC": 0.14979021868973297,
+          "best_updated": false,
+          "epoch": 34,
+          "lr": [
+            2.3201898319347674e-05,
+            7.733966106449225e-06,
+            2.3201898319347674e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 672.9714755378664,
+          "status": "ok",
+          "step": 25330
+        },
+        {
+          "RMSE_LC": 0.1494287146170551,
+          "best_updated": true,
+          "epoch": 35,
+          "lr": [
+            2.282744762209932e-05,
+            7.60914920736644e-06,
+            2.282744762209932e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 668.367224983871,
+          "status": "ok",
+          "step": 26075
+        },
+        {
+          "RMSE_LC": 0.1498059215814524,
+          "best_updated": false,
+          "epoch": 36,
+          "lr": [
+            2.2446650696850112e-05,
+            7.4822168989500375e-06,
+            2.2446650696850112e-05
+          ],
+          "peak_cuda_bytes_rank0": 13656108544,
+          "seconds": 665.0195163749158,
+          "status": "ok",
+          "step": 26820
+        },
+        {
+          "RMSE_LC": 0.150250680928815,
+          "best_updated": false,
+          "epoch": 37,
+          "lr": [
+            2.2059889470761537e-05,
+            7.353296490253846e-06,
+            2.2059889470761537e-05
+          ],
+          "peak_cuda_bytes_rank0": 13655584256,
+          "seconds": 663.500320289284,
+          "status": "ok",
+          "step": 27565
+        },
+        {
+          "RMSE_LC": 0.15010352207584468,
+          "best_updated": false,
+          "epoch": 38,
+          "lr": [
+            2.166755185299842e-05,
+            7.222517284332807e-06,
+            2.166755185299842e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225999872,
+          "seconds": 418.3578611500561,
+          "status": "ok",
+          "step": 28310
+        },
+        {
+          "RMSE_LC": 0.14977983951581134,
+          "best_updated": false,
+          "epoch": 39,
+          "lr": [
+            2.1270031345668463e-05,
+            7.090010448556155e-06,
+            2.1270031345668463e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 414.0333899781108,
+          "status": "ok",
+          "step": 29055
+        },
+        {
+          "RMSE_LC": 0.14966012176192123,
+          "best_updated": false,
+          "epoch": 40,
+          "lr": [
+            2.0867726649152164e-05,
+            6.955908883050722e-06,
+            2.0867726649152164e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 413.8871510066092,
+          "status": "ok",
+          "step": 29800
+        },
+        {
+          "RMSE_LC": 0.15006958750382748,
+          "best_updated": false,
+          "epoch": 41,
+          "lr": [
+            2.0461041262219078e-05,
+            6.820347087406359e-06,
+            2.0461041262219078e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 413.5302363522351,
+          "status": "ok",
+          "step": 30545
+        },
+        {
+          "RMSE_LC": 0.14990922700626935,
+          "best_updated": false,
+          "epoch": 42,
+          "lr": [
+            2.0050383077331398e-05,
+            6.683461025777132e-06,
+            2.0050383077331398e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 414.04836163297296,
+          "status": "ok",
+          "step": 31290
+        },
+        {
+          "RMSE_LC": 0.15033333557542572,
+          "best_updated": false,
+          "epoch": 43,
+          "lr": [
+            1.9636163971540897e-05,
+            6.545387990513633e-06,
+            1.9636163971540897e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225477632,
+          "seconds": 413.75396355614066,
+          "status": "ok",
+          "step": 32035
+        },
+        {
+          "RMSE_LC": 0.14966398354149948,
+          "best_updated": false,
+          "epoch": 44,
+          "lr": [
+            1.921879939338933e-05,
+            6.406266464463111e-06,
+            1.921879939338933e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 414.17167266458273,
+          "status": "ok",
+          "step": 32780
+        },
+        {
+          "RMSE_LC": 0.1498471128367006,
+          "best_updated": false,
+          "epoch": 45,
+          "lr": [
+            1.8798707946226827e-05,
+            6.266235982075609e-06,
+            1.8798707946226827e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 414.65817888081074,
+          "status": "ok",
+          "step": 33525
+        },
+        {
+          "RMSE_LC": 0.1499571970717109,
+          "best_updated": false,
+          "epoch": 46,
+          "lr": [
+            1.8376310968366107e-05,
+            6.125436989455369e-06,
+            1.8376310968366107e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 414.52697920426726,
+          "status": "ok",
+          "step": 34270
+        },
+        {
+          "RMSE_LC": 0.1495062527145199,
+          "best_updated": false,
+          "epoch": 47,
+          "lr": [
+            1.7952032110493586e-05,
+            5.9840107034978624e-06,
+            1.7952032110493586e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227705856,
+          "seconds": 414.01427488029003,
+          "status": "ok",
+          "step": 35015
+        },
+        {
+          "RMSE_LC": 0.15002904000319267,
+          "best_updated": false,
+          "epoch": 48,
+          "lr": [
+            1.7526296910761268e-05,
+            5.8420989702537565e-06,
+            1.7526296910761268e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 415.72431690618396,
+          "status": "ok",
+          "step": 35760
+        },
+        {
+          "RMSE_LC": 0.15018492777063924,
+          "best_updated": false,
+          "epoch": 49,
+          "lr": [
+            1.7099532367985558e-05,
+            5.699844122661853e-06,
+            1.7099532367985558e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 414.1968656554818,
+          "status": "ok",
+          "step": 36505
+        },
+        {
+          "RMSE_LC": 0.1499416387409516,
+          "best_updated": false,
+          "epoch": 50,
+          "lr": [
+            1.667216651338107e-05,
+            5.557388837793691e-06,
+            1.667216651338107e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225477632,
+          "seconds": 416.26984265074134,
+          "status": "ok",
+          "step": 37250
+        },
+        {
+          "RMSE_LC": 0.14937308729529436,
+          "best_updated": true,
+          "epoch": 51,
+          "lr": [
+            1.6244627981258996e-05,
+            5.414875993753e-06,
+            1.6244627981258996e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227705856,
+          "seconds": 415.44199126958847,
+          "status": "ok",
+          "step": 37995
+        },
+        {
+          "RMSE_LC": 0.14983270970936668,
+          "best_updated": false,
+          "epoch": 52,
+          "lr": [
+            1.5817345579120575e-05,
+            5.272448526373525e-06,
+            1.5817345579120575e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 414.5632718130946,
+          "status": "ok",
+          "step": 38740
+        },
+        {
+          "RMSE_LC": 0.1501943085926829,
+          "best_updated": false,
+          "epoch": 53,
+          "lr": [
+            1.539074785757682e-05,
+            5.13024928585894e-06,
+            1.539074785757682e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 413.85374040156603,
+          "status": "ok",
+          "step": 39485
+        },
+        {
+          "RMSE_LC": 0.15003863716915758,
+          "best_updated": false,
+          "epoch": 54,
+          "lr": [
+            1.4965262680525999e-05,
+            4.988420893508667e-06,
+            1.4965262680525999e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 415.7143162600696,
+          "status": "ok",
+          "step": 40230
+        },
+        {
+          "RMSE_LC": 0.14957893338440287,
+          "best_updated": false,
+          "epoch": 55,
+          "lr": [
+            1.4541316796019735e-05,
+            4.847105598673245e-06,
+            1.4541316796019735e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225739776,
+          "seconds": 417.57032867893577,
+          "status": "ok",
+          "step": 40975
+        },
+        {
+          "RMSE_LC": 0.14984592016317233,
+          "best_updated": false,
+          "epoch": 56,
+          "lr": [
+            1.4119335408248372e-05,
+            4.706445136082791e-06,
+            1.4119335408248372e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 414.92177491262555,
+          "status": "ok",
+          "step": 41720
+        },
+        {
+          "RMSE_LC": 0.14962250683239792,
+          "best_updated": false,
+          "epoch": 57,
+          "lr": [
+            1.3699741751074739e-05,
+            4.56658058369158e-06,
+            1.3699741751074739e-05
+          ],
+          "peak_cuda_bytes_rank0": 27226657280,
+          "seconds": 416.7647185847163,
+          "status": "ok",
+          "step": 42465
+        },
+        {
+          "RMSE_LC": 0.1498019328414031,
+          "best_updated": false,
+          "epoch": 58,
+          "lr": [
+            1.3282956663544075e-05,
+            4.427652221181359e-06,
+            1.3282956663544075e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 416.9165865778923,
+          "status": "ok",
+          "step": 43210
+        },
+        {
+          "RMSE_LC": 0.1496162550830746,
+          "best_updated": false,
+          "epoch": 59,
+          "lr": [
+            1.2869398167795923e-05,
+            4.289799389265308e-06,
+            1.2869398167795923e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225215488,
+          "seconds": 414.72085052356124,
+          "status": "ok",
+          "step": 43955
+        },
+        {
+          "RMSE_LC": 0.1500559995017268,
+          "best_updated": false,
+          "epoch": 60,
+          "lr": [
+            1.2459481049801256e-05,
+            4.1531603499337526e-06,
+            1.2459481049801256e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227705856,
+          "seconds": 414.5995752736926,
+          "status": "ok",
+          "step": 44700
+        }
+      ],
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "recursive",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      }
+    },
+    "C0R": {
+      "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+      "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+      "best_epoch": 19,
+      "best_step": 14155,
+      "validation_RMSE_LC": 0.14956784802202178,
+      "actual_training_updates": 74500,
+      "actual_training_epochs": 100,
+      "selection_window_epochs": 60,
+      "schedule_horizon_updates": 74500,
+      "lr_prefix_60_epochs_verified": true,
+      "parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "summary_sha256": "10fe6e4243f571680860799e2ff22d63ca41f48bfdd63b52b61ee03300c41c2c",
+      "validation_history_1_60": [
+        {
+          "RMSE_LC": 0.15128531647526572,
+          "best_updated": true,
+          "epoch": 1,
+          "lr": [
+            2.9999743522500603e-05,
+            9.999914507500201e-06,
+            2.9999743522500603e-05
+          ],
+          "peak_cuda_bytes_rank0": 26455534080,
+          "seconds": 732.8706711903214,
+          "status": "ok",
+          "step": 745
+        },
+        {
+          "RMSE_LC": 0.1504850817106046,
+          "best_updated": true,
+          "epoch": 2,
+          "lr": [
+            2.9990338538080614e-05,
+            9.996779512693539e-06,
+            2.9990338538080614e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 732.3987928181887,
+          "status": "ok",
+          "step": 1490
+        },
+        {
+          "RMSE_LC": 0.1507663954935466,
+          "best_updated": false,
+          "epoch": 3,
+          "lr": [
+            2.9967403174701466e-05,
+            9.989134391567155e-06,
+            2.9967403174701466e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 731.6349900178611,
+          "status": "ok",
+          "step": 2235
+        },
+        {
+          "RMSE_LC": 0.15150428744540997,
+          "best_updated": false,
+          "epoch": 4,
+          "lr": [
+            2.9930960435800558e-05,
+            9.97698681193352e-06,
+            2.9930960435800558e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 734.7508772723377,
+          "status": "ok",
+          "step": 2980
+        },
+        {
+          "RMSE_LC": 0.15072067339285697,
+          "best_updated": false,
+          "epoch": 5,
+          "lr": [
+            2.9881046872281803e-05,
+            9.960348957427268e-06,
+            2.9881046872281803e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 733.892268050462,
+          "status": "ok",
+          "step": 3725
+        },
+        {
+          "RMSE_LC": 0.1505281141569104,
+          "best_updated": false,
+          "epoch": 6,
+          "lr": [
+            2.9817712545856238e-05,
+            9.939237515285413e-06,
+            2.9817712545856238e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 736.8867304734886,
+          "status": "ok",
+          "step": 4470
+        },
+        {
+          "RMSE_LC": 0.15044076439989007,
+          "best_updated": true,
+          "epoch": 7,
+          "lr": [
+            2.9741020978831704e-05,
+            9.91367365961057e-06,
+            2.9741020978831704e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 723.9911211393774,
+          "status": "ok",
+          "step": 5215
+        },
+        {
+          "RMSE_LC": 0.15051662741609298,
+          "best_updated": false,
+          "epoch": 8,
+          "lr": [
+            2.965104909040204e-05,
+            9.883683030134014e-06,
+            2.965104909040204e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 697.3147834837437,
+          "status": "ok",
+          "step": 5960
+        },
+        {
+          "RMSE_LC": 0.1511925498007844,
+          "best_updated": false,
+          "epoch": 9,
+          "lr": [
+            2.9547887119499544e-05,
+            9.849295706499848e-06,
+            2.9547887119499544e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 697.5116160474718,
+          "status": "ok",
+          "step": 6705
+        },
+        {
+          "RMSE_LC": 0.15080371579819424,
+          "best_updated": false,
+          "epoch": 10,
+          "lr": [
+            2.943163853428824e-05,
+            9.81054617809608e-06,
+            2.943163853428824e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 696.9111282341182,
+          "status": "ok",
+          "step": 7450
+        },
+        {
+          "RMSE_LC": 0.1505738466277941,
+          "best_updated": false,
+          "epoch": 11,
+          "lr": [
+            2.930241992838858e-05,
+            9.767473309462861e-06,
+            2.930241992838858e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 697.8760716021061,
+          "status": "ok",
+          "step": 8195
+        },
+        {
+          "RMSE_LC": 0.15054069821338104,
+          "best_updated": false,
+          "epoch": 12,
+          "lr": [
+            2.916036090393779e-05,
+            9.720120301312596e-06,
+            2.916036090393779e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 698.2523108385503,
+          "status": "ok",
+          "step": 8940
+        },
+        {
+          "RMSE_LC": 0.1497702307642558,
+          "best_updated": true,
+          "epoch": 13,
+          "lr": [
+            2.9005603941603045e-05,
+            9.668534647201016e-06,
+            2.9005603941603045e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 700.5108946748078,
+          "status": "ok",
+          "step": 9685
+        },
+        {
+          "RMSE_LC": 0.1505484219329186,
+          "best_updated": false,
+          "epoch": 14,
+          "lr": [
+            2.8838304257677928e-05,
+            9.612768085892644e-06,
+            2.8838304257677928e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 697.9420659430325,
+          "status": "ok",
+          "step": 10430
+        },
+        {
+          "RMSE_LC": 0.15024884828130836,
+          "best_updated": false,
+          "epoch": 15,
+          "lr": [
+            2.865862964840542e-05,
+            9.552876549468474e-06,
+            2.865862964840542e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 697.2698375731707,
+          "status": "ok",
+          "step": 11175
+        },
+        {
+          "RMSE_LC": 0.15066257232965902,
+          "best_updated": false,
+          "epoch": 16,
+          "lr": [
+            2.8466760321683632e-05,
+            9.488920107227877e-06,
+            2.8466760321683632e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 693.3479924947023,
+          "status": "ok",
+          "step": 11920
+        },
+        {
+          "RMSE_LC": 0.15045156526918632,
+          "best_updated": false,
+          "epoch": 17,
+          "lr": [
+            2.826288871632304e-05,
+            9.420962905441015e-06,
+            2.826288871632304e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 500.8111057393253,
+          "status": "ok",
+          "step": 12665
+        },
+        {
+          "RMSE_LC": 0.15076692241737832,
+          "best_updated": false,
+          "epoch": 18,
+          "lr": [
+            2.8047219309036505e-05,
+            9.349073103012169e-06,
+            2.8047219309036505e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 619.0958289057016,
+          "status": "ok",
+          "step": 13410
+        },
+        {
+          "RMSE_LC": 0.14956784802202178,
+          "best_updated": true,
+          "epoch": 19,
+          "lr": [
+            2.781996840935563e-05,
+            9.273322803118544e-06,
+            2.781996840935563e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 611.5440938286483,
+          "status": "ok",
+          "step": 14155
+        },
+        {
+          "RMSE_LC": 0.15045927101702064,
+          "best_updated": false,
+          "epoch": 20,
+          "lr": [
+            2.758136394267924e-05,
+            9.19378798089308e-06,
+            2.758136394267924e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 592.5814496316016,
+          "status": "ok",
+          "step": 14900
+        },
+        {
+          "RMSE_LC": 0.15026550691286705,
+          "best_updated": false,
+          "epoch": 21,
+          "lr": [
+            2.7331645221671454e-05,
+            9.110548407223819e-06,
+            2.7331645221671454e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 591.1986372768879,
+          "status": "ok",
+          "step": 15645
+        },
+        {
+          "RMSE_LC": 0.15042976930106333,
+          "best_updated": false,
+          "epoch": 22,
+          "lr": [
+            2.7071062706238743e-05,
+            9.023687568746248e-06,
+            2.7071062706238743e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 594.226114757359,
+          "status": "ok",
+          "step": 16390
+        },
+        {
+          "RMSE_LC": 0.15038920417768567,
+          "best_updated": false,
+          "epoch": 23,
+          "lr": [
+            2.679987775232661e-05,
+            8.933292584108872e-06,
+            2.679987775232661e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 551.932187538594,
+          "status": "ok",
+          "step": 17135
+        },
+        {
+          "RMSE_LC": 0.15000205113235673,
+          "best_updated": false,
+          "epoch": 24,
+          "lr": [
+            2.6518362349787967e-05,
+            8.83945411659599e-06,
+            2.6518362349787967e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 547.9399224184453,
+          "status": "ok",
+          "step": 17880
+        },
+        {
+          "RMSE_LC": 0.14999268263791135,
+          "best_updated": false,
+          "epoch": 25,
+          "lr": [
+            2.6226798849585934e-05,
+            8.742266283195311e-06,
+            2.6226798849585934e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 547.1255616396666,
+          "status": "ok",
+          "step": 18625
+        },
+        {
+          "RMSE_LC": 0.1501547718782245,
+          "best_updated": false,
+          "epoch": 26,
+          "lr": [
+            2.5925479680604878e-05,
+            8.641826560201627e-06,
+            2.5925479680604878e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 547.4416049830616,
+          "status": "ok",
+          "step": 19370
+        },
+        {
+          "RMSE_LC": 0.1503220373350794,
+          "best_updated": false,
+          "epoch": 27,
+          "lr": [
+            2.5614707056353556e-05,
+            8.538235685451187e-06,
+            2.5614707056353556e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 547.7757718898356,
+          "status": "ok",
+          "step": 20115
+        },
+        {
+          "RMSE_LC": 0.14986489617053045,
+          "best_updated": false,
+          "epoch": 28,
+          "lr": [
+            2.5294792671854626e-05,
+            8.431597557284876e-06,
+            2.5294792671854626e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 547.3686594590545,
+          "status": "ok",
+          "step": 20860
+        },
+        {
+          "RMSE_LC": 0.15004153865769101,
+          "best_updated": false,
+          "epoch": 29,
+          "lr": [
+            2.496605739102448e-05,
+            8.322019130341494e-06,
+            2.496605739102448e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 550.1532018482685,
+          "status": "ok",
+          "step": 21605
+        },
+        {
+          "RMSE_LC": 0.15011248340792352,
+          "best_updated": false,
+          "epoch": 30,
+          "lr": [
+            2.462883092485698e-05,
+            8.20961030828566e-06,
+            2.462883092485698e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 546.1984428316355,
+          "status": "ok",
+          "step": 22350
+        },
+        {
+          "RMSE_LC": 0.1504102053434488,
+          "best_updated": false,
+          "epoch": 31,
+          "lr": [
+            2.428345150073384e-05,
+            8.094483833577946e-06,
+            2.428345150073384e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 547.3414505831897,
+          "status": "ok",
+          "step": 23095
+        },
+        {
+          "RMSE_LC": 0.15049043418731278,
+          "best_updated": false,
+          "epoch": 32,
+          "lr": [
+            2.3930265523193384e-05,
+            7.976755174397795e-06,
+            2.3930265523193384e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 555.9863434135914,
+          "status": "ok",
+          "step": 23840
+        },
+        {
+          "RMSE_LC": 0.15039903127357496,
+          "best_updated": false,
+          "epoch": 33,
+          "lr": [
+            2.3569627226497843e-05,
+            7.856542408832615e-06,
+            2.3569627226497843e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 546.8382150903344,
+          "status": "ok",
+          "step": 24585
+        },
+        {
+          "RMSE_LC": 0.1498674695850627,
+          "best_updated": false,
+          "epoch": 34,
+          "lr": [
+            2.3201898319347674e-05,
+            7.733966106449225e-06,
+            2.3201898319347674e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 546.7585310563445,
+          "status": "ok",
+          "step": 25330
+        },
+        {
+          "RMSE_LC": 0.14960992457667402,
+          "best_updated": false,
+          "epoch": 35,
+          "lr": [
+            2.282744762209932e-05,
+            7.60914920736644e-06,
+            2.282744762209932e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 546.2350229099393,
+          "status": "ok",
+          "step": 26075
+        },
+        {
+          "RMSE_LC": 0.1499272440133096,
+          "best_updated": false,
+          "epoch": 36,
+          "lr": [
+            2.2446650696850112e-05,
+            7.4822168989500375e-06,
+            2.2446650696850112e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 551.7840097881854,
+          "status": "ok",
+          "step": 26820
+        },
+        {
+          "RMSE_LC": 0.1504533832375903,
+          "best_updated": false,
+          "epoch": 37,
+          "lr": [
+            2.2059889470761537e-05,
+            7.353296490253846e-06,
+            2.2059889470761537e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 547.0323339998722,
+          "status": "ok",
+          "step": 27565
+        },
+        {
+          "RMSE_LC": 0.15058157715442122,
+          "best_updated": false,
+          "epoch": 38,
+          "lr": [
+            2.166755185299842e-05,
+            7.222517284332807e-06,
+            2.166755185299842e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 546.4316081218421,
+          "status": "ok",
+          "step": 28310
+        },
+        {
+          "RMSE_LC": 0.14983426536626404,
+          "best_updated": false,
+          "epoch": 39,
+          "lr": [
+            2.1270031345668463e-05,
+            7.090010448556155e-06,
+            2.1270031345668463e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 551.0186195373535,
+          "status": "ok",
+          "step": 29055
+        },
+        {
+          "RMSE_LC": 0.1501386015477025,
+          "best_updated": false,
+          "epoch": 40,
+          "lr": [
+            2.0867726649152164e-05,
+            6.955908883050722e-06,
+            2.0867726649152164e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 547.6531808637083,
+          "status": "ok",
+          "step": 29800
+        },
+        {
+          "RMSE_LC": 0.1504206247048606,
+          "best_updated": false,
+          "epoch": 41,
+          "lr": [
+            2.0461041262219078e-05,
+            6.820347087406359e-06,
+            2.0461041262219078e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 548.6734263636172,
+          "status": "ok",
+          "step": 30545
+        },
+        {
+          "RMSE_LC": 0.15023252629853864,
+          "best_updated": false,
+          "epoch": 42,
+          "lr": [
+            2.0050383077331398e-05,
+            6.683461025777132e-06,
+            2.0050383077331398e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 525.6607572361827,
+          "status": "ok",
+          "step": 31290
+        },
+        {
+          "RMSE_LC": 0.15056713194837704,
+          "best_updated": false,
+          "epoch": 43,
+          "lr": [
+            1.9636163971540897e-05,
+            6.545387990513633e-06,
+            1.9636163971540897e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 460.2213673964143,
+          "status": "ok",
+          "step": 32035
+        },
+        {
+          "RMSE_LC": 0.15016269381459352,
+          "best_updated": false,
+          "epoch": 44,
+          "lr": [
+            1.921879939338933e-05,
+            6.406266464463111e-06,
+            1.921879939338933e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 661.9913047328591,
+          "status": "ok",
+          "step": 32780
+        },
+        {
+          "RMSE_LC": 0.1497153154712406,
+          "best_updated": false,
+          "epoch": 45,
+          "lr": [
+            1.8798707946226827e-05,
+            6.266235982075609e-06,
+            1.8798707946226827e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 551.1353792622685,
+          "status": "ok",
+          "step": 33525
+        },
+        {
+          "RMSE_LC": 0.1498601864518063,
+          "best_updated": false,
+          "epoch": 46,
+          "lr": [
+            1.8376310968366107e-05,
+            6.125436989455369e-06,
+            1.8376310968366107e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 552.9315970726311,
+          "status": "ok",
+          "step": 34270
+        },
+        {
+          "RMSE_LC": 0.14996686756706426,
+          "best_updated": false,
+          "epoch": 47,
+          "lr": [
+            1.7952032110493586e-05,
+            5.9840107034978624e-06,
+            1.7952032110493586e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 547.127565830946,
+          "status": "ok",
+          "step": 35015
+        },
+        {
+          "RMSE_LC": 0.15030425784738963,
+          "best_updated": false,
+          "epoch": 48,
+          "lr": [
+            1.7526296910761268e-05,
+            5.8420989702537565e-06,
+            1.7526296910761268e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 546.0283138975501,
+          "status": "ok",
+          "step": 35760
+        },
+        {
+          "RMSE_LC": 0.15062122335493075,
+          "best_updated": false,
+          "epoch": 49,
+          "lr": [
+            1.7099532367985558e-05,
+            5.699844122661853e-06,
+            1.7099532367985558e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 527.8241785317659,
+          "status": "ok",
+          "step": 36505
+        },
+        {
+          "RMSE_LC": 0.15036448701987742,
+          "best_updated": false,
+          "epoch": 50,
+          "lr": [
+            1.667216651338107e-05,
+            5.557388837793691e-06,
+            1.667216651338107e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 531.1258787661791,
+          "status": "ok",
+          "step": 37250
+        },
+        {
+          "RMSE_LC": 0.14961863311279644,
+          "best_updated": false,
+          "epoch": 51,
+          "lr": [
+            1.6244627981258996e-05,
+            5.414875993753e-06,
+            1.6244627981258996e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 529.7646481655538,
+          "status": "ok",
+          "step": 37995
+        },
+        {
+          "RMSE_LC": 0.1499820158952686,
+          "best_updated": false,
+          "epoch": 52,
+          "lr": [
+            1.5817345579120575e-05,
+            5.272448526373525e-06,
+            1.5817345579120575e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 527.1312892176211,
+          "status": "ok",
+          "step": 38740
+        },
+        {
+          "RMSE_LC": 0.15031856681389444,
+          "best_updated": false,
+          "epoch": 53,
+          "lr": [
+            1.539074785757682e-05,
+            5.13024928585894e-06,
+            1.539074785757682e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 552.556376773864,
+          "status": "ok",
+          "step": 39485
+        },
+        {
+          "RMSE_LC": 0.15029393950854575,
+          "best_updated": false,
+          "epoch": 54,
+          "lr": [
+            1.4965262680525999e-05,
+            4.988420893508667e-06,
+            1.4965262680525999e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 572.8300675302744,
+          "status": "ok",
+          "step": 40230
+        },
+        {
+          "RMSE_LC": 0.1498332641306666,
+          "best_updated": false,
+          "epoch": 55,
+          "lr": [
+            1.4541316796019735e-05,
+            4.847105598673245e-06,
+            1.4541316796019735e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 552.2316334322095,
+          "status": "ok",
+          "step": 40975
+        },
+        {
+          "RMSE_LC": 0.1499215408208154,
+          "best_updated": false,
+          "epoch": 56,
+          "lr": [
+            1.4119335408248372e-05,
+            4.706445136082791e-06,
+            1.4119335408248372e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 547.1159451194108,
+          "status": "ok",
+          "step": 41720
+        },
+        {
+          "RMSE_LC": 0.1498571952444837,
+          "best_updated": false,
+          "epoch": 57,
+          "lr": [
+            1.3699741751074739e-05,
+            4.56658058369158e-06,
+            1.3699741751074739e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 545.7513356618583,
+          "status": "ok",
+          "step": 42465
+        },
+        {
+          "RMSE_LC": 0.15018159551835594,
+          "best_updated": false,
+          "epoch": 58,
+          "lr": [
+            1.3282956663544075e-05,
+            4.427652221181359e-06,
+            1.3282956663544075e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 545.0889004394412,
+          "status": "ok",
+          "step": 43210
+        },
+        {
+          "RMSE_LC": 0.15015307983617576,
+          "best_updated": false,
+          "epoch": 59,
+          "lr": [
+            1.2869398167795923e-05,
+            4.289799389265308e-06,
+            1.2869398167795923e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 551.0849937722087,
+          "status": "ok",
+          "step": 43955
+        },
+        {
+          "RMSE_LC": 0.15048943070235768,
+          "best_updated": false,
+          "epoch": 60,
+          "lr": [
+            1.2459481049801256e-05,
+            4.1531603499337526e-06,
+            1.2459481049801256e-05
+          ],
+          "peak_cuda_bytes_rank0": 26456451584,
+          "seconds": 546.3051333352923,
+          "status": "ok",
+          "step": 44700
+        }
+      ],
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "direct",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      }
+    },
+    "CONSISTENCY": {
+      "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_consistency_D946_60ep_20261114_01/D/formal/best_val.pt",
+      "sha256": "f1334bb429238f84635e2a12b2ddc43c170dadd2d6f9d5c7a60d236c2606f3f8",
+      "best_epoch": 51,
+      "best_step": 37995,
+      "validation_RMSE_LC": 0.14953470412259215,
+      "actual_training_updates": 44700,
+      "actual_training_epochs": 60,
+      "selection_window_epochs": 60,
+      "schedule_horizon_updates": 74500,
+      "lr_prefix_60_epochs_verified": true,
+      "parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "summary_sha256": "578ab37a9921e86c2ff868406f851cd094d6411096d24ccc8ae8a6ef24c98f7e",
+      "validation_history_1_60": [
+        {
+          "RMSE_LC": 0.15110846442291365,
+          "best_updated": true,
+          "epoch": 1,
+          "lr": [
+            2.9999743522500603e-05,
+            9.999914507500201e-06,
+            2.9999743522500603e-05
+          ],
+          "peak_cuda_bytes_rank0": 27226654720,
+          "seconds": 682.3828707411885,
+          "status": "ok",
+          "step": 745
+        },
+        {
+          "RMSE_LC": 0.15018987944220488,
+          "best_updated": true,
+          "epoch": 2,
+          "lr": [
+            2.9990338538080614e-05,
+            9.996779512693539e-06,
+            2.9990338538080614e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 685.2459555380046,
+          "status": "ok",
+          "step": 1490
+        },
+        {
+          "RMSE_LC": 0.15057010132460338,
+          "best_updated": false,
+          "epoch": 3,
+          "lr": [
+            2.9967403174701466e-05,
+            9.989134391567155e-06,
+            2.9967403174701466e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 705.4951936751604,
+          "status": "ok",
+          "step": 2235
+        },
+        {
+          "RMSE_LC": 0.1512871750274377,
+          "best_updated": false,
+          "epoch": 4,
+          "lr": [
+            2.9930960435800558e-05,
+            9.97698681193352e-06,
+            2.9930960435800558e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 705.4961999319494,
+          "status": "ok",
+          "step": 2980
+        },
+        {
+          "RMSE_LC": 0.15049719635834025,
+          "best_updated": false,
+          "epoch": 5,
+          "lr": [
+            2.9881046872281803e-05,
+            9.960348957427268e-06,
+            2.9881046872281803e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 644.139585480094,
+          "status": "ok",
+          "step": 3725
+        },
+        {
+          "RMSE_LC": 0.15021009036151026,
+          "best_updated": false,
+          "epoch": 6,
+          "lr": [
+            2.9817712545856238e-05,
+            9.939237515285413e-06,
+            2.9817712545856238e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 650.7541694939137,
+          "status": "ok",
+          "step": 4470
+        },
+        {
+          "RMSE_LC": 0.15012789795113324,
+          "best_updated": true,
+          "epoch": 7,
+          "lr": [
+            2.9741020978831704e-05,
+            9.91367365961057e-06,
+            2.9741020978831704e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 658.1712794601917,
+          "status": "ok",
+          "step": 5215
+        },
+        {
+          "RMSE_LC": 0.1504376368909391,
+          "best_updated": false,
+          "epoch": 8,
+          "lr": [
+            2.965104909040204e-05,
+            9.883683030134014e-06,
+            2.965104909040204e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225737216,
+          "seconds": 660.1642164960504,
+          "status": "ok",
+          "step": 5960
+        },
+        {
+          "RMSE_LC": 0.15111241533908157,
+          "best_updated": false,
+          "epoch": 9,
+          "lr": [
+            2.9547887119499544e-05,
+            9.849295706499848e-06,
+            2.9547887119499544e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 641.5336758568883,
+          "status": "ok",
+          "step": 6705
+        },
+        {
+          "RMSE_LC": 0.1504908733513897,
+          "best_updated": false,
+          "epoch": 10,
+          "lr": [
+            2.943163853428824e-05,
+            9.81054617809608e-06,
+            2.943163853428824e-05
+          ],
+          "peak_cuda_bytes_rank0": 27226001408,
+          "seconds": 639.2086740396917,
+          "status": "ok",
+          "step": 7450
+        },
+        {
+          "RMSE_LC": 0.15026681546781873,
+          "best_updated": false,
+          "epoch": 11,
+          "lr": [
+            2.930241992838858e-05,
+            9.767473309462861e-06,
+            2.930241992838858e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 663.9860620126128,
+          "status": "ok",
+          "step": 8195
+        },
+        {
+          "RMSE_LC": 0.15039181619145964,
+          "best_updated": false,
+          "epoch": 12,
+          "lr": [
+            2.916036090393779e-05,
+            9.720120301312596e-06,
+            2.916036090393779e-05
+          ],
+          "peak_cuda_bytes_rank0": 27226001408,
+          "seconds": 651.5698742978275,
+          "status": "ok",
+          "step": 8940
+        },
+        {
+          "RMSE_LC": 0.14977283896883206,
+          "best_updated": true,
+          "epoch": 13,
+          "lr": [
+            2.9005603941603045e-05,
+            9.668534647201016e-06,
+            2.9005603941603045e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 651.8145155720413,
+          "status": "ok",
+          "step": 9685
+        },
+        {
+          "RMSE_LC": 0.15020565331243613,
+          "best_updated": false,
+          "epoch": 14,
+          "lr": [
+            2.8838304257677928e-05,
+            9.612768085892644e-06,
+            2.8838304257677928e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 644.5101074762642,
+          "status": "ok",
+          "step": 10430
+        },
+        {
+          "RMSE_LC": 0.1504912495057729,
+          "best_updated": false,
+          "epoch": 15,
+          "lr": [
+            2.865862964840542e-05,
+            9.552876549468474e-06,
+            2.865862964840542e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 668.6828027106822,
+          "status": "ok",
+          "step": 11175
+        },
+        {
+          "RMSE_LC": 0.15078757349825214,
+          "best_updated": false,
+          "epoch": 16,
+          "lr": [
+            2.8466760321683632e-05,
+            9.488920107227877e-06,
+            2.8466760321683632e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225739264,
+          "seconds": 684.3563771285117,
+          "status": "ok",
+          "step": 11920
+        },
+        {
+          "RMSE_LC": 0.15039151188117802,
+          "best_updated": false,
+          "epoch": 17,
+          "lr": [
+            2.826288871632304e-05,
+            9.420962905441015e-06,
+            2.826288871632304e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225739264,
+          "seconds": 735.637585464865,
+          "status": "ok",
+          "step": 12665
+        },
+        {
+          "RMSE_LC": 0.15044136950693726,
+          "best_updated": false,
+          "epoch": 18,
+          "lr": [
+            2.8047219309036505e-05,
+            9.349073103012169e-06,
+            2.8047219309036505e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 690.4881603345275,
+          "status": "ok",
+          "step": 13410
+        },
+        {
+          "RMSE_LC": 0.15004503951754278,
+          "best_updated": false,
+          "epoch": 19,
+          "lr": [
+            2.781996840935563e-05,
+            9.273322803118544e-06,
+            2.781996840935563e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225477120,
+          "seconds": 663.9772223718464,
+          "status": "ok",
+          "step": 14155
+        },
+        {
+          "RMSE_LC": 0.15039533469223476,
+          "best_updated": false,
+          "epoch": 20,
+          "lr": [
+            2.758136394267924e-05,
+            9.19378798089308e-06,
+            2.758136394267924e-05
+          ],
+          "peak_cuda_bytes_rank0": 27226654720,
+          "seconds": 656.2718101032078,
+          "status": "ok",
+          "step": 14900
+        },
+        {
+          "RMSE_LC": 0.15070646409517968,
+          "best_updated": false,
+          "epoch": 21,
+          "lr": [
+            2.7331645221671454e-05,
+            9.110548407223819e-06,
+            2.7331645221671454e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 669.2200406268239,
+          "status": "ok",
+          "step": 15645
+        },
+        {
+          "RMSE_LC": 0.15080569830416915,
+          "best_updated": false,
+          "epoch": 22,
+          "lr": [
+            2.7071062706238743e-05,
+            9.023687568746248e-06,
+            2.7071062706238743e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227574272,
+          "seconds": 687.0385733358562,
+          "status": "ok",
+          "step": 16390
+        },
+        {
+          "RMSE_LC": 0.15076488083448653,
+          "best_updated": false,
+          "epoch": 23,
+          "lr": [
+            2.679987775232661e-05,
+            8.933292584108872e-06,
+            2.679987775232661e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 669.2128940448165,
+          "status": "ok",
+          "step": 17135
+        },
+        {
+          "RMSE_LC": 0.15041614366550263,
+          "best_updated": false,
+          "epoch": 24,
+          "lr": [
+            2.6518362349787967e-05,
+            8.83945411659599e-06,
+            2.6518362349787967e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225477120,
+          "seconds": 649.3680851086974,
+          "status": "ok",
+          "step": 17880
+        },
+        {
+          "RMSE_LC": 0.15042166855975803,
+          "best_updated": false,
+          "epoch": 25,
+          "lr": [
+            2.6226798849585934e-05,
+            8.742266283195311e-06,
+            2.6226798849585934e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225477120,
+          "seconds": 620.5340259298682,
+          "status": "ok",
+          "step": 18625
+        },
+        {
+          "RMSE_LC": 0.1505575746695653,
+          "best_updated": false,
+          "epoch": 26,
+          "lr": [
+            2.5925479680604878e-05,
+            8.641826560201627e-06,
+            2.5925479680604878e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 648.6553624160588,
+          "status": "ok",
+          "step": 19370
+        },
+        {
+          "RMSE_LC": 0.15040859803429762,
+          "best_updated": false,
+          "epoch": 27,
+          "lr": [
+            2.5614707056353556e-05,
+            8.538235685451187e-06,
+            2.5614707056353556e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227574272,
+          "seconds": 650.5660704448819,
+          "status": "ok",
+          "step": 20115
+        },
+        {
+          "RMSE_LC": 0.15000178593307711,
+          "best_updated": false,
+          "epoch": 28,
+          "lr": [
+            2.5294792671854626e-05,
+            8.431597557284876e-06,
+            2.5294792671854626e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 650.8300692141056,
+          "status": "ok",
+          "step": 20860
+        },
+        {
+          "RMSE_LC": 0.15025864866730343,
+          "best_updated": false,
+          "epoch": 29,
+          "lr": [
+            2.496605739102448e-05,
+            8.322019130341494e-06,
+            2.496605739102448e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227705344,
+          "seconds": 642.2432393245399,
+          "status": "ok",
+          "step": 21605
+        },
+        {
+          "RMSE_LC": 0.1498123780810034,
+          "best_updated": false,
+          "epoch": 30,
+          "lr": [
+            2.462883092485698e-05,
+            8.20961030828566e-06,
+            2.462883092485698e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225477120,
+          "seconds": 641.9439775943756,
+          "status": "ok",
+          "step": 22350
+        },
+        {
+          "RMSE_LC": 0.15041075461006137,
+          "best_updated": false,
+          "epoch": 31,
+          "lr": [
+            2.428345150073384e-05,
+            8.094483833577946e-06,
+            2.428345150073384e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225739264,
+          "seconds": 646.7675562128425,
+          "status": "ok",
+          "step": 23095
+        },
+        {
+          "RMSE_LC": 0.14993681225888827,
+          "best_updated": false,
+          "epoch": 32,
+          "lr": [
+            2.3930265523193384e-05,
+            7.976755174397795e-06,
+            2.3930265523193384e-05
+          ],
+          "peak_cuda_bytes_rank0": 27226001408,
+          "seconds": 627.219700243324,
+          "status": "ok",
+          "step": 23840
+        },
+        {
+          "RMSE_LC": 0.15028556522400532,
+          "best_updated": false,
+          "epoch": 33,
+          "lr": [
+            2.3569627226497843e-05,
+            7.856542408832615e-06,
+            2.3569627226497843e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225477120,
+          "seconds": 616.5498529039323,
+          "status": "ok",
+          "step": 24585
+        },
+        {
+          "RMSE_LC": 0.1500875337279753,
+          "best_updated": false,
+          "epoch": 34,
+          "lr": [
+            2.3201898319347674e-05,
+            7.733966106449225e-06,
+            2.3201898319347674e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227574272,
+          "seconds": 608.5726254656911,
+          "status": "ok",
+          "step": 25330
+        },
+        {
+          "RMSE_LC": 0.14972080785644648,
+          "best_updated": true,
+          "epoch": 35,
+          "lr": [
+            2.282744762209932e-05,
+            7.60914920736644e-06,
+            2.282744762209932e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 606.764267001301,
+          "status": "ok",
+          "step": 26075
+        },
+        {
+          "RMSE_LC": 0.15026885346468555,
+          "best_updated": false,
+          "epoch": 36,
+          "lr": [
+            2.2446650696850112e-05,
+            7.4822168989500375e-06,
+            2.2446650696850112e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 607.4089377485216,
+          "status": "ok",
+          "step": 26820
+        },
+        {
+          "RMSE_LC": 0.15079193889999706,
+          "best_updated": false,
+          "epoch": 37,
+          "lr": [
+            2.2059889470761537e-05,
+            7.353296490253846e-06,
+            2.2059889470761537e-05
+          ],
+          "peak_cuda_bytes_rank0": 27226001408,
+          "seconds": 607.8009272962809,
+          "status": "ok",
+          "step": 27565
+        },
+        {
+          "RMSE_LC": 0.15014835665588766,
+          "best_updated": false,
+          "epoch": 38,
+          "lr": [
+            2.166755185299842e-05,
+            7.222517284332807e-06,
+            2.166755185299842e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227705344,
+          "seconds": 606.580113414675,
+          "status": "ok",
+          "step": 28310
+        },
+        {
+          "RMSE_LC": 0.15036924074904945,
+          "best_updated": false,
+          "epoch": 39,
+          "lr": [
+            2.1270031345668463e-05,
+            7.090010448556155e-06,
+            2.1270031345668463e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 608.1923381797969,
+          "status": "ok",
+          "step": 29055
+        },
+        {
+          "RMSE_LC": 0.14996615524011184,
+          "best_updated": false,
+          "epoch": 40,
+          "lr": [
+            2.0867726649152164e-05,
+            6.955908883050722e-06,
+            2.0867726649152164e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 623.3034587912261,
+          "status": "ok",
+          "step": 29800
+        },
+        {
+          "RMSE_LC": 0.150157832207219,
+          "best_updated": false,
+          "epoch": 41,
+          "lr": [
+            2.0461041262219078e-05,
+            6.820347087406359e-06,
+            2.0461041262219078e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 609.7317625209689,
+          "status": "ok",
+          "step": 30545
+        },
+        {
+          "RMSE_LC": 0.15030392884854404,
+          "best_updated": false,
+          "epoch": 42,
+          "lr": [
+            2.0050383077331398e-05,
+            6.683461025777132e-06,
+            2.0050383077331398e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 641.9767996817827,
+          "status": "ok",
+          "step": 31290
+        },
+        {
+          "RMSE_LC": 0.15059033019753573,
+          "best_updated": false,
+          "epoch": 43,
+          "lr": [
+            1.9636163971540897e-05,
+            6.545387990513633e-06,
+            1.9636163971540897e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225477120,
+          "seconds": 654.8380915261805,
+          "status": "ok",
+          "step": 32035
+        },
+        {
+          "RMSE_LC": 0.1501621281554469,
+          "best_updated": false,
+          "epoch": 44,
+          "lr": [
+            1.921879939338933e-05,
+            6.406266464463111e-06,
+            1.921879939338933e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 656.4990052953362,
+          "status": "ok",
+          "step": 32780
+        },
+        {
+          "RMSE_LC": 0.14958035595615943,
+          "best_updated": true,
+          "epoch": 45,
+          "lr": [
+            1.8798707946226827e-05,
+            6.266235982075609e-06,
+            1.8798707946226827e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 654.6115213185549,
+          "status": "ok",
+          "step": 33525
+        },
+        {
+          "RMSE_LC": 0.1501498845220368,
+          "best_updated": false,
+          "epoch": 46,
+          "lr": [
+            1.8376310968366107e-05,
+            6.125436989455369e-06,
+            1.8376310968366107e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 653.3542157709599,
+          "status": "ok",
+          "step": 34270
+        },
+        {
+          "RMSE_LC": 0.14982169186590097,
+          "best_updated": false,
+          "epoch": 47,
+          "lr": [
+            1.7952032110493586e-05,
+            5.9840107034978624e-06,
+            1.7952032110493586e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227705344,
+          "seconds": 653.5975601151586,
+          "status": "ok",
+          "step": 35015
+        },
+        {
+          "RMSE_LC": 0.1504128344497314,
+          "best_updated": false,
+          "epoch": 48,
+          "lr": [
+            1.7526296910761268e-05,
+            5.8420989702537565e-06,
+            1.7526296910761268e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 654.0174386166036,
+          "status": "ok",
+          "step": 35760
+        },
+        {
+          "RMSE_LC": 0.15028939562510074,
+          "best_updated": false,
+          "epoch": 49,
+          "lr": [
+            1.7099532367985558e-05,
+            5.699844122661853e-06,
+            1.7099532367985558e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 653.4884946942329,
+          "status": "ok",
+          "step": 36505
+        },
+        {
+          "RMSE_LC": 0.1503177306127182,
+          "best_updated": false,
+          "epoch": 50,
+          "lr": [
+            1.667216651338107e-05,
+            5.557388837793691e-06,
+            1.667216651338107e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225477120,
+          "seconds": 650.1846600957215,
+          "status": "ok",
+          "step": 37250
+        },
+        {
+          "RMSE_LC": 0.14953470412259215,
+          "best_updated": true,
+          "epoch": 51,
+          "lr": [
+            1.6244627981258996e-05,
+            5.414875993753e-06,
+            1.6244627981258996e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227705344,
+          "seconds": 651.4310765787959,
+          "status": "ok",
+          "step": 37995
+        },
+        {
+          "RMSE_LC": 0.15036206544328043,
+          "best_updated": false,
+          "epoch": 52,
+          "lr": [
+            1.5817345579120575e-05,
+            5.272448526373525e-06,
+            1.5817345579120575e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 650.9450443610549,
+          "status": "ok",
+          "step": 38740
+        },
+        {
+          "RMSE_LC": 0.15043129133050587,
+          "best_updated": false,
+          "epoch": 53,
+          "lr": [
+            1.539074785757682e-05,
+            5.13024928585894e-06,
+            1.539074785757682e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 651.2707453034818,
+          "status": "ok",
+          "step": 39485
+        },
+        {
+          "RMSE_LC": 0.15032002502493064,
+          "best_updated": false,
+          "epoch": 54,
+          "lr": [
+            1.4965262680525999e-05,
+            4.988420893508667e-06,
+            1.4965262680525999e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 652.5573803782463,
+          "status": "ok",
+          "step": 40230
+        },
+        {
+          "RMSE_LC": 0.14986561466957904,
+          "best_updated": false,
+          "epoch": 55,
+          "lr": [
+            1.4541316796019735e-05,
+            4.847105598673245e-06,
+            1.4541316796019735e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225739264,
+          "seconds": 651.6666144728661,
+          "status": "ok",
+          "step": 40975
+        },
+        {
+          "RMSE_LC": 0.14996581476313448,
+          "best_updated": false,
+          "epoch": 56,
+          "lr": [
+            1.4119335408248372e-05,
+            4.706445136082791e-06,
+            1.4119335408248372e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 651.8001810386777,
+          "status": "ok",
+          "step": 41720
+        },
+        {
+          "RMSE_LC": 0.1498547830924109,
+          "best_updated": false,
+          "epoch": 57,
+          "lr": [
+            1.3699741751074739e-05,
+            4.56658058369158e-06,
+            1.3699741751074739e-05
+          ],
+          "peak_cuda_bytes_rank0": 27226656768,
+          "seconds": 645.2291745729744,
+          "status": "ok",
+          "step": 42465
+        },
+        {
+          "RMSE_LC": 0.15043226817769248,
+          "best_updated": false,
+          "epoch": 58,
+          "lr": [
+            1.3282956663544075e-05,
+            4.427652221181359e-06,
+            1.3282956663544075e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 712.7687516100705,
+          "status": "ok",
+          "step": 43210
+        },
+        {
+          "RMSE_LC": 0.15019818592196207,
+          "best_updated": false,
+          "epoch": 59,
+          "lr": [
+            1.2869398167795923e-05,
+            4.289799389265308e-06,
+            1.2869398167795923e-05
+          ],
+          "peak_cuda_bytes_rank0": 27225214976,
+          "seconds": 1021.2894615344703,
+          "status": "ok",
+          "step": 43955
+        },
+        {
+          "RMSE_LC": 0.150262455949145,
+          "best_updated": false,
+          "epoch": 60,
+          "lr": [
+            1.2459481049801256e-05,
+            4.1531603499337526e-06,
+            1.2459481049801256e-05
+          ],
+          "peak_cuda_bytes_rank0": 27227705344,
+          "seconds": 1111.921049065888,
+          "status": "ok",
+          "step": 44700
+        }
+      ],
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "recursive",
+        "endpoint_target": "detached_direct",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      }
+    },
+    "BASELINE": {
+      "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_baseline_D946_60ep_20261114_02/D/formal/best_val.pt",
+      "sha256": "49975a2084ed973c38d48b7bf78ce42b96fafbd22017fcbe788056e22143b94c",
+      "best_epoch": 47,
+      "best_step": 35015,
+      "validation_RMSE_LC": 0.15014123544673988,
+      "actual_training_updates": 44700,
+      "actual_training_epochs": 60,
+      "selection_window_epochs": 60,
+      "schedule_horizon_updates": 74500,
+      "lr_prefix_60_epochs_verified": true,
+      "parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "summary_sha256": "31018d8150845d3f1693d556dcdb93d241e28caa21dca10f531c8d75dbabe334",
+      "validation_history_1_60": [
+        {
+          "RMSE_LC": 0.15135091173282905,
+          "best_updated": true,
+          "epoch": 1,
+          "lr": [
+            9.999914507500201e-06,
+            2.9999743522500603e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499277824,
+          "seconds": 474.0812752582133,
+          "status": "ok",
+          "step": 745
+        },
+        {
+          "RMSE_LC": 0.15049749124379372,
+          "best_updated": true,
+          "epoch": 2,
+          "lr": [
+            9.996779512693539e-06,
+            2.9990338538080614e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 549.0607339851558,
+          "status": "ok",
+          "step": 1490
+        },
+        {
+          "RMSE_LC": 0.1510449004198839,
+          "best_updated": false,
+          "epoch": 3,
+          "lr": [
+            9.989134391567155e-06,
+            2.9967403174701466e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 536.4340420477092,
+          "status": "ok",
+          "step": 2235
+        },
+        {
+          "RMSE_LC": 0.15128419749919186,
+          "best_updated": false,
+          "epoch": 4,
+          "lr": [
+            9.97698681193352e-06,
+            2.9930960435800558e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 560.4311176873744,
+          "status": "ok",
+          "step": 2980
+        },
+        {
+          "RMSE_LC": 0.1509516383395771,
+          "best_updated": false,
+          "epoch": 5,
+          "lr": [
+            9.960348957427268e-06,
+            2.9881046872281803e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 548.0794362425804,
+          "status": "ok",
+          "step": 3725
+        },
+        {
+          "RMSE_LC": 0.15077897409188215,
+          "best_updated": false,
+          "epoch": 6,
+          "lr": [
+            9.939237515285413e-06,
+            2.9817712545856238e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 491.02161556854844,
+          "status": "ok",
+          "step": 4470
+        },
+        {
+          "RMSE_LC": 0.15076271323569668,
+          "best_updated": false,
+          "epoch": 7,
+          "lr": [
+            9.91367365961057e-06,
+            2.9741020978831704e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 506.0587373524904,
+          "status": "ok",
+          "step": 5215
+        },
+        {
+          "RMSE_LC": 0.15147211342013267,
+          "best_updated": false,
+          "epoch": 8,
+          "lr": [
+            9.883683030134014e-06,
+            2.965104909040204e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 592.3415558151901,
+          "status": "ok",
+          "step": 5960
+        },
+        {
+          "RMSE_LC": 0.15133085491411793,
+          "best_updated": false,
+          "epoch": 9,
+          "lr": [
+            9.849295706499848e-06,
+            2.9547887119499544e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 540.7423364557326,
+          "status": "ok",
+          "step": 6705
+        },
+        {
+          "RMSE_LC": 0.1512511727748932,
+          "best_updated": false,
+          "epoch": 10,
+          "lr": [
+            9.81054617809608e-06,
+            2.943163853428824e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 625.3466063514352,
+          "status": "ok",
+          "step": 7450
+        },
+        {
+          "RMSE_LC": 0.15099413578725096,
+          "best_updated": false,
+          "epoch": 11,
+          "lr": [
+            9.767473309462861e-06,
+            2.930241992838858e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 574.5336346775293,
+          "status": "ok",
+          "step": 8195
+        },
+        {
+          "RMSE_LC": 0.15103668930996617,
+          "best_updated": false,
+          "epoch": 12,
+          "lr": [
+            9.720120301312596e-06,
+            2.916036090393779e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 682.1143070608377,
+          "status": "ok",
+          "step": 8940
+        },
+        {
+          "RMSE_LC": 0.15027839194206538,
+          "best_updated": true,
+          "epoch": 13,
+          "lr": [
+            9.668534647201016e-06,
+            2.9005603941603045e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 667.8643238767982,
+          "status": "ok",
+          "step": 9685
+        },
+        {
+          "RMSE_LC": 0.15118192764647276,
+          "best_updated": false,
+          "epoch": 14,
+          "lr": [
+            9.612768085892644e-06,
+            2.8838304257677928e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 564.137554064393,
+          "status": "ok",
+          "step": 10430
+        },
+        {
+          "RMSE_LC": 0.15108663408109585,
+          "best_updated": false,
+          "epoch": 15,
+          "lr": [
+            9.552876549468474e-06,
+            2.865862964840542e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 619.9368556216359,
+          "status": "ok",
+          "step": 11175
+        },
+        {
+          "RMSE_LC": 0.15113521028659035,
+          "best_updated": false,
+          "epoch": 16,
+          "lr": [
+            9.488920107227877e-06,
+            2.8466760321683632e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 577.6049046032131,
+          "status": "ok",
+          "step": 11920
+        },
+        {
+          "RMSE_LC": 0.15113562604695369,
+          "best_updated": false,
+          "epoch": 17,
+          "lr": [
+            9.420962905441015e-06,
+            2.826288871632304e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 595.6026775129139,
+          "status": "ok",
+          "step": 12665
+        },
+        {
+          "RMSE_LC": 0.15147538208141437,
+          "best_updated": false,
+          "epoch": 18,
+          "lr": [
+            9.349073103012169e-06,
+            2.8047219309036505e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 612.8322308398783,
+          "status": "ok",
+          "step": 13410
+        },
+        {
+          "RMSE_LC": 0.15073849154105956,
+          "best_updated": false,
+          "epoch": 19,
+          "lr": [
+            9.273322803118544e-06,
+            2.781996840935563e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 577.8487731181085,
+          "status": "ok",
+          "step": 14155
+        },
+        {
+          "RMSE_LC": 0.15115540198991,
+          "best_updated": false,
+          "epoch": 20,
+          "lr": [
+            9.19378798089308e-06,
+            2.758136394267924e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 585.0884920582175,
+          "status": "ok",
+          "step": 14900
+        },
+        {
+          "RMSE_LC": 0.1511408792032074,
+          "best_updated": false,
+          "epoch": 21,
+          "lr": [
+            9.110548407223819e-06,
+            2.7331645221671454e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 558.4270862862468,
+          "status": "ok",
+          "step": 15645
+        },
+        {
+          "RMSE_LC": 0.15114157393394267,
+          "best_updated": false,
+          "epoch": 22,
+          "lr": [
+            9.023687568746248e-06,
+            2.7071062706238743e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 451.37864277884364,
+          "status": "ok",
+          "step": 16390
+        },
+        {
+          "RMSE_LC": 0.15095383168855225,
+          "best_updated": false,
+          "epoch": 23,
+          "lr": [
+            8.933292584108872e-06,
+            2.679987775232661e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 552.067457202822,
+          "status": "ok",
+          "step": 17135
+        },
+        {
+          "RMSE_LC": 0.15053217974049965,
+          "best_updated": false,
+          "epoch": 24,
+          "lr": [
+            8.83945411659599e-06,
+            2.6518362349787967e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 546.8192339763045,
+          "status": "ok",
+          "step": 17880
+        },
+        {
+          "RMSE_LC": 0.15098225963470951,
+          "best_updated": false,
+          "epoch": 25,
+          "lr": [
+            8.742266283195311e-06,
+            2.6226798849585934e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 574.0966338142753,
+          "status": "ok",
+          "step": 18625
+        },
+        {
+          "RMSE_LC": 0.15054628547708937,
+          "best_updated": false,
+          "epoch": 26,
+          "lr": [
+            8.641826560201627e-06,
+            2.5925479680604878e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 562.8362385481596,
+          "status": "ok",
+          "step": 19370
+        },
+        {
+          "RMSE_LC": 0.15095147327060043,
+          "best_updated": false,
+          "epoch": 27,
+          "lr": [
+            8.538235685451187e-06,
+            2.5614707056353556e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 532.8290499225259,
+          "status": "ok",
+          "step": 20115
+        },
+        {
+          "RMSE_LC": 0.15061389007498047,
+          "best_updated": false,
+          "epoch": 28,
+          "lr": [
+            8.431597557284876e-06,
+            2.5294792671854626e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 566.9292352534831,
+          "status": "ok",
+          "step": 20860
+        },
+        {
+          "RMSE_LC": 0.15059992945359937,
+          "best_updated": false,
+          "epoch": 29,
+          "lr": [
+            8.322019130341494e-06,
+            2.496605739102448e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 569.5820329599082,
+          "status": "ok",
+          "step": 21605
+        },
+        {
+          "RMSE_LC": 0.150942814518638,
+          "best_updated": false,
+          "epoch": 30,
+          "lr": [
+            8.20961030828566e-06,
+            2.462883092485698e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 513.619652274996,
+          "status": "ok",
+          "step": 22350
+        },
+        {
+          "RMSE_LC": 0.15101210569687534,
+          "best_updated": false,
+          "epoch": 31,
+          "lr": [
+            8.094483833577946e-06,
+            2.428345150073384e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 489.00173132121563,
+          "status": "ok",
+          "step": 23095
+        },
+        {
+          "RMSE_LC": 0.15112222315279733,
+          "best_updated": false,
+          "epoch": 32,
+          "lr": [
+            7.976755174397795e-06,
+            2.3930265523193384e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 415.2263916730881,
+          "status": "ok",
+          "step": 23840
+        },
+        {
+          "RMSE_LC": 0.15128228448570136,
+          "best_updated": false,
+          "epoch": 33,
+          "lr": [
+            7.856542408832615e-06,
+            2.3569627226497843e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 410.47983995079994,
+          "status": "ok",
+          "step": 24585
+        },
+        {
+          "RMSE_LC": 0.1503234345059236,
+          "best_updated": false,
+          "epoch": 34,
+          "lr": [
+            7.733966106449225e-06,
+            2.3201898319347674e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 415.97231189906597,
+          "status": "ok",
+          "step": 25330
+        },
+        {
+          "RMSE_LC": 0.15023339017008744,
+          "best_updated": true,
+          "epoch": 35,
+          "lr": [
+            7.60914920736644e-06,
+            2.282744762209932e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 416.8056003674865,
+          "status": "ok",
+          "step": 26075
+        },
+        {
+          "RMSE_LC": 0.15115838495657669,
+          "best_updated": false,
+          "epoch": 36,
+          "lr": [
+            7.4822168989500375e-06,
+            2.2446650696850112e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 413.11786311492324,
+          "status": "ok",
+          "step": 26820
+        },
+        {
+          "RMSE_LC": 0.1512202246561128,
+          "best_updated": false,
+          "epoch": 37,
+          "lr": [
+            7.353296490253846e-06,
+            2.2059889470761537e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 411.486144926399,
+          "status": "ok",
+          "step": 27565
+        },
+        {
+          "RMSE_LC": 0.1507321835021508,
+          "best_updated": false,
+          "epoch": 38,
+          "lr": [
+            7.222517284332807e-06,
+            2.166755185299842e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 416.31409856304526,
+          "status": "ok",
+          "step": 28310
+        },
+        {
+          "RMSE_LC": 0.15060899231039962,
+          "best_updated": false,
+          "epoch": 39,
+          "lr": [
+            7.090010448556155e-06,
+            2.1270031345668463e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 409.3617910556495,
+          "status": "ok",
+          "step": 29055
+        },
+        {
+          "RMSE_LC": 0.15028094719418827,
+          "best_updated": false,
+          "epoch": 40,
+          "lr": [
+            6.955908883050722e-06,
+            2.0867726649152164e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 411.904839232564,
+          "status": "ok",
+          "step": 29800
+        },
+        {
+          "RMSE_LC": 0.150824347349593,
+          "best_updated": false,
+          "epoch": 41,
+          "lr": [
+            6.820347087406359e-06,
+            2.0461041262219078e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 462.05754022300243,
+          "status": "ok",
+          "step": 30545
+        },
+        {
+          "RMSE_LC": 0.150609911809784,
+          "best_updated": false,
+          "epoch": 42,
+          "lr": [
+            6.683461025777132e-06,
+            2.0050383077331398e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 436.4163659848273,
+          "status": "ok",
+          "step": 31290
+        },
+        {
+          "RMSE_LC": 0.1513372718263673,
+          "best_updated": false,
+          "epoch": 43,
+          "lr": [
+            6.545387990513633e-06,
+            1.9636163971540897e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 415.85288620740175,
+          "status": "ok",
+          "step": 32035
+        },
+        {
+          "RMSE_LC": 0.15027986065944351,
+          "best_updated": false,
+          "epoch": 44,
+          "lr": [
+            6.406266464463111e-06,
+            1.921879939338933e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 408.9023338109255,
+          "status": "ok",
+          "step": 32780
+        },
+        {
+          "RMSE_LC": 0.15076412788414623,
+          "best_updated": false,
+          "epoch": 45,
+          "lr": [
+            6.266235982075609e-06,
+            1.8798707946226827e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 409.50347777083516,
+          "status": "ok",
+          "step": 33525
+        },
+        {
+          "RMSE_LC": 0.15094874060786737,
+          "best_updated": false,
+          "epoch": 46,
+          "lr": [
+            6.125436989455369e-06,
+            1.8376310968366107e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 407.3987107947469,
+          "status": "ok",
+          "step": 34270
+        },
+        {
+          "RMSE_LC": 0.15014123544673988,
+          "best_updated": true,
+          "epoch": 47,
+          "lr": [
+            5.9840107034978624e-06,
+            1.7952032110493586e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 417.94248751178384,
+          "status": "ok",
+          "step": 35015
+        },
+        {
+          "RMSE_LC": 0.15060609444145956,
+          "best_updated": false,
+          "epoch": 48,
+          "lr": [
+            5.8420989702537565e-06,
+            1.7526296910761268e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 414.5162761993706,
+          "status": "ok",
+          "step": 35760
+        },
+        {
+          "RMSE_LC": 0.15104489872783597,
+          "best_updated": false,
+          "epoch": 49,
+          "lr": [
+            5.699844122661853e-06,
+            1.7099532367985558e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 413.67108096927404,
+          "status": "ok",
+          "step": 36505
+        },
+        {
+          "RMSE_LC": 0.15071400085543843,
+          "best_updated": false,
+          "epoch": 50,
+          "lr": [
+            5.557388837793691e-06,
+            1.667216651338107e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 413.29011065885425,
+          "status": "ok",
+          "step": 37250
+        },
+        {
+          "RMSE_LC": 0.1502311332659356,
+          "best_updated": false,
+          "epoch": 51,
+          "lr": [
+            5.414875993753e-06,
+            1.6244627981258996e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 411.3406697027385,
+          "status": "ok",
+          "step": 37995
+        },
+        {
+          "RMSE_LC": 0.15115705209972735,
+          "best_updated": false,
+          "epoch": 52,
+          "lr": [
+            5.272448526373525e-06,
+            1.5817345579120575e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 415.2180288992822,
+          "status": "ok",
+          "step": 38740
+        },
+        {
+          "RMSE_LC": 0.15094529568475373,
+          "best_updated": false,
+          "epoch": 53,
+          "lr": [
+            5.13024928585894e-06,
+            1.539074785757682e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 412.07400895655155,
+          "status": "ok",
+          "step": 39485
+        },
+        {
+          "RMSE_LC": 0.15081816583109792,
+          "best_updated": false,
+          "epoch": 54,
+          "lr": [
+            4.988420893508667e-06,
+            1.4965262680525999e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 413.46420680359006,
+          "status": "ok",
+          "step": 40230
+        },
+        {
+          "RMSE_LC": 0.15069237097355448,
+          "best_updated": false,
+          "epoch": 55,
+          "lr": [
+            4.847105598673245e-06,
+            1.4541316796019735e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 412.18024561554193,
+          "status": "ok",
+          "step": 40975
+        },
+        {
+          "RMSE_LC": 0.1507113917958973,
+          "best_updated": false,
+          "epoch": 56,
+          "lr": [
+            4.706445136082791e-06,
+            1.4119335408248372e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 412.6682545542717,
+          "status": "ok",
+          "step": 41720
+        },
+        {
+          "RMSE_LC": 0.1506557951957262,
+          "best_updated": false,
+          "epoch": 57,
+          "lr": [
+            4.56658058369158e-06,
+            1.3699741751074739e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 411.62438758835196,
+          "status": "ok",
+          "step": 42465
+        },
+        {
+          "RMSE_LC": 0.15096227535078607,
+          "best_updated": false,
+          "epoch": 58,
+          "lr": [
+            4.427652221181359e-06,
+            1.3282956663544075e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 412.05391209572554,
+          "status": "ok",
+          "step": 43210
+        },
+        {
+          "RMSE_LC": 0.15083440552771715,
+          "best_updated": false,
+          "epoch": 59,
+          "lr": [
+            4.289799389265308e-06,
+            1.2869398167795923e-05
+          ],
+          "peak_cuda_bytes_rank0": 13500326400,
+          "seconds": 413.82979851588607,
+          "status": "ok",
+          "step": 43955
+        },
+        {
+          "RMSE_LC": 0.15095579861213515,
+          "best_updated": false,
+          "epoch": 60,
+          "lr": [
+            4.1531603499337526e-06,
+            1.2459481049801256e-05
+          ],
+          "peak_cuda_bytes_rank0": 13499933184,
+          "seconds": 412.41957359761,
+          "status": "ok",
+          "step": 44700
+        }
+      ],
+      "contract_cfg": {
+        "arch": "SpanWorldBaselineOnly",
+        "route_version": "spanworld_baseline_only_v1",
+        "experiment": "baseline_only_retrain",
+        "training_stage": "stage2",
+        "variant": "D",
+        "factual_path": "direct",
+        "use_adaln": false,
+        "freeze_b0": false,
+        "supervision_v2": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_only",
+        "context_length": 10,
+        "target_length": 20,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "continuation": "not_applicable"
+      }
+    }
+  },
+  "rule": "minimum validation RMSE_LC in epochs1..60, first tie; user revision after training, not preregistered; no test selection",
+  "time": 1794635137.715332
+}

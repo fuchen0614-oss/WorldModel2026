@@ -1,0 +1,20 @@
+[
+  {
+    "model": "C1",
+    "path": "E:\\MineProgram\\codexwork\\CVPRAAAI\u6295\u7a3f\\WorldModel2026v2\\terrastate\\\u601d\u8def\u6574\u7406\u8fdb\u5c55\\03_\u5173\u952e\u5b9e\u9a8c\u7ed3\u679c\\D_seed42_ablation60_20261114\\fairness_audit\\evidence\\D\\tables\\C1_standard_receipt.json",
+    "sha256": "704ba5c450b7884524a242eb1e24c300366abae69036989bc288a872f971a86c",
+    "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb"
+  },
+  {
+    "model": "C0R",
+    "path": "E:\\MineProgram\\codexwork\\CVPRAAAI\u6295\u7a3f\\WorldModel2026v2\\terrastate\\\u601d\u8def\u6574\u7406\u8fdb\u5c55\\03_\u5173\u952e\u5b9e\u9a8c\u7ed3\u679c\\D_seed42_ablation60_20261114\\fairness_audit\\evidence\\D\\tables\\C0R_standard_receipt.json",
+    "sha256": "df4071b232d65bbfe754eaa14758de5617bbe1c284584ef026396cd3ac42db97",
+    "checkpoint_sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b"
+  },
+  {
+    "model": "CONSISTENCY",
+    "path": "E:\\MineProgram\\codexwork\\CVPRAAAI\u6295\u7a3f\\WorldModel2026v2\\terrastate\\\u601d\u8def\u6574\u7406\u8fdb\u5c55\\03_\u5173\u952e\u5b9e\u9a8c\u7ed3\u679c\\D_consistency_seed42_60ep_20261114\\result.json",
+    "sha256": "c47e9ee2dc2702b15c5ed1f02984e187bea0800734e828becae08d4d1bd0e49b",
+    "checkpoint_sha256": "f1334bb429238f84635e2a12b2ddc43c170dadd2d6f9d5c7a60d236c2606f3f8"
+  }
+]

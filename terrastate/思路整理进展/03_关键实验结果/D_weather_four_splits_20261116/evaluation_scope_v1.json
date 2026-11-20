@@ -1,0 +1,59 @@
+{
+  "status": "SCOPE_FROZEN_BEFORE_NEW_RESULTS; EXECUTION_GATED_ON_PARITY_AND_COVERAGE",
+  "model": "D-C1 seed42 validation selected epoch51",
+  "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+  "splits": {
+    "iid_chopped": 2856,
+    "ood-t_chopped": 1904,
+    "ood-s_chopped": 10536,
+    "ood-st_chopped": 7024
+  },
+  "total_manifest_samples": 22320,
+  "scope": "all four existing downloaded test splits; not new datasets or training",
+  "intervention": "state branch only, factual baseline and initial state fixed, receiver calendar preserved",
+  "arms": [
+    "actual",
+    "matched_normal_donor",
+    "normalized_mean"
+  ],
+  "primary": "per-receiver masked full100day MSE; report paired donor-minus-actual and mean-minus-actual, unchanged original scoring",
+  "matching": {
+    "normal_band": 0.75,
+    "valid_fraction_min": 0.8,
+    "same_meteorological_season": true,
+    "caliper": 1.5,
+    "reuse_cap": 5,
+    "within_same_split": true,
+    "self_match": false,
+    "matching_features": [
+      "doy",
+      "lat",
+      "lon",
+      "lc_veg_frac",
+      "ctx_cloud_ratio",
+      "ctx_valid_frac",
+      "ctx_ndvi_mean",
+      "future_valid_frac"
+    ],
+    "training_climatology": "reuse frozen extreme_audit_oodt_v1/climatology_train.json",
+    "receiver_change": "all eligible weather conditions instead of heat/drought threshold",
+    "coverage_gate": "report read failures, weather-ineligible, unmatched, matched, score-invalid; do not silently relax thresholds; inspect manifest before model-result evaluation"
+  },
+  "uncertainty": "preserve paired and geographic/donor cluster bootstrap protocol; record group IDs/counts; not training-seed variability",
+  "reporting": "all four splits regardless direction; no outcome-based split selection; original84 results preserved separately",
+  "gates": [
+    "read existing parity runtime, no duplicate launch",
+    "actual arm vs formal forecast numerical parity and archived actual MSE",
+    "coverage manifest QA including no self donor",
+    "fixed non-outcome-selected technical pilot",
+    "parallel full predeclared matched sets"
+  ],
+  "resources": "one worker per available GPU initially, shard large splits; no interruption of current training; reduce stdout and archive real exits/PIDs/checkpoint/hash/coverage",
+  "not_authorized_here": [
+    "new training",
+    "R2 expansion",
+    "whole-model weather intervention",
+    "deletion of original84",
+    "paper edits"
+  ]
+}

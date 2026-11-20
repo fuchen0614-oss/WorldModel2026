@@ -1,0 +1,22 @@
+[
+  {
+    "file": "c1_100epoch_three_seeds_all_metrics.csv",
+    "sha256": "73805fd1a8435aa2c0aec85ae232ba2102ff179920f5f78cb0b23e906d092ffa",
+    "bytes": 8430
+  },
+  {
+    "file": "c1_100epoch_three_seeds_summary.csv",
+    "sha256": "6ec111a86ea27cd8f053e3f95db6dd6abfec8de67bc861df0a9add81f963de2c",
+    "bytes": 1078
+  },
+  {
+    "file": "c1_100epoch_vs_original_three_seeds.csv",
+    "sha256": "c6176246411a20eb9d08bf61261eb489317a13173055de43250e483b440a4b79",
+    "bytes": 842
+  },
+  {
+    "file": "seed97_cpu_evaluation_receipt.json",
+    "sha256": "6d873b5cb7e896cf333a06b14230ea1d0c70b60dd15ed71eff2f2bf89db0c471",
+    "bytes": 6706
+  }
+]

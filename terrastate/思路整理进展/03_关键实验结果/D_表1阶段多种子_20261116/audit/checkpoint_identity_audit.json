@@ -1,0 +1,43 @@
+{
+  "status": "PASS_FILE_IDENTITIES_AND_PLANNED_BUDGET",
+  "n": 6,
+  "final_selection_status": "not fully verified",
+  "checkpoints": {
+    "27C1": {
+      "epoch": 34,
+      "step": 25330,
+      "actual_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/7065e020626ea497185ef00b87a01ce246603e61fa07bc5ac79da114c3e5d38a/next/best_frozen.pt",
+      "actual_sha256": "7065e020626ea497185ef00b87a01ce246603e61fa07bc5ac79da114c3e5d38a"
+    },
+    "27C0R": {
+      "epoch": 34,
+      "step": 25330,
+      "actual_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/250786eff46469053e89b685ee56246882251a13a743c1e7166a5e2b0158c05e/next/best_frozen.pt",
+      "actual_sha256": "250786eff46469053e89b685ee56246882251a13a743c1e7166a5e2b0158c05e"
+    },
+    "97C1": {
+      "epoch": 42,
+      "step": 31290,
+      "actual_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/bcf423992db4cffad96f5ce7aa3917c205553542d334556056bec2eef5f81356/next/best_frozen.pt",
+      "actual_sha256": "bcf423992db4cffad96f5ce7aa3917c205553542d334556056bec2eef5f81356"
+    },
+    "97C0R": {
+      "epoch": 42,
+      "step": 31290,
+      "actual_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/unified_training_dispatch_20261115_01/evaluations/9b5d115be43a18a682408df4e37b565b904d6a486f9f83c1ea1b2bcbdccac771/next/best_frozen.pt",
+      "actual_sha256": "9b5d115be43a18a682408df4e37b565b904d6a486f9f83c1ea1b2bcbdccac771"
+    },
+    "42C1": {
+      "epoch": 51,
+      "step": 37995,
+      "actual_path": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+      "actual_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb"
+    },
+    "42C0R": {
+      "epoch": 19,
+      "step": 14155,
+      "actual_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+      "actual_sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b"
+    }
+  }
+}

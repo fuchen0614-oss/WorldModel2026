@@ -1,0 +1,584 @@
+[
+  {
+    "path": "source_c1/configs/spanworld_full_base/stage1_A.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage1_A.json",
+    "sha256": "95ce51e2479a2b8696f0b1e33c0446c149d45c1cf6a22c31c7b0fcb1ae8479a8",
+    "bytes": 995
+  },
+  {
+    "path": "source_c1/configs/spanworld_full_base/stage2_A.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage2_A.json",
+    "sha256": "0f9e37215fa29312daed6aa772e468c49086ab352a656b10ea49a4d2cba9bb84",
+    "bytes": 1017
+  },
+  {
+    "path": "source_c1/configs/spanworld_full_base/stage2_B.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage2_B.json",
+    "sha256": "8dad1c11763b2205bf697cd8fc0c6c8d858b1c9758c134a1a77c3a352b9b4d3d",
+    "bytes": 1025
+  },
+  {
+    "path": "source_c1/configs/spanworld_full_base/stage2_C.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage2_C.json",
+    "sha256": "32fa482cc1d894b46566a3a6803df11c2d4e2e4bb2072aaf00bc99e5ee207612",
+    "bytes": 1018
+  },
+  {
+    "path": "source_c1/configs/spanworld_full_base/stage2_D.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage2_D.json",
+    "sha256": "8602357a061586d41e0333752711ae4f8af9ba0195e09117a63ca808282242dd",
+    "bytes": 1026
+  },
+  {
+    "path": "source_c1/data/calendar_features.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/data/calendar_features.py",
+    "sha256": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc",
+    "bytes": 388
+  },
+  {
+    "path": "source_c1/data/earthnet_manifest.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/data/earthnet_manifest.py",
+    "sha256": "8302cc297dc91a5129dddbba9ece5e62de42387bc7ed8015823e3f443c5c2336",
+    "bytes": 19328
+  },
+  {
+    "path": "source_c1/data/greenearthnet_contextformer_dataset.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/data/greenearthnet_contextformer_dataset.py",
+    "sha256": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7",
+    "bytes": 7672
+  },
+  {
+    "path": "source_c1/data/ssl4eo_l1c_l2a_paired.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/data/ssl4eo_l1c_l2a_paired.py",
+    "sha256": "9dbd6e7ad1cf6be31db6439d12967868f190ab99dbbc24abb955e5c7c84da099",
+    "bytes": 1135
+  },
+  {
+    "path": "source_c1/data/weather_contract.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/data/weather_contract.py",
+    "sha256": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e",
+    "bytes": 1795
+  },
+  {
+    "path": "source_c1/eval/__init__.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/eval/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "source_c1/eval/eval_spanworld_v2_standard.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/eval/eval_spanworld_v2_standard.py",
+    "sha256": "fc10a300f04bc642a5167aed7476b664f051d50959abac24fe3a19a66493cefe",
+    "bytes": 8352
+  },
+  {
+    "path": "source_c1/eval/eval_terrastate_candidate_c_q4.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/eval/eval_terrastate_candidate_c_q4.py",
+    "sha256": "b9244ad7074936d4e91f531cd463df15ebbd5e96c9aa485047c64204466f1514",
+    "bytes": 77179
+  },
+  {
+    "path": "source_c1/eval/exclusive_weather_v2.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/eval/exclusive_weather_v2.py",
+    "sha256": "aedec01160f53d5bf947ba2a96fcdec552fb9acb58d13e677095de5f9745cb6c",
+    "bytes": 1585
+  },
+  {
+    "path": "source_c1/eval/greenearthnet_protocol.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/eval/greenearthnet_protocol.py",
+    "sha256": "bc3e72376459fa1d6e9a1f38c4e079b4c7d731569adcc5bf31f2e7320b54ade8",
+    "bytes": 18124
+  },
+  {
+    "path": "source_c1/eval/ndvi_prediction_v2.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/eval/ndvi_prediction_v2.py",
+    "sha256": "8c826840eb90fb819827eca46a383c695e62dc9fce4198baca3915174e426aa4",
+    "bytes": 856
+  },
+  {
+    "path": "source_c1/eval/standard_eval_receipt.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/eval/standard_eval_receipt.py",
+    "sha256": "706b643cd94dabf7bb4c342f719a46f5631f63fa13d34efc03437ff1f4ae965d",
+    "bytes": 1680
+  },
+  {
+    "path": "source_c1/eval/table1_artifact_contract.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/eval/table1_artifact_contract.py",
+    "sha256": "6ce183a7e160e0da7608e887e59c6f651fd1bc4c739d5cb1145360ec60cdbc13",
+    "bytes": 2797
+  },
+  {
+    "path": "source_c1/models/dynamics/plan_b_state_contract.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/dynamics/plan_b_state_contract.py",
+    "sha256": "15e30074a284d120629421e9cd789afa8d2308cd2c69de221386c6a54938450c",
+    "bytes": 2862
+  },
+  {
+    "path": "source_c1/models/encoders/contextformer_official.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/encoders/contextformer_official.py",
+    "sha256": "ca379e01e0609752fb9794ec1db29fc754b04e08031c7122b9138f8aa9bfc6c3",
+    "bytes": 21967
+  },
+  {
+    "path": "source_c1/models/encoders/pvt_contextformer_q.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/encoders/pvt_contextformer_q.py",
+    "sha256": "57b74bdf05af716604b515d5e166ec316020742199013d3e92de77836d5fae3f",
+    "bytes": 8062
+  },
+  {
+    "path": "source_c1/models/encoders/state_projection.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/encoders/state_projection.py",
+    "sha256": "50b0a33ec28f955590297ccc8ac77ca5c33945e7287622d0339d409485e5c5a9",
+    "bytes": 982
+  },
+  {
+    "path": "source_c1/models/losses/masked_l2_ndvi.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/losses/masked_l2_ndvi.py",
+    "sha256": "b97e43a65fd814d37847e52d01a21ca643b8b036552002ebe03aa02f62671cdb",
+    "bytes": 5727
+  },
+  {
+    "path": "source_c1/models/losses/supervision_v2.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/losses/supervision_v2.py",
+    "sha256": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9",
+    "bytes": 2621
+  },
+  {
+    "path": "source_c1/models/plan_b_b4.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/plan_b_b4.py",
+    "sha256": "9728a6ad8102041c75b1278a1ad01f4961ceabadd5315ecb7e9011119ee05032",
+    "bytes": 26981
+  },
+  {
+    "path": "source_c1/models/plan_b_b4_exclusive.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/plan_b_b4_exclusive.py",
+    "sha256": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+    "bytes": 14005
+  },
+  {
+    "path": "source_c1/models/spanworld_full_base.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/spanworld_full_base.py",
+    "sha256": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625",
+    "bytes": 6967
+  },
+  {
+    "path": "source_c1/models/stage1_8_factorizer.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/stage1_8_factorizer.py",
+    "sha256": "c7853deb7fff00f313b443cc264dc5135152af1cef18ef18dcad4bb561920e2a",
+    "bytes": 3766
+  },
+  {
+    "path": "source_c1/models/terrastate_candidate_c.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/terrastate_candidate_c.py",
+    "sha256": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c",
+    "bytes": 37232
+  },
+  {
+    "path": "source_c1/models/terrastate_v2.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/models/terrastate_v2.py",
+    "sha256": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+    "bytes": 10354
+  },
+  {
+    "path": "source_c1/train/c1_checkpoint.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/c1_checkpoint.py",
+    "sha256": "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4",
+    "bytes": 1886
+  },
+  {
+    "path": "source_c1/train/c1_validation.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/c1_validation.py",
+    "sha256": "f3ef83a0e763123919ace04fd3404bdf351704a501b4710997270d9c650c203b",
+    "bytes": 2403
+  },
+  {
+    "path": "source_c1/train/efficiency_continuation.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/efficiency_continuation.py",
+    "sha256": "44d24e48b9448d9e0e4c55ab2634ec9040d63b48502b6d90e837aa87f809dc5c",
+    "bytes": 9358
+  },
+  {
+    "path": "source_c1/train/full_base_policy.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/full_base_policy.py",
+    "sha256": "944170e2d348ab86d00f6fef4464be04e29447c0f2e51022adf93c4e1338b712",
+    "bytes": 7339
+  },
+  {
+    "path": "source_c1/train/launch_candidate_c.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/launch_candidate_c.py",
+    "sha256": "f9b758ec2831fe94c695e2e418347c51370ce8295e7468d10a221c0b296059c8",
+    "bytes": 18194
+  },
+  {
+    "path": "source_c1/train/progress_io.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/progress_io.py",
+    "sha256": "73db3ba974e8d80bc204a072533bce3f36e3fac1abed80e6f64093971f547d1b",
+    "bytes": 1360
+  },
+  {
+    "path": "source_c1/train/terrastate_future_state_cache.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/terrastate_future_state_cache.py",
+    "sha256": "4044c0fcc8b8f43644966df29582abf4a9c072cb07b3ac6f2feddc330dd65d46",
+    "bytes": 17111
+  },
+  {
+    "path": "source_c1/train/terrastate_v2_common.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/terrastate_v2_common.py",
+    "sha256": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f",
+    "bytes": 8658
+  },
+  {
+    "path": "source_c1/train/topology_migration.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/topology_migration.py",
+    "sha256": "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6",
+    "bytes": 5599
+  },
+  {
+    "path": "source_c1/train/train_plan_b_b4.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/train_plan_b_b4.py",
+    "sha256": "591bd0ba39fcf549b8a7dc52c683e02449a5f7c2095e92e63ab31c358bc2c845",
+    "bytes": 13585
+  },
+  {
+    "path": "source_c1/train/train_plan_b_b4_exclusive.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/train_plan_b_b4_exclusive.py",
+    "sha256": "477535da54dd616974624841083250e3c065659be9d71244b723fcda45668a23",
+    "bytes": 25650
+  },
+  {
+    "path": "source_c1/train/train_plan_b_contextformer.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/train_plan_b_contextformer.py",
+    "sha256": "b2c7650e5a11b9b11050fe394ad0ff4361b57676ab7fd4b4732eef69f77f575f",
+    "bytes": 11555
+  },
+  {
+    "path": "source_c1/train/train_spanworld_full_base.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/train_spanworld_full_base.py",
+    "sha256": "ee63fc6ba41cce09fbd8fae19dc0388743a82ffe475a9f51969f1460d9d88397",
+    "bytes": 50759
+  },
+  {
+    "path": "source_c1/train/train_stage1_8_factorize.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/train_stage1_8_factorize.py",
+    "sha256": "8177f187d86d25f98ecd5effd13d6ca6bdee65ca6d3f3b8ee2daf7978770363a",
+    "bytes": 4962
+  },
+  {
+    "path": "source_c1/train/train_terrastate_candidate_c.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/train_terrastate_candidate_c.py",
+    "sha256": "1d6ddd49fb6469e1267c203b78ac7a002b0ecd84530b7a9a81516456e357b294",
+    "bytes": 42533
+  },
+  {
+    "path": "source_c1/train/train_terrastate_candidate_c_100ep.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/train_terrastate_candidate_c_100ep.py",
+    "sha256": "60ffc13a4dc155e3533ab1fa2b0fb9ad4f708d95f8ac897cb17c42f2ca1f6480",
+    "bytes": 37315
+  },
+  {
+    "path": "source_c1/train/train_terrastate_v2.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/train/train_terrastate_v2.py",
+    "sha256": "167a22969e9c664434f6135465778ee28524ce4c565dbcec793023794a28ac37",
+    "bytes": 42174
+  },
+  {
+    "path": "source_c0r/configs/spanworld_full_base/stage1_A.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/configs/spanworld_full_base/stage1_A.json",
+    "sha256": "95ce51e2479a2b8696f0b1e33c0446c149d45c1cf6a22c31c7b0fcb1ae8479a8",
+    "bytes": 995
+  },
+  {
+    "path": "source_c0r/configs/spanworld_full_base/stage2_A.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/configs/spanworld_full_base/stage2_A.json",
+    "sha256": "0f9e37215fa29312daed6aa772e468c49086ab352a656b10ea49a4d2cba9bb84",
+    "bytes": 1017
+  },
+  {
+    "path": "source_c0r/configs/spanworld_full_base/stage2_B.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/configs/spanworld_full_base/stage2_B.json",
+    "sha256": "8dad1c11763b2205bf697cd8fc0c6c8d858b1c9758c134a1a77c3a352b9b4d3d",
+    "bytes": 1025
+  },
+  {
+    "path": "source_c0r/configs/spanworld_full_base/stage2_C.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/configs/spanworld_full_base/stage2_C.json",
+    "sha256": "32fa482cc1d894b46566a3a6803df11c2d4e2e4bb2072aaf00bc99e5ee207612",
+    "bytes": 1018
+  },
+  {
+    "path": "source_c0r/configs/spanworld_full_base/stage2_D.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/configs/spanworld_full_base/stage2_D.json",
+    "sha256": "8602357a061586d41e0333752711ae4f8af9ba0195e09117a63ca808282242dd",
+    "bytes": 1026
+  },
+  {
+    "path": "source_c0r/configs/spanworld_full_base/stage2_D_C0R.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/configs/spanworld_full_base/stage2_D_C0R.json",
+    "sha256": "b4a5313a008f15982ba6640692f778ab258071b32040c9cd1bdf5b48d24ee649",
+    "bytes": 987
+  },
+  {
+    "path": "source_c0r/data/calendar_features.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/data/calendar_features.py",
+    "sha256": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc",
+    "bytes": 388
+  },
+  {
+    "path": "source_c0r/data/earthnet_manifest.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/data/earthnet_manifest.py",
+    "sha256": "8302cc297dc91a5129dddbba9ece5e62de42387bc7ed8015823e3f443c5c2336",
+    "bytes": 19328
+  },
+  {
+    "path": "source_c0r/data/greenearthnet_contextformer_dataset.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/data/greenearthnet_contextformer_dataset.py",
+    "sha256": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7",
+    "bytes": 7672
+  },
+  {
+    "path": "source_c0r/data/ssl4eo_l1c_l2a_paired.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/data/ssl4eo_l1c_l2a_paired.py",
+    "sha256": "9dbd6e7ad1cf6be31db6439d12967868f190ab99dbbc24abb955e5c7c84da099",
+    "bytes": 1135
+  },
+  {
+    "path": "source_c0r/data/weather_contract.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/data/weather_contract.py",
+    "sha256": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e",
+    "bytes": 1795
+  },
+  {
+    "path": "source_c0r/eval/__init__.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/eval/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "source_c0r/eval/eval_spanworld_v2_standard.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/eval/eval_spanworld_v2_standard.py",
+    "sha256": "fc10a300f04bc642a5167aed7476b664f051d50959abac24fe3a19a66493cefe",
+    "bytes": 8352
+  },
+  {
+    "path": "source_c0r/eval/eval_terrastate_candidate_c_q4.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/eval/eval_terrastate_candidate_c_q4.py",
+    "sha256": "b9244ad7074936d4e91f531cd463df15ebbd5e96c9aa485047c64204466f1514",
+    "bytes": 77179
+  },
+  {
+    "path": "source_c0r/eval/exclusive_weather_v2.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/eval/exclusive_weather_v2.py",
+    "sha256": "aedec01160f53d5bf947ba2a96fcdec552fb9acb58d13e677095de5f9745cb6c",
+    "bytes": 1585
+  },
+  {
+    "path": "source_c0r/eval/greenearthnet_protocol.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/eval/greenearthnet_protocol.py",
+    "sha256": "bc3e72376459fa1d6e9a1f38c4e079b4c7d731569adcc5bf31f2e7320b54ade8",
+    "bytes": 18124
+  },
+  {
+    "path": "source_c0r/eval/ndvi_prediction_v2.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/eval/ndvi_prediction_v2.py",
+    "sha256": "8c826840eb90fb819827eca46a383c695e62dc9fce4198baca3915174e426aa4",
+    "bytes": 856
+  },
+  {
+    "path": "source_c0r/eval/standard_eval_receipt.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/eval/standard_eval_receipt.py",
+    "sha256": "706b643cd94dabf7bb4c342f719a46f5631f63fa13d34efc03437ff1f4ae965d",
+    "bytes": 1680
+  },
+  {
+    "path": "source_c0r/eval/table1_artifact_contract.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/eval/table1_artifact_contract.py",
+    "sha256": "6ce183a7e160e0da7608e887e59c6f651fd1bc4c739d5cb1145360ec60cdbc13",
+    "bytes": 2797
+  },
+  {
+    "path": "source_c0r/models/dynamics/plan_b_state_contract.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/dynamics/plan_b_state_contract.py",
+    "sha256": "15e30074a284d120629421e9cd789afa8d2308cd2c69de221386c6a54938450c",
+    "bytes": 2862
+  },
+  {
+    "path": "source_c0r/models/encoders/contextformer_official.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/encoders/contextformer_official.py",
+    "sha256": "ca379e01e0609752fb9794ec1db29fc754b04e08031c7122b9138f8aa9bfc6c3",
+    "bytes": 21967
+  },
+  {
+    "path": "source_c0r/models/encoders/pvt_contextformer_q.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/encoders/pvt_contextformer_q.py",
+    "sha256": "57b74bdf05af716604b515d5e166ec316020742199013d3e92de77836d5fae3f",
+    "bytes": 8062
+  },
+  {
+    "path": "source_c0r/models/encoders/state_projection.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/encoders/state_projection.py",
+    "sha256": "50b0a33ec28f955590297ccc8ac77ca5c33945e7287622d0339d409485e5c5a9",
+    "bytes": 982
+  },
+  {
+    "path": "source_c0r/models/losses/masked_l2_ndvi.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/losses/masked_l2_ndvi.py",
+    "sha256": "b97e43a65fd814d37847e52d01a21ca643b8b036552002ebe03aa02f62671cdb",
+    "bytes": 5727
+  },
+  {
+    "path": "source_c0r/models/losses/supervision_v2.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/losses/supervision_v2.py",
+    "sha256": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9",
+    "bytes": 2621
+  },
+  {
+    "path": "source_c0r/models/plan_b_b4.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/plan_b_b4.py",
+    "sha256": "9728a6ad8102041c75b1278a1ad01f4961ceabadd5315ecb7e9011119ee05032",
+    "bytes": 26981
+  },
+  {
+    "path": "source_c0r/models/plan_b_b4_exclusive.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/plan_b_b4_exclusive.py",
+    "sha256": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+    "bytes": 14005
+  },
+  {
+    "path": "source_c0r/models/spanworld_full_base.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/spanworld_full_base.py",
+    "sha256": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625",
+    "bytes": 6967
+  },
+  {
+    "path": "source_c0r/models/stage1_8_factorizer.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/stage1_8_factorizer.py",
+    "sha256": "c7853deb7fff00f313b443cc264dc5135152af1cef18ef18dcad4bb561920e2a",
+    "bytes": 3766
+  },
+  {
+    "path": "source_c0r/models/terrastate_candidate_c.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/terrastate_candidate_c.py",
+    "sha256": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c",
+    "bytes": 37232
+  },
+  {
+    "path": "source_c0r/models/terrastate_v2.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/models/terrastate_v2.py",
+    "sha256": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+    "bytes": 10354
+  },
+  {
+    "path": "source_c0r/train/c1_checkpoint.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/c1_checkpoint.py",
+    "sha256": "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4",
+    "bytes": 1886
+  },
+  {
+    "path": "source_c0r/train/c1_validation.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/c1_validation.py",
+    "sha256": "f3ef83a0e763123919ace04fd3404bdf351704a501b4710997270d9c650c203b",
+    "bytes": 2403
+  },
+  {
+    "path": "source_c0r/train/efficiency_continuation.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/efficiency_continuation.py",
+    "sha256": "44d24e48b9448d9e0e4c55ab2634ec9040d63b48502b6d90e837aa87f809dc5c",
+    "bytes": 9358
+  },
+  {
+    "path": "source_c0r/train/full_base_policy.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/full_base_policy.py",
+    "sha256": "944170e2d348ab86d00f6fef4464be04e29447c0f2e51022adf93c4e1338b712",
+    "bytes": 7339
+  },
+  {
+    "path": "source_c0r/train/launch_candidate_c.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/launch_candidate_c.py",
+    "sha256": "f9b758ec2831fe94c695e2e418347c51370ce8295e7468d10a221c0b296059c8",
+    "bytes": 18194
+  },
+  {
+    "path": "source_c0r/train/progress_io.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/progress_io.py",
+    "sha256": "73db3ba974e8d80bc204a072533bce3f36e3fac1abed80e6f64093971f547d1b",
+    "bytes": 1360
+  },
+  {
+    "path": "source_c0r/train/terrastate_future_state_cache.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/terrastate_future_state_cache.py",
+    "sha256": "4044c0fcc8b8f43644966df29582abf4a9c072cb07b3ac6f2feddc330dd65d46",
+    "bytes": 17111
+  },
+  {
+    "path": "source_c0r/train/terrastate_v2_common.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/terrastate_v2_common.py",
+    "sha256": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f",
+    "bytes": 8658
+  },
+  {
+    "path": "source_c0r/train/topology_migration.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/topology_migration.py",
+    "sha256": "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6",
+    "bytes": 5599
+  },
+  {
+    "path": "source_c0r/train/train_plan_b_b4.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/train_plan_b_b4.py",
+    "sha256": "591bd0ba39fcf549b8a7dc52c683e02449a5f7c2095e92e63ab31c358bc2c845",
+    "bytes": 13585
+  },
+  {
+    "path": "source_c0r/train/train_plan_b_b4_exclusive.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/train_plan_b_b4_exclusive.py",
+    "sha256": "477535da54dd616974624841083250e3c065659be9d71244b723fcda45668a23",
+    "bytes": 25650
+  },
+  {
+    "path": "source_c0r/train/train_plan_b_contextformer.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/train_plan_b_contextformer.py",
+    "sha256": "b2c7650e5a11b9b11050fe394ad0ff4361b57676ab7fd4b4732eef69f77f575f",
+    "bytes": 11555
+  },
+  {
+    "path": "source_c0r/train/train_spanworld_full_base.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/train_spanworld_full_base.py",
+    "sha256": "ee63fc6ba41cce09fbd8fae19dc0388743a82ffe475a9f51969f1460d9d88397",
+    "bytes": 50759
+  },
+  {
+    "path": "source_c0r/train/train_stage1_8_factorize.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/train_stage1_8_factorize.py",
+    "sha256": "8177f187d86d25f98ecd5effd13d6ca6bdee65ca6d3f3b8ee2daf7978770363a",
+    "bytes": 4962
+  },
+  {
+    "path": "source_c0r/train/train_terrastate_candidate_c.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/train_terrastate_candidate_c.py",
+    "sha256": "1d6ddd49fb6469e1267c203b78ac7a002b0ecd84530b7a9a81516456e357b294",
+    "bytes": 42533
+  },
+  {
+    "path": "source_c0r/train/train_terrastate_candidate_c_100ep.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/train_terrastate_candidate_c_100ep.py",
+    "sha256": "60ffc13a4dc155e3533ab1fa2b0fb9ad4f708d95f8ac897cb17c42f2ca1f6480",
+    "bytes": 37315
+  },
+  {
+    "path": "source_c0r/train/train_terrastate_v2.py",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/train_terrastate_v2.py",
+    "sha256": "167a22969e9c664434f6135465778ee28524ce4c565dbcec793023794a28ac37",
+    "bytes": 42174
+  },
+  {
+    "path": "manifests/data/candidate_c_eo_split_manifest_v1.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+    "sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b",
+    "bytes": 1791066
+  },
+  {
+    "path": "manifests/data/candidate_c_q4_partition_manifest_v1.json",
+    "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+    "sha256": "d0a4c6564516ea62f7eda9ebc4018433d1357391ad3a2a3bd8070de1a54e1e0e",
+    "bytes": 3359
+  }
+]

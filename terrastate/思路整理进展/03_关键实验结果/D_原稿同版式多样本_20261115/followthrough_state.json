@@ -1,0 +1,16 @@
+{
+  "pid": 58776,
+  "time": 1794772546.597344,
+  "status": "needs_audit",
+  "interval_seconds": 10800,
+  "remote": {
+    "exists": true,
+    "state": {
+      "pid": 291303,
+      "stage": "failed",
+      "time": 1794772202.8128495,
+      "elapsed_seconds": 3.75522518157959,
+      "error": "Traceback (most recent call last):\n  File \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_original_layout_20261115/worker.py\", line 16, in <module>\n    from eval.full_base_diagnostics import prepare,suffix\nModuleNotFoundError: No module named 'eval.full_base_diagnostics'\n"
+    }
+  }
+}

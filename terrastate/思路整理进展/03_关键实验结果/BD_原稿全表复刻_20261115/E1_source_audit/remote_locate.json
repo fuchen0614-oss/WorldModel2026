@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"time\": 1794721830.5788684, \"roots\": {\"/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z\": false, \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet\": true, \"/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet\": true}, \"matches\": []}\n",
+  "stderr": "",
+  "host": "909",
+  "started": 1794721731.1267724,
+  "seconds": 131.6857671737671
+}

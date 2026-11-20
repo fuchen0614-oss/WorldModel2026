@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "checkpoint_sha256": "ecd0b07d7b031189477dbe64d1729012b0c4ce5b5d67414b61304acc26e43abc",
+  "all_remote_manifest_hashes_verified": true,
+  "per_sample_csv_sha_matches_acceptance": true,
+  "all_four_protocol_checks_pass": true,
+  "true_worker_exits": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "aggregate_exit": 0,
+  "samples": 22320,
+  "scope": "final B-C1 seed27 standard evaluation only; not final three-seed summary"
+}

@@ -1,0 +1,2033 @@
+{
+  "C1": {
+    "contract_cfg": {
+      "use_adaln": true,
+      "season_encoding": "annual_sincos_v1",
+      "season_route": "tokens_and_transition",
+      "supervision_v2": true,
+      "zero_empty_history_reference": true,
+      "state_dim": 256,
+      "freeze_b0": false,
+      "dw": 128,
+      "dg": 64,
+      "dh": 64,
+      "cond_dim": 256,
+      "lc_min": 10,
+      "lc_max": 40,
+      "partitions": [
+        [
+          5,
+          5
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          10,
+          10
+        ]
+      ],
+      "heldout_partitions": [
+        [
+          3,
+          7
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          4,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          2,
+          18
+        ]
+      ],
+      "arch": "SpanWorldFullBase",
+      "route_version": "spanworld_full_base_v1",
+      "driver_protocol": "full24",
+      "factual_path": "recursive",
+      "days_per_transition_step": 5,
+      "use_future_state_anchor": false,
+      "eo_traj_weight": 1.0,
+      "eo_endpoint_weight": 1.0,
+      "factual_endpoints": [
+        10,
+        15,
+        20
+      ],
+      "nc_min_std": 0.001,
+      "nc_min_effective_rank": 2.0,
+      "nc_min_movement": 0.0001,
+      "cc_train_partitions": {
+        "10": [
+          [
+            10
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3,
+            2
+          ]
+        ],
+        "15": [
+          [
+            15
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            4,
+            4
+          ]
+        ],
+        "20": [
+          [
+            20
+          ],
+          [
+            10,
+            10
+          ],
+          [
+            10,
+            5,
+            5
+          ],
+          [
+            5,
+            5,
+            5,
+            5
+          ]
+        ]
+      },
+      "cc_heldout_partitions": {
+        "10": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            2,
+            3,
+            5
+          ]
+        ],
+        "15": [
+          [
+            4,
+            11
+          ],
+          [
+            3,
+            5,
+            7
+          ]
+        ],
+        "20": [
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ],
+          [
+            2,
+            6,
+            12
+          ],
+          [
+            1,
+            4,
+            6,
+            9
+          ]
+        ]
+      },
+      "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+      "training_stage": "stage2",
+      "variant": "D"
+    },
+    "epoch": 51,
+    "step": 37995,
+    "total_steps": 74500,
+    "accum": 1,
+    "world_size": 4,
+    "global_batch": 32,
+    "runtime_topology": {
+      "world_size": 4,
+      "per_gpu_batch": 8,
+      "accum": 1,
+      "global_batch": 32
+    },
+    "sha": {
+      "parent_alias": "selected_stage1",
+      "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "parent_value_sha16": "fde2d8f9ff18b3f6",
+      "inherited_value_sha16": "fde2d8f9ff18b3f6",
+      "warm_start_state_sha256": "f488b7d7a8676f810124280bc93d188d0b74c1822a988bf27223fa28e6ab0cd0",
+      "val_split_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+      "val_split_manifest_sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b",
+      "val_split_selector": "validation_subsplit.val_dev.ids",
+      "val_split_n_ids": 476,
+      "selection_metric": "GreenEarthNet RMSE_LC HQ",
+      "scorer_reference_sha256": "cfbc6722174981daeabd880e27afaa90dce0de11269ecbba8365fe54de29bd2f",
+      "q4_partition_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+      "q4_partition_manifest_sha256": "d0a4c6564516ea62f7eda9ebc4018433d1357391ad3a2a3bd8070de1a54e1e0e",
+      "selected_config_sha256": "8602357a061586d41e0333752711ae4f8af9ba0195e09117a63ca808282242dd",
+      "selected_config_content": {
+        "stage": "stage2",
+        "variant": "D",
+        "trainer": "train/train_spanworld_full_base.py",
+        "parent_ckpt": null,
+        "expected_parent_sha256": null,
+        "status": "requires verified parent path; no launch",
+        "global_batch": 32,
+        "world_size": 4,
+        "per_gpu_batch": 8,
+        "effective_updates": 74500,
+        "epochs_equivalent": 100,
+        "branch_peak_lr": 3e-05,
+        "token_season_lr": 3e-05,
+        "q_peak_lr": 1e-05,
+        "q_blocks": [
+          1,
+          2
+        ],
+        "adaln": true,
+        "traj_weight": 1,
+        "endpoint_weight": 1,
+        "warmup": 600,
+        "decay_start": 600,
+        "final_factor": 0.1,
+        "selection": "val_dev476 official RMSE_LC minimum; first tie",
+        "stage2_parent": "same selected stage1 best_val.pt for all variants",
+        "arm": "C1",
+        "factual_path": "recursive",
+        "seed": 42,
+        "branch_final_lr": 3e-06,
+        "q_final_lr": 1.0000000000000002e-06,
+        "token_season_final_lr": 3e-06,
+        "transition_season_peak_lr": 3e-05,
+        "transition_season_final_lr": 3e-06,
+        "adaln_peak_lr": 3e-05,
+        "adaln_final_lr": 3e-06
+      },
+      "config_sha256": "75b03214c12a46710458cda0f3b21c3b86c00c5f5acfa66456186561fc1a272c",
+      "source_sha256": {
+        "models/terrastate_candidate_c.py": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c",
+        "train/train_spanworld_full_base.py": "ee63fc6ba41cce09fbd8fae19dc0388743a82ffe475a9f51969f1460d9d88397",
+        "train/full_base_policy.py": "944170e2d348ab86d00f6fef4464be04e29447c0f2e51022adf93c4e1338b712",
+        "train/efficiency_continuation.py": "44d24e48b9448d9e0e4c55ab2634ec9040d63b48502b6d90e837aa87f809dc5c",
+        "train/progress_io.py": "73db3ba974e8d80bc204a072533bce3f36e3fac1abed80e6f64093971f547d1b",
+        "models/encoders/pvt_contextformer_q.py": "57b74bdf05af716604b515d5e166ec316020742199013d3e92de77836d5fae3f",
+        "train/topology_migration.py": "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6",
+        "models/spanworld_full_base.py": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625",
+        "train/train_terrastate_candidate_c.py": "1d6ddd49fb6469e1267c203b78ac7a002b0ecd84530b7a9a81516456e357b294",
+        "models/losses/supervision_v2.py": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9",
+        "models/encoders/contextformer_official.py": "ca379e01e0609752fb9794ec1db29fc754b04e08031c7122b9138f8aa9bfc6c3",
+        "data/calendar_features.py": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc",
+        "data/weather_contract.py": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e",
+        "data/greenearthnet_contextformer_dataset.py": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7",
+        "train/c1_validation.py": "f3ef83a0e763123919ace04fd3404bdf351704a501b4710997270d9c650c203b",
+        "train/c1_checkpoint.py": "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4",
+        "models/terrastate_v2.py": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+        "models/plan_b_b4_exclusive.py": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+        "models/plan_b_b4.py": "9728a6ad8102041c75b1278a1ad01f4961ceabadd5315ecb7e9011119ee05032",
+        "train/train_terrastate_v2.py": "167a22969e9c664434f6135465778ee28524ce4c565dbcec793023794a28ac37",
+        "train/terrastate_v2_common.py": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f"
+      },
+      "train_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "val_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9"
+    },
+    "args": {
+      "continuation_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/continuation_manifest.json",
+      "history_state_only": true,
+      "migration_checkpoint": "",
+      "migration_checkpoint_sha256": "",
+      "migration_best": "",
+      "migration_best_sha256": "",
+      "handoff_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/handoff",
+      "handoff_token": "5f65162685b240569a8f61584b667b2c",
+      "handoff_timeout": 120.0,
+      "runtime_per_gpu_batch": null,
+      "runtime_world_size": 4,
+      "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage2_D.json",
+      "stage": "stage2",
+      "variant": "D",
+      "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "arm": "C1",
+      "factual_path": "recursive",
+      "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+      "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+      "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+      "val_split_selector": "validation_subsplit.val_dev.ids",
+      "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+      "output_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal",
+      "resume": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/last.pt",
+      "parent_alias": "terrastate/v2/default-training-anchor",
+      "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "allow_unverified_parent": false,
+      "state_dim": 256,
+      "per_gpu_batch": 8,
+      "global_batch": 32,
+      "num_workers": 4,
+      "max_epochs": 100,
+      "max_steps": 0,
+      "stop_after_step": 0,
+      "lambda_z": 0.0,
+      "lambda_y": 0.0,
+      "lambda_pair": 0.0,
+      "lambda_nc": 0.0,
+      "allow_nonzero_lambdas": false,
+      "eo_traj_weight": 1.0,
+      "eo_endpoint_weight": 1.0,
+      "days_per_transition_step": 5,
+      "branch_lr": 3e-05,
+      "q_lr_scale": 0.33333333333333337,
+      "weight_decay": 0.0,
+      "grad_clip": 1.0,
+      "lr_warmup_steps": 600,
+      "use_adaln": true,
+      "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+      "seed": 42,
+      "log_interval": 10,
+      "val_interval": 745,
+      "ckpt_interval": 372,
+      "device": "cuda",
+      "deterministic": false,
+      "allow_existing_out": true,
+      "verify_data_manifest": true,
+      "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+      "stage_epochs": 100,
+      "stage_total_steps": 74500
+    },
+    "lineage": {
+      "parent_alias": "selected_stage1",
+      "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "parent_value_sha16": "fde2d8f9ff18b3f6",
+      "inherited_value_sha16": "fde2d8f9ff18b3f6",
+      "inherited_n_tensors": 257,
+      "max_abs_diff_vs_parent": 0.0,
+      "missing_keys": [
+        "transition.adaln.bias",
+        "transition.adaln.weight"
+      ],
+      "unexpected_keys": [],
+      "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "fork_kind": "weights_only_full_base_stage2",
+      "is_exact_resume": false,
+      "parent_optimizer_scheduler_deliberately_discarded": true,
+      "efficiency_continuation": {
+        "checkpoint_source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/last.pt",
+        "checkpoint_sha256": "5f60366128505f08e2ad96f553538c112a8464b67364ee0250147a4a7bac5f6c",
+        "manifest_sha256": "2ce2ff5a391fd1ae7fce6377593846386b6d0de74c2cf1301937155dbcc29fd6",
+        "manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/continuation_manifest.json",
+        "previous_continuation": null,
+        "source_sha_pairs": {
+          "train/train_spanworld_full_base.py": [
+            "150bebfc865eaacd8706731d770de5ecf495a3f8ce8c32871fb93d9ce53e501d",
+            "ee63fc6ba41cce09fbd8fae19dc0388743a82ffe475a9f51969f1460d9d88397"
+          ],
+          "models/encoders/pvt_contextformer_q.py": [
+            null,
+            "57b74bdf05af716604b515d5e166ec316020742199013d3e92de77836d5fae3f"
+          ],
+          "models/encoders/contextformer_official.py": [
+            "ad577fe8d6f054c66fc9668128df0861392e0649807a817fdf9660158514931f",
+            "ca379e01e0609752fb9794ec1db29fc754b04e08031c7122b9138f8aa9bfc6c3"
+          ],
+          "train/topology_migration.py": [
+            "556c656efad17ff419b14f542d92e0df84c36bc10dd04c879cd70da8189ce15f",
+            "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6"
+          ],
+          "train/c1_checkpoint.py": [
+            "7ae1badbcd3994febaa0cec678458d01ba6ba3a46ceb0c9fd880520d309770e9",
+            "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4"
+          ],
+          "models/spanworld_full_base.py": [
+            "b19b9db319f77d661281577e30f0ea6e4dc2a51583ca0d41d9a0eddc1456b96c",
+            "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625"
+          ],
+          "train/efficiency_continuation.py": [
+            null,
+            "44d24e48b9448d9e0e4c55ab2634ec9040d63b48502b6d90e837aa87f809dc5c"
+          ],
+          "train/progress_io.py": [
+            null,
+            "73db3ba974e8d80bc204a072533bce3f36e3fac1abed80e6f64093971f547d1b"
+          ]
+        },
+        "argument_changes": {
+          "handoff_dir": [
+            "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_stage2_DC_micro4_accum2_20261113_02/handoff/D_train",
+            "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/handoff"
+          ],
+          "output_dir": [
+            "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage2_DC_seed42_micro4_accum2_20261113_02/D/formal",
+            "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal"
+          ],
+          "handoff_token": [
+            "61ec77b8e8b74a2ab9b541a64beaf266",
+            "5f65162685b240569a8f61584b667b2c"
+          ],
+          "per_gpu_batch": [
+            4,
+            8
+          ],
+          "allow_existing_out": [
+            false,
+            true
+          ],
+          "history_state_only": [
+            null,
+            true
+          ],
+          "runtime_per_gpu_batch": [
+            4,
+            null
+          ],
+          "resume": [
+            "",
+            "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/last.pt"
+          ],
+          "continuation_manifest": [
+            null,
+            "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/continuation_manifest.json"
+          ],
+          "config": [
+            "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_stage2_DC_micro4_accum2_20261113_02/code/configs/spanworld_full_base/stage2_D.json",
+            "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage2_D.json"
+          ]
+        },
+        "path_changes": {},
+        "is_bitwise_exact_historical_resume": false,
+        "topology": {
+          "source": [
+            4,
+            4,
+            2
+          ],
+          "target": [
+            4,
+            8,
+            1
+          ],
+          "global_batch": 32
+        },
+        "numerical_note": "Same global batch and samples; changed FP32 reduction grouping, not bitwise exact.",
+        "cuda_rng_note": "Legacy source CUDA RNG may be empty; no missing historical RNG is fabricated.",
+        "remaining_effective_steps": 46935,
+        "inherited_best": {
+          "source_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/best_val.pt",
+          "sha256": "1ae75ec885198b3e32519d1b5353cfd4e1516011c3bbf4ecac6cec33e128506e",
+          "original_sha": {
+            "parent_alias": "selected_stage1",
+            "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+            "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+            "parent_value_sha16": "fde2d8f9ff18b3f6",
+            "inherited_value_sha16": "fde2d8f9ff18b3f6",
+            "warm_start_state_sha256": "f488b7d7a8676f810124280bc93d188d0b74c1822a988bf27223fa28e6ab0cd0",
+            "val_split_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+            "val_split_manifest_sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b",
+            "val_split_selector": "validation_subsplit.val_dev.ids",
+            "val_split_n_ids": 476,
+            "selection_metric": "GreenEarthNet RMSE_LC HQ",
+            "scorer_reference_sha256": "cfbc6722174981daeabd880e27afaa90dce0de11269ecbba8365fe54de29bd2f",
+            "q4_partition_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+            "q4_partition_manifest_sha256": "d0a4c6564516ea62f7eda9ebc4018433d1357391ad3a2a3bd8070de1a54e1e0e",
+            "selected_config_sha256": "8602357a061586d41e0333752711ae4f8af9ba0195e09117a63ca808282242dd",
+            "selected_config_content": {
+              "stage": "stage2",
+              "variant": "D",
+              "trainer": "train/train_spanworld_full_base.py",
+              "parent_ckpt": null,
+              "expected_parent_sha256": null,
+              "status": "requires verified parent path; no launch",
+              "global_batch": 32,
+              "world_size": 4,
+              "per_gpu_batch": 8,
+              "effective_updates": 74500,
+              "epochs_equivalent": 100,
+              "branch_peak_lr": 3e-05,
+              "token_season_lr": 3e-05,
+              "q_peak_lr": 1e-05,
+              "q_blocks": [
+                1,
+                2
+              ],
+              "adaln": true,
+              "traj_weight": 1,
+              "endpoint_weight": 1,
+              "warmup": 600,
+              "decay_start": 600,
+              "final_factor": 0.1,
+              "selection": "val_dev476 official RMSE_LC minimum; first tie",
+              "stage2_parent": "same selected stage1 best_val.pt for all variants",
+              "arm": "C1",
+              "factual_path": "recursive",
+              "seed": 42,
+              "branch_final_lr": 3e-06,
+              "q_final_lr": 1.0000000000000002e-06,
+              "token_season_final_lr": 3e-06,
+              "transition_season_peak_lr": 3e-05,
+              "transition_season_final_lr": 3e-06,
+              "adaln_peak_lr": 3e-05,
+              "adaln_final_lr": 3e-06
+            },
+            "config_sha256": "5eb3f456ebc36a2bcde2f0bfff8d7a4fab42c161581fd47c7f74d13f1fb2c885",
+            "source_sha256": {
+              "models/terrastate_candidate_c.py": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c",
+              "train/train_spanworld_full_base.py": "150bebfc865eaacd8706731d770de5ecf495a3f8ce8c32871fb93d9ce53e501d",
+              "train/full_base_policy.py": "944170e2d348ab86d00f6fef4464be04e29447c0f2e51022adf93c4e1338b712",
+              "train/topology_migration.py": "556c656efad17ff419b14f542d92e0df84c36bc10dd04c879cd70da8189ce15f",
+              "models/spanworld_full_base.py": "b19b9db319f77d661281577e30f0ea6e4dc2a51583ca0d41d9a0eddc1456b96c",
+              "train/train_terrastate_candidate_c.py": "1d6ddd49fb6469e1267c203b78ac7a002b0ecd84530b7a9a81516456e357b294",
+              "models/losses/supervision_v2.py": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9",
+              "models/encoders/contextformer_official.py": "ad577fe8d6f054c66fc9668128df0861392e0649807a817fdf9660158514931f",
+              "data/calendar_features.py": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc",
+              "data/weather_contract.py": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e",
+              "data/greenearthnet_contextformer_dataset.py": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7",
+              "train/c1_validation.py": "f3ef83a0e763123919ace04fd3404bdf351704a501b4710997270d9c650c203b",
+              "train/c1_checkpoint.py": "7ae1badbcd3994febaa0cec678458d01ba6ba3a46ceb0c9fd880520d309770e9",
+              "models/terrastate_v2.py": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+              "models/plan_b_b4_exclusive.py": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+              "models/plan_b_b4.py": "9728a6ad8102041c75b1278a1ad01f4961ceabadd5315ecb7e9011119ee05032",
+              "train/train_terrastate_v2.py": "167a22969e9c664434f6135465778ee28524ce4c565dbcec793023794a28ac37",
+              "train/terrastate_v2_common.py": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f"
+            },
+            "train_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+            "val_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9"
+          },
+          "rmse_best": {
+            "score": 0.1494287146170551,
+            "epoch": 35,
+            "step": 26075
+          },
+          "step": 26075,
+          "epoch": 35
+        }
+      },
+      "resumed_within_phase": true,
+      "resume_parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/checkpoints/last.pt",
+      "resume_parent_file_sha256": "5f60366128505f08e2ad96f553538c112a8464b67364ee0250147a4a7bac5f6c"
+    },
+    "rmse_best": {
+      "score": 0.14937308729529436,
+      "epoch": 51,
+      "step": 37995
+    },
+    "checkpoint_keys": [
+      "arch",
+      "route_version",
+      "training_stage",
+      "variant",
+      "b4_state_dict",
+      "contract_cfg",
+      "optimizer_state_dict",
+      "scheduler_state_dict",
+      "scaler",
+      "epoch",
+      "step",
+      "phase_step",
+      "micro_in_epoch",
+      "phase",
+      "arm",
+      "factual_path",
+      "q_freeze",
+      "rng_state",
+      "rng_states_by_rank",
+      "best_val",
+      "total_steps",
+      "accum",
+      "world_size",
+      "global_batch",
+      "runtime_topology",
+      "alpha",
+      "lambdas",
+      "endpoint_plan_note",
+      "completion_reason",
+      "sha",
+      "args",
+      "lineage",
+      "simulator_status",
+      "selection_note",
+      "not_exact_resume_of_parent",
+      "candidate",
+      "rmse_best",
+      "validation_history"
+    ],
+    "optimizer_state_dict": [
+      {
+        "lr": 1.6244627981258996e-05,
+        "name": "branch",
+        "param_names": [
+          "projector.net.0.weight",
+          "projector.net.0.bias",
+          "projector.net.1.weight",
+          "projector.net.1.bias",
+          "projector.net.3.weight",
+          "projector.net.3.bias",
+          "projector.net.4.weight",
+          "projector.net.4.bias",
+          "weather_enc.gru.weight_ih_l0",
+          "weather_enc.gru.weight_hh_l0",
+          "weather_enc.gru.bias_ih_l0",
+          "weather_enc.gru.bias_hh_l0",
+          "geo_enc.mlp.0.weight",
+          "geo_enc.mlp.0.bias",
+          "geo_enc.mlp.2.weight",
+          "geo_enc.mlp.2.bias",
+          "fuse.0.weight",
+          "fuse.0.bias",
+          "fuse.2.weight",
+          "fuse.2.bias",
+          "transition.ln.weight",
+          "transition.ln.bias",
+          "transition.adaln.weight",
+          "transition.adaln.bias",
+          "transition.net.0.weight",
+          "transition.net.0.bias",
+          "transition.net.2.weight",
+          "transition.net.2.bias",
+          "transition.net.4.weight",
+          "transition.net.4.bias",
+          "o_delta.weight",
+          "o_delta.bias"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 3e-05,
+        "params": 32
+      },
+      {
+        "lr": 5.414875993753e-06,
+        "name": "q",
+        "param_names": [
+          "q.core.blocks.1.norm1.weight",
+          "q.core.blocks.1.norm1.bias",
+          "q.core.blocks.1.attn.qkv.weight",
+          "q.core.blocks.1.attn.qkv.bias",
+          "q.core.blocks.1.attn.proj.weight",
+          "q.core.blocks.1.attn.proj.bias",
+          "q.core.blocks.1.norm2.weight",
+          "q.core.blocks.1.norm2.bias",
+          "q.core.blocks.1.mlp.fc1.weight",
+          "q.core.blocks.1.mlp.fc1.bias",
+          "q.core.blocks.1.mlp.fc2.weight",
+          "q.core.blocks.1.mlp.fc2.bias",
+          "q.core.blocks.2.norm1.weight",
+          "q.core.blocks.2.norm1.bias",
+          "q.core.blocks.2.attn.qkv.weight",
+          "q.core.blocks.2.attn.qkv.bias",
+          "q.core.blocks.2.attn.proj.weight",
+          "q.core.blocks.2.attn.proj.bias",
+          "q.core.blocks.2.norm2.weight",
+          "q.core.blocks.2.norm2.bias",
+          "q.core.blocks.2.mlp.fc1.weight",
+          "q.core.blocks.2.mlp.fc1.bias",
+          "q.core.blocks.2.mlp.fc2.weight",
+          "q.core.blocks.2.mlp.fc2.bias"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 1e-05,
+        "params": 24
+      },
+      {
+        "lr": 1.6244627981258996e-05,
+        "name": "season",
+        "param_names": [
+          "q.core.season_proj.weight",
+          "season_condition.weight"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 3e-05,
+        "params": 2
+      }
+    ],
+    "scheduler_state_dict": "{'base_lrs': [3e-05, 1e-05, 3e-05], 'last_epoch': 37995, 'verbose': False, '_step_count': 37996, '_get_lr_called_within_step': False, '_last_lr': [1.6244627981258996e-05, 5.414875993753e-06, 1.6244627981258996e-05], 'lr_lambdas': [None, None, None]}"
+  },
+  "C0R": {
+    "contract_cfg": {
+      "use_adaln": true,
+      "season_encoding": "annual_sincos_v1",
+      "season_route": "tokens_and_transition",
+      "supervision_v2": true,
+      "zero_empty_history_reference": true,
+      "state_dim": 256,
+      "freeze_b0": false,
+      "dw": 128,
+      "dg": 64,
+      "dh": 64,
+      "cond_dim": 256,
+      "lc_min": 10,
+      "lc_max": 40,
+      "partitions": [
+        [
+          5,
+          5
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          10,
+          10
+        ]
+      ],
+      "heldout_partitions": [
+        [
+          3,
+          7
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          4,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          2,
+          18
+        ]
+      ],
+      "arch": "SpanWorldFullBase",
+      "route_version": "spanworld_full_base_v1",
+      "driver_protocol": "full24",
+      "factual_path": "direct",
+      "days_per_transition_step": 5,
+      "use_future_state_anchor": false,
+      "eo_traj_weight": 1.0,
+      "eo_endpoint_weight": 1.0,
+      "factual_endpoints": [
+        10,
+        15,
+        20
+      ],
+      "nc_min_std": 0.001,
+      "nc_min_effective_rank": 2.0,
+      "nc_min_movement": 0.0001,
+      "cc_train_partitions": {
+        "10": [
+          [
+            10
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3,
+            2
+          ]
+        ],
+        "15": [
+          [
+            15
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            4,
+            4
+          ]
+        ],
+        "20": [
+          [
+            20
+          ],
+          [
+            10,
+            10
+          ],
+          [
+            10,
+            5,
+            5
+          ],
+          [
+            5,
+            5,
+            5,
+            5
+          ]
+        ]
+      },
+      "cc_heldout_partitions": {
+        "10": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            2,
+            3,
+            5
+          ]
+        ],
+        "15": [
+          [
+            4,
+            11
+          ],
+          [
+            3,
+            5,
+            7
+          ]
+        ],
+        "20": [
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ],
+          [
+            2,
+            6,
+            12
+          ],
+          [
+            1,
+            4,
+            6,
+            9
+          ]
+        ]
+      },
+      "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+      "training_stage": "stage2",
+      "variant": "D"
+    },
+    "epoch": 19,
+    "step": 14155,
+    "total_steps": 74500,
+    "accum": 1,
+    "world_size": 4,
+    "global_batch": 32,
+    "runtime_topology": {
+      "world_size": 4,
+      "per_gpu_batch": 8,
+      "accum": 1,
+      "global_batch": 32
+    },
+    "sha": {
+      "parent_alias": "selected_stage1",
+      "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "parent_value_sha16": "fde2d8f9ff18b3f6",
+      "inherited_value_sha16": "fde2d8f9ff18b3f6",
+      "warm_start_state_sha256": "f488b7d7a8676f810124280bc93d188d0b74c1822a988bf27223fa28e6ab0cd0",
+      "val_split_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+      "val_split_manifest_sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b",
+      "val_split_selector": "validation_subsplit.val_dev.ids",
+      "val_split_n_ids": 476,
+      "selection_metric": "GreenEarthNet RMSE_LC HQ",
+      "scorer_reference_sha256": "cfbc6722174981daeabd880e27afaa90dce0de11269ecbba8365fe54de29bd2f",
+      "q4_partition_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+      "q4_partition_manifest_sha256": "d0a4c6564516ea62f7eda9ebc4018433d1357391ad3a2a3bd8070de1a54e1e0e",
+      "selected_config_sha256": "b4a5313a008f15982ba6640692f778ab258071b32040c9cd1bdf5b48d24ee649",
+      "selected_config_content": {
+        "stage": "stage2",
+        "variant": "D",
+        "trainer": "train/train_spanworld_full_base.py",
+        "parent_ckpt": null,
+        "expected_parent_sha256": null,
+        "status": "requires verified parent path; no launch",
+        "global_batch": 32,
+        "world_size": 4,
+        "per_gpu_batch": 8,
+        "effective_updates": 74500,
+        "epochs_equivalent": 100,
+        "branch_peak_lr": 3e-05,
+        "token_season_lr": 3e-05,
+        "q_peak_lr": 1e-05,
+        "q_blocks": [
+          1,
+          2
+        ],
+        "adaln": true,
+        "traj_weight": 1,
+        "endpoint_weight": 1,
+        "warmup": 600,
+        "decay_start": 600,
+        "final_factor": 0.1,
+        "selection": "val_dev476 official RMSE_LC minimum; first tie",
+        "stage2_parent": "same selected stage1 best_val.pt for all variants",
+        "arm": "C0R",
+        "factual_path": "direct",
+        "seed": 42,
+        "branch_final_lr": 3e-06,
+        "q_final_lr": 1.0000000000000002e-06,
+        "token_season_final_lr": 3e-06,
+        "transition_season_peak_lr": 3e-05,
+        "transition_season_final_lr": 3e-06,
+        "adaln_peak_lr": 3e-05,
+        "adaln_final_lr": 3e-06
+      },
+      "config_sha256": "c431bcbbe7cf335b0da0ef1e60bd8bccf342834fd04825ad406ec0a6bbad481f",
+      "source_sha256": {
+        "models/terrastate_candidate_c.py": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c",
+        "train/train_spanworld_full_base.py": "ee63fc6ba41cce09fbd8fae19dc0388743a82ffe475a9f51969f1460d9d88397",
+        "train/full_base_policy.py": "944170e2d348ab86d00f6fef4464be04e29447c0f2e51022adf93c4e1338b712",
+        "train/efficiency_continuation.py": "44d24e48b9448d9e0e4c55ab2634ec9040d63b48502b6d90e837aa87f809dc5c",
+        "train/progress_io.py": "73db3ba974e8d80bc204a072533bce3f36e3fac1abed80e6f64093971f547d1b",
+        "models/encoders/pvt_contextformer_q.py": "57b74bdf05af716604b515d5e166ec316020742199013d3e92de77836d5fae3f",
+        "train/topology_migration.py": "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6",
+        "models/spanworld_full_base.py": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625",
+        "train/train_terrastate_candidate_c.py": "1d6ddd49fb6469e1267c203b78ac7a002b0ecd84530b7a9a81516456e357b294",
+        "models/losses/supervision_v2.py": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9",
+        "models/encoders/contextformer_official.py": "ca379e01e0609752fb9794ec1db29fc754b04e08031c7122b9138f8aa9bfc6c3",
+        "data/calendar_features.py": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc",
+        "data/weather_contract.py": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e",
+        "data/greenearthnet_contextformer_dataset.py": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7",
+        "train/c1_validation.py": "f3ef83a0e763123919ace04fd3404bdf351704a501b4710997270d9c650c203b",
+        "train/c1_checkpoint.py": "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4",
+        "models/terrastate_v2.py": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+        "models/plan_b_b4_exclusive.py": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+        "models/plan_b_b4.py": "9728a6ad8102041c75b1278a1ad01f4961ceabadd5315ecb7e9011119ee05032",
+        "train/train_terrastate_v2.py": "167a22969e9c664434f6135465778ee28524ce4c565dbcec793023794a28ac37",
+        "train/terrastate_v2_common.py": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f"
+      },
+      "train_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "val_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9"
+    },
+    "args": {
+      "continuation_manifest": "",
+      "history_state_only": true,
+      "migration_checkpoint": "",
+      "migration_checkpoint_sha256": "",
+      "migration_best": "",
+      "migration_best_sha256": "",
+      "handoff_dir": "",
+      "handoff_token": "",
+      "handoff_timeout": 120.0,
+      "runtime_per_gpu_batch": null,
+      "runtime_world_size": 4,
+      "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/configs/spanworld_full_base/stage2_D_C0R.json",
+      "stage": "stage2",
+      "variant": "D",
+      "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "arm": "C0R",
+      "factual_path": "direct",
+      "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+      "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+      "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+      "val_split_selector": "validation_subsplit.val_dev.ids",
+      "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+      "output_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal",
+      "resume": "",
+      "parent_alias": "terrastate/v2/default-training-anchor",
+      "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "allow_unverified_parent": false,
+      "state_dim": 256,
+      "per_gpu_batch": 8,
+      "global_batch": 32,
+      "num_workers": 4,
+      "max_epochs": 100,
+      "max_steps": 0,
+      "stop_after_step": 0,
+      "lambda_z": 0.0,
+      "lambda_y": 0.0,
+      "lambda_pair": 0.0,
+      "lambda_nc": 0.0,
+      "allow_nonzero_lambdas": false,
+      "eo_traj_weight": 1.0,
+      "eo_endpoint_weight": 1.0,
+      "days_per_transition_step": 5,
+      "branch_lr": 3e-05,
+      "q_lr_scale": 0.33333333333333337,
+      "weight_decay": 0.0,
+      "grad_clip": 1.0,
+      "lr_warmup_steps": 600,
+      "use_adaln": true,
+      "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+      "seed": 42,
+      "log_interval": 10,
+      "val_interval": 745,
+      "ckpt_interval": 372,
+      "device": "cuda",
+      "deterministic": false,
+      "allow_existing_out": false,
+      "verify_data_manifest": true,
+      "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+      "stage_epochs": 100,
+      "stage_total_steps": 74500
+    },
+    "lineage": {
+      "parent_alias": "selected_stage1",
+      "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "parent_value_sha16": "fde2d8f9ff18b3f6",
+      "inherited_value_sha16": "fde2d8f9ff18b3f6",
+      "inherited_n_tensors": 257,
+      "max_abs_diff_vs_parent": 0.0,
+      "missing_keys": [
+        "transition.adaln.bias",
+        "transition.adaln.weight"
+      ],
+      "unexpected_keys": [],
+      "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "fork_kind": "weights_only_full_base_stage2",
+      "is_exact_resume": false,
+      "parent_optimizer_scheduler_deliberately_discarded": true
+    },
+    "rmse_best": {
+      "score": 0.14956784802202178,
+      "epoch": 19,
+      "step": 14155
+    },
+    "checkpoint_keys": [
+      "arch",
+      "route_version",
+      "training_stage",
+      "variant",
+      "b4_state_dict",
+      "contract_cfg",
+      "optimizer_state_dict",
+      "scheduler_state_dict",
+      "scaler",
+      "epoch",
+      "step",
+      "phase_step",
+      "micro_in_epoch",
+      "phase",
+      "arm",
+      "factual_path",
+      "q_freeze",
+      "rng_state",
+      "rng_states_by_rank",
+      "best_val",
+      "total_steps",
+      "accum",
+      "world_size",
+      "global_batch",
+      "runtime_topology",
+      "alpha",
+      "lambdas",
+      "endpoint_plan_note",
+      "completion_reason",
+      "sha",
+      "args",
+      "lineage",
+      "simulator_status",
+      "selection_note",
+      "not_exact_resume_of_parent",
+      "candidate",
+      "rmse_best",
+      "validation_history"
+    ],
+    "optimizer_state_dict": [
+      {
+        "lr": 2.781996840935563e-05,
+        "name": "branch",
+        "param_names": [
+          "projector.net.0.weight",
+          "projector.net.0.bias",
+          "projector.net.1.weight",
+          "projector.net.1.bias",
+          "projector.net.3.weight",
+          "projector.net.3.bias",
+          "projector.net.4.weight",
+          "projector.net.4.bias",
+          "weather_enc.gru.weight_ih_l0",
+          "weather_enc.gru.weight_hh_l0",
+          "weather_enc.gru.bias_ih_l0",
+          "weather_enc.gru.bias_hh_l0",
+          "geo_enc.mlp.0.weight",
+          "geo_enc.mlp.0.bias",
+          "geo_enc.mlp.2.weight",
+          "geo_enc.mlp.2.bias",
+          "fuse.0.weight",
+          "fuse.0.bias",
+          "fuse.2.weight",
+          "fuse.2.bias",
+          "transition.ln.weight",
+          "transition.ln.bias",
+          "transition.adaln.weight",
+          "transition.adaln.bias",
+          "transition.net.0.weight",
+          "transition.net.0.bias",
+          "transition.net.2.weight",
+          "transition.net.2.bias",
+          "transition.net.4.weight",
+          "transition.net.4.bias",
+          "o_delta.weight",
+          "o_delta.bias"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 3e-05,
+        "params": 32
+      },
+      {
+        "lr": 9.273322803118544e-06,
+        "name": "q",
+        "param_names": [
+          "q.core.blocks.1.norm1.weight",
+          "q.core.blocks.1.norm1.bias",
+          "q.core.blocks.1.attn.qkv.weight",
+          "q.core.blocks.1.attn.qkv.bias",
+          "q.core.blocks.1.attn.proj.weight",
+          "q.core.blocks.1.attn.proj.bias",
+          "q.core.blocks.1.norm2.weight",
+          "q.core.blocks.1.norm2.bias",
+          "q.core.blocks.1.mlp.fc1.weight",
+          "q.core.blocks.1.mlp.fc1.bias",
+          "q.core.blocks.1.mlp.fc2.weight",
+          "q.core.blocks.1.mlp.fc2.bias",
+          "q.core.blocks.2.norm1.weight",
+          "q.core.blocks.2.norm1.bias",
+          "q.core.blocks.2.attn.qkv.weight",
+          "q.core.blocks.2.attn.qkv.bias",
+          "q.core.blocks.2.attn.proj.weight",
+          "q.core.blocks.2.attn.proj.bias",
+          "q.core.blocks.2.norm2.weight",
+          "q.core.blocks.2.norm2.bias",
+          "q.core.blocks.2.mlp.fc1.weight",
+          "q.core.blocks.2.mlp.fc1.bias",
+          "q.core.blocks.2.mlp.fc2.weight",
+          "q.core.blocks.2.mlp.fc2.bias"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 1e-05,
+        "params": 24
+      },
+      {
+        "lr": 2.781996840935563e-05,
+        "name": "season",
+        "param_names": [
+          "q.core.season_proj.weight",
+          "season_condition.weight"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 3e-05,
+        "params": 2
+      }
+    ],
+    "scheduler_state_dict": "{'base_lrs': [3e-05, 1e-05, 3e-05], 'last_epoch': 14155, 'verbose': False, '_step_count': 14156, '_get_lr_called_within_step': False, '_last_lr': [2.781996840935563e-05, 9.273322803118544e-06, 2.781996840935563e-05], 'lr_lambdas': [None, None, None]}"
+  },
+  "CONSISTENCY": {
+    "contract_cfg": {
+      "use_adaln": true,
+      "season_encoding": "annual_sincos_v1",
+      "season_route": "tokens_and_transition",
+      "supervision_v2": true,
+      "zero_empty_history_reference": true,
+      "state_dim": 256,
+      "freeze_b0": false,
+      "dw": 128,
+      "dg": 64,
+      "dh": 64,
+      "cond_dim": 256,
+      "lc_min": 10,
+      "lc_max": 40,
+      "partitions": [
+        [
+          5,
+          5
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          10,
+          10
+        ]
+      ],
+      "heldout_partitions": [
+        [
+          3,
+          7
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          4,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          2,
+          18
+        ]
+      ],
+      "arch": "SpanWorldFullBase",
+      "route_version": "spanworld_full_base_v1",
+      "driver_protocol": "full24",
+      "factual_path": "recursive",
+      "endpoint_target": "detached_direct",
+      "days_per_transition_step": 5,
+      "use_future_state_anchor": false,
+      "eo_traj_weight": 1.0,
+      "eo_endpoint_weight": 1.0,
+      "factual_endpoints": [
+        10,
+        15,
+        20
+      ],
+      "nc_min_std": 0.001,
+      "nc_min_effective_rank": 2.0,
+      "nc_min_movement": 0.0001,
+      "cc_train_partitions": {
+        "10": [
+          [
+            10
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3,
+            2
+          ]
+        ],
+        "15": [
+          [
+            15
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            4,
+            4
+          ]
+        ],
+        "20": [
+          [
+            20
+          ],
+          [
+            10,
+            10
+          ],
+          [
+            10,
+            5,
+            5
+          ],
+          [
+            5,
+            5,
+            5,
+            5
+          ]
+        ]
+      },
+      "cc_heldout_partitions": {
+        "10": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            2,
+            3,
+            5
+          ]
+        ],
+        "15": [
+          [
+            4,
+            11
+          ],
+          [
+            3,
+            5,
+            7
+          ]
+        ],
+        "20": [
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ],
+          [
+            2,
+            6,
+            12
+          ],
+          [
+            1,
+            4,
+            6,
+            9
+          ]
+        ]
+      },
+      "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+      "training_stage": "stage2",
+      "variant": "D"
+    },
+    "epoch": 51,
+    "step": 37995,
+    "total_steps": 74500,
+    "accum": 1,
+    "world_size": 4,
+    "global_batch": 32,
+    "sha": {
+      "parent_alias": "selected_stage1",
+      "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "parent_value_sha16": "fde2d8f9ff18b3f6",
+      "inherited_value_sha16": "fde2d8f9ff18b3f6",
+      "warm_start_state_sha256": "f488b7d7a8676f810124280bc93d188d0b74c1822a988bf27223fa28e6ab0cd0",
+      "val_split_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+      "val_split_manifest_sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b",
+      "val_split_selector": "validation_subsplit.val_dev.ids",
+      "val_split_n_ids": 476,
+      "selection_metric": "GreenEarthNet RMSE_LC HQ",
+      "scorer_reference_sha256": "cfbc6722174981daeabd880e27afaa90dce0de11269ecbba8365fe54de29bd2f",
+      "q4_partition_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+      "q4_partition_manifest_sha256": "d0a4c6564516ea62f7eda9ebc4018433d1357391ad3a2a3bd8070de1a54e1e0e",
+      "selected_config_sha256": "1d8de95d641422267f1889513c7bdc8d91983d5dbd51e0eb5c6e42c513e8cb24",
+      "selected_config_content": {
+        "stage": "stage2",
+        "variant": "D",
+        "trainer": "train/train_spanworld_full_base.py",
+        "parent_ckpt": null,
+        "expected_parent_sha256": null,
+        "status": "validated configuration; launch subject to tests",
+        "global_batch": 32,
+        "world_size": 4,
+        "per_gpu_batch": 8,
+        "effective_updates": 74500,
+        "epochs_equivalent": 100,
+        "branch_peak_lr": 3e-05,
+        "token_season_lr": 3e-05,
+        "q_peak_lr": 1e-05,
+        "q_blocks": [
+          1,
+          2
+        ],
+        "adaln": true,
+        "traj_weight": 1,
+        "endpoint_weight": 1,
+        "warmup": 600,
+        "decay_start": 600,
+        "final_factor": 0.1,
+        "selection": "val_dev476 official RMSE_LC minimum; first tie",
+        "stage2_parent": "same selected stage1 best_val.pt for all variants",
+        "arm": "C1",
+        "factual_path": "recursive",
+        "seed": 42,
+        "branch_final_lr": 3e-06,
+        "q_final_lr": 1.0000000000000002e-06,
+        "token_season_final_lr": 3e-06,
+        "transition_season_peak_lr": 3e-05,
+        "transition_season_final_lr": 3e-06,
+        "adaln_peak_lr": 3e-05,
+        "adaln_final_lr": 3e-06,
+        "experiment": "consistency",
+        "endpoint_target": "detached_direct",
+        "planned_stop_step": 44700,
+        "actual_epochs_equivalent": 60,
+        "fixed_ablation_step": 29800,
+        "fixed_ablation_epoch": 40,
+        "checkpoint_interval_epochs": 20,
+        "schedule_horizon_updates": 74500
+      },
+      "config_sha256": "e89837c08efbb4e1ee6cf9e65979940c7591121a5b5f04916d02557250ed7b3a",
+      "source_sha256": {
+        "models/terrastate_candidate_c.py": "f937dfbd6f38ad196ccf32c905e9aab956d626e075d9fcb3c1d7c9eb1db468ea",
+        "train/train_spanworld_full_base.py": "dd73449c3513614cdeb17a5ce72042d3a10d7076680ab6fd722483b384467c0c",
+        "train/full_base_policy.py": "850a9da4d80351e92e8128d32e1abf0daf9049a0472b51878bf0c58d6c84b50c",
+        "train/efficiency_continuation.py": "f78e8126a874c52386554655fd5eef61acfaca72fa2c773a9a89438b65925817",
+        "train/progress_io.py": "73db3ba974e8d80bc204a072533bce3f36e3fac1abed80e6f64093971f547d1b",
+        "models/encoders/pvt_contextformer_q.py": "57b74bdf05af716604b515d5e166ec316020742199013d3e92de77836d5fae3f",
+        "train/topology_migration.py": "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6",
+        "models/spanworld_full_base.py": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625",
+        "train/train_terrastate_candidate_c.py": "1d6ddd49fb6469e1267c203b78ac7a002b0ecd84530b7a9a81516456e357b294",
+        "models/losses/supervision_v2.py": "f5acf24fc3fce1c3d48602b9b3363106a065b415a827ebe9d12aec8ea65f448b",
+        "models/encoders/contextformer_official.py": "ca379e01e0609752fb9794ec1db29fc754b04e08031c7122b9138f8aa9bfc6c3",
+        "data/calendar_features.py": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc",
+        "data/weather_contract.py": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e",
+        "data/greenearthnet_contextformer_dataset.py": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7",
+        "train/c1_validation.py": "f3ef83a0e763123919ace04fd3404bdf351704a501b4710997270d9c650c203b",
+        "train/c1_checkpoint.py": "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4",
+        "models/terrastate_v2.py": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+        "models/plan_b_b4_exclusive.py": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+        "models/plan_b_b4.py": "9b3638dbb58b282ebff188973065d2b2dc269361d4c521678873c9cd6687d2c3",
+        "train/train_terrastate_v2.py": "167a22969e9c664434f6135465778ee28524ce4c565dbcec793023794a28ac37",
+        "train/terrastate_v2_common.py": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f"
+      },
+      "train_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "val_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9"
+    },
+    "args": {
+      "endpoint_target": "detached_direct",
+      "continuation_manifest": "",
+      "history_state_only": true,
+      "migration_checkpoint": "",
+      "migration_checkpoint_sha256": "",
+      "migration_best": "",
+      "migration_best_sha256": "",
+      "handoff_dir": "",
+      "handoff_token": "",
+      "handoff_timeout": 120.0,
+      "runtime_world_size": 4,
+      "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_consistency_D946_60ep_20261114_01/code/configs/spanworld_full_base/stage2_D_consistency.json",
+      "stage": "stage2",
+      "variant": "D",
+      "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "arm": "C1",
+      "factual_path": "recursive",
+      "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+      "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+      "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+      "val_split_selector": "validation_subsplit.val_dev.ids",
+      "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+      "output_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_consistency_D946_60ep_20261114_01/D/formal",
+      "resume": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_consistency_D946_60ep_20261114_01/D/formal/last.pt",
+      "parent_alias": "terrastate/v2/default-training-anchor",
+      "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "allow_unverified_parent": false,
+      "state_dim": 256,
+      "per_gpu_batch": 8,
+      "global_batch": 32,
+      "num_workers": 4,
+      "max_epochs": 100,
+      "max_steps": 0,
+      "stop_after_step": 44700,
+      "lambda_z": 0.0,
+      "lambda_y": 0.0,
+      "lambda_pair": 0.0,
+      "lambda_nc": 0.0,
+      "allow_nonzero_lambdas": false,
+      "eo_traj_weight": 1.0,
+      "eo_endpoint_weight": 1.0,
+      "days_per_transition_step": 5,
+      "branch_lr": 3e-05,
+      "q_lr_scale": 0.33333333333333337,
+      "weight_decay": 0.0,
+      "grad_clip": 1.0,
+      "lr_warmup_steps": 600,
+      "use_adaln": true,
+      "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+      "seed": 42,
+      "log_interval": 10,
+      "val_interval": 745,
+      "ckpt_interval": 372,
+      "device": "cuda",
+      "deterministic": false,
+      "allow_existing_out": true,
+      "verify_data_manifest": true,
+      "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+      "stage_epochs": 100,
+      "stage_total_steps": 74500
+    },
+    "lineage": {
+      "parent_alias": "selected_stage1",
+      "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "parent_value_sha16": "fde2d8f9ff18b3f6",
+      "inherited_value_sha16": "fde2d8f9ff18b3f6",
+      "inherited_n_tensors": 257,
+      "max_abs_diff_vs_parent": 0.0,
+      "missing_keys": [
+        "transition.adaln.bias",
+        "transition.adaln.weight"
+      ],
+      "unexpected_keys": [],
+      "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "fork_kind": "weights_only_full_base_stage2",
+      "is_exact_resume": false,
+      "parent_optimizer_scheduler_deliberately_discarded": true,
+      "resumed_within_phase": true,
+      "resume_parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_consistency_D946_60ep_20261114_01/D/formal/last.pt",
+      "resume_parent_file_sha256": "6bc06050f090d9e0cdff2805f453834ef49475c3be6ad6087b3e8681cd27c659"
+    },
+    "rmse_best": {
+      "score": 0.14953470412259215,
+      "epoch": 51,
+      "step": 37995
+    },
+    "checkpoint_keys": [
+      "arch",
+      "route_version",
+      "training_stage",
+      "variant",
+      "b4_state_dict",
+      "contract_cfg",
+      "experiment",
+      "endpoint_target",
+      "planned_stop_step",
+      "optimizer_state_dict",
+      "scheduler_state_dict",
+      "scaler",
+      "epoch",
+      "step",
+      "phase_step",
+      "micro_in_epoch",
+      "phase",
+      "arm",
+      "factual_path",
+      "q_freeze",
+      "rng_state",
+      "rng_states_by_rank",
+      "best_val",
+      "total_steps",
+      "accum",
+      "world_size",
+      "global_batch",
+      "alpha",
+      "lambdas",
+      "endpoint_plan_note",
+      "completion_reason",
+      "sha",
+      "args",
+      "lineage",
+      "simulator_status",
+      "selection_note",
+      "not_exact_resume_of_parent",
+      "candidate",
+      "rmse_best",
+      "validation_history"
+    ],
+    "optimizer_state_dict": [
+      {
+        "lr": 1.6244627981258996e-05,
+        "name": "branch",
+        "param_names": [
+          "projector.net.0.weight",
+          "projector.net.0.bias",
+          "projector.net.1.weight",
+          "projector.net.1.bias",
+          "projector.net.3.weight",
+          "projector.net.3.bias",
+          "projector.net.4.weight",
+          "projector.net.4.bias",
+          "weather_enc.gru.weight_ih_l0",
+          "weather_enc.gru.weight_hh_l0",
+          "weather_enc.gru.bias_ih_l0",
+          "weather_enc.gru.bias_hh_l0",
+          "geo_enc.mlp.0.weight",
+          "geo_enc.mlp.0.bias",
+          "geo_enc.mlp.2.weight",
+          "geo_enc.mlp.2.bias",
+          "fuse.0.weight",
+          "fuse.0.bias",
+          "fuse.2.weight",
+          "fuse.2.bias",
+          "transition.ln.weight",
+          "transition.ln.bias",
+          "transition.adaln.weight",
+          "transition.adaln.bias",
+          "transition.net.0.weight",
+          "transition.net.0.bias",
+          "transition.net.2.weight",
+          "transition.net.2.bias",
+          "transition.net.4.weight",
+          "transition.net.4.bias",
+          "o_delta.weight",
+          "o_delta.bias"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 3e-05,
+        "params": 32
+      },
+      {
+        "lr": 5.414875993753e-06,
+        "name": "q",
+        "param_names": [
+          "q.core.blocks.1.norm1.weight",
+          "q.core.blocks.1.norm1.bias",
+          "q.core.blocks.1.attn.qkv.weight",
+          "q.core.blocks.1.attn.qkv.bias",
+          "q.core.blocks.1.attn.proj.weight",
+          "q.core.blocks.1.attn.proj.bias",
+          "q.core.blocks.1.norm2.weight",
+          "q.core.blocks.1.norm2.bias",
+          "q.core.blocks.1.mlp.fc1.weight",
+          "q.core.blocks.1.mlp.fc1.bias",
+          "q.core.blocks.1.mlp.fc2.weight",
+          "q.core.blocks.1.mlp.fc2.bias",
+          "q.core.blocks.2.norm1.weight",
+          "q.core.blocks.2.norm1.bias",
+          "q.core.blocks.2.attn.qkv.weight",
+          "q.core.blocks.2.attn.qkv.bias",
+          "q.core.blocks.2.attn.proj.weight",
+          "q.core.blocks.2.attn.proj.bias",
+          "q.core.blocks.2.norm2.weight",
+          "q.core.blocks.2.norm2.bias",
+          "q.core.blocks.2.mlp.fc1.weight",
+          "q.core.blocks.2.mlp.fc1.bias",
+          "q.core.blocks.2.mlp.fc2.weight",
+          "q.core.blocks.2.mlp.fc2.bias"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 1e-05,
+        "params": 24
+      },
+      {
+        "lr": 1.6244627981258996e-05,
+        "name": "season",
+        "param_names": [
+          "q.core.season_proj.weight",
+          "season_condition.weight"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 3e-05,
+        "params": 2
+      }
+    ],
+    "scheduler_state_dict": "{'base_lrs': [3e-05, 1e-05, 3e-05], 'last_epoch': 37995, 'verbose': False, '_step_count': 37996, '_get_lr_called_within_step': False, '_last_lr': [1.6244627981258996e-05, 5.414875993753e-06, 1.6244627981258996e-05], 'lr_lambdas': [None, None, None]}"
+  },
+  "BASELINE": {
+    "contract_cfg": {
+      "arch": "SpanWorldBaselineOnly",
+      "route_version": "spanworld_baseline_only_v1",
+      "experiment": "baseline_only_retrain",
+      "training_stage": "stage2",
+      "variant": "D",
+      "factual_path": "direct",
+      "use_adaln": false,
+      "freeze_b0": false,
+      "supervision_v2": true,
+      "season_encoding": "annual_sincos_v1",
+      "season_route": "tokens_only",
+      "context_length": 10,
+      "target_length": 20,
+      "eo_traj_weight": 1.0,
+      "eo_endpoint_weight": 1.0,
+      "factual_endpoints": [
+        10,
+        15,
+        20
+      ],
+      "continuation": "not_applicable"
+    },
+    "epoch": 47,
+    "step": 35015,
+    "total_steps": 74500,
+    "accum": 1,
+    "world_size": 4,
+    "global_batch": 32,
+    "runtime_topology": {
+      "world_size": 4,
+      "per_gpu_batch": 8,
+      "accum": 1,
+      "global_batch": 32
+    },
+    "sha": {
+      "parent_alias": "selected_stage1",
+      "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "parent_value_sha16": "be4243102e4c1ab1",
+      "inherited_value_sha16": "be4243102e4c1ab1",
+      "warm_start_state_sha256": "be4243102e4c1ab1f93cd473c0bc40047ee732e36f7f91d8367b1824764d544b",
+      "val_split_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+      "val_split_manifest_sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b",
+      "val_split_selector": "validation_subsplit.val_dev.ids",
+      "val_split_n_ids": 476,
+      "selection_metric": "GreenEarthNet RMSE_LC HQ",
+      "scorer_reference_sha256": "cfbc6722174981daeabd880e27afaa90dce0de11269ecbba8365fe54de29bd2f",
+      "q4_partition_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+      "q4_partition_manifest_sha256": "d0a4c6564516ea62f7eda9ebc4018433d1357391ad3a2a3bd8070de1a54e1e0e",
+      "selected_config_sha256": "f0975d7b3d6086d7b15f37abc28ecfbff4084b182eae47bf740166bac4e0a02e",
+      "selected_config_content": {
+        "stage": "stage2",
+        "variant": "D",
+        "trainer": "train/train_spanworld_full_base.py",
+        "parent_ckpt": null,
+        "expected_parent_sha256": null,
+        "status": "prepared; requires CPU and real GPU startup acceptance",
+        "global_batch": 32,
+        "world_size": 4,
+        "per_gpu_batch": 8,
+        "effective_updates": 74500,
+        "epochs_equivalent": 100,
+        "branch_peak_lr": null,
+        "token_season_lr": 3e-05,
+        "q_peak_lr": 1e-05,
+        "q_blocks": [
+          1,
+          2
+        ],
+        "adaln": false,
+        "traj_weight": 1,
+        "endpoint_weight": 1,
+        "warmup": 600,
+        "decay_start": 600,
+        "final_factor": 0.1,
+        "selection": "val_dev476 official RMSE_LC minimum; first tie",
+        "stage2_parent": "same selected stage1 best_val.pt for all variants",
+        "arm": "BASELINE",
+        "factual_path": "direct",
+        "seed": 42,
+        "branch_final_lr": null,
+        "q_final_lr": 1.0000000000000002e-06,
+        "token_season_final_lr": 3e-06,
+        "transition_season_peak_lr": null,
+        "transition_season_final_lr": null,
+        "adaln_peak_lr": null,
+        "adaln_final_lr": null,
+        "experiment": "baseline_only_retrain",
+        "planned_stop_step": 44700,
+        "actual_epochs_equivalent": 60,
+        "fixed_ablation_step": 29800,
+        "checkpoint_interval_epochs": 20,
+        "continuation": "not_applicable"
+      },
+      "config_sha256": "7c098800d2113d87724693145cb544145f91b4d7da09526533b804b547a3b867",
+      "source_sha256": {
+        "models/spanworld_baseline_only.py": "4420765fe6df3d06c1b1d279219a81200554d127d83dfc79396a42b29fca6821",
+        "train/baseline_startup_check.py": "74dcacbcaf1b3276c5d93ff4d198acf6d9faa1cd0d2c07aebb32d4c740c9873b",
+        "models/terrastate_candidate_c.py": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c",
+        "train/train_spanworld_full_base.py": "d386d58657e934d10ff5c4d859518552155ccd5b47bfb67d3d8c694c7a421994",
+        "train/full_base_policy.py": "589e7066d4c7cd111e962940e3ec1fda3981cbae1e5ebfba64f768364a93d6ff",
+        "train/efficiency_continuation.py": "44d24e48b9448d9e0e4c55ab2634ec9040d63b48502b6d90e837aa87f809dc5c",
+        "train/progress_io.py": "73db3ba974e8d80bc204a072533bce3f36e3fac1abed80e6f64093971f547d1b",
+        "models/encoders/pvt_contextformer_q.py": "57b74bdf05af716604b515d5e166ec316020742199013d3e92de77836d5fae3f",
+        "train/topology_migration.py": "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6",
+        "models/spanworld_full_base.py": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625",
+        "train/train_terrastate_candidate_c.py": "1d6ddd49fb6469e1267c203b78ac7a002b0ecd84530b7a9a81516456e357b294",
+        "models/losses/supervision_v2.py": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9",
+        "models/encoders/contextformer_official.py": "ca379e01e0609752fb9794ec1db29fc754b04e08031c7122b9138f8aa9bfc6c3",
+        "data/calendar_features.py": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc",
+        "data/weather_contract.py": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e",
+        "data/greenearthnet_contextformer_dataset.py": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7",
+        "train/c1_validation.py": "f3ef83a0e763123919ace04fd3404bdf351704a501b4710997270d9c650c203b",
+        "train/c1_checkpoint.py": "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4",
+        "models/terrastate_v2.py": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+        "models/plan_b_b4_exclusive.py": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+        "models/plan_b_b4.py": "9728a6ad8102041c75b1278a1ad01f4961ceabadd5315ecb7e9011119ee05032",
+        "train/train_terrastate_v2.py": "167a22969e9c664434f6135465778ee28524ce4c565dbcec793023794a28ac37",
+        "train/terrastate_v2_common.py": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f"
+      },
+      "train_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "val_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9"
+    },
+    "args": {
+      "continuation_manifest": "",
+      "history_state_only": false,
+      "migration_checkpoint": "",
+      "migration_checkpoint_sha256": "",
+      "migration_best": "",
+      "migration_best_sha256": "",
+      "handoff_dir": "",
+      "handoff_token": "",
+      "handoff_timeout": 120.0,
+      "runtime_per_gpu_batch": null,
+      "runtime_world_size": 4,
+      "config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_baseline_D946_60ep_20261114_02/code/configs/spanworld_full_base/stage2_D_baseline.json",
+      "stage": "stage2",
+      "variant": "D",
+      "expected_parent_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "arm": "BASELINE",
+      "factual_path": "direct",
+      "train_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+      "val_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+      "val_split_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+      "val_split_selector": "validation_subsplit.val_dev.ids",
+      "q4_partition_manifest": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+      "output_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_baseline_D946_60ep_20261114_02/D/formal",
+      "resume": "",
+      "parent_alias": "terrastate/v2/default-training-anchor",
+      "parent_ckpt": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "allow_unverified_parent": false,
+      "state_dim": 256,
+      "per_gpu_batch": 8,
+      "global_batch": 32,
+      "num_workers": 4,
+      "max_epochs": 100,
+      "max_steps": 0,
+      "stop_after_step": 44700,
+      "lambda_z": 0.0,
+      "lambda_y": 0.0,
+      "lambda_pair": 0.0,
+      "lambda_nc": 0.0,
+      "allow_nonzero_lambdas": false,
+      "eo_traj_weight": 1.0,
+      "eo_endpoint_weight": 1.0,
+      "days_per_transition_step": 5,
+      "branch_lr": 3e-05,
+      "q_lr_scale": 0.33333333333333337,
+      "weight_decay": 0.0,
+      "grad_clip": 1.0,
+      "lr_warmup_steps": 600,
+      "use_adaln": false,
+      "unfreeze_q_prefixes": "core.blocks.1.,core.blocks.2.",
+      "seed": 42,
+      "log_interval": 10,
+      "val_interval": 745,
+      "ckpt_interval": 372,
+      "device": "cuda",
+      "deterministic": false,
+      "allow_existing_out": false,
+      "verify_data_manifest": true,
+      "expect_train_manifest_sha": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+      "expect_val_manifest_sha": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+      "stage_epochs": 100,
+      "stage_total_steps": 74500
+    },
+    "lineage": {
+      "parent_alias": "selected_stage1",
+      "parent_file_sha256": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+      "parent_value_sha16": "be4243102e4c1ab1",
+      "inherited_value_sha16": "be4243102e4c1ab1",
+      "inherited_n_tensors": 224,
+      "max_abs_diff_vs_parent": 0.0,
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "parent_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+      "fork_kind": "weights_only_base_subset_stage2",
+      "is_exact_resume": false,
+      "parent_optimizer_scheduler_deliberately_discarded": true
+    },
+    "rmse_best": {
+      "score": 0.15014123544673988,
+      "epoch": 47,
+      "step": 35015
+    },
+    "checkpoint_keys": [
+      "arch",
+      "route_version",
+      "training_stage",
+      "variant",
+      "b4_state_dict",
+      "contract_cfg",
+      "experiment",
+      "planned_stop_step",
+      "optimizer_state_dict",
+      "scheduler_state_dict",
+      "scaler",
+      "epoch",
+      "step",
+      "phase_step",
+      "micro_in_epoch",
+      "phase",
+      "arm",
+      "factual_path",
+      "q_freeze",
+      "rng_state",
+      "rng_states_by_rank",
+      "best_val",
+      "total_steps",
+      "accum",
+      "world_size",
+      "global_batch",
+      "runtime_topology",
+      "alpha",
+      "lambdas",
+      "endpoint_plan_note",
+      "completion_reason",
+      "sha",
+      "args",
+      "lineage",
+      "simulator_status",
+      "selection_note",
+      "not_exact_resume_of_parent",
+      "candidate",
+      "rmse_best",
+      "validation_history"
+    ],
+    "optimizer_state_dict": [
+      {
+        "lr": 5.9840107034978624e-06,
+        "name": "q",
+        "param_names": [
+          "q.core.blocks.1.norm1.weight",
+          "q.core.blocks.1.norm1.bias",
+          "q.core.blocks.1.attn.qkv.weight",
+          "q.core.blocks.1.attn.qkv.bias",
+          "q.core.blocks.1.attn.proj.weight",
+          "q.core.blocks.1.attn.proj.bias",
+          "q.core.blocks.1.norm2.weight",
+          "q.core.blocks.1.norm2.bias",
+          "q.core.blocks.1.mlp.fc1.weight",
+          "q.core.blocks.1.mlp.fc1.bias",
+          "q.core.blocks.1.mlp.fc2.weight",
+          "q.core.blocks.1.mlp.fc2.bias",
+          "q.core.blocks.2.norm1.weight",
+          "q.core.blocks.2.norm1.bias",
+          "q.core.blocks.2.attn.qkv.weight",
+          "q.core.blocks.2.attn.qkv.bias",
+          "q.core.blocks.2.attn.proj.weight",
+          "q.core.blocks.2.attn.proj.bias",
+          "q.core.blocks.2.norm2.weight",
+          "q.core.blocks.2.norm2.bias",
+          "q.core.blocks.2.mlp.fc1.weight",
+          "q.core.blocks.2.mlp.fc1.bias",
+          "q.core.blocks.2.mlp.fc2.weight",
+          "q.core.blocks.2.mlp.fc2.bias"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 1e-05,
+        "params": 24
+      },
+      {
+        "lr": 1.7952032110493586e-05,
+        "name": "season",
+        "param_names": [
+          "q.core.season_proj.weight"
+        ],
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "initial_lr": 3e-05,
+        "params": 1
+      }
+    ],
+    "scheduler_state_dict": "{'base_lrs': [1e-05, 3e-05], 'last_epoch': 35015, 'verbose': False, '_step_count': 35016, '_get_lr_called_within_step': False, '_last_lr': [5.9840107034978624e-06, 1.7952032110493586e-05], 'lr_lambdas': [None, None]}"
+  }
+}

@@ -1,0 +1,2613 @@
+[
+  {
+    "case": "Q90",
+    "baseline": {
+      "id": "Q90",
+      "receiver": "MJJ17/minicube_22_30STJ_38.85_-5.31.nc",
+      "expected_dates": [
+        "2017-05-02",
+        "2017-05-07",
+        "2017-05-12",
+        "2017-05-17",
+        "2017-05-22",
+        "2017-05-27",
+        "2017-06-01",
+        "2017-06-06",
+        "2017-06-11",
+        "2017-06-16",
+        "2017-06-21",
+        "2017-06-26",
+        "2017-07-01",
+        "2017-07-06",
+        "2017-07-11",
+        "2017-07-16",
+        "2017-07-21",
+        "2017-07-26",
+        "2017-07-31",
+        "2017-08-05"
+      ],
+      "dates": [
+        "2017-05-02",
+        "2017-05-07",
+        "2017-05-12",
+        "2017-05-17",
+        "2017-05-22",
+        "2017-05-27",
+        "2017-06-01",
+        "2017-06-06",
+        "2017-06-11",
+        "2017-06-16",
+        "2017-06-21",
+        "2017-06-26",
+        "2017-07-01",
+        "2017-07-06",
+        "2017-07-11",
+        "2017-07-16",
+        "2017-07-21",
+        "2017-07-26",
+        "2017-07-31",
+        "2017-08-05"
+      ],
+      "checkpoint": "/data/zs/_downloads/greenearthnet_official_weights_20260912/model_weights/predrnn/predrnn1M/seed=42.ckpt",
+      "checkpoint_sha256": "7e84f48934e70b925cb47340aabd97b4c4ca82cd92b67385381a96515e3a5f02",
+      "config_sha256": "f0ab89f5ddc6bebf46576d0d95fe9cc70be057d6e27a56e016fb37aba18c1b1e",
+      "seed": 42,
+      "strict_load": true,
+      "array_sha256": "76e48341a4060064dc1067e294db057a45a8fcf38e8e407ce9d3764857d6e3e3",
+      "dataset_sha256": "a87499b22f77463a2cdffbeb709b9f6252c4bdbda43fbae37c80c1c3288a26bc",
+      "model_code_commit": "268943b10f78f69a79084ddda3291c35763c3612",
+      "selected_indices": [
+        4,
+        10
+      ],
+      "subset_sha256": "5c89e20b12447b338dc9004c14b96aeafc79eef0a86bf79a2cc1a55eeee089c6"
+    },
+    "D_source": {
+      "case": "Q90",
+      "metadata": {
+        "id": "Q90",
+        "receiver_id": "MJJ17/minicube_22_30STJ_38.85_-5.31.nc",
+        "dates": [
+          "2017-05-02",
+          "2017-05-07",
+          "2017-05-12",
+          "2017-05-17",
+          "2017-05-22",
+          "2017-05-27",
+          "2017-06-01",
+          "2017-06-06",
+          "2017-06-11",
+          "2017-06-16",
+          "2017-06-21",
+          "2017-06-26",
+          "2017-07-01",
+          "2017-07-06",
+          "2017-07-11",
+          "2017-07-16",
+          "2017-07-21",
+          "2017-07-26",
+          "2017-07-31",
+          "2017-08-05"
+        ],
+        "selection": "Frozen historical case Q90; re-evaluated with D seed42",
+        "dataset_index": 1568,
+        "models": {
+          "C1": {
+            "checkpoint": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+            "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "epoch": 51,
+            "step": 37995,
+            "variant": "D",
+            "seed": 42,
+            "selection": "same SHA as accepted complete six-table evaluation",
+            "contract_cfg": {
+              "use_adaln": true,
+              "season_encoding": "annual_sincos_v1",
+              "season_route": "tokens_and_transition",
+              "supervision_v2": true,
+              "zero_empty_history_reference": true,
+              "state_dim": 256,
+              "freeze_b0": false,
+              "dw": 128,
+              "dg": 64,
+              "dh": 64,
+              "cond_dim": 256,
+              "lc_min": 10,
+              "lc_max": 40,
+              "partitions": [
+                [
+                  5,
+                  5
+                ],
+                [
+                  7,
+                  8
+                ],
+                [
+                  10,
+                  10
+                ]
+              ],
+              "heldout_partitions": [
+                [
+                  3,
+                  7
+                ],
+                [
+                  6,
+                  4
+                ],
+                [
+                  4,
+                  11
+                ],
+                [
+                  8,
+                  12
+                ],
+                [
+                  2,
+                  18
+                ]
+              ],
+              "arch": "SpanWorldFullBase",
+              "route_version": "spanworld_full_base_v1",
+              "driver_protocol": "full24",
+              "factual_path": "recursive",
+              "days_per_transition_step": 5,
+              "use_future_state_anchor": false,
+              "eo_traj_weight": 1.0,
+              "eo_endpoint_weight": 1.0,
+              "factual_endpoints": [
+                10,
+                15,
+                20
+              ],
+              "nc_min_std": 0.001,
+              "nc_min_effective_rank": 2.0,
+              "nc_min_movement": 0.0001,
+              "cc_train_partitions": {
+                "10": [
+                  [
+                    10
+                  ],
+                  [
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    3,
+                    2
+                  ]
+                ],
+                "15": [
+                  [
+                    15
+                  ],
+                  [
+                    7,
+                    8
+                  ],
+                  [
+                    7,
+                    4,
+                    4
+                  ]
+                ],
+                "20": [
+                  [
+                    20
+                  ],
+                  [
+                    10,
+                    10
+                  ],
+                  [
+                    10,
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    5,
+                    5,
+                    5
+                  ]
+                ]
+              },
+              "cc_heldout_partitions": {
+                "10": [
+                  [
+                    3,
+                    7
+                  ],
+                  [
+                    6,
+                    4
+                  ],
+                  [
+                    2,
+                    3,
+                    5
+                  ]
+                ],
+                "15": [
+                  [
+                    4,
+                    11
+                  ],
+                  [
+                    3,
+                    5,
+                    7
+                  ]
+                ],
+                "20": [
+                  [
+                    8,
+                    12
+                  ],
+                  [
+                    2,
+                    18
+                  ],
+                  [
+                    2,
+                    6,
+                    12
+                  ],
+                  [
+                    1,
+                    4,
+                    6,
+                    9
+                  ]
+                ]
+              },
+              "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+              "training_stage": "stage2",
+              "variant": "D"
+            }
+          },
+          "C0R": {
+            "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+            "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+            "epoch": 19,
+            "step": 14155,
+            "variant": "D",
+            "seed": 42,
+            "selection": "same SHA as accepted complete six-table evaluation",
+            "contract_cfg": {
+              "use_adaln": true,
+              "season_encoding": "annual_sincos_v1",
+              "season_route": "tokens_and_transition",
+              "supervision_v2": true,
+              "zero_empty_history_reference": true,
+              "state_dim": 256,
+              "freeze_b0": false,
+              "dw": 128,
+              "dg": 64,
+              "dh": 64,
+              "cond_dim": 256,
+              "lc_min": 10,
+              "lc_max": 40,
+              "partitions": [
+                [
+                  5,
+                  5
+                ],
+                [
+                  7,
+                  8
+                ],
+                [
+                  10,
+                  10
+                ]
+              ],
+              "heldout_partitions": [
+                [
+                  3,
+                  7
+                ],
+                [
+                  6,
+                  4
+                ],
+                [
+                  4,
+                  11
+                ],
+                [
+                  8,
+                  12
+                ],
+                [
+                  2,
+                  18
+                ]
+              ],
+              "arch": "SpanWorldFullBase",
+              "route_version": "spanworld_full_base_v1",
+              "driver_protocol": "full24",
+              "factual_path": "direct",
+              "days_per_transition_step": 5,
+              "use_future_state_anchor": false,
+              "eo_traj_weight": 1.0,
+              "eo_endpoint_weight": 1.0,
+              "factual_endpoints": [
+                10,
+                15,
+                20
+              ],
+              "nc_min_std": 0.001,
+              "nc_min_effective_rank": 2.0,
+              "nc_min_movement": 0.0001,
+              "cc_train_partitions": {
+                "10": [
+                  [
+                    10
+                  ],
+                  [
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    3,
+                    2
+                  ]
+                ],
+                "15": [
+                  [
+                    15
+                  ],
+                  [
+                    7,
+                    8
+                  ],
+                  [
+                    7,
+                    4,
+                    4
+                  ]
+                ],
+                "20": [
+                  [
+                    20
+                  ],
+                  [
+                    10,
+                    10
+                  ],
+                  [
+                    10,
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    5,
+                    5,
+                    5
+                  ]
+                ]
+              },
+              "cc_heldout_partitions": {
+                "10": [
+                  [
+                    3,
+                    7
+                  ],
+                  [
+                    6,
+                    4
+                  ],
+                  [
+                    2,
+                    3,
+                    5
+                  ]
+                ],
+                "15": [
+                  [
+                    4,
+                    11
+                  ],
+                  [
+                    3,
+                    5,
+                    7
+                  ]
+                ],
+                "20": [
+                  [
+                    8,
+                    12
+                  ],
+                  [
+                    2,
+                    18
+                  ],
+                  [
+                    2,
+                    6,
+                    12
+                  ],
+                  [
+                    1,
+                    4,
+                    6,
+                    9
+                  ]
+                ]
+              },
+              "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+              "training_stage": "stage2",
+              "variant": "D"
+            }
+          }
+        },
+        "arrays_sha256": "7f341ebd5ea8461058c3f8ad430e51af011c626d464b9aa918461705f8fad437",
+        "prefix_days": [
+          15,
+          35
+        ],
+        "data_sha256": "a87499b22f77463a2cdffbeb709b9f6252c4bdbda43fbae37c80c1c3288a26bc",
+        "validation": "per-horizon continuation MSE checked against accepted D six-table raw results",
+        "validation_checks": [
+          {
+            "arm": "C1",
+            "k": 1,
+            "n_valid": 16187,
+            "mse_difference": 3.791356350454709e-11
+          },
+          {
+            "arm": "C1",
+            "k": 2,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C1",
+            "k": 3,
+            "n_valid": 15346,
+            "mse_difference": 6.270219699755365e-12
+          },
+          {
+            "arm": "C1",
+            "k": 4,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C1",
+            "k": 5,
+            "n_valid": 16187,
+            "mse_difference": 1.7239331175085205e-10
+          },
+          {
+            "arm": "C1",
+            "k": 6,
+            "n_valid": 16187,
+            "mse_difference": 6.022523794715739e-11
+          },
+          {
+            "arm": "C1",
+            "k": 7,
+            "n_valid": 16187,
+            "mse_difference": 8.442585340218809e-11
+          },
+          {
+            "arm": "C1",
+            "k": 8,
+            "n_valid": 16187,
+            "mse_difference": 3.4963491201796637e-11
+          },
+          {
+            "arm": "C1",
+            "k": 9,
+            "n_valid": 16187,
+            "mse_difference": 1.492093979243594e-10
+          },
+          {
+            "arm": "C1",
+            "k": 10,
+            "n_valid": 16187,
+            "mse_difference": 8.512867441232593e-11
+          },
+          {
+            "arm": "C0R",
+            "k": 1,
+            "n_valid": 16187,
+            "mse_difference": 1.7578629619522132e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 2,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C0R",
+            "k": 3,
+            "n_valid": 15346,
+            "mse_difference": 3.596767430280915e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 4,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C0R",
+            "k": 5,
+            "n_valid": 16187,
+            "mse_difference": 3.3979881541775206e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 6,
+            "n_valid": 16187,
+            "mse_difference": 2.9483202774016583e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 7,
+            "n_valid": 16187,
+            "mse_difference": 8.478462722295542e-11
+          },
+          {
+            "arm": "C0R",
+            "k": 8,
+            "n_valid": 16187,
+            "mse_difference": 2.7039261119322184e-12
+          },
+          {
+            "arm": "C0R",
+            "k": 9,
+            "n_valid": 16187,
+            "mse_difference": 5.8000644394948625e-11
+          },
+          {
+            "arm": "C0R",
+            "k": 10,
+            "n_valid": 16187,
+            "mse_difference": 1.2694335632982558e-10
+          }
+        ]
+      },
+      "source_full_sha256": "7f341ebd5ea8461058c3f8ad430e51af011c626d464b9aa918461705f8fad437",
+      "G1_indices": [
+        4,
+        10
+      ],
+      "G1_structure_reason": "low-contrast broad fields",
+      "G1_date_rule": "highest valid coverage in each half of forecast; earliest tie; fixed before PredRNN inference",
+      "G2_indices": [
+        10,
+        12
+      ],
+      "G2_date_rule": "among C1 self-degradation and coverage>=.40: max-coverage earliest tie and median relative-degradation; deduplicated",
+      "G2_eligible_frames": 8,
+      "subsets": {
+        "Q90/G1_day25.npz": "9bf40155d13e30db74c5b5c7ccd74efea3fc4d605f099d7e0869430de851092a",
+        "Q90/G1_day55.npz": "f132951f73dcbe72672d892d4c566afb87c3f72c7a36340ca0ec3888d1cc7896",
+        "Q90/G2_day55.npz": "a95f34180e39af0ca3a479f49b6c5d35ecc4e0e321e6d8cd771f1f16d9ed4780",
+        "Q90/G2_day65.npz": "638ed4ed439e9929c07d776ebb3686aa710d0dc9d2ef282f5189ad884410e246"
+      }
+    },
+    "gt_max_abs_diff": 4.023313522338867e-07,
+    "mask_identical": true,
+    "gt_score_source": "D GT for both models; baseline GT compared within2e-6",
+    "metrics": [
+      {
+        "case": "Q90",
+        "day": 25,
+        "date": "2017-05-22",
+        "valid_pixels": 16187,
+        "coverage": 0.98797607421875,
+        "D_C1": 0.0035059766888178904,
+        "PredRNN": 0.0015163032700306616,
+        "display_saturation": {
+          "D_C1": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          },
+          "PredRNN": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          }
+        }
+      },
+      {
+        "case": "Q90",
+        "day": 55,
+        "date": "2017-06-21",
+        "valid_pixels": 16187,
+        "coverage": 0.98797607421875,
+        "D_C1": 0.0034847861206146807,
+        "PredRNN": 0.0018555403088411162,
+        "display_saturation": {
+          "D_C1": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          },
+          "PredRNN": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          }
+        }
+      }
+    ],
+    "date_rule": "highest valid coverage in each half of forecast; earliest tie; fixed before PredRNN inference",
+    "model_identity": "same historical official PredRNN seed42 SHA; real file verified",
+    "source_script_sha256": "2a475279f7e37ea50cc0d49558be5deabfbd88bb33927a14615399a733973a34"
+  },
+  {
+    "case": "new_Q50",
+    "baseline": {
+      "id": "new_Q50",
+      "receiver": "MJJ18/minicube_89_31UGS_50.75_7.36.nc",
+      "expected_dates": [
+        "2018-05-05",
+        "2018-05-10",
+        "2018-05-15",
+        "2018-05-20",
+        "2018-05-25",
+        "2018-05-30",
+        "2018-06-04",
+        "2018-06-09",
+        "2018-06-14",
+        "2018-06-19",
+        "2018-06-24",
+        "2018-06-29",
+        "2018-07-04",
+        "2018-07-09",
+        "2018-07-14",
+        "2018-07-19",
+        "2018-07-24",
+        "2018-07-29",
+        "2018-08-03",
+        "2018-08-08"
+      ],
+      "dates": [
+        "2018-05-05",
+        "2018-05-10",
+        "2018-05-15",
+        "2018-05-20",
+        "2018-05-25",
+        "2018-05-30",
+        "2018-06-04",
+        "2018-06-09",
+        "2018-06-14",
+        "2018-06-19",
+        "2018-06-24",
+        "2018-06-29",
+        "2018-07-04",
+        "2018-07-09",
+        "2018-07-14",
+        "2018-07-19",
+        "2018-07-24",
+        "2018-07-29",
+        "2018-08-03",
+        "2018-08-08"
+      ],
+      "checkpoint": "/data/zs/_downloads/greenearthnet_official_weights_20260912/model_weights/predrnn/predrnn1M/seed=42.ckpt",
+      "checkpoint_sha256": "7e84f48934e70b925cb47340aabd97b4c4ca82cd92b67385381a96515e3a5f02",
+      "config_sha256": "f0ab89f5ddc6bebf46576d0d95fe9cc70be057d6e27a56e016fb37aba18c1b1e",
+      "seed": 42,
+      "strict_load": true,
+      "array_sha256": "86ee50319ff6cb9752050bac415f1552409e57e1a0dcefa69ec2f14d2c7f42af",
+      "dataset_sha256": "c2eaaeb1c99dc4aa82508c5b32a8f44b3f28df426314eb66bf4a979c810403dd",
+      "model_code_commit": "268943b10f78f69a79084ddda3291c35763c3612",
+      "selected_indices": [
+        0,
+        14
+      ],
+      "subset_sha256": "c9e506bfe91ffd22405a9758c73119f6e73f0214f4c53dbe30ba2979bca9de7d"
+    },
+    "D_source": {
+      "case": "new_Q50",
+      "metadata": {
+        "id": "new_Q50",
+        "receiver_id": "MJJ18/minicube_89_31UGS_50.75_7.36.nc",
+        "selection": "D outcome-selected benefit quantile 0.5; coverage >= 40%",
+        "selection_metrics": {
+          "dataset_index": 1891,
+          "receiver_id": "MJJ18/minicube_89_31UGS_50.75_7.36.nc",
+          "coverage": 0.574481201171875,
+          "c1_mse": 0.015634198752791394,
+          "c0r_mse": 0.018029023894691406,
+          "benefit": 0.0023948251419000123,
+          "candidate_alias": "new_Q50",
+          "quantile": 0.5
+        },
+        "dates": [
+          "2018-05-05",
+          "2018-05-10",
+          "2018-05-15",
+          "2018-05-20",
+          "2018-05-25",
+          "2018-05-30",
+          "2018-06-04",
+          "2018-06-09",
+          "2018-06-14",
+          "2018-06-19",
+          "2018-06-24",
+          "2018-06-29",
+          "2018-07-04",
+          "2018-07-09",
+          "2018-07-14",
+          "2018-07-19",
+          "2018-07-24",
+          "2018-07-29",
+          "2018-08-03",
+          "2018-08-08"
+        ],
+        "dataset_index": 1891,
+        "models": {
+          "C1": {
+            "checkpoint": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+            "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "epoch": 51,
+            "step": 37995,
+            "variant": "D",
+            "seed": 42,
+            "selection": "same SHA as accepted complete six-table evaluation",
+            "contract_cfg": {
+              "use_adaln": true,
+              "season_encoding": "annual_sincos_v1",
+              "season_route": "tokens_and_transition",
+              "supervision_v2": true,
+              "zero_empty_history_reference": true,
+              "state_dim": 256,
+              "freeze_b0": false,
+              "dw": 128,
+              "dg": 64,
+              "dh": 64,
+              "cond_dim": 256,
+              "lc_min": 10,
+              "lc_max": 40,
+              "partitions": [
+                [
+                  5,
+                  5
+                ],
+                [
+                  7,
+                  8
+                ],
+                [
+                  10,
+                  10
+                ]
+              ],
+              "heldout_partitions": [
+                [
+                  3,
+                  7
+                ],
+                [
+                  6,
+                  4
+                ],
+                [
+                  4,
+                  11
+                ],
+                [
+                  8,
+                  12
+                ],
+                [
+                  2,
+                  18
+                ]
+              ],
+              "arch": "SpanWorldFullBase",
+              "route_version": "spanworld_full_base_v1",
+              "driver_protocol": "full24",
+              "factual_path": "recursive",
+              "days_per_transition_step": 5,
+              "use_future_state_anchor": false,
+              "eo_traj_weight": 1.0,
+              "eo_endpoint_weight": 1.0,
+              "factual_endpoints": [
+                10,
+                15,
+                20
+              ],
+              "nc_min_std": 0.001,
+              "nc_min_effective_rank": 2.0,
+              "nc_min_movement": 0.0001,
+              "cc_train_partitions": {
+                "10": [
+                  [
+                    10
+                  ],
+                  [
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    3,
+                    2
+                  ]
+                ],
+                "15": [
+                  [
+                    15
+                  ],
+                  [
+                    7,
+                    8
+                  ],
+                  [
+                    7,
+                    4,
+                    4
+                  ]
+                ],
+                "20": [
+                  [
+                    20
+                  ],
+                  [
+                    10,
+                    10
+                  ],
+                  [
+                    10,
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    5,
+                    5,
+                    5
+                  ]
+                ]
+              },
+              "cc_heldout_partitions": {
+                "10": [
+                  [
+                    3,
+                    7
+                  ],
+                  [
+                    6,
+                    4
+                  ],
+                  [
+                    2,
+                    3,
+                    5
+                  ]
+                ],
+                "15": [
+                  [
+                    4,
+                    11
+                  ],
+                  [
+                    3,
+                    5,
+                    7
+                  ]
+                ],
+                "20": [
+                  [
+                    8,
+                    12
+                  ],
+                  [
+                    2,
+                    18
+                  ],
+                  [
+                    2,
+                    6,
+                    12
+                  ],
+                  [
+                    1,
+                    4,
+                    6,
+                    9
+                  ]
+                ]
+              },
+              "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+              "training_stage": "stage2",
+              "variant": "D"
+            }
+          },
+          "C0R": {
+            "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+            "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+            "epoch": 19,
+            "step": 14155,
+            "variant": "D",
+            "seed": 42,
+            "selection": "same SHA as accepted complete six-table evaluation",
+            "contract_cfg": {
+              "use_adaln": true,
+              "season_encoding": "annual_sincos_v1",
+              "season_route": "tokens_and_transition",
+              "supervision_v2": true,
+              "zero_empty_history_reference": true,
+              "state_dim": 256,
+              "freeze_b0": false,
+              "dw": 128,
+              "dg": 64,
+              "dh": 64,
+              "cond_dim": 256,
+              "lc_min": 10,
+              "lc_max": 40,
+              "partitions": [
+                [
+                  5,
+                  5
+                ],
+                [
+                  7,
+                  8
+                ],
+                [
+                  10,
+                  10
+                ]
+              ],
+              "heldout_partitions": [
+                [
+                  3,
+                  7
+                ],
+                [
+                  6,
+                  4
+                ],
+                [
+                  4,
+                  11
+                ],
+                [
+                  8,
+                  12
+                ],
+                [
+                  2,
+                  18
+                ]
+              ],
+              "arch": "SpanWorldFullBase",
+              "route_version": "spanworld_full_base_v1",
+              "driver_protocol": "full24",
+              "factual_path": "direct",
+              "days_per_transition_step": 5,
+              "use_future_state_anchor": false,
+              "eo_traj_weight": 1.0,
+              "eo_endpoint_weight": 1.0,
+              "factual_endpoints": [
+                10,
+                15,
+                20
+              ],
+              "nc_min_std": 0.001,
+              "nc_min_effective_rank": 2.0,
+              "nc_min_movement": 0.0001,
+              "cc_train_partitions": {
+                "10": [
+                  [
+                    10
+                  ],
+                  [
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    3,
+                    2
+                  ]
+                ],
+                "15": [
+                  [
+                    15
+                  ],
+                  [
+                    7,
+                    8
+                  ],
+                  [
+                    7,
+                    4,
+                    4
+                  ]
+                ],
+                "20": [
+                  [
+                    20
+                  ],
+                  [
+                    10,
+                    10
+                  ],
+                  [
+                    10,
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    5,
+                    5,
+                    5
+                  ]
+                ]
+              },
+              "cc_heldout_partitions": {
+                "10": [
+                  [
+                    3,
+                    7
+                  ],
+                  [
+                    6,
+                    4
+                  ],
+                  [
+                    2,
+                    3,
+                    5
+                  ]
+                ],
+                "15": [
+                  [
+                    4,
+                    11
+                  ],
+                  [
+                    3,
+                    5,
+                    7
+                  ]
+                ],
+                "20": [
+                  [
+                    8,
+                    12
+                  ],
+                  [
+                    2,
+                    18
+                  ],
+                  [
+                    2,
+                    6,
+                    12
+                  ],
+                  [
+                    1,
+                    4,
+                    6,
+                    9
+                  ]
+                ]
+              },
+              "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+              "training_stage": "stage2",
+              "variant": "D"
+            }
+          }
+        },
+        "arrays_sha256": "9f3bc58f709a43ac380d88873859e6576495a28ea04f128822762099bdcb7b88",
+        "prefix_days": [
+          15,
+          35
+        ],
+        "data_sha256": "c2eaaeb1c99dc4aa82508c5b32a8f44b3f28df426314eb66bf4a979c810403dd",
+        "validation": "per-horizon continuation MSE checked against accepted D six-table raw results",
+        "validation_checks": [
+          {
+            "arm": "C1",
+            "k": 1,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C1",
+            "k": 2,
+            "n_valid": 15652,
+            "mse_difference": 1.6980214911402146e-10
+          },
+          {
+            "arm": "C1",
+            "k": 3,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C1",
+            "k": 4,
+            "n_valid": 11063,
+            "mse_difference": 4.909377568067556e-10
+          },
+          {
+            "arm": "C1",
+            "k": 5,
+            "n_valid": 15655,
+            "mse_difference": 4.0269632423710774e-10
+          },
+          {
+            "arm": "C1",
+            "k": 6,
+            "n_valid": 5737,
+            "mse_difference": 2.6326943739339455e-10
+          },
+          {
+            "arm": "C1",
+            "k": 7,
+            "n_valid": 15615,
+            "mse_difference": 5.458462939552161e-10
+          },
+          {
+            "arm": "C1",
+            "k": 8,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C1",
+            "k": 9,
+            "n_valid": 15654,
+            "mse_difference": 2.767722913282756e-10
+          },
+          {
+            "arm": "C1",
+            "k": 10,
+            "n_valid": 14747,
+            "mse_difference": 5.664101377370029e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 1,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C0R",
+            "k": 2,
+            "n_valid": 15652,
+            "mse_difference": 9.87014569232549e-11
+          },
+          {
+            "arm": "C0R",
+            "k": 3,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C0R",
+            "k": 4,
+            "n_valid": 11063,
+            "mse_difference": 6.223678389466619e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 5,
+            "n_valid": 15655,
+            "mse_difference": 9.873830030679094e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 6,
+            "n_valid": 5737,
+            "mse_difference": 3.066084397974619e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 7,
+            "n_valid": 15615,
+            "mse_difference": 6.945332482470692e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 8,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C0R",
+            "k": 9,
+            "n_valid": 15654,
+            "mse_difference": 8.799547885349353e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 10,
+            "n_valid": 14747,
+            "mse_difference": 3.7942972067694114e-10
+          }
+        ]
+      },
+      "source_full_sha256": "9f3bc58f709a43ac380d88873859e6576495a28ea04f128822762099bdcb7b88",
+      "G1_indices": [
+        0,
+        14
+      ],
+      "G1_structure_reason": "dense mixed fields",
+      "G1_date_rule": "highest valid coverage in each half of forecast; earliest tie; fixed before PredRNN inference",
+      "G2_indices": [
+        14,
+        18
+      ],
+      "G2_date_rule": "among C1 self-degradation and coverage>=.40: max-coverage earliest tie and median relative-degradation; deduplicated",
+      "G2_eligible_frames": 5,
+      "subsets": {
+        "new_Q50/G1_day5.npz": "ae13ac23dd71caa8bd4bf75aaf33527bd1da29ee5a867522b2a6a3fccab27ff1",
+        "new_Q50/G1_day75.npz": "a9c932138c2fce1372d38b4f9151846782ff5ac517bd423bd3269d44747d6a38",
+        "new_Q50/G2_day75.npz": "0c69a2048c231c1e48b5a8c8b2818afeeb44cd993602dbf492c65bbda62b3a16",
+        "new_Q50/G2_day95.npz": "cb818364b1dfd13c3b12fce7b4c890ca0e3f762efee04d0f8383b6cb70287945"
+      }
+    },
+    "gt_max_abs_diff": 7.003545761108398e-07,
+    "mask_identical": true,
+    "gt_score_source": "D GT for both models; baseline GT compared within2e-6",
+    "metrics": [
+      {
+        "case": "new_Q50",
+        "day": 5,
+        "date": "2018-05-05",
+        "valid_pixels": 15656,
+        "coverage": 0.95556640625,
+        "D_C1": 0.00892985751673637,
+        "PredRNN": 0.010145023164896273,
+        "display_saturation": {
+          "D_C1": {
+            "ndvi": 0.006515074092999489,
+            "absolute_error": 0.005365355135411344
+          },
+          "PredRNN": {
+            "ndvi": 0.002874297393970363,
+            "absolute_error": 0.004982115482881962
+          }
+        }
+      },
+      {
+        "case": "new_Q50",
+        "day": 75,
+        "date": "2018-07-14",
+        "valid_pixels": 15655,
+        "coverage": 0.95550537109375,
+        "D_C1": 0.014677936160251126,
+        "PredRNN": 0.017483866793787738,
+        "display_saturation": {
+          "D_C1": {
+            "ndvi": 0.0014053018205046311,
+            "absolute_error": 0.0013414244650271478
+          },
+          "PredRNN": {
+            "ndvi": 0.0,
+            "absolute_error": 0.000830405621207282
+          }
+        }
+      }
+    ],
+    "date_rule": "highest valid coverage in each half of forecast; earliest tie; fixed before PredRNN inference",
+    "model_identity": "same historical official PredRNN seed42 SHA; real file verified",
+    "source_script_sha256": "2a475279f7e37ea50cc0d49558be5deabfbd88bb33927a14615399a733973a34"
+  },
+  {
+    "case": "new_Q95",
+    "baseline": {
+      "id": "new_Q95",
+      "receiver": "SON17/minicube_223_34TEL_40.70_21.54.nc",
+      "expected_dates": [
+        "2017-09-01",
+        "2017-09-06",
+        "2017-09-11",
+        "2017-09-16",
+        "2017-09-21",
+        "2017-09-26",
+        "2017-10-01",
+        "2017-10-06",
+        "2017-10-11",
+        "2017-10-16",
+        "2017-10-21",
+        "2017-10-26",
+        "2017-10-31",
+        "2017-11-05",
+        "2017-11-10",
+        "2017-11-15",
+        "2017-11-20",
+        "2017-11-25",
+        "2017-11-30",
+        "2017-12-05"
+      ],
+      "dates": [
+        "2017-09-01",
+        "2017-09-06",
+        "2017-09-11",
+        "2017-09-16",
+        "2017-09-21",
+        "2017-09-26",
+        "2017-10-01",
+        "2017-10-06",
+        "2017-10-11",
+        "2017-10-16",
+        "2017-10-21",
+        "2017-10-26",
+        "2017-10-31",
+        "2017-11-05",
+        "2017-11-10",
+        "2017-11-15",
+        "2017-11-20",
+        "2017-11-25",
+        "2017-11-30",
+        "2017-12-05"
+      ],
+      "checkpoint": "/data/zs/_downloads/greenearthnet_official_weights_20260912/model_weights/predrnn/predrnn1M/seed=42.ckpt",
+      "checkpoint_sha256": "7e84f48934e70b925cb47340aabd97b4c4ca82cd92b67385381a96515e3a5f02",
+      "config_sha256": "f0ab89f5ddc6bebf46576d0d95fe9cc70be057d6e27a56e016fb37aba18c1b1e",
+      "seed": 42,
+      "strict_load": true,
+      "array_sha256": "7b8e970a2937a205d09ee24dfd66bbbdd6d89d73600f849d6590b02011ef138b",
+      "dataset_sha256": "fa3491824d017f166326969e0018844ea7eca35e039044bc661a0e947ea4e623",
+      "model_code_commit": "268943b10f78f69a79084ddda3291c35763c3612",
+      "selected_indices": [
+        1,
+        10
+      ],
+      "subset_sha256": "6a1471072ed34643fd56e20137a4151eac15df36c12c739af06937a38ffe9987"
+    },
+    "D_source": {
+      "case": "new_Q95",
+      "metadata": {
+        "id": "new_Q95",
+        "receiver_id": "SON17/minicube_223_34TEL_40.70_21.54.nc",
+        "selection": "D outcome-selected benefit quantile 0.95; coverage >= 40%",
+        "selection_metrics": {
+          "dataset_index": 2275,
+          "receiver_id": "SON17/minicube_223_34TEL_40.70_21.54.nc",
+          "coverage": 0.497137451171875,
+          "c1_mse": 0.007813753480901069,
+          "c0r_mse": 0.029403365200901338,
+          "benefit": 0.02158961172000027,
+          "candidate_alias": "new_Q95",
+          "quantile": 0.95
+        },
+        "dates": [
+          "2017-09-01",
+          "2017-09-06",
+          "2017-09-11",
+          "2017-09-16",
+          "2017-09-21",
+          "2017-09-26",
+          "2017-10-01",
+          "2017-10-06",
+          "2017-10-11",
+          "2017-10-16",
+          "2017-10-21",
+          "2017-10-26",
+          "2017-10-31",
+          "2017-11-05",
+          "2017-11-10",
+          "2017-11-15",
+          "2017-11-20",
+          "2017-11-25",
+          "2017-11-30",
+          "2017-12-05"
+        ],
+        "dataset_index": 2275,
+        "models": {
+          "C1": {
+            "checkpoint": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+            "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "epoch": 51,
+            "step": 37995,
+            "variant": "D",
+            "seed": 42,
+            "selection": "same SHA as accepted complete six-table evaluation",
+            "contract_cfg": {
+              "use_adaln": true,
+              "season_encoding": "annual_sincos_v1",
+              "season_route": "tokens_and_transition",
+              "supervision_v2": true,
+              "zero_empty_history_reference": true,
+              "state_dim": 256,
+              "freeze_b0": false,
+              "dw": 128,
+              "dg": 64,
+              "dh": 64,
+              "cond_dim": 256,
+              "lc_min": 10,
+              "lc_max": 40,
+              "partitions": [
+                [
+                  5,
+                  5
+                ],
+                [
+                  7,
+                  8
+                ],
+                [
+                  10,
+                  10
+                ]
+              ],
+              "heldout_partitions": [
+                [
+                  3,
+                  7
+                ],
+                [
+                  6,
+                  4
+                ],
+                [
+                  4,
+                  11
+                ],
+                [
+                  8,
+                  12
+                ],
+                [
+                  2,
+                  18
+                ]
+              ],
+              "arch": "SpanWorldFullBase",
+              "route_version": "spanworld_full_base_v1",
+              "driver_protocol": "full24",
+              "factual_path": "recursive",
+              "days_per_transition_step": 5,
+              "use_future_state_anchor": false,
+              "eo_traj_weight": 1.0,
+              "eo_endpoint_weight": 1.0,
+              "factual_endpoints": [
+                10,
+                15,
+                20
+              ],
+              "nc_min_std": 0.001,
+              "nc_min_effective_rank": 2.0,
+              "nc_min_movement": 0.0001,
+              "cc_train_partitions": {
+                "10": [
+                  [
+                    10
+                  ],
+                  [
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    3,
+                    2
+                  ]
+                ],
+                "15": [
+                  [
+                    15
+                  ],
+                  [
+                    7,
+                    8
+                  ],
+                  [
+                    7,
+                    4,
+                    4
+                  ]
+                ],
+                "20": [
+                  [
+                    20
+                  ],
+                  [
+                    10,
+                    10
+                  ],
+                  [
+                    10,
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    5,
+                    5,
+                    5
+                  ]
+                ]
+              },
+              "cc_heldout_partitions": {
+                "10": [
+                  [
+                    3,
+                    7
+                  ],
+                  [
+                    6,
+                    4
+                  ],
+                  [
+                    2,
+                    3,
+                    5
+                  ]
+                ],
+                "15": [
+                  [
+                    4,
+                    11
+                  ],
+                  [
+                    3,
+                    5,
+                    7
+                  ]
+                ],
+                "20": [
+                  [
+                    8,
+                    12
+                  ],
+                  [
+                    2,
+                    18
+                  ],
+                  [
+                    2,
+                    6,
+                    12
+                  ],
+                  [
+                    1,
+                    4,
+                    6,
+                    9
+                  ]
+                ]
+              },
+              "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+              "training_stage": "stage2",
+              "variant": "D"
+            }
+          },
+          "C0R": {
+            "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+            "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+            "epoch": 19,
+            "step": 14155,
+            "variant": "D",
+            "seed": 42,
+            "selection": "same SHA as accepted complete six-table evaluation",
+            "contract_cfg": {
+              "use_adaln": true,
+              "season_encoding": "annual_sincos_v1",
+              "season_route": "tokens_and_transition",
+              "supervision_v2": true,
+              "zero_empty_history_reference": true,
+              "state_dim": 256,
+              "freeze_b0": false,
+              "dw": 128,
+              "dg": 64,
+              "dh": 64,
+              "cond_dim": 256,
+              "lc_min": 10,
+              "lc_max": 40,
+              "partitions": [
+                [
+                  5,
+                  5
+                ],
+                [
+                  7,
+                  8
+                ],
+                [
+                  10,
+                  10
+                ]
+              ],
+              "heldout_partitions": [
+                [
+                  3,
+                  7
+                ],
+                [
+                  6,
+                  4
+                ],
+                [
+                  4,
+                  11
+                ],
+                [
+                  8,
+                  12
+                ],
+                [
+                  2,
+                  18
+                ]
+              ],
+              "arch": "SpanWorldFullBase",
+              "route_version": "spanworld_full_base_v1",
+              "driver_protocol": "full24",
+              "factual_path": "direct",
+              "days_per_transition_step": 5,
+              "use_future_state_anchor": false,
+              "eo_traj_weight": 1.0,
+              "eo_endpoint_weight": 1.0,
+              "factual_endpoints": [
+                10,
+                15,
+                20
+              ],
+              "nc_min_std": 0.001,
+              "nc_min_effective_rank": 2.0,
+              "nc_min_movement": 0.0001,
+              "cc_train_partitions": {
+                "10": [
+                  [
+                    10
+                  ],
+                  [
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    3,
+                    2
+                  ]
+                ],
+                "15": [
+                  [
+                    15
+                  ],
+                  [
+                    7,
+                    8
+                  ],
+                  [
+                    7,
+                    4,
+                    4
+                  ]
+                ],
+                "20": [
+                  [
+                    20
+                  ],
+                  [
+                    10,
+                    10
+                  ],
+                  [
+                    10,
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    5,
+                    5,
+                    5
+                  ]
+                ]
+              },
+              "cc_heldout_partitions": {
+                "10": [
+                  [
+                    3,
+                    7
+                  ],
+                  [
+                    6,
+                    4
+                  ],
+                  [
+                    2,
+                    3,
+                    5
+                  ]
+                ],
+                "15": [
+                  [
+                    4,
+                    11
+                  ],
+                  [
+                    3,
+                    5,
+                    7
+                  ]
+                ],
+                "20": [
+                  [
+                    8,
+                    12
+                  ],
+                  [
+                    2,
+                    18
+                  ],
+                  [
+                    2,
+                    6,
+                    12
+                  ],
+                  [
+                    1,
+                    4,
+                    6,
+                    9
+                  ]
+                ]
+              },
+              "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+              "training_stage": "stage2",
+              "variant": "D"
+            }
+          }
+        },
+        "arrays_sha256": "8e4dae41e60143c8def950586616dcb653c89e85c2078a9389a4e394004118d0",
+        "prefix_days": [
+          15,
+          35
+        ],
+        "data_sha256": "fa3491824d017f166326969e0018844ea7eca35e039044bc661a0e947ea4e623",
+        "validation": "per-horizon continuation MSE checked against accepted D six-table raw results",
+        "validation_checks": [
+          {
+            "arm": "C1",
+            "k": 1,
+            "n_valid": 16363,
+            "mse_difference": 2.611600342028811e-10
+          },
+          {
+            "arm": "C1",
+            "k": 2,
+            "n_valid": 15980,
+            "mse_difference": 3.3915405319373108e-12
+          },
+          {
+            "arm": "C1",
+            "k": 3,
+            "n_valid": 16363,
+            "mse_difference": 1.2391442190687055e-10
+          },
+          {
+            "arm": "C1",
+            "k": 4,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C1",
+            "k": 5,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C1",
+            "k": 6,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C1",
+            "k": 7,
+            "n_valid": 20,
+            "mse_difference": 5.081482234992052e-10
+          },
+          {
+            "arm": "C1",
+            "k": 8,
+            "n_valid": 16363,
+            "mse_difference": 5.073247863215396e-10
+          },
+          {
+            "arm": "C1",
+            "k": 9,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C1",
+            "k": 10,
+            "n_valid": 16362,
+            "mse_difference": 4.5895975325107454e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 1,
+            "n_valid": 16363,
+            "mse_difference": 3.3928549638221163e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 2,
+            "n_valid": 15980,
+            "mse_difference": 1.4056369740813286e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 3,
+            "n_valid": 16363,
+            "mse_difference": 7.001302723760396e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 4,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C0R",
+            "k": 5,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C0R",
+            "k": 6,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C0R",
+            "k": 7,
+            "n_valid": 20,
+            "mse_difference": 2.342107008335148e-09
+          },
+          {
+            "arm": "C0R",
+            "k": 8,
+            "n_valid": 16363,
+            "mse_difference": 4.169090391282312e-09
+          },
+          {
+            "arm": "C0R",
+            "k": 9,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C0R",
+            "k": 10,
+            "n_valid": 16362,
+            "mse_difference": 1.1033476442721037e-09
+          }
+        ]
+      },
+      "source_full_sha256": "8e4dae41e60143c8def950586616dcb653c89e85c2078a9389a4e394004118d0",
+      "G1_indices": [
+        1,
+        10
+      ],
+      "G1_structure_reason": "heterogeneous field mosaic",
+      "G1_date_rule": "highest valid coverage in each half of forecast; earliest tie; fixed before PredRNN inference",
+      "G2_indices": [
+        10
+      ],
+      "G2_date_rule": "among C1 self-degradation and coverage>=.40: max-coverage earliest tie and median relative-degradation; deduplicated",
+      "G2_eligible_frames": 4,
+      "subsets": {
+        "new_Q95/G1_day10.npz": "f27d4098373fbde6feec9dbdf074f2eb86dff1c88ca176d25d39b3c3c5196815",
+        "new_Q95/G1_day55.npz": "8efca686ce1f5d4fefb3e5bf2392a355e0cc562b5539ebc0caa2a99fde100458",
+        "new_Q95/G2_day55.npz": "2efd4e4a4d2efa68b9e423188bfea10405e158fd3630c5e4cd9454693c9decf0"
+      }
+    },
+    "gt_max_abs_diff": 2.980232238769531e-07,
+    "mask_identical": true,
+    "gt_score_source": "D GT for both models; baseline GT compared within2e-6",
+    "metrics": [
+      {
+        "case": "new_Q95",
+        "day": 10,
+        "date": "2017-09-06",
+        "valid_pixels": 16363,
+        "coverage": 0.99871826171875,
+        "D_C1": 0.0014202519113299592,
+        "PredRNN": 0.002372673081363146,
+        "display_saturation": {
+          "D_C1": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          },
+          "PredRNN": {
+            "ndvi": 6.111348774674571e-05,
+            "absolute_error": 0.0
+          }
+        }
+      },
+      {
+        "case": "new_Q95",
+        "day": 55,
+        "date": "2017-10-21",
+        "valid_pixels": 16363,
+        "coverage": 0.99871826171875,
+        "D_C1": 0.003494610868954094,
+        "PredRNN": 0.007876430941814058,
+        "display_saturation": {
+          "D_C1": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          },
+          "PredRNN": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          }
+        }
+      }
+    ],
+    "date_rule": "highest valid coverage in each half of forecast; earliest tie; fixed before PredRNN inference",
+    "model_identity": "same historical official PredRNN seed42 SHA; real file verified",
+    "source_script_sha256": "2a475279f7e37ea50cc0d49558be5deabfbd88bb33927a14615399a733973a34"
+  },
+  {
+    "case": "new_Q98",
+    "baseline": {
+      "id": "new_Q98",
+      "receiver": "JAS19/minicube_29_30TWK_40.05_-2.43.nc",
+      "expected_dates": [
+        "2019-07-03",
+        "2019-07-08",
+        "2019-07-13",
+        "2019-07-18",
+        "2019-07-23",
+        "2019-07-28",
+        "2019-08-02",
+        "2019-08-07",
+        "2019-08-12",
+        "2019-08-17",
+        "2019-08-22",
+        "2019-08-27",
+        "2019-09-01",
+        "2019-09-06",
+        "2019-09-11",
+        "2019-09-16",
+        "2019-09-21",
+        "2019-09-26",
+        "2019-10-01",
+        "2019-10-06"
+      ],
+      "dates": [
+        "2019-07-03",
+        "2019-07-08",
+        "2019-07-13",
+        "2019-07-18",
+        "2019-07-23",
+        "2019-07-28",
+        "2019-08-02",
+        "2019-08-07",
+        "2019-08-12",
+        "2019-08-17",
+        "2019-08-22",
+        "2019-08-27",
+        "2019-09-01",
+        "2019-09-06",
+        "2019-09-11",
+        "2019-09-16",
+        "2019-09-21",
+        "2019-09-26",
+        "2019-10-01",
+        "2019-10-06"
+      ],
+      "checkpoint": "/data/zs/_downloads/greenearthnet_official_weights_20260912/model_weights/predrnn/predrnn1M/seed=42.ckpt",
+      "checkpoint_sha256": "7e84f48934e70b925cb47340aabd97b4c4ca82cd92b67385381a96515e3a5f02",
+      "config_sha256": "f0ab89f5ddc6bebf46576d0d95fe9cc70be057d6e27a56e016fb37aba18c1b1e",
+      "seed": 42,
+      "strict_load": true,
+      "array_sha256": "035cdb8a4dfb837714a09133a9709872597ea2bc66625b7153568a814c783865",
+      "dataset_sha256": "63e698c0ae03a3b8e163dde44128d99581ea6db79c4b25529cbde6e0b5436175",
+      "model_code_commit": "268943b10f78f69a79084ddda3291c35763c3612",
+      "selected_indices": [
+        0,
+        10
+      ],
+      "subset_sha256": "4f7f1f31bd655184f19cbb20b686b3add39b848b0b80aee192f0049f4177ad72"
+    },
+    "D_source": {
+      "case": "new_Q98",
+      "metadata": {
+        "id": "new_Q98",
+        "receiver_id": "JAS19/minicube_29_30TWK_40.05_-2.43.nc",
+        "selection": "D outcome-selected benefit quantile 0.98; coverage >= 40%",
+        "selection_metrics": {
+          "dataset_index": 635,
+          "receiver_id": "JAS19/minicube_29_30TWK_40.05_-2.43.nc",
+          "coverage": 0.684051513671875,
+          "c1_mse": 0.003732411075909436,
+          "c0r_mse": 0.03997653924591861,
+          "benefit": 0.036244128170009174,
+          "candidate_alias": "new_Q98",
+          "quantile": 0.98
+        },
+        "dates": [
+          "2019-07-03",
+          "2019-07-08",
+          "2019-07-13",
+          "2019-07-18",
+          "2019-07-23",
+          "2019-07-28",
+          "2019-08-02",
+          "2019-08-07",
+          "2019-08-12",
+          "2019-08-17",
+          "2019-08-22",
+          "2019-08-27",
+          "2019-09-01",
+          "2019-09-06",
+          "2019-09-11",
+          "2019-09-16",
+          "2019-09-21",
+          "2019-09-26",
+          "2019-10-01",
+          "2019-10-06"
+        ],
+        "dataset_index": 635,
+        "models": {
+          "C1": {
+            "checkpoint": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+            "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "epoch": 51,
+            "step": 37995,
+            "variant": "D",
+            "seed": 42,
+            "selection": "same SHA as accepted complete six-table evaluation",
+            "contract_cfg": {
+              "use_adaln": true,
+              "season_encoding": "annual_sincos_v1",
+              "season_route": "tokens_and_transition",
+              "supervision_v2": true,
+              "zero_empty_history_reference": true,
+              "state_dim": 256,
+              "freeze_b0": false,
+              "dw": 128,
+              "dg": 64,
+              "dh": 64,
+              "cond_dim": 256,
+              "lc_min": 10,
+              "lc_max": 40,
+              "partitions": [
+                [
+                  5,
+                  5
+                ],
+                [
+                  7,
+                  8
+                ],
+                [
+                  10,
+                  10
+                ]
+              ],
+              "heldout_partitions": [
+                [
+                  3,
+                  7
+                ],
+                [
+                  6,
+                  4
+                ],
+                [
+                  4,
+                  11
+                ],
+                [
+                  8,
+                  12
+                ],
+                [
+                  2,
+                  18
+                ]
+              ],
+              "arch": "SpanWorldFullBase",
+              "route_version": "spanworld_full_base_v1",
+              "driver_protocol": "full24",
+              "factual_path": "recursive",
+              "days_per_transition_step": 5,
+              "use_future_state_anchor": false,
+              "eo_traj_weight": 1.0,
+              "eo_endpoint_weight": 1.0,
+              "factual_endpoints": [
+                10,
+                15,
+                20
+              ],
+              "nc_min_std": 0.001,
+              "nc_min_effective_rank": 2.0,
+              "nc_min_movement": 0.0001,
+              "cc_train_partitions": {
+                "10": [
+                  [
+                    10
+                  ],
+                  [
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    3,
+                    2
+                  ]
+                ],
+                "15": [
+                  [
+                    15
+                  ],
+                  [
+                    7,
+                    8
+                  ],
+                  [
+                    7,
+                    4,
+                    4
+                  ]
+                ],
+                "20": [
+                  [
+                    20
+                  ],
+                  [
+                    10,
+                    10
+                  ],
+                  [
+                    10,
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    5,
+                    5,
+                    5
+                  ]
+                ]
+              },
+              "cc_heldout_partitions": {
+                "10": [
+                  [
+                    3,
+                    7
+                  ],
+                  [
+                    6,
+                    4
+                  ],
+                  [
+                    2,
+                    3,
+                    5
+                  ]
+                ],
+                "15": [
+                  [
+                    4,
+                    11
+                  ],
+                  [
+                    3,
+                    5,
+                    7
+                  ]
+                ],
+                "20": [
+                  [
+                    8,
+                    12
+                  ],
+                  [
+                    2,
+                    18
+                  ],
+                  [
+                    2,
+                    6,
+                    12
+                  ],
+                  [
+                    1,
+                    4,
+                    6,
+                    9
+                  ]
+                ]
+              },
+              "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+              "training_stage": "stage2",
+              "variant": "D"
+            }
+          },
+          "C0R": {
+            "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+            "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+            "epoch": 19,
+            "step": 14155,
+            "variant": "D",
+            "seed": 42,
+            "selection": "same SHA as accepted complete six-table evaluation",
+            "contract_cfg": {
+              "use_adaln": true,
+              "season_encoding": "annual_sincos_v1",
+              "season_route": "tokens_and_transition",
+              "supervision_v2": true,
+              "zero_empty_history_reference": true,
+              "state_dim": 256,
+              "freeze_b0": false,
+              "dw": 128,
+              "dg": 64,
+              "dh": 64,
+              "cond_dim": 256,
+              "lc_min": 10,
+              "lc_max": 40,
+              "partitions": [
+                [
+                  5,
+                  5
+                ],
+                [
+                  7,
+                  8
+                ],
+                [
+                  10,
+                  10
+                ]
+              ],
+              "heldout_partitions": [
+                [
+                  3,
+                  7
+                ],
+                [
+                  6,
+                  4
+                ],
+                [
+                  4,
+                  11
+                ],
+                [
+                  8,
+                  12
+                ],
+                [
+                  2,
+                  18
+                ]
+              ],
+              "arch": "SpanWorldFullBase",
+              "route_version": "spanworld_full_base_v1",
+              "driver_protocol": "full24",
+              "factual_path": "direct",
+              "days_per_transition_step": 5,
+              "use_future_state_anchor": false,
+              "eo_traj_weight": 1.0,
+              "eo_endpoint_weight": 1.0,
+              "factual_endpoints": [
+                10,
+                15,
+                20
+              ],
+              "nc_min_std": 0.001,
+              "nc_min_effective_rank": 2.0,
+              "nc_min_movement": 0.0001,
+              "cc_train_partitions": {
+                "10": [
+                  [
+                    10
+                  ],
+                  [
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    3,
+                    2
+                  ]
+                ],
+                "15": [
+                  [
+                    15
+                  ],
+                  [
+                    7,
+                    8
+                  ],
+                  [
+                    7,
+                    4,
+                    4
+                  ]
+                ],
+                "20": [
+                  [
+                    20
+                  ],
+                  [
+                    10,
+                    10
+                  ],
+                  [
+                    10,
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    5,
+                    5,
+                    5
+                  ]
+                ]
+              },
+              "cc_heldout_partitions": {
+                "10": [
+                  [
+                    3,
+                    7
+                  ],
+                  [
+                    6,
+                    4
+                  ],
+                  [
+                    2,
+                    3,
+                    5
+                  ]
+                ],
+                "15": [
+                  [
+                    4,
+                    11
+                  ],
+                  [
+                    3,
+                    5,
+                    7
+                  ]
+                ],
+                "20": [
+                  [
+                    8,
+                    12
+                  ],
+                  [
+                    2,
+                    18
+                  ],
+                  [
+                    2,
+                    6,
+                    12
+                  ],
+                  [
+                    1,
+                    4,
+                    6,
+                    9
+                  ]
+                ]
+              },
+              "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+              "training_stage": "stage2",
+              "variant": "D"
+            }
+          }
+        },
+        "arrays_sha256": "33b51fad02bad2af974b2573d4e8e8caa20979a1292aac7da462cbf79bb0f354",
+        "prefix_days": [
+          15,
+          35
+        ],
+        "data_sha256": "63e698c0ae03a3b8e163dde44128d99581ea6db79c4b25529cbde6e0b5436175",
+        "validation": "per-horizon continuation MSE checked against accepted D six-table raw results",
+        "validation_checks": [
+          {
+            "arm": "C1",
+            "k": 1,
+            "n_valid": 14952,
+            "mse_difference": 9.686069911778862e-11
+          },
+          {
+            "arm": "C1",
+            "k": 2,
+            "n_valid": 13916,
+            "mse_difference": 1.0177528010099593e-11
+          },
+          {
+            "arm": "C1",
+            "k": 3,
+            "n_valid": 14654,
+            "mse_difference": 8.81668220984236e-11
+          },
+          {
+            "arm": "C1",
+            "k": 4,
+            "n_valid": 8455,
+            "mse_difference": 6.047572172983075e-11
+          },
+          {
+            "arm": "C1",
+            "k": 5,
+            "n_valid": 13522,
+            "mse_difference": 4.636339074167934e-10
+          },
+          {
+            "arm": "C1",
+            "k": 6,
+            "n_valid": 1720,
+            "mse_difference": 1.1051944372595276e-11
+          },
+          {
+            "arm": "C1",
+            "k": 7,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C1",
+            "k": 8,
+            "n_valid": 14952,
+            "mse_difference": 7.789067696517977e-11
+          },
+          {
+            "arm": "C1",
+            "k": 9,
+            "n_valid": 14952,
+            "mse_difference": 9.99508757075241e-12
+          },
+          {
+            "arm": "C1",
+            "k": 10,
+            "n_valid": 14952,
+            "mse_difference": 3.9608273857100775e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 1,
+            "n_valid": 14952,
+            "mse_difference": 2.819103984792617e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 2,
+            "n_valid": 13916,
+            "mse_difference": 3.7945562836358267e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 3,
+            "n_valid": 14654,
+            "mse_difference": 4.0425870739739325e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 4,
+            "n_valid": 8455,
+            "mse_difference": 2.971212159677578e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 5,
+            "n_valid": 13522,
+            "mse_difference": 4.076061981324862e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 6,
+            "n_valid": 1720,
+            "mse_difference": 3.058402234310686e-10
+          },
+          {
+            "arm": "C0R",
+            "k": 7,
+            "n_valid": 0,
+            "mse_difference": 0
+          },
+          {
+            "arm": "C0R",
+            "k": 8,
+            "n_valid": 14952,
+            "mse_difference": 3.726432451239358e-09
+          },
+          {
+            "arm": "C0R",
+            "k": 9,
+            "n_valid": 14952,
+            "mse_difference": 3.758366431579045e-09
+          },
+          {
+            "arm": "C0R",
+            "k": 10,
+            "n_valid": 14952,
+            "mse_difference": 2.299712280781411e-10
+          }
+        ]
+      },
+      "source_full_sha256": "33b51fad02bad2af974b2573d4e8e8caa20979a1292aac7da462cbf79bb0f354",
+      "G1_indices": [
+        0,
+        10
+      ],
+      "G1_structure_reason": "river/linear geometry",
+      "G1_date_rule": "highest valid coverage in each half of forecast; earliest tie; fixed before PredRNN inference",
+      "G2_indices": [],
+      "G2_date_rule": "among C1 self-degradation and coverage>=.40: max-coverage earliest tie and median relative-degradation; deduplicated",
+      "G2_eligible_frames": 0,
+      "subsets": {
+        "new_Q98/G1_day5.npz": "1b48501f10a76ac976f1a976da6bb88a19f65f28c8a23082e4cb1841f7060432",
+        "new_Q98/G1_day55.npz": "db6350b481d4aacc464c9d4797624be4516d23d247150271c721a511105fac48"
+      }
+    },
+    "gt_max_abs_diff": 2.384185791015625e-07,
+    "mask_identical": true,
+    "gt_score_source": "D GT for both models; baseline GT compared within2e-6",
+    "metrics": [
+      {
+        "case": "new_Q98",
+        "day": 5,
+        "date": "2019-07-03",
+        "valid_pixels": 14952,
+        "coverage": 0.91259765625,
+        "D_C1": 0.0031617206000795132,
+        "PredRNN": 0.006536760047128948,
+        "display_saturation": {
+          "D_C1": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          },
+          "PredRNN": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          }
+        }
+      },
+      {
+        "case": "new_Q98",
+        "day": 55,
+        "date": "2019-08-22",
+        "valid_pixels": 14952,
+        "coverage": 0.91259765625,
+        "D_C1": 0.003741531145605869,
+        "PredRNN": 0.004497026189941718,
+        "display_saturation": {
+          "D_C1": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          },
+          "PredRNN": {
+            "ndvi": 0.0,
+            "absolute_error": 0.0
+          }
+        }
+      }
+    ],
+    "date_rule": "highest valid coverage in each half of forecast; earliest tie; fixed before PredRNN inference",
+    "model_identity": "same historical official PredRNN seed42 SHA; real file verified",
+    "source_script_sha256": "2a475279f7e37ea50cc0d49558be5deabfbd88bb33927a14615399a733973a34"
+  }
+]

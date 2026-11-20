@@ -1,0 +1,29 @@
+{
+  "event": "FINISHED",
+  "business_exit": 0,
+  "launch": {
+    "pid": 360312,
+    "gpu": 0,
+    "runtime": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_figure3_P42_20261116_npz_v3",
+    "output": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/figure_candidates/D_figure3_P42_20261116_npz_v3/raw",
+    "time": 1794778127.297326,
+    "verified_weights": {
+      "C1": {
+        "path": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+        "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb"
+      },
+      "C0R": {
+        "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+        "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b"
+      }
+    }
+  },
+  "receipt": {
+    "status": "PASS",
+    "business_exit": 0,
+    "cases": 1,
+    "oss": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/figure_candidates/D_figure3_P42_20261116_npz_v3/raw",
+    "task": "D paired arrays only; original-script rendering follows locally"
+  },
+  "log_tail": ""
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "Q10",
+    "receiver_id": "MJJ19/minicube_91_31UGS_50.56_5.89.nc",
+    "day": 100,
+    "coverage": 0.0,
+    "reason": "day100 valid coverage below .40"
+  },
+  {
+    "id": "Q25",
+    "receiver_id": "JAS19/minicube_157_33TXN_46.91_17.39.nc",
+    "day": 100,
+    "coverage": 0.1396484375,
+    "reason": "day100 valid coverage below .40"
+  },
+  {
+    "id": "Q50",
+    "receiver_id": "JAS18/minicube_59_30UYV_48.77_0.56.nc",
+    "day": 100,
+    "coverage": 0.0,
+    "reason": "day100 valid coverage below .40"
+  },
+  {
+    "id": "new_Q25",
+    "receiver_id": "JAS19/minicube_203_34TCL_41.47_19.52.nc",
+    "day": 100,
+    "coverage": 0.25341796875,
+    "reason": "day100 valid coverage below .40"
+  },
+  {
+    "id": "new_Q75",
+    "receiver_id": "JAS19/minicube_230_34TFN_42.76_22.81.nc",
+    "day": 100,
+    "coverage": 0.0,
+    "reason": "day100 valid coverage below .40"
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"controller_pid\": 4191458, \"controller_exit\": null, \"state\": {\"status\": \"running\", \"worker_pid\": 4191459, \"pid\": 4191458, \"time\": 1794741677.6847823}, \"log_tail\": \"\"}\n",
+  "stderr": "",
+  "host": "909",
+  "started": 1794741568.820481,
+  "seconds": 135.21046543121338
+}

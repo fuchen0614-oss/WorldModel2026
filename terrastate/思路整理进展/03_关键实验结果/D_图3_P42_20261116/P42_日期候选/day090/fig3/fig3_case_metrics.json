@@ -1,0 +1,47 @@
+{
+  "case_id_internal": "P42",
+  "case_selection_internal": "Frozen historical case P42; re-evaluated with D seed42",
+  "target_step": 18,
+  "target_day": 90,
+  "target_date": "2019-07-26",
+  "continuation_from_day": 50,
+  "pre_continuation_partition_days": [
+    15,
+    35
+  ],
+  "valid_pixels": 16147,
+  "total_pixels": 16384,
+  "coverage": 0.98553466796875,
+  "ndvi_display_limits": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display_limits": [
+    0.0,
+    0.45
+  ],
+  "ndvi_display_saturation_fraction": {
+    "gt": 0.0,
+    "C1_direct": 0.0,
+    "C1_continued": 0.0,
+    "C0R_direct": 0.0,
+    "C0R_continued": 0.0
+  },
+  "metrics": [
+    {
+      "model": "SpanWorld",
+      "direct_mse": 0.004080505575984716,
+      "continued_mse": 0.0037788725458085537,
+      "direct_error_display_saturation_fraction": 0.0,
+      "continued_error_display_saturation_fraction": 0.0
+    },
+    {
+      "model": "Direct-endpoint control",
+      "direct_mse": 0.004064501263201237,
+      "continued_mse": 0.005013452842831612,
+      "direct_error_display_saturation_fraction": 0.0,
+      "continued_error_display_saturation_fraction": 0.0
+    }
+  ],
+  "metric_note": "Single target date; mean squared error over the identical valid-observation pixels. Display clipping never changes MSE."
+}

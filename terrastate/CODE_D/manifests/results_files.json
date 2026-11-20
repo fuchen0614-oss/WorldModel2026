@@ -1,0 +1,3411 @@
+{
+  "authority": "../思路整理进展/A08_E1主表_同协议重跑结果.md",
+  "files": [
+    {
+      "path": "思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "bytes": 143297,
+      "sha256": "fa50494b031b84293bf16cb8b7544037cbf670dd154a4bbf4ab4735751453c45",
+      "source_sha256": "1a89996dea46da515efc2aff3b10f99847a66a6c6c61514c86aa0382ce39455b"
+    },
+    {
+      "path": "思路整理进展/A51_方案D_原稿对应表格结果追加记录_20261115.md",
+      "bytes": 39209,
+      "sha256": "f3ebd2bf1a5636b7e3af8ba41404d93f4198ba9cc7eb103683bd36ce9c527db0",
+      "source_sha256": "bf75f8f17eef57d79b7208e7f256eebc9e3309e06ba7d12261b47af0c5bc0769"
+    },
+    {
+      "path": "思路整理进展/A52_D表1与标准精度差异初审_20261116.md",
+      "bytes": 8350,
+      "sha256": "070ae77c2abdb0cf337ffced5a5cd79e1ea768aae1bbfe84dbfe6e48ef0dca96"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/c1_100epoch_three_seeds_all_metrics.csv",
+      "bytes": 8430,
+      "sha256": "73805fd1a8435aa2c0aec85ae232ba2102ff179920f5f78cb0b23e906d092ffa"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/c1_100epoch_three_seeds_summary.csv",
+      "bytes": 1078,
+      "sha256": "6ec111a86ea27cd8f053e3f95db6dd6abfec8de67bc861df0a9add81f963de2c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/c1_100epoch_vs_original_three_seeds.csv",
+      "bytes": 842,
+      "sha256": "c6176246411a20eb9d08bf61261eb489317a13173055de43250e483b440a4b79"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/contextformer_public_retrained_comparison.csv",
+      "bytes": 6645,
+      "sha256": "2b163b307c041c86b88912587b4570153afa3916406a01794f3bd67b064876be"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/contextformer_retrained_metrics.json",
+      "bytes": 10867,
+      "sha256": "fb2597c03b37741669f164dd1c4e7355de0cd26560ec47b09ec592ca9e270079"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/cpu_evaluation_receipt.json",
+      "bytes": 15247,
+      "sha256": "8683e32b846e02b291969e4b8a80fd33441798d9fbcb9378ddfa46eadd9b6b8c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/derived_comparisons.json",
+      "bytes": 1611,
+      "sha256": "921c3423212bd384839865037dfadf0d3e9a57ea3aedfdaddecea60b5310f60f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/evidence_manifest.json",
+      "bytes": 975,
+      "sha256": "b6ec02281bf1acdb7b393f2efb9aab3c9b7f3b8f08c7708b250561554e32d4da"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/original_spanworld_per_seed.csv",
+      "bytes": 1363,
+      "sha256": "9cfb21ee78ea670749e0827522c55e3b8d92183ee30f6fdf3797a21e5c16751e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/seed97_cpu_evaluation_receipt.json",
+      "bytes": 6706,
+      "sha256": "6d873b5cb7e896cf333a06b14230ea1d0c70b60dd15ed71eff2f2bf89db0c471"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/100epoch_20261112/three_seed_evidence_manifest.json",
+      "bytes": 648,
+      "sha256": "d70380f1e0635cc05d8789f00297f4945dc9ae9ab0ad579ab240dbb5d0f74d4e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/A08_BD_A2_A3_append_receipt.json",
+      "bytes": 577,
+      "sha256": "605122d5b0c44122078b914619356e1b44c000a31d8ea996635097ebcb4e4277"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/A08_BD_full_blocks_sync_receipt.json",
+      "bytes": 1395,
+      "sha256": "ff82c4d9a9369c361a77319af82f4ee30419a42b67e20c8adbbc93897782d7c8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/bd_checkpoint_config_audit.json",
+      "bytes": 3773804,
+      "sha256": "51f4edda9703c9d631159a91b90e759573440e2f656ce589bad64eeafe0560cc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/bd_d1_deploy.json",
+      "bytes": 649,
+      "sha256": "3bcfabe886c5694edabc3b8212c22259aeb38e5c5348997e409c4c54cc579421"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/bd_d1_import_fix.json",
+      "bytes": 1462,
+      "sha256": "6afecb850042f412da40363460ec84e15b707a0fa2484c90aefdb7d734a4f369"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/bd_d1_native_diagnostic.json",
+      "bytes": 6204,
+      "sha256": "49940b2289f2812ab7101d662e5c4a9f1ef533ec2982b2b37a17582a548f063e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/bd_d1_status.json",
+      "bytes": 907,
+      "sha256": "2af24b017888134a3dfdbb22abc06593e3d757edf63e421540d370f4df3158fa"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D_migration_locate_readonly.json",
+      "bytes": 4826,
+      "sha256": "64eebb9a15908e074dcde6266534749f112c305f061017e21d2b36ffffc8eb36"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_A08_sync_probe.json",
+      "bytes": 16179,
+      "sha256": "3ee1a73cfe585af8e7aba85816aee8987b52e8d212ba2f8fc89360f23fbcbe45"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_B_artifact_audit.json",
+      "bytes": 3447,
+      "sha256": "189253e037f52b0920d2ec2e57b7f4fca3feeecafe6cd939a7f971411f726a2b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_diagnose.json",
+      "bytes": 6928,
+      "sha256": "0ac7267461deedd97509bf969ad54c5a814bd85bb1721d50f0004967c5955129"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_D_artifact_audit.json",
+      "bytes": 3455,
+      "sha256": "99f9bf65f7b720eabe6d837bcca33c673dfc5b2e5fa9e17c9a4ec439062f6a78"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_probe_latest.json",
+      "bytes": 10241,
+      "sha256": "7f40514e6f94a73e6d2fd1641ec73c7df3675c2288d92cc2feea3b16f9e04478"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_progress_0617.json",
+      "bytes": 15700,
+      "sha256": "e1406eb9f118bd09d71aeda491e66b694788077212cfb27a7863788ae8e234cc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_progress_0646.json",
+      "bytes": 15696,
+      "sha256": "a29e5a1bdba7016eaf2cc18fea4531f536ee15b9cff28c38855045854a35a160"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_progress_0658.json",
+      "bytes": 16069,
+      "sha256": "2c3978a784fc73fcfc018a5474684f06e1832dcffa66eec344c6d3cfc1094c60"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_repair_D_path.json",
+      "bytes": 1017,
+      "sha256": "abfa0087422e8b6d88aca4308d21c49e85e891339a1905193a05c1f6260c8c0e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_resume_D_oss.json",
+      "bytes": 1775,
+      "sha256": "0dd714c91f7a23b015f91884e12278d4857d5a99c7a2b92f7d194c1b2dd9f829"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/e2_review_current.json",
+      "bytes": 10244,
+      "sha256": "6ed7797dceb063ae99883b084483e7af15ac7ca76c79543f6bc6ccdfdc4a206b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/first_batch_receipt.json",
+      "bytes": 1809,
+      "sha256": "0b9312942522a3c7159bfb5155d4d6847369f519996d6ce45e7a7af42ff9963d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/markdown_validation.json",
+      "bytes": 715,
+      "sha256": "bb89aaa37544852731cff74ab9e814bef87d8dbcb4b89ad6f71f31ffcef962c0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/reused_baseline_tables_receipt.json",
+      "bytes": 557,
+      "sha256": "e499b5deca4ea994cd18806f8321a57d1ae21e85c5e9181375b04f1d474ee035"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D1_20min_collector/remote_latest.json",
+      "bytes": 10206,
+      "sha256": "291a371822817d372ae4c064e3aef749451f7c545dc8dc668d918626065e99e8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D1_20min_collector/state.json",
+      "bytes": 738,
+      "sha256": "69218d3714195e4c8bc0fa3b5f3365b03123a5de7b3bd32b562bf757b2275d99"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/recovery_1.json",
+      "bytes": 3425,
+      "sha256": "1c480bf3fc7c3518c19b99252bca6191d95f028d9b96382c9956a75d1b87acdc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/recovery_2.json",
+      "bytes": 2997,
+      "sha256": "ea170a9fec122994449204dabd86a8ed1056da8f7fa2dd39d346efb7ad6fa5d3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/recovery_attempts.json",
+      "bytes": 617,
+      "sha256": "e11f4618561160d4307a32ccf5c9749a8427a250d4f6ea02b6aa1e0f897e8cf4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/remote_latest.json",
+      "bytes": 3384171,
+      "sha256": "a1f80f6802ecdb27db75815e609764a2c6071c133bcd23bd6a97dceec600fe80"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/snapshot.json",
+      "bytes": 15442,
+      "sha256": "29852f1a0f96f3a3c1c42e48eb9bec1e25f38d72de8d4a445ed538cf09e21e2b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/state.json",
+      "bytes": 353,
+      "sha256": "2fe8ef25fa1bf136b0318de144639c7abfd24c9c70047cb14a3f1ac3e8d226fb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/bd_e1_collector_20min.py",
+      "bytes": 3930,
+      "sha256": "6213f06c1d4d522f27c4773b922afe98ecf5bd586bfc10031c48d73fdaea2764"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/bd_e1_collect_remote.py",
+      "bytes": 1186,
+      "sha256": "edfa289576a45028afeed660e1dab7c294d762f952e48bffc8a9f83ba87abbb3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/bd_e1_controller.py",
+      "bytes": 1997,
+      "sha256": "a21ee483c72c1d18cd2aa97e5e6586fbe6b140771691b823e080741ac2f0a6ff"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/bd_e1_controller_resume.py",
+      "bytes": 2121,
+      "sha256": "c169e72828f7308c41ad0c75b5f5c0d78ecac6f1870d372b85527f8a75c32d52"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/bd_e1_statistics.py",
+      "bytes": 8963,
+      "sha256": "e8d6ca239374e7db1f54ce269cf0c06f87fd52a4fffb9265f372b65a36d04644"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/bd_e1_worker.py",
+      "bytes": 4904,
+      "sha256": "d5610c5f6fcbd992d991cd309e92d23d1726ac5ae82493b1618382fd053a3a08"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/bd_e1_worker_resume.py",
+      "bytes": 5077,
+      "sha256": "3795ef3bdcd6419295ba507451f0ccc66cd87aee84c7ea5915b999f31ba1f821"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/build_matched_donor_evidence_v1.py",
+      "bytes": 14964,
+      "sha256": "66661f64d170fd71439f5eb604f7218c1df95c98597542d09b3e08b1657212af"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/build_matched_donor_manifest_v1.py",
+      "bytes": 3063,
+      "sha256": "c8405eee57dedec1c0a1a635cd1f5b14f3f75123ebf466ba05e2654174276ad2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/deployment_receipt.json",
+      "bytes": 1632,
+      "sha256": "becb5f113ab95c664199af4ef2a441c14d44909d0c27f4719c16b55d59ce8ec2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/e1_diagnose.json",
+      "bytes": 6832,
+      "sha256": "0c71a87c6dea55a7702bcc72637c0e9dacfe36cc608464e640801b7d25100136"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/e1_disk_probe.json",
+      "bytes": 6319,
+      "sha256": "ecee84a0990df9652a5de029db206ffbfbe592b1283a844eb92455359ed96ce9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/e1_resume_deploy.json",
+      "bytes": 1871,
+      "sha256": "3151fc309de39ead4475cef5fbfe6eaee3d4783fa88072afbc8efc8b750d44e6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/e1_resume_deploy_template.py",
+      "bytes": 2768,
+      "sha256": "7f501e5c51949e965ef2f726bfa407647d43173af108da210e806aa5886dd9dc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/E1_selection_and_asset_review.md",
+      "bytes": 3238,
+      "sha256": "6f903fbead2badf637f91d161a0cec9b33efad005ae104eb20b35fad4b1df8c2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/e1_statistics_selfcheck.py",
+      "bytes": 827,
+      "sha256": "a1dd6a4e16bd9c2d6fbeff4e357e9db24bdd257cf187935b4e58c685feef8381"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/final_remote_status.json",
+      "bytes": 3179,
+      "sha256": "f4dcb23ef59d50cd006e7c1b65ffc4deabd5f2e31dc9909a822297ef73e2273b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_asset_inventory.json",
+      "bytes": 25594,
+      "sha256": "a50105a995980b485491babace149b597ac7d98359c0cd665f6098dd8f66b282"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/manifest_version_acceptance.json",
+      "bytes": 670,
+      "sha256": "0d00b2a4305ad1b8c7d9033202c7db8b88d1e76fbfbddae04f3d16bf7a7c4616"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/matched_donor_state_eval_v1.py",
+      "bytes": 11941,
+      "sha256": "1c1944a0bf3e0bea4a25d1aa41375192df0ff0af885c0465ff97d5b8218f107d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/original_statistics_audit.py",
+      "bytes": 4193,
+      "sha256": "06311838d6a7dc6f27f38197e0567915e76d1caf23eecc4077a37c5aa38db0ab"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/rebuild_frozen_matched_donor_manifest_v2.py",
+      "bytes": 6973,
+      "sha256": "61f9b46b4f2fa78858fa917e02fa5929928bb4606297b82cd40c76faa50deacd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/receipt.json",
+      "bytes": 1025,
+      "sha256": "8fa927ae2e7aabb67cfb42dcae34c66d0f0714c775a82fede00e6bf995c015d6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/remote_locate.json",
+      "bytes": 440,
+      "sha256": "70370db02dcba65a6d0f1b7b9ec1ee706aafd158f1731f59e16c8d5d50625da6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/statistics_adapter_real_split_test.json",
+      "bytes": 1460,
+      "sha256": "308afe16db54b5b7a81d8b86ab66de666cf5111bd4b4fc0f4fe3be9d20e97122"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/statistics_pipeline_deployment.json",
+      "bytes": 723,
+      "sha256": "0a9aef7353cf46cb3df2243bd153ad2af6142d26d4b163916c943a72452c9120"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/status_1454_20261115.json",
+      "bytes": 989445,
+      "sha256": "62b9f94f6b87355a1c936643bfa812d7c6c67321d266a6eead2c56c0e00d52bd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/status_1829_20261115.json",
+      "bytes": 3226153,
+      "sha256": "d521d3bbc888aafccef2d71b41f52918db0ca8174d934b5775c74249bf7b3c1d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1_source_audit/bd_f1_a1_publish.py",
+      "bytes": 5439,
+      "sha256": "d11ca03b0b32d31ed658aa65bd1bf4659fa8f8840941a1daab75521f08f53a84"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1_source_audit/bd_f1_collect.json",
+      "bytes": 147982,
+      "sha256": "9e86ca384fa12b31464398e507887c79028ccca706a095b145fa69bff9f7242b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1_source_audit/bd_f1_controller.py",
+      "bytes": 1106,
+      "sha256": "e9ef65b6bb0d77e3351332dac6093c4a49ca10cdb55f0ea46bf9853cc38e4cff"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1_source_audit/bd_f1_deploy.json",
+      "bytes": 1531,
+      "sha256": "0d07599514db093dcd2ecf6c74b8f4c0043839babfc75cf731da8dd1bfca27a8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1_source_audit/bd_f1_worker.py",
+      "bytes": 4332,
+      "sha256": "399fc44674f3aede8148280e0f0a2df5941e391f5c52f80ec69884fe61e5f1b3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1_source_audit/bootstrap_seed_audit.json",
+      "bytes": 40,
+      "sha256": "a0379103a16fd78d4bee842e8273eaa255b2321dd6fee05fa8c146063babdf10"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1_source_audit/f1_stats_pure.py",
+      "bytes": 1511,
+      "sha256": "e513099a8f7f260d55a7e2d0bbb928adbc5714350c12eb36fabf8bb10aaeb941"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1_source_audit/frozen_source_hash_audit.json",
+      "bytes": 2175,
+      "sha256": "33ba37b3077cc57dd84fd93ff89ee24627f8a924eef4ce84bf04d25e17d7b7f0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/I1/bd_i1_remaining.json",
+      "bytes": 71071,
+      "sha256": "706dd9163f95ce6b006628908a8005ddd8eaacb3fffe1536db8f2ebaa82d6833"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/I1/bd_i1_summaries.json",
+      "bytes": 126475,
+      "sha256": "61c003dc564ed9267b308f1f0a0eed07d4fb3ef899155738e0d0efc6d12ba14e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/I1/bd_i1_timeline909.json",
+      "bytes": 79449,
+      "sha256": "4f2f2ff6c06a35d89c5cc55b7e2efbc29b1e219e620c410be78ed4dfe4d0d13a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/I1/D_seed42_training_cost_reconstructed_20261116.json",
+      "bytes": 1325,
+      "sha256": "8411060e96b59bd1bc3b64af6538e1a06e90800efd758f284408415ff71d9c1e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/I1/TableI1_B.md",
+      "bytes": 563,
+      "sha256": "8c2b51e574b16f1781736d9f563c66cf17ddad799ad9436c0e1ced0ce41c1acc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/I1/TableI1_D.md",
+      "bytes": 566,
+      "sha256": "3b2249b433b0f5f03a8f9594ca96f28ee3ba548f4bd9b8999d494a70c7b52c7d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1/B/publication.json",
+      "bytes": 89,
+      "sha256": "b273917a86c47b1f21a294bd28c62af2757b161f5a16c2e5ccd32abfb7697884"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1/B/receipt.json",
+      "bytes": 90363,
+      "sha256": "9fa67bf96d4557bb24894c81a63494e51a0eb44db42fcb4bc8de18b6b648d43f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1/B/statistics.json",
+      "bytes": 3326,
+      "sha256": "f2bd302c6c521e4fab7c5208649a3c58f87cf979c7d9b2c90eebcca7dd6b1bcc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1/B/TableA1.md",
+      "bytes": 966,
+      "sha256": "fd3b2bd48a1b1e64f2fbbd3259766d13c50f7c87e61bc82d9efa195bf3cebf95"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1/B/TableF1.md",
+      "bytes": 709,
+      "sha256": "da40a80e4407f356508abc9a80178dae65b69e0ffe9e255dede277c12c220c18"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1/D/publication.json",
+      "bytes": 89,
+      "sha256": "772e9a50c953453e016ce8624959b24daf773f99887baef2f6a3156d08abd7b5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1/D/receipt.json",
+      "bytes": 91009,
+      "sha256": "6a1a9d9ae54cfb3adb31f6afbcc01fa8d4948d59db0d8dadab2281f3e024b37a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1/D/statistics.json",
+      "bytes": 3348,
+      "sha256": "0c83c8f772a6a6b8c4a21d1b5fc46b23e4a1312c21543e364aed7d023f97a3e5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1/D/TableA1.md",
+      "bytes": 984,
+      "sha256": "8c3db591e125affa035cb6169e8a6c3a91c708d6bc432dbe48ad92e6766820a3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/F1/D/TableF1.md",
+      "bytes": 712,
+      "sha256": "0fd7be1144626dba4caeb77b26c8591ce138febb7db86c0d5362bf7582ea843c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/export_receipt.json",
+      "bytes": 8440,
+      "sha256": "249afeb8a0833f672f920334bedb6170e498c570d9e8b8724f8c0550fca3a0d1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/calibration_train_v2_corrected_mask_20260909T134000Z/calibration.json",
+      "bytes": 1437,
+      "sha256": "56f6212b5ccf00ae58119b6ecb7f1ee4e0f852b868d29eb25d1a1451f4b9eefc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/audit_iid_matched_donor_calibration_v1.py",
+      "bytes": 3357,
+      "sha256": "0f369965004b938da82c7d324ce7d76cd0d3ade54f8f55d534cc5d3fc1c26a3e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/audit_matched_donor_exclusions_v2.py",
+      "bytes": 6128,
+      "sha256": "d8632e3f488c5f4b82f01c2b4e3a632b30d71bc197e964ecb9137e3373094a99"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/audit_training_calibration_invalid_v1.py",
+      "bytes": 5628,
+      "sha256": "555652bbd8267bdd3ec8904637636d29efb3b6637fbe290ea3f64cd9e270398e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/build_matched_donor_evidence_v1.py",
+      "bytes": 14724,
+      "sha256": "9e1c6292e10a80bcd935f5201019d58602b35913dbc59076c2850b93b4320e12"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/build_matched_donor_manifest_v1.py",
+      "bytes": 2986,
+      "sha256": "cb9b836f44212ff85fb4d22f3fc15d45aacb6b4c84ca99b910ad60f6fc265a1e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/compare_matched_donor_calibration_v1.py",
+      "bytes": 4059,
+      "sha256": "4b3fe6b33fb42531cba0399d5f67673b6a4d5ef63fba4221c7255093b5f880ef"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/freeze_matched_donor_calibration_v1.py",
+      "bytes": 2855,
+      "sha256": "e9ab8224c434f0168d398c985e243069feea5acd0440a6b9ee35c756509387a8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/freeze_matched_donor_calibration_v2.py",
+      "bytes": 5254,
+      "sha256": "c9f7f551d4e2a5430e82105a72109fe4f06ef479e55cceeaa74fe1af8833a6e3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/inspect_calibration_invalid_sample_v1.py",
+      "bytes": 3122,
+      "sha256": "f07538b40a99c5adadf9586ec49184b9c147c6c12d5bc28ef501ba61d8675092"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/matched_donor_feature_extractor_v2.py",
+      "bytes": 2787,
+      "sha256": "aceb490a7b03fccea009152c91f53bd2acfafee6c7741db1143cb0d0d3844bb1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/matched_donor_smoke_v1.py",
+      "bytes": 6922,
+      "sha256": "488685940903a93e01c260871eeefe0d0bfc23ca88124511dfa1726bbea796b9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/matched_donor_state_eval_v1.py",
+      "bytes": 11714,
+      "sha256": "03e959e5dc2fe3613bcfb44aba3181fff79a78941e89c39f334ba5b1b566117c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/rebuild_frozen_matched_donor_manifest_v1.py",
+      "bytes": 6611,
+      "sha256": "23217c7dbd5252876f7af17f84c2646a6dc17f0e4a809242c649f9f71bfa3e1e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/rebuild_frozen_matched_donor_manifest_v2.py",
+      "bytes": 6857,
+      "sha256": "cf4b908cf38c88456ac2ef5ba7a8e3fc758dfb3d4fd3cc1e569c9d245ba4d0db"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/reclassify_calibration_invalid_masks_v1.py",
+      "bytes": 3875,
+      "sha256": "903fc2d45a2badfeaf83e7a7b49d4c910570e70d0e948c2eb1d6eebce05845d2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/record_calibration_provenance_v1.py",
+      "bytes": 2199,
+      "sha256": "e35486846ad00a4682b0271a9d993e240d62c1e545268d9fd54b0625849320a9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/test_matched_donor_feature_extractor_v2.py",
+      "bytes": 3219,
+      "sha256": "c946b8355bb36ac16b4055e400750710eaef7afbf9e6830fe38239d457f7cfd3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/code/validate_matched_donor_smoke_v2.py",
+      "bytes": 5580,
+      "sha256": "1da00c0d7969ac269994d2f99bba8b615d9705cae1ecafeb2751ba8f495960c4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/matched_donor_rebuild_v2_corrected_mask_iid_20260909T153000Z/matched_donor_manifest.csv",
+      "bytes": 409285,
+      "sha256": "bb959cb65a07d142fdaec18f5718327d91e73e22816a5c75bb7268923c128663"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/matched_donor_rebuild_v2_corrected_mask_iid_20260909T153000Z/rebuild_report.json",
+      "bytes": 196041,
+      "sha256": "5538dd31cefa9477902105a0de3beaf135e93c6c2448bb9ec45f41b6cf71dd3b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/matched_donor_rebuild_v2_corrected_mask_ood_st_20260909T153000Z/matched_donor_manifest.csv",
+      "bytes": 974184,
+      "sha256": "0bb537a9eb920a55e155c80c96e870dee62c6eaee3c9fd993fd18635ea14bde0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/matched_donor_rebuild_v2_corrected_mask_ood_st_20260909T153000Z/rebuild_report.json",
+      "bytes": 351257,
+      "sha256": "12493ed93c4c52b61ca17faa00029e73581450b7c536fb1b791290403178f3a5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/matched_donor_rebuild_v2_corrected_mask_ood_s_20260909T153000Z/matched_donor_manifest.csv",
+      "bytes": 1235693,
+      "sha256": "f09625a3d4fdd99833840817d3f45d4294cbf165bd18f3d1f90043c295cb1995"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/matched_donor_rebuild_v2_corrected_mask_ood_s_20260909T153000Z/rebuild_report.json",
+      "bytes": 881208,
+      "sha256": "6276119cb20bd38711f7560dc0dc304cd73463a27b4a83282ef12e2aaf1be5ed"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/matched_donor_rebuild_v2_corrected_mask_ood_t_20260909T153000Z/matched_donor_manifest.csv",
+      "bytes": 320886,
+      "sha256": "65ae828bb3cad38dd6909b8b23f9be955cc234aa2d8459031ea1bdedc7fb0428"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/matched_donor_rebuild_v2_corrected_mask_ood_t_20260909T153000Z/rebuild_report.json",
+      "bytes": 70388,
+      "sha256": "627125e074c412772f9818f49e1f5979413969387a06bedd9f2e06c8600d648c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/corrected_mask_recompute_20260910T071500Z/merged/ood_t/manifests/matched_donor_manifest.csv",
+      "bytes": 320886,
+      "sha256": "65ae828bb3cad38dd6909b8b23f9be955cc234aa2d8459031ea1bdedc7fb0428"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/corrected_mask_recompute_20260910T071500Z/merged/ood_st/manifests/matched_donor_manifest.csv",
+      "bytes": 974184,
+      "sha256": "0bb537a9eb920a55e155c80c96e870dee62c6eaee3c9fd993fd18635ea14bde0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/corrected_mask_recompute_20260910T071500Z/merged/ood_s/manifests/matched_donor_manifest.csv",
+      "bytes": 1235693,
+      "sha256": "f09625a3d4fdd99833840817d3f45d4294cbf165bd18f3d1f90043c295cb1995"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_source_audit/legacy_export/corrected_mask_recompute_20260910T071500Z/merged/iid/manifests/matched_donor_manifest.csv",
+      "bytes": 409285,
+      "sha256": "bb959cb65a07d142fdaec18f5718327d91e73e22816a5c75bb7268923c128663"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/published.json",
+      "bytes": 639,
+      "sha256": "b51c5395fd487535693b37f76c8949ac5ba3cd88985c4e5eb56c55d4d4ebdc7d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/statistics_acceptance.json",
+      "bytes": 12064,
+      "sha256": "f2332df92aed96de39a782aeeca1603a0c8be2347273d9cf238e1824f31353e1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/TableE1.md",
+      "bytes": 1303,
+      "sha256": "8e37adff096b5176fe81cdc090775527b8dca4751dccb52b7d1114133661152e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/published.json",
+      "bytes": 639,
+      "sha256": "1b426b66ffe9a295c3e394b2168e81ef13b24307eead0ac830403a925f92308b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/statistics_acceptance.json",
+      "bytes": 12065,
+      "sha256": "c8488e289b64862fc772d8b1e485c7bfac7e651e990d6223da0e6f686134be41"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/TableE1.md",
+      "bytes": 1308,
+      "sha256": "1a860042bc45e8036e261b942dc43c01c44b90e51e8e6c7561dfb5834c7752d4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/iid_chopped/paired_per_horizon.csv",
+      "bytes": 3061619,
+      "sha256": "54c2c9391ddbdf30913c826af6b83fc9fd7c762aa002208be1e45b2811c3017d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/iid_chopped/receipt.json",
+      "bytes": 672,
+      "sha256": "f0b91409df794fda5188cb56a8716085c6f3ee6dd2e3924f93a4cb5646023f7f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/ood-st_chopped/receipt.json",
+      "bytes": 678,
+      "sha256": "502e9cf64b7341e0e1cadb5401ad15010ea20d007c3f3cd210ee00350f0fb8da"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/ood-s_chopped/receipt.json",
+      "bytes": 676,
+      "sha256": "4585b7bc2fce8c65c30a0862536d240b96d6d59cd03559b07288c3f140c33203"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/ood-t_chopped/paired_per_horizon.csv",
+      "bytes": 2381732,
+      "sha256": "7286cdccf5c32a3df839290b5b02a6e40801491eb221116f19b308f2593e03e0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/ood-t_chopped/receipt.json",
+      "bytes": 675,
+      "sha256": "7d2207508b3bd00310466e0db6d04b6e5b84bae131c14aca97de61a81e22c8c7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/iid_chopped/paired_per_horizon.csv",
+      "bytes": 3061493,
+      "sha256": "8c2a32d7d913621060230ae43d35e66ebbc17ea3bca449dcb13e8ee902d42d2f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/iid_chopped/receipt.json",
+      "bytes": 673,
+      "sha256": "9d38e44761214ca998e441d107df2421f4e6cb710b71c78c2b0413ba3186ebd2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/ood-st_chopped/receipt.json",
+      "bytes": 678,
+      "sha256": "e5456ca5419a6fcc92df53f00a841eff5c72fcd133f22b3f9a5afd9c2a92785b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/ood-s_chopped/receipt.json",
+      "bytes": 676,
+      "sha256": "e2de8ca7ca9b49643cf0cb99c07747782ebc965f40550aa6ac1899dcb93a067f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/ood-t_chopped/paired_per_horizon.csv",
+      "bytes": 2381727,
+      "sha256": "d954fe53d64442b40e4c370eea0b12a3c1c823c79d41f7903a1dc164e4dcb6bf"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/ood-t_chopped/receipt.json",
+      "bytes": 676,
+      "sha256": "8340781cacf7e838ce32b77f5f08d5cc49607368f037bb1dbd5aa466d3ab3929"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D1_20min_collector/B/published.json",
+      "bytes": 173,
+      "sha256": "e1573cbeca5fc79e9881beb113806b61d49b6984ac63582d75b9a043aaaa8c69"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D1_20min_collector/B/receipt.json",
+      "bytes": 5116,
+      "sha256": "1e666f480255b60e57ecce8c327948cc1673efb1f937c878d353cae072b25760"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D1_20min_collector/B/TableD1.csv",
+      "bytes": 929,
+      "sha256": "dfd98fde8f74ab0f792f0e477d8bc5e818eaa3f3ac5c32655a83fe9c98b6bc13"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D1_20min_collector/B/TableD1.md",
+      "bytes": 750,
+      "sha256": "77f38cfbd8b66f01866716fb9e5a5c0386572aef5e8921df9f65979024795a36"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D1_20min_collector/D/published.json",
+      "bytes": 174,
+      "sha256": "37082e38ec6025a5d9ff90222e12327a9b6635c8e48bc7378fcbc4bff73458dc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D1_20min_collector/D/receipt.json",
+      "bytes": 5105,
+      "sha256": "1c50ff1e9fe903debcf3867b4ef9efe99f8d2768cc1826161ba72116e6ea0d0e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D1_20min_collector/D/TableD1.csv",
+      "bytes": 924,
+      "sha256": "6dd4b7c190f34e323a5857dd97bb0e382435cba773ab24e5ffd0cc2ffcad9ca3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/D1_20min_collector/D/TableD1.md",
+      "bytes": 749,
+      "sha256": "f58c0eeeb34fbe6698540cd678ab05d7769f5c6c365632bc9c1575c6a5f7fd47"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_baseline_seed42_60ep_20261114/archive_audit.json",
+      "bytes": 771,
+      "sha256": "afbe5e64a4789d010e540df3c85041580a3b60c86aeff53c14a9d935faaeca60"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_baseline_seed42_60ep_20261114/result.json",
+      "bytes": 8500,
+      "sha256": "d124e04ea476840470fecff837a8bb9e86045233197e461e1b01be76609136bd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_C0R_seed42_100ep_20261114/iid_chopped_result.json",
+      "bytes": 4319,
+      "sha256": "d83c6d23acd03bf95e852d8c87c60ed50de606c3fe5da5b15e6fed02defb8f7e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_C0R_seed42_100ep_20261114/iid_chopped_result.json.source.json",
+      "bytes": 314,
+      "sha256": "234fca101b1cb15aa08299429f3133c004b851a25a8f39cb35d2dd30271ca418"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_C0R_seed42_100ep_20261114/ood-t_chopped_result.json",
+      "bytes": 4316,
+      "sha256": "baaeb8bbe4e4571f6816303054143d8270e4a37e5748794e92af34b06c9aa61b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_C0R_seed42_100ep_20261114/ood-t_chopped_result.json.source.json",
+      "bytes": 316,
+      "sha256": "dfec28f74675082a7b44942a8ea0176f75104a5e40b7312098729fdc6de23fe4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_C1_seed42_100ep_20261114/archive_audit.json",
+      "bytes": 759,
+      "sha256": "5d38268dc47e08d62765c3fe329ee95311a03af4b6f854e105f03608560811d3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_C1_seed42_100ep_20261114/result.json",
+      "bytes": 8642,
+      "sha256": "b00d4ddcc45407fca8a8838479a777a1633e3e758365ded60531a17aedce2716"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_consistency_seed42_60ep_20261114/iid_chopped_result.json",
+      "bytes": 4360,
+      "sha256": "4d16636cddbe0d3beaa147c4723433d31ca649e7866eb14af454c39140a70814"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_consistency_seed42_60ep_20261114/iid_chopped_result.json.source.json",
+      "bytes": 313,
+      "sha256": "a182f012f06f92083d28119ef20c7384f087942ef2a9931de14251412e61d884"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_consistency_seed42_60ep_20261114/ood-st_chopped_result.json",
+      "bytes": 4365,
+      "sha256": "f1ca8ddf5eddb58663a124cef75a880fa107bc25796c72c2fc17b264d1c43b18"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_consistency_seed42_60ep_20261114/ood-st_chopped_result.json.source.json",
+      "bytes": 316,
+      "sha256": "13e7acd526f495da6a0a3c0bd7f77552038d37073b997a4e81e78f31a929fcd4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_consistency_seed42_60ep_20261114/ood-s_chopped_result.json",
+      "bytes": 4367,
+      "sha256": "bab2a9e603e95690158a92cdce94c487b01d52eea2075f3e052e6b800f711a01"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_consistency_seed42_60ep_20261114/ood-s_chopped_result.json.source.json",
+      "bytes": 315,
+      "sha256": "57d96330000555426cdcaf2fe6e8f3227916a05b10999401cd807244e6f1e210"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_consistency_seed42_60ep_20261114/ood-t_chopped_result.json",
+      "bytes": 4363,
+      "sha256": "d74137859478950266fa7e422c628a51b4d611a7be85d089d2aaf27292a64aa3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_consistency_seed42_60ep_20261114/ood-t_chopped_result.json.source.json",
+      "bytes": 315,
+      "sha256": "33bcb5bc6133e96c1685b8db53599d453879a892cd4d1a9131bff132ecbb68b6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_consistency_seed42_60ep_20261114/result.json",
+      "bytes": 8506,
+      "sha256": "c47e9ee2dc2702b15c5ed1f02984e187bea0800734e828becae08d4d1bd0e49b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_consistency_seed42_60ep_20261114/result.json.source.json",
+      "bytes": 301,
+      "sha256": "5a0f00987abcdfc03595ebe39848d20e189f38daee93110fa728a8edd828f271"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/archive_status.json",
+      "bytes": 289,
+      "sha256": "4f2ce5cf0cfe3b7b44822e737a098d3782cd2b1d947ba049c363e031e3a7f434"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/archive_upload.json",
+      "bytes": 223,
+      "sha256": "c9c223cd6932b56e1d147be3e845fefff8db11ff9211e0704830b958e08076c6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/baseline_fetch.json",
+      "bytes": 223,
+      "sha256": "c531b505667c3c67996668e166bcf28504a04e8bd6774197ef33e9df3c7b7d44"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/baseline_probe.json",
+      "bytes": 223,
+      "sha256": "b2ba5c70acede9ad87761cc05045d7ee32b4b848cea4cfd0e55b342dcbd14622"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/baseline_probe_summary.json",
+      "bytes": 668,
+      "sha256": "418c340e670feea7d78d82ac8a69bc42785bdba584f862732a2833785c540350"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/extract_946.json",
+      "bytes": 220,
+      "sha256": "0fe328fc0431543defa36f1ed81a47a66b0d8b2898f5b951933871bdac0da617"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/final_receipt.json",
+      "bytes": 9576,
+      "sha256": "d95e311569ead4653a4905d0c42b1b2a758defd72e74c76b702d798ce950021b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1_candidates.json",
+      "bytes": 74151,
+      "sha256": "827c50b788eb5683269e0d9961044622832e56577de9e690cbd2851c46b965bd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1_fixed_cases.json",
+      "bytes": 2615,
+      "sha256": "00d8f76a139a7bf00d76ecfba63bcc04f3861da8cf8ac55ddf3bb54ebe30bc69"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1_metrics.csv",
+      "bytes": 743,
+      "sha256": "a6bafc11fc2a38a16a23c3cfb71684e18b5efdd20684d5806be57dd4af57d15e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2_all_suffix_frames.csv",
+      "bytes": 14762,
+      "sha256": "c030ac3af67700d3a89103028c26ce52b32705e13844323ba885b7a5cd3e1fc9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2_candidates.json",
+      "bytes": 106313,
+      "sha256": "967f072b92a807db5be5d91f4829b6d6aab51ff1232f6b037c1d1b71f5b7ff25"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/historical_PredRNN_provenance.json",
+      "bytes": 4981,
+      "sha256": "22d5e6738ff3a90adde53c1184fbad07fc5a74ae898a7d8671933b0bfbd9a802"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/predrnn_deploy.json",
+      "bytes": 223,
+      "sha256": "8d618d5c078239a3e1eeecc8831ca7fbe2c1f39d502b8cc8a223b067e4bfbb3b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/predrnn_deploy_env_v2.json",
+      "bytes": 230,
+      "sha256": "b726a38738eaf41c0a4f83fe20ebc18bbb12367c85f4e7637f4e878391f6cbde"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/predrnn_events.json",
+      "bytes": 824,
+      "sha256": "393fb1673ee1af84cebda3622b830f6ba475d9437331ca8fcf18fbf87674e6b1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/predrnn_events_env_v2.json",
+      "bytes": 8201,
+      "sha256": "cb29ba15c0317e6d99a14cb8f3c9000d544d6e2f325fdeac95821858df60e0c4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/predrnn_worker.py",
+      "bytes": 4898,
+      "sha256": "5edaea3b51bbef6b94b1bdb67c1309870a31205ea930e04294855bf19c909e5e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/remote_extract.py",
+      "bytes": 3177,
+      "sha256": "7d30575e49e3520faf68819227a71643d72e64eec87d60c91a710ad518bf17fc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/status.json",
+      "bytes": 449,
+      "sha256": "acb3b36e5a6e189c026c758ea04ba2f7e4c516822748fbb788c93f53553d3a7b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/inputs/all_G2_frames.json",
+      "bytes": 29097,
+      "sha256": "8618c29042e28db2f704c90fe23eaf4db2d66fadcbd50a2433f549eb953d30fd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/inputs/manifest.json",
+      "bytes": 56908,
+      "sha256": "26b9369f97d30d5c8387a47caf93a6093b031abb9a1bb8a3fd401457842cbe32"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q2_day100/H2_数值核验.json",
+      "bytes": 1548,
+      "sha256": "cca7f0218c4886f32feddbbcdfa43353923d1fa2e95626d99268f06bda285ba2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q2_day100/provenance.json",
+      "bytes": 8914,
+      "sha256": "5d305cd989215ac0515c1ae379f13dcf28cbf7065bfe161bc50e0b01b8973fd0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q50_day75/H2_数值核验.json",
+      "bytes": 1550,
+      "sha256": "6742d4fe0b6661a2a66675afe24c397697906248b1ba82490187770f783f9eda"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q50_day75/provenance.json",
+      "bytes": 8928,
+      "sha256": "dda4c9afda0ea9f8ce069b0127f90e6d43992bc7a880a7f7da74d5466a736254"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q50_day95/H2_数值核验.json",
+      "bytes": 1549,
+      "sha256": "b16469ad919a49b2627768e5f6053cc542e30276ec83fc9d4718f41d667d28f4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q50_day95/provenance.json",
+      "bytes": 8927,
+      "sha256": "9b85d57e3ee99a1c7f61b413c1ad59df7ec2c2a667ce2820f292175b12789fd6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q90_day95/H2_数值核验.json",
+      "bytes": 1552,
+      "sha256": "396dd7d788023ee3680b63965fdddcb863bfb4e50238ec0be3d330a927ae0f5c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q90_day95/provenance.json",
+      "bytes": 8928,
+      "sha256": "91e3fa72336f0c58427c8eff84460876702228300443d72be11dafebf48d259d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q95_day55/H2_数值核验.json",
+      "bytes": 1552,
+      "sha256": "8e5b97a4fec51eac8b89c3c25e7f3af39be7aa93dd29ebf9c31189916e2c979b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q95_day55/provenance.json",
+      "bytes": 8805,
+      "sha256": "366f244469aff01b5789372ef2581ac4f8c94af127fe40614591e7e8d330ab06"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/P42_day55/H2_数值核验.json",
+      "bytes": 1523,
+      "sha256": "4143eee9c86bdb835e2643fbc371cff8892f15d9db98305f5e70942531881800"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/P42_day55/provenance.json",
+      "bytes": 8851,
+      "sha256": "ff99ff54b5fc94bc988c2a3999e69a87f27be6197479aa595c23ab706f51aa1d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/P42_day60/H2_数值核验.json",
+      "bytes": 1522,
+      "sha256": "2f5e859b6dee78b5dab3f9106f6de7f694b496019e8efd81fb7984fea81f4308"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/P42_day60/provenance.json",
+      "bytes": 8854,
+      "sha256": "56e48e4c68da89e8508b8b7e75f283e74a0976b354625b836ae9d4bc8199ab3f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q75_day100/H2_数值核验.json",
+      "bytes": 1509,
+      "sha256": "d668ca7276751e0817ded4c3a3ce3ba1a13f3ac2cb37d6dd6421f2c9c2b88a0c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q75_day100/provenance.json",
+      "bytes": 8898,
+      "sha256": "ace82d012a5b276982dccac65f8ff6f6f70281e8c2437f4083f61a12ca920218"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q75_day85/H2_数值核验.json",
+      "bytes": 1515,
+      "sha256": "b057da52d7870c7fa6a7c071108320d434552feb2b7f65cd96b609e31808b5f0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q75_day85/provenance.json",
+      "bytes": 8919,
+      "sha256": "6035b06eceb899993c2743e6ca9551bc47241bf485dc7264d94acbfa89cb0eca"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q90_day55/H2_数值核验.json",
+      "bytes": 1524,
+      "sha256": "138f3a8293b7673fd1fe277d926553da942586f64d98882561533502b8fae1af"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q90_day55/provenance.json",
+      "bytes": 8784,
+      "sha256": "4ad11e7c9b6b3c2c328353d7281bb0ec8b742d44727f8ea847e224c6808b29f2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q90_day65/H2_数值核验.json",
+      "bytes": 1521,
+      "sha256": "d4398e4286448f204257cea8d60bb21cbd9faa7a55b1cce921a1bb11ab649808"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q90_day65/provenance.json",
+      "bytes": 8779,
+      "sha256": "725073c91249ab36d15fb215092c20e4f127e9cdcb38f165f91714a527360f90"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q90_day65/inputs/metadata.json",
+      "bytes": 5615,
+      "sha256": "b614d106a1ac1c7993dd6872d436d5e96bb9801323c79cebf79c4c4cab65d8e8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q90_day55/inputs/metadata.json",
+      "bytes": 5616,
+      "sha256": "5f66f0f9a104c2db2276ce27611585823a0f7e233d9eae2e5c8ee7b303b7e258"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q75_day85/inputs/metadata.json",
+      "bytes": 5656,
+      "sha256": "df920b77c41900e7609d6235a508d7aec4ce39fed04d37ca631ae3c9078eeff4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/Q75_day100/inputs/metadata.json",
+      "bytes": 5652,
+      "sha256": "d8a07c01423eb7288e800e41e6d67fd0cf0d6355b1d27cea864b0b77328e9a98"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/P42_day60/inputs/metadata.json",
+      "bytes": 5712,
+      "sha256": "b073adaa2b68a9ee56a1a729fa6c07e69071639fd37456a922b4d2ef95d70add"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/P42_day55/inputs/metadata.json",
+      "bytes": 5712,
+      "sha256": "1262d8f936578b7cd4c162fde45ffff441c5637974828ddc81733b614445e7a1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q95_day55/inputs/metadata.json",
+      "bytes": 5815,
+      "sha256": "eaa059bfee8da506faad339ae3fbda323f18143fcf7b3e56138ad5ee44553096"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q90_day95/inputs/metadata.json",
+      "bytes": 5998,
+      "sha256": "7081212d9e5c17e1971a041dafb6439f8457869a45e4838c5c4999b05138d7f2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q50_day95/inputs/metadata.json",
+      "bytes": 5861,
+      "sha256": "be307e7a3d4399e699cbf61acf543c836370cb524ee2b35dc8fa1487c95850f5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q50_day75/inputs/metadata.json",
+      "bytes": 5862,
+      "sha256": "c5136caaaf53c9d2b82d2cf22754cb1c03d4625119969484420e9ce5f2a61522"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G2/new_Q2_day100/inputs/metadata.json",
+      "bytes": 5854,
+      "sha256": "ff2e53dbfaf7e89c651a90e5fac9a46da212add221f761b229b64e0673de5748"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q50/H1_数值核验.json",
+      "bytes": 1308,
+      "sha256": "23f843b531ecd25e3727598270a87b37195b7560f0b9e978a4f48d758b22102f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q50/provenance.json",
+      "bytes": 17465,
+      "sha256": "fbb8c38c482beb2d4021dad030a2974f1780c621800227db97630de2d36155b2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q50/render_source.py",
+      "bytes": 8186,
+      "sha256": "e9636b1247677fe22b02de23a1c685ae1715e14f4c4d3bfbb3d00e6d811c8288"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q95/H1_数值核验.json",
+      "bytes": 1312,
+      "sha256": "2d694834ddc3c16d5af76047a5efee61550a22191ea658bc224f0ccbfb11a167"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q95/provenance.json",
+      "bytes": 17224,
+      "sha256": "4a97568f16bf398ae4b0399ff89873387d64d950aaa68cda3f86ef5b21308719"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q95/render_source.py",
+      "bytes": 8186,
+      "sha256": "fa0187cbd97ab7094db1c0e2f76f5c3e737590db43f1673d16b2a96404708300"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q98/H1_数值核验.json",
+      "bytes": 1306,
+      "sha256": "c15a33733d4445cc815afcbb05b86484b1cb0862990ff770091827adc7a2b92e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q98/provenance.json",
+      "bytes": 17216,
+      "sha256": "4ea8f19ff3ac2fc707579aaf852e222b5401416e42baab7c1d427d018e1eb264"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q98/render_source.py",
+      "bytes": 8186,
+      "sha256": "b443c70cb94567de2272b5a3b71c09a964251d076e454d62a13953cef373aafe"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/Q90/H1_数值核验.json",
+      "bytes": 1302,
+      "sha256": "bd59c3a8916fa054880c96e6911aa167e84ed00075e3c903ed81c1126ea27c98"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/Q90/provenance.json",
+      "bytes": 17009,
+      "sha256": "1fa061569cb29f64c5bf486869350194136b42d9314ea364a38c70f8e7200bd3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/Q90/render_source.py",
+      "bytes": 8182,
+      "sha256": "06f8a748b14fc77a2abbae9e075f0895eb081d7b732ac8796882a869605ba356"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/Q90/inputs/metadata.json",
+      "bytes": 93,
+      "sha256": "be61f96e56543c65d5059e347911da6f2550e063aba103a1c7703efb3466ccd6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q98/inputs/metadata.json",
+      "bytes": 92,
+      "sha256": "3994b4d0a97f0427a98a68d91d1a21de667c3b037dad2f4ca1d5a6445788b9b3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q95/inputs/metadata.json",
+      "bytes": 93,
+      "sha256": "873871270349bec1dd7af3dbb0a774e66cfe3213e37fa019638a7e18148e8a51"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/G1/new_Q50/inputs/metadata.json",
+      "bytes": 92,
+      "sha256": "5dac5c8db68e39b812ecadbaaf25c0fd3cc369402e1ea42a25e01afc6310a36c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/baseline/new_Q50/metadata.json",
+      "bytes": 1339,
+      "sha256": "000075a44058202342e1045ad8eece6fe94a1f72fb0858e32007bfe245ce5384"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/baseline/new_Q95/metadata.json",
+      "bytes": 1341,
+      "sha256": "e87e202e11950bcbbd3e500cdacae81e94df82ba10aa2675ed4050be67b05aab"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/baseline/new_Q98/metadata.json",
+      "bytes": 1340,
+      "sha256": "89998e4a0bc522577d748611bb53e91784ad0095d503f93d75f42a8d27c0ad36"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_G1G2扩展地块_20261116/baseline/Q90/metadata.json",
+      "bytes": 1336,
+      "sha256": "73a7b952ff00f235f6e16415210f1092d0db52f3498070a830326ef10107ff83"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/attempt_shared_exit1.json",
+      "bytes": 9441,
+      "sha256": "b07fd7055e16a329b09aa65c1ce2ca3c55644c748054f8defa1edd866b1c70e1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_build.py",
+      "bytes": 2928,
+      "sha256": "113881d81aa3639ece6c50f218c69b03b7b8a1bcb2a1369813dc2fff9ba28f65"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_collect.py",
+      "bytes": 866,
+      "sha256": "f7789a6ed8fc58caa778f1d5661590ea558fd5019daf82785fb1457b6a86bcd6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_controller.py",
+      "bytes": 1576,
+      "sha256": "a178ae1232650fab5e618692af7c81dea51e286ae5e753a23e983a82ca4a1a2a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_deploy.json",
+      "bytes": 6620,
+      "sha256": "c893554946ae10fdfff6f120d926d216d44c562644638c294f2207bca15e5b34"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_gpu_916.json",
+      "bytes": 1186,
+      "sha256": "79857352dc18ae0e6e06bca7528d6417410ca73c6f577a91d7e0f9ca4d41e0bb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_gpu_946.json",
+      "bytes": 3503,
+      "sha256": "bd4e6941681d963802e8397b4444eec84cd0c8355f72771c23bfc563e2ae8463"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_gpu_991.json",
+      "bytes": 1387,
+      "sha256": "fee860109ebe6f446c9f1b8bc041dce016d16076bd7314651f134f68457a3973"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_metadata_repair.json",
+      "bytes": 223,
+      "sha256": "6f7b41a0ca70542805075a67a23620828bb71520315bace0b8a075595da09b66"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_metadata_repair.py",
+      "bytes": 1209,
+      "sha256": "6510a551fad0e71211665a6ae69f9fdbf6ce07f24f39cdf79d42f238032df2d5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_probe.json",
+      "bytes": 4726,
+      "sha256": "3c65afd92a9ebbbec260d596ff34774b6f39c26294adf55d792b38c0861ba06c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_recover_csv.json",
+      "bytes": 11332,
+      "sha256": "2bb04ed3cc974ce8fb0485212196ff8e427574653914e268ee273667f195fbf6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_repair_300.json",
+      "bytes": 258,
+      "sha256": "7352fe77849e55240e9add5003d81aff2ec8f364a6bc32f1f47448d15671b0be"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_repair_300.py",
+      "bytes": 1314,
+      "sha256": "921fd61c55043233ad071eee08f7c903dd6b7ab9a93c4ce80d883117c4aad9df"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_shared_retry.json",
+      "bytes": 325,
+      "sha256": "11a6f6abef20a62f1b7ec9a4cc3b5023edb1630e6eb80bdbbbed71d7a9dbbc41"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_shared_start.py",
+      "bytes": 2743,
+      "sha256": "0634c7daf728dacab3a78318d27246c9cf92a28a01c3e49a7e3b6a1c2535fd5c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/d_cost_worker.py",
+      "bytes": 7243,
+      "sha256": "80f8d1edfe4dc77cbcf7dac6ffb68602a536ec806dbd36e6f076feb87a33468a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/exit.json",
+      "bytes": 52,
+      "sha256": "aa6b16e404558d61e1a7b369cd78440356b7e51173d7984913e7629d78dd10d2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/latest_collection.json",
+      "bytes": 9543,
+      "sha256": "e5814b3bece6a5a951715d44d0efd5a7ffc01d171a1f384aef7ebf589b3aabd6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/launch_state.json",
+      "bytes": 3539,
+      "sha256": "4fa5a60cf2f2af6e180320a74260cf060023ff06ef9db1511882e6e320c69de1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/numerical_equivalence.json",
+      "bytes": 2797,
+      "sha256": "1321d233b4a7ebb7db1b77e652614ea16a4a8ec2b2c17c5ca9f0000650add543"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/plan.json",
+      "bytes": 3765,
+      "sha256": "684c7b52f852407b59b1ad944244f3b7b791c4782d5aa0a5cec57a5ff407e376"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/progress.json",
+      "bytes": 110,
+      "sha256": "19270a694b0d9acb630bdbcb10a914f0308aa7738a71b1802904626fc5959227"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/recovered_data_acceptance.json",
+      "bytes": 1247,
+      "sha256": "8563082ed7028d1e094fd57215946b7a3c4bbaef71396c34205c185e4e547449"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/state.json",
+      "bytes": 613,
+      "sha256": "a83070c974f07c41cbc7eeddd9a3595a56e5035ab8f7cf6a4d7bf9745142ea65"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/summary.csv",
+      "bytes": 531,
+      "sha256": "4df346a58765981990cadc1858f06e9d09a58d78f2dcb6650a40b2760a27b552"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/timings.csv",
+      "bytes": 36704,
+      "sha256": "ca553f18ffd9e0a9b85fb2372f5671580240d2b5dcaae2f4fb56bcb9a90a6cce"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/external_reply_locations_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "bytes": 80278,
+      "sha256": "052a7a8f8fe06bed11b3acc2fa47db4d1f928a728f1ba40a2f21769c42d3946c",
+      "source_sha256": "1d5fea63418373811508c508890cadcdde96e6facc0c144f7ad629fc5f816396"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/external_reply_locations_before/A49_SpanWorld_ICLR逐项审稿回复_中英锁定稿_20261113.md",
+      "bytes": 85270,
+      "sha256": "8bd45538005100902d537b5571453ac19323068d1936439b7485455a8615a7a4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "bytes": 78373,
+      "sha256": "2bff91a46ce95946138910ca0e41dbe4e33b558660cb4be5bbaa650b633af2b0",
+      "source_sha256": "c460e761761a635589a7b1261448801233ef0577175a4a043f62a937fb74e902"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/A49_SpanWorld_ICLR逐项审稿回复_中英锁定稿_20261113.md",
+      "bytes": 77909,
+      "sha256": "256d32655db5dc8f2d61c0307b2e5e241b0be0beba7259a99c361ea24e12e19b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "bytes": 170837,
+      "sha256": "6c0da4a14457100a7628cd36f8aab528ff05fbd0f007e5dd093f24c044f4eec1",
+      "source_sha256": "abbf88b4ad8b71482529c1dd77329715b010fafa6560bbeeb7e8fb75aab28c5a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/receipt.json",
+      "bytes": 1925,
+      "sha256": "f6228ac4a39c4876be319042c8127031e423dfe847df219d1e8a266215d5c0e2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/remote_status_receipt.json",
+      "bytes": 12424,
+      "sha256": "58328ccf3e97bf7e8d7863d0f84aa508af14fd037b34ba4e8e0b7e7ce59ba533"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/scientific_judgments.json",
+      "bytes": 5457,
+      "sha256": "f5382b1fbb103599062b3d5cc533b8cac89269a9c037ff72bd52f9a82cecb8c6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/AUDIT_REPORT.md",
+      "bytes": 5439,
+      "sha256": "79665939697373d0d5035d04b08aa80673657a65f12b498d28f409f00c120bb0",
+      "source_sha256": "428b2c8d82d0240fb7722947857ab9b071304c3c1c77c6f6fe051500f6b123ef"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/best60_all_groups_receiver_distribution.csv",
+      "bytes": 138327,
+      "sha256": "f4a32aa09ee8765f106a6928ee5c90642dd9baaf683001977a08ca81a946888a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/best60_all_target_MSE.csv",
+      "bytes": 4613,
+      "sha256": "73478c5652e27ffeace81add2c18280712a08d1cda8448dd657ee7268a157834"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/best60_standard_three_models_four_splits.csv",
+      "bytes": 1663,
+      "sha256": "c4250744d578c262c30e7b5a4a2de8fa975274b41546cd219f3a461e57817285"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/checkpoint_metadata.json",
+      "bytes": 79654,
+      "sha256": "712ece7caa1857239ce091902af819ec86e2de202b4b3375aa3970e45ec450aa"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/decomposition.json",
+      "bytes": 2620,
+      "sha256": "e2c3dac213acdd0811494f95300880fc47e273413b979be2105422c24c9b6313"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/distribution_summary.json",
+      "bytes": 3056,
+      "sha256": "4d5a1e94c5ccdec71e651a2515dd9860cd77d7b07630910b9fd8b981d7653e7d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/download_receipt.json",
+      "bytes": 4619,
+      "sha256": "1f7046597d649755ccb5a80c08ae6c3769bbe76e525c11e040c2b5b9b057685c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/R2_AND_DISTRIBUTION_AUDIT.md",
+      "bytes": 4669,
+      "sha256": "fc310f1c1f58497f5909fc9e01bd9e3c209232ec8d74ab89a51f779dced9a497",
+      "source_sha256": "ad765c17b30864c2656e09855d667bc39b6fec8ff3f29444b6b7f09cc1caa9a3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/r2_completion_status.json",
+      "bytes": 787,
+      "sha256": "fddff9f3e904757ad550eb25a309c60c721784696a7caebc2ae772dca7591096"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/standard_comparison_sources.json",
+      "bytes": 1392,
+      "sha256": "64a535060fbf43a162c3aa0d5c3642653574293e091cda8eca4a87223491fd6c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_comparison.json",
+      "bytes": 22115,
+      "sha256": "ff82ef042b90c623e4a4a0f7a99520d1777ebd9fd6a6e6e22233e5b2dd4ac384"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_source_manifest.json",
+      "bytes": 5585,
+      "sha256": "9b92b632cadbb11508df6b50a829e4e1bd25a94440662428e03464fbbb082c43"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/r2_source_evidence/AB_scorer.py",
+      "bytes": 18124,
+      "sha256": "bc3e72376459fa1d6e9a1f38c4e079b4c7d731569adcc5bf31f2e7320b54ade8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/r2_source_evidence/D_scorer.py",
+      "bytes": 18124,
+      "sha256": "bc3e72376459fa1d6e9a1f38c4e079b4c7d731569adcc5bf31f2e7320b54ade8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/r2_source_evidence/fixed40_scorer.py",
+      "bytes": 18124,
+      "sha256": "bc3e72376459fa1d6e9a1f38c4e079b4c7d731569adcc5bf31f2e7320b54ade8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/r2_source_evidence/receipt.json",
+      "bytes": 19282,
+      "sha256": "80d902211af1cd60bd5ac9ce7f96b13e24dc889e0df3689d9aad45535a431623"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/r2_source_evidence/spatial_bootstrap.py",
+      "bytes": 28693,
+      "sha256": "01e443f056390b3cd377389560ec6c44d967f7fa92fb32ff9891253e11c1d6b2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/plan.json",
+      "bytes": 5482,
+      "sha256": "1cb89387216c970aa86388eea83a92659e7d583345be35fae931a5f47b170d7d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/source_manifest.json",
+      "bytes": 5609,
+      "sha256": "222dadc1c3641471359c2495d8af2601b4fc59d5d5a008e9ecb2e3f7ead2ef7b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/plan.json",
+      "bytes": 7531,
+      "sha256": "0ff28a80c9661ad954a8f68b072ca302a7144fc46dc44de00eaf52906fb4c1dc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/source_manifest.json",
+      "bytes": 5392,
+      "sha256": "e70671c42b0207f5c663a921d4263f04cb2e52654a00c63f1e6af5c7c7cfa4d5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/plan.json",
+      "bytes": 12195,
+      "sha256": "cdad2adda2116a234728d41847e2cef97ff405d430c57c84bfb680adcba785dd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/receipt.json",
+      "bytes": 20334,
+      "sha256": "42ffc4f8f41b81bcad52d3634971212a224d520270b9d0ecd9bc2712713c606b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/plan.json",
+      "bytes": 16061,
+      "sha256": "533d1adc35bba2a1b8a58cb77898760c49c2f96d8025c9ffef456920870220f6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/source_manifest.json",
+      "bytes": 5285,
+      "sha256": "a6eb4c8b2f0a9ccb25106533fc8f013832c593016529747f559ce2fbd1a68b78"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/code/data/greenearthnet_contextformer_dataset.py",
+      "bytes": 7672,
+      "sha256": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/code/models/spanworld_full_base.py",
+      "bytes": 6967,
+      "sha256": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/code/models/terrastate_candidate_c.py",
+      "bytes": 35466,
+      "sha256": "f937dfbd6f38ad196ccf32c905e9aab956d626e075d9fcb3c1d7c9eb1db468ea"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/code/train/c1_checkpoint.py",
+      "bytes": 1886,
+      "sha256": "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/code/train/efficiency_continuation.py",
+      "bytes": 8764,
+      "sha256": "f78e8126a874c52386554655fd5eef61acfaca72fa2c773a9a89438b65925817"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/code/train/full_base_policy.py",
+      "bytes": 7355,
+      "sha256": "850a9da4d80351e92e8128d32e1abf0daf9049a0472b51878bf0c58d6c84b50c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/code/train/terrastate_v2_common.py",
+      "bytes": 8658,
+      "sha256": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/code/train/topology_migration.py",
+      "bytes": 5599,
+      "sha256": "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/code/train/train_spanworld_full_base.py",
+      "bytes": 48681,
+      "sha256": "dd73449c3513614cdeb17a5ce72042d3a10d7076680ab6fd722483b384467c0c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/CONSISTENCY/code/models/losses/supervision_v2.py",
+      "bytes": 1087,
+      "sha256": "f5acf24fc3fce1c3d48602b9b3363106a065b415a827ebe9d12aec8ea65f448b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/code/data/greenearthnet_contextformer_dataset.py",
+      "bytes": 7672,
+      "sha256": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/code/models/spanworld_full_base.py",
+      "bytes": 6967,
+      "sha256": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/code/models/terrastate_candidate_c.py",
+      "bytes": 37232,
+      "sha256": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/code/train/c1_checkpoint.py",
+      "bytes": 1886,
+      "sha256": "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/code/train/efficiency_continuation.py",
+      "bytes": 9358,
+      "sha256": "44d24e48b9448d9e0e4c55ab2634ec9040d63b48502b6d90e837aa87f809dc5c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/code/train/full_base_policy.py",
+      "bytes": 7339,
+      "sha256": "944170e2d348ab86d00f6fef4464be04e29447c0f2e51022adf93c4e1338b712"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/code/train/terrastate_v2_common.py",
+      "bytes": 8658,
+      "sha256": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/code/train/topology_migration.py",
+      "bytes": 5599,
+      "sha256": "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/code/train/train_spanworld_full_base.py",
+      "bytes": 50759,
+      "sha256": "ee63fc6ba41cce09fbd8fae19dc0388743a82ffe475a9f51969f1460d9d88397"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C1/code/models/losses/supervision_v2.py",
+      "bytes": 2621,
+      "sha256": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/code/data/greenearthnet_contextformer_dataset.py",
+      "bytes": 7672,
+      "sha256": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/code/models/spanworld_full_base.py",
+      "bytes": 6967,
+      "sha256": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/code/models/terrastate_candidate_c.py",
+      "bytes": 37232,
+      "sha256": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/code/train/c1_checkpoint.py",
+      "bytes": 1886,
+      "sha256": "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/code/train/efficiency_continuation.py",
+      "bytes": 9358,
+      "sha256": "44d24e48b9448d9e0e4c55ab2634ec9040d63b48502b6d90e837aa87f809dc5c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/code/train/full_base_policy.py",
+      "bytes": 7339,
+      "sha256": "944170e2d348ab86d00f6fef4464be04e29447c0f2e51022adf93c4e1338b712"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/code/train/terrastate_v2_common.py",
+      "bytes": 8658,
+      "sha256": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/code/train/topology_migration.py",
+      "bytes": 5599,
+      "sha256": "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/code/train/train_spanworld_full_base.py",
+      "bytes": 50759,
+      "sha256": "ee63fc6ba41cce09fbd8fae19dc0388743a82ffe475a9f51969f1460d9d88397"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/C0R/code/models/losses/supervision_v2.py",
+      "bytes": 2621,
+      "sha256": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/data/greenearthnet_contextformer_dataset.py",
+      "bytes": 7672,
+      "sha256": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/models/spanworld_baseline_only.py",
+      "bytes": 6132,
+      "sha256": "4420765fe6df3d06c1b1d279219a81200554d127d83dfc79396a42b29fca6821"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/models/spanworld_full_base.py",
+      "bytes": 6967,
+      "sha256": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/models/terrastate_candidate_c.py",
+      "bytes": 37232,
+      "sha256": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/train/c1_checkpoint.py",
+      "bytes": 1886,
+      "sha256": "9158468283aff9b83779de13c848fbee004408b112ea1548369ae267469bf5b4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/train/efficiency_continuation.py",
+      "bytes": 9358,
+      "sha256": "44d24e48b9448d9e0e4c55ab2634ec9040d63b48502b6d90e837aa87f809dc5c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/train/full_base_policy.py",
+      "bytes": 7496,
+      "sha256": "589e7066d4c7cd111e962940e3ec1fda3981cbae1e5ebfba64f768364a93d6ff"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/train/terrastate_v2_common.py",
+      "bytes": 8658,
+      "sha256": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/train/topology_migration.py",
+      "bytes": 5599,
+      "sha256": "42185cee7a8d23b1e26f1b09f1c75550dfac18fab082fa8ac801f2011e1443e6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/train/train_spanworld_full_base.py",
+      "bytes": 50739,
+      "sha256": "d386d58657e934d10ff5c4d859518552155ccd5b47bfb67d3d8c694c7a421994"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/training_evidence/BASELINE/code/models/losses/supervision_v2.py",
+      "bytes": 2621,
+      "sha256": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/assemble_AB_exit.json",
+      "bytes": 63,
+      "sha256": "a70e6849dcb0458fe6051afb464d7c18cab1210505e9dc867318b697f76ab64d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/plan.json",
+      "bytes": 2521,
+      "sha256": "9df31b94bcd30448c8a4c2d314eaac692b6567acc986bb6cda1d45f19429893e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/selection_receipt.json",
+      "bytes": 105703,
+      "sha256": "e0ce592000aa0f7064b23952ae1cf99fe31e18a6031a3a6ce23fdda9503f8d52"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/state.json",
+      "bytes": 294,
+      "sha256": "f4ab88b99976520115bceafa380be1a603ac1cae1142df337393ff84a125c94b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/worker_exit.json",
+      "bytes": 107,
+      "sha256": "878738982fdaf0e2d6f7e304230202e5eed3a745db51ef494e7e830472b5bfc8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/plan.json",
+      "bytes": 1544,
+      "sha256": "717409c90d5d1a662f6dd09adada78813e556e78eb08df4a564ed420b6a241c1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/state.json",
+      "bytes": 389,
+      "sha256": "54c109019a09eb0ae94cbf852b711e4b2b45e8978afac0ca3ab72983c4c1449c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/worker_exit.json",
+      "bytes": 108,
+      "sha256": "60fdb29394f840e9d225e88550c0bf7039ce8951fec7f4e6cc6bffb8ee25862d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/diagnostics/receiver_mse.csv",
+      "bytes": 930073,
+      "sha256": "1d6cf87d22f1e85b54fb7ded2bf1631a377dd6ec8bfe5e7b67decc353a86a7d1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/diagnostics/source_audit.json",
+      "bytes": 855,
+      "sha256": "c4a4d15db0237cee6f90402cadff0e21cf423e666975473579374a681999c4b5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/shared_code/data/calendar_features.py",
+      "bytes": 388,
+      "sha256": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/shared_code/data/weather_contract.py",
+      "bytes": 1795,
+      "sha256": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/shared_code/models/plan_b_b4.py",
+      "bytes": 26981,
+      "sha256": "9728a6ad8102041c75b1278a1ad01f4961ceabadd5315ecb7e9011119ee05032"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/shared_code/models/plan_b_b4_exclusive.py",
+      "bytes": 14005,
+      "sha256": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/shared_code/models/encoders/contextformer_official.py",
+      "bytes": 21967,
+      "sha256": "ca379e01e0609752fb9794ec1db29fc754b04e08031c7122b9138f8aa9bfc6c3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/shared_code/models/encoders/pvt_contextformer_q.py",
+      "bytes": 8062,
+      "sha256": "57b74bdf05af716604b515d5e166ec316020742199013d3e92de77836d5fae3f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/shared_code/models/losses/masked_l2_ndvi.py",
+      "bytes": 5727,
+      "sha256": "b97e43a65fd814d37847e52d01a21ca643b8b036552002ebe03aa02f62671cdb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/shared_code/models/losses/supervision_v2.py",
+      "bytes": 2621,
+      "sha256": "6f10e34337388773c50f253809e84f597b75365f294f5096bb691642b5dcbfa9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/suffix/RUN_METADATA.json",
+      "bytes": 21952,
+      "sha256": "3e5d2189ee02db9053a90a02cf5a506073092e34279a6bd4f99b099d4e9767fd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/suffix/SAMPLE_MANIFEST.csv",
+      "bytes": 381456,
+      "sha256": "53a10b3cd84a59b2127f62c8d51b19b28f2214c171150d089730c6c7f04c8f66"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/B2_B3_standard_all_metrics.csv",
+      "bytes": 23221,
+      "sha256": "1ee345e7358d2a6d4d78208d8535eba344dbfb626c3aea030cb2d78baff9fb1a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/B2_B3_standard_differences.csv",
+      "bytes": 8692,
+      "sha256": "6dc4d8a86faefebbfa41f17db4579ece3af5860379f3923d4110adc6c30acfeb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/C0R_standard_receipt.json",
+      "bytes": 8498,
+      "sha256": "df4071b232d65bbfe754eaa14758de5617bbe1c284584ef026396cd3ac42db97"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/C1_absolute_MSE_CI.csv",
+      "bytes": 699,
+      "sha256": "9be09e90f5f24e066c1e7e3c1d3e36688ef43af3947f0015b99078e6e74fc7be"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/C1_standard_receipt.json",
+      "bytes": 9678,
+      "sha256": "704ba5c450b7884524a242eb1e24c300366abae69036989bc288a872f971a86c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/C2.csv",
+      "bytes": 618,
+      "sha256": "566a8d9cd94982c029d7afe1230d1af3164df5d74e395cee582f4a6a2059fd83"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/C3.csv",
+      "bytes": 522,
+      "sha256": "98ee15d95ab21ba24fcaa6b2629319ba2f2ec0ae2af8d232024d8b76a8cb6999"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/C4.csv",
+      "bytes": 444,
+      "sha256": "9d14fb45cc5fc08d5fffea654c81bd39af31ea5f04b40663dc45c5e99a56317a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/old_new_matched_relative.csv",
+      "bytes": 913,
+      "sha256": "48f77e367809c45982d32e1f979133968ae5d2429b0ffa5c9de4fd7ad65739dd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/receipt.json",
+      "bytes": 1728,
+      "sha256": "e14d68d6fd25414663817020d6709971d781eb46d083fe3e7bbc93cd29f24306"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/suffix_tables_ready.json",
+      "bytes": 185,
+      "sha256": "4df005a8ada93f3545d921c3d6cd36ac8525e976dcfe092a00ac1421a081d20c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/D/tables/Table1_C1.csv",
+      "bytes": 752,
+      "sha256": "0b7af8cf627902811cbbcd87e57c56a1e8160f667dbd0307db4165a5fafc3209"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/suffix/RUN_METADATA.json",
+      "bytes": 850,
+      "sha256": "fa67604eb70c19ad37cb2e21fd6eeb86436a913546a883bec5cbf3e9f6540e21"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/suffix/SAMPLE_MANIFEST.csv",
+      "bytes": 381456,
+      "sha256": "53a10b3cd84a59b2127f62c8d51b19b28f2214c171150d089730c6c7f04c8f66"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/tables/A_geographic_CI.csv",
+      "bytes": 4842,
+      "sha256": "0a94d327a4c0639d489f9d7f496849003ae9e0ef09d943955ec2a162b875ee4c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/tables/A_model_differences.csv",
+      "bytes": 633,
+      "sha256": "7285bfa9ed352d561f5970e25d522616bf70147573bb778ca2ef0c770cb1d1a3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/tables/A_suffix.csv",
+      "bytes": 971,
+      "sha256": "0b30b44275d4cf79810910b523f637919a23a9d6e3978c2f43f930d99327254f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/tables/B_standard.csv",
+      "bytes": 814,
+      "sha256": "fe3abadea6ecfd6b50182536192c5c42eaf66569abc56a2e0fd0b06addbd33d2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/tables/receipt.json",
+      "bytes": 1887,
+      "sha256": "26f0012e97f8f5b99700a372ff20d4c48660ac3a259604eaf73f453eb05d5ff9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/evidence/AB/tables/scientific_judgments.json",
+      "bytes": 5281,
+      "sha256": "17f6730f98ac25ea1e6eba7852c44666fca26a10eaca577246dca483f4129fb0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/B_RESULTS.md",
+      "bytes": 584,
+      "sha256": "63c12d1b1a12bd939fd0a8ebfbdab923b612d35fc002effece9a776b4c6088f5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/B_standard_fixed40.csv",
+      "bytes": 1193,
+      "sha256": "b131c25670f2945a2944b84db90004827162ffcba057afd1cfe73308f0888806"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/README.md",
+      "bytes": 550,
+      "sha256": "dc929d51f26a40f10126dbe021ceada2e6ee4e55513ad3c753c5176417e85380",
+      "source_sha256": "47e6acd8ec258b59d1044d5e933b9a2dcaccca66137ea67033707bc9fdcf5bee"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/recovery_acceptance.json",
+      "bytes": 28819,
+      "sha256": "437f25d4e2710b1f707def6280ae2dbc705b5135fdd94bf39c0df0834c1f842c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/startup_receipt.json",
+      "bytes": 15004,
+      "sha256": "9921f18f9f3e7b222707749509a46f5c22b57d0cebef8d6598c06266c422119a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/suffix_acceptance.json",
+      "bytes": 94,
+      "sha256": "358f15125442b39bf3d1ea6fb60acfd5daeb001115e564cc4dd1a1f41d9c0e5d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/SUFFIX_RESULTS.md",
+      "bytes": 1172,
+      "sha256": "675549065dfe635be9fb171fbc6f603451a6415a79b0ff53bcaf9c908aac0bc5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/baseline_standard/acceptance.json",
+      "bytes": 214,
+      "sha256": "34372e07e2bd340622f8336a5ef0eca900ca3803487cefd730d1da4f408ee8bb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/baseline_standard/archive_receipt.json",
+      "bytes": 878,
+      "sha256": "4d76ba31855daddfadbfdf0a7a711f030525f9dd3c0977bfc49d65bcda007299"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/baseline_standard/result.json",
+      "bytes": 8908,
+      "sha256": "f4b5dbaf9c78beacbe1531d4f0b64bd2d4436c85533f9bb6a564102eeaa1ff87"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/baseline_standard/summary.csv",
+      "bytes": 2281,
+      "sha256": "ba5f93fea31abd91df05c46cb64dd78b97a23741c7d38fb0d794b9976c59c045"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/C1_standard/acceptance.json",
+      "bytes": 226,
+      "sha256": "f700058f16bbce3eb6fae6adb143a854342c56a75350d01e25294eb3337251a7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/C1_standard/ood-st_chopped_result.json",
+      "bytes": 4561,
+      "sha256": "8b98bb83fc5a67406ec7845254a309c9137940cf7241b043374ecaeb35d66454"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/C1_standard/ood-s_chopped_result.json",
+      "bytes": 4568,
+      "sha256": "a4dd2e0c7a6c017f557d1eec83cb1cc63fa8203149d236579aad324cc4413bb7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/C1_standard/result.json",
+      "bytes": 8256,
+      "sha256": "b5f5f1f6fca8d5167b61a61d1ddcae142029f75fb9baf583919d23579ee89aa5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/C1_standard/state.json",
+      "bytes": 1719,
+      "sha256": "1f7644e67952aa22459e458c91d65a3d187062d2f270ead2b41ebaa6661cec4c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/C1_standard/summary.csv",
+      "bytes": 2304,
+      "sha256": "c14aee5de8ad245a8fd337ac9ffe21f5c6ae51c9b9e1662ca0d00e18f163cf44"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/suffix_tables/A_geographic_CI.csv",
+      "bytes": 4819,
+      "sha256": "a9cc39fcfc2223114aec8b4109df3c025d6741dd391273f8273eb0ea4703f5df"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/suffix_tables/A_model_differences.csv",
+      "bytes": 638,
+      "sha256": "71d7c0badf046fe9d5d3cd9dd53f6d1d6f9f3333d654130776fc1c96a6292ed6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/suffix_tables/A_suffix.csv",
+      "bytes": 946,
+      "sha256": "29a7fc9538d7a0b67c86ff65ef0e3d5411eca83318dc5c019b5c969e7f17441e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/suffix_tables/receipt.json",
+      "bytes": 441,
+      "sha256": "5b8b0b42b8580e50a8a2bec4c9ae3a421d9b34734e1675052cdced18ca7617db"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/audit_receipt.json",
+      "bytes": 2198,
+      "sha256": "ce6daf63f06e31799eb350d74f9ee5293f7c22abf01866f589feaca11e18f512"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/bounded120_read.json",
+      "bytes": 12148,
+      "sha256": "72ba42c762e029ab72bf37aa550af4579ae108449187bfb31c959ab4d4b18d79"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/C1_controller.py",
+      "bytes": 4372,
+      "sha256": "229f7b28d3879b9e5c392e2988db55961a76ccde38912d8bb0fe8c519462cdbe"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/C1_split_audit.csv",
+      "bytes": 985,
+      "sha256": "71781c11f8e108d375d359702bc9dc88b379070bb89cee13ec5f0ee808be2c35"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/check_other.json",
+      "bytes": 2617,
+      "sha256": "43f7db7f33c15c4370561d46b420dbf53c58186422ed3bfb5ea42e0a3b57f473"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/check_other.py",
+      "bytes": 313,
+      "sha256": "9724e05c690a079136e0bfb3e387f32b380190268e55eb3a576b9215008e8ce4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/completion_fetch.json",
+      "bytes": 14686,
+      "sha256": "7bf50eea6688065a8cf34bc1c96a0a1227d667e288dec331527126170bd4352f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/connection_retry_state.json",
+      "bytes": 164,
+      "sha256": "b47143432fa9b3dff4987b8edb72a8c1c6d48d7e61fae4a21036716f94c5de5a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/deploy_C1_missing.json",
+      "bytes": 1959,
+      "sha256": "66172cbc6fb54c99022d829f27b7ff6e0798a4c84c4d858248a0c3615d281f83"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/deploy_C1_missing.py",
+      "bytes": 6203,
+      "sha256": "d3e0a6f671aa0801d55fc3116ee39150a7187aabe70436c58c57875e83a3240d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/finalizer_state.json",
+      "bytes": 229,
+      "sha256": "65ffcc8a26ba0d9f434035bf39d79a2c373905c0e2b43dae809f663c7634a016"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/finalize_table_B.py",
+      "bytes": 4763,
+      "sha256": "528ff53764e59713cc5ad4a030178956ed2658613411d95e3bf409d00b8022bd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/inspect_missing.py",
+      "bytes": 697,
+      "sha256": "2889110eb0bf7bc8bd2a5e1d6263d876739d2ae39514eb45174a423b127f8f11"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/missing_inspection.json",
+      "bytes": 108742,
+      "sha256": "35771afc3e98c1f026ccc34911ba2ac669b2bb8bd1ba0993daaa6f67322f34f4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/preflight_C1.json",
+      "bytes": 79457,
+      "sha256": "1aff42915e0fe9665a5b9bfd51ea8cf73f15f6ddca76879823d262bfaa47d41c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/preflight_C1.py",
+      "bytes": 796,
+      "sha256": "010699d16a231355c21ea7376e179c11cc54f6834eb7df4e7ce919a63b7fbca5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/writer_C1_audit_20261115/retry_existing_C1_readonly.py",
+      "bytes": 2240,
+      "sha256": "1bc3ecdf44dab4132b5b1c23169d736aeea935f6620aa433b9001540af0adde5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/C1_standard/iid_chopped/exit.json",
+      "bytes": 67,
+      "sha256": "34e92d33d2b2f8468515f1e2afdc5c766d6fe22258334a0c356282d917d4f244"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/C1_standard/ood-t_chopped/exit.json",
+      "bytes": 66,
+      "sha256": "b01f7f19bd196c8cea83933366e7b7e704f578b08fc94f436ae2e9e362186d51"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/archive_audit.json",
+      "bytes": 1899,
+      "sha256": "d2f891288726beebd0a6d84669bea41e19e3ddee66f16966bf0b2105259bd6e7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/assembly_recovery_acceptance.json",
+      "bytes": 1864,
+      "sha256": "bcd7812de99b80dbc53e19dc60ff0dedd6cb919f1c9dbb82e0d2e2612c677dab"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/assembly_recovery_exit.json",
+      "bytes": 336,
+      "sha256": "ec8f2d8e750131157f4330099ed25e17dc3f2971c0468fa197e5325b23612546"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/C1_standard_identity_bound.json",
+      "bytes": 9678,
+      "sha256": "704ba5c450b7884524a242eb1e24c300366abae69036989bc288a872f971a86c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/README.md",
+      "bytes": 1872,
+      "sha256": "bc5562f693f994b33488ff343f151399ee30822d8950893cb04143b0367f0de8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/scientific_judgments.json",
+      "bytes": 3444,
+      "sha256": "6e0ca677f59917634682d064f44756b74bc658f90021c5dbc893615a812cdf52"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/state.json",
+      "bytes": 389,
+      "sha256": "54c109019a09eb0ae94cbf852b711e4b2b45e8978afac0ca3ab72983c4c1449c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/worker_exit.json",
+      "bytes": 108,
+      "sha256": "60fdb29394f840e9d225e88550c0bf7039ce8951fec7f4e6cc6bffb8ee25862d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/statistics/receipt.json",
+      "bytes": 866,
+      "sha256": "5c11b441727ef6989f639d5872e42191ecafa94101f0e2fde8bda25d4030ce23"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/suffix/RUN_METADATA.json",
+      "bytes": 21952,
+      "sha256": "3e5d2189ee02db9053a90a02cf5a506073092e34279a6bd4f99b099d4e9767fd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/suffix/SAMPLE_MANIFEST.csv",
+      "bytes": 378599,
+      "sha256": "a949d34253c520c2558013c428b3baf388d3013368f2979417aeb722867a6fe9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/B2_B3_standard_all_metrics.csv",
+      "bytes": 23221,
+      "sha256": "1ee345e7358d2a6d4d78208d8535eba344dbfb626c3aea030cb2d78baff9fb1a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/B2_B3_standard_differences.csv",
+      "bytes": 8692,
+      "sha256": "6dc4d8a86faefebbfa41f17db4579ece3af5860379f3923d4110adc6c30acfeb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/C0R_standard_receipt.json",
+      "bytes": 8498,
+      "sha256": "df4071b232d65bbfe754eaa14758de5617bbe1c284584ef026396cd3ac42db97"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/C1_absolute_MSE_CI.csv",
+      "bytes": 699,
+      "sha256": "9be09e90f5f24e066c1e7e3c1d3e36688ef43af3947f0015b99078e6e74fc7be"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/C1_standard_receipt.json",
+      "bytes": 9678,
+      "sha256": "704ba5c450b7884524a242eb1e24c300366abae69036989bc288a872f971a86c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/C2.csv",
+      "bytes": 618,
+      "sha256": "566a8d9cd94982c029d7afe1230d1af3164df5d74e395cee582f4a6a2059fd83"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/C3.csv",
+      "bytes": 522,
+      "sha256": "98ee15d95ab21ba24fcaa6b2629319ba2f2ec0ae2af8d232024d8b76a8cb6999"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/C4.csv",
+      "bytes": 444,
+      "sha256": "9d14fb45cc5fc08d5fffea654c81bd39af31ea5f04b40663dc45c5e99a56317a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/old_new_matched_relative.csv",
+      "bytes": 913,
+      "sha256": "48f77e367809c45982d32e1f979133968ae5d2429b0ffa5c9de4fd7ad65739dd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/receipt.json",
+      "bytes": 1728,
+      "sha256": "e14d68d6fd25414663817020d6709971d781eb46d083fe3e7bbc93cd29f24306"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/suffix_tables_ready.json",
+      "bytes": 185,
+      "sha256": "4df005a8ada93f3545d921c3d6cd36ac8525e976dcfe092a00ac1421a081d20c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/tables/Table1_C1.csv",
+      "bytes": 752,
+      "sha256": "0b7af8cf627902811cbbcd87e57c56a1e8160f667dbd0307db4165a5fafc3209"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_archive_launch.py",
+      "bytes": 2649,
+      "sha256": "c42833c522c192018e3d36314461b34bf015e39f4bc4a8d49695740a72d030eb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_build.py",
+      "bytes": 2980,
+      "sha256": "6b5b84ce469cf3ce84511dcc3dc5bb759bd15c7a52731076e5e04341f59049c9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_collect.py",
+      "bytes": 853,
+      "sha256": "73346513517829c804520a34d2bfc025b2e10a63ba1bf871930152dc5eebb9d3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_controller.py",
+      "bytes": 1388,
+      "sha256": "29be76999229940282b6bed52b8bc94e47ebea068df5f51013e28cbf58466f3a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_deploy.json",
+      "bytes": 264,
+      "sha256": "c36dc5ab6a486b610e60eeab2412e30d6be5892c91bf841d6b24cb8b8bc382c4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_deploy_recovery.json",
+      "bytes": 4219,
+      "sha256": "2dcbddb70938449b6824478be3421cd4b4810d1bd12011774637722fc8483849"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_finalize.py",
+      "bytes": 4787,
+      "sha256": "5ff552595b7b3da2da4647e6859818aba49b41df1ae27922e41c517f2c1664c1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_locate.json",
+      "bytes": 37704,
+      "sha256": "2674cf271d10ed2a4eaf1f53296f24cd16f2bbdc15adadf9664a1e4fd080f768"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_manifest_repair.json",
+      "bytes": 3776,
+      "sha256": "7047d0639658f0a992d5d8e76e8e1bb2ca1a9e74f678df6e4ec3737390f90ba2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_manifest_repair.py",
+      "bytes": 6101,
+      "sha256": "50bfb5b0bb63675804a2324bd2085ee5400775efe93c2f9022c96a36507a8c82"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_probe.json",
+      "bytes": 4501,
+      "sha256": "3e97fcdcba7e4d0c0744d27a50f9ab9afa9936cd215ca582fbc1cc31b62936d0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/d_state_worker.py",
+      "bytes": 4697,
+      "sha256": "58deefaa12c7845c840d92fd1345404f3bc71c48c845c663663f62bbfd1982c8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/exit.json",
+      "bytes": 74,
+      "sha256": "b643d0efcc63cb6ae485fe3cf8acc66ac8d37c96f1cf770b3c1c7c436db051cf"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/latest_collection.json",
+      "bytes": 378859,
+      "sha256": "fda534c7c3a1ee2e5e16bbcbb4c456e4da5a478d904da51df09f00a409322651"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/launch_state.json",
+      "bytes": 1026,
+      "sha256": "ce06faef651a2d0a6930878d2feb74b7d2831643733c186db37dd7571cc82aea"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/local_acceptance.json",
+      "bytes": 683,
+      "sha256": "2e9419a3875fb626576e1440440af90cea1c8add672497148faa65de2252597c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/per_sample.csv",
+      "bytes": 1081572,
+      "sha256": "7ba6bd0ae5efb12a145e7eb4c6355cb8db85a6bec18ce481f6e7e1a3808f83d1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/plan.json",
+      "bytes": 2943,
+      "sha256": "a9e65f67a4f2342f590f096c534197b6c62199c73d59e6529a5ad6f8c913e291"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/progress.json",
+      "bytes": 561,
+      "sha256": "24c6078e61dcf51ce26ec01e1423b8d97eba9cab1826b81064942a4b2c9392a3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/result.json",
+      "bytes": 1720,
+      "sha256": "9d6da5175c791a81f05132c15559218e1e16b7ac636ef22dbf40af586e4edb02"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/state.json",
+      "bytes": 97,
+      "sha256": "1bd5fa8260304dab761125da4b26e1f410a11ed94f94194fced042d652968d9e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/summary.csv",
+      "bytes": 243,
+      "sha256": "998ecf0aa865aaeed0a51c9d71591f8ba22e0fb013c35bdd90bc338b98072cd2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "bytes": 77097,
+      "sha256": "1f1139c77eda50bc45861c7355037b7338dfa24fe88cd253789c32ce152a4942",
+      "source_sha256": "00bf919ad37e1a5cdd455de9c65d1a8c696ca5669d98c2e7049c3523d8fb69b0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/A49_SpanWorld_ICLR逐项审稿回复_中英锁定稿_20261113.md",
+      "bytes": 74536,
+      "sha256": "219c446e876086bf2c34690420099336d884f7f91d65cd59aade32aa3ea35f92"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "bytes": 168181,
+      "sha256": "9899d68f9ed36403fd0cf73817074951320c2ecfa835fd6b1f8f652fce41b3d8",
+      "source_sha256": "c81e2cec84830ab567fb942b7121fec89e818fdfda8ff8d90e5b5a9236977ec2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/t9jt_q1_before_integration/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "bytes": 80323,
+      "sha256": "af4d2086da301925b54edf949a3310b253b258b409e39039e266f78dac892283",
+      "source_sha256": "e3edd4a28db5a13e81e18c13f39740cc932a1ff65a48d873360cb8a10de9d4b1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/t9jt_q1_before_integration/A49_SpanWorld_ICLR逐项审稿回复_中英锁定稿_20261113.md",
+      "bytes": 84162,
+      "sha256": "b14d4f12a09a60d2ae8cce7b46ae4a8f5a94fb1d30921bfed3f07d8741578105"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_weather_four_splits_20261116/code_audit_20261116.json",
+      "bytes": 1688,
+      "sha256": "4caced39f226ffd5ae43323c54b37a30a3481232417a6ef70b6f246b4d03e638"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_weather_four_splits_20261116/collection_state.json",
+      "bytes": 166,
+      "sha256": "1b645f7aef348de77d4ade1543c921b7b2af2d4c7672e509281f3bf860c033cc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_weather_four_splits_20261116/evaluation_scope_v1.json",
+      "bytes": 2544,
+      "sha256": "4613b1612ba3966ab3845aafc8d5c5aff581edab01c4e648f5e1dc8989c1bd49"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_weather_four_splits_20261116/oodt_bootstrap_verified.json",
+      "bytes": 1257,
+      "sha256": "fbff24f4365ae605277ac0caf79dab88cfa8f95832ae18d7c6d14a036e90d70a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_weather_four_splits_20261116/parity_verified_20261116.json",
+      "bytes": 660,
+      "sha256": "02099dc9c5be0db94a84734f01193ac2e20dfda2431e656f79012f460747206f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_weather_four_splits_20261116/whole84_preliminary_verified.json",
+      "bytes": 42717,
+      "sha256": "ab84fa258cf3e5f1fedf87a00b13babcdc27371e2c2bb8bb6e74afc39d5d17ad"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_weather_four_splits_20261116/whole_collection_state.json",
+      "bytes": 166,
+      "sha256": "4bf6041c0c1ece6b7c6b78f9982614c07e891f5034a17a98023fe17756d43948"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_weather_four_splits_20261116/whole_four_splits_and_input_audit_summary.json",
+      "bytes": 15727,
+      "sha256": "d5c5b1d245a6520d221fd6fb6ba8cab7a0212b694c1d08662d8a88b61a288fef"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_原稿同版式多样本_20261115/followthrough_state.json",
+      "bytes": 638,
+      "sha256": "af32f32985dae0e6b1a758af166e6b13816bc3e9aabcc7f831b7e32f714896be"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_原稿同版式多样本_20261115/launch.json",
+      "bytes": 151,
+      "sha256": "7b51f21eb4b04b110e5f36941d51a75548f38cb39b884b2f852bda00b4f4bc2c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_原稿同版式多样本_20261115/original_launch_2.json",
+      "bytes": 234,
+      "sha256": "a16b82d9114d2ef7feac2ff3529d6a4e4b9d26fa5b55077fd03066778684388b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_原稿同版式多样本_20261115/original_probe_1.json",
+      "bytes": 279,
+      "sha256": "e3f60a4f8f0e0a2fdb6e61cd6fbaae59dd4bf05033122c5e7588fddd975a5d3b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_原稿同版式多样本_20261115/original_probe_2.json",
+      "bytes": 233,
+      "sha256": "f9635b3d55d86a41726c103d71c28ba1d25d8e58e598ed12cdc936f79093aadd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_原稿同版式多样本_20261115/original_status_2.json",
+      "bytes": 234,
+      "sha256": "195a050f0ac9998d06b40f0d40d32f093a3b9daccd111487377bc442917c1833"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_原稿同版式多样本_20261115/plan.json",
+      "bytes": 2222,
+      "sha256": "ff8a3de1f45963f8a435074882f7e27adea397dd2f1e16ff81a9b07060ea0f07"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_原稿同版式多样本_20261115/README.md",
+      "bytes": 1325,
+      "sha256": "a5ec1e581e469930be5fb8c033ace5d610a166f74144a84dc4733de3070fecce",
+      "source_sha256": "5b48b5cac680a54ac53ae46bb0f0f64b8fa5d2ceee0ce1d04a573977f976b6ea"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_原稿同版式多样本_20261115/script_sources.json",
+      "bytes": 1056,
+      "sha256": "375b273ce42734515f63daaa2aef6aa6dcd36d64051b113346b9c5607c100f97"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/current_status.json",
+      "bytes": 3891,
+      "sha256": "46a7d9c954d017a60031b5ef321eeedc38cd81157e89c7da9fbaeab64401fd1c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/download_direct909.json",
+      "bytes": 291,
+      "sha256": "e0036cd3cd93a8212eff2b412c5d18873803c1479146b1782230ded160bc3867"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/download_via_916.json",
+      "bytes": 387,
+      "sha256": "77837168288dcbba2f876a09dd9279190d4b2d8bf6df616715c50bf908dde784"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/download_via_946_main.json",
+      "bytes": 222,
+      "sha256": "3cf680d84d0a1c6fe5163b1cc4b629e0e7afa788a559cfc7e23b0688751026ff"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/download_via_ssh.json",
+      "bytes": 387,
+      "sha256": "77f5958f39a5b1218399c2d608bd8645421d8a07d627d1c43d05b2674f4d1cd5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/final_visual_receipt.json",
+      "bytes": 1882,
+      "sha256": "9fb60efd824a3e7c0569b0d6f5156cb80777c158a6a16e2253b6d7e4b8d50203"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/isolated_deploy.json",
+      "bytes": 216,
+      "sha256": "c8c1ca12cd9bd98e2901be56ee88ffb4957650065db9c83a184a23d89c3a5449"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/launch.json",
+      "bytes": 392,
+      "sha256": "8147c04a4e5adb3cf70446a78aba855dca0c4039cbff1118cfdaf0b2083979df"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/npz_recovery_events.json",
+      "bytes": 2416,
+      "sha256": "4e189dd7cbe7e3adc0b4028f900ee1eead2f2e4235fa028ab6631d8d62a297f8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/npz_recovery_remote.json",
+      "bytes": 220,
+      "sha256": "94dfa3376490b50998b5b46d896427e8d5a40dfcec18c0ee68110c47a09ab2f1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/npz_recovery_status.json",
+      "bytes": 1354,
+      "sha256": "551d74b2fc9ea711e846bfd1d81ba6b7c55b210a8ff6108e1398ad049ff9dada"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/npz_remote_script_validated.py",
+      "bytes": 5459,
+      "sha256": "85852951ea66ac25338ea8445ef8650a14a2226a7be526ecc91c97a1791ba8ee"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/npz_script_validation.json",
+      "bytes": 128,
+      "sha256": "fbd3b07aeff6eb477f148d9a5f541e013d3b54130b0a07e21cb0363ab8f2e89f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/nul_failure_path_recovery_remote.json",
+      "bytes": 337,
+      "sha256": "2bbee8ce12a7c52482b5b3665672a321eddb0472cd1f7fa24171d1681a3ca693"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/nul_failure_path_recovery_status.json",
+      "bytes": 401,
+      "sha256": "f8769b7633dfd11bdf6266243df8c0ce9eff35c36ffdd6f768d6dc2ec9565faa"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/path_recovery_events.json",
+      "bytes": 4580,
+      "sha256": "1e61c0dc6787aec9b9f0796761b2fcec00abc48f3c0731436dd265f7e096fe92"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/path_recovery_remote.json",
+      "bytes": 221,
+      "sha256": "15f0e7c20d9dcae70b6321acb41fc294b5afecdda984630a93dbdff3ade8f05b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/path_recovery_status.json",
+      "bytes": 3518,
+      "sha256": "37df4e019746255e131742153c59ea40a3ac1d880f341257776799dc221351ac"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/plan.json",
+      "bytes": 2214,
+      "sha256": "bfc3c3fc8836a0d56821208a8677ee452672f7a37bee5d0afe9e5c08f90c7c5f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/post_launch_check.json",
+      "bytes": 218,
+      "sha256": "9169989af54ee49598679d8b14b7c79c571151856d4a66ab13c7efd1531271ab"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/probe_summary.json",
+      "bytes": 888,
+      "sha256": "484b9909d32e4bd5043f7530a7009053aa9137f2d03775d59b909e6cae0e3ec8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/receipt.json",
+      "bytes": 14151,
+      "sha256": "8cf3abe7ba4bd55fc549e4835d5bf3ba6b7bb0501190bd8adc205dca569b3b29"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/remote_probe.json",
+      "bytes": 213,
+      "sha256": "a8f20fb7c6e55561c05d0a638fb4c126a6e25dfe707c61ddedfea2be38dd5fed"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/remote_script_validated.py",
+      "bytes": 5050,
+      "sha256": "aefa9115c9f6ecc0d6d9ce76f6b9fbfe635897bd5cd6a4237b6c24178a89f509"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/render_process.json",
+      "bytes": 86,
+      "sha256": "36ba0a48275bdab0f62eea6f0e992d7834726eaae994074328fbee09164194e9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/script_validation.json",
+      "bytes": 128,
+      "sha256": "b755dfdc467758618e70aafb39ba309f34a54d31650fd4e2b5c4ec6314f21997"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/v2_download_arrays_npz.json",
+      "bytes": 249,
+      "sha256": "0602e32089f16ecd284cc87fa77f020537590dbd532a448c986fb98a6c18dc45"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/day100_subset/status.json",
+      "bytes": 67,
+      "sha256": "8e0450f5437e10b6760b0990cc30acdebf08a3e3a5f9f16fe5d4b07912f9e1cc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/fig3/fig3_case_metrics.json",
+      "bytes": 1403,
+      "sha256": "7187168b93f96ec69b51f1911e2d943d80c1c15857be7c0ff02a748b7c058706"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/inputs/P42_metadata.json",
+      "bytes": 5541,
+      "sha256": "18a7b2c0c434f02ee7761a6272236aeb09f4d421400733081aca0174ada37ab9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/candidate_metrics.json",
+      "bytes": 8939,
+      "sha256": "b3145c242be052e2061a6bcaf52010a6c48db3fd9c4cb9b63a65d54b3914a2f5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/raw/cases/P42/metadata.json",
+      "bytes": 10401,
+      "sha256": "cdefd982ffabb5ebabaa42439466fd60d1b26aeccece88b2c71438ca7fd3df44"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/day100/fig3/fig3_case_metrics.json",
+      "bytes": 1403,
+      "sha256": "7187168b93f96ec69b51f1911e2d943d80c1c15857be7c0ff02a748b7c058706"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/day095/fig3/fig3_case_metrics.json",
+      "bytes": 1383,
+      "sha256": "55f422e7cccf825b6a1d63d57a48ae32c0abf675233e20da7b4765cd76bd4d51"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/day090/fig3/fig3_case_metrics.json",
+      "bytes": 1327,
+      "sha256": "6f3d61f2c2ec623624fa0f3b3c0bb8ac6d858c239507e2730d3ec0eae6c26bf2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/day085/fig3/fig3_case_metrics.json",
+      "bytes": 1402,
+      "sha256": "d67c21e6111c8c9f71f91eef2f94e1f51a62995bf0aa8f7dc0a970390e9438d8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/day080/fig3/fig3_case_metrics.json",
+      "bytes": 1398,
+      "sha256": "38b7f52b3bf4df6c82545cc6fc92c1a4185870e3a440ef9092c0533cbf90aa8c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/day075/fig3/fig3_case_metrics.json",
+      "bytes": 1404,
+      "sha256": "0825aabfd13687da8533b2e7290017f3ba1e25387ea6b4117d5547c74e4ae9f0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/day070/fig3/fig3_case_metrics.json",
+      "bytes": 1419,
+      "sha256": "0f943a04722f66ca4ea032f5148303297f86f4895feff99faafad18a0ad37482"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/day065/fig3/fig3_case_metrics.json",
+      "bytes": 1402,
+      "sha256": "653a6d83f6e6aa0e8d60645fd22ff12f6ba37d8a6a7c98f4aa39a5d41f153bc2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/day060/fig3/fig3_case_metrics.json",
+      "bytes": 1417,
+      "sha256": "1fd0c45c264a73cce4737067020df95e03fb4dfc632a58abe603ed31cf344d00"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3_P42_20261116/P42_日期候选/day055/fig3/fig3_case_metrics.json",
+      "bytes": 1416,
+      "sha256": "cb1008339861499c8c92ab03660f053d56aa466fabe24cd8acbf7805a54754cb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/build_candidates_original_layout.py",
+      "bytes": 13883,
+      "sha256": "555035315aa02638f39584fead4ca1a73ade13d9c1ad1d74f5195f05bce8fcd0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/events.json",
+      "bytes": 2453,
+      "sha256": "8f51610007c27fc70bc32aebae51a92150764649e05e6af70f2f7a364162bca4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/final_receipt.json",
+      "bytes": 8037,
+      "sha256": "913ee66f0d4e3b6df2f60265645cea1c3bef5bd17b8ff42bd58d9e9f872d8fa7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/metrics.csv",
+      "bytes": 2963,
+      "sha256": "e67ddeee8ab4bbff7326be38d5fe0d77e92346e3a0ffa97e6b6997b0db293eb1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/remote_candidate_script.py",
+      "bytes": 7265,
+      "sha256": "d5aec057a57151997ce89cd08a6bd5b0cc1fac1d85c666d4902745b7a85df86f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/remote_export.json",
+      "bytes": 222,
+      "sha256": "90a57095564ed68c46c3813ae1db8b40625e259478c8df4e93a121f9b3a73736"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/render_process.json",
+      "bytes": 125,
+      "sha256": "00f09d41eebcad1d19b8d9543b1d215c386be97b7057d73a417e8e42232a2103"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/render_receipt.json",
+      "bytes": 640,
+      "sha256": "0c81596f2a678cd074965e38734ae6868af66d92484bcbfaf4d8356f98a61742"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/status.json",
+      "bytes": 444,
+      "sha256": "f06447451efe39d15b0d177bdb829b081d95d468087f357c107163c395985b51"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/case_manifest.json",
+      "bytes": 8095,
+      "sha256": "820e1f62918114efe7ac61cdeb29417076f9b9c14c2b9559e4dca0ef0469877d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/excluded_day100.json",
+      "bytes": 890,
+      "sha256": "6d2a16257dc968b3819d9b92c89fdf1b70d5a9699b8e1ab45e50a86a769b3ab3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/receipt.json",
+      "bytes": 276,
+      "sha256": "c3f85924b196f0a35d6d49b2e5d05e5b7291e0f064c92cfcb2f91443c811afd5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/selection.json",
+      "bytes": 3226,
+      "sha256": "4bfa222739c99785dc0e1b67120b8db3e7097594d3c39ee0fff4b28017925957"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q10/metadata.json",
+      "bytes": 6092,
+      "sha256": "50c4a1344a78556a53c6dc72d62a0a939c8d3a86f3a01659d8a475d8a97d1082"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q10/original_metadata.json",
+      "bytes": 5774,
+      "sha256": "653ec1dffb4d71f3b1dd8277a4fec82a57644f1cdb4c8d2b583bf8e9ec2d3605"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q2/metadata.json",
+      "bytes": 5983,
+      "sha256": "9bafe8717152710d5cf71a976eb8e60df565eb939ef752a4d9bd55766d75ed06"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q2/original_metadata.json",
+      "bytes": 5666,
+      "sha256": "db9510b43b9cd64e7229d7140a1ed1f2e48588ede55af68ee2b27af833d5ae3c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q50/metadata.json",
+      "bytes": 5992,
+      "sha256": "158367563f41ff3bbd1b6cdeffaccafa81f99a93610572f0ff31b247a30ab874"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q50/original_metadata.json",
+      "bytes": 5674,
+      "sha256": "786ba48f2fb92e1310de63070e4b3e6b867026afdd16c62f0ad009c29fc2c530"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q90/metadata.json",
+      "bytes": 6129,
+      "sha256": "9e935265566eff51af8ff1796915354d3157754e727eed878674e5a89bf5c77a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q90/original_metadata.json",
+      "bytes": 5811,
+      "sha256": "9f5f9bd2282ca382c8dda4ef48967e5f3c8b7893718ce3ebba12e8603e6a37a2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q95/metadata.json",
+      "bytes": 5947,
+      "sha256": "86ee642611c1b7a3a2bedc82c54fc028ebf226207512a7eda6d45f4ccf3a7c02"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q95/original_metadata.json",
+      "bytes": 5629,
+      "sha256": "a946df15698d48cba7424f8aaf2cca519635e835c4b7707714a1219b3491fde2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q98/metadata.json",
+      "bytes": 6086,
+      "sha256": "1f74cc9c5a758bd1c38557646a6d96bace9b2b28693882a32838ae0173c3fecd"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/new_Q98/original_metadata.json",
+      "bytes": 5768,
+      "sha256": "d29eca771089f126b3969b7b617fc73d3688e2c7724462e2f0a4f51139e12881"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/Q75/metadata.json",
+      "bytes": 5800,
+      "sha256": "f7f6575035d0867fd7d3f9efa0d0458ae7037a2795c44512737d174850f9f571"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/Q75/original_metadata.json",
+      "bytes": 5486,
+      "sha256": "cde6db23e18bc838c8f241af882027156a00ae40e0e01663a81f1fa13e17e5d3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/Q90/metadata.json",
+      "bytes": 5759,
+      "sha256": "e3d4cc5dcb609a882fc9d559e8f0f497596b6b7113c7e5e52ad8dd4289276a8d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/inputs/Q90/original_metadata.json",
+      "bytes": 5445,
+      "sha256": "ea053b7d71d6346f18468ac3094ce528e8c5fc4589f1baae3e0c5942be93ac79"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q10/provenance.json",
+      "bytes": 13466,
+      "sha256": "d0b2af4f482ca5f3de784f1e6c999264639a9028b64225ec59294283f156dca1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q2/provenance.json",
+      "bytes": 13356,
+      "sha256": "841467d375d83ec443dae606c7925ee30997b9300fafb86a12da92e99d8cb560"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q50/provenance.json",
+      "bytes": 13365,
+      "sha256": "782384692bc01aca8dd4192055d3d3065e2ee779b87e1f9fecb1d2e485a4cf71"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q90/provenance.json",
+      "bytes": 13500,
+      "sha256": "1d7e267a645bebe0333327d8889f64a774b6f9a60d2f71f409323ff007fa91bc"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q95/provenance.json",
+      "bytes": 13323,
+      "sha256": "1427ce345dbf344920127b759bf411112dc4842c16ecf5ddcd2fb6efbebb6ac1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q98/provenance.json",
+      "bytes": 13462,
+      "sha256": "45a892fa50f7b441e6d43ee8c60173a4bf2a0af69707a3b3ecb2f97eb3a0b62d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/Q75/provenance.json",
+      "bytes": 13098,
+      "sha256": "66a1a2671af382f2a250d00231b2a7f711be4bb00b9119b988fea0c4ca76cc92"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/Q90/provenance.json",
+      "bytes": 13065,
+      "sha256": "61c718720a485ae2e1acd3c284bad5d188bac4d8204b3de80bc7be817a34e604"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/Q90/fig3/fig3_case_metrics.json",
+      "bytes": 1330,
+      "sha256": "a70232088274774fca357e7c5386d874693b91c5e779c2ab0cf441ad17db6f88"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/Q75/fig3/fig3_case_metrics.json",
+      "bytes": 1444,
+      "sha256": "4a5f00016e6c7a62efe40b696aac4d64fe491f0fa7eaf84f7602d12b3c7e456a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q98/fig3/fig3_case_metrics.json",
+      "bytes": 1363,
+      "sha256": "2a3c27abeaa3bbbda286dc5777fc928d8a8926437efb6cc3d5179a60a4a2c91e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q95/fig3/fig3_case_metrics.json",
+      "bytes": 1438,
+      "sha256": "a09f2ff06c1936786daec059efa3dbdbf67e9e52105d1e8289b0d78cb256b8a3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q90/fig3/fig3_case_metrics.json",
+      "bytes": 1412,
+      "sha256": "52d81e1e9e2c7f2fdb16f637f31457cd588351688cecf0dd929cd44ce3b7580c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q50/fig3/fig3_case_metrics.json",
+      "bytes": 1470,
+      "sha256": "9d2639a204f8ee3baeaa8e8574b73ac2ffb280e5a8349de657c60a52904d7c9a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q2/fig3/fig3_case_metrics.json",
+      "bytes": 1479,
+      "sha256": "74770abdc822f221e88c65478eb57df5a712397027d53ed2d33ca4d7cdce4115"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_图3其他候选_20261116/candidates/new_Q10/fig3/fig3_case_metrics.json",
+      "bytes": 1399,
+      "sha256": "a075e73f5bd22cc3bf0165ba610c2556da07facbe71d3d1664c739f7bec86fac"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_结果图候选_20261115/figure4_values.json",
+      "bytes": 4691,
+      "sha256": "f09d71eeed785357e833baac53ceeeedfdd3f46194bd71fed32a30649b236a58"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_结果图候选_20261115/followthrough_state.json",
+      "bytes": 241,
+      "sha256": "c71ee9dd76bee037538f62bfb115b22b2647d35f45692ba362f31f8f6dfd1d97"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_结果图候选_20261115/historical_cases.json",
+      "bytes": 3657,
+      "sha256": "fc323212c4f16de98a17756393c56be7848ce1c17699f2215effc2f6f26c1014"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_结果图候选_20261115/local_receipt.json",
+      "bytes": 1094,
+      "sha256": "fadc14177afbed6d9ce9be94897f89c0fd1084dd6f229bedb51c8995b48ac045"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_结果图候选_20261115/payload_manifest.json",
+      "bytes": 4222,
+      "sha256": "d836712a1c2e9b8bf8fa6f8ef43e15386383be50d04d93875054ae297a24bd2c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_结果图候选_20261115/plan.json",
+      "bytes": 2217,
+      "sha256": "e7d426fac188e3d4298d2fd38f6855b227884d057dcb9f05ef672ebe8871e19b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_结果图候选_20261115/README.md",
+      "bytes": 2066,
+      "sha256": "404758bc9d040a050a9fc16cdb61b555a27394731e36d19182511a057f086423",
+      "source_sha256": "2a0e76cd69c238586c11d6af05f1040b859912c4da387e2ba3d8c649da376194"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/deploy_27_1.json",
+      "bytes": 223,
+      "sha256": "b88295691a7521a908cfe5df72b69b218f2e8051cdd1856788c0974b1d9d56db"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/deploy_27_2.json",
+      "bytes": 223,
+      "sha256": "0a8552a5080ec5f552cb2d7e1c1b5b3f489c3d0768596d1d11901de98600cc3f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/deploy_27_3.json",
+      "bytes": 223,
+      "sha256": "36156d5113b6b19c2e824e43d62c49849f6894f2eacb359fe34ed53b6b35e098"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/deploy_97_1.json",
+      "bytes": 353,
+      "sha256": "901a4f66415e87b5f4c3e93433ef1e34102fec52f79b99e0a874470e3078ddef"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/deploy_97_2.json",
+      "bytes": 223,
+      "sha256": "98dbb9270a09e2776926779dae29671359ac7057d0fda48ad5ffa2fee4429bc5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/deploy_97_3.json",
+      "bytes": 223,
+      "sha256": "41e2c2ba4c662005f52b20d4e93db92c0aa6cea4f96b2ddbd3c732f4d76643b7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/deploy_97_97.json",
+      "bytes": 224,
+      "sha256": "e85f9ca47d86d5bc134c294a4e46c7edab065ee1c0eff359b0a5e3c79e335a96"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/deploy_97_98.json",
+      "bytes": 267,
+      "sha256": "39e57e840a3ee335fc8cc0ce469aa8bbdb230f8c3e9a0deafd4a42c71170e5cb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/deploy_97_99.json",
+      "bytes": 224,
+      "sha256": "9dd56bbbc482ddcdcb81dd8ef8b2024952d7684b76b06355f710f8720dfbc3b3"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/followthrough_state.json",
+      "bytes": 236,
+      "sha256": "61cb0ebe864caad2d844132edf8ee95b04db61de2abf3a6025be17322d09bf4d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/manuscript_table1_update_receipt.json",
+      "bytes": 1714,
+      "sha256": "a1411116410fe6c438bf3b2370f5ab6b96c38dc19cb6be3f357675b4d2befe8f"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/README.md",
+      "bytes": 1635,
+      "sha256": "be6888f819614d7dcbc0185d839e06e98f100f9161dcb723746b6309cac2e9c7",
+      "source_sha256": "7c48814efffdbda644e757b65d6e93d8f1d18ab271d0b3d5b99aec45d0f0b55c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/requirements.json",
+      "bytes": 1597,
+      "sha256": "d48dff2ca4abd514e828a28526e6ca0bb2668880982291e3f429c9065e7d6989"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/seed27_latest.json",
+      "bytes": 5727,
+      "sha256": "abc05c5d0f471b5364d32fab9a9de342043b98f596a9c0327db37eeccfd5eecb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/seed27_status.json",
+      "bytes": 5954,
+      "sha256": "d541d24fcf93f0eb52430dc5f26f11d42538674943688d0caac3f04e187554a5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/seed97_immediate_909.json",
+      "bytes": 5760,
+      "sha256": "f16110e586d5846b374f17d9b46ba852165090d297c833c0c6afad00a831a6f2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/seed97_immediate_916.json",
+      "bytes": 329,
+      "sha256": "031f79a44878bb10322b955bd342da73971d83226dc1bebdfd00ceb7e6bec13a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/seed97_immediate_991.json",
+      "bytes": 136,
+      "sha256": "dd0a6a3317dfa5e3e4e4c0ff240736304559e73ecb7f64af41e6973c0eeb79fe"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/seed97_latest.json",
+      "bytes": 5549,
+      "sha256": "26196e85a17754eea3ade975bc7634c6962945250bb70f4db3eea543b7a2abe0"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/seed97_status.json",
+      "bytes": 415,
+      "sha256": "7c939f077c318ad7991345477a17168911140f1ae4d83bc07e2a6417493b3512"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/status_27_1.json",
+      "bytes": 223,
+      "sha256": "400d7db5d44303a72aa4b7eabec2f29b8f5503a4fda9734be176f1bda7c4bde5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/status_27_2.json",
+      "bytes": 223,
+      "sha256": "553b4cd123d5934a5d095aa090d04aefc161535a1085558e50e893f5952f4be5"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/status_27_3.json",
+      "bytes": 223,
+      "sha256": "67da5765cde6196780dc78eb2ed4b5c93011b70372b3f17c811033987e57ce4e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/status_97_1.json",
+      "bytes": 223,
+      "sha256": "a675d54d8e7dee1774d00fa94aab0de5de005a330dd36e9b4537e1c8273987c1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/status_97_2.json",
+      "bytes": 223,
+      "sha256": "3f6c3af13cd87b7ce0d9c707d81405138e889687423707929a20f3fd5a6bf126"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/status_97_3.json",
+      "bytes": 223,
+      "sha256": "68ae1aa9bc1f8a9312040dbbf406880b0f607b39eef97b30205f6ecf33e128d9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/status_97_97.json",
+      "bytes": 224,
+      "sha256": "0cb150030652528594447204f698374a781d522c49c335a059014b17a1334985"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/Table1_formal_layout_preview.md",
+      "bytes": 2802,
+      "sha256": "04664b28af5fb495ad7b2a7b75fc26748d7cd56692fa0ec073563cdc88c7b716"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/Table1_per_seed.csv",
+      "bytes": 2011,
+      "sha256": "5d5944dc615b66bb5f748ce504540429eea5eccf274fdc7bfe2e381d013f1fa9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/Table1_preview.md",
+      "bytes": 5489,
+      "sha256": "03251035d22fc29ddbc9ae6882e09eacfedc3d1074aab5980b5f1dec0669fb80"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/Table1_three_seed_geo_ci.csv",
+      "bytes": 934,
+      "sha256": "8ac234ef8438b7df33c3c111a008805ef273a064d871ce177c4ab52cb56769f1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/Table1_three_seed_geo_ci_receipt.json",
+      "bytes": 3240,
+      "sha256": "5c61df6b75eb9700359589933ed487a50baf6ad3dc9c4907f57d6124c0d14308"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/Table1_three_seed_summary.json",
+      "bytes": 1370,
+      "sha256": "80c0dbbb07b5e70cf3b13e942bae5d9af61ec67df046ae73751f0bed606adc48"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/A08_systematic_revision.json",
+      "bytes": 394,
+      "sha256": "76b982a17d65d04d1e2214b7e07c54e732118db8b20f1402818ad6fc0d560391"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/audit_receipt.json",
+      "bytes": 484,
+      "sha256": "4abf7884660dc9d647d3358a1db162a352817763110a9ddd84b55b2ab13d05e1"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/c1_final_actual_916_20261116.json",
+      "bytes": 123,
+      "sha256": "a5b0c6d18c33fe45d58bbb8f09f9cc8065c96dbb87dc76d4cfa260bd2172265b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/c1_final_archive_20261116.json",
+      "bytes": 46390,
+      "sha256": "b734ff941900804769e42ba5e547c1c91aaf908f0e60ef88a961dcf0fa2e4a94"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/c1_final_retry_916_20261116.json",
+      "bytes": 123,
+      "sha256": "a5b0c6d18c33fe45d58bbb8f09f9cc8065c96dbb87dc76d4cfa260bd2172265b"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/checkpoint_identity_audit.json",
+      "bytes": 2442,
+      "sha256": "84b78dfb744de737b226b3d88b061dd580c1be05cac80df4300b41da7e2e97e8"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/final_identity_candidates.json",
+      "bytes": 11672,
+      "sha256": "5b120d84176c8a09f8bdc66d4ccf7039a45aae0ccd0d75067288d4b57a5768f2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/matched_original_seed27_partial.json",
+      "bytes": 596,
+      "sha256": "996a219a6abe7f20c022b7d476fa2ca4fdfe6d2c31852b4b9eac9d902b7ea413"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/matched_per_date.csv",
+      "bytes": 19292,
+      "sha256": "4dacc89cf1c0d78ba8b44c1af609da59c0fcdcb121f84379558b58d64ea0c64a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/matched_suffix_audit.json",
+      "bytes": 72162,
+      "sha256": "25a1287e1472df972b0e13b171fff3dc21a467782f0846c0a18ba69a5fbd7f92"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/remote_identity.json",
+      "bytes": 109734,
+      "sha256": "c0b521abb2bd19f0c566d4de2ddd21459fe35c7b612073591b24b52d3822bed4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/remote_identity_archived.json",
+      "bytes": 156933,
+      "sha256": "41d620fca0959f8de417fb6d37bea21e0816b321978e1372f38906e45ade62fa"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/review_current_909.json",
+      "bytes": 3838,
+      "sha256": "b2f67a8a4200bd0eee14c3419c75b90c3eb0c9f9c68658c6625c3f6a6b966551"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/connection_attempt_20261116_020316/deploy_27_1.json",
+      "bytes": 317,
+      "sha256": "5fd2796783a13fb729c2ca0370ada10bdb07ab80d90010535cdbc8e4d321a585"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/connection_attempt_20261116_020316/deploy_97_1.json",
+      "bytes": 269,
+      "sha256": "43236681306bc2d74bf5630f7d9f3c6f437da615f83ec6e1ade40dd614a12a98"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/connection_attempt_20261116_020316/followthrough_state.json",
+      "bytes": 207,
+      "sha256": "755b332abdb5af0fae4aaa8791fc41f779615d121dac863e57f1a9b56114ca06"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/connection_attempt_20261116_020316/seed27_status.json",
+      "bytes": 379,
+      "sha256": "80f2ad6b0ece65a850b0969d9091adc8bd00f7aa5eed6813ab50a118e7469760"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/connection_attempt_20261116_020316/seed97_status.json",
+      "bytes": 331,
+      "sha256": "6849e352336051b89e39ac237fb15aa38bfa7de16b7fd1bb0b71ca6a65fb25a4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/remote_code/eval/eval_full_base_suffix.py",
+      "bytes": 10963,
+      "sha256": "687bdbfaaefcd39366e6e919d7e1a6f2d86d222c4916a35e749efaa45e0701ce"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/remote_code/eval/full_base_loader.py",
+      "bytes": 3507,
+      "sha256": "552620ef13cdd9d89d0afde672f1cdeffae5c65f5c13795f713e72b367981cfb"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/remote_code/models/plan_b_b4_exclusive.py",
+      "bytes": 14005,
+      "sha256": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/remote_code/models/spanworld_full_base.py",
+      "bytes": 6967,
+      "sha256": "155e57225c47f54a32e0c75f110f9e32e67eb42609ec9f29472f91c2a16f6625"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/remote_code/models/terrastate_candidate_c.py",
+      "bytes": 37232,
+      "sha256": "3d83ac914fbfa7b79038a0a9765975d68df3a173ca2a8df45e3500335759bb7c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_表1阶段多种子_20261116/audit/remote_code/models/terrastate_v2.py",
+      "bytes": 10354,
+      "sha256": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G1_metrics.csv",
+      "bytes": 477,
+      "sha256": "ee779ed4af019dc62aa262db101d8176d69eab3d4f512b5336b1ac1c641152d4"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2_all_cases_metrics.csv",
+      "bytes": 1751,
+      "sha256": "b9b786beeca93d4e8102086861698714c5f0856dd485c1b2ec3bc7f090f1ce98"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/receipt.json",
+      "bytes": 4434,
+      "sha256": "78242fe6075e67612faceb376a1eab1c3a08fce9b89ce70ac4a29848b1b811f7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/new_Q2/H2_数值核验.json",
+      "bytes": 1527,
+      "sha256": "095ae3713564aff1fff227ae36e7f74cf8a5e1f56db2e66de3fbd848d976ca53"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/new_Q2/provenance.json",
+      "bytes": 14249,
+      "sha256": "80761b65f0f31106d0d65201af47762a556b5969cc2bd4c4f96aa15970f7f1bf"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/new_Q2/render_source.py",
+      "bytes": 8138,
+      "sha256": "6ce1b475a7295f578b54aeac4b4ce6d8a6020b007218034d08fd91626a064452"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/new_Q50/H2_数值核验.json",
+      "bytes": 1532,
+      "sha256": "301b0d9fbd5fa336c3654f69a7674d1ba7e61da0ffd02979c569095194db876c"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/new_Q50/provenance.json",
+      "bytes": 14263,
+      "sha256": "6ad125e8b215304a1ac347d28ad2d1d6bb0e3d8a7c4bbfee9780f62134b74aa7"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/new_Q50/render_source.py",
+      "bytes": 8138,
+      "sha256": "6ce1b475a7295f578b54aeac4b4ce6d8a6020b007218034d08fd91626a064452"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/Q75/H2_数值核验.json",
+      "bytes": 1488,
+      "sha256": "e3dfcc34f7e7f88fab9736811ae2d25c758cda3c8d77f01849b1f278bfcf88d2"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/Q75/provenance.json",
+      "bytes": 13977,
+      "sha256": "f703677bdacbbeb0994a0508e81629f7fd5ea9c7d29cb314a7dbd3858ba2f461"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/Q75/render_source.py",
+      "bytes": 8138,
+      "sha256": "6ce1b475a7295f578b54aeac4b4ce6d8a6020b007218034d08fd91626a064452"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/Q90/H2_数值核验.json",
+      "bytes": 1506,
+      "sha256": "ccab5a715694869850a61f48371e34311656da4f34166a272685f1a3299de0bf"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/Q90/provenance.json",
+      "bytes": 13944,
+      "sha256": "aa80ce4942be653795e2c2d5efaefe7ae8e3b81f16e3b4487cb7f6e7e13f683a"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/Q90/render_source.py",
+      "bytes": 8138,
+      "sha256": "6ce1b475a7295f578b54aeac4b4ce6d8a6020b007218034d08fd91626a064452"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/Q90/inputs/metadata.json",
+      "bytes": 5616,
+      "sha256": "1b9f59130cdb97644d14e8ae4ecdabb346a7ae6fd3058911a935156dde8c82c6"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/Q75/inputs/metadata.json",
+      "bytes": 5652,
+      "sha256": "d8a07c01423eb7288e800e41e6d67fd0cf0d6355b1d27cea864b0b77328e9a98"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/new_Q50/inputs/metadata.json",
+      "bytes": 5862,
+      "sha256": "cf3df898e62592e9e3c997f1571b440f4d5d1d3e0269dd9fe15550819d6a85ae"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G2/new_Q2/inputs/metadata.json",
+      "bytes": 5854,
+      "sha256": "ff2e53dbfaf7e89c651a90e5fac9a46da212add221f761b229b64e0673de5748"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G1/P42_day25_75/H1_数值核验.json",
+      "bytes": 1258,
+      "sha256": "cd4c11da8a75e30a1c9ff3f1a8a45707c1240a7cf1e08f4fb8a9934b73a79eaf"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G1/P42_day25_75/receipt.json",
+      "bytes": 6405,
+      "sha256": "dac213e599645acd1f76f6276696678b401bae11d26d60ec3b81a188a5d5c6de"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G1/P42_day55_100/H1_数值核验.json",
+      "bytes": 1268,
+      "sha256": "8b3429e402557bb0f938a1b0c74e0682f9b6a4f50a098178ca4a173642820e2e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1G2候选_20261116/G1/P42_day55_100/source_receipt.json",
+      "bytes": 6405,
+      "sha256": "dac213e599645acd1f76f6276696678b401bae11d26d60ec3b81a188a5d5c6de"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1_P42_20261116/H1_数值核验.json",
+      "bytes": 1258,
+      "sha256": "cd4c11da8a75e30a1c9ff3f1a8a45707c1240a7cf1e08f4fb8a9934b73a79eaf"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1_P42_20261116/receipt.json",
+      "bytes": 6405,
+      "sha256": "dac213e599645acd1f76f6276696678b401bae11d26d60ec3b81a188a5d5c6de"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/D_附录G1_P42_20261116/inputs/P42_metadata.json",
+      "bytes": 5839,
+      "sha256": "c0d79860bcf17c988658a4e2dc70a913811c1bb42479782535cfb5102bb85c7d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/EO_WM公开权重重评_20261113/最终分数与验收证据.json",
+      "bytes": 6335,
+      "sha256": "b8b9a291395dc972a6563d15a0b0b768b1b7efed66c880f67d5bdae9642c6191"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/ood-st_chopped/paired_per_horizon.csv",
+      "bytes": 7646560,
+      "sha256": "1e8fc8cf1965ab030bff3b31a142b93c3b81724cc230329ba2da02eaf7cb0a1e"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/ood-s_chopped/paired_per_horizon.csv",
+      "bytes": 9774731,
+      "sha256": "ea8d4939bd819be3a66cf60a9b76512636b65e71f724344ca5584c92a364eb6d"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/ood-st_chopped/paired_per_horizon.csv",
+      "bytes": 7646546,
+      "sha256": "c77ec548448ffea8a3a8b98e2bf8dcea25267eb99f3cbc1518a18497c46094ac"
+    },
+    {
+      "path": "思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/ood-s_chopped/paired_per_horizon.csv",
+      "bytes": 9774462,
+      "sha256": "af0bb24acc7d95e5a9d9f81753327e0389f07c03d045c4d29345ecc84986abbf"
+    }
+  ],
+  "large_candidates": [],
+  "policy": "Canonical A08 and existing evidence paths retained. Public Markdown links adapted; source SHA retained where changed. Four larger per-sample CSV files included; no prediction tensors."
+}

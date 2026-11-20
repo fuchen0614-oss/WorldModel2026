@@ -1,0 +1,353 @@
+{
+  "status": "PASS",
+  "variant": "B",
+  "seed": 42,
+  "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+  "statistics": {
+    "iid_chopped": {
+      "suffix": {
+        "N": 2066,
+        "Groups": 80,
+        "estimates": [
+          0.0004993851475762429,
+          0.0004454276711208769,
+          0.00042128469351882414
+        ],
+        "ci95": [
+          [
+            1.9643535046387027e-06,
+            0.0010061624753928068
+          ],
+          [
+            -0.00012421675260045824,
+            0.00101481311841256
+          ],
+          [
+            9.881621968443328e-05,
+            0.0007330956322770578
+          ]
+        ],
+        "group_source": "intact cube ID parsed exactly as historical statistics; saved geo_group is not authoritative",
+        "truncated_source_labels": 0
+      },
+      "endpoint": {
+        "N": 1214,
+        "Groups": 80,
+        "estimates": [
+          0.000952024975278829,
+          0.0010279369832399624,
+          0.0010433901487603878
+        ],
+        "ci95": [
+          [
+            0.00032617169650089726,
+            0.0016257538042276332
+          ],
+          [
+            0.00019368921779874278,
+            0.0018599482703494656
+          ],
+          [
+            0.000589108431450442,
+            0.0015284712169740388
+          ]
+        ],
+        "group_source": "intact cube ID parsed exactly as historical statistics; saved geo_group is not authoritative",
+        "truncated_source_labels": 0
+      }
+    },
+    "ood-t_chopped": {
+      "suffix": {
+        "N": 1605,
+        "Groups": 80,
+        "estimates": [
+          0.0006016093731986495,
+          0.0006604717889545895,
+          0.000468780205570919
+        ],
+        "ci95": [
+          [
+            0.00020410857801834067,
+            0.0010082462046612064
+          ],
+          [
+            0.0002439624103163053,
+            0.0010875478159363522
+          ],
+          [
+            7.928836514226612e-05,
+            0.0009090856929402848
+          ]
+        ],
+        "group_source": "intact cube ID parsed exactly as historical statistics; saved geo_group is not authoritative",
+        "truncated_source_labels": 0
+      },
+      "endpoint": {
+        "N": 884,
+        "Groups": 80,
+        "estimates": [
+          0.0009675265419222346,
+          0.001118763184444709,
+          0.00045605850407062754
+        ],
+        "ci95": [
+          [
+            0.0003110713807704782,
+            0.0017202969933727418
+          ],
+          [
+            -0.00029029047493091725,
+            0.002551693210767427
+          ],
+          [
+            -9.42298907826774e-05,
+            0.0012146345112220153
+          ]
+        ],
+        "group_source": "intact cube ID parsed exactly as historical statistics; saved geo_group is not authoritative",
+        "truncated_source_labels": 0
+      }
+    },
+    "ood-s_chopped": {
+      "suffix": {
+        "N": 6965,
+        "Groups": 878,
+        "estimates": [
+          0.000693540466880382,
+          0.00047441551109841744,
+          0.0007563759122870096
+        ],
+        "ci95": [
+          [
+            0.00016273419052353476,
+            0.0012003008120919203
+          ],
+          [
+            -0.00013893976741268503,
+            0.0010570094467165561
+          ],
+          [
+            0.00037683821401787563,
+            0.0011404183997540936
+          ]
+        ],
+        "group_source": "intact cube ID parsed exactly as historical statistics; saved geo_group is not authoritative",
+        "truncated_source_labels": 348
+      },
+      "endpoint": {
+        "N": 3549,
+        "Groups": 852,
+        "estimates": [
+          0.0019351679495659554,
+          0.002063668904915289,
+          0.0014766341198015594
+        ],
+        "ci95": [
+          [
+            0.0013375741800678547,
+            0.0025635103434937107
+          ],
+          [
+            0.0011159693299487774,
+            0.0031112218135272117
+          ],
+          [
+            0.0009188395894667626,
+            0.0020763027390246656
+          ]
+        ],
+        "group_source": "intact cube ID parsed exactly as historical statistics; saved geo_group is not authoritative",
+        "truncated_source_labels": 348
+      }
+    },
+    "ood-st_chopped": {
+      "suffix": {
+        "N": 5437,
+        "Groups": 878,
+        "estimates": [
+          -8.52029673570883e-05,
+          -0.0002695167651152749,
+          0.0004971989016825789
+        ],
+        "ci95": [
+          [
+            -0.00045990120316643547,
+            0.00029487041185890644
+          ],
+          [
+            -0.000667676862231188,
+            0.0001287637197793891
+          ],
+          [
+            0.00017668982257683805,
+            0.0008535631476412862
+          ]
+        ],
+        "group_source": "intact cube ID parsed exactly as historical statistics; saved geo_group is not authoritative",
+        "truncated_source_labels": 348
+      },
+      "endpoint": {
+        "N": 2731,
+        "Groups": 854,
+        "estimates": [
+          0.0002844165865437803,
+          -0.00035459908796012566,
+          0.00022812496989698045
+        ],
+        "ci95": [
+          [
+            -0.0003571169419571537,
+            0.0009306486696684457
+          ],
+          [
+            -0.0011265218644641473,
+            0.00040050076560458334
+          ],
+          [
+            -0.0004572295938648268,
+            0.0009201778304654429
+          ]
+        ],
+        "group_source": "intact cube ID parsed exactly as historical statistics; saved geo_group is not authoritative",
+        "truncated_source_labels": 348
+      }
+    }
+  },
+  "evidence": {
+    "iid_chopped": {
+      "source": {
+        "exit": {
+          "exit": 0,
+          "pid": 4046425,
+          "time": 1794725391.1486413
+        },
+        "result": {
+          "status": "PASS",
+          "variant": "B",
+          "split": "iid_chopped",
+          "pairs": 2078,
+          "counts": {
+            "suffix": 2066,
+            "day100": 1214
+          },
+          "rows": 20780,
+          "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+          "csv_sha256": "8c2a32d7d913621060230ae43d35e66ebbc17ea3bca449dcb13e8ee902d42d2f",
+          "seconds": 1582.7509725093842
+        },
+        "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/B/iid_chopped/paired_per_horizon.csv"
+      },
+      "local_csv": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\BD_原稿全表复刻_20261115\\E1_20min_collector\\B\\iid_chopped\\paired_per_horizon.csv",
+      "regression": {
+        "status": "PASS",
+        "historical_code_sha256": "06311838d6a7dc6f27f38197e0567915e76d1caf23eecc4077a37c5aa38db0ab",
+        "absolute_tolerance": 1e-12,
+        "method": "original program on schema-converted actual rows; all three point estimates and CIs"
+      },
+      "manifest_sha256": "bb959cb65a07d142fdaec18f5718327d91e73e22816a5c75bb7268923c128663"
+    },
+    "ood-t_chopped": {
+      "source": {
+        "exit": {
+          "exit": 0,
+          "pid": 4046720,
+          "time": 1794724978.4647832
+        },
+        "result": {
+          "status": "PASS",
+          "variant": "B",
+          "split": "ood-t_chopped",
+          "pairs": 1632,
+          "counts": {
+            "suffix": 1605,
+            "day100": 884
+          },
+          "rows": 16320,
+          "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+          "csv_sha256": "d954fe53d64442b40e4c370eea0b12a3c1c823c79d41f7903a1dc164e4dcb6bf",
+          "seconds": 1155.0309891700745
+        },
+        "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/B/ood-t_chopped/paired_per_horizon.csv"
+      },
+      "local_csv": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\BD_原稿全表复刻_20261115\\E1_20min_collector\\B\\ood-t_chopped\\paired_per_horizon.csv",
+      "regression": {
+        "status": "PASS",
+        "historical_code_sha256": "06311838d6a7dc6f27f38197e0567915e76d1caf23eecc4077a37c5aa38db0ab",
+        "absolute_tolerance": 1e-12,
+        "method": "original program on schema-converted actual rows; all three point estimates and CIs"
+      },
+      "manifest_sha256": "65ae828bb3cad38dd6909b8b23f9be955cc234aa2d8459031ea1bdedc7fb0428"
+    },
+    "ood-s_chopped": {
+      "source": {
+        "exit": {
+          "exit": 0,
+          "pid": 4173638,
+          "time": 1794739832.3492966
+        },
+        "result": {
+          "status": "PASS",
+          "variant": "B",
+          "split": "ood-s_chopped",
+          "pairs": 7065,
+          "counts": {
+            "suffix": 6965,
+            "day100": 3549
+          },
+          "rows": 70650,
+          "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+          "csv_sha256": "af0bb24acc7d95e5a9d9f81753327e0389f07c03d045c4d29345ecc84986abbf",
+          "seconds": 6217.752780675888
+        },
+        "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/B/ood-s_chopped/paired_per_horizon.csv"
+      },
+      "local_csv": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\BD_原稿全表复刻_20261115\\E1_20min_collector\\B\\ood-s_chopped\\paired_per_horizon.csv",
+      "regression": {
+        "status": "PASS",
+        "historical_code_sha256": "06311838d6a7dc6f27f38197e0567915e76d1caf23eecc4077a37c5aa38db0ab",
+        "absolute_tolerance": 1e-12,
+        "method": "original program on schema-converted actual rows; all three point estimates and CIs"
+      },
+      "manifest_sha256": "f09625a3d4fdd99833840817d3f45d4294cbf165bd18f3d1f90043c295cb1995"
+    },
+    "ood-st_chopped": {
+      "source": {
+        "exit": {
+          "exit": 0,
+          "pid": 4046723,
+          "time": 1794728763.6767192
+        },
+        "result": {
+          "status": "PASS",
+          "variant": "B",
+          "split": "ood-st_chopped",
+          "pairs": 5577,
+          "counts": {
+            "suffix": 5437,
+            "day100": 2731
+          },
+          "rows": 55770,
+          "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+          "csv_sha256": "c77ec548448ffea8a3a8b98e2bf8dcea25267eb99f3cbc1518a18497c46094ac",
+          "seconds": 4940.435929298401
+        },
+        "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/B/ood-st_chopped/paired_per_horizon.csv"
+      },
+      "local_csv": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\BD_原稿全表复刻_20261115\\E1_20min_collector\\B\\ood-st_chopped\\paired_per_horizon.csv",
+      "regression": {
+        "status": "PASS",
+        "historical_code_sha256": "06311838d6a7dc6f27f38197e0567915e76d1caf23eecc4077a37c5aa38db0ab",
+        "absolute_tolerance": 1e-12,
+        "method": "original program on schema-converted actual rows; all three point estimates and CIs"
+      },
+      "manifest_sha256": "0bb537a9eb920a55e155c80c96e870dee62c6eaee3c9fd993fd18635ea14bde0"
+    }
+  },
+  "bootstrap": {
+    "resamples": 2000,
+    "seed": 20260910,
+    "unit": "paired receiver geographic group",
+    "fixed_matching": true
+  },
+  "table_sha256": "8e37adff096b5176fe81cdc090775527b8dca4751dccb52b7d1114133661152e"
+}

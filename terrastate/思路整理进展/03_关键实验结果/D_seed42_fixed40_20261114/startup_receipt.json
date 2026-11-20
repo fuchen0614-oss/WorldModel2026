@@ -1,0 +1,412 @@
+{
+  "launch.json": {
+    "pid": 3416904,
+    "time": 1794641606.5772324,
+    "command": [
+      "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+      "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/controller.py",
+      "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114"
+    ]
+  },
+  "state.json": {
+    "status": "running",
+    "pid": 3416904,
+    "children": {
+      "suffix_0": {
+        "pid": 3416983,
+        "uuid": "GPU-6b066b99-857d-37d3-41ef-b5f7ddcfab04",
+        "slot": 0,
+        "kind": "suffix",
+        "arm": "0",
+        "command": [
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+          "-B",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/suffix_worker.py",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114",
+          "0"
+        ],
+        "status": "running",
+        "started": 1794641610.5231044,
+        "protocol_pass": true,
+        "protocol_check": {
+          "status": "PASS",
+          "pid": 3416983,
+          "rank": 0,
+          "first_id": "JAS17/minicube_0_29SND_39.29_-8.56.nc",
+          "rows": 120,
+          "paired_masks_match_D": true,
+          "unique_keys": true,
+          "finite_valid_predictions": true,
+          "peak_cuda_bytes": 748240384,
+          "models": [
+            {
+              "model": "C0R",
+              "checkpoint_sha256": "2fd2bebddf7b1eef9d7cdca8ab97203be7b60a9aec723ccb8e1aaf1f8d3d8cef",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "C0R"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            },
+            {
+              "model": "C1",
+              "checkpoint_sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "C1"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            },
+            {
+              "model": "CONSISTENCY",
+              "checkpoint_sha256": "198d983bc8b205c1477f82f280090e08ceec6ca0d749acef7be8d64cc37b8d7a",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "CONSISTENCY"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            }
+          ],
+          "time": 1794641625.640942
+        },
+        "progress": {
+          "pid": 3416983,
+          "scanned": 24,
+          "total": 714,
+          "receivers": 23,
+          "rows": 2760,
+          "seconds": 54.06373643875122,
+          "time": 1794641667.2794335
+        }
+      },
+      "suffix_1": {
+        "pid": 3416994,
+        "uuid": "GPU-9865b664-8f6f-5e91-ab81-bdac60b61b62",
+        "slot": 1,
+        "kind": "suffix",
+        "arm": "1",
+        "command": [
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+          "-B",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/suffix_worker.py",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114",
+          "1"
+        ],
+        "status": "running",
+        "started": 1794641610.6406574,
+        "protocol_pass": true,
+        "protocol_check": {
+          "status": "PASS",
+          "pid": 3416994,
+          "rank": 1,
+          "first_id": "JAS17/minicube_100_32TPP_43.28_10.58.nc",
+          "rows": 120,
+          "paired_masks_match_D": true,
+          "unique_keys": true,
+          "finite_valid_predictions": true,
+          "peak_cuda_bytes": 748240384,
+          "models": [
+            {
+              "model": "C0R",
+              "checkpoint_sha256": "2fd2bebddf7b1eef9d7cdca8ab97203be7b60a9aec723ccb8e1aaf1f8d3d8cef",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "C0R"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            },
+            {
+              "model": "C1",
+              "checkpoint_sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "C1"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            },
+            {
+              "model": "CONSISTENCY",
+              "checkpoint_sha256": "198d983bc8b205c1477f82f280090e08ceec6ca0d749acef7be8d64cc37b8d7a",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "CONSISTENCY"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            }
+          ],
+          "time": 1794641625.1181035
+        },
+        "progress": {
+          "pid": 3416994,
+          "scanned": 23,
+          "total": 714,
+          "receivers": 23,
+          "rows": 2760,
+          "seconds": 53.77249836921692,
+          "time": 1794641666.9919388
+        }
+      },
+      "suffix_2": {
+        "pid": 3416997,
+        "uuid": "GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf",
+        "slot": 2,
+        "kind": "suffix",
+        "arm": "2",
+        "command": [
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+          "-B",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/suffix_worker.py",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114",
+          "2"
+        ],
+        "status": "running",
+        "started": 1794641610.6825573,
+        "protocol_pass": true,
+        "protocol_check": {
+          "status": "PASS",
+          "pid": 3416997,
+          "rank": 2,
+          "first_id": "JAS17/minicube_101_32TPR_45.53_11.26.nc",
+          "rows": 120,
+          "paired_masks_match_D": true,
+          "unique_keys": true,
+          "finite_valid_predictions": true,
+          "peak_cuda_bytes": 748240384,
+          "models": [
+            {
+              "model": "C0R",
+              "checkpoint_sha256": "2fd2bebddf7b1eef9d7cdca8ab97203be7b60a9aec723ccb8e1aaf1f8d3d8cef",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "C0R"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            },
+            {
+              "model": "C1",
+              "checkpoint_sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "C1"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            },
+            {
+              "model": "CONSISTENCY",
+              "checkpoint_sha256": "198d983bc8b205c1477f82f280090e08ceec6ca0d749acef7be8d64cc37b8d7a",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "CONSISTENCY"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            }
+          ],
+          "time": 1794641625.5448744
+        },
+        "progress": {
+          "pid": 3416997,
+          "scanned": 26,
+          "total": 714,
+          "receivers": 25,
+          "rows": 3000,
+          "seconds": 53.77927494049072,
+          "time": 1794641666.99616
+        }
+      },
+      "suffix_3": {
+        "pid": 3417000,
+        "uuid": "GPU-3e1f63df-7402-94f9-7695-d79678b39143",
+        "slot": 3,
+        "kind": "suffix",
+        "arm": "3",
+        "command": [
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+          "-B",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/suffix_worker.py",
+          "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114",
+          "3"
+        ],
+        "status": "running",
+        "started": 1794641610.7276926,
+        "protocol_pass": true,
+        "protocol_check": {
+          "status": "PASS",
+          "pid": 3417000,
+          "rank": 3,
+          "first_id": "JAS17/minicube_102_32TPR_45.81_10.98.nc",
+          "rows": 120,
+          "paired_masks_match_D": true,
+          "unique_keys": true,
+          "finite_valid_predictions": true,
+          "peak_cuda_bytes": 748240384,
+          "models": [
+            {
+              "model": "C0R",
+              "checkpoint_sha256": "2fd2bebddf7b1eef9d7cdca8ab97203be7b60a9aec723ccb8e1aaf1f8d3d8cef",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "C0R"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            },
+            {
+              "model": "C1",
+              "checkpoint_sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "C1"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            },
+            {
+              "model": "CONSISTENCY",
+              "checkpoint_sha256": "198d983bc8b205c1477f82f280090e08ceec6ca0d749acef7be8d64cc37b8d7a",
+              "training": {
+                "variant": "D",
+                "seed": 42,
+                "arm": "CONSISTENCY"
+              },
+              "selection_kind": "fixed_epoch_040",
+              "epoch": 40,
+              "step": 29800,
+              "strict": true,
+              "probe": false
+            }
+          ],
+          "time": 1794641625.4590204
+        },
+        "progress": {
+          "pid": 3417000,
+          "scanned": 24,
+          "total": 714,
+          "receivers": 24,
+          "rows": 2880,
+          "seconds": 53.08016610145569,
+          "time": 1794641666.2980783
+        }
+      }
+    },
+    "time": 1794641668.1591232,
+    "pending_tasks": 16
+  },
+  "selection_exit.json": {
+    "pid": 3416905,
+    "exit": 0,
+    "time": 1794641610.383873
+  },
+  "resource_lease.json": {
+    "status": "active",
+    "pid": 3416904,
+    "gpu_uuids": [
+      "GPU-6b066b99-857d-37d3-41ef-b5f7ddcfab04",
+      "GPU-9865b664-8f6f-5e91-ab81-bdac60b61b62",
+      "GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf",
+      "GPU-3e1f63df-7402-94f9-7695-d79678b39143"
+    ],
+    "guard_recognition_prefix": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code",
+    "purpose": "D40 16 standard splits and4disjoint suffix shards",
+    "time": 1794641610.4147048
+  },
+  "selection_receipt.json": {
+    "status": "PASS",
+    "models": {
+      "C1": {
+        "sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+        "epoch": 40,
+        "step": 29800,
+        "arm": "C1",
+        "global_batch": 32,
+        "schedule_steps": 74500
+      },
+      "C0R": {
+        "sha256": "2fd2bebddf7b1eef9d7cdca8ab97203be7b60a9aec723ccb8e1aaf1f8d3d8cef",
+        "epoch": 40,
+        "step": 29800,
+        "arm": "C0R",
+        "global_batch": 32,
+        "schedule_steps": 74500
+      },
+      "CONSISTENCY": {
+        "sha256": "198d983bc8b205c1477f82f280090e08ceec6ca0d749acef7be8d64cc37b8d7a",
+        "epoch": 40,
+        "step": 29800,
+        "arm": "C1",
+        "global_batch": 32,
+        "schedule_steps": 74500
+      },
+      "BASELINE": {
+        "sha256": "79307c23917b2bcd33fb867fd68ca9acbe582da28da7bd71004d08c1237d2e7d",
+        "epoch": 40,
+        "step": 29800,
+        "arm": "BASELINE",
+        "global_batch": 32,
+        "schedule_steps": 74500
+      }
+    }
+  },
+  "tails": {
+    "suffix_0.log": "",
+    "controller.log": "",
+    "selection.log": "FIXED40_SELECTION_PASS\n",
+    "suffix_3.log": "",
+    "suffix_1.log": "",
+    "suffix_2.log": ""
+  },
+  "gpu": "0, GPU-6b066b99-857d-37d3-41ef-b5f7ddcfab04, 34645 MiB, 13875 MiB, 100 %\n1, GPU-9865b664-8f6f-5e91-ab81-bdac60b61b62, 33525 MiB, 14995 MiB, 100 %\n2, GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf, 34729 MiB, 13791 MiB, 100 %\n3, GPU-3e1f63df-7402-94f9-7695-d79678b39143, 34317 MiB, 14203 MiB, 100 %",
+  "time": 1794641669.461403
+}

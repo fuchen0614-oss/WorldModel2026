@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"pid\": 4046424, \"exit\": null, \"runtime\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01\", \"state\": {\"pid\": 4046424, \"status\": \"running_verified_full_splits\", \"time\": 1794723810.3064158, \"running\": {\"('B', 'iid_chopped')\": {\"pid\": 4046425, \"slot\": 0}, \"('B', 'ood-t_chopped')\": {\"pid\": 4046720, \"slot\": 1}, \"('B', 'ood-s_chopped')\": {\"pid\": 4046721, \"slot\": 2}, \"('B', 'ood-st_chopped')\": {\"pid\": 4046723, \"slot\": 3}}, \"completed\": [], \"pending\": [[\"D\", \"iid_chopped\"], [\"D\", \"ood-t_chopped\"], [\"D\", \"ood-s_chopped\"], [\"D\", \"ood-st_chopped\"]]}, \"B/iid_chopped/protocol_PASS.json\": {\"status\": \"PASS\", \"checkpoint_sha256\": \"0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46\", \"manifest_sha256\": \"bb959cb65a07d142fdaec18f5718327d91e73e22816a5c75bb7268923c128663\", \"all_paths_mapped\": true, \"only_state_replaced\": true, \"prefix_steps\": [10], \"receiver_prior_geo_weather_held_fixed\": true, \"states_unmodified\": true, \"scoring\": \"same valid target pixels; float64 SSE; no standard-accuracy rerun\"}, \"B/iid_chopped/progress.json\": {\"done\": 1, \"total\": 2078, \"seconds\": 3.378476858139038, \"eligible_counts\": {\"suffix\": 1, \"day100\": 1}, \"time\": 1794723804.0206017}, \"B_ood-s_chopped.log\": \"\", \"controller.log\": \"\", \"B_iid_chopped.log\": \"\", \"B_ood-st_chopped.log\": \"\", \"B_ood-t_chopped.log\": \"\"}\n",
+  "stderr": "",
+  "host": "909",
+  "started": 1794723678.6911511,
+  "seconds": 179.65550708770752
+}

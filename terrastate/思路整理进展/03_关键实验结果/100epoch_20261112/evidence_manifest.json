@@ -1,0 +1,32 @@
+[
+  {
+    "file": "cpu_evaluation_receipt.json",
+    "sha256": "8683E32B846E02B291969E4B8A80FD33441798D9FBCB9378DDFA46EADD9B6B8C",
+    "bytes": 15247
+  },
+  {
+    "file": "original_spanworld_per_seed.csv",
+    "sha256": "9CFB21EE78EA670749E0827522C55E3B8D92183EE30F6FDF3797A21E5C16751E",
+    "bytes": 1363
+  },
+  {
+    "file": "original_paper_table1.tex",
+    "sha256": "E7B66F13B88521D9C3BD7B52E73A3F910582CC45CDDE80BBB6B22A2EE282DD0C",
+    "bytes": 1710
+  },
+  {
+    "file": "contextformer_retrained_metrics.json",
+    "sha256": "FB2597C03B37741669F164DD1C4E7355DE0CD26560EC47B09EC592CA9E270079",
+    "bytes": 10867
+  },
+  {
+    "file": "contextformer_public_retrained_comparison.csv",
+    "sha256": "2B163B307C041C86B88912587B4570153AFA3916406A01794F3BD67B064876BE",
+    "bytes": 6645
+  },
+  {
+    "file": "derived_comparisons.json",
+    "sha256": "921C3423212BD384839865037DFADF0D3E9A57EA3AEDFDADDECEA60B5310F60F",
+    "bytes": 1611
+  }
+]

@@ -1,0 +1,5 @@
+split,epoch,step,checkpoint_sha256,identity_evidence,expected_samples,coverage,actual_exit,metric_file,acceptance
+iid_chopped,40,29800,0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198,startup_receipt.json; standard evaluator binding pending,2856,unknown,unverified,not retrieved,pending_remote_verification
+ood-t_chopped,40,29800,0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198,startup_receipt.json; standard evaluator binding pending,1904,unknown,unverified,not retrieved,pending_remote_verification
+ood-s_chopped,40,29800,0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198,startup_receipt.json; standard evaluator binding pending,10536,10536 historical,unverified,not retrieved,pending_remote_verification
+ood-st_chopped,40,29800,0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198,startup_receipt.json; standard evaluator binding pending,7024,7024 historical,unverified,not retrieved,pending_remote_verification

@@ -1,0 +1,74 @@
+[
+  {
+    "path": "C",
+    "other": "C0R",
+    "direct_difference": 0.001113027668541107,
+    "degradation_difference": -0.005321741538735124,
+    "continuation_difference": -0.004208713870194017,
+    "identity_error": 0.0,
+    "ci95_low": -0.00537601246400587,
+    "ci95_high": -0.0030302687796561227,
+    "receiver_improvement_fraction": 0.7109622841029256,
+    "receiver_median_difference": -0.002442453861310305
+  },
+  {
+    "path": "C",
+    "other": "CONSISTENCY",
+    "direct_difference": 0.0006681692733323599,
+    "degradation_difference": 0.0003809129241796813,
+    "continuation_difference": 0.0010490821975120412,
+    "identity_error": 0.0,
+    "ci95_low": 0.0006737184558127324,
+    "ci95_high": 0.0014732093760829925,
+    "receiver_improvement_fraction": 0.449418399718012,
+    "receiver_median_difference": 9.495860186170026e-05
+  },
+  {
+    "path": "A",
+    "other": "C0R",
+    "direct_difference": 0.001113027668541107,
+    "degradation_difference": -0.0022967748169622285,
+    "continuation_difference": -0.0011837471484211215,
+    "identity_error": 0.0,
+    "ci95_low": -0.0019905445202307087,
+    "ci95_high": -0.00025117312354937634,
+    "receiver_improvement_fraction": 0.6531547409235108,
+    "receiver_median_difference": -0.00108976220011716
+  },
+  {
+    "path": "A",
+    "other": "CONSISTENCY",
+    "direct_difference": 0.0006681692733323599,
+    "degradation_difference": 0.0001899512312083726,
+    "continuation_difference": 0.0008581205045407325,
+    "identity_error": 0.0,
+    "ci95_low": 0.0005273650401989627,
+    "ci95_high": 0.0012235066025631988,
+    "receiver_improvement_fraction": 0.4698625308424392,
+    "receiver_median_difference": 5.5472153316168775e-05
+  },
+  {
+    "path": "B",
+    "other": "C0R",
+    "direct_difference": 0.001113027668541107,
+    "degradation_difference": -0.005966330515076876,
+    "continuation_difference": -0.004853302846535769,
+    "identity_error": 0.0,
+    "ci95_low": -0.00610367427222284,
+    "ci95_high": -0.0035937682533026317,
+    "receiver_improvement_fraction": 0.7067324638702855,
+    "receiver_median_difference": -0.0026291640302130506
+  },
+  {
+    "path": "B",
+    "other": "CONSISTENCY",
+    "direct_difference": 0.0006681692733323599,
+    "degradation_difference": 0.0005489714120786096,
+    "continuation_difference": 0.0012171406854109695,
+    "identity_error": 0.0,
+    "ci95_low": 0.0008055284789442578,
+    "ci95_high": 0.0016637967734978592,
+    "receiver_improvement_fraction": 0.449418399718012,
+    "receiver_median_difference": 9.579102445115076e-05
+  }
+]

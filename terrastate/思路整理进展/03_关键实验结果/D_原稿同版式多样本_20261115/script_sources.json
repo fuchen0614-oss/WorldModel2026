@@ -1,0 +1,26 @@
+{
+  "Figure4": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续写作\\FIG4\\v4_简洁排版_20260926\\code\\build_fig4.py",
+    "sha256": "a1d10196f93f32463dcd33ced7f5c27a40915fde0f83104c338a987983f5572b",
+    "changes": [
+      "D source binding",
+      "axis limits/ticks to include D values and intervals",
+      "local output path",
+      "separate PNG visual QA; original PDF QA block not run"
+    ]
+  },
+  "Figure3": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A25_SpanWorld_正文实验图_紧凑排版_20260924\\code\\build_experiment_figures.py",
+    "crop": [
+      161,
+      15,
+      2310,
+      1034
+    ],
+    "original_png_pixel_exact_crop_match": true
+  },
+  "appendix": {
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续写作\\附录\\图版\\render_appendix_h.py",
+    "original_png_sha_exact_match": true
+  }
+}

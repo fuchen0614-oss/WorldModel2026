@@ -1,0 +1,271 @@
+{
+  "converted": [
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "old": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/思路整理进展/A51_方案D_原稿对应表格结果追加记录_20261115.md",
+      "new": "A51_方案D_原稿对应表格结果追加记录_20261115.md"
+    },
+    {
+      "file": "terrastate/思路整理进展/A51_方案D_原稿对应表格结果追加记录_20261115.md",
+      "old": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/思路整理进展/03_关键实验结果/D_seed42_six_tables_20261114/README.md",
+      "new": "03_关键实验结果/D_seed42_six_tables_20261114/README.md"
+    }
+  ],
+  "historical_references": [
+    {
+      "file": "terrastate/CODE_D/README.md",
+      "target": "PUBLICATION_STATUS.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/external_reply_locations_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "A42_SpanWorld回应DeepOSG_LISG_正文公式与回复双语方案_20261111.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/external_reply_locations_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "C:/Users/32084/.codex/attachments/2345ac0f-f9eb-48dc-a081-5368c65a3c6d/已粘贴的文本.txt",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/external_reply_locations_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "D:/datato/Chrome/17467_SpanWorld_A_Variable_Spa.pdf",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/external_reply_locations_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/spanworld_iclr2027.pdf",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/external_reply_locations_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/SpanWorld_全文完整稿_中英双语_v23_图2拼写修正版替换_20260925.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "A42_SpanWorld回应DeepOSG_LISG_正文公式与回复双语方案_20261111.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "C:/Users/32084/.codex/attachments/2345ac0f-f9eb-48dc-a081-5368c65a3c6d/已粘贴的文本.txt",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "D:/datato/Chrome/17467_SpanWorld_A_Variable_Spa.pdf",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/spanworld_iclr2027.pdf",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/SpanWorld_全文完整稿_中英双语_v23_图2拼写修正版替换_20260925.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "ICLR2027完整稿_v16_图2拼写修正版替换_20260925/spanworld_iclr2027.pdf",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "SpanWorld_全文完整稿_中英双语_v22_图1图2修正版替换_20260925.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "D:/Mine Program/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/figures/figure1_motivation.png",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "D:/Mine Program/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/figures/figure2_architecture.png",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "D:/Mine Program/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/figures/figure3_prediction_routes.png",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_inference_cost_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "D:/Mine Program/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/figures/figure4_partition_interventions.png",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/R2_AND_DISTRIBUTION_AUDIT.md",
+      "target": "r2_source_evidence/D_scorer.py:192",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_seed42_ablation60_20261114/fairness_audit/R2_AND_DISTRIBUTION_AUDIT.md",
+      "target": "r2_source_evidence/D_scorer.py:257",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_seed42_fixed40_20261114/README.md",
+      "target": "../../执行交接/额度优化_20261026/FIXED40_SEED42_STATE.txt",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "A42_SpanWorld回应DeepOSG_LISG_正文公式与回复双语方案_20261111.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "C:/Users/32084/.codex/attachments/2345ac0f-f9eb-48dc-a081-5368c65a3c6d/已粘贴的文本.txt",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "D:/datato/Chrome/17467_SpanWorld_A_Variable_Spa.pdf",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/spanworld_iclr2027.pdf",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/SpanWorld_全文完整稿_中英双语_v23_图2拼写修正版替换_20260925.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "ICLR2027完整稿_v16_图2拼写修正版替换_20260925/spanworld_iclr2027.pdf",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "SpanWorld_全文完整稿_中英双语_v22_图1图2修正版替换_20260925.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "D:/Mine Program/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/figures/figure1_motivation.png",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "D:/Mine Program/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/figures/figure2_architecture.png",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "D:/Mine Program/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/figures/figure3_prediction_routes.png",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/manuscript_sync_before/SpanWorld_中英双语_逐项修订工作稿.md",
+      "target": "D:/Mine Program/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/figures/figure4_partition_interventions.png",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/t9jt_q1_before_integration/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "A42_SpanWorld回应DeepOSG_LISG_正文公式与回复双语方案_20261111.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/t9jt_q1_before_integration/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "C:/Users/32084/.codex/attachments/2345ac0f-f9eb-48dc-a081-5368c65a3c6d/已粘贴的文本.txt",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/t9jt_q1_before_integration/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "D:/datato/Chrome/17467_SpanWorld_A_Variable_Spa.pdf",
+      "reason": "external historical evidence path"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/t9jt_q1_before_integration/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/ICLR2027完整稿_v16_图2拼写修正版替换_20260925/spanworld_iclr2027.pdf",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/03_关键实验结果/D_state_similarity_seed42_20261115/t9jt_q1_before_integration/A39_SpanWorld_ICLR审稿意见与修订策略汇总_20261110.md",
+      "target": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/writing/SpanWorld后续写作/SpanWorld_全文完整稿_中英双语_v23_图2拼写修正版替换_20260925.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "./A06_TerraState_主表Table1_当前数值与来源.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "./A07_E1基线家底_权重代码数据在哪怎么取.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "执行交接/统一管理/scores_and_curves_20261113_2345.json",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "执行交接/统一管理/B44_comparison_diagnostic_20261114.json",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "执行交接/统一管理/overnight_queue_audit_20261114_1217.json",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "执行交接/统一管理/overnight_result_audit_20261114_1219.json",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "执行交接/额度优化_20261026/FIXED40_SEED42_STATE.txt",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "执行交接/额度优化_20261026/personal_recovery_20261114/large_file_migration_manifest.json",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "A50_方案B_原稿对应表格结果追加记录_20261115.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "E:/MineProgram/codexwork/CVPRAAAI投稿/WorldModel2026v2/terrastate/思路整理进展/A50_方案B_原稿对应表格结果追加记录_20261115.md",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "执行交接/额度优化_20261026/training_dispatch_20261115/d_final_identity.json",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "03_关键实验结果/D_结果图候选_20261115/figure4/horizontal/figure4.png",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A08_E1主表_同协议重跑结果.md",
+      "target": "03_关键实验结果/D_结果图候选_20261115/figure4/stacked/figure4.png",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A51_方案D_原稿对应表格结果追加记录_20261115.md",
+      "target": "03_关键实验结果/D_结果图候选_20261115/figure4/horizontal/figure4.png",
+      "reason": "not included or absent from local source"
+    },
+    {
+      "file": "terrastate/思路整理进展/A51_方案D_原稿对应表格结果追加记录_20261115.md",
+      "target": "03_关键实验结果/D_结果图候选_20261115/figure4/stacked/figure4.png",
+      "reason": "not included or absent from local source"
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "C1_vs_CONSISTENCY": [
+    {
+      "model": "C1-minus-CONSISTENCY",
+      "path": "C",
+      "metric": "continued_MSE_diff",
+      "n_receivers": 2837,
+      "n_groups": 80,
+      "mean": 0.001049082197511988,
+      "ci95_low": 0.0006737184558127324,
+      "ci95_high": 0.0014732093760829925,
+      "ci_crosses_zero": false,
+      "interpretation": "C1 higher with interval above zero"
+    },
+    {
+      "model": "C1-minus-CONSISTENCY",
+      "path": "A",
+      "metric": "continued_MSE_diff",
+      "n_receivers": 2837,
+      "n_groups": 80,
+      "mean": 0.0008581205045408082,
+      "ci95_low": 0.0005273650401989627,
+      "ci95_high": 0.0012235066025631988,
+      "ci_crosses_zero": false,
+      "interpretation": "C1 higher with interval above zero"
+    },
+    {
+      "model": "C1-minus-CONSISTENCY",
+      "path": "B",
+      "metric": "continued_MSE_diff",
+      "n_receivers": 2837,
+      "n_groups": 80,
+      "mean": 0.0012171406854108637,
+      "ci95_low": 0.0008055284789442578,
+      "ci95_high": 0.0016637967734978592,
+      "ci_crosses_zero": false,
+      "interpretation": "C1 higher with interval above zero"
+    }
+  ],
+  "multi_path_consistency_vs_CONSISTENCY": {
+    "all_point_differences_negative": false,
+    "all_intervals_below_zero": false
+  },
+  "C1_vs_C0R": [
+    {
+      "model": "C1-minus-C0R",
+      "path": "C",
+      "metric": "continued_MSE_diff",
+      "n_receivers": 2837,
+      "n_groups": 80,
+      "mean": -0.004208713870194046,
+      "ci95_low": -0.00537601246400587,
+      "ci95_high": -0.0030302687796561227,
+      "ci_crosses_zero": false,
+      "interpretation": "C1 lower with interval below zero"
+    },
+    {
+      "model": "C1-minus-C0R",
+      "path": "A",
+      "metric": "continued_MSE_diff",
+      "n_receivers": 2837,
+      "n_groups": 80,
+      "mean": -0.0011837471484211063,
+      "ci95_low": -0.0019905445202307087,
+      "ci95_high": -0.00025117312354937634,
+      "ci_crosses_zero": false,
+      "interpretation": "C1 lower with interval below zero"
+    },
+    {
+      "model": "C1-minus-C0R",
+      "path": "B",
+      "metric": "continued_MSE_diff",
+      "n_receivers": 2837,
+      "n_groups": 80,
+      "mean": -0.00485330284653581,
+      "ci95_low": -0.00610367427222284,
+      "ci95_high": -0.0035937682533026317,
+      "ci_crosses_zero": false,
+      "interpretation": "C1 lower with interval below zero"
+    }
+  ],
+  "multi_path_consistency_vs_C0R": {
+    "all_point_differences_negative": true,
+    "all_intervals_below_zero": true
+  },
+  "state_branch_standard_effect": [
+    {
+      "split": "iid_chopped",
+      "metric": "rmse",
+      "C1": 0.14889195561408997,
+      "BASELINE": 0.1490221619606018,
+      "C1_minus_BASELINE": -0.00013020634651184082,
+      "seed": 42,
+      "selection_window_epochs": 60,
+      "baseline_continuation": "N/A",
+      "interpretation": "C1 lower RMSE"
+    },
+    {
+      "split": "iid_chopped",
+      "metric": "R2",
+      "C1": 0.5292535934040912,
+      "BASELINE": 0.5272166700342409,
+      "C1_minus_BASELINE": 0.0020369233698502853,
+      "seed": 42,
+      "selection_window_epochs": 60,
+      "baseline_continuation": "N/A",
+      "interpretation": "C1 higher R2"
+    },
+    {
+      "split": "ood-t_chopped",
+      "metric": "rmse",
+      "C1": 0.14551585912704468,
+      "BASELINE": 0.14523598551750183,
+      "C1_minus_BASELINE": 0.0002798736095428467,
+      "seed": 42,
+      "selection_window_epochs": 60,
+      "baseline_continuation": "N/A",
+      "interpretation": "C1 higher RMSE"
+    },
+    {
+      "split": "ood-t_chopped",
+      "metric": "R2",
+      "C1": 0.5757154008023769,
+      "BASELINE": 0.5769341605854525,
+      "C1_minus_BASELINE": -0.001218759783075618,
+      "seed": 42,
+      "selection_window_epochs": 60,
+      "baseline_continuation": "N/A",
+      "interpretation": "C1 lower R2"
+    },
+    {
+      "split": "ood-s_chopped",
+      "metric": "rmse",
+      "C1": 0.15653540194034576,
+      "BASELINE": 0.156584233045578,
+      "C1_minus_BASELINE": -4.883110523223877e-05,
+      "seed": 42,
+      "selection_window_epochs": 60,
+      "baseline_continuation": "N/A",
+      "interpretation": "C1 lower RMSE"
+    },
+    {
+      "split": "ood-s_chopped",
+      "metric": "R2",
+      "C1": 0.4959946621712888,
+      "BASELINE": 0.4941111377713354,
+      "C1_minus_BASELINE": 0.0018835243999533735,
+      "seed": 42,
+      "selection_window_epochs": 60,
+      "baseline_continuation": "N/A",
+      "interpretation": "C1 higher R2"
+    },
+    {
+      "split": "ood-st_chopped",
+      "metric": "rmse",
+      "C1": 0.15110313892364502,
+      "BASELINE": 0.14995978772640228,
+      "C1_minus_BASELINE": 0.0011433511972427368,
+      "seed": 42,
+      "selection_window_epochs": 60,
+      "baseline_continuation": "N/A",
+      "interpretation": "C1 higher RMSE"
+    },
+    {
+      "split": "ood-st_chopped",
+      "metric": "R2",
+      "C1": 0.5432778217819925,
+      "BASELINE": 0.5448473010554283,
+      "C1_minus_BASELINE": -0.0015694792734358698,
+      "seed": 42,
+      "selection_window_epochs": 60,
+      "baseline_continuation": "N/A",
+      "interpretation": "C1 lower R2"
+    }
+  ],
+  "scope": "Single seed42; geographic intervals do not include training randomness. Revised60epoch validation window, actual100/60 training budgets disclosed."
+}

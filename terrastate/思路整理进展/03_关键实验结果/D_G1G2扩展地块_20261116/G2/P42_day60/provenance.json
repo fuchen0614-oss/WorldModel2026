@@ -1,0 +1,395 @@
+{
+  "case": "P42",
+  "index": 11,
+  "day": 60,
+  "date": "2019-06-26",
+  "coverage": 0.98553466796875,
+  "valid_pixels": 16147,
+  "C1_direct": 0.003083631033933661,
+  "C1_continued": 0.003200316923691698,
+  "C0R_direct": 0.003262797629572517,
+  "C0R_continued": 0.004213116124176062,
+  "degradation": 0.00011668588975803727,
+  "relative_degradation": 0.03784041880301934,
+  "paired_delta": -0.001012799200484364,
+  "display_saturation": {
+    "C1_direct": {
+      "ndvi": 0.0,
+      "abs_error": 6.193100885613426e-05
+    },
+    "C1_continued": {
+      "ndvi": 0.0,
+      "abs_error": 6.193100885613426e-05
+    },
+    "C0R_direct": {
+      "ndvi": 0.0,
+      "abs_error": 0.00012386201771226853
+    },
+    "C0R_continued": {
+      "ndvi": 0.0,
+      "abs_error": 6.193100885613426e-05
+    }
+  },
+  "source_full_sha256": "4e5b9595d309427fd1aa5ee8aeefcd65902c9b6b5d2bdc015397f2c2fd2f5d32",
+  "subset_sha256": "73f06f097f251ab3e8a6ac34a0a8f0195c3920ea3dd52947e9d9f78c91c28447",
+  "checkpoint": {
+    "C1": {
+      "checkpoint": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_D909_fast4x8_20261113_01/D/formal/best_val.pt",
+      "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+      "epoch": 51,
+      "step": 37995,
+      "variant": "D",
+      "seed": 42,
+      "selection": "same SHA as accepted complete six-table evaluation",
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "recursive",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      }
+    },
+    "C0R": {
+      "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal/best_val.pt",
+      "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+      "epoch": 19,
+      "step": 14155,
+      "variant": "D",
+      "seed": 42,
+      "selection": "same SHA as accepted complete six-table evaluation",
+      "contract_cfg": {
+        "use_adaln": true,
+        "season_encoding": "annual_sincos_v1",
+        "season_route": "tokens_and_transition",
+        "supervision_v2": true,
+        "zero_empty_history_reference": true,
+        "state_dim": 256,
+        "freeze_b0": false,
+        "dw": 128,
+        "dg": 64,
+        "dh": 64,
+        "cond_dim": 256,
+        "lc_min": 10,
+        "lc_max": 40,
+        "partitions": [
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "heldout_partitions": [
+          [
+            3,
+            7
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "arch": "SpanWorldFullBase",
+        "route_version": "spanworld_full_base_v1",
+        "driver_protocol": "full24",
+        "factual_path": "direct",
+        "days_per_transition_step": 5,
+        "use_future_state_anchor": false,
+        "eo_traj_weight": 1.0,
+        "eo_endpoint_weight": 1.0,
+        "factual_endpoints": [
+          10,
+          15,
+          20
+        ],
+        "nc_min_std": 0.001,
+        "nc_min_effective_rank": 2.0,
+        "nc_min_movement": 0.0001,
+        "cc_train_partitions": {
+          "10": [
+            [
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              3,
+              2
+            ]
+          ],
+          "15": [
+            [
+              15
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              4,
+              4
+            ]
+          ],
+          "20": [
+            [
+              20
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              5,
+              5,
+              5,
+              5
+            ]
+          ]
+        },
+        "cc_heldout_partitions": {
+          "10": [
+            [
+              3,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              2,
+              3,
+              5
+            ]
+          ],
+          "15": [
+            [
+              4,
+              11
+            ],
+            [
+              3,
+              5,
+              7
+            ]
+          ],
+          "20": [
+            [
+              8,
+              12
+            ],
+            [
+              2,
+              18
+            ],
+            [
+              2,
+              6,
+              12
+            ],
+            [
+              1,
+              4,
+              6,
+              9
+            ]
+          ]
+        },
+        "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+        "training_stage": "stage2",
+        "variant": "D"
+      }
+    }
+  },
+  "date_rule": "among C1 self-degradation and coverage>=.40: max-coverage earliest tie and median relative-degradation; deduplicated",
+  "path": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_G1G2扩展地块_20261116\\G2\\P42_day60"
+}

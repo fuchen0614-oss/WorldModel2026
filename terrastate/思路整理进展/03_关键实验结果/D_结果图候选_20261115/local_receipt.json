@@ -1,0 +1,20 @@
+{
+  "status": "LOCAL_FIGURE4_PASS_REMOTE_CASES_PENDING",
+  "figure4_layouts": [
+    "horizontal",
+    "stacked"
+  ],
+  "files": {
+    "figure4\\horizontal\\figure4.pdf": "b7c59746c441ebbe50382c5c367783785af60fa41570981dcf39dba4be6767e2",
+    "figure4\\horizontal\\figure4.png": "71a537062176cf1ecad8450d37d0d86583f35645011607f5b886c82a62c683ee",
+    "figure4\\stacked\\figure4.pdf": "4fbdc6874638fd778ec9613b4d459428b1245cc0aa3ab6977546bf26ebab12fa",
+    "figure4\\stacked\\figure4.png": "828fa7a5f2884f01817029cd6aba191b102964200cb0be309ed80a9f7ff9ff25"
+  },
+  "values_sha256": "f09d71eeed785357e833baac53ceeeedfdd3f46194bd71fed32a30649b236a58",
+  "visual_review": "Both layouts inspected; horizontal scientific-notation overlap fixed and rechecked; intervals, signs and labels preserved.",
+  "remote_archive_confirmed": false,
+  "case_inference_confirmed": false,
+  "controller_pid": 39032,
+  "next_attempt_local": "2026-11-16T00:28:28.805657",
+  "oss_target": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/figure_candidates/D_seed42_20261115_v1"
+}

@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"gpu\": \"0, GPU-bd4678ea-b9d5-e0aa-c89c-cf843d2a327d, 47993 MiB, NVIDIA GeForce RTX 4090\\n1, GPU-9e587a71-8e1c-c7c5-f048-fcb0e04a6c51, 47993 MiB, NVIDIA GeForce RTX 4090\\n2, GPU-27641db0-9e67-b359-5829-04d8225f42fb, 47993 MiB, NVIDIA GeForce RTX 4090\\n3, GPU-22c26739-3951-ad13-95e6-246036db9b05, 47993 MiB, NVIDIA GeForce RTX 4090\", \"compute\": \"GPU-bd4678ea-b9d5-e0aa-c89c-cf843d2a327d, 3361758, /cpfs/user/chengjuntao/maker/junkang/miniconda3/envs/pytorch/bin/python3\\nGPU-9e587a71-8e1c-c7c5-f048-fcb0e04a6c51, 3361759, /cpfs/user/chengjuntao/maker/junkang/miniconda3/envs/pytorch/bin/python3\\nGPU-27641db0-9e67-b359-5829-04d8225f42fb, 3361760, /cpfs/user/chengjuntao/maker/junkang/miniconda3/envs/pytorch/bin/python3\\nGPU-22c26739-3951-ad13-95e6-246036db9b05, 3361761, /cpfs/user/chengjuntao/maker/junkang/miniconda3/envs/pytorch/bin/python3\", \"tasks\": \"3383859 bash family_latency.sh coco_dfine_nano coco_dfine_small coco_dfine_medium coco_rtv4_small coco_rtv4_medium coco_ecdet_small coco_ecdet_medium coco_nano coco_medium\"}\n",
+  "stderr": "",
+  "host": "916",
+  "started": 1794739858.9460213,
+  "seconds": 63.45070719718933
+}

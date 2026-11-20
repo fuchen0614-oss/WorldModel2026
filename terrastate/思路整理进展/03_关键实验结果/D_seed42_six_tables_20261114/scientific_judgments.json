@@ -1,0 +1,67 @@
+{
+  "scope": "seed42 only; spatial bootstrapCI not training-seed uncertainty",
+  "relative_advantage_expanded": false,
+  "relative_advantage": [
+    {
+      "path": "D20",
+      "old_relative_improvement_percent": "0.46963312856564055",
+      "new_relative_improvement_percent": "-2.642485067897203",
+      "change_percentage_points": "-3.112118196462844",
+      "qualification_exactly_equal": "True",
+      "scope": "each version versus its own matched control; architecture/training/parent/weather baseline changed; not isolated mechanism effect"
+    },
+    {
+      "path": "A",
+      "old_relative_improvement_percent": "4.6331774078255235",
+      "new_relative_improvement_percent": "2.640893891192692",
+      "change_percentage_points": "-1.9922835166328317",
+      "qualification_exactly_equal": "True",
+      "scope": "each version versus its own matched control; architecture/training/parent/weather baseline changed; not isolated mechanism effect"
+    },
+    {
+      "path": "B",
+      "old_relative_improvement_percent": "10.652762099850513",
+      "new_relative_improvement_percent": "9.920792562485858",
+      "change_percentage_points": "-0.7319695373646553",
+      "qualification_exactly_equal": "True",
+      "scope": "each version versus its own matched control; architecture/training/parent/weather baseline changed; not isolated mechanism effect"
+    },
+    {
+      "path": "C",
+      "old_relative_improvement_percent": "10.958640053250585",
+      "new_relative_improvement_percent": "8.75552099693733",
+      "change_percentage_points": "-2.2031190563132554",
+      "qualification_exactly_equal": "True",
+      "scope": "each version versus its own matched control; architecture/training/parent/weather baseline changed; not isolated mechanism effect"
+    }
+  ],
+  "all_three_continuation_paths_C1_lower_with_CI_below_zero": true,
+  "degradation_relative_to_matched_C0R": "C1 smaller in all three paths, paired spatial intervals exclude zero",
+  "C1_degradation_versus_old_version": [
+    {
+      "path": "A",
+      "old_C1_degradation": 0.0004030746045066081,
+      "new_C1_degradation": 0.00040646485308591147,
+      "change": 3.390248579303388e-06
+    },
+    {
+      "path": "B",
+      "old_C1_degradation": 0.0002508784447490836,
+      "new_C1_degradation": 0.000833694446833206,
+      "change": 0.0005828160020841225
+    },
+    {
+      "path": "C",
+      "old_C1_degradation": 0.00016334882838543217,
+      "new_C1_degradation": 0.0006270248688272064,
+      "change": 0.00046367604044177417
+    }
+  ],
+  "direct_suffix_C1_relative_MSE_increase_percent": 2.642485067897203,
+  "standard_RMSE_C1_minus_C0R_macro": 0.00033203884959220886,
+  "standard_R2_C1_minus_C0R_macro": -0.0034132319907339004,
+  "standard": "C1 lower RMSE on IID/OOD-S, higher on OOD-T/OOD-ST; R2 lower on all four",
+  "old_degradation_source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\releases\\spanworld_v2\\evaluation_v2_20261113\\paper_delivery_v1\\evidence\\legacy_statistics\\work\\DEGRADATION_VS_DIRECT.csv",
+  "old_degradation_source_sha256": "b919aa71fda3415806b51ba2b4ff88c74efff96e92e8b66508c298bfdb27837d",
+  "limits": "New and old matched controls differ in architecture/parent/training/weather baseline; do not isolate mechanism attribution. All target qualification counts match. Consistency comparison is separate and still running."
+}

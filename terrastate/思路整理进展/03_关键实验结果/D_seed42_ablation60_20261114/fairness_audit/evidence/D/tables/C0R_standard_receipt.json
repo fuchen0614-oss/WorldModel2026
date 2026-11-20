@@ -1,0 +1,241 @@
+{
+  "status": "PASS",
+  "selection_kind": "completed_run_validation_best",
+  "checkpoint_sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+  "best_epoch": 19,
+  "best_step": 14155,
+  "arm": "C0R",
+  "variant": "D",
+  "seed": 42,
+  "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+  "total_samples": 22320,
+  "splits": {
+    "iid_chopped": {
+      "count": 2856,
+      "empty": 1369,
+      "coverage_complete": true,
+      "checkpoint_sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+      "manifest_sha256": "4fb4ca86d7e19751a736835349b97785fb5b7ab5a3fcf451ec1d334bd0c74c59",
+      "relative_ids_sha256": "8a040cfe09b32eb5ff7ada683bf505c25e387069bff09005b88b82e73b4dd6f4",
+      "metrics": {
+        "nse": -0.0498677017243252,
+        "rmse": 0.14922550320625305,
+        "R2": 0.5295329797751279,
+        "biasabs": 0.09510266780853271,
+        "nse_forest": -0.07716139869892169,
+        "rmse_forest": 0.14514891803264618,
+        "R2_forest": 0.4797566257310309,
+        "biasabs_forest": 0.08993000537157059,
+        "nse_shrub": -0.14267911006079403,
+        "rmse_shrub": 0.14396549761295319,
+        "R2_shrub": 0.5077294072762188,
+        "biasabs_shrub": 0.09290239959955215,
+        "nse_grass": -0.024710515198740346,
+        "rmse_grass": 0.1457432359457016,
+        "R2_grass": 0.5454902456613384,
+        "biasabs_grass": 0.09224697202444077,
+        "nse_crop": 0.03658250150235731,
+        "rmse_crop": 0.16204433143138885,
+        "R2_crop": 0.5851556404319236,
+        "biasabs_crop": 0.10533131659030914,
+        "rmse_0_5": 0.08885088562965393,
+        "rmse_5_10": 0.12704141438007355,
+        "rmse_10_15": 0.15455228090286255,
+        "rmse_15_20": 0.16534343361854553,
+        "rmse25": 0.08885088562965393
+      }
+    },
+    "ood-t_chopped": {
+      "count": 1904,
+      "empty": 885,
+      "coverage_complete": true,
+      "checkpoint_sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+      "manifest_sha256": "3d710b4af988d88ba34d6dfee3e9136099ba2b918eb36b493692b15712bb13d0",
+      "relative_ids_sha256": "ce88cf797adb4103885c2453b6961117abb2e245ae2d71de310959df7d5819c8",
+      "metrics": {
+        "nse": -0.02043580011515278,
+        "rmse": 0.14488697052001953,
+        "R2": 0.5815753893775774,
+        "biasabs": 0.09552302956581116,
+        "nse_forest": -0.042947868725759175,
+        "rmse_forest": 0.1436140239238739,
+        "R2_forest": 0.5546313083482255,
+        "biasabs_forest": 0.09353867173194885,
+        "nse_shrub": -0.10983023360249655,
+        "rmse_shrub": 0.14234326779842377,
+        "R2_shrub": 0.5761195891567308,
+        "biasabs_shrub": 0.09566118568181992,
+        "nse_grass": 0.03386831224117737,
+        "rmse_grass": 0.1390359252691269,
+        "R2_grass": 0.5924078302687811,
+        "biasabs_grass": 0.0906955748796463,
+        "nse_crop": 0.03032280007311794,
+        "rmse_crop": 0.15455466508865356,
+        "R2_crop": 0.6031428297365719,
+        "biasabs_crop": 0.10219670832157135,
+        "rmse_0_5": 0.08163049817085266,
+        "rmse_5_10": 0.12396814674139023,
+        "rmse_10_15": 0.1503579020500183,
+        "rmse_15_20": 0.16274607181549072,
+        "rmse25": 0.08163049817085266
+      }
+    },
+    "ood-s_chopped": {
+      "count": 10536,
+      "empty": 7040,
+      "coverage_complete": true,
+      "checkpoint_sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+      "manifest_sha256": "249d791b7570a3287d853320b312744f1b6253469d4d2821c5ef892e6ba06417",
+      "relative_ids_sha256": "91add6b73214355dff21c188d55a63c8a4ff91a47f8fc1b32dca0167a0ffb322",
+      "metrics": {
+        "nse": -0.10022896670052672,
+        "rmse": 0.15660828351974487,
+        "R2": 0.497436518000307,
+        "biasabs": 0.09755167365074158,
+        "nse_forest": -0.15384718088052285,
+        "rmse_forest": 0.15635424852371216,
+        "R2_forest": 0.4481704519714147,
+        "biasabs_forest": 0.09596950560808182,
+        "nse_shrub": -0.1456088321673228,
+        "rmse_shrub": 0.14224331080913544,
+        "R2_shrub": 0.49865151258413204,
+        "biasabs_shrub": 0.09115036576986313,
+        "nse_grass": -0.11149751411086939,
+        "rmse_grass": 0.1553623229265213,
+        "R2_grass": 0.49088509565828375,
+        "biasabs_grass": 0.09520523995161057,
+        "nse_crop": 0.002409413046692954,
+        "rmse_crop": 0.1724732667207718,
+        "R2_crop": 0.5520390117873977,
+        "biasabs_crop": 0.107881560921669,
+        "rmse_0_5": 0.0945907011628151,
+        "rmse_5_10": 0.13066904246807098,
+        "rmse_10_15": 0.16064222157001495,
+        "rmse_15_20": 0.17500069737434387,
+        "rmse25": 0.0945907011628151
+      }
+    },
+    "ood-st_chopped": {
+      "count": 7024,
+      "empty": 4836,
+      "coverage_complete": true,
+      "checkpoint_sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+      "manifest_sha256": "485f6927d606842df3a7b87d2f89a2a29a6fdae0e3e2e00911b5cad35f5e86d6",
+      "relative_ids_sha256": "a0f8cadb2768c655e246be06dacadecc094ec3bad8cf3a429173b6da7f54a068",
+      "metrics": {
+        "nse": -0.09233466098491494,
+        "rmse": 0.14999744296073914,
+        "R2": 0.5493495189696727,
+        "biasabs": 0.09893131256103516,
+        "nse_forest": -0.11855322747522479,
+        "rmse_forest": 0.14797013998031616,
+        "R2_forest": 0.5270042863512175,
+        "biasabs_forest": 0.0967378169298172,
+        "nse_shrub": -0.186676019581427,
+        "rmse_shrub": 0.14667849242687225,
+        "R2_shrub": 0.5424355705139341,
+        "biasabs_shrub": 0.10060851275920868,
+        "nse_grass": -0.05998712846930765,
+        "rmse_grass": 0.14424125850200653,
+        "R2_grass": 0.5443135941690709,
+        "biasabs_grass": 0.09287498146295547,
+        "nse_crop": -0.012215141253237416,
+        "rmse_crop": 0.16109983623027802,
+        "R2_crop": 0.5836446248444681,
+        "biasabs_crop": 0.10550395399332047,
+        "rmse_0_5": 0.0854320377111435,
+        "rmse_5_10": 0.12873025238513947,
+        "rmse_10_15": 0.15598942339420319,
+        "rmse_15_20": 0.1675957292318344,
+        "rmse25": 0.0854320377111435
+      }
+    }
+  },
+  "acceptance": {
+    "iid_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 3361122,
+        "time": 1794633490.1180384
+      },
+      "count": 2856,
+      "coverage_exact": true,
+      "dtypes": {
+        "nnse": "float32",
+        "rmse": "float32",
+        "R2": "float64",
+        "biasabs": "float32",
+        "rmse_0_5": "float32",
+        "rmse_5_10": "float32",
+        "rmse_10_15": "float32",
+        "rmse_15_20": "float32"
+      },
+      "aggregate_exact": true,
+      "csv_sha256": "5e4438669b1bd5288768eed37c39926aee161cb127e9a5b66c442aeedd0fe0dd"
+    },
+    "ood-t_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 3361128,
+        "time": 1794632994.9964812
+      },
+      "count": 1904,
+      "coverage_exact": true,
+      "dtypes": {
+        "nnse": "float32",
+        "rmse": "float32",
+        "R2": "float64",
+        "biasabs": "float32",
+        "rmse_0_5": "float32",
+        "rmse_5_10": "float32",
+        "rmse_10_15": "float32",
+        "rmse_15_20": "float32"
+      },
+      "aggregate_exact": true,
+      "csv_sha256": "9cc9b31c257a715c48b382648196100c6a5f84635b331c71e46d5f5d837b0e04"
+    },
+    "ood-s_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 3361125,
+        "time": 1794637034.273223
+      },
+      "count": 10536,
+      "coverage_exact": true,
+      "dtypes": {
+        "nnse": "float32",
+        "rmse": "float32",
+        "R2": "float64",
+        "biasabs": "float32",
+        "rmse_0_5": "float32",
+        "rmse_5_10": "float32",
+        "rmse_10_15": "float32",
+        "rmse_15_20": "float32"
+      },
+      "aggregate_exact": true,
+      "csv_sha256": "c5c7e0fe0472e88311bf599729a8f73f3d17dc55a7f5d218c6eb763e00da77df"
+    },
+    "ood-st_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 3361131,
+        "time": 1794635429.0136948
+      },
+      "count": 7024,
+      "coverage_exact": true,
+      "dtypes": {
+        "nnse": "float32",
+        "rmse": "float32",
+        "R2": "float64",
+        "biasabs": "float32",
+        "rmse_0_5": "float32",
+        "rmse_5_10": "float32",
+        "rmse_10_15": "float32",
+        "rmse_15_20": "float32"
+      },
+      "aggregate_exact": true,
+      "csv_sha256": "a81aaa281389ddccd46756608e31a3a06289d14a5bfc2c4f883bc439c27fbb88"
+    }
+  },
+  "time": 1794637035.549006
+}

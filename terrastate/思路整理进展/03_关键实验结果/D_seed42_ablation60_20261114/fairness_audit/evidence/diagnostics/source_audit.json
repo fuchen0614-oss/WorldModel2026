@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "raw_source_sha256": {
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_six_tables_seed42_20261114/suffix/PER_RECEIVER_HORIZON.csv": "4ee641a2e06ce55331040badc7f433abec0d64b5f49e5d4b24089158a220aa88",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_ablation60_seed42_20261114/suffix/PER_RECEIVER_HORIZON.csv": "a7cf01153909f917e33f13c5440080ebecdb61c2c38c2eb432e9bbf5888ac5ce"
+  },
+  "raw_unique_rows": 340440,
+  "all_three_models_all_paths_target_counts_equal": true,
+  "n_receivers": 2837,
+  "reduction": "per receiver sum target SSE / sum target n_valid; all ten rows required",
+  "raw_per_target_CSV_retained_remotely": true
+}

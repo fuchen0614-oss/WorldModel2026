@@ -1,0 +1,582 @@
+{
+  "root": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z",
+  "exists": true,
+  "files": [
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_rebuild_v2_corrected_mask_ood_st_20260909T153000Z/matched_donor_manifest.csv",
+      "size": 974184
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_rebuild_v2_corrected_mask_ood_s_20260909T153000Z/matched_donor_manifest.csv",
+      "size": 1235693
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/test_single_cpu_708_20260908T150000Z/manifests/formal_donor_manifest.csv",
+      "size": 236
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_rebuild_v2_corrected_mask_iid_20260909T153000Z/matched_donor_manifest.csv",
+      "size": 409285
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_eval_iid_v1_20260909T022718Z/manifests/matched_donor_manifest.csv",
+      "size": 367589
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_eval_iid_delta_smoke_v1/manifests/matched_donor_manifest.csv",
+      "size": 62508
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/calibration_train_v2_corrected_mask_20260909T134000Z/calibration.json",
+      "size": 1437
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/fixedstep_r_20260910T110000Z/eval/suffix/iid_chopped/manifests/matched_donor_manifest.csv",
+      "size": 366177
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/fixedstep_r_20260910T110000Z/eval/suffix/ood-st_chopped/manifests/matched_donor_manifest.csv",
+      "size": 783701
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/fixedstep_r_20260910T110000Z/eval/suffix/ood-t_chopped/manifests/matched_donor_manifest.csv",
+      "size": 243421
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/fixedstep_r_20260910T110000Z/eval/suffix/ood-s_chopped/manifests/matched_donor_manifest.csv",
+      "size": 1177669
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/fixedstep_r_20260910T110000Z/code/terrastate/scripts/build_b4_donor_manifest.py",
+      "size": 6627
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/fixedstep_r_20260910T110000Z/code/terrastate/eval/b4_donor_schema.py",
+      "size": 16784
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/fixedstep_r_20260910T110000Z/code/terrastate/eval/__pycache__/b4_donor_schema.cpython-310.pyc",
+      "size": 14202
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_eval_iid_frozen_train_v1/manifests/matched_donor_manifest.csv",
+      "size": 367637
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/formal_suffix_v3_iid_full_20260908T100000Z/manifests/formal_donor_manifest.csv",
+      "size": 366177
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/formal_suffix_v3_ood-t_chopped_v4_20260908T113000Z/manifests/formal_donor_manifest.csv",
+      "size": 243421
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_rebuild_v2_corrected_mask_ood_t_20260909T153000Z/matched_donor_manifest.csv",
+      "size": 320886
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_eval_iid_delta_354_fixed_train_v1/manifests/matched_donor_manifest.csv",
+      "size": 62508
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_calibration_train_v1.log",
+      "size": 425
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_quality_formal_iid_v1.log",
+      "size": 695855
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_quality_formal_iid_v3.log",
+      "size": 83
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_exclusion_audit_iid_v2.log",
+      "size": 269
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_eval_ood_s_fixed_train_v1.log",
+      "size": 10081
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_eval_ood_t_fixed_train_v1.log",
+      "size": 2268
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/rebuild_all_matched_donor_v2_corrected_mask_20260909T150000Z.log",
+      "size": 398
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_eval_iid_delta_smoke_v1.log",
+      "size": 27
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_balance_audit_iid_v1.log",
+      "size": 213
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_exclusion_audit_iid_v1.log",
+      "size": 153
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_eval_ood_st_fixed_train_v1.log",
+      "size": 7957
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_calibration_train_v2_corrected_mask_20260909T134000Z.log",
+      "size": 3070
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/rebuild_all_matched_donor_v2_corrected_mask_20260909T152000Z.log",
+      "size": 417
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/rebuild_all_matched_donor_v2_corrected_mask_20260909T153000Z.log",
+      "size": 668
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_quality_formal_iid_v2.log",
+      "size": 1887
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_eval_iid_delta_354_fixed_train_v1.log",
+      "size": 483
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_quality_iid_v1.log",
+      "size": 87
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_quality_formal_iid_v4.log",
+      "size": 87
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_iid_after_oods_20260909T022718Z.log",
+      "size": 1137
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_calibration_train_v2.log",
+      "size": 2518
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/logs/matched_donor_calibration_train_invalid_audit_v1.log",
+      "size": 2514
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_eval_ood_s_fixed_train_v1/manifests/matched_donor_manifest.csv",
+      "size": 1094345
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/formal_suffix_v3_ood-s_chopped_repaired_v4_20260909T021700Z/manifests/formal_donor_manifest.csv",
+      "size": 1177669
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_rebuild_v2_corrected_mask_iid_20260909T152000Z/matched_donor_manifest.csv",
+      "size": 0
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/prediction_v3_20260908T090000Z/code/matched_donor_quality_formal_iid_v2.py",
+      "size": 6922
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/prediction_v3_20260908T090000Z/code/matched_donor_state_eval_v1.py",
+      "size": 17195
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/prediction_v3_20260908T090000Z/code/matched_donor_quality_formal_iid_v1.py",
+      "size": 6633
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/prediction_v3_20260908T090000Z/code/matched_donor_quality_iid_v1.py",
+      "size": 6260
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/prediction_v3_20260908T090000Z/code/audit_matched_donor_balance_v1.py",
+      "size": 3907
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/prediction_v3_20260908T090000Z/code/run_matched_donor_iid_after_oods_v1.sh",
+      "size": 3676
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/prediction_v3_20260908T090000Z/code/audit_matched_donor_exclusions_v1.py",
+      "size": 5824
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/prediction_v3_20260908T090000Z/code/matched_donor_smoke_v1.py",
+      "size": 5737
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/ood_s/smoke/manifests/matched_donor_manifest.csv",
+      "size": 64826
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/ood_s/formal_changed/manifests/matched_donor_manifest.csv",
+      "size": 64826
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/ood_t/smoke/manifests/matched_donor_manifest.csv",
+      "size": 17985
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/ood_t/formal_changed/manifests/matched_donor_manifest.csv",
+      "size": 17985
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/iid/smoke/manifests/matched_donor_manifest.csv",
+      "size": 17334
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/iid/formal_changed/manifests/matched_donor_manifest.csv",
+      "size": 17334
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/ood_st/smoke/manifests/matched_donor_manifest.csv",
+      "size": 78752
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/ood_st/formal_changed/manifests/matched_donor_manifest.csv",
+      "size": 78752
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/merged/ood_s/manifests/matched_donor_manifest.csv",
+      "size": 1235693
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/merged/ood_t/manifests/matched_donor_manifest.csv",
+      "size": 320886
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/merged/iid/manifests/matched_donor_manifest.csv",
+      "size": 409285
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_mask_recompute_20260910T071500Z/merged/ood_st/manifests/matched_donor_manifest.csv",
+      "size": 974184
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_eval_ood_t_fixed_train_v1/manifests/matched_donor_manifest.csv",
+      "size": 288274
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/calibration_train_v2_corrected_mask_smoke_20260909T133500Z/calibration.json",
+      "size": 1361
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/formal_suffix_v3_ood-s_chopped_repaired_v1_20260908T140500Z/manifests/formal_donor_manifest.csv",
+      "size": 1177669
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_ood_s_frozen_train_v1.csv",
+      "size": 1094345
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_ood_t_frozen_train_v1.json",
+      "size": 88773
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_calibration_compare_v1.md",
+      "size": 1309
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_smoke_v1.json",
+      "size": 8930
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/iid_matched_donor_calibration_audit_v1.json",
+      "size": 1980
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_iid_frozen_train_v1.csv",
+      "size": 0
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_calibration_train_invalid_audit_v1.json",
+      "size": 1100847
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_ood_t_frozen_train_v1.csv",
+      "size": 288274
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_balance_audit_iid_v1.json",
+      "size": 1363
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_ood_st_frozen_train_v1.csv",
+      "size": 862524
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_calibration_train_v2.json",
+      "size": 1035
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_change_plan_iid_v2.csv",
+      "size": 21594
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_change_plan_ood_st_v2.json",
+      "size": 1162
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_iid_changed_354_v1.json",
+      "size": 3912
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_change_plan_ood_s_v2.json",
+      "size": 1160
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_iid_v2.summary.json",
+      "size": 361
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_exclusion_audit_iid_v2.json",
+      "size": 1878310
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_quality_formal_iid_v4.json",
+      "size": 857384
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_change_plan_ood_t_v2.csv",
+      "size": 22384
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_iid_frozen_train_v2.csv",
+      "size": 367637
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_change_plan_ood_s_v2.csv",
+      "size": 84816
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_change_plan_ood_t_v2.json",
+      "size": 978
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_exclusion_audit_iid_v1.json",
+      "size": 1915570
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_change_plan_iid_v2.json",
+      "size": 974
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_change_plan_ood_st_v2.csv",
+      "size": 102891
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_quality_iid_v1.json",
+      "size": 1481026
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_iid_frozen_train_v2.json",
+      "size": 195953
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_ood_s_frozen_train_v1.json",
+      "size": 965655
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_smoke_regression_v2.json",
+      "size": 8756
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_calibration_compare_v1.json",
+      "size": 1565
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_protocol_v2_frozen.md",
+      "size": 2933
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_quality_formal_iid_v4_validation.json",
+      "size": 105482
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_protocol_v1.md",
+      "size": 3692
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_calibration_invalid_mask_reclassification_v1.json",
+      "size": 976398
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_iid_changed_354_v1.csv",
+      "size": 62508
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_calibration_train_v2_provenance.json",
+      "size": 1627
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_ood_st_frozen_train_v1.json",
+      "size": 417041
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_iid_v2.csv",
+      "size": 367589
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_quality_formal_iid_v3.json",
+      "size": 7991
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_field_audit_v1.json",
+      "size": 15245
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_eval_ood_st_fixed_train_v1/manifests/matched_donor_manifest.csv",
+      "size": 862524
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/formal_suffix_v3_ood-st_chopped_v4_20260908T113000Z/manifests/formal_donor_manifest.csv",
+      "size": 783701
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/formal_suffix_v3_20260908T090000Z/manifests/formal_donor_manifest.csv",
+      "size": 494539
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/matched_donor_eval_iid_smoke_20260909T022718Z/manifests/matched_donor_manifest.csv",
+      "size": 367589
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/test_matched_donor_feature_extractor_v2.py",
+      "size": 3219
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/matched_donor_state_eval_v1.py",
+      "size": 11714
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/audit_training_calibration_invalid_v1.py",
+      "size": 5628
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/rebuild_frozen_matched_donor_manifest_v2.py",
+      "size": 6857
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/inspect_calibration_invalid_sample_v1.py",
+      "size": 3122
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/matched_donor_feature_extractor_v2.py",
+      "size": 2787
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/build_matched_donor_evidence_v1.py",
+      "size": 14724
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/audit_matched_donor_exclusions_v2.py",
+      "size": 6128
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/rebuild_frozen_matched_donor_manifest_v1.py",
+      "size": 6611
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/build_donor_change_plan_v1.py",
+      "size": 3359
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/reclassify_calibration_invalid_masks_v1.py",
+      "size": 3875
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/audit_iid_matched_donor_calibration_v1.py",
+      "size": 3357
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/run_rebuild_all_matched_donor_v2.sh",
+      "size": 1688
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/run_matched_donor_iid_after_oods_v1.sh",
+      "size": 2963
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/validate_matched_donor_smoke_v2.py",
+      "size": 5580
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/matched_donor_smoke_v1.py",
+      "size": 6922
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/compare_matched_donor_calibration_v1.py",
+      "size": 4059
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/build_matched_donor_manifest_v1.py",
+      "size": 2986
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/freeze_matched_donor_calibration_v2.py",
+      "size": 5254
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/freeze_matched_donor_calibration_v1.py",
+      "size": 2855
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/record_calibration_provenance_v1.py",
+      "size": 2199
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/__pycache__/matched_donor_smoke_v1.cpython-310.pyc",
+      "size": 7124
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/__pycache__/matched_donor_feature_extractor_v2.cpython-38.pyc",
+      "size": 2461
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/__pycache__/audit_matched_donor_exclusions_v2.cpython-310.pyc",
+      "size": 6410
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/__pycache__/matched_donor_state_eval_v1.cpython-310.pyc",
+      "size": 10957
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/__pycache__/matched_donor_feature_extractor_v2.cpython-310.pyc",
+      "size": 2501
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/__pycache__/build_matched_donor_manifest_v1.cpython-310.pyc",
+      "size": 2902
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/formal_suffix_v3_ood-s_chopped_repaired_v3_20260908T150000Z/manifests/formal_donor_manifest.csv",
+      "size": 1177669
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/formal_suffix_v3_ood-s_chopped_20260908T100000Z/manifests/formal_donor_manifest.csv",
+      "size": 1177669
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/formal_suffix_v3_ood-s_chopped_repaired_v2_20260908T143500Z/manifests/formal_donor_manifest.csv",
+      "size": 1177669
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_v2_20260908T083432Z/tables/T4B_matched_state_donor_heldout_means.csv",
+      "size": 4708
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_v2_20260908T083432Z/tables/T4B_matched_state_donor_heldout_ci.csv",
+      "size": 1196
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_v2_20260908T083432Z/protocols/p0_2_donor_heldout_cluster_ci_20.json",
+      "size": 1596
+    },
+    {
+      "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/corrected_v2_20260908T083432Z/protocols/p0_2_donor_heldout_20.json",
+      "size": 39269
+    }
+  ]
+}

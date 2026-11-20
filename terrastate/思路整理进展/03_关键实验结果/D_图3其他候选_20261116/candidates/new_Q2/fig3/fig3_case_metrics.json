@@ -1,0 +1,47 @@
+{
+  "case_id_internal": "new_Q2",
+  "case_selection_internal": "D outcome-selected benefit quantile 0.02; coverage >= 40%",
+  "target_step": 20,
+  "target_day": 100,
+  "target_date": "2019-06-08",
+  "continuation_from_day": 50,
+  "pre_continuation_partition_days": [
+    15,
+    35
+  ],
+  "valid_pixels": 13149,
+  "total_pixels": 16384,
+  "coverage": 0.80255126953125,
+  "ndvi_display_limits": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display_limits": [
+    0.0,
+    0.45
+  ],
+  "ndvi_display_saturation_fraction": {
+    "gt": 0.00022815423226100844,
+    "C1_direct": 0.015666590615255913,
+    "C1_continued": 0.003954673359190813,
+    "C0R_direct": 0.013765305346414175,
+    "C0R_continued": 0.040839607574720514
+  },
+  "metrics": [
+    {
+      "model": "SpanWorld",
+      "direct_mse": 0.07441859692335129,
+      "continued_mse": 0.0901234969496727,
+      "direct_error_display_saturation_fraction": 0.12898319263822344,
+      "continued_error_display_saturation_fraction": 0.16640048672902882
+    },
+    {
+      "model": "Direct-endpoint control",
+      "direct_mse": 0.07586678117513657,
+      "continued_mse": 0.06100469082593918,
+      "direct_error_display_saturation_fraction": 0.13194919765761656,
+      "continued_error_display_saturation_fraction": 0.09301087535173777
+    }
+  ],
+  "metric_note": "Single target date; mean squared error over the identical valid-observation pixels. Display clipping never changes MSE."
+}

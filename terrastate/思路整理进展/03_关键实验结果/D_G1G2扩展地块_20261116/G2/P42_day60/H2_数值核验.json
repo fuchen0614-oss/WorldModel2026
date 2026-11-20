@@ -1,0 +1,39 @@
+{
+  "source_arrays": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_G1G2扩展地块_20261116\\G2\\P42_day60\\inputs\\frames.npz",
+  "source_metadata": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_G1G2扩展地块_20261116\\G2\\P42_day60\\inputs\\metadata.json",
+  "case": "P42 IID",
+  "selection": "Frozen historical case P42; re-evaluated with D seed42",
+  "suffix_benefit_C0R_minus_C1": null,
+  "date_selection": "maximum coverage and median relative self-degradation among all >=40% eligible suffix frames; retained and deduplicated",
+  "selected_step_coverage_from_metadata": 0.98553466796875,
+  "ndvi_display": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display": [
+    0.0,
+    0.45
+  ],
+  "display_clipping_only": true,
+  "same_valid_mask_within_each_row": true,
+  "records": [
+    {
+      "scheme": "SpanWorld",
+      "step_1based": 12,
+      "date": "2019-06-26",
+      "valid_pixels": 16147,
+      "coverage": 0.98553466796875,
+      "direct_mse_unclipped": 0.003083630930632353,
+      "continued_mse_unclipped": 0.003200317034497857
+    },
+    {
+      "scheme": "Direct-endpoint control",
+      "step_1based": 12,
+      "date": "2019-06-26",
+      "valid_pixels": 16147,
+      "coverage": 0.98553466796875,
+      "direct_mse_unclipped": 0.003262797836214304,
+      "continued_mse_unclipped": 0.004213116597384214
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+{
+  "status": "PASS_TRANSFER_SHA",
+  "remote_host": "zhisheng",
+  "root": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z",
+  "files": [
+    {
+      "rel": "matched_donor_rebuild_v2_corrected_mask_ood_st_20260909T153000Z/rebuild_report.json",
+      "sha256": "12493ed93c4c52b61ca17faa00029e73581450b7c536fb1b791290403178f3a5"
+    },
+    {
+      "rel": "matched_donor_rebuild_v2_corrected_mask_ood_st_20260909T153000Z/matched_donor_manifest.csv",
+      "sha256": "0bb537a9eb920a55e155c80c96e870dee62c6eaee3c9fd993fd18635ea14bde0"
+    },
+    {
+      "rel": "matched_donor_rebuild_v2_corrected_mask_ood_s_20260909T153000Z/rebuild_report.json",
+      "sha256": "6276119cb20bd38711f7560dc0dc304cd73463a27b4a83282ef12e2aaf1be5ed"
+    },
+    {
+      "rel": "matched_donor_rebuild_v2_corrected_mask_ood_s_20260909T153000Z/matched_donor_manifest.csv",
+      "sha256": "f09625a3d4fdd99833840817d3f45d4294cbf165bd18f3d1f90043c295cb1995"
+    },
+    {
+      "rel": "matched_donor_rebuild_v2_corrected_mask_iid_20260909T153000Z/rebuild_report.json",
+      "sha256": "5538dd31cefa9477902105a0de3beaf135e93c6c2448bb9ec45f41b6cf71dd3b"
+    },
+    {
+      "rel": "matched_donor_rebuild_v2_corrected_mask_iid_20260909T153000Z/matched_donor_manifest.csv",
+      "sha256": "bb959cb65a07d142fdaec18f5718327d91e73e22816a5c75bb7268923c128663"
+    },
+    {
+      "rel": "matched_donor_rebuild_v2_corrected_mask_ood_t_20260909T153000Z/rebuild_report.json",
+      "sha256": "627125e074c412772f9818f49e1f5979413969387a06bedd9f2e06c8600d648c"
+    },
+    {
+      "rel": "matched_donor_rebuild_v2_corrected_mask_ood_t_20260909T153000Z/matched_donor_manifest.csv",
+      "sha256": "65ae828bb3cad38dd6909b8b23f9be955cc234aa2d8459031ea1bdedc7fb0428"
+    },
+    {
+      "rel": "calibration_train_v2_corrected_mask_20260909T134000Z/calibration.json",
+      "sha256": "56f6212b5ccf00ae58119b6ecb7f1ee4e0f852b868d29eb25d1a1451f4b9eefc"
+    },
+    {
+      "rel": "code/test_matched_donor_feature_extractor_v2.py",
+      "sha256": "c946b8355bb36ac16b4055e400750710eaef7afbf9e6830fe38239d457f7cfd3"
+    },
+    {
+      "rel": "code/matched_donor_state_eval_v1.py",
+      "sha256": "03e959e5dc2fe3613bcfb44aba3181fff79a78941e89c39f334ba5b1b566117c"
+    },
+    {
+      "rel": "code/rebuild_frozen_matched_donor_manifest_v2.py",
+      "sha256": "cf4b908cf38c88456ac2ef5ba7a8e3fc758dfb3d4fd3cc1e569c9d245ba4d0db"
+    },
+    {
+      "rel": "code/matched_donor_feature_extractor_v2.py",
+      "sha256": "aceb490a7b03fccea009152c91f53bd2acfafee6c7741db1143cb0d0d3844bb1"
+    },
+    {
+      "rel": "code/build_matched_donor_evidence_v1.py",
+      "sha256": "9e1c6292e10a80bcd935f5201019d58602b35913dbc59076c2850b93b4320e12"
+    },
+    {
+      "rel": "code/audit_matched_donor_exclusions_v2.py",
+      "sha256": "d8632e3f488c5f4b82f01c2b4e3a632b30d71bc197e964ecb9137e3373094a99"
+    },
+    {
+      "rel": "code/rebuild_frozen_matched_donor_manifest_v1.py",
+      "sha256": "23217c7dbd5252876f7af17f84c2646a6dc17f0e4a809242c649f9f71bfa3e1e"
+    },
+    {
+      "rel": "code/audit_iid_matched_donor_calibration_v1.py",
+      "sha256": "0f369965004b938da82c7d324ce7d76cd0d3ade54f8f55d534cc5d3fc1c26a3e"
+    },
+    {
+      "rel": "code/validate_matched_donor_smoke_v2.py",
+      "sha256": "1da00c0d7969ac269994d2f99bba8b615d9705cae1ecafeb2751ba8f495960c4"
+    },
+    {
+      "rel": "code/matched_donor_smoke_v1.py",
+      "sha256": "488685940903a93e01c260871eeefe0d0bfc23ca88124511dfa1726bbea796b9"
+    },
+    {
+      "rel": "code/compare_matched_donor_calibration_v1.py",
+      "sha256": "4b3fe6b33fb42531cba0399d5f67673b6a4d5ef63fba4221c7255093b5f880ef"
+    },
+    {
+      "rel": "code/build_matched_donor_manifest_v1.py",
+      "sha256": "cb9b836f44212ff85fb4d22f3fc15d45aacb6b4c84ca99b910ad60f6fc265a1e"
+    },
+    {
+      "rel": "code/freeze_matched_donor_calibration_v2.py",
+      "sha256": "c9f7f551d4e2a5430e82105a72109fe4f06ef479e55cceeaa74fe1af8833a6e3"
+    },
+    {
+      "rel": "code/freeze_matched_donor_calibration_v1.py",
+      "sha256": "e9ab8224c434f0168d398c985e243069feea5acd0440a6b9ee35c756509387a8"
+    },
+    {
+      "rel": "code/audit_training_calibration_invalid_v1.py",
+      "sha256": "555652bbd8267bdd3ec8904637636d29efb3b6637fbe290ea3f64cd9e270398e"
+    },
+    {
+      "rel": "code/inspect_calibration_invalid_sample_v1.py",
+      "sha256": "f07538b40a99c5adadf9586ec49184b9c147c6c12d5bc28ef501ba61d8675092"
+    },
+    {
+      "rel": "code/reclassify_calibration_invalid_masks_v1.py",
+      "sha256": "903fc2d45a2badfeaf83e7a7b49d4c910570e70d0e948c2eb1d6eebce05845d2"
+    },
+    {
+      "rel": "code/record_calibration_provenance_v1.py",
+      "sha256": "e35486846ad00a4682b0271a9d993e240d62c1e545268d9fd54b0625849320a9"
+    },
+    {
+      "rel": "corrected_mask_recompute_20260910T071500Z/merged/ood_s/manifests/matched_donor_manifest.csv",
+      "sha256": "f09625a3d4fdd99833840817d3f45d4294cbf165bd18f3d1f90043c295cb1995"
+    },
+    {
+      "rel": "corrected_mask_recompute_20260910T071500Z/merged/ood_t/manifests/matched_donor_manifest.csv",
+      "sha256": "65ae828bb3cad38dd6909b8b23f9be955cc234aa2d8459031ea1bdedc7fb0428"
+    },
+    {
+      "rel": "corrected_mask_recompute_20260910T071500Z/merged/iid/manifests/matched_donor_manifest.csv",
+      "sha256": "bb959cb65a07d142fdaec18f5718327d91e73e22816a5c75bb7268923c128663"
+    },
+    {
+      "rel": "corrected_mask_recompute_20260910T071500Z/merged/ood_st/manifests/matched_donor_manifest.csv",
+      "sha256": "0bb537a9eb920a55e155c80c96e870dee62c6eaee3c9fd993fd18635ea14bde0"
+    }
+  ],
+  "pair_checks": [
+    {
+      "file": "matched_donor_rebuild_v2_corrected_mask_iid_20260909T153000Z\\matched_donor_manifest.csv",
+      "rows": 2078,
+      "self_match": 0,
+      "max_donor_reuse": 1,
+      "head": {
+        "dataset_index": "2",
+        "cube": "minicube_101_32TPR_45.53_11.26",
+        "relative_path": "JAS17/minicube_101_32TPR_45.53_11.26.nc",
+        "season": "2017-05",
+        "donor_index": "166",
+        "donor_cube": "minicube_35_30TXR_45.39_-1.14",
+        "donor_relative_path": "JAS17/minicube_35_30TXR_45.39_-1.14.nc",
+        "match_distance": "0.102649010294501",
+        "receiver_mask_source": "s2_dlmask",
+        "donor_mask_source": "s2_dlmask"
+      }
+    },
+    {
+      "file": "matched_donor_rebuild_v2_corrected_mask_ood_st_20260909T153000Z\\matched_donor_manifest.csv",
+      "rows": 5577,
+      "self_match": 0,
+      "max_donor_reuse": 1,
+      "head": {
+        "dataset_index": "0",
+        "cube": "minicube_0_36.25_-5.75",
+        "relative_path": "JAS21/minicube_0_36.25_-5.75.nc",
+        "season": "2021-05",
+        "donor_index": "151",
+        "donor_cube": "minicube_236_46.25_7.55",
+        "donor_relative_path": "JAS21/minicube_236_46.25_7.55.nc",
+        "match_distance": "0.7750617827585804",
+        "receiver_mask_source": "s2_dlmask",
+        "donor_mask_source": "s2_dlmask"
+      }
+    },
+    {
+      "file": "matched_donor_rebuild_v2_corrected_mask_ood_s_20260909T153000Z\\matched_donor_manifest.csv",
+      "rows": 7065,
+      "self_match": 0,
+      "max_donor_reuse": 1,
+      "head": {
+        "dataset_index": "0",
+        "cube": "minicube_0_36.25_-5.75",
+        "relative_path": "JAS17/minicube_0_36.25_-5.75.nc",
+        "season": "2017-05",
+        "donor_index": "430",
+        "donor_cube": "minicube_488_50.75_21.05",
+        "donor_relative_path": "JAS17/minicube_488_50.75_21.05.nc",
+        "match_distance": "0.13681609372600118",
+        "receiver_mask_source": "s2_dlmask",
+        "donor_mask_source": "s2_dlmask"
+      }
+    },
+    {
+      "file": "matched_donor_rebuild_v2_corrected_mask_ood_t_20260909T153000Z\\matched_donor_manifest.csv",
+      "rows": 1632,
+      "self_match": 0,
+      "max_donor_reuse": 1,
+      "head": {
+        "dataset_index": "0",
+        "cube": "minicube_0_29SND_39.29_-8.56",
+        "relative_path": "JAS21/minicube_0_29SND_39.29_-8.56.nc",
+        "season": "2021-05",
+        "donor_index": "106",
+        "donor_cube": "minicube_19_29TQF_40.87_-5.90",
+        "donor_relative_path": "JAS21/minicube_19_29TQF_40.87_-5.90.nc",
+        "match_distance": "0.4110879763105757",
+        "receiver_mask_source": "s2_dlmask",
+        "donor_mask_source": "s2_dlmask"
+      }
+    }
+  ]
+}

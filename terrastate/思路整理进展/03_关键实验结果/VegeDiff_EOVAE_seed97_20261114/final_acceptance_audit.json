@@ -1,0 +1,670 @@
+{
+  "time_utc": "2026-11-13T17:04:05.869679+00:00",
+  "read_only": true,
+  "result": {
+    "status": "PASS",
+    "total": 22320,
+    "splits": [
+      {
+        "status": "PASS",
+        "split": "iid_chopped",
+        "completed": 2856,
+        "expected": 2856,
+        "metrics": {
+          "nse": -3.9519601672131346,
+          "rmse": 0.40426825363170515,
+          "R2": 0.2964565499561755,
+          "biasabs": 0.33092587632377096,
+          "nse_forest": -3.8058436997819705,
+          "rmse_forest": 0.3959336198818244,
+          "R2_forest": 0.27364154040686384,
+          "biasabs_forest": 0.321548389024051,
+          "nse_shrub": -3.9657721231706864,
+          "rmse_shrub": 0.36772665361135226,
+          "R2_shrub": 0.2899664934797514,
+          "biasabs_shrub": 0.29570224701749187,
+          "nse_grass": -4.397694236479111,
+          "rmse_grass": 0.4205222339050222,
+          "R2_grass": 0.3021566175849958,
+          "biasabs_grass": 0.3499706219728295,
+          "nse_crop": -3.6857580279779247,
+          "rmse_crop": 0.43289050712862176,
+          "R2_crop": 0.3200615483530909,
+          "biasabs_crop": 0.3564822472807114,
+          "rmse_0_5": 0.3297283153061115,
+          "rmse_5_10": 0.37753609486531947,
+          "rmse_10_15": 0.3974390278392197,
+          "rmse_15_20": 0.43193735449614334,
+          "rmse25": 0.3297283153061115
+        },
+        "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/sealed/best_val.pt",
+        "checkpoint_sha256": "97cc2d2396f5d45b43992ea64096090a709f0d3cb698f2d88cbd6d5ef8c17bde",
+        "checkpoint_step": 59600,
+        "vae_sha256": "3da8f81bca696732fd868e7745bb902807b4c1f01f8bc1d5d0ccc298fc881c7e",
+        "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+        "prediction_grid": "official_5day_20",
+        "inference_precision": "fp32",
+        "seed": 97
+      },
+      {
+        "status": "PASS",
+        "split": "ood-t_chopped",
+        "completed": 1904,
+        "expected": 1904,
+        "metrics": {
+          "nse": -3.865808790199857,
+          "rmse": 0.38823982360538545,
+          "R2": 0.2884061846695188,
+          "biasabs": 0.30034151863071806,
+          "nse_forest": -3.7113339242173966,
+          "rmse_forest": 0.3784097001736484,
+          "R2_forest": 0.2789355135495039,
+          "biasabs_forest": 0.29206272803876876,
+          "nse_shrub": -3.940857544931334,
+          "rmse_shrub": 0.3647979962407442,
+          "R2_shrub": 0.2776845237225941,
+          "biasabs_shrub": 0.2740889423803198,
+          "nse_grass": -4.135248336807862,
+          "rmse_grass": 0.3953542024748098,
+          "R2_grass": 0.29375168926658657,
+          "biasabs_grass": 0.3106346698522329,
+          "nse_crop": -3.6977135765755085,
+          "rmse_crop": 0.41439739553233956,
+          "R2_crop": 0.30325301213939054,
+          "biasabs_crop": 0.3245797342515509,
+          "rmse_0_5": 0.3410000614523401,
+          "rmse_5_10": 0.3639533064499855,
+          "rmse_10_15": 0.36805325871256633,
+          "rmse_15_20": 0.39353513762270165,
+          "rmse25": 0.3410000614523401
+        },
+        "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/sealed/best_val.pt",
+        "checkpoint_sha256": "97cc2d2396f5d45b43992ea64096090a709f0d3cb698f2d88cbd6d5ef8c17bde",
+        "checkpoint_step": 59600,
+        "vae_sha256": "3da8f81bca696732fd868e7745bb902807b4c1f01f8bc1d5d0ccc298fc881c7e",
+        "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+        "prediction_grid": "official_5day_20",
+        "inference_precision": "fp32",
+        "seed": 97
+      },
+      {
+        "status": "PASS",
+        "split": "ood-s_chopped",
+        "completed": 10536,
+        "expected": 10536,
+        "metrics": {
+          "nse": -3.587141498244054,
+          "rmse": 0.40314461667440826,
+          "R2": 0.2845762907328213,
+          "biasabs": 0.3192567518989699,
+          "nse_forest": -3.4217311973313604,
+          "rmse_forest": 0.39562492372348124,
+          "R2_forest": 0.25406178536322915,
+          "biasabs_forest": 0.3056787759733632,
+          "nse_shrub": -3.733614692363796,
+          "rmse_shrub": 0.3546924061923911,
+          "R2_shrub": 0.2921158186022335,
+          "biasabs_shrub": 0.2844335380158563,
+          "nse_grass": -4.182774098637463,
+          "rmse_grass": 0.43170633007855214,
+          "R2_grass": 0.27669782792891345,
+          "biasabs_grass": 0.3478669395792584,
+          "nse_crop": -3.11935964725157,
+          "rmse_crop": 0.43055480670320845,
+          "R2_crop": 0.3154297310369093,
+          "biasabs_crop": 0.33904775402740167,
+          "rmse_0_5": 0.32520476971836526,
+          "rmse_5_10": 0.36796462378439115,
+          "rmse_10_15": 0.3992221249820231,
+          "rmse_15_20": 0.43301291663191377,
+          "rmse25": 0.32520476971836526
+        },
+        "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/sealed/best_val.pt",
+        "checkpoint_sha256": "97cc2d2396f5d45b43992ea64096090a709f0d3cb698f2d88cbd6d5ef8c17bde",
+        "checkpoint_step": 59600,
+        "vae_sha256": "3da8f81bca696732fd868e7745bb902807b4c1f01f8bc1d5d0ccc298fc881c7e",
+        "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+        "prediction_grid": "official_5day_20",
+        "inference_precision": "fp32",
+        "seed": 97,
+        "recovery": "independent original four logical shards; original sample seeds, FP32 and scoring preserved"
+      },
+      {
+        "status": "PASS",
+        "split": "ood-st_chopped",
+        "completed": 7024,
+        "expected": 7024,
+        "metrics": {
+          "nse": -3.960496010150348,
+          "rmse": 0.40301833465548026,
+          "R2": 0.27952968787730087,
+          "biasabs": 0.3120350444784836,
+          "nse_forest": -3.796292343998009,
+          "rmse_forest": 0.39204411627052393,
+          "R2_forest": 0.2729304132035253,
+          "biasabs_forest": 0.30017755593850576,
+          "nse_shrub": -3.7985201885067292,
+          "rmse_shrub": 0.3547112951583731,
+          "R2_shrub": 0.27863426793201385,
+          "biasabs_shrub": 0.26998205236518247,
+          "nse_grass": -4.443171542218197,
+          "rmse_grass": 0.42685737947279906,
+          "R2_grass": 0.27174192306899525,
+          "biasabs_grass": 0.337246050037966,
+          "nse_crop": -3.851370036775471,
+          "rmse_crop": 0.438460547720225,
+          "R2_crop": 0.2948121473046691,
+          "biasabs_crop": 0.3407345195722803,
+          "rmse_0_5": 0.34909155502017797,
+          "rmse_5_10": 0.3768232914836943,
+          "rmse_10_15": 0.3839225429341133,
+          "rmse_15_20": 0.412905135927508,
+          "rmse25": 0.34909155502017797
+        },
+        "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/sealed/best_val.pt",
+        "checkpoint_sha256": "97cc2d2396f5d45b43992ea64096090a709f0d3cb698f2d88cbd6d5ef8c17bde",
+        "checkpoint_step": 59600,
+        "vae_sha256": "3da8f81bca696732fd868e7745bb902807b4c1f01f8bc1d5d0ccc298fc881c7e",
+        "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+        "prediction_grid": "official_5day_20",
+        "inference_precision": "fp32",
+        "seed": 97,
+        "recovery": "independent original four logical shards; original sample seeds, FP32 and scoring preserved"
+      }
+    ],
+    "recovery": "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113",
+    "original_ood_s_exit_preserved": 1,
+    "after_evaluation": "GPU2/3 holder restoration governed by B-C0R lease"
+  },
+  "exit": {
+    "exit": 0,
+    "accepted": true,
+    "time": 1794578149.3118992
+  },
+  "lease": {
+    "schema": 1,
+    "status": "active",
+    "task": "B-C0R latest-boundary four-card continuation",
+    "owner_thread": "01a1c56f-85d0-7d32-92f0-d7def1a1a327",
+    "gpus": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "uuids": [
+      "GPU-bd4678ea-b9d5-e0aa-c89c-cf843d2a327d",
+      "GPU-9e587a71-8e1c-c7c5-f048-fcb0e04a6c51",
+      "GPU-27641db0-9e67-b359-5829-04d8225f42fb",
+      "GPU-22c26739-3951-ad13-95e6-246036db9b05"
+    ],
+    "holders": [
+      1483704,
+      1452807
+    ],
+    "holder_starts": {
+      "1483704": "82367002",
+      "1452807": "81889716"
+    },
+    "created": 1794576369.3959267,
+    "training_pid": 2377563,
+    "training_run": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_B_C0R916_4x4a2_20261114_03/B/formal",
+    "release_rule": "Only training owner atomically sets status=released after true training exit and no live training children; guard then restores holders after evaluation workers exit",
+    "allow_existing_evaluation": true,
+    "allow_new_evaluation_workers": false,
+    "training_start": "95666238",
+    "training_runtime": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B_C0R916_4x4a2_20261114_03",
+    "activated": 1794588043.0931387,
+    "torchrun_pid": 2279414,
+    "released": 1794587923.087943,
+    "training_exit": 0,
+    "previous_training_runtime": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B_C0R916_2x8a2_20261113_01",
+    "restored_holders": [
+      {
+        "gpu": 0,
+        "pid": 2376648,
+        "mode": "restarted",
+        "verified": true,
+        "cwd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B_C0R916_4x4a2_20261113_01",
+        "output": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B_C0R916_4x4a2_20261114_02/restored_holders/gpu0"
+      },
+      {
+        "gpu": 1,
+        "pid": 2376775,
+        "mode": "restarted",
+        "verified": true,
+        "cwd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112",
+        "output": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B_C0R916_4x4a2_20261114_02/restored_holders/gpu1"
+      },
+      {
+        "gpu": 2,
+        "pid": 1483704,
+        "mode": "resumed"
+      },
+      {
+        "gpu": 3,
+        "pid": 1452807,
+        "mode": "resumed"
+      }
+    ],
+    "resume_step": 1490
+  },
+  "splits": [
+    {
+      "split": "iid_chopped",
+      "completed": 2856,
+      "unique_ids": 2856,
+      "manifest_exact": true,
+      "history10_target20": true,
+      "eligible_pixel_count": 3561662,
+      "rank_exits": [
+        {
+          "rank": 0,
+          "scope": "covered by split torchrun exit0"
+        },
+        {
+          "rank": 1,
+          "scope": "covered by split torchrun exit0"
+        },
+        {
+          "rank": 2,
+          "scope": "covered by split torchrun exit0"
+        },
+        {
+          "rank": 3,
+          "scope": "covered by split torchrun exit0"
+        }
+      ]
+    },
+    {
+      "split": "ood-t_chopped",
+      "completed": 1904,
+      "unique_ids": 1904,
+      "manifest_exact": true,
+      "history10_target20": true,
+      "eligible_pixel_count": 2112698,
+      "rank_exits": [
+        {
+          "rank": 0,
+          "scope": "covered by split torchrun exit0"
+        },
+        {
+          "rank": 1,
+          "scope": "covered by split torchrun exit0"
+        },
+        {
+          "rank": 2,
+          "scope": "covered by split torchrun exit0"
+        },
+        {
+          "rank": 3,
+          "scope": "covered by split torchrun exit0"
+        }
+      ]
+    },
+    {
+      "split": "ood-s_chopped",
+      "completed": 10536,
+      "unique_ids": 10536,
+      "manifest_exact": true,
+      "history10_target20": true,
+      "eligible_pixel_count": 5773852,
+      "rank_exits": [
+        {
+          "rank": 0,
+          "receipt": {
+            "exit": 0,
+            "pid": 2225981,
+            "raw_wait_status": 0,
+            "source": "kernel wait status held by paused original parent",
+            "time": 1794577015.4869652
+          },
+          "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/exit_rank0.json"
+        },
+        {
+          "rank": 1,
+          "scope": "reused durable shard from original failed collective; no independent process exit0 claimed"
+        },
+        {
+          "rank": 2,
+          "scope": "reused durable shard from original failed collective; no independent process exit0 claimed"
+        },
+        {
+          "rank": 3,
+          "scope": "reused durable shard from original failed collective; no independent process exit0 claimed"
+        }
+      ]
+    },
+    {
+      "split": "ood-st_chopped",
+      "completed": 7024,
+      "unique_ids": 7024,
+      "manifest_exact": true,
+      "history10_target20": true,
+      "eligible_pixel_count": 3075226,
+      "rank_exits": [
+        {
+          "rank": 0,
+          "receipt": {
+            "exit": 0,
+            "pid": 2246480,
+            "time": 1794575746.9836469
+          },
+          "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/exit_rank0.json"
+        },
+        {
+          "rank": 1,
+          "receipt": {
+            "exit": 0,
+            "pid": 2246481,
+            "time": 1794575762.316489
+          },
+          "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/exit_rank1.json"
+        },
+        {
+          "rank": 2,
+          "receipt": {
+            "exit": 0,
+            "pid": 2266427,
+            "raw_wait_status": 0,
+            "source": "kernel wait status held by paused original parent",
+            "time": 1794578080.624075
+          },
+          "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/exit_rank2.json"
+        },
+        {
+          "rank": 3,
+          "receipt": {
+            "exit": 0,
+            "pid": 2266588,
+            "raw_wait_status": 0,
+            "source": "kernel wait status held by paused original parent",
+            "time": 1794578131.4416053
+          },
+          "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/exit_rank3.json"
+        }
+      ]
+    }
+  ],
+  "files": {
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/coverage_rank0.csv": {
+      "bytes": 42275,
+      "sha256": "21231541bde80468d57b2e2f2ddbd1c57dc158862a98a4ceb69ceb975c899a24"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/cube_landcover_rank0.csv": {
+      "bytes": 225794,
+      "sha256": "ae06984c9704e4b3dd4f2f3e5981a8a7fbf809f222e3aca3ea36e6683effe736"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/coverage_rank1.csv": {
+      "bytes": 42264,
+      "sha256": "d77f1ae4596ef979366856728a41d8d4d7c3e9e3f1e410d96375a43af6cc981f"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/cube_landcover_rank1.csv": {
+      "bytes": 234968,
+      "sha256": "527c99f0045d61630e07ba35223dd5f4e73d6a145ee94c1d0084425e65bb9209"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/coverage_rank2.csv": {
+      "bytes": 42277,
+      "sha256": "acd472760863469b0575db0f2d8d680c22c572238a12a55c8ff010ff3cd74868"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/cube_landcover_rank2.csv": {
+      "bytes": 224883,
+      "sha256": "46174d7c8e52f3576539f4f61d0dee0ce0283da3ab9269b8c05b49645369ecf2"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/coverage_rank3.csv": {
+      "bytes": 42272,
+      "sha256": "854dd8e558dc6ba55aa0f14ba270492d54221da8afb303b2a3d668cc827b4c07"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/cube_landcover_rank3.csv": {
+      "bytes": 239124,
+      "sha256": "e00d2edd6edc2495750ffa180760da74481527394b312a665f07d117428c5e61"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/coverage.csv": {
+      "bytes": 168998,
+      "sha256": "8e02a94a4b9e8cc013652d094a6f9424c5590fd3fbcd8bf00cd5160ae101c4fe"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/cube_landcover.csv": {
+      "bytes": 924544,
+      "sha256": "7a3b1d22b267b85d28fe54d87845750e83bb8992a98ba4d0f55519d4860ccb88"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/iid_chopped/result.json": {
+      "bytes": 1532,
+      "sha256": "55fc2930410d19a6d1bb4e427be147180d60cdc7299bb9964010ac188b54063c"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/exit_iid_chopped.json": {
+      "bytes": 1691,
+      "sha256": "3b45e8623a8c3131d025cd4494625b5c9cfec966ffcb28f0ab69200af10605a5"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/coverage_rank0.csv": {
+      "bytes": 29019,
+      "sha256": "db668c782dbc695489d6b307fe442cb8a4e1228e23a3777776a9fb3dccd1de47"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/cube_landcover_rank0.csv": {
+      "bytes": 137049,
+      "sha256": "ad7badb795a9b2d21a193ddba06a446cb0460b373c38cafbf437b665d65f7dee"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/coverage_rank1.csv": {
+      "bytes": 29053,
+      "sha256": "d36e7e564b5e6f3c7b44383dd3a043d6363c3a20adbed5a72600f3598a10a6d5"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/cube_landcover_rank1.csv": {
+      "bytes": 153955,
+      "sha256": "9623e39237f87b7283595718de3f9acef010edb97dafb5accf11fd0e675a900d"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/coverage_rank2.csv": {
+      "bytes": 29095,
+      "sha256": "261718c34d7c17f50d95366cf053441160ddf4e21bd854ff89da205924c72db5"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/cube_landcover_rank2.csv": {
+      "bytes": 154267,
+      "sha256": "45be7e8c6ea4ca184c77d25edd3b1654f99268e8abfba9d7151ea48f7af343e8"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/coverage_rank3.csv": {
+      "bytes": 29067,
+      "sha256": "6efce55149f8fced36e6dc0f0bce4cf9110527ec219d42eab0c925b56f0b987f"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/cube_landcover_rank3.csv": {
+      "bytes": 157934,
+      "sha256": "74d0a0dbaed21fdd96a2fc40ff6a461f5b6c8d735dfe0648cedf1ff093f0331a"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/coverage.csv": {
+      "bytes": 116144,
+      "sha256": "0e28e10e0b40bc211d5c2ebdfa1dde89bba1f83e5a7660844cb531ca873d9ab1"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/cube_landcover.csv": {
+      "bytes": 602980,
+      "sha256": "33d12bc76b98093ea98efe624f8e419ada5e1ff5e677e00f10ceb6d2b36ca0a7"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/ood-t_chopped/result.json": {
+      "bytes": 1533,
+      "sha256": "aea53397b5f1c686482578620b08945b3477bcba6cd1f860e741073c5f2a5796"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/exit_ood-t_chopped.json": {
+      "bytes": 1692,
+      "sha256": "f1fd0b7efa4345db075e0c35d146e59d81242cda13b063366409a46309c0c2bd"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/exit_rank0.json": {
+      "bytes": 152,
+      "sha256": "eb80fdd550d137f8c79ad73f603107eadd7c5e3d2f9862f093e4f2bad40e241f"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/coverage_rank0.csv": {
+      "bytes": 145583,
+      "sha256": "3ff4c7453f6a7bad9e495ef016902c6e52bbcee2a4af20cc73385d54d3ea1d3a"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/cube_landcover_rank0.csv": {
+      "bytes": 464221,
+      "sha256": "e57afbec8a28b9491157c38884e1f5c336714ad68beff7b9824f90a4b871a5cc"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/coverage_rank1.csv": {
+      "bytes": 145599,
+      "sha256": "3a06073b8998388eb4366fa73a2d111e329cfdc1e22da0c4a09aa41e97a77754"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/cube_landcover_rank1.csv": {
+      "bytes": 473001,
+      "sha256": "12617322addda0c8ebb967be0e6e38640a5bc2a363ad8a7548f5273815a73ddb"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/coverage_rank2.csv": {
+      "bytes": 145538,
+      "sha256": "6d06834492e4e384e96cb21752f352aec053ee8e6a1b2cf142fbff0c745570b0"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/cube_landcover_rank2.csv": {
+      "bytes": 448578,
+      "sha256": "3796985d169bc42b026708b9acc6215c6227726aacf7d7ab283a8f017f784dfb"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/coverage_rank3.csv": {
+      "bytes": 145589,
+      "sha256": "e2efda79091a31a5b6e81290498591f737bbd9704d723df1c24f5d050c37a413"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/cube_landcover_rank3.csv": {
+      "bytes": 476381,
+      "sha256": "0c2fa326425ba2d8fa1663c4402fc16dac7dc1e25d3395cc64c375d594298946"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/coverage.csv": {
+      "bytes": 582219,
+      "sha256": "a63ccc8b44cfd013942ac6a4d5d745740a84851dad0083c05291ddd411d1d9fa"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/cube_landcover.csv": {
+      "bytes": 1819159,
+      "sha256": "4352e94c0a4a6c87593927a2c12d4040ea51ac2d7f054cd4b43be26afd3efb0b"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-s_chopped/result.json": {
+      "bytes": 1645,
+      "sha256": "1d3211efe6bac189295e36e197bd3cb42f0215b535bc715fb05cc69b2e10adf2"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/exit_ood-s_chopped.json": {
+      "bytes": 65,
+      "sha256": "50e4c7117d9075d3d68e5fd6c84900c9bb30479739f58c3a8f15ab59e3249a82"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/exit_rank0.json": {
+      "bytes": 63,
+      "sha256": "627585831ccfddab694206081455c1cae30bcc6d72d2e92359af96b79fea57ac"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/coverage_rank0.csv": {
+      "bytes": 98498,
+      "sha256": "d9043841d8c7317ef77eca1ef325f240122171915c733590d36739ed864a407c"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/cube_landcover_rank0.csv": {
+      "bytes": 275228,
+      "sha256": "c22bfb6991fed4752c19c89d4d82399fe8c8c119aa2185bf3b034c2cdd96e6b0"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/exit_rank1.json": {
+      "bytes": 62,
+      "sha256": "d504b25d45b5428d323cbbe1f25babbacccb0f22acf70fc870e6dbe7d22e52c3"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/coverage_rank1.csv": {
+      "bytes": 98543,
+      "sha256": "e33fc02a9b9ea0a447f9fa635a76ab1c5056a8a17b29e6f979096058c6e8ade2"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/cube_landcover_rank1.csv": {
+      "bytes": 289290,
+      "sha256": "52deccccd529a9c76d120dbcfaf578862abfed8171e3790e751fa04547511b86"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/exit_rank2.json": {
+      "bytes": 151,
+      "sha256": "0b9fd51f6d45f9d4efd8653092088d182c7257cdfc803f138c7db803226d7a51"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/coverage_rank2.csv": {
+      "bytes": 98485,
+      "sha256": "0f119429b9349d3ddd68ff91e1532b34d117eeba17a15037d2811ee1f1a48367"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/cube_landcover_rank2.csv": {
+      "bytes": 272682,
+      "sha256": "8d499b510a7c08546e712a3ac25c08bf9dd47c3a3b3bb613b1e1b2e5a935429c"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/exit_rank3.json": {
+      "bytes": 152,
+      "sha256": "154861ef3791b261ad642044ffd2773837534cd69d4e10cee1456f96a6f44654"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/coverage_rank3.csv": {
+      "bytes": 98487,
+      "sha256": "0e0e7f0faf5a782855f72af400dcec288cabfbad2f3c79aed43301b52a23fa05"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/cube_landcover_rank3.csv": {
+      "bytes": 280955,
+      "sha256": "8f6f4aa9b8791accb0885e2383523eb3b287008b67edc1da13be404206ea8979"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/coverage.csv": {
+      "bytes": 393923,
+      "sha256": "d6c1560b139fabdd336546db67aa604f1e893773f38a283edfc656ddfde5fdc2"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/cube_landcover.csv": {
+      "bytes": 1091613,
+      "sha256": "e846edc86daa95cb11b10e743d09b18d7ceb05156f12eeef486c101913725f5d"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/ood-st_chopped/result.json": {
+      "bytes": 1641,
+      "sha256": "b5c80801357927e522ce217b12d3b9ce714335041419a48bda5d4b595d1cc7d8"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/exit_ood-st_chopped.json": {
+      "bytes": 65,
+      "sha256": "63d43c6b8fb2900a955ed53af979edc601264d40df04c6b2e6d2addc861843fc"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/evaluate.py": {
+      "bytes": 16978,
+      "sha256": "7572c4573e216810f92d4d2b5580fcb2f44632ccf45b748cb9049fe6247c4c6b"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/worker.py": {
+      "bytes": 15181,
+      "sha256": "8378c69eed782ee71a2107e407153e74c1e0eb617f7d4bca3507288645c8da58"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/aggregate.py": {
+      "bytes": 2021,
+      "sha256": "d2d6c30b34987881b507d05cf97bc6ff72e73ad83aa67d43a200a1a7d91fa343"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/cpu_acceptance.json": {
+      "bytes": 635,
+      "sha256": "d8e12f12a99be15fbeba40a948668b3340425c91e595a4b788e5839ac748679e"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/cpu_exit.json": {
+      "bytes": 45,
+      "sha256": "cf20ae752f38848b61fcf483d538d071b985957fa8047b7f3f1edf94a4700077"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/exit_ood-s_chopped.json": {
+      "bytes": 82,
+      "sha256": "a8befb1344432829f1aff6973d2d36d8d24109f55b60e0c89210caa6e5817702"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/preflight_exit.json": {
+      "bytes": 15,
+      "sha256": "769eeee53ad97740736371b400ef1ad1b664fdb4385e9c1ed5f9cbd49b203457"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/diagnosis.json": {
+      "bytes": 403,
+      "sha256": "29b0771276b7e1b4b3eeac26273af28ead6115f6ac86f1be8595559487ed6e56"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/summary.csv": {
+      "bytes": 2281,
+      "sha256": "72352fe6828769696c3703c1b15377cff4774d114563c20a683277b7525ac3e5"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/result.json": {
+      "bytes": 7331,
+      "sha256": "76d91871e8bd63d8728972f55c82006e6ab5d66b89122f6f21382c398c8f7917"
+    },
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/scorer/eval/greenearthnet_protocol.py": {
+      "bytes": 17661,
+      "sha256": "e0cc47ff794c80addda8053f0dcd4daabc9ba5e827938a8517b09c82fa8f3ed1"
+    }
+  },
+  "sources": {
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/evaluate.py": "\"\"\"Review-only VegeDiff training candidate. No process is launched on import.\"\"\"\nimport argparse, hashlib, json, math, os, random, shutil, sys, time\nfrom pathlib import Path\nimport numpy as np\nimport torch\nimport torch.distributed as dist\nfrom torch.nn.parallel import DistributedDataParallel as DDP\nfrom torch.utils.data import DataLoader, Dataset, DistributedSampler\nimport xarray as xr\nimport pandas as pd\nimport yaml\n\nB=Path('/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet')\nQ=B/'runtime/eo_chain_20261112'\nP=B/'EO_WM_public/greenearthnet_preflight'\nS=Q/'cpu_checks/vegediff_real_source'\nDATA=B/'runtime/spanworld_c1_parent14880_100ep_s27_s42_s97_20261109_oss_recovery/data/greenearthnet_public'\nVAE_CONFIG=B/'EO_WM_public/weights/995134fba369e8a62a05e77f6182f05bc3a9e304/eo-vae/model_config.yaml'\nsys.path.insert(0,str(S));sys.path.insert(0,str(P))\nSCORER_ROOT=Path(__file__).resolve().parent/'scorer'\nsys.path.insert(0,str(SCORER_ROOT))\nfrom eval.greenearthnet_protocol import compute_pixel_metrics, expected_prediction_times, OFFICIAL_EVALUATOR_COMMIT\nfrom eo_vae.models.new_autoencoder import EOFluxVAE\nfrom sgm.util import instantiate_from_config\nfrom sgm.modules.diffusionmodules.models.DiT import DiT\nfrom sgm.modules.diffusionmodules.wrappers import DiTWrapper\n\nBANDS=['s2_B02','s2_B03','s2_B04','s2_B8A']\nVARS=['fg','hu','pp','qq','rr','tg','tn','tx']\nMEANS=np.array([2.732927619847993,77.54440854529798,1014.330962704611,126.47924227500346,1.7713217310829938,8.90661030749754,4.770701430461286,13.567999825718509])\nSTDS=np.array([1.4870108944469236,13.511387994026359,10.262645403460999,97.05522895011327,4.147967261223076,9.75620252236597,9.044987677752898,11.08198777356161])\nclass Cubes(Dataset):\n    def __init__(self,split):\n        self.paths=sorted((DATA/split).rglob('*.nc'))\n        if not self.paths:raise RuntimeError('empty split '+split)\n    def __len__(self):return len(self.paths)\n    def __getitem__(self,index):\n        with xr.open_dataset(self.paths[index]) as ds:\n            arr=ds[BANDS].to_array('band').isel(time=slice(4,None,5)).transpose('time','band','lat','lon').values\n            dates=ds.time.isel(time=slice(4,None,5)).values\n            mask=ds.s2_dlmask.where(ds.s2_dlmask>0,4*(~ds.s2_SCL.isin([1,2,4,5,6,7]))).isel(time=slice(4,None,5)).transpose('time','lat','lon').values[:,None]\n            clear=(mask<1)&np.isfinite(arr).all(axis=1,keepdims=True)\n            arr=np.clip(np.nan_to_num(arr,nan=0),0,1)\n            mean=(arr[:10]*clear[:10]).sum(0)/(clear[:10].sum(0)+1e-8)\n            arr=np.where(clear,arr,mean[None])\n            e=ds[['eobs_'+v for v in VARS]].to_array('variable').transpose('time','variable')\n            e=(e-xr.DataArray(MEANS,dims=['variable'],coords={'variable':e.coords['variable'].values}))/xr.DataArray(STDS,dims=['variable'],coords={'variable':e.coords['variable'].values})\n            weather=np.concatenate([e.coarsen(time=5,coord_func='max').mean().values,e.coarsen(time=5,coord_func='max').min().values,e.coarsen(time=5,coord_func='max').max().values],axis=1)\n            static=ds[['nasa_dem','alos_dem','cop_dem','esawc_lc','geom_cls']].to_array('variable').transpose('variable','lat','lon').values/np.array([500,500,500,100,10])[:,None,None]\n            lc=ds.esawc_lc.values\n        valid=clear&((lc>=10)&(lc<=40))[None,None]\n        if arr.shape!=(30,4,128,128) or weather.shape!=(30,24) or static.shape!=(5,128,128) or len(np.unique(dates))!=30:raise RuntimeError('bad cube '+str(self.paths[index]))\n        return torch.from_numpy(arr.astype('float32')*2-1),torch.from_numpy(valid),torch.from_numpy(np.nan_to_num(weather,nan=0).astype('float32')),torch.from_numpy(np.nan_to_num(static,nan=0).astype('float32'))\n\ndef aggregate_rmse_lc(compact):\n    if not compact:raise RuntimeError('official scorer found no eligible validation pixels')\n    frame=pd.DataFrame(compact)\n    score=float(frame.groupby(['id','landcover']).rmse.mean().groupby('landcover').mean().mean())\n    if not math.isfinite(score):raise RuntimeError('nonfinite official RMSE_LC')\n    return score\n\ndef save(path,obj):\n    tmp=path.with_suffix(path.suffix+'.tmp');torch.save(obj,tmp);os.replace(tmp,path)\n\ndef main():\n    p=argparse.ArgumentParser()\n    p.add_argument('--vae-best',required=True,type=Path)\n    p.add_argument('--output',required=True,type=Path)\n    p.add_argument('--epochs',type=int,default=100)\n    p.add_argument('--per-gpu',type=int,default=8,choices=[2,4,8])\n    p.add_argument('--global-batch',type=int,default=32)\n    p.add_argument('--lr',type=float,default=5e-5)\n    p.add_argument('--seed',type=int,default=97)\n    p.add_argument('--val-every',type=int,default=10)\n    p.add_argument('--resume',type=Path)\n    p.add_argument('--short-steps',type=int,default=0)\n    p.add_argument('--skip-validation',action='store_true',help='diagnostic only')\n    p.add_argument('--cpu-static-check',action='store_true')\n    p.add_argument('--precision',choices=['fp32','bf16'],default='fp32')\n    p.add_argument('--encode-frames',type=int,choices=[1,4],default=1)\n    p.add_argument('--benchmark-steps',type=int,default=0)\n    p.add_argument('--eval-split',required=True,choices=['iid_chopped','ood-t_chopped','ood-s_chopped','ood-st_chopped'])\n    a=p.parse_args()\n    world=int(os.environ.get('WORLD_SIZE','1'));rank=int(os.environ.get('RANK','0'));local=int(os.environ.get('LOCAL_RANK','0'))\n    if a.cpu_static_check:\n        tr=Cubes('train');va=Cubes('val_chopped');x,m,w,s=tr[0]\n        assert (len(tr),len(va),x.shape,m.shape,w.shape,s.shape)==(23816,952,(30,4,128,128),(30,1,128,128),(30,24),(5,128,128))\n        print(json.dumps(dict(status='CPU_STATIC_PASS',train=len(tr),val=len(va),valid_target=int(m[10:].sum()))));return\n    if not a.vae_best.is_file():raise FileNotFoundError('new fine-tuned VAE best required: '+str(a.vae_best))\n    if world!=4:raise RuntimeError('formal candidate requires four ranks')\n    if a.global_batch!=world*a.per_gpu and a.short_steps==0:raise RuntimeError('formal global batch must equal four times per-GPU batch')\n    torch.cuda.set_device(local);device=torch.device('cuda',local);dist.init_process_group('nccl')\n    torch.manual_seed(a.seed+rank);np.random.seed(a.seed+rank);random.seed(a.seed+rank)\n    a.output.mkdir(parents=True,exist_ok=True)\n    frozen=a.output/'vae_frozen_best_val.pt'\n    if rank==0 and not frozen.exists():\n        tmp=frozen.with_suffix('.tmp');shutil.copyfile(a.vae_best,tmp);os.replace(tmp,frozen)\n    dist.barrier()\n    tr=Cubes('train');va=Cubes(a.eval_split)\n    manifest=[json.loads(x) for x in (Q/'evaluation_samples.jsonl').read_text().splitlines()]\n    records={str(Path(x['path']).resolve()):x for x in manifest if x['split']==a.eval_split}\n    if set(records)!=set(str(p.resolve()) for p in va.paths):raise RuntimeError('test manifest coverage mismatch')\n    ts=DistributedSampler(tr,num_replicas=world,rank=rank,shuffle=True,seed=a.seed,drop_last=False)\n    if len(tr)%world:raise RuntimeError('train split would be padded')\n    vs=DistributedSampler(va,num_replicas=world,rank=rank,shuffle=False,drop_last=False)\n    if len(va)%world:raise RuntimeError('validation split would be padded')\n    vl=DataLoader(va,batch_size=1,sampler=vs,num_workers=8,pin_memory=True,prefetch_factor=2,persistent_workers=True,multiprocessing_context='spawn')\n    loader=DataLoader(tr,batch_size=a.per_gpu,sampler=ts,drop_last=False,num_workers=8,pin_memory=True,prefetch_factor=2,persistent_workers=True,multiprocessing_context='spawn')\n    wl=torch.tensor([.490,.560,.665,.865],device=device)\n    vae=EOFluxVAE.from_config(str(VAE_CONFIG),ckpt_path=None,freeze_body=False,device=device,eval_mode=True)\n    with frozen.open('rb') as f:\n        digest=hashlib.sha256()\n        for chunk in iter(lambda:f.read(8*1024*1024),b''):digest.update(chunk)\n        vae_sha=digest.hexdigest()\n    state=torch.load(frozen,map_location='cpu',weights_only=False)\n    if 'model' not in state or 'best' not in state:raise RuntimeError('not a verified new VAE best checkpoint')\n    vae.load_state_dict(state['model'],strict=True)\n    vae.eval()\n    for q in vae.parameters():q.requires_grad_(False)\n    cfg=yaml.safe_load((S/'configs/train/diffusion/video_sd_rs_final_experi_2e-4.yaml').read_text())['diffusion']\n    params=cfg['network_config']['params'];params.update(in_channels=32,use_checkpoint=True)\n    model=DiT(**params).to(device)\n    if rank==0: print(json.dumps(dict(status='model_initialized',parameters=sum(p.numel() for p in model.parameters()),vae_sha256=vae_sha,per_gpu=a.per_gpu,global_batch=a.global_batch)),flush=True)\n    opt=torch.optim.AdamW(model.parameters(),lr=a.lr,betas=(.9,.999),weight_decay=.01,eps=1e-8)\n    step=0;start_epoch=0;best=float('inf')\n    if a.resume:\n        ck=torch.load(a.resume,map_location='cpu',weights_only=False)\n        if ck['vae_best_sha256']!=vae_sha or ck['world']!=world or ck['per_gpu']!=a.per_gpu:raise RuntimeError('resume config mismatch')\n        model.load_state_dict(ck['model'],strict=True);opt.load_state_dict(ck['optimizer'])\n        step,start_epoch,best=ck['step'],ck['epoch']+1,ck['best_rmse_lc']\n    ddp=DDP(model,device_ids=[local],output_device=local,find_unused_parameters=False,static_graph=True)\n    class PrecisionNet(torch.nn.Module):\n        def __init__(self,inner):\n            super().__init__();self.inner=inner\n        def forward(self,*args,**kwargs):\n            # Training DiT only. VAE, loss and validation keep FP32.\n            with torch.autocast('cuda',dtype=torch.bfloat16,enabled=a.precision=='bf16' and model.training):\n                return self.inner(*args,**kwargs).float()\n    if a.precision=='bf16' and not torch.cuda.is_bf16_supported():raise RuntimeError('BF16 unsupported')\n    net=PrecisionNet(DiTWrapper(ddp))\n    reference_net=DiTWrapper(model)\n    initial_step=step;local_updates=0;bench_start=None;checks={}\n    if rank==0:print(json.dumps(dict(status='resume_loaded',step=step,start_epoch=start_epoch,precision=a.precision,encode_frames=a.encode_frames)),flush=True)\n    denoiser=instantiate_from_config(cfg['denoiser_config'])\n    lossfn=instantiate_from_config(cfg['loss_fn_config'])\n    sampler=instantiate_from_config(cfg['sampler_config'])\n    for component in (denoiser,lossfn,sampler):\n        if isinstance(component,torch.nn.Module):component.to(device)\n    if hasattr(sampler,'device'):sampler.device=device\n    def cond(batch):return {'crossattn':batch['highres_condition_image'],'vector':batch['meso_condition_image']}\n    def encode(pixels):\n        with torch.no_grad():\n            parts=[]\n            for j in range(0,30,a.encode_frames):\n                x=pixels[:,j:j+a.encode_frames];bs,nt=x.shape[:2]\n                z=vae.encode_spatial_normalized(x.reshape(bs*nt,*x.shape[2:]),wl)\n                parts.append(z.reshape(bs,nt,*z.shape[1:]))\n            latent=torch.cat(parts,dim=1)\n            if a.benchmark_steps and a.encode_frames>1 and 'encoding_max_abs' not in checks:\n                ref=torch.cat([vae.encode_spatial_normalized(pixels[:,i],wl).unsqueeze(1) for i in range(30)],dim=1)\n                checks['encoding_max_abs']=float((latent-ref).abs().max())\n                checks['encoding_equivalent']=bool(torch.allclose(latent,ref,rtol=1e-4,atol=1e-4))\n                if not checks['encoding_equivalent']:raise RuntimeError('batched VAE latent equivalence failed')\n            return latent\n    def decode(z):\n        with torch.no_grad():return vae.decode_spatial_normalized(z.float(),wl)\n    def prepare(raw):\n        pixels,mask,weather,static=(v.to(device,non_blocking=True) for v in raw)\n        batch=dict(mask=mask,meso_condition_image=weather,highres_condition_image=static)\n        latent=encode(pixels)\n        with torch.no_grad():pastmean=vae.encode_spatial_normalized(pixels[:,:10].mean(1),wl)\n        return pixels,batch,latent,pastmean\n    from eval.greenearthnet_protocol import summarize_scores\n    def validate():\n        model.eval();compact=[];coverage=[]\n        metric_columns=['nnse','rmse','R2','biasabs','rmse_0_5','rmse_5_10','rmse_10_15','rmse_15_20']\n        with torch.no_grad():\n            for i,raw in enumerate(vl):\n                pixels,batch,latent,pastmean=prepare(raw)\n                c=cond(batch);uc={k:torch.zeros_like(v) for k,v in c.items()}\n                generator=torch.Generator(device=device).manual_seed(a.seed+rank+i*world)\n                noise=torch.randn(1,20*32,16,16,device=device,generator=generator)\n                def denoise(x,sigma,conditioning,past):return denoiser(net,past,x,sigma,conditioning)\n                out=sampler(denoise,noise,c,uc=uc,past_images=latent[:,:10],noise_image_num=20,past_weigth=.1).reshape(20,32,16,16)\n                pred=torch.cat([decode(out[j:j+1]) for j in range(20)],dim=0).clamp(-1,1)\n                rgbn=((pred.float().cpu().numpy()+1)/2).clip(0,1)\n                ndvi=np.clip((rgbn[:,3]-rgbn[:,2])/(rgbn[:,3]+rgbn[:,2]+1e-8),-1,1).astype('float32')\n                path=va.paths[i*world+rank]\n                with xr.open_dataset(path) as target:\n                    expected=np.asarray(records[str(path.resolve())]['target_dates'],dtype='datetime64[ns]')\n                    if not np.array_equal(expected,expected_prediction_times(target).values):raise RuntimeError('target dates changed')\n                    if not np.isfinite(ndvi).all():raise RuntimeError('nonfinite predicted NDVI')\n                    prediction=xr.Dataset({'ndvi_pred':xr.DataArray(ndvi,coords={'time':expected_prediction_times(target),'lat':target.lat,'lon':target.lon},dims=('time','lat','lon'))})\n                    frame=compute_pixel_metrics(target,prediction).reset_index()\n                sample_id=str(path.relative_to(DATA/a.eval_split))\n                coverage.append(dict(split=a.eval_split,id=sample_id,eligible_pixels=len(frame),seed=a.seed+rank+i*world))\n                if not frame.empty:\n                    frame['id']=sample_id;frame['R2']=frame.r**2;frame['biasabs']=frame.bias.abs()\n                    compact.extend(frame.groupby(['id','landcover'],as_index=False)[metric_columns].mean().to_dict('records'))\n                if i==0 or (i+1)%10==0 or i+1==len(vl):\n                    value=dict(status='evaluating',split=a.eval_split,rank=rank,completed=i+1,total=len(vl),time=time.time())\n                    tmp=a.output/f'progress_rank{rank}.tmp';tmp.write_text(json.dumps(value));os.replace(tmp,a.output/f'progress_rank{rank}.json')\n        pd.DataFrame(compact).to_csv(a.output/f'cube_landcover_rank{rank}.csv',index=False)\n        pd.DataFrame(coverage).to_csv(a.output/f'coverage_rank{rank}.csv',index=False)\n        gathered=[None]*world\n        dist.all_gather_object(gathered,compact)\n        if rank==0:\n            frame=pd.DataFrame([row for part in gathered for row in part])\n            # Nonlinear metrics were transformed before per-cube aggregation.\n            # sqrt(R2) and biasabs reconstruct inputs for the pinned official summarizer.\n            frame['r']=np.sqrt(frame.R2);frame['bias']=frame.biasabs\n            scores=summarize_scores(frame)\n            if not all(math.isfinite(scores[k]) for k in ['nse','rmse','R2','biasabs','rmse25']):raise RuntimeError('nonfinite aggregate metric')\n            score=scores['rmse']\n            frame.drop(columns=['r','bias']).to_csv(a.output/'cube_landcover.csv',index=False)\n            seen=pd.concat([pd.read_csv(a.output/f'coverage_rank{j}.csv') for j in range(world)],ignore_index=True)\n            if seen.id.duplicated().any() or set(seen.id)!=set(str(p.relative_to(DATA/a.eval_split)) for p in va.paths):raise RuntimeError('missing or repeated test cubes')\n            seen.to_csv(a.output/'coverage.csv',index=False)\n            h=hashlib.sha256()\n            with a.resume.open('rb') as f:\n                for block in iter(lambda:f.read(8*1024*1024),b''):h.update(block)\n            result=dict(status='PASS',split=a.eval_split,completed=len(seen),expected=len(va),metrics=scores,checkpoint=str(a.resume),checkpoint_sha256=h.hexdigest(),checkpoint_step=ck['step'],vae_sha256=vae_sha,scorer_commit=OFFICIAL_EVALUATOR_COMMIT,prediction_grid='official_5day_20',inference_precision='fp32',seed=a.seed)\n            (a.output/'result.json').write_text(json.dumps(result,indent=2))\n        else:score=0.0\n        scalar=torch.tensor(score,device=device,dtype=torch.float64)\n        dist.broadcast(scalar,src=0);model.train()\n        return scalar.item()\n    def checkpoint(path,epoch):\n        if rank==0:save(path,dict(model=model.state_dict(),optimizer=opt.state_dict(),step=step,epoch=epoch,best_rmse_lc=best,scorer_commit=OFFICIAL_EVALUATOR_COMMIT,vae_best=str(frozen.resolve()),vae_best_sha256=vae_sha,world=world,per_gpu=a.per_gpu,seed=a.seed,training_precision=a.precision,encode_frames=a.encode_frames))\n    try:\n        if not a.resume:raise RuntimeError('evaluation requires final best_val checkpoint')\n        validate()\n    finally:dist.destroy_process_group()\nif __name__=='__main__':main()\n",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/worker.py": "\"\"\"Review-only VegeDiff training candidate. No process is launched on import.\"\"\"\nimport argparse, hashlib, json, math, os, random, shutil, sys, time\nfrom pathlib import Path\nimport numpy as np\nimport torch\nimport torch.distributed as dist\nfrom torch.nn.parallel import DistributedDataParallel as DDP\nfrom torch.utils.data import DataLoader, Dataset, DistributedSampler\nimport xarray as xr\nimport pandas as pd\nimport yaml\n\nB=Path('/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet')\nQ=B/'runtime/eo_chain_20261112'\nP=B/'EO_WM_public/greenearthnet_preflight'\nS=Q/'cpu_checks/vegediff_real_source'\nDATA=B/'runtime/spanworld_c1_parent14880_100ep_s27_s42_s97_20261109_oss_recovery/data/greenearthnet_public'\nVAE_CONFIG=B/'EO_WM_public/weights/995134fba369e8a62a05e77f6182f05bc3a9e304/eo-vae/model_config.yaml'\nsys.path.insert(0,str(S));sys.path.insert(0,str(P))\nSCORER_ROOT=Path(__file__).resolve().parent/'scorer'\nsys.path.insert(0,str(SCORER_ROOT))\nfrom eval.greenearthnet_protocol import compute_pixel_metrics, expected_prediction_times, OFFICIAL_EVALUATOR_COMMIT\nfrom eo_vae.models.new_autoencoder import EOFluxVAE\nfrom sgm.util import instantiate_from_config\nfrom sgm.modules.diffusionmodules.models.DiT import DiT\nfrom sgm.modules.diffusionmodules.wrappers import DiTWrapper\n\nBANDS=['s2_B02','s2_B03','s2_B04','s2_B8A']\nVARS=['fg','hu','pp','qq','rr','tg','tn','tx']\nMEANS=np.array([2.732927619847993,77.54440854529798,1014.330962704611,126.47924227500346,1.7713217310829938,8.90661030749754,4.770701430461286,13.567999825718509])\nSTDS=np.array([1.4870108944469236,13.511387994026359,10.262645403460999,97.05522895011327,4.147967261223076,9.75620252236597,9.044987677752898,11.08198777356161])\nclass Cubes(Dataset):\n    def __init__(self,split):\n        self.paths=sorted((DATA/split).rglob('*.nc'))\n        if not self.paths:raise RuntimeError('empty split '+split)\n    def __len__(self):return len(self.paths)\n    def __getitem__(self,index):\n        with xr.open_dataset(self.paths[index]) as ds:\n            arr=ds[BANDS].to_array('band').isel(time=slice(4,None,5)).transpose('time','band','lat','lon').values\n            dates=ds.time.isel(time=slice(4,None,5)).values\n            mask=ds.s2_dlmask.where(ds.s2_dlmask>0,4*(~ds.s2_SCL.isin([1,2,4,5,6,7]))).isel(time=slice(4,None,5)).transpose('time','lat','lon').values[:,None]\n            clear=(mask<1)&np.isfinite(arr).all(axis=1,keepdims=True)\n            arr=np.clip(np.nan_to_num(arr,nan=0),0,1)\n            mean=(arr[:10]*clear[:10]).sum(0)/(clear[:10].sum(0)+1e-8)\n            arr=np.where(clear,arr,mean[None])\n            e=ds[['eobs_'+v for v in VARS]].to_array('variable').transpose('time','variable')\n            e=(e-xr.DataArray(MEANS,dims=['variable'],coords={'variable':e.coords['variable'].values}))/xr.DataArray(STDS,dims=['variable'],coords={'variable':e.coords['variable'].values})\n            weather=np.concatenate([e.coarsen(time=5,coord_func='max').mean().values,e.coarsen(time=5,coord_func='max').min().values,e.coarsen(time=5,coord_func='max').max().values],axis=1)\n            static=ds[['nasa_dem','alos_dem','cop_dem','esawc_lc','geom_cls']].to_array('variable').transpose('variable','lat','lon').values/np.array([500,500,500,100,10])[:,None,None]\n            lc=ds.esawc_lc.values\n        valid=clear&((lc>=10)&(lc<=40))[None,None]\n        if arr.shape!=(30,4,128,128) or weather.shape!=(30,24) or static.shape!=(5,128,128) or len(np.unique(dates))!=30:raise RuntimeError('bad cube '+str(self.paths[index]))\n        return torch.from_numpy(arr.astype('float32')*2-1),torch.from_numpy(valid),torch.from_numpy(np.nan_to_num(weather,nan=0).astype('float32')),torch.from_numpy(np.nan_to_num(static,nan=0).astype('float32'))\n\ndef aggregate_rmse_lc(compact):\n    if not compact:raise RuntimeError('official scorer found no eligible validation pixels')\n    frame=pd.DataFrame(compact)\n    score=float(frame.groupby(['id','landcover']).rmse.mean().groupby('landcover').mean().mean())\n    if not math.isfinite(score):raise RuntimeError('nonfinite official RMSE_LC')\n    return score\n\ndef save(path,obj):\n    tmp=path.with_suffix(path.suffix+'.tmp');torch.save(obj,tmp);os.replace(tmp,path)\n\ndef main():\n    p=argparse.ArgumentParser()\n    p.add_argument('--vae-best',required=True,type=Path)\n    p.add_argument('--output',required=True,type=Path)\n    p.add_argument('--epochs',type=int,default=100)\n    p.add_argument('--per-gpu',type=int,default=8,choices=[2,4,8])\n    p.add_argument('--global-batch',type=int,default=32)\n    p.add_argument('--lr',type=float,default=5e-5)\n    p.add_argument('--seed',type=int,default=97)\n    p.add_argument('--val-every',type=int,default=10)\n    p.add_argument('--resume',type=Path)\n    p.add_argument('--short-steps',type=int,default=0)\n    p.add_argument('--skip-validation',action='store_true',help='diagnostic only')\n    p.add_argument('--cpu-static-check',action='store_true')\n    p.add_argument('--precision',choices=['fp32','bf16'],default='fp32')\n    p.add_argument('--encode-frames',type=int,choices=[1,4],default=1)\n    p.add_argument('--benchmark-steps',type=int,default=0)\n    p.add_argument('--eval-split',required=True,choices=['iid_chopped','ood-t_chopped','ood-s_chopped','ood-st_chopped'])\n    a=p.parse_args()\n    world=int(os.environ.get('WORLD_SIZE','1'));rank=int(os.environ.get('RANK','0'));local=int(os.environ.get('LOCAL_RANK','0'))\n    if a.cpu_static_check:\n        tr=Cubes('train');va=Cubes('val_chopped');x,m,w,s=tr[0]\n        assert (len(tr),len(va),x.shape,m.shape,w.shape,s.shape)==(23816,952,(30,4,128,128),(30,1,128,128),(30,24),(5,128,128))\n        print(json.dumps(dict(status='CPU_STATIC_PASS',train=len(tr),val=len(va),valid_target=int(m[10:].sum()))));return\n    if not a.vae_best.is_file():raise FileNotFoundError('new fine-tuned VAE best required: '+str(a.vae_best))\n    if world!=4:raise RuntimeError('formal candidate requires four ranks')\n    if a.global_batch!=world*a.per_gpu and a.short_steps==0:raise RuntimeError('formal global batch must equal four times per-GPU batch')\n    torch.cuda.set_device(local);device=torch.device('cuda',local)\n    torch.manual_seed(a.seed+rank);np.random.seed(a.seed+rank);random.seed(a.seed+rank)\n    a.output.mkdir(parents=True,exist_ok=True)\n    frozen=a.output/'vae_frozen_best_val.pt'\n    if rank==0 and not frozen.exists():\n        tmp=frozen.with_suffix('.tmp');shutil.copyfile(a.vae_best,tmp);os.replace(tmp,frozen)\n    # Independent evaluation shard: no collective operations.\n    tr=Cubes('train');va=Cubes(a.eval_split)\n    manifest=[json.loads(x) for x in (Q/'evaluation_samples.jsonl').read_text().splitlines()]\n    records={str(Path(x['path']).resolve()):x for x in manifest if x['split']==a.eval_split}\n    if set(records)!=set(str(p.resolve()) for p in va.paths):raise RuntimeError('test manifest coverage mismatch')\n    ts=DistributedSampler(tr,num_replicas=world,rank=rank,shuffle=True,seed=a.seed,drop_last=False)\n    if len(tr)%world:raise RuntimeError('train split would be padded')\n    vs=DistributedSampler(va,num_replicas=world,rank=rank,shuffle=False,drop_last=False)\n    if len(va)%world:raise RuntimeError('validation split would be padded')\n    vl=DataLoader(va,batch_size=1,sampler=vs,num_workers=8,pin_memory=True,prefetch_factor=2,persistent_workers=True,multiprocessing_context='spawn')\n    loader=DataLoader(tr,batch_size=a.per_gpu,sampler=ts,drop_last=False,num_workers=8,pin_memory=True,prefetch_factor=2,persistent_workers=True,multiprocessing_context='spawn')\n    wl=torch.tensor([.490,.560,.665,.865],device=device)\n    vae=EOFluxVAE.from_config(str(VAE_CONFIG),ckpt_path=None,freeze_body=False,device=device,eval_mode=True)\n    with frozen.open('rb') as f:\n        digest=hashlib.sha256()\n        for chunk in iter(lambda:f.read(8*1024*1024),b''):digest.update(chunk)\n        vae_sha=digest.hexdigest()\n    state=torch.load(frozen,map_location='cpu',weights_only=False)\n    if 'model' not in state or 'best' not in state:raise RuntimeError('not a verified new VAE best checkpoint')\n    vae.load_state_dict(state['model'],strict=True)\n    vae.eval()\n    for q in vae.parameters():q.requires_grad_(False)\n    cfg=yaml.safe_load((S/'configs/train/diffusion/video_sd_rs_final_experi_2e-4.yaml').read_text())['diffusion']\n    params=cfg['network_config']['params'];params.update(in_channels=32,use_checkpoint=True)\n    model=DiT(**params).to(device)\n    if rank==0: print(json.dumps(dict(status='model_initialized',parameters=sum(p.numel() for p in model.parameters()),vae_sha256=vae_sha,per_gpu=a.per_gpu,global_batch=a.global_batch)),flush=True)\n    opt=torch.optim.AdamW(model.parameters(),lr=a.lr,betas=(.9,.999),weight_decay=.01,eps=1e-8)\n    step=0;start_epoch=0;best=float('inf')\n    if a.resume:\n        ck=torch.load(a.resume,map_location='cpu',weights_only=False)\n        if ck['vae_best_sha256']!=vae_sha or ck['world']!=world or ck['per_gpu']!=a.per_gpu:raise RuntimeError('resume config mismatch')\n        model.load_state_dict(ck['model'],strict=True);opt.load_state_dict(ck['optimizer'])\n        step,start_epoch,best=ck['step'],ck['epoch']+1,ck['best_rmse_lc']\n    ddp=model\n    class PrecisionNet(torch.nn.Module):\n        def __init__(self,inner):\n            super().__init__();self.inner=inner\n        def forward(self,*args,**kwargs):\n            # Training DiT only. VAE, loss and validation keep FP32.\n            with torch.autocast('cuda',dtype=torch.bfloat16,enabled=a.precision=='bf16' and model.training):\n                return self.inner(*args,**kwargs).float()\n    if a.precision=='bf16' and not torch.cuda.is_bf16_supported():raise RuntimeError('BF16 unsupported')\n    net=PrecisionNet(DiTWrapper(ddp))\n    reference_net=DiTWrapper(model)\n    initial_step=step;local_updates=0;bench_start=None;checks={}\n    if rank==0:print(json.dumps(dict(status='resume_loaded',step=step,start_epoch=start_epoch,precision=a.precision,encode_frames=a.encode_frames)),flush=True)\n    denoiser=instantiate_from_config(cfg['denoiser_config'])\n    lossfn=instantiate_from_config(cfg['loss_fn_config'])\n    sampler=instantiate_from_config(cfg['sampler_config'])\n    for component in (denoiser,lossfn,sampler):\n        if isinstance(component,torch.nn.Module):component.to(device)\n    if hasattr(sampler,'device'):sampler.device=device\n    def cond(batch):return {'crossattn':batch['highres_condition_image'],'vector':batch['meso_condition_image']}\n    def encode(pixels):\n        with torch.no_grad():\n            parts=[]\n            for j in range(0,30,a.encode_frames):\n                x=pixels[:,j:j+a.encode_frames];bs,nt=x.shape[:2]\n                z=vae.encode_spatial_normalized(x.reshape(bs*nt,*x.shape[2:]),wl)\n                parts.append(z.reshape(bs,nt,*z.shape[1:]))\n            latent=torch.cat(parts,dim=1)\n            if a.benchmark_steps and a.encode_frames>1 and 'encoding_max_abs' not in checks:\n                ref=torch.cat([vae.encode_spatial_normalized(pixels[:,i],wl).unsqueeze(1) for i in range(30)],dim=1)\n                checks['encoding_max_abs']=float((latent-ref).abs().max())\n                checks['encoding_equivalent']=bool(torch.allclose(latent,ref,rtol=1e-4,atol=1e-4))\n                if not checks['encoding_equivalent']:raise RuntimeError('batched VAE latent equivalence failed')\n            return latent\n    def decode(z):\n        with torch.no_grad():return vae.decode_spatial_normalized(z.float(),wl)\n    def prepare(raw):\n        pixels,mask,weather,static=(v.to(device,non_blocking=True) for v in raw)\n        batch=dict(mask=mask,meso_condition_image=weather,highres_condition_image=static)\n        latent=encode(pixels)\n        with torch.no_grad():pastmean=vae.encode_spatial_normalized(pixels[:,:10].mean(1),wl)\n        return pixels,batch,latent,pastmean\n    from eval.greenearthnet_protocol import summarize_scores\n    def validate():\n        model.eval();compact=[];coverage=[]\n        metric_columns=['nnse','rmse','R2','biasabs','rmse_0_5','rmse_5_10','rmse_10_15','rmse_15_20']\n        with torch.no_grad():\n            for i,raw in enumerate(vl):\n                pixels,batch,latent,pastmean=prepare(raw)\n                c=cond(batch);uc={k:torch.zeros_like(v) for k,v in c.items()}\n                generator=torch.Generator(device=device).manual_seed(a.seed+rank+i*world)\n                noise=torch.randn(1,20*32,16,16,device=device,generator=generator)\n                def denoise(x,sigma,conditioning,past):return denoiser(net,past,x,sigma,conditioning)\n                out=sampler(denoise,noise,c,uc=uc,past_images=latent[:,:10],noise_image_num=20,past_weigth=.1).reshape(20,32,16,16)\n                pred=torch.cat([decode(out[j:j+1]) for j in range(20)],dim=0).clamp(-1,1)\n                rgbn=((pred.float().cpu().numpy()+1)/2).clip(0,1)\n                ndvi=np.clip((rgbn[:,3]-rgbn[:,2])/(rgbn[:,3]+rgbn[:,2]+1e-8),-1,1).astype('float32')\n                path=va.paths[i*world+rank]\n                with xr.open_dataset(path) as target:\n                    expected=np.asarray(records[str(path.resolve())]['target_dates'],dtype='datetime64[ns]')\n                    if not np.array_equal(expected,expected_prediction_times(target).values):raise RuntimeError('target dates changed')\n                    if not np.isfinite(ndvi).all():raise RuntimeError('nonfinite predicted NDVI')\n                    prediction=xr.Dataset({'ndvi_pred':xr.DataArray(ndvi,coords={'time':expected_prediction_times(target),'lat':target.lat,'lon':target.lon},dims=('time','lat','lon'))})\n                    frame=compute_pixel_metrics(target,prediction).reset_index()\n                sample_id=str(path.relative_to(DATA/a.eval_split))\n                coverage.append(dict(split=a.eval_split,id=sample_id,eligible_pixels=len(frame),seed=a.seed+rank+i*world))\n                if not frame.empty:\n                    frame['id']=sample_id;frame['R2']=frame.r**2;frame['biasabs']=frame.bias.abs()\n                    compact.extend(frame.groupby(['id','landcover'],as_index=False)[metric_columns].mean().to_dict('records'))\n                if i==0 or (i+1)%10==0 or i+1==len(vl):\n                    value=dict(status='evaluating',split=a.eval_split,rank=rank,completed=i+1,total=len(vl),time=time.time())\n                    tmp=a.output/f'progress_rank{rank}.tmp';tmp.write_text(json.dumps(value));os.replace(tmp,a.output/f'progress_rank{rank}.json')\n        pd.DataFrame(compact).to_csv(a.output/f'cube_landcover_rank{rank}.csv',index=False)\n        pd.DataFrame(coverage).to_csv(a.output/f'coverage_rank{rank}.csv',index=False)\n        print(json.dumps(dict(status='SHARD_PASS',rank=rank,completed=len(coverage))),flush=True)\n        return 0.0\n    def checkpoint(path,epoch):\n        if rank==0:save(path,dict(model=model.state_dict(),optimizer=opt.state_dict(),step=step,epoch=epoch,best_rmse_lc=best,scorer_commit=OFFICIAL_EVALUATOR_COMMIT,vae_best=str(frozen.resolve()),vae_best_sha256=vae_sha,world=world,per_gpu=a.per_gpu,seed=a.seed,training_precision=a.precision,encode_frames=a.encode_frames))\n    try:\n        if not a.resume:raise RuntimeError('evaluation requires final best_val checkpoint')\n        validate()\n    finally:pass\nif __name__=='__main__':main()\n",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/aggregate.py": "from pathlib import Path\nimport os,json,sys,importlib.util,hashlib,math\nos.environ['CUDA_VISIBLE_DEVICES']=''\nR=Path(__file__).resolve().parent;E=R.parent\nspec=importlib.util.spec_from_file_location('recovery_eval',R/'worker.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\nimport pandas as pd,numpy as np\nfrom eval.greenearthnet_protocol import summarize_scores\nsplit=sys.argv[1];folder=R/split;ds=m.Cubes(split)\nframes=[];cover=[]\nfor rank in range(4):\n c=pd.read_csv(folder/f'coverage_rank{rank}.csv');f=pd.read_csv(folder/f'cube_landcover_rank{rank}.csv')\n ids=[str(p.relative_to(m.DATA/split)) for p in ds.paths[rank::4]]\n assert c.id.tolist()==ids and c.seed.tolist()==[97+i for i in range(rank,len(ds),4)]\n assert (c['split']==split).all() and not c.id.duplicated().any()\n assert set(f.id).issubset(set(ids)) and not f.duplicated(['id','landcover']).any()\n frames.append(f);cover.append(c)\nseen=pd.concat(cover,ignore_index=True);frame=pd.concat(frames,ignore_index=True)\nassert len(seen)==len(ds) and not seen.id.duplicated().any()\nframe['r']=np.sqrt(frame.R2);frame['bias']=frame.biasabs;scores=summarize_scores(frame)\nassert all(math.isfinite(scores[k]) for k in ['nse','rmse','R2','biasabs','rmse25'])\ndef sha(p):\n h=hashlib.sha256()\n with p.open('rb') as f:\n  for block in iter(lambda:f.read(8388608),b''):h.update(block)\n return h.hexdigest()\nref=json.loads((E/'iid_chopped/result.json').read_text())\nassert sha(E/'sealed/best_val.pt')==ref['checkpoint_sha256']\nassert sha(E/'sealed/vae_frozen_best_val.pt')==ref['vae_sha256']\nassert m.OFFICIAL_EVALUATOR_COMMIT==ref['scorer_commit']\nframe.drop(columns=['r','bias']).to_csv(folder/'cube_landcover.csv',index=False);seen.to_csv(folder/'coverage.csv',index=False)\nresult=dict(ref,split=split,completed=len(seen),expected=len(ds),metrics=scores,recovery='independent original four logical shards; original sample seeds, FP32 and scoring preserved')\n(folder/'result.json').write_text(json.dumps(result,indent=2));print(json.dumps(result))\n",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/cpu_acceptance.json": "{\n  \"status\": \"PASS\",\n  \"total\": 22320,\n  \"checks\": [\n    {\n      \"split\": \"iid_chopped\",\n      \"count\": 2856,\n      \"aggregation_max_abs\": 0.0\n    },\n    {\n      \"split\": \"ood-t_chopped\",\n      \"count\": 1904,\n      \"aggregation_max_abs\": 0.0\n    },\n    {\n      \"split\": \"ood-s_chopped\",\n      \"count\": 10536,\n      \"aggregation_max_abs\": 0.0\n    },\n    {\n      \"split\": \"ood-st_chopped\",\n      \"count\": 7024,\n      \"aggregation_max_abs\": 2.220446049250313e-16\n    }\n  ],\n  \"scorer_commit\": \"a0329636631371a4aaa9a95c75ed0a37d27b8c4f\",\n  \"scope\": \"CPU data/manifest/date/scorer acceptance; GPU inference waits for training completion\"\n}",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/cpu_exit.json": "{\n  \"exit\": 0,\n  \"time\": 1794503238.4355223\n}",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/exit_ood-s_chopped.json": "{\n  \"exit\": 1,\n  \"accepted\": false,\n  \"result\": {},\n  \"time\": 1794569919.8312778\n}",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/preflight_exit.json": "{\n  \"exit\": 0\n}",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113/diagnosis.json": "{\n  \"root_cause\": \"NCCL ALLGATHER 600000ms timeout: rank0 still at 2400/2634 while ranks1/2/3 finished; torchrun exit1, rank2 SIGABRT -6\",\n  \"reuse\": 7902,\n  \"recompute\": 2634,\n  \"next_split\": 7024,\n  \"protocol_unchanged\": true,\n  \"source_sha256\": \"7572c4573e216810f92d4d2b5580fcb2f44632ccf45b748cb9049fe6247c4c6b\",\n  \"worker_sha256\": \"8378c69eed782ee71a2107e407153e74c1e0eb617f7d4bca3507288645c8da58\"\n}",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/summary.csv": "split,completed,nse,rmse,R2,biasabs,nse_forest,rmse_forest,R2_forest,biasabs_forest,nse_shrub,rmse_shrub,R2_shrub,biasabs_shrub,nse_grass,rmse_grass,R2_grass,biasabs_grass,nse_crop,rmse_crop,R2_crop,biasabs_crop,rmse_0_5,rmse_5_10,rmse_10_15,rmse_15_20,rmse25\niid_chopped,2856,-3.9519601672131346,0.40426825363170515,0.2964565499561755,0.33092587632377096,-3.8058436997819705,0.3959336198818244,0.27364154040686384,0.321548389024051,-3.9657721231706864,0.36772665361135226,0.2899664934797514,0.29570224701749187,-4.397694236479111,0.4205222339050222,0.3021566175849958,0.3499706219728295,-3.6857580279779247,0.43289050712862176,0.3200615483530909,0.3564822472807114,0.3297283153061115,0.37753609486531947,0.3974390278392197,0.43193735449614334,0.3297283153061115\nood-t_chopped,1904,-3.865808790199857,0.38823982360538545,0.2884061846695188,0.30034151863071806,-3.7113339242173966,0.3784097001736484,0.2789355135495039,0.29206272803876876,-3.940857544931334,0.3647979962407442,0.2776845237225941,0.2740889423803198,-4.135248336807862,0.3953542024748098,0.29375168926658657,0.3106346698522329,-3.6977135765755085,0.41439739553233956,0.30325301213939054,0.3245797342515509,0.3410000614523401,0.3639533064499855,0.36805325871256633,0.39353513762270165,0.3410000614523401\nood-s_chopped,10536,-3.587141498244054,0.40314461667440826,0.2845762907328213,0.3192567518989699,-3.4217311973313604,0.39562492372348124,0.25406178536322915,0.3056787759733632,-3.733614692363796,0.3546924061923911,0.2921158186022335,0.2844335380158563,-4.182774098637463,0.43170633007855214,0.27669782792891345,0.3478669395792584,-3.11935964725157,0.43055480670320845,0.3154297310369093,0.33904775402740167,0.32520476971836526,0.36796462378439115,0.3992221249820231,0.43301291663191377,0.32520476971836526\nood-st_chopped,7024,-3.960496010150348,0.40301833465548026,0.27952968787730087,0.3120350444784836,-3.796292343998009,0.39204411627052393,0.2729304132035253,0.30017755593850576,-3.7985201885067292,0.3547112951583731,0.27863426793201385,0.26998205236518247,-4.443171542218197,0.42685737947279906,0.27174192306899525,0.337246050037966,-3.851370036775471,0.438460547720225,0.2948121473046691,0.3407345195722803,0.34909155502017797,0.3768232914836943,0.3839225429341133,0.412905135927508,0.34909155502017797\n",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/result.json": "{\n  \"status\": \"PASS\",\n  \"total\": 22320,\n  \"splits\": [\n    {\n      \"status\": \"PASS\",\n      \"split\": \"iid_chopped\",\n      \"completed\": 2856,\n      \"expected\": 2856,\n      \"metrics\": {\n        \"nse\": -3.9519601672131346,\n        \"rmse\": 0.40426825363170515,\n        \"R2\": 0.2964565499561755,\n        \"biasabs\": 0.33092587632377096,\n        \"nse_forest\": -3.8058436997819705,\n        \"rmse_forest\": 0.3959336198818244,\n        \"R2_forest\": 0.27364154040686384,\n        \"biasabs_forest\": 0.321548389024051,\n        \"nse_shrub\": -3.9657721231706864,\n        \"rmse_shrub\": 0.36772665361135226,\n        \"R2_shrub\": 0.2899664934797514,\n        \"biasabs_shrub\": 0.29570224701749187,\n        \"nse_grass\": -4.397694236479111,\n        \"rmse_grass\": 0.4205222339050222,\n        \"R2_grass\": 0.3021566175849958,\n        \"biasabs_grass\": 0.3499706219728295,\n        \"nse_crop\": -3.6857580279779247,\n        \"rmse_crop\": 0.43289050712862176,\n        \"R2_crop\": 0.3200615483530909,\n        \"biasabs_crop\": 0.3564822472807114,\n        \"rmse_0_5\": 0.3297283153061115,\n        \"rmse_5_10\": 0.37753609486531947,\n        \"rmse_10_15\": 0.3974390278392197,\n        \"rmse_15_20\": 0.43193735449614334,\n        \"rmse25\": 0.3297283153061115\n      },\n      \"checkpoint\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/sealed/best_val.pt\",\n      \"checkpoint_sha256\": \"97cc2d2396f5d45b43992ea64096090a709f0d3cb698f2d88cbd6d5ef8c17bde\",\n      \"checkpoint_step\": 59600,\n      \"vae_sha256\": \"3da8f81bca696732fd868e7745bb902807b4c1f01f8bc1d5d0ccc298fc881c7e\",\n      \"scorer_commit\": \"a0329636631371a4aaa9a95c75ed0a37d27b8c4f\",\n      \"prediction_grid\": \"official_5day_20\",\n      \"inference_precision\": \"fp32\",\n      \"seed\": 97\n    },\n    {\n      \"status\": \"PASS\",\n      \"split\": \"ood-t_chopped\",\n      \"completed\": 1904,\n      \"expected\": 1904,\n      \"metrics\": {\n        \"nse\": -3.865808790199857,\n        \"rmse\": 0.38823982360538545,\n        \"R2\": 0.2884061846695188,\n        \"biasabs\": 0.30034151863071806,\n        \"nse_forest\": -3.7113339242173966,\n        \"rmse_forest\": 0.3784097001736484,\n        \"R2_forest\": 0.2789355135495039,\n        \"biasabs_forest\": 0.29206272803876876,\n        \"nse_shrub\": -3.940857544931334,\n        \"rmse_shrub\": 0.3647979962407442,\n        \"R2_shrub\": 0.2776845237225941,\n        \"biasabs_shrub\": 0.2740889423803198,\n        \"nse_grass\": -4.135248336807862,\n        \"rmse_grass\": 0.3953542024748098,\n        \"R2_grass\": 0.29375168926658657,\n        \"biasabs_grass\": 0.3106346698522329,\n        \"nse_crop\": -3.6977135765755085,\n        \"rmse_crop\": 0.41439739553233956,\n        \"R2_crop\": 0.30325301213939054,\n        \"biasabs_crop\": 0.3245797342515509,\n        \"rmse_0_5\": 0.3410000614523401,\n        \"rmse_5_10\": 0.3639533064499855,\n        \"rmse_10_15\": 0.36805325871256633,\n        \"rmse_15_20\": 0.39353513762270165,\n        \"rmse25\": 0.3410000614523401\n      },\n      \"checkpoint\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/sealed/best_val.pt\",\n      \"checkpoint_sha256\": \"97cc2d2396f5d45b43992ea64096090a709f0d3cb698f2d88cbd6d5ef8c17bde\",\n      \"checkpoint_step\": 59600,\n      \"vae_sha256\": \"3da8f81bca696732fd868e7745bb902807b4c1f01f8bc1d5d0ccc298fc881c7e\",\n      \"scorer_commit\": \"a0329636631371a4aaa9a95c75ed0a37d27b8c4f\",\n      \"prediction_grid\": \"official_5day_20\",\n      \"inference_precision\": \"fp32\",\n      \"seed\": 97\n    },\n    {\n      \"status\": \"PASS\",\n      \"split\": \"ood-s_chopped\",\n      \"completed\": 10536,\n      \"expected\": 10536,\n      \"metrics\": {\n        \"nse\": -3.587141498244054,\n        \"rmse\": 0.40314461667440826,\n        \"R2\": 0.2845762907328213,\n        \"biasabs\": 0.3192567518989699,\n        \"nse_forest\": -3.4217311973313604,\n        \"rmse_forest\": 0.39562492372348124,\n        \"R2_forest\": 0.25406178536322915,\n        \"biasabs_forest\": 0.3056787759733632,\n        \"nse_shrub\": -3.733614692363796,\n        \"rmse_shrub\": 0.3546924061923911,\n        \"R2_shrub\": 0.2921158186022335,\n        \"biasabs_shrub\": 0.2844335380158563,\n        \"nse_grass\": -4.182774098637463,\n        \"rmse_grass\": 0.43170633007855214,\n        \"R2_grass\": 0.27669782792891345,\n        \"biasabs_grass\": 0.3478669395792584,\n        \"nse_crop\": -3.11935964725157,\n        \"rmse_crop\": 0.43055480670320845,\n        \"R2_crop\": 0.3154297310369093,\n        \"biasabs_crop\": 0.33904775402740167,\n        \"rmse_0_5\": 0.32520476971836526,\n        \"rmse_5_10\": 0.36796462378439115,\n        \"rmse_10_15\": 0.3992221249820231,\n        \"rmse_15_20\": 0.43301291663191377,\n        \"rmse25\": 0.32520476971836526\n      },\n      \"checkpoint\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/sealed/best_val.pt\",\n      \"checkpoint_sha256\": \"97cc2d2396f5d45b43992ea64096090a709f0d3cb698f2d88cbd6d5ef8c17bde\",\n      \"checkpoint_step\": 59600,\n      \"vae_sha256\": \"3da8f81bca696732fd868e7745bb902807b4c1f01f8bc1d5d0ccc298fc881c7e\",\n      \"scorer_commit\": \"a0329636631371a4aaa9a95c75ed0a37d27b8c4f\",\n      \"prediction_grid\": \"official_5day_20\",\n      \"inference_precision\": \"fp32\",\n      \"seed\": 97,\n      \"recovery\": \"independent original four logical shards; original sample seeds, FP32 and scoring preserved\"\n    },\n    {\n      \"status\": \"PASS\",\n      \"split\": \"ood-st_chopped\",\n      \"completed\": 7024,\n      \"expected\": 7024,\n      \"metrics\": {\n        \"nse\": -3.960496010150348,\n        \"rmse\": 0.40301833465548026,\n        \"R2\": 0.27952968787730087,\n        \"biasabs\": 0.3120350444784836,\n        \"nse_forest\": -3.796292343998009,\n        \"rmse_forest\": 0.39204411627052393,\n        \"R2_forest\": 0.2729304132035253,\n        \"biasabs_forest\": 0.30017755593850576,\n        \"nse_shrub\": -3.7985201885067292,\n        \"rmse_shrub\": 0.3547112951583731,\n        \"R2_shrub\": 0.27863426793201385,\n        \"biasabs_shrub\": 0.26998205236518247,\n        \"nse_grass\": -4.443171542218197,\n        \"rmse_grass\": 0.42685737947279906,\n        \"R2_grass\": 0.27174192306899525,\n        \"biasabs_grass\": 0.337246050037966,\n        \"nse_crop\": -3.851370036775471,\n        \"rmse_crop\": 0.438460547720225,\n        \"R2_crop\": 0.2948121473046691,\n        \"biasabs_crop\": 0.3407345195722803,\n        \"rmse_0_5\": 0.34909155502017797,\n        \"rmse_5_10\": 0.3768232914836943,\n        \"rmse_10_15\": 0.3839225429341133,\n        \"rmse_15_20\": 0.412905135927508,\n        \"rmse25\": 0.34909155502017797\n      },\n      \"checkpoint\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/sealed/best_val.pt\",\n      \"checkpoint_sha256\": \"97cc2d2396f5d45b43992ea64096090a709f0d3cb698f2d88cbd6d5ef8c17bde\",\n      \"checkpoint_step\": 59600,\n      \"vae_sha256\": \"3da8f81bca696732fd868e7745bb902807b4c1f01f8bc1d5d0ccc298fc881c7e\",\n      \"scorer_commit\": \"a0329636631371a4aaa9a95c75ed0a37d27b8c4f\",\n      \"prediction_grid\": \"official_5day_20\",\n      \"inference_precision\": \"fp32\",\n      \"seed\": 97,\n      \"recovery\": \"independent original four logical shards; original sample seeds, FP32 and scoring preserved\"\n    }\n  ],\n  \"recovery\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/recovery_20261113\",\n  \"original_ood_s_exit_preserved\": 1,\n  \"after_evaluation\": \"GPU2/3 holder restoration governed by B-C0R lease\"\n}",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/VegeDiff_EOVAE/evaluation/seed97/after_100ep_20261113/scorer/eval/greenearthnet_protocol.py": "\"\"\"GreenEarthNet CVPR 2024 evaluation protocol.\n\nThe formulas and aggregation order follow the authors' public ``eval.py`` at\ncommit ``a0329636631371a4aaa9a95c75ed0a37d27b8c4f``.  Keeping this evaluator\nseparate from the legacy EarthNet ENS scorer prevents the two protocols from\nbeing accidentally mixed in a paper table.\n\"\"\"\n\nfrom __future__ import annotations\n\nfrom pathlib import Path\nfrom typing import Any\n\nimport numpy as np\nimport pandas as pd\nimport xarray as xr\n\nfrom eval.table1_artifact_contract import (\n    PREDICTION_GRID_CLIMATOLOGY_DAILY,\n    PREDICTION_GRID_FIVE_DAILY_20,\n    VALID_PREDICTION_GRIDS,\n)\n\n\nOFFICIAL_REPOSITORY = \"https://github.com/vitusbenson/greenearthnet\"\nOFFICIAL_EVALUATOR_COMMIT = \"a0329636631371a4aaa9a95c75ed0a37d27b8c4f\"\nPREDICTION_VARIABLE = \"ndvi_pred\"\nVALID_SCL_CLASSES = (1, 2, 4, 5, 6, 7)\nOUTPERFORMANCE_THRESHOLDS = {\n    \"rmse\": 0.01,\n    \"nnse\": 0.05,\n    \"R2\": 0.05,\n    \"biasabs\": 0.01,\n}\n\n\ndef expected_prediction_times(\n    target: xr.Dataset,\n    *,\n    context_steps: int = 10,\n    target_steps: int = 20,\n    offset_days: int = 4,\n    stride_days: int = 5,\n) -> xr.DataArray:\n    \"\"\"Return the official 20 five-daily target timestamps.\"\"\"\n\n    if \"time\" not in target.coords:\n        raise ValueError(\"GreenEarthNet target has no time coordinate\")\n    sampled = target.time.isel(time=slice(offset_days, None, stride_days))\n    required = context_steps + target_steps\n    if sampled.size < required:\n        raise ValueError(\n            f\"GreenEarthNet target has only {sampled.size} five-daily steps; \"\n            f\"expected at least {required}\"\n        )\n    return sampled.isel(time=slice(context_steps, required))\n\n\ndef expected_climatology_prediction_times(target: xr.Dataset) -> xr.DataArray:\n    \"\"\"Return the exact public Climatology output grid.\n\n    The public GreenEarthNet ``model_pixelwise/climatology.py`` selects\n    ``targ.time.isel(time=slice(50, None))``.  This daily grid is intentionally\n    distinct from the 20 five-daily timestamps produced by Persistence and\n    learned predictors.  Keep the asymmetry explicit rather than silently\n    resampling one baseline to another grid.\n    \"\"\"\n\n    if \"time\" not in target.coords:\n        raise ValueError(\"GreenEarthNet target has no time coordinate\")\n    if int(target.sizes.get(\"time\", 0)) <= 50:\n        raise ValueError(\n            \"Official Climatology requires target timestamps from positional index 50\"\n        )\n    return target.time.isel(time=slice(50, None))\n\n\ndef expected_prediction_times_for_grid(\n    target: xr.Dataset,\n    prediction_grid: str,\n) -> xr.DataArray:\n    \"\"\"Return the only permitted target timestamps for a declared public grid.\"\"\"\n\n    if prediction_grid == PREDICTION_GRID_FIVE_DAILY_20:\n        return expected_prediction_times(target)\n    if prediction_grid == PREDICTION_GRID_CLIMATOLOGY_DAILY:\n        return expected_climatology_prediction_times(target)\n    raise ValueError(\n        f\"Unsupported GreenEarthNet prediction grid {prediction_grid!r}; \"\n        f\"expected one of {sorted(VALID_PREDICTION_GRIDS)}\"\n    )\n\n\ndef validate_prediction_dataset(\n    target: xr.Dataset,\n    prediction: xr.Dataset,\n    *,\n    prediction_name: str = PREDICTION_VARIABLE,\n    prediction_grid: str = PREDICTION_GRID_FIVE_DAILY_20,\n) -> None:\n    \"\"\"Reject malformed or temporally misaligned prediction files.\"\"\"\n\n    if prediction_name not in prediction:\n        raise KeyError(f\"Prediction is missing variable {prediction_name!r}\")\n    array = prediction[prediction_name]\n    if tuple(array.dims) != (\"time\", \"lat\", \"lon\"):\n        raise ValueError(\n            f\"{prediction_name} must use dims ('time','lat','lon'), got {array.dims}\"\n        )\n    expected = expected_prediction_times_for_grid(target, prediction_grid)\n    if array.sizes.get(\"time\") != expected.size:\n        raise ValueError(\n            f\"Prediction has {array.sizes.get('time')} target steps; \"\n            f\"expected {expected.size}\"\n        )\n    if not np.array_equal(array.time.values, expected.values):\n        raise ValueError(\"Prediction timestamps do not match the official target times\")\n    for coordinate in (\"lat\", \"lon\"):\n        if coordinate not in target.coords:\n            raise ValueError(f\"Target is missing coordinate {coordinate!r}\")\n        if not np.array_equal(array[coordinate].values, target[coordinate].values):\n            raise ValueError(f\"Prediction {coordinate} coordinate does not match target\")\n    values = np.asarray(array.values)\n    if np.isinf(values).any():\n        raise ValueError(\"Prediction contains infinite values\")\n\n\ndef official_clear_mask(target: xr.Dataset) -> xr.DataArray:\n    \"\"\"Evaluation-only clear-pixel mask from DL mask and Sentinel-2 SCL.\"\"\"\n\n    required = (\"s2_dlmask\", \"s2_SCL\")\n    missing = [name for name in required if name not in target]\n    if missing:\n        raise KeyError(f\"Target is missing official mask variables: {missing}\")\n    return (target.s2_dlmask < 1) & target.s2_SCL.isin(VALID_SCL_CLASSES)\n\n\ndef target_ndvi(target: xr.Dataset) -> xr.DataArray:\n    missing = [name for name in (\"s2_B8A\", \"s2_B04\") if name not in target]\n    if missing:\n        raise KeyError(f\"Target is missing NDVI bands: {missing}\")\n    return ((target.s2_B8A - target.s2_B04) / (\n        target.s2_B8A + target.s2_B04 + 1e-8\n    )).clip(-1, 1)\n\n\ndef compute_pixel_metrics(\n    target: xr.Dataset,\n    prediction: xr.Dataset,\n    *,\n    prediction_name: str = PREDICTION_VARIABLE,\n    prediction_grid: str = PREDICTION_GRID_FIVE_DAILY_20,\n    subset_hq: bool = True,\n    validate: bool = True,\n) -> pd.DataFrame:\n    \"\"\"Compute official per-pixel metrics for one minicube.\"\"\"\n\n    if validate:\n        validate_prediction_dataset(\n            target,\n            prediction,\n            prediction_name=prediction_name,\n            prediction_grid=prediction_grid,\n        )\n    for name in (\"esawc_lc\", \"geom_cls\", \"cop_dem\"):\n        if name not in target:\n            raise KeyError(f\"Target is missing official evaluator variable {name!r}\")\n\n    mask_full = official_clear_mask(target)\n    mask = mask_full.sel(time=prediction.time)\n    ndvi_full = target_ndvi(target).where(mask_full)\n    ndvi_true = ndvi_full.sel(time=prediction.time)\n    ndvi_pred = prediction[prediction_name].clip(-1, 1).fillna(0.5)\n\n    squared_error = (ndvi_true - ndvi_pred) ** 2\n    mse = squared_error.mean(\"time\")\n    target_mean = ndvi_true.mean(\"time\")\n    target_variation = ((ndvi_true - target_mean) ** 2).sum(\"time\")\n    nse = 1.0 - squared_error.sum(\"time\") / target_variation\n\n    metrics: dict[str, xr.DataArray] = {\n        # The official implementation stores normalized NSE per pixel, then\n        # reverses the transform only after land-cover-balanced aggregation.\n        \"nnse\": 1.0 / (2.0 - nse),\n        \"n_obs_full\": mask_full.sum(\"time\"),\n        \"n_obs\": mask.sum(\"time\"),\n        \"sigma_targ\": ndvi_true.std(\"time\"),\n        \"sigma_pred\": ndvi_pred.where(mask).std(\"time\"),\n        \"bias\": ndvi_true.mean(\"time\") - ndvi_pred.where(mask).mean(\"time\"),\n        \"min_ndvi_targ\": ndvi_full.min(\"time\"),\n        \"rmse\": mse ** 0.5,\n        \"r\": xr.corr(ndvi_true, ndvi_pred, dim=\"time\"),\n        \"landcover\": target.esawc_lc,\n        \"geom\": target.geom_cls,\n        \"cop_dem\": target.cop_dem,\n    }\n    for start in (0, 5, 10, 15):\n        metrics[f\"rmse_{start}_{start + 5}\"] = (\n            squared_error.isel(time=slice(start, start + 5)).mean(\"time\") ** 0.5\n        )\n\n    frame = (\n        xr.Dataset(metrics)\n        .to_dataframe()\n        .drop(columns=\"sentinel:product_id\", errors=\"ignore\")\n    )\n    if subset_hq:\n        frame = frame[\n            (frame.landcover < 41)\n            & (frame.min_ndvi_targ > 0.0)\n            & (frame.n_obs >= 10)\n            & ((frame.n_obs_full - frame.n_obs) >= 3)\n            & (frame.sigma_targ > 0.1)\n        ]\n    return frame\n\n\ndef score_cube_paths(\n    target_path: str | Path,\n    prediction_path: str | Path,\n    *,\n    prediction_name: str = PREDICTION_VARIABLE,\n    prediction_grid: str = PREDICTION_GRID_FIVE_DAILY_20,\n) -> pd.DataFrame:\n    target_path = Path(target_path)\n    prediction_path = Path(prediction_path)\n    with xr.open_dataset(target_path) as target, xr.open_dataset(prediction_path) as prediction:\n        frame = compute_pixel_metrics(\n            target,\n            prediction,\n            prediction_name=prediction_name,\n            prediction_grid=prediction_grid,\n        ).reset_index()\n    frame[\"id\"] = target_path.stem\n    frame[\"season\"] = target_path.parent.stem\n    return frame\n\n\ndef summarize_scores(\n    frame: pd.DataFrame,\n    comparison: pd.DataFrame | None = None,\n) -> dict[str, float]:\n    \"\"\"Apply the official cube/land-cover-balanced aggregation order.\"\"\"\n\n    if frame.empty:\n        raise ValueError(\"No eligible GreenEarthNet pixels were scored\")\n    required = {\n        \"id\", \"landcover\", \"nnse\", \"rmse\", \"r\", \"bias\",\n        \"rmse_0_5\", \"rmse_5_10\", \"rmse_10_15\", \"rmse_15_20\",\n    }\n    missing = sorted(required - set(frame.columns))\n    if missing:\n        raise KeyError(f\"Score frame is missing columns: {missing}\")\n\n    nnse_lc = _landcover_balanced(frame, \"nnse\")\n    rmse_lc = _landcover_balanced(frame, \"rmse\")\n    r2_lc = _landcover_balanced(frame.assign(R2=frame.r ** 2), \"R2\")\n    biasabs_lc = _landcover_balanced(frame.assign(biasabs=frame.bias.abs()), \"biasabs\")\n    result: dict[str, float] = {\n        \"nse\": float(2.0 - 1.0 / nnse_lc.mean()),\n        \"rmse\": float(rmse_lc.mean()),\n        \"R2\": float(r2_lc.mean()),\n        \"biasabs\": float(biasabs_lc.mean()),\n    }\n\n    for label, code in ((\"forest\", 10), (\"shrub\", 20), (\"grass\", 30), (\"crop\", 40)):\n        if code in nnse_lc.index:\n            result[f\"nse_{label}\"] = float(2.0 - 1.0 / nnse_lc.loc[code])\n            result[f\"rmse_{label}\"] = float(rmse_lc.loc[code])\n            result[f\"R2_{label}\"] = float(r2_lc.loc[code])\n            result[f\"biasabs_{label}\"] = float(biasabs_lc.loc[code])\n\n    for start in (0, 5, 10, 15):\n        key = f\"rmse_{start}_{start + 5}\"\n        result[key] = float(_landcover_balanced(frame, key).mean())\n\n    if comparison is not None:\n        result.update(_outperformance_metrics(frame, comparison))\n        result[\"outperformance\"] = result[\"gain_outperform\"]\n    result[\"rmse25\"] = result[\"rmse_0_5\"]\n    return result\n\n\ndef summarize_score_parquets(\n    score_dir: str | Path,\n    comparison_score_dir: str | Path | None = None,\n) -> dict[str, float]:\n    \"\"\"Memory-bounded official aggregation over per-region Parquet files.\"\"\"\n\n    score_paths = sorted(Path(score_dir).glob(\"scores_en21x_*.parquet\"))\n    if not score_paths:\n        raise FileNotFoundError(f\"No GreenEarthNet score Parquets under {score_dir}\")\n\n    cube_landcover_frames = []\n    for path in score_paths:\n        frame = pd.read_parquet(path)\n        frame = frame.assign(R2=frame.r ** 2, biasabs=frame.bias.abs())\n        columns = [\n            \"nnse\", \"rmse\", \"R2\", \"biasabs\",\n            \"rmse_0_5\", \"rmse_5_10\", \"rmse_10_15\", \"rmse_15_20\",\n        ]\n        cube_landcover_frames.append(\n            frame.groupby([\"season\", \"id\", \"landcover\"], as_index=False)[columns].mean()\n        )\n    cube_landcover = pd.concat(cube_landcover_frames, ignore_index=True)\n    # A minicube is uniquely (season, id): chopped tracks legitimately repeat a\n    # stem across season-year regions. Fail only on a true duplicate of that key.\n    if cube_landcover.duplicated([\"season\", \"id\", \"landcover\"]).any():\n        raise ValueError(\"Duplicate season/id/landcover groups across score Parquets\")\n\n    by_landcover = cube_landcover.groupby(\"landcover\").mean(numeric_only=True)\n    result: dict[str, float] = {\n        \"nse\": float(2.0 - 1.0 / by_landcover.nnse.mean()),\n        \"rmse\": float(by_landcover.rmse.mean()),\n        \"R2\": float(by_landcover.R2.mean()),\n        \"biasabs\": float(by_landcover.biasabs.mean()),\n    }\n    for label, code in ((\"forest\", 10), (\"shrub\", 20), (\"grass\", 30), (\"crop\", 40)):\n        if code in by_landcover.index:\n            row = by_landcover.loc[code]\n            result[f\"nse_{label}\"] = float(2.0 - 1.0 / row.nnse)\n            result[f\"rmse_{label}\"] = float(row.rmse)\n            result[f\"R2_{label}\"] = float(row.R2)\n            result[f\"biasabs_{label}\"] = float(row.biasabs)\n    for start in (0, 5, 10, 15):\n        key = f\"rmse_{start}_{start + 5}\"\n        result[key] = float(by_landcover[key].mean())\n\n    if comparison_score_dir is not None:\n        gain_frames = []\n        comparison_root = Path(comparison_score_dir)\n        for model_path in score_paths:\n            baseline_path = comparison_root / model_path.name\n            if not baseline_path.is_file():\n                raise FileNotFoundError(\n                    f\"Missing comparison score Parquet: {baseline_path}\"\n                )\n            model = pd.read_parquet(model_path)\n            baseline = pd.read_parquet(baseline_path)\n            index = [\"lon\", \"lat\", \"id\", \"season\", \"landcover\"]\n            model = model.set_index(index).sort_index()\n            baseline = baseline.set_index(index).sort_index()\n            if not model.index.equals(baseline.index):\n                raise ValueError(\n                    f\"Model/baseline eligible pixels differ for {model_path.name}\"\n                )\n            gains = pd.DataFrame(\n                {\n                    \"nnse\": -1.0 / model.nnse + 1.0 / baseline.nnse,\n                    \"R2\": model.r ** 2 - baseline.r ** 2,\n                    \"rmse\": baseline.rmse - model.rmse,\n                    \"biasabs\": baseline.bias.abs() - model.bias.abs(),\n                }\n            ).reset_index()\n            gain_frames.append(\n                gains.groupby([\"id\", \"landcover\"], as_index=False)[\n                    [\"nnse\", \"R2\", \"rmse\", \"biasabs\"]\n                ].mean()\n            )\n        gain_frame = pd.concat(gain_frames, ignore_index=True)\n        if gain_frame.duplicated([\"id\", \"landcover\"]).any():\n            raise ValueError(\"Duplicate gain groups across comparison Parquets\")\n        gain_lc = gain_frame.groupby(\"landcover\").mean(numeric_only=True)\n        for name in (\"nnse\", \"R2\", \"rmse\", \"biasabs\"):\n            result[f\"gain_{name}_mean\"] = float(gain_lc[name].mean())\n        wins = sum(\n            (gain_frame[name] > threshold).astype(float)\n            for name, threshold in OUTPERFORMANCE_THRESHOLDS.items()\n        )\n        result[\"gain_outperform\"] = float((wins > 2).mean())\n        result[\"outperformance\"] = result[\"gain_outperform\"]\n\n    result[\"rmse25\"] = result[\"rmse_0_5\"]\n    return result\n\n\ndef _landcover_balanced(frame: pd.DataFrame, column: str) -> pd.Series:\n    return frame.groupby([\"id\", \"landcover\"])[column].mean().groupby(\"landcover\").mean()\n\n\ndef _outperformance_metrics(\n    frame: pd.DataFrame,\n    comparison: pd.DataFrame,\n) -> dict[str, float]:\n    index = [\"lon\", \"lat\", \"id\", \"season\", \"landcover\"]\n    required = set(index) | {\"nnse\", \"r\", \"rmse\", \"bias\"}\n    for name, candidate in ((\"model\", frame), (\"comparison\", comparison)):\n        missing = sorted(required - set(candidate.columns))\n        if missing:\n            raise KeyError(f\"{name} score frame is missing columns: {missing}\")\n\n    model = frame.set_index(index).sort_index()\n    baseline = comparison.set_index(index).sort_index()\n    common = model.index.intersection(baseline.index)\n    if common.empty:\n        raise ValueError(\"Model and comparison scores have no aligned pixels\")\n    model = model.loc[common]\n    baseline = baseline.loc[common]\n    gains = {\n        \"nnse\": -1.0 / model.nnse + 1.0 / baseline.nnse,\n        \"R2\": model.r ** 2 - baseline.r ** 2,\n        \"rmse\": baseline.rmse - model.rmse,\n        \"biasabs\": baseline.bias.abs() - model.bias.abs(),\n    }\n    output: dict[str, float] = {}\n    grouped_gains = {}\n    for name, values in gains.items():\n        grouped = values.groupby([\"id\", \"landcover\"]).mean()\n        grouped_gains[name] = grouped\n        output[f\"gain_{name}_mean\"] = float(grouped.groupby(\"landcover\").mean().mean())\n\n    wins = sum(\n        (grouped_gains[name] > threshold).astype(float)\n        for name, threshold in OUTPERFORMANCE_THRESHOLDS.items()\n    )\n    output[\"gain_outperform\"] = float((wins > 2).mean())\n    return output\n\n\ndef rgbn_to_ndvi(\n    prediction: np.ndarray,\n    *,\n    red_index: int = 2,\n    nir_index: int = 3,\n) -> np.ndarray:\n    \"\"\"Convert ``[T,C,H,W]`` RGBN reflectance to clipped NDVI.\"\"\"\n\n    array = np.asarray(prediction, dtype=np.float32)\n    if array.ndim != 4:\n        raise ValueError(f\"Expected prediction [T,C,H,W], got {array.shape}\")\n    if max(red_index, nir_index) >= array.shape[1]:\n        raise ValueError(\"Red/NIR index is outside the prediction channel dimension\")\n    red = array[:, red_index]\n    nir = array[:, nir_index]\n    ndvi = (nir - red) / (nir + red + 1e-8)\n    return np.clip(ndvi, -1.0, 1.0).astype(np.float32)\n\n\ndef make_prediction_dataset(\n    target: xr.Dataset,\n    prediction_rgbn: np.ndarray,\n    *,\n    red_index: int = 2,\n    nir_index: int = 3,\n) -> xr.Dataset:\n    ndvi = rgbn_to_ndvi(\n        prediction_rgbn,\n        red_index=red_index,\n        nir_index=nir_index,\n    )\n    times = expected_prediction_times(target)\n    expected_shape = (times.size, target.sizes[\"lat\"], target.sizes[\"lon\"])\n    if ndvi.shape != expected_shape:\n        raise ValueError(f\"NDVI prediction shape={ndvi.shape}, expected={expected_shape}\")\n    return xr.Dataset(\n        {\n            PREDICTION_VARIABLE: xr.DataArray(\n                ndvi,\n                coords={\"time\": times, \"lat\": target.lat, \"lon\": target.lon},\n                dims=(\"time\", \"lat\", \"lon\"),\n            )\n        }\n    )\n"
+  },
+  "checkpoint_sha256": "97cc2d2396f5d45b43992ea64096090a709f0d3cb698f2d88cbd6d5ef8c17bde",
+  "vae_sha256": "3da8f81bca696732fd868e7745bb902807b4c1f01f8bc1d5d0ccc298fc881c7e",
+  "date_mask_scope": "Exact manifest coverage and lengths independently checked; target-date equality and finite NDVI enforced per sample by executed worker; raw target and mask delegated unchanged to pinned compute_pixel_metrics; no new inference or full raw-NetCDF rescan.",
+  "status": "PASS",
+  "local_archive_checks": {
+    "summary_csv_byte_hash_matches_server": true,
+    "metric_values_verified": 100,
+    "A08_existing_rows_verified": 4,
+    "new_inference": false
+  }
+}

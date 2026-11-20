@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "time": "2026-11-15 17:49",
+  "real_exit": 0,
+  "paired_samples": 2837,
+  "per_sample_rows": 11348,
+  "csv_sha_verified": true,
+  "exact_accepted_receiver_set_verified": true,
+  "aggregation_recomputed": true,
+  "models": {
+    "C1": {
+      "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+      "epoch": 51,
+      "step": 37995,
+      "seed": 42,
+      "variant": "D",
+      "arm": "C1"
+    },
+    "C0R": {
+      "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+      "epoch": 19,
+      "step": 14155,
+      "seed": 42,
+      "variant": "D",
+      "arm": "C0R"
+    }
+  }
+}

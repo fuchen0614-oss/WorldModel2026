@@ -1,0 +1,104 @@
+{
+  "status": "candidate_set_not_final_selection",
+  "candidate_count": 1340,
+  "quantiles": [
+    0.02,
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    0.9,
+    0.95,
+    0.98
+  ],
+  "coverage_min": 0.4,
+  "metric": "C0R minus C1 receiver pooled suffix MSE, path 15+35",
+  "selected": [
+    {
+      "dataset_index": 1340,
+      "receiver_id": "MAM19/minicube_239_34VCL_59.24_18.52.nc",
+      "coverage": 0.4069091796875,
+      "c1_mse": 0.0653590659056112,
+      "c0r_mse": 0.04905636875475076,
+      "benefit": -0.016302697150860447,
+      "candidate_alias": "new_Q2",
+      "quantile": 0.02
+    },
+    {
+      "dataset_index": 2035,
+      "receiver_id": "MJJ19/minicube_221_34TEL_40.70_21.85.nc",
+      "coverage": 0.884259033203125,
+      "c1_mse": 0.02236595905020401,
+      "c0r_mse": 0.01862283107367586,
+      "benefit": -0.003743127976528149,
+      "candidate_alias": "new_Q10",
+      "quantile": 0.1
+    },
+    {
+      "dataset_index": 587,
+      "receiver_id": "JAS19/minicube_203_34TCL_41.47_19.52.nc",
+      "coverage": 0.544818115234375,
+      "c1_mse": 0.01442110012435601,
+      "c0r_mse": 0.014038948318144518,
+      "benefit": -0.0003821518062114924,
+      "candidate_alias": "new_Q25",
+      "quantile": 0.25
+    },
+    {
+      "dataset_index": 1891,
+      "receiver_id": "MJJ18/minicube_89_31UGS_50.75_7.36.nc",
+      "coverage": 0.574481201171875,
+      "c1_mse": 0.015634198752791394,
+      "c0r_mse": 0.018029023894691406,
+      "benefit": 0.0023948251419000123,
+      "candidate_alias": "new_Q50",
+      "quantile": 0.5
+    },
+    {
+      "dataset_index": 617,
+      "receiver_id": "JAS19/minicube_230_34TFN_42.76_22.81.nc",
+      "coverage": 0.639129638671875,
+      "c1_mse": 0.014286987338566776,
+      "c0r_mse": 0.02063358631834387,
+      "benefit": 0.006346598979777095,
+      "candidate_alias": "new_Q75",
+      "quantile": 0.75
+    },
+    {
+      "dataset_index": 1491,
+      "receiver_id": "MJJ17/minicube_15_29TPH_42.42_-7.23.nc",
+      "coverage": 0.556512451171875,
+      "c1_mse": 0.009136795071312237,
+      "c0r_mse": 0.0225041614425325,
+      "benefit": 0.013367366371220261,
+      "candidate_alias": "new_Q90",
+      "quantile": 0.9
+    },
+    {
+      "dataset_index": 2275,
+      "receiver_id": "SON17/minicube_223_34TEL_40.70_21.54.nc",
+      "coverage": 0.497137451171875,
+      "c1_mse": 0.007813753480901069,
+      "c0r_mse": 0.029403365200901338,
+      "benefit": 0.02158961172000027,
+      "candidate_alias": "new_Q95",
+      "quantile": 0.95
+    },
+    {
+      "dataset_index": 635,
+      "receiver_id": "JAS19/minicube_29_30TWK_40.05_-2.43.nc",
+      "coverage": 0.684051513671875,
+      "c1_mse": 0.003732411075909436,
+      "c0r_mse": 0.03997653924591861,
+      "benefit": 0.036244128170009174,
+      "candidate_alias": "new_Q98",
+      "quantile": 0.98
+    }
+  ],
+  "sources": {
+    "PER_RECEIVER_HORIZON.csv": "4ee641a2e06ce55331040badc7f433abec0d64b5f49e5d4b24089158a220aa88",
+    "SAMPLE_MANIFEST.csv": "53a10b3cd84a59b2127f62c8d51b19b28f2214c171150d089730c6c7f04c8f66",
+    "RUN_METADATA.json": "3e5d2189ee02db9053a90a02cf5a506073092e34279a6bd4f99b099d4e9767fd"
+  },
+  "notice": "Outcome-selected quantiles, not random or representative cases; all selected cases retained."
+}

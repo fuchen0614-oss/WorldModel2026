@@ -1,0 +1,12 @@
+{
+  "time": 1794745912.3276188,
+  "status": "complete_published",
+  "published": [
+    "D",
+    "B"
+  ],
+  "inspection_stopped": true,
+  "stopped_collector_pid": 8196,
+  "verified": "both full tables exactly present in A50/A51 and A08; all eight remote splits PASS exit0",
+  "remaining": "E1 complete; A1/F1/H1 remain separate pending work"
+}

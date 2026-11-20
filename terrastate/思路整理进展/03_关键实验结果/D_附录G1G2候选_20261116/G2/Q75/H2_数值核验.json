@@ -1,0 +1,39 @@
+{
+  "source_arrays": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_附录G1G2候选_20261116\\G2\\Q75\\inputs\\frames.npz",
+  "source_metadata": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_附录G1G2候选_20261116\\G2\\Q75\\inputs\\metadata.json",
+  "case": "Q75 IID",
+  "selection": "Frozen historical case Q75; re-evaluated with D seed42",
+  "suffix_benefit_C0R_minus_C1": null,
+  "date_selection": "day100 fixed in prior candidate export; all >=40% coverage cases with C1 continued MSE > own direct MSE retained",
+  "selected_step_coverage_from_metadata": 0.943359375,
+  "ndvi_display": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display": [
+    0.0,
+    0.45
+  ],
+  "display_clipping_only": true,
+  "same_valid_mask_within_each_row": true,
+  "records": [
+    {
+      "scheme": "SpanWorld",
+      "step_1based": 20,
+      "date": "2018-08-07",
+      "valid_pixels": 15456,
+      "coverage": 0.943359375,
+      "direct_mse_unclipped": 0.028126537799835205,
+      "continued_mse_unclipped": 0.028476735576987267
+    },
+    {
+      "scheme": "Direct-endpoint control",
+      "step_1based": 20,
+      "date": "2018-08-07",
+      "valid_pixels": 15456,
+      "coverage": 0.943359375,
+      "direct_mse_unclipped": 0.027455119416117668,
+      "continued_mse_unclipped": 0.031398698687553406
+    }
+  ]
+}

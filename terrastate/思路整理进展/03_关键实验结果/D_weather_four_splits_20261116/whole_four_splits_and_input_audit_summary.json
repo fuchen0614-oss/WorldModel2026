@@ -1,0 +1,527 @@
+{
+  "evaluation": {
+    "iid_chopped": {
+      "coverage": {
+        "status": "PASS",
+        "manifest_samples": 2856,
+        "weather_eligible": 2604,
+        "normal_donor_pool": 309,
+        "matched": 1545,
+        "unmatched": 1059,
+        "excluded": 252,
+        "unique_donors": 309,
+        "max_donor_reuse": 5,
+        "pairs_sha256": "999827a648347b65b8b0f96d4ff432bbaefe14496cadb751dad670b102fed001",
+        "seconds": 162.78943729400635,
+        "scope": "all eligible weather conditions; matches exclude self; fixed original caliper, same season and normal band; no predictions used"
+      },
+      "shards": [
+        {
+          "shard": "shard_0",
+          "result.json": {
+            "status": "PASS",
+            "split": "iid_chopped",
+            "shard": 0,
+            "nshards": 1,
+            "covered": 1545,
+            "score_valid": 1545,
+            "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "seconds": 856.68998670578,
+            "file_sha256": "499f89478d3e6b62a8788cf6342a72eb990cc7cf56cbdb6af322c67a95495916"
+          },
+          "progress.json": {
+            "done": 1526,
+            "total": 1545,
+            "seconds": 845.906893491745
+          }
+        }
+      ],
+      "rows": 1545,
+      "score_valid": 1545,
+      "mse": {
+        "actual": 0.04768902626940468,
+        "mean": 0.045686322712704154,
+        "donor": 0.04609264827933928
+      },
+      "delta": {
+        "mean": -0.0020027035567005275,
+        "donor": -0.0015963779900654007
+      },
+      "increase_pct": {
+        "mean": -4.199506077953576,
+        "donor": -3.3474744924485305
+      }
+    },
+    "ood-t_chopped": {
+      "coverage": {
+        "status": "PASS",
+        "manifest_samples": 1904,
+        "weather_eligible": 1704,
+        "normal_donor_pool": 213,
+        "matched": 1054,
+        "unmatched": 650,
+        "excluded": 200,
+        "unique_donors": 213,
+        "max_donor_reuse": 5,
+        "pairs_sha256": "7a0a7a2762fc0b24ee90fa53936c77dba58a5c325e6981413e69da2cf44d9c13",
+        "seconds": 108.28483891487122,
+        "scope": "all eligible weather conditions; matches exclude self; fixed original caliper, same season and normal band; no predictions used"
+      },
+      "shards": [
+        {
+          "shard": "shard_0",
+          "result.json": {
+            "status": "PASS",
+            "split": "ood-t_chopped",
+            "shard": 0,
+            "nshards": 1,
+            "covered": 1054,
+            "score_valid": 1054,
+            "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "seconds": 656.9645864963531,
+            "file_sha256": "39686f33ac6120b33334dc21fe43eb85a5179e3268f0d1059138a4f12d487a6c"
+          },
+          "progress.json": {
+            "done": 1051,
+            "total": 1054,
+            "seconds": 655.1064138412476
+          }
+        }
+      ],
+      "rows": 1054,
+      "score_valid": 1054,
+      "mse": {
+        "actual": 0.02405307288677034,
+        "mean": 0.02685687109504153,
+        "donor": 0.02788150317038487
+      },
+      "delta": {
+        "mean": 0.0028037982082711917,
+        "donor": 0.003828430283614532
+      },
+      "increase_pct": {
+        "mean": 11.656715220837066,
+        "donor": 15.916595362417262
+      }
+    },
+    "ood-s_chopped": {
+      "coverage": {
+        "status": "PASS",
+        "manifest_samples": 10536,
+        "weather_eligible": 10080,
+        "normal_donor_pool": 645,
+        "matched": 3225,
+        "unmatched": 6855,
+        "excluded": 456,
+        "unique_donors": 645,
+        "max_donor_reuse": 5,
+        "pairs_sha256": "b57bd2cc7697b455ebd66f9c74bcc5de86876608998b6a34ffaab0a1bf59c890",
+        "seconds": 425.67405891418457,
+        "scope": "all eligible weather conditions; matches exclude self; fixed original caliper, same season and normal band; no predictions used"
+      },
+      "shards": [
+        {
+          "shard": "shard_0",
+          "result.json": {
+            "status": "PASS",
+            "split": "ood-s_chopped",
+            "shard": 0,
+            "nshards": 3,
+            "covered": 1075,
+            "score_valid": 1075,
+            "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "seconds": 788.7291071414948,
+            "file_sha256": "ca99426f72b1ba19f633982b8e9d64421e0c8f5b4123656d72fee0e93a003cc1"
+          },
+          "progress.json": {
+            "done": 1051,
+            "total": 1075,
+            "seconds": 769.8498206138611
+          }
+        },
+        {
+          "shard": "shard_1",
+          "result.json": {
+            "status": "PASS",
+            "split": "ood-s_chopped",
+            "shard": 1,
+            "nshards": 3,
+            "covered": 1075,
+            "score_valid": 1075,
+            "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "seconds": 766.9278390407562,
+            "file_sha256": "71bcba903491c0e5078b208d4d78a2adb2f220e05b7d4948eb84e4f6925aab63"
+          },
+          "progress.json": {
+            "done": 1051,
+            "total": 1075,
+            "seconds": 749.3020236492157
+          }
+        },
+        {
+          "shard": "shard_2",
+          "result.json": {
+            "status": "PASS",
+            "split": "ood-s_chopped",
+            "shard": 2,
+            "nshards": 3,
+            "covered": 1075,
+            "score_valid": 1075,
+            "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "seconds": 758.3311128616333,
+            "file_sha256": "d4067d5f5b57237fb1c588b8006bdebd78c35be8dd77b9ca58c59c22f1ce94b4"
+          },
+          "progress.json": {
+            "done": 1051,
+            "total": 1075,
+            "seconds": 741.0835905075073
+          }
+        }
+      ],
+      "rows": 3225,
+      "score_valid": 3225,
+      "mse": {
+        "actual": 0.08493960016587561,
+        "mean": 0.07178084017373189,
+        "donor": 0.08795997059512378
+      },
+      "delta": {
+        "mean": -0.01315875999214372,
+        "donor": 0.003020370429248173
+      },
+      "increase_pct": {
+        "mean": -15.491902441789733,
+        "donor": 3.5559037520188417
+      }
+    },
+    "ood-st_chopped": {
+      "coverage": {
+        "status": "PASS",
+        "manifest_samples": 7024,
+        "weather_eligible": 6536,
+        "normal_donor_pool": 393,
+        "matched": 1917,
+        "unmatched": 4619,
+        "excluded": 488,
+        "unique_donors": 392,
+        "max_donor_reuse": 5,
+        "pairs_sha256": "f59d338ff33b89e43dbbc4e6b97448f669c73ab24cad2a32c1c84de24ed52cb6",
+        "seconds": 474.28310775756836,
+        "scope": "all eligible weather conditions; matches exclude self; fixed original caliper, same season and normal band; no predictions used"
+      },
+      "shards": [
+        {
+          "shard": "shard_0",
+          "result.json": {
+            "status": "PASS",
+            "split": "ood-st_chopped",
+            "shard": 0,
+            "nshards": 3,
+            "covered": 639,
+            "score_valid": 639,
+            "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "seconds": 473.46308755874634,
+            "file_sha256": "a0066dcbc630124cc98d9df988285250ba5c81fb8e6e92b39d40c46b9593d9b7"
+          },
+          "progress.json": {
+            "done": 626,
+            "total": 639,
+            "seconds": 464.0001177787781
+          }
+        },
+        {
+          "shard": "shard_1",
+          "result.json": {
+            "status": "PASS",
+            "split": "ood-st_chopped",
+            "shard": 1,
+            "nshards": 3,
+            "covered": 639,
+            "score_valid": 639,
+            "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "seconds": 501.9392671585083,
+            "file_sha256": "356a139d36527c1aa6728fc8273e18e8e97f800547502918aeb52c02217145b7"
+          },
+          "progress.json": {
+            "done": 626,
+            "total": 639,
+            "seconds": 492.12380194664
+          }
+        },
+        {
+          "shard": "shard_2",
+          "result.json": {
+            "status": "PASS",
+            "split": "ood-st_chopped",
+            "shard": 2,
+            "nshards": 3,
+            "covered": 639,
+            "score_valid": 639,
+            "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "seconds": 696.7696874141693,
+            "file_sha256": "44aa83d3a9cbf7bc1abeb70dca524e3a9bd29bba3e705306c9a79749d45dfb9c"
+          },
+          "progress.json": {
+            "done": 626,
+            "total": 639,
+            "seconds": 682.6578884124756
+          }
+        }
+      ],
+      "rows": 1917,
+      "score_valid": 1917,
+      "mse": {
+        "actual": 0.04469202469024335,
+        "mean": 0.04065886868610172,
+        "donor": 0.04670696728052105
+      },
+      "delta": {
+        "mean": -0.0040331560041416345,
+        "donor": 0.0020149425902777005
+      },
+      "increase_pct": {
+        "mean": -9.024330475280765,
+        "donor": 4.508505945396516
+      }
+    },
+    "hotdry84": {
+      "coverage": {
+        "status": "PASS",
+        "matched": 84,
+        "scope": "original frozen84 receivers and original donors",
+        "pairs_sha256": "2a351dcec0e487c760e69a56640e6080e1a5c8425657f0eca6a1662a1c5eb23c"
+      },
+      "shards": [
+        {
+          "shard": "shard_0",
+          "result.json": {
+            "status": "PASS",
+            "split": "hotdry84",
+            "shard": 0,
+            "nshards": 1,
+            "covered": 84,
+            "score_valid": 84,
+            "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+            "seconds": 54.19372272491455,
+            "file_sha256": "3d27b9dbd4e012af3af1445086c035783fe2204f669e782264eabfd2df5e7ca0"
+          },
+          "progress.json": {
+            "done": 76,
+            "total": 84,
+            "seconds": 49.14946532249451
+          }
+        }
+      ],
+      "rows": 84,
+      "score_valid": 84,
+      "mse": {
+        "actual": 0.01781009754943495,
+        "mean": 0.025485660434545327,
+        "donor": 0.02007012153072061
+      },
+      "delta": {
+        "mean": 0.007675562885110378,
+        "donor": 0.0022600239812856603
+      },
+      "increase_pct": {
+        "mean": 43.09669199624286,
+        "donor": 12.689565427772532
+      }
+    }
+  },
+  "audit": {
+    "iid_chopped": {
+      "pairs": 1545,
+      "valid": 1545,
+      "errors": 0,
+      "same_1e_6": 0,
+      "rmse_quantiles_0_10_25_50_75_90_100": [
+        0.04320771997416722,
+        0.45984849892655555,
+        0.6346744477095427,
+        0.7706615825638691,
+        0.9115603762504859,
+        1.0607263348739107,
+        2.2408310192092564
+      ],
+      "manifest_sha256": "999827a648347b65b8b0f96d4ff432bbaefe14496cadb751dad670b102fed001"
+    },
+    "ood-t_chopped": {
+      "pairs": 1054,
+      "valid": 1054,
+      "errors": 0,
+      "same_1e_6": 0,
+      "rmse_quantiles_0_10_25_50_75_90_100": [
+        0.05756370246205012,
+        0.49056712921262197,
+        0.6777673365030659,
+        0.8538829168220581,
+        1.0474808476158832,
+        1.322114487161326,
+        5.069333081009342
+      ],
+      "manifest_sha256": "7a0a7a2762fc0b24ee90fa53936c77dba58a5c325e6981413e69da2cf44d9c13"
+    },
+    "ood-s_chopped": {
+      "pairs": 3225,
+      "valid": 3225,
+      "errors": 0,
+      "same_1e_6": 10,
+      "rmse_quantiles_0_10_25_50_75_90_100": [
+        0.0,
+        0.5555708526100632,
+        0.6857012943325147,
+        0.8109866177108026,
+        0.9487256388184404,
+        1.061846181421997,
+        2.0239948764272597
+      ],
+      "manifest_sha256": "b57bd2cc7697b455ebd66f9c74bcc5de86876608998b6a34ffaab0a1bf59c890"
+    },
+    "ood-st_chopped": {
+      "pairs": 1917,
+      "valid": 1917,
+      "errors": 0,
+      "same_1e_6": 0,
+      "rmse_quantiles_0_10_25_50_75_90_100": [
+        0.07830259733170132,
+        0.5880468227716007,
+        0.763118377347526,
+        0.9157957866177193,
+        1.084968725998939,
+        1.2863318551835967,
+        6.677374146715698
+      ],
+      "manifest_sha256": "f59d338ff33b89e43dbbc4e6b97448f669c73ab24cad2a32c1c84de24ed52cb6"
+    },
+    "hotdry84": {
+      "pairs": 84,
+      "valid": 84,
+      "errors": 0,
+      "same_1e_6": 0,
+      "rmse_quantiles_0_10_25_50_75_90_100": [
+        0.11155116241837315,
+        0.3132789428265912,
+        0.4874400503787003,
+        0.6796694968539805,
+        0.8638435995916389,
+        1.1667369076086875,
+        2.3985418980344257
+      ],
+      "manifest_sha256": "84a09421ff5b43c5b5529a3e7e9a0b40e3e999c170f1cd365d0509c73e9c2ccf"
+    },
+    "exit.json": {
+      "exit": 0,
+      "pid": 4060460,
+      "time": 1794765342.7946281
+    },
+    "result.json": {
+      "status": "COMPLETE_REQUIRES_ACCEPTANCE",
+      "future_ndvi_or_prediction_scores_read": false,
+      "threshold_locked": false
+    },
+    "protocol.json": {
+      "scope": "exact dataset standardization and five-day aggregation; future input20x24",
+      "variables": [
+        "fg",
+        "hu",
+        "pp",
+        "qq",
+        "rr",
+        "tg",
+        "tn",
+        "tx"
+      ],
+      "aggregations": [
+        "mean",
+        "min",
+        "max"
+      ],
+      "selection_uses_prediction_errors": false,
+      "threshold_locked": false
+    }
+  },
+  "host_states": {
+    "909": {
+      "status": "complete",
+      "controller_pid": 185640,
+      "scan_pids": {},
+      "worker_pids": {},
+      "finished": [
+        {
+          "split": "ood-s_chopped",
+          "shard": 2,
+          "pid": 185750,
+          "exit": 0
+        },
+        {
+          "split": "ood-s_chopped",
+          "shard": 1,
+          "pid": 185749,
+          "exit": 0
+        },
+        {
+          "split": "ood-s_chopped",
+          "shard": 0,
+          "pid": 185748,
+          "exit": 0
+        }
+      ],
+      "time": 1794764059.4574492
+    },
+    "946": {
+      "status": "complete",
+      "controller_pid": 633225,
+      "scan_pids": {},
+      "worker_pids": {},
+      "finished": [
+        {
+          "split": "ood-st_chopped",
+          "shard": 0,
+          "pid": 633409,
+          "exit": 0
+        },
+        {
+          "split": "ood-st_chopped",
+          "shard": 1,
+          "pid": 633410,
+          "exit": 0
+        },
+        {
+          "split": "ood-st_chopped",
+          "shard": 2,
+          "pid": 633411,
+          "exit": 0
+        }
+      ],
+      "time": 1794763983.3630052
+    },
+    "991": {
+      "status": "complete",
+      "controller_pid": 4060102,
+      "scan_pids": {},
+      "worker_pids": {},
+      "finished": [
+        {
+          "split": "hotdry84",
+          "shard": 0,
+          "pid": 4060194,
+          "exit": 0
+        },
+        {
+          "split": "iid_chopped",
+          "shard": 0,
+          "pid": 4061025,
+          "exit": 0
+        },
+        {
+          "split": "ood-t_chopped",
+          "shard": 0,
+          "pid": 4068855,
+          "exit": 0
+        }
+      ],
+      "time": 1794766737.6331048
+    }
+  }
+}

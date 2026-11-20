@@ -1,0 +1,8 @@
+{
+  "exit": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"<stdin>\", line 12, in <module>\nAssertionError: {'candidates': [], 'matches': 0}\n",
+  "host": "909",
+  "started": 1794733103.4991174,
+  "seconds": 42.64503240585327
+}

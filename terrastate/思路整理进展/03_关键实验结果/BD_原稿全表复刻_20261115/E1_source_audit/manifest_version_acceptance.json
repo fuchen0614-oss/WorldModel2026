@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "pairs": [
+    {
+      "split": "iid",
+      "sha256": "bb959cb65a07d142fdaec18f5718327d91e73e22816a5c75bb7268923c128663",
+      "merged_identical": true
+    },
+    {
+      "split": "ood_t",
+      "sha256": "65ae828bb3cad38dd6909b8b23f9be955cc234aa2d8459031ea1bdedc7fb0428",
+      "merged_identical": true
+    },
+    {
+      "split": "ood_s",
+      "sha256": "f09625a3d4fdd99833840817d3f45d4294cbf165bd18f3d1f90043c295cb1995",
+      "merged_identical": true
+    },
+    {
+      "split": "ood_st",
+      "sha256": "0bb537a9eb920a55e155c80c96e870dee62c6eaee3c9fd993fd18635ea14bde0",
+      "merged_identical": true
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "heldout_partitions": [
+    {
+      "endpoint_day": 50,
+      "partition_days": "15+35",
+      "n_eligible": 1615,
+      "direct_pooled_mse": 0.029473730347772384,
+      "partitioned_pooled_mse": 0.030155219210841803,
+      "relative_change_pct": 2.312190737406694
+    },
+    {
+      "endpoint_day": 50,
+      "partition_days": "30+20",
+      "n_eligible": 1615,
+      "direct_pooled_mse": 0.029473730347772384,
+      "partitioned_pooled_mse": 0.02993586422770595,
+      "relative_change_pct": 1.5679517810628818
+    },
+    {
+      "endpoint_day": 50,
+      "partition_days": "10+15+25",
+      "n_eligible": 1615,
+      "direct_pooled_mse": 0.029473730347772384,
+      "partitioned_pooled_mse": 0.030303718162329872,
+      "relative_change_pct": 2.8160256769812486
+    },
+    {
+      "endpoint_day": 75,
+      "partition_days": "20+55",
+      "n_eligible": 1568,
+      "direct_pooled_mse": 0.038458315240877256,
+      "partitioned_pooled_mse": 0.038798819010733926,
+      "relative_change_pct": 0.8853840001153968
+    },
+    {
+      "endpoint_day": 75,
+      "partition_days": "15+25+35",
+      "n_eligible": 1568,
+      "direct_pooled_mse": 0.038458315240877256,
+      "partitioned_pooled_mse": 0.03939653558737141,
+      "relative_change_pct": 2.4395773465836212
+    },
+    {
+      "endpoint_day": 100,
+      "partition_days": "40+60",
+      "n_eligible": 1617,
+      "direct_pooled_mse": 0.03353577704344981,
+      "partitioned_pooled_mse": 0.03432875011671622,
+      "relative_change_pct": 2.364558519813076
+    },
+    {
+      "endpoint_day": 100,
+      "partition_days": "10+90",
+      "n_eligible": 1617,
+      "direct_pooled_mse": 0.03353577704344981,
+      "partitioned_pooled_mse": 0.03441098526220098,
+      "relative_change_pct": 2.609774682176691
+    },
+    {
+      "endpoint_day": 100,
+      "partition_days": "10+30+60",
+      "n_eligible": 1617,
+      "direct_pooled_mse": 0.03353577704344981,
+      "partitioned_pooled_mse": 0.03451445285096351,
+      "relative_change_pct": 2.9183036559603304
+    },
+    {
+      "endpoint_day": 100,
+      "partition_days": "5+20+30+45",
+      "n_eligible": 1617,
+      "direct_pooled_mse": 0.03353577704344981,
+      "partitioned_pooled_mse": 0.03482281916331302,
+      "relative_change_pct": 3.8378180955690677
+    }
+  ],
+  "state_replacement": [
+    {
+      "split": "IID",
+      "n_samples": 2066,
+      "delta_mse": 0.0004519928524043281,
+      "ci_low": -0.00019400593092435984,
+      "ci_high": 0.0011267227358034684
+    },
+    {
+      "split": "OOD-T",
+      "n_samples": 1605,
+      "delta_mse": 0.0006859401214850955,
+      "ci_low": 0.00027876504599065317,
+      "ci_high": 0.0011025239116109592
+    },
+    {
+      "split": "OOD-S",
+      "n_samples": 6965,
+      "delta_mse": 0.0001786097618212898,
+      "ci_low": -0.00047579648299806636,
+      "ci_high": 0.000839051198813941
+    },
+    {
+      "split": "OOD-ST",
+      "n_samples": 5437,
+      "delta_mse": -0.00035125271931042755,
+      "ci_low": -0.0008270486922687359,
+      "ci_high": 0.00010857948439225572
+    }
+  ],
+  "weather_replacement": [
+    {
+      "condition": "Donor weather",
+      "n_samples": 84,
+      "delta_mse": -0.0003308107840157824,
+      "ci_low": -0.0006500496188302452,
+      "ci_high": -7.070500581857152e-05
+    },
+    {
+      "condition": "Mean weather",
+      "n_samples": 84,
+      "delta_mse": -0.0007781229994309667,
+      "ci_low": -0.0017325911651412992,
+      "ci_high": -0.00013861448359706632
+    }
+  ],
+  "sources": {
+    "E:\\MineProgram\\codexwork\\CVPRAAAI\u6295\u7a3f\\WorldModel2026v2\\terrastate\\\u601d\u8def\u6574\u7406\u8fdb\u5c55\\03_\u5173\u952e\u5b9e\u9a8c\u7ed3\u679c\\BD_\u539f\u7a3f\u5168\u8868\u590d\u523b_20261115\\D1_20min_collector\\D\\TableD1.csv": "6dd4b7c190f34e323a5857dd97bb0e382435cba773ab24e5ffd0cc2ffcad9ca3",
+    "E:\\MineProgram\\codexwork\\CVPRAAAI\u6295\u7a3f\\WorldModel2026v2\\terrastate\\\u601d\u8def\u6574\u7406\u8fdb\u5c55\\03_\u5173\u952e\u5b9e\u9a8c\u7ed3\u679c\\BD_\u539f\u7a3f\u5168\u8868\u590d\u523b_20261115\\E1_20min_collector\\D\\statistics_acceptance.json": "c8488e289b64862fc772d8b1e485c7bfac7e651e990d6223da0e6f686134be41",
+    "E:\\MineProgram\\codexwork\\CVPRAAAI\u6295\u7a3f\\WorldModel2026v2\\terrastate\\\u601d\u8def\u6574\u7406\u8fdb\u5c55\\03_\u5173\u952e\u5b9e\u9a8c\u7ed3\u679c\\BD_\u539f\u7a3f\u5168\u8868\u590d\u523b_20261115\\F1\\D\\statistics.json": "0c83c8f772a6a6b8c4a21d1b5fc46b23e4a1312c21543e364aed7d023f97a3e5"
+  },
+  "model": "D seed42 selected validation best",
+  "weather_scope": "transition_only; factual-weather baseline retained"
+}

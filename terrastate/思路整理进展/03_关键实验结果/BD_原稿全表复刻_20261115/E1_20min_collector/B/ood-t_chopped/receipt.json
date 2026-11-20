@@ -1,0 +1,22 @@
+{
+  "exit": {
+    "exit": 0,
+    "pid": 4046720,
+    "time": 1794724978.4647832
+  },
+  "result": {
+    "status": "PASS",
+    "variant": "B",
+    "split": "ood-t_chopped",
+    "pairs": 1632,
+    "counts": {
+      "suffix": 1605,
+      "day100": 884
+    },
+    "rows": 16320,
+    "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+    "csv_sha256": "d954fe53d64442b40e4c370eea0b12a3c1c823c79d41f7903a1dc164e4dcb6bf",
+    "seconds": 1155.0309891700745
+  },
+  "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/B/ood-t_chopped/paired_per_horizon.csv"
+}

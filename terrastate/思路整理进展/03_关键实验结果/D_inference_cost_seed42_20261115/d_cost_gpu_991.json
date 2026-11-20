@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"gpu\": \"0, GPU-bfb3540a-ba34-ecdf-b61c-5a13ae0afd54, 39876 MiB, NVIDIA GeForce RTX 4090\\n1, GPU-e1a9b6e1-b262-a40a-fe9c-37a9538a7388, 36630 MiB, NVIDIA GeForce RTX 4090\\n2, GPU-a04b1313-abef-14a7-82c0-200a0e391680, 33584 MiB, NVIDIA GeForce RTX 4090\\n3, GPU-9d51820a-4e87-e128-b546-e0edd69fd419, 33454 MiB, NVIDIA GeForce RTX 4090\", \"compute\": \"GPU-bfb3540a-ba34-ecdf-b61c-5a13ae0afd54, 2068415, /shared/smartbot/chengjuntao/maker/junkang/miniconda3/envs/smolora310/bin/python\\nGPU-e1a9b6e1-b262-a40a-fe9c-37a9538a7388, 3758299, /shared/smartbot/chengjuntao/maker/junkang/miniconda3/envs/smolora310/bin/python\\nGPU-a04b1313-abef-14a7-82c0-200a0e391680, 1813925, /shared/smartbot/chengjuntao/maker/junkang/miniconda3/envs/smolora310/bin/python\\nGPU-a04b1313-abef-14a7-82c0-200a0e391680, 3616248, /shared/smartbot/chengjuntao/maker/liujinshi/covar-kd/relocated_inputs_20261031_v1/env_relocated_20261024/bin/python\\nGPU-9d51820a-4e87-e128-b546-e0edd69fd419, 1585535, /shared/smartbot/chengjuntao/maker/junkang/miniconda3/envs/smolora310/bin/python\\nGPU-9d51820a-4e87-e128-b546-e0edd69fd419, 3616249, /shared/smartbot/chengjuntao/maker/liujinshi/covar-kd/relocated_inputs_20261031_v1/env_relocated_20261024/bin/python\", \"tasks\": \"\"}\n",
+  "stderr": "",
+  "host": "991",
+  "started": 1794739858.9646306,
+  "seconds": 67.12325501441956
+}

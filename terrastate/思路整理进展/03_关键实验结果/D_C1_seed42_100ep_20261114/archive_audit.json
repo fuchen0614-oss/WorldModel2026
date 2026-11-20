@@ -1,0 +1,13 @@
+{
+  "status": "PASS_EXISTING_RESULT_ARCHIVE",
+  "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/evaluation/spanworld_D909_fast4x8_20261113_01/D/result.json",
+  "sha256": "b00d4ddcc45407fca8a8838479a777a1633e3e758365ded60531a17aedce2716",
+  "checks": [
+    "source byte SHA",
+    "four split counts and coverage flags",
+    "checkpoint SHA consistency",
+    "all metrics finite"
+  ],
+  "limits": "Read existing result and queue receipts only; no inference, no new raw per-sample ID re-audit; CSV paths not re-invented.",
+  "queue_evidence": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\执行交接\\统一管理\\overnight_queue_audit_20261114_1217.json"
+}

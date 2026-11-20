@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "A08_existing_text_preserved": true,
+  "within_existing_B_D_blocks": true,
+  "new_tables": [
+    "B_A2",
+    "B_A3",
+    "D_A2",
+    "D_A3"
+  ],
+  "new_training": false,
+  "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\BD_原稿全表复刻_20261115\\bd_checkpoint_config_audit.json",
+  "before_sha256": "eb26d7baa843e38be7ae047f9412a32d3a11692df1541319eb3f99c3bb8e8d16",
+  "after_sha256": "b849e94394de083b75c5cdf3b2f3158f73c8c920346bef9acc2cc3ea0d421054"
+}

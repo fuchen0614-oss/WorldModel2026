@@ -1,0 +1,17 @@
+{
+  "status": "MD_TABLE1_DATA_ONLY_OTHER_EDITS_REVERTED",
+  "files": [
+    "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续审稿修改\\SpanWorld_中英双语_逐项修订工作稿.md",
+    "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续审稿修改\\tables\\table1_continuation.tex",
+    "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续审稿修改\\sections\\experiments.tex"
+  ],
+  "backup": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续审稿修改\\修订备份\\表1三种子落稿前_20261116_043830",
+  "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_表1阶段多种子_20261116",
+  "pdf_status": "not rebuilt",
+  "qualification": "interim selections; fixed-three-model geographic CI; Appendix C remains seed42",
+  "sha256": {
+    "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续审稿修改\\SpanWorld_中英双语_逐项修订工作稿.md": "e8502c2a07420c4067a831e12da566296719ea31d246584bc51354ac1dbdaeba",
+    "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续审稿修改\\tables\\table1_continuation.tex": "c66e46ea9b18290cf51aee63082609b987416db13a8252a62c6d05c602efc085",
+    "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\writing\\SpanWorld后续审稿修改\\sections\\experiments.tex": "93a8b7d79fb14d512d75391222e295840997b8101d6d85bb80b2b2b5c8afb908"
+  }
+}

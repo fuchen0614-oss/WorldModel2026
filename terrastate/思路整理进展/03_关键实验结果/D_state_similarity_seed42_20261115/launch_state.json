@@ -1,0 +1,38 @@
+{
+  "runtime": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/D_state_similarity_seed42_20261115_01",
+  "pid": 4129223,
+  "controller_exit": null,
+  "state.json": {
+    "status": "running",
+    "worker_pid": 4129226,
+    "run_id": "D_state_similarity_seed42_20261115_01",
+    "pid": 4129223,
+    "time": 1794733425.228038
+  },
+  "progress.json": {
+    "done": 26,
+    "total": 2837,
+    "seconds": 14.236177206039429,
+    "pid": 4129226,
+    "time": 1794733447.418107,
+    "models": {
+      "C1": {
+        "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+        "epoch": 51,
+        "step": 37995,
+        "seed": 42,
+        "variant": "D",
+        "arm": "C1"
+      },
+      "C0R": {
+        "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+        "epoch": 19,
+        "step": 14155,
+        "seed": 42,
+        "variant": "D",
+        "arm": "C0R"
+      }
+    }
+  },
+  "log_tail": ""
+}

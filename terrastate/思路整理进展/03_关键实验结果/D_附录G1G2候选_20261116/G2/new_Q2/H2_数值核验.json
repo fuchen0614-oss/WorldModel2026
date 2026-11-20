@@ -1,0 +1,39 @@
+{
+  "source_arrays": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_附录G1G2候选_20261116\\G2\\new_Q2\\inputs\\frames.npz",
+  "source_metadata": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_附录G1G2候选_20261116\\G2\\new_Q2\\inputs\\metadata.json",
+  "case": "new_Q2 IID",
+  "selection": "D outcome-selected benefit quantile 0.02; coverage >= 40%",
+  "suffix_benefit_C0R_minus_C1": -0.016302697150860447,
+  "date_selection": "day100 fixed in prior candidate export; all >=40% coverage cases with C1 continued MSE > own direct MSE retained",
+  "selected_step_coverage_from_metadata": 0.80255126953125,
+  "ndvi_display": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display": [
+    0.0,
+    0.45
+  ],
+  "display_clipping_only": true,
+  "same_valid_mask_within_each_row": true,
+  "records": [
+    {
+      "scheme": "SpanWorld",
+      "step_1based": 20,
+      "date": "2019-06-08",
+      "valid_pixels": 13149,
+      "coverage": 0.80255126953125,
+      "direct_mse_unclipped": 0.07441859692335129,
+      "continued_mse_unclipped": 0.0901234969496727
+    },
+    {
+      "scheme": "Direct-endpoint control",
+      "step_1based": 20,
+      "date": "2019-06-08",
+      "valid_pixels": 13149,
+      "coverage": 0.80255126953125,
+      "direct_mse_unclipped": 0.07586678117513657,
+      "continued_mse_unclipped": 0.06100469082593918
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "source_arrays": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_附录G1_P42_20261116\\inputs\\P42_arrays.npz",
+  "source_baselines": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_附录G1_P42_20261116\\inputs\\P42_official_baselines.npz",
+  "case": "P42 IID; same case family as main-text example, different dates",
+  "selection": "steps 5 and 15 fixed before rendering; not selected by per-frame error",
+  "ndvi_display": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display": [
+    0.0,
+    0.45
+  ],
+  "display_clipping_only": true,
+  "same_valid_mask_within_each_row": true,
+  "records": [
+    {
+      "step_1based": 5,
+      "date": "2019-05-22",
+      "valid_pixels": 16147,
+      "coverage": 0.98553466796875,
+      "spanworld_mse_unclipped": 0.003075512358918786,
+      "predrnn_mse_unclipped": 0.002807630691677332
+    },
+    {
+      "step_1based": 15,
+      "date": "2019-07-11",
+      "valid_pixels": 16147,
+      "coverage": 0.98553466796875,
+      "spanworld_mse_unclipped": 0.0032656912226229906,
+      "predrnn_mse_unclipped": 0.0035974804777652025
+    }
+  ]
+}

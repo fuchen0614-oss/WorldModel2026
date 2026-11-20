@@ -1,0 +1,42 @@
+{
+  "result.json": {
+    "remote": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/evaluation/spanworld_B44_eval909_4gpu_20261114_01/B/result.json",
+    "sha256": "8454bc7c462232f8ecc3685a4d7f71817768c7b3167fadf281b255b3a0f307af"
+  },
+  "summary.csv": {
+    "remote": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/evaluation/spanworld_B44_eval909_4gpu_20261114_01/B/summary.csv",
+    "sha256": "1083b5f0585523452654c79f8c3c1653752c319c80d77130f0bcf3e861283989"
+  },
+  "final_acceptance_audit.json": {
+    "remote": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B44_eval909_4gpu_20261114_01/aggregation_recovery_20261114_v2/acceptance.json",
+    "sha256": "d12903f94040b952e975efdae70158ae8593215b54ad710e61e6c9f3bce3d68b"
+  },
+  "original_failed_state.json": {
+    "remote": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B44_eval909_4gpu_20261114_01/aggregation_recovery_20261114_v2/failed_state.json",
+    "sha256": "10d9b86b342c1c638d2929bcf2ebe9f10c5095b3dbeb0aed71752c9888197e14"
+  },
+  "original_failed_manager_done.json": {
+    "remote": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B44_eval909_4gpu_20261114_01/aggregation_recovery_20261114_v2/failed_manager_done.json",
+    "sha256": "c24f020951197255bb64164426834b6ab1fc775e307e7b4194c09a9820b30c6b"
+  },
+  "original_manager.py": {
+    "remote": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B44_eval909_4gpu_20261114_01/aggregation_recovery_20261114_v2/original_manager.py",
+    "sha256": "dc7814929195c57a60a20e92d65a6eada9beb36fb021dc066254cc4c38260423"
+  },
+  "reaggregate_preserve_dtypes.py": {
+    "remote": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B44_eval909_4gpu_20261114_01/reaggregate_preserve_dtypes_20261114_v2.py",
+    "sha256": "43686c8507ae9b9666016930247a280617f8986ac0974d2c502ffaa8210f92fd"
+  },
+  "source_manifest.json": {
+    "remote": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B44_eval909_4gpu_20261114_01/source_manifest.json",
+    "sha256": "01d6331796f224acbe12a5319c6345cf9b30c1530be8be58ced48cce643c5036"
+  },
+  "checkpoint_receipt.json": {
+    "remote": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B44_eval909_4gpu_20261114_01/checkpoint_receipt.json",
+    "sha256": "4a88f6d92a28e37cab778342605a429d3663ebf610c9cde56427fbba3e68ad69"
+  },
+  "guard_receipt.json": {
+    "remote": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_B44_eval909_4gpu_20261114_01/guard_receipt.json",
+    "sha256": "6c0221d02324f73d5af3bdd4e2d81ec1aeae79277a2f44b81cedb2003cbbf34b"
+  }
+}

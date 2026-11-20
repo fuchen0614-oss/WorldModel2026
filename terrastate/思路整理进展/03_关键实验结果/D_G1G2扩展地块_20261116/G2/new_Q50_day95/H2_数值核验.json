@@ -1,0 +1,39 @@
+{
+  "source_arrays": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_G1G2扩展地块_20261116\\G2\\new_Q50_day95\\inputs\\frames.npz",
+  "source_metadata": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_G1G2扩展地块_20261116\\G2\\new_Q50_day95\\inputs\\metadata.json",
+  "case": "new_Q50 IID",
+  "selection": "D outcome-selected benefit quantile 0.5; coverage >= 40%",
+  "suffix_benefit_C0R_minus_C1": 0.0023948251419000123,
+  "date_selection": "maximum coverage and median relative self-degradation among all >=40% eligible suffix frames; retained and deduplicated",
+  "selected_step_coverage_from_metadata": 0.9554443359375,
+  "ndvi_display": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display": [
+    0.0,
+    0.45
+  ],
+  "display_clipping_only": true,
+  "same_valid_mask_within_each_row": true,
+  "records": [
+    {
+      "scheme": "SpanWorld",
+      "step_1based": 19,
+      "date": "2018-08-03",
+      "valid_pixels": 15654,
+      "coverage": 0.9554443359375,
+      "direct_mse_unclipped": 0.01763410121202469,
+      "continued_mse_unclipped": 0.017777511849999428
+    },
+    {
+      "scheme": "Direct-endpoint control",
+      "step_1based": 19,
+      "date": "2018-08-03",
+      "valid_pixels": 15654,
+      "coverage": 0.9554443359375,
+      "direct_mse_unclipped": 0.017906663939356804,
+      "continued_mse_unclipped": 0.020742541179060936
+    }
+  ]
+}

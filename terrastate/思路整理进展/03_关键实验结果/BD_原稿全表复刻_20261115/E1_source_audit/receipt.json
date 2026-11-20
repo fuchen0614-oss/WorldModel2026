@@ -1,0 +1,36 @@
+{
+  "status": "BLOCKED_FROZEN_DONOR_SOURCE_NOT_LOCATED",
+  "scope": "B/D E1 same original fixed donor pairing",
+  "new_inference": false,
+  "protocol": {
+    "prefix_steps": [
+      10
+    ],
+    "suffix_days": "55-100 and day100 separately",
+    "bootstrap": 2000,
+    "seed": 20260910,
+    "weightings": [
+      "sample_equal",
+      "group_equal",
+      "pixel_pooled"
+    ],
+    "expected_window_N": [
+      2066,
+      1605,
+      6965,
+      5437
+    ],
+    "expected_day100_N": [
+      1214,
+      884,
+      3549,
+      2731
+    ]
+  },
+  "findings": [
+    "909 old /data/zs root absent; bounded shared/OSS scan found no matched_donor files",
+    "local state_iid_formal_run_summary has 88 receivers, not original E1 full IID 2066; cannot substitute",
+    "recent code-owner chat has no frozen donor manifest location"
+  ],
+  "next_action": "Trace original historical server/exported manifest and training-calibration constants; do not rerun donor selection or infer missing pairs"
+}

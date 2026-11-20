@@ -1,0 +1,30 @@
+{
+  "time": 1794759712.1033118,
+  "status": "STATIC_AUDIT_AND_SHARD_TEST_PASS_DYNAMIC_PARITY_PENDING",
+  "code_sha256": {
+    "weather4_worker.py": "c4ba7d87cba7addb13a6ef02082b8208d0787572dec2d127c1cd41767eca96a4",
+    "weather4_scan.py": "7bb7ed8725ee62c65ff10557038e2b97f3128e653e92a474ffaf1eca045f42e5",
+    "weather4_controller.py": "ba27e799de3c653096d9ab7f4ddea7d5dac83ce5faf7b6e03514b4d4acb0c068"
+  },
+  "verified": [
+    "formal forecast composition matches manually assembled actual arm in inspected source",
+    "24 weather + 2 receiver calendar channels; baseline and initial state fixed",
+    "matching uses weather and historical context, not forecast error or future NDVI",
+    "self donor excluded; split-local donors; deterministic stride shards cover without duplicates",
+    "syntax parse and synthetic shard coverage tests passed"
+  ],
+  "fixed": [
+    "pilot cannot pass without a score-valid receiver",
+    "masked-out nonfinite values cannot poison MSE; nonfinite scored targets rejected",
+    "pairs hash, unique receiver and dataset-membership checks",
+    "24/26 channel and 20 target-step assertions",
+    "partial per-sample progress saved; nonzero controller exit on worker failure"
+  ],
+  "pending": [
+    "129-sample original actual/forecast numeric parity",
+    "on-data four-split coverage and match quality",
+    "first score-valid receiver pilot per shard",
+    "real exits, merged coverage, geographic/donor bootstrap and result acceptance"
+  ],
+  "deployment": "previous SSH failed but setup directory exists; no active evaluator observed on 946; bounded recovery in progress; never overwrite active/evaluated directory"
+}

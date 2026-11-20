@@ -1,0 +1,14 @@
+{
+  "time": "2026-11-15 14:51 CST",
+  "collector_pid": 48672,
+  "replaces_collector_pid": 57364,
+  "training_or_inference_restarted": false,
+  "real_data_regression": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\BD_原稿全表复刻_20261115\\E1_source_audit\\statistics_adapter_real_split_test.json",
+  "scope": "E1 only: collect -> validate frozen pairs/SHA/exit/counts/groups -> original-code regression -> 8-row TableE1 per variant -> A50/A51 and A08 BD blocks",
+  "pending_elsewhere": [
+    "A1",
+    "F1",
+    "H1"
+  ],
+  "completion": "collector exits only after both E1 variants published; business failure retained and stops"
+}

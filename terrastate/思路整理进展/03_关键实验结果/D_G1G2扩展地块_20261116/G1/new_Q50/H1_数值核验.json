@@ -1,0 +1,34 @@
+{
+  "source_arrays": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_G1G2扩展地块_20261116\\G1\\new_Q50\\inputs\\selected_D.npz",
+  "source_baselines": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_G1G2扩展地块_20261116\\G1\\new_Q50\\inputs\\selected_baseline.npz",
+  "case": "new_Q50 IID; coverage-selected dates fixed before baseline inference",
+  "selection": "maximum valid coverage in each forecast half, earliest tie; fixed before baseline inference",
+  "ndvi_display": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display": [
+    0.0,
+    0.45
+  ],
+  "display_clipping_only": true,
+  "same_valid_mask_within_each_row": true,
+  "records": [
+    {
+      "step_1based": 1,
+      "date": "2018-05-05",
+      "valid_pixels": 15656,
+      "coverage": 0.95556640625,
+      "spanworld_mse_unclipped": 0.008929857052862644,
+      "predrnn_mse_unclipped": 0.010145023465156555
+    },
+    {
+      "step_1based": 15,
+      "date": "2018-07-14",
+      "valid_pixels": 15655,
+      "coverage": 0.95550537109375,
+      "spanworld_mse_unclipped": 0.014677935279905796,
+      "predrnn_mse_unclipped": 0.017483865842223167
+    }
+  ]
+}

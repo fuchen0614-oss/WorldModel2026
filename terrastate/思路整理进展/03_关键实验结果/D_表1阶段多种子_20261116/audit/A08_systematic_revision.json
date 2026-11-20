@@ -1,0 +1,11 @@
+{
+  "before_sha256": "a0cf80e13493db90e8dd1905a70d5cac4d7de95246c7217286ae7c11b0c8cf7d",
+  "backup": "A08_before_systematic_audit_a0cf80e13493.md",
+  "changes": [
+    "current scope and status navigation",
+    "distinguish historical versus current Table1",
+    "qualify auto-generation claim",
+    "replace unproven budget-mismatch statement"
+  ],
+  "numeric_tables_changed": false
+}

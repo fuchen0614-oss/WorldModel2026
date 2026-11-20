@@ -1,0 +1,39 @@
+{
+  "source_arrays": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_G1G2扩展地块_20261116\\G2\\Q90_day65\\inputs\\frames.npz",
+  "source_metadata": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_G1G2扩展地块_20261116\\G2\\Q90_day65\\inputs\\metadata.json",
+  "case": "Q90 IID",
+  "selection": "Frozen historical case Q90; re-evaluated with D seed42",
+  "suffix_benefit_C0R_minus_C1": null,
+  "date_selection": "maximum coverage and median relative self-degradation among all >=40% eligible suffix frames; retained and deduplicated",
+  "selected_step_coverage_from_metadata": 0.9366455078125,
+  "ndvi_display": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display": [
+    0.0,
+    0.45
+  ],
+  "display_clipping_only": true,
+  "same_valid_mask_within_each_row": true,
+  "records": [
+    {
+      "scheme": "SpanWorld",
+      "step_1based": 13,
+      "date": "2017-07-01",
+      "valid_pixels": 15346,
+      "coverage": 0.9366455078125,
+      "direct_mse_unclipped": 0.0027566549833863974,
+      "continued_mse_unclipped": 0.0028534862212836742
+    },
+    {
+      "scheme": "Direct-endpoint control",
+      "step_1based": 13,
+      "date": "2017-07-01",
+      "valid_pixels": 15346,
+      "coverage": 0.9366455078125,
+      "direct_mse_unclipped": 0.003084727330133319,
+      "continued_mse_unclipped": 0.004713329952210188
+    }
+  ]
+}

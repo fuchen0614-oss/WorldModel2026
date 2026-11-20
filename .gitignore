@@ -25,6 +25,8 @@ runs/
 # ---------- 大体量中间数据 ----------
 *.log
 *.csv
+# Curated per-sample metrics and table evidence are part of the D release.
+!terrastate/思路整理进展/03_关键实验结果/**/*.csv
 *.parquet
 *.h5
 *.hdf5

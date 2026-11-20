@@ -1,0 +1,119 @@
+{
+  "status": "PASS_CANDIDATE_VISUAL_QA",
+  "cases": 8,
+  "ids": [
+    "new_Q10",
+    "new_Q2",
+    "new_Q50",
+    "new_Q90",
+    "new_Q95",
+    "new_Q98",
+    "Q75",
+    "Q90"
+  ],
+  "source_script": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A25_SpanWorld_正文实验图_紧凑排版_20260924\\code\\build_experiment_figures.py",
+  "source_script_sha256": "20a51535427fc22e4af862c5daa37b01f4fea794aebb2a785f2b3442076b19a9",
+  "fixed_scales": {
+    "ndvi": [
+      -0.6,
+      0.9
+    ],
+    "error": [
+      0,
+      0.45
+    ]
+  },
+  "P42_excluded": true,
+  "remote_business_exit": 0,
+  "local_render_exit": 0,
+  "visual_review": "All 8 PNGs and all 8 Poppler-rendered PDFs inspected as contact sheets: original layout/labels/shared scales intact; no clipping or overlap.",
+  "excluded_day100": [
+    {
+      "id": "Q10",
+      "receiver_id": "MJJ19/minicube_91_31UGS_50.56_5.89.nc",
+      "day": 100,
+      "coverage": 0.0,
+      "reason": "day100 valid coverage below .40"
+    },
+    {
+      "id": "Q25",
+      "receiver_id": "JAS19/minicube_157_33TXN_46.91_17.39.nc",
+      "day": 100,
+      "coverage": 0.1396484375,
+      "reason": "day100 valid coverage below .40"
+    },
+    {
+      "id": "Q50",
+      "receiver_id": "JAS18/minicube_59_30UYV_48.77_0.56.nc",
+      "day": 100,
+      "coverage": 0.0,
+      "reason": "day100 valid coverage below .40"
+    },
+    {
+      "id": "new_Q25",
+      "receiver_id": "JAS19/minicube_203_34TCL_41.47_19.52.nc",
+      "day": 100,
+      "coverage": 0.25341796875,
+      "reason": "day100 valid coverage below .40"
+    },
+    {
+      "id": "new_Q75",
+      "receiver_id": "JAS19/minicube_230_34TFN_42.76_22.81.nc",
+      "day": 100,
+      "coverage": 0.0,
+      "reason": "day100 valid coverage below .40"
+    }
+  ],
+  "scope": "13 declared non-P42 unique samples; 8 pass >=40% day100 coverage, 5 explicitly excluded; no outcome-based removal among eligible cases",
+  "manuscript_modified": false,
+  "files": {
+    "candidates\\new_Q10\\figure3_original_crop.png": "7701a7ced31d1e6e647191d2ca68ea21f409a2f3d90e2019f047d64d0b10589b",
+    "candidates\\new_Q10\\pdf_preview.png": "e6eedceb82168bdead3f31ec99b6997d1e120664d72bc04afc001204bfd127e9",
+    "candidates\\new_Q10\\provenance.json": "d0b2af4f482ca5f3de784f1e6c999264639a9028b64225ec59294283f156dca1",
+    "candidates\\new_Q2\\figure3_original_crop.png": "bb877f0658ede3211673233f6b7bc676edbd72912470ca34ca420574d9537957",
+    "candidates\\new_Q2\\pdf_preview.png": "3600664a8fc5ce758255b6b4a04c759fe1ee8f77cd8105fc7324990ba6a693bf",
+    "candidates\\new_Q2\\provenance.json": "841467d375d83ec443dae606c7925ee30997b9300fafb86a12da92e99d8cb560",
+    "candidates\\new_Q50\\figure3_original_crop.png": "90f1368b168ce6e69007607a306463522a09f590ced9517f3cdff38e7e5e772c",
+    "candidates\\new_Q50\\pdf_preview.png": "d1e8377c20e2035091f33f66cf242334411cbdc8dcee90eea9e2ba613241c10f",
+    "candidates\\new_Q50\\provenance.json": "782384692bc01aca8dd4192055d3d3065e2ee779b87e1f9fecb1d2e485a4cf71",
+    "candidates\\new_Q90\\figure3_original_crop.png": "944d71993f22c1df1a882392129e5f67932f138d0aaedfe2b7d1609036c937cc",
+    "candidates\\new_Q90\\pdf_preview.png": "28699cd28412b6453c40bba2b48dc3bb6ae2db1408918d7efe1a63738c660345",
+    "candidates\\new_Q90\\provenance.json": "1d7e267a645bebe0333327d8889f64a774b6f9a60d2f71f409323ff007fa91bc",
+    "candidates\\new_Q95\\figure3_original_crop.png": "216bda994ee121304e2ea315f6e3e387c7c2d69bb5d85e84b6483a6203f3f20e",
+    "candidates\\new_Q95\\pdf_preview.png": "9d3474be2282ff605d7b9d602880e4ac72473b6b840a07e6726502e860a0ea7b",
+    "candidates\\new_Q95\\provenance.json": "1427ce345dbf344920127b759bf411112dc4842c16ecf5ddcd2fb6efbebb6ac1",
+    "candidates\\new_Q98\\figure3_original_crop.png": "540000673e26cf5bff1aaeee17733982fb7cd95e71e7f63dd755b826778bbc6d",
+    "candidates\\new_Q98\\pdf_preview.png": "b7cf2419a275a90ca9d7105fec6975f68a8ae53fcaede816f5944a2d87644b05",
+    "candidates\\new_Q98\\provenance.json": "45a892fa50f7b441e6d43ee8c60173a4bf2a0af69707a3b3ecb2f97eb3a0b62d",
+    "candidates\\Q75\\figure3_original_crop.png": "892e18c2bde06911f3fa32581e06e6df29b6425edbb11cfaecc5ae9e429de3ad",
+    "candidates\\Q75\\pdf_preview.png": "288ef1944e4532d2138e1baf36ddda6ad8a1ea8bee7691701bcb4b0c6983d2d8",
+    "candidates\\Q75\\provenance.json": "66a1a2671af382f2a250d00231b2a7f711be4bb00b9119b988fea0c4ca76cc92",
+    "candidates\\Q90\\figure3_original_crop.png": "6f8ae9eeba74f3e2b7581eeb12ab60ec5979ba73838d8fcf8679c6ef4c3d34a9",
+    "candidates\\Q90\\pdf_preview.png": "d12ba00acaeef17b614c48e44128f2039a76b62e2d2092a008b73c1c1ed32d3f",
+    "candidates\\Q90\\provenance.json": "61c718720a485ae2e1acd3c284bad5d188bac4d8204b3de80bc7be817a34e604",
+    "candidates\\Q90\\fig3\\fig3_case_metrics.json": "a70232088274774fca357e7c5386d874693b91c5e779c2ab0cf441ad17db6f88",
+    "candidates\\Q90\\fig3\\fig3_prediction_routes_compact.pdf": "f982de89554e601b39feaad456e92c5e93e61e8106640fc971ffda01137c15fe",
+    "candidates\\Q90\\fig3\\fig3_prediction_routes_compact.png": "42d5fcccdc0b755a55eebcc582afb56803a698a3fc4e41c45406f84f05925f60",
+    "candidates\\Q75\\fig3\\fig3_case_metrics.json": "4a5f00016e6c7a62efe40b696aac4d64fe491f0fa7eaf84f7602d12b3c7e456a",
+    "candidates\\Q75\\fig3\\fig3_prediction_routes_compact.pdf": "246234aba98c6999ca8be77937f4f399cce0fc731aeddea0ad076accf55d0ebc",
+    "candidates\\Q75\\fig3\\fig3_prediction_routes_compact.png": "6c4d0a078c3a3cc564abcf8e95fa7b8e7e245a54d733debb75e921297d0b6278",
+    "candidates\\new_Q98\\fig3\\fig3_case_metrics.json": "2a3c27abeaa3bbbda286dc5777fc928d8a8926437efb6cc3d5179a60a4a2c91e",
+    "candidates\\new_Q98\\fig3\\fig3_prediction_routes_compact.pdf": "b4c7d3b1b933c92eb8ffe54da540de950432d62ed154bce7be0d730563473e1e",
+    "candidates\\new_Q98\\fig3\\fig3_prediction_routes_compact.png": "2f6f74677b33df65ce947786e9a4e8aad717ad9467cacd114fb859a7d55f8ea0",
+    "candidates\\new_Q95\\fig3\\fig3_case_metrics.json": "a09f2ff06c1936786daec059efa3dbdbf67e9e52105d1e8289b0d78cb256b8a3",
+    "candidates\\new_Q95\\fig3\\fig3_prediction_routes_compact.pdf": "a37e4fa3d35232e7a00a5628f4a35f70428acb5aea2cf69b40910a6e8d25629c",
+    "candidates\\new_Q95\\fig3\\fig3_prediction_routes_compact.png": "fa8972ab7d085e37026eebf98ae57effb2082184345c2a73a797e7fbc692c1cd",
+    "candidates\\new_Q90\\fig3\\fig3_case_metrics.json": "52d81e1e9e2c7f2fdb16f637f31457cd588351688cecf0dd929cd44ce3b7580c",
+    "candidates\\new_Q90\\fig3\\fig3_prediction_routes_compact.pdf": "4a4a45e9a897a930fc1b23cd80025758d902288ed325ed05f70861724ec3c4ea",
+    "candidates\\new_Q90\\fig3\\fig3_prediction_routes_compact.png": "0cad0e6fd98780c3468191a447d79cba1ecd4f108a6010ba044723fc53c51306",
+    "candidates\\new_Q50\\fig3\\fig3_case_metrics.json": "9d2639a204f8ee3baeaa8e8574b73ac2ffb280e5a8349de657c60a52904d7c9a",
+    "candidates\\new_Q50\\fig3\\fig3_prediction_routes_compact.pdf": "3e94a48d93fd9879473b6f4cc10878392115efbc6e8cf6b0bcb13f3a3642c777",
+    "candidates\\new_Q50\\fig3\\fig3_prediction_routes_compact.png": "8dfc27b2f99a5c0119cd4ac411b047e1b59ee1d975cdaf97ecb3b28659aa6052",
+    "candidates\\new_Q2\\fig3\\fig3_case_metrics.json": "74770abdc822f221e88c65478eb57df5a712397027d53ed2d33ca4d7cdce4115",
+    "candidates\\new_Q2\\fig3\\fig3_prediction_routes_compact.pdf": "120734bb82915769e16aca4ab6fb4b617f9c6b69e9c13313a90426c5b8d34e97",
+    "candidates\\new_Q2\\fig3\\fig3_prediction_routes_compact.png": "8f6e6c5855d5852c8e3e1da1d2a294a340e427c676c058415aa925a8c52594fe",
+    "candidates\\new_Q10\\fig3\\fig3_case_metrics.json": "a075e73f5bd22cc3bf0165ba610c2556da07facbe71d3d1664c739f7bec86fac",
+    "candidates\\new_Q10\\fig3\\fig3_prediction_routes_compact.pdf": "ea163e861061d29892abaf2bc8a5632b9bff160f6a18de46ca85aae920eaf2ac",
+    "candidates\\new_Q10\\fig3\\fig3_prediction_routes_compact.png": "eaf99d645aaa1ae93975312c109660444f8a7590414cdeab089e232774fd8233"
+  }
+}

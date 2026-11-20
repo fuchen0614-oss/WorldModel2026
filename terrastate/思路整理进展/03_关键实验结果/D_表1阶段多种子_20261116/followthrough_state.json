@@ -1,0 +1,16 @@
+{
+  "pid": 24384,
+  "time": 1794768533.4296453,
+  "status": "complete",
+  "interval_seconds": 600,
+  "seeds": [
+    27,
+    42,
+    97
+  ],
+  "qualification": "interim preview",
+  "published": [
+    "A51",
+    "A08"
+  ]
+}

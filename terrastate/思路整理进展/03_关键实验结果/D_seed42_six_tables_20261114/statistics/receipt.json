@@ -1,0 +1,12 @@
+{
+  "input_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_six_tables_seed42_20261114/suffix",
+  "hashes": {
+    "PER_RECEIVER_HORIZON.csv": "4ee641a2e06ce55331040badc7f433abec0d64b5f49e5d4b24089158a220aa88",
+    "SAMPLE_MANIFEST.csv": "53a10b3cd84a59b2127f62c8d51b19b28f2214c171150d089730c6c7f04c8f66",
+    "RUN_METADATA.json": "3e5d2189ee02db9053a90a02cf5a506073092e34279a6bd4f99b099d4e9767fd"
+  },
+  "spatial_bootstrap": true,
+  "original_input_unchanged": true,
+  "estimator": "legacy receiver equal-weight; ten rows present and summed valid count >0",
+  "note": "This is distinct from requiring each individual horizon to have valid pixels. Never silently substitute existing SUMMARY.csv. Per-seed spatial intervals and across-seed sample SD are separate."
+}

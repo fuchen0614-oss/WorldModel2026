@@ -1,0 +1,47 @@
+{
+  "case_id_internal": "new_Q90",
+  "case_selection_internal": "D outcome-selected benefit quantile 0.9; coverage >= 40%",
+  "target_step": 20,
+  "target_day": 100,
+  "target_date": "2017-08-08",
+  "continuation_from_day": 50,
+  "pre_continuation_partition_days": [
+    15,
+    35
+  ],
+  "valid_pixels": 6768,
+  "total_pixels": 16384,
+  "coverage": 0.4130859375,
+  "ndvi_display_limits": [
+    -0.6,
+    0.9
+  ],
+  "absolute_error_display_limits": [
+    0.0,
+    0.45
+  ],
+  "ndvi_display_saturation_fraction": {
+    "gt": 0.0,
+    "C1_direct": 0.0,
+    "C1_continued": 0.0,
+    "C0R_direct": 0.0,
+    "C0R_continued": 0.1573581560283688
+  },
+  "metrics": [
+    {
+      "model": "SpanWorld",
+      "direct_mse": 0.008999675512313843,
+      "continued_mse": 0.008515151217579842,
+      "direct_error_display_saturation_fraction": 0.0004432624113475177,
+      "continued_error_display_saturation_fraction": 0.0004432624113475177
+    },
+    {
+      "model": "Direct-endpoint control",
+      "direct_mse": 0.009545678272843361,
+      "continued_mse": 0.03267233818769455,
+      "direct_error_display_saturation_fraction": 0.000591016548463357,
+      "continued_error_display_saturation_fraction": 0.001182033096926714
+    }
+  ],
+  "metric_note": "Single target date; mean squared error over the identical valid-observation pixels. Display clipping never changes MSE."
+}

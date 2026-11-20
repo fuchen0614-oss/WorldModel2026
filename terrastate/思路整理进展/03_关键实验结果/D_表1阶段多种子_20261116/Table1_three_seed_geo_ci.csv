@@ -1,0 +1,5 @@
+path,n_seeds,n_groups,n_receivers_per_seed,draws,bootstrap_seed,mean_delta_c1_minus_c0r,ci95_low,ci95_high,ci_crosses_zero,scope
+D20,3,80,2837,2000,20260914,0.0006573717786690124,0.00017677457813186637,0.001187480208126375,False,geographic uncertainty conditional on three fixed selected seeds; seed sample SD separately reported
+A,3,80,2837,2000,20260914,-0.001300277369536604,-0.0021493706620619724,-0.0003695631049656853,False,geographic uncertainty conditional on three fixed selected seeds; seed sample SD separately reported
+B,3,80,2837,2000,20260914,-0.006414657823386524,-0.007756428396798132,-0.005130236590237425,False,geographic uncertainty conditional on three fixed selected seeds; seed sample SD separately reported
+C,3,80,2837,2000,20260914,-0.005865521388109497,-0.007198648350367556,-0.004603087759678458,False,geographic uncertainty conditional on three fixed selected seeds; seed sample SD separately reported

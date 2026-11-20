@@ -1,0 +1,220 @@
+{
+  "selection_kind": "completed_run_validation_best",
+  "status": "PASS",
+  "total_samples": 10536,
+  "probe": false,
+  "device": "cuda:0",
+  "arm": "C1",
+  "model_config": {
+    "use_adaln": true,
+    "season_encoding": "annual_sincos_v1",
+    "season_route": "tokens_and_transition",
+    "supervision_v2": true,
+    "zero_empty_history_reference": true,
+    "state_dim": 256,
+    "freeze_b0": false,
+    "dw": 128,
+    "dg": 64,
+    "dh": 64,
+    "cond_dim": 256,
+    "lc_min": 10,
+    "lc_max": 40,
+    "partitions": [
+      [
+        5,
+        5
+      ],
+      [
+        7,
+        8
+      ],
+      [
+        10,
+        10
+      ]
+    ],
+    "heldout_partitions": [
+      [
+        3,
+        7
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        4,
+        11
+      ],
+      [
+        8,
+        12
+      ],
+      [
+        2,
+        18
+      ]
+    ],
+    "arch": "SpanWorldFullBase",
+    "route_version": "spanworld_full_base_v1",
+    "driver_protocol": "full24",
+    "factual_path": "recursive",
+    "endpoint_target": "detached_direct",
+    "days_per_transition_step": 5,
+    "use_future_state_anchor": false,
+    "eo_traj_weight": 1.0,
+    "eo_endpoint_weight": 1.0,
+    "factual_endpoints": [
+      10,
+      15,
+      20
+    ],
+    "nc_min_std": 0.001,
+    "nc_min_effective_rank": 2.0,
+    "nc_min_movement": 0.0001,
+    "cc_train_partitions": {
+      "10": [
+        [
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          3,
+          2
+        ]
+      ],
+      "15": [
+        [
+          15
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          4,
+          4
+        ]
+      ],
+      "20": [
+        [
+          20
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          10,
+          5,
+          5
+        ],
+        [
+          5,
+          5,
+          5,
+          5
+        ]
+      ]
+    },
+    "cc_heldout_partitions": {
+      "10": [
+        [
+          3,
+          7
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "15": [
+        [
+          4,
+          11
+        ],
+        [
+          3,
+          5,
+          7
+        ]
+      ],
+      "20": [
+        [
+          8,
+          12
+        ],
+        [
+          2,
+          18
+        ],
+        [
+          2,
+          6,
+          12
+        ],
+        [
+          1,
+          4,
+          6,
+          9
+        ]
+      ]
+    },
+    "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+    "training_stage": "stage2",
+    "variant": "D"
+  },
+  "checkpoint_sha256": "f1334bb429238f84635e2a12b2ddc43c170dadd2d6f9d5c7a60d236c2606f3f8",
+  "best_epoch": 51,
+  "best_step": 37995,
+  "scorer_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+  "seconds": 5243.288559913635,
+  "splits": {
+    "ood-s_chopped": {
+      "count": 10536,
+      "empty": 7040,
+      "coverage_complete": true,
+      "checkpoint_sha256": "f1334bb429238f84635e2a12b2ddc43c170dadd2d6f9d5c7a60d236c2606f3f8",
+      "manifest_sha256": "249d791b7570a3287d853320b312744f1b6253469d4d2821c5ef892e6ba06417",
+      "relative_ids_sha256": "91add6b73214355dff21c188d55a63c8a4ff91a47f8fc1b32dca0167a0ffb322",
+      "metrics": {
+        "nse": -0.09730772509858854,
+        "rmse": 0.15646417438983917,
+        "R2": 0.49658509130144013,
+        "biasabs": 0.09738094359636307,
+        "nse_forest": -0.15120133694089066,
+        "rmse_forest": 0.15631116926670074,
+        "R2_forest": 0.44715999340183704,
+        "biasabs_forest": 0.09567301720380783,
+        "nse_shrub": -0.14467066364283543,
+        "rmse_shrub": 0.14220048487186432,
+        "R2_shrub": 0.4997063907515685,
+        "biasabs_shrub": 0.09110282361507416,
+        "nse_grass": -0.10898975952018697,
+        "rmse_grass": 0.15530724823474884,
+        "R2_grass": 0.48899180202670617,
+        "biasabs_grass": 0.09516708552837372,
+        "nse_crop": 0.0076413339807792635,
+        "rmse_crop": 0.1720377802848816,
+        "R2_crop": 0.550482179025649,
+        "biasabs_crop": 0.10758087038993835,
+        "rmse_0_5": 0.09456097334623337,
+        "rmse_5_10": 0.130631685256958,
+        "rmse_10_15": 0.16062428057193756,
+        "rmse_15_20": 0.1746293008327484,
+        "rmse25": 0.09456097334623337
+      }
+    }
+  }
+}

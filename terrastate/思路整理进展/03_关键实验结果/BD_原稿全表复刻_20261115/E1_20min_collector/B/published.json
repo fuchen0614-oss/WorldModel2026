@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "targets": [
+    "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A50_方案B_原稿对应表格结果追加记录_20261115.md",
+    "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A08_E1主表_同协议重跑结果.md"
+  ],
+  "table_rows": 8,
+  "sha256": {
+    "A50_方案B_原稿对应表格结果追加记录_20261115.md": "374da93bee4cffaf88a8ec39594a74fbf5db0d2181dfb61dca6a858f13a02b7f",
+    "A08_E1主表_同协议重跑结果.md": "b69fa6fffb02cb1d71b14dd0e8e4c110500a5d3f85e48883b513eccb4dd3b1c3"
+  }
+}

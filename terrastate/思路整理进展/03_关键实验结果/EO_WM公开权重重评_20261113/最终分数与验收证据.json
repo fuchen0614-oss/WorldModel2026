@@ -1,0 +1,175 @@
+{
+  "state": {
+    "pid": 2783243,
+    "phase": "COMPLETE",
+    "time": 1794537779.2198343,
+    "samples": 22320,
+    "result": "/oss-chengjuntao/makerdata/chenzhisheng/EO_WM_public/greenearthnet_eval_20261112_946gpu4/summary.json"
+  },
+  "scores": {
+    "iid_chopped": {
+      "samples": 2856,
+      "empty_valid_samples": 1369,
+      "metrics": {
+        "nse": -0.15533090130568938,
+        "rmse": 0.15775588990399264,
+        "R2": 0.4642879730254629,
+        "biasabs": 0.09892457048812625,
+        "nse_forest": -0.17143170525455842,
+        "rmse_forest": 0.15156834691046037,
+        "R2_forest": 0.4190579291347556,
+        "biasabs_forest": 0.09165470736999969,
+        "nse_shrub": -0.1992344748641992,
+        "rmse_shrub": 0.1476953138046863,
+        "R2_shrub": 0.44441327521772717,
+        "biasabs_shrub": 0.0917002672530102,
+        "nse_grass": -0.16191949738100542,
+        "rmse_grass": 0.15665992709766696,
+        "R2_grass": 0.47177226234572006,
+        "biasabs_grass": 0.09852107813286327,
+        "nse_crop": -0.09169014671131626,
+        "rmse_crop": 0.17509997180315692,
+        "R2_crop": 0.5219084254036486,
+        "biasabs_crop": 0.11382222919663186,
+        "rmse_0_5": 0.09911635330771715,
+        "rmse_5_10": 0.13494900433470217,
+        "rmse_10_15": 0.16111452622231537,
+        "rmse_15_20": 0.17349893065705918,
+        "rmse25": 0.09911635330771715
+      }
+    },
+    "ood-t_chopped": {
+      "samples": 1904,
+      "empty_valid_samples": 885,
+      "metrics": {
+        "nse": -0.18238339616263533,
+        "rmse": 0.15705293684172397,
+        "R2": 0.5330950575708095,
+        "biasabs": 0.105184915298937,
+        "nse_forest": -0.17848042063807856,
+        "rmse_forest": 0.15269101430388335,
+        "R2_forest": 0.5145382776050017,
+        "biasabs_forest": 0.10046084635530882,
+        "nse_shrub": -0.18895752426342716,
+        "rmse_shrub": 0.14780705035964276,
+        "R2_shrub": 0.5248479115533481,
+        "biasabs_shrub": 0.10020005870358338,
+        "nse_grass": -0.16992760313141542,
+        "rmse_grass": 0.15457778625073415,
+        "R2_grass": 0.5361866091561764,
+        "biasabs_grass": 0.10168082361520338,
+        "nse_crop": -0.1923112299585532,
+        "rmse_crop": 0.17313589645263563,
+        "R2_crop": 0.5568074319687119,
+        "biasabs_crop": 0.11839793252165241,
+        "rmse_0_5": 0.10695758332266193,
+        "rmse_5_10": 0.1448188510816134,
+        "rmse_10_15": 0.15984795154163176,
+        "rmse_15_20": 0.1594423102923397,
+        "rmse25": 0.10695758332266193
+      }
+    },
+    "ood-s_chopped": {
+      "samples": 10536,
+      "empty_valid_samples": 7040,
+      "metrics": {
+        "nse": -0.24390975188615505,
+        "rmse": 0.16794585914160468,
+        "R2": 0.43221228586785854,
+        "biasabs": 0.10435292421895213,
+        "nse_forest": -0.2570531966828309,
+        "rmse_forest": 0.16298641275325793,
+        "R2_forest": 0.3813767780537728,
+        "biasabs_forest": 0.09731172374399621,
+        "nse_shrub": -0.2662300425587558,
+        "rmse_shrub": 0.14983615987613033,
+        "R2_shrub": 0.44662766315617725,
+        "biasabs_shrub": 0.09520587703476695,
+        "nse_grass": -0.2840359936399306,
+        "rmse_grass": 0.16838093402634943,
+        "R2_grass": 0.4153524845544532,
+        "biasabs_grass": 0.103635511562635,
+        "nse_crop": -0.17172068990312583,
+        "rmse_crop": 0.19057992991068098,
+        "R2_crop": 0.48549221770703094,
+        "biasabs_crop": 0.12125858453441037,
+        "rmse_0_5": 0.10512646105422063,
+        "rmse_5_10": 0.1413939588985,
+        "rmse_10_15": 0.16960416468468972,
+        "rmse_15_20": 0.18702178819443305,
+        "rmse25": 0.10512646105422063
+      }
+    },
+    "ood-st_chopped": {
+      "samples": 7024,
+      "empty_valid_samples": 4836,
+      "metrics": {
+        "nse": -0.26412463474749925,
+        "rmse": 0.16241087910311097,
+        "R2": 0.5014131201054721,
+        "biasabs": 0.10684591227483935,
+        "nse_forest": -0.3219384726439456,
+        "rmse_forest": 0.16127248015182458,
+        "R2_forest": 0.4717152663016966,
+        "biasabs_forest": 0.10648332534512532,
+        "nse_shrub": -0.19666540146730815,
+        "rmse_shrub": 0.14692656995428446,
+        "R2_shrub": 0.5230404687531479,
+        "biasabs_shrub": 0.09696114978564464,
+        "nse_grass": -0.3243954584067854,
+        "rmse_grass": 0.1628621217918766,
+        "R2_grass": 0.47996941245804026,
+        "biasabs_grass": 0.10529146035381036,
+        "nse_crop": -0.21947154190491425,
+        "rmse_crop": 0.1785823445144583,
+        "R2_crop": 0.5309273329090036,
+        "biasabs_crop": 0.11864771361477705,
+        "rmse_0_5": 0.10863182963276008,
+        "rmse_5_10": 0.14746936895627327,
+        "rmse_10_15": 0.16354616026498578,
+        "rmse_15_20": 0.16851110525506569,
+        "rmse25": 0.10863182963276008
+      }
+    }
+  },
+  "exit": {
+    "exit_code": 0,
+    "status": "COMPLETE",
+    "samples": 22320,
+    "time": 1794537779.0402455
+  },
+  "holders": [
+    {
+      "pid": 2586917,
+      "rank": 2,
+      "status": "RESIDENT",
+      "bytes": 29481762816,
+      "time": 1794537942.1025863,
+      "cwd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112/memory_only_909_20261113"
+    },
+    {
+      "pid": 2586916,
+      "rank": 1,
+      "status": "RESIDENT",
+      "bytes": 31809601536,
+      "time": 1794537941.1709747,
+      "cwd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112/memory_only_909_20261113"
+    },
+    {
+      "pid": 2586918,
+      "rank": 3,
+      "status": "RESIDENT",
+      "bytes": 29481762816,
+      "time": 1794537940.5938802,
+      "cwd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112/memory_only_909_20261113"
+    },
+    {
+      "pid": 2586915,
+      "rank": 0,
+      "status": "RESIDENT",
+      "bytes": 29481762816,
+      "time": 1794537940.452888,
+      "cwd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112/memory_only_909_20261113"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "time": "2026-11-15T02:10:24.802087+08:00",
+  "status": "blocked_remote_connectivity_not_evaluation_failure",
+  "jump_ssh": "banner exchange timeout exit1",
+  "direct_909": "connection timed out exit1",
+  "rows": [
+    {
+      "split": "iid_chopped",
+      "epoch": "40",
+      "step": "29800",
+      "checkpoint_sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+      "identity_evidence": "startup_receipt.json; standard evaluator binding pending",
+      "expected_samples": "2856",
+      "coverage": "unknown",
+      "actual_exit": "unverified",
+      "metric_file": "not retrieved",
+      "acceptance": "pending_remote_verification"
+    },
+    {
+      "split": "ood-t_chopped",
+      "epoch": "40",
+      "step": "29800",
+      "checkpoint_sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+      "identity_evidence": "startup_receipt.json; standard evaluator binding pending",
+      "expected_samples": "1904",
+      "coverage": "unknown",
+      "actual_exit": "unverified",
+      "metric_file": "not retrieved",
+      "acceptance": "pending_remote_verification"
+    },
+    {
+      "split": "ood-s_chopped",
+      "epoch": "40",
+      "step": "29800",
+      "checkpoint_sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+      "identity_evidence": "startup_receipt.json; standard evaluator binding pending",
+      "expected_samples": "10536",
+      "coverage": "10536 historical",
+      "actual_exit": "unverified",
+      "metric_file": "not retrieved",
+      "acceptance": "pending_remote_verification"
+    },
+    {
+      "split": "ood-st_chopped",
+      "epoch": "40",
+      "step": "29800",
+      "checkpoint_sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+      "identity_evidence": "startup_receipt.json; standard evaluator binding pending",
+      "expected_samples": "7024",
+      "coverage": "7024 historical",
+      "actual_exit": "unverified",
+      "metric_file": "not retrieved",
+      "acceptance": "pending_remote_verification"
+    }
+  ],
+  "new_evaluation_launched": false,
+  "baseline": "accepted; untouched"
+}

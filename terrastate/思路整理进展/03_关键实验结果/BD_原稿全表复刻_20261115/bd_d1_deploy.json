@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"pid\": 3801327, \"exit\": null, \"runtime\": \"/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_D1_seed42_20261115_01\", \"state\": {\"pid\": 3801327, \"status\": \"running\", \"time\": 1794701391.2773085, \"running\": {\"('D', 0)\": {\"pid\": 3801428, \"slot\": 0}}, \"pending\": [[\"D\", 1]], \"done\": [], \"failed\": [[\"B\", 0], [\"B\", 1]], \"inspection_interval_seconds\": 1200}, \"B_1.log\": \"\", \"controller.log\": \"\", \"B_0.log\": \"\", \"D_0.log\": \"\"}\n",
+  "stderr": "",
+  "host": "909",
+  "started": 1794701348.532039,
+  "seconds": 51.44908905029297
+}

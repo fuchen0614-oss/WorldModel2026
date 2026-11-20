@@ -1,0 +1,447 @@
+{
+  "time": 1794743803.5070095,
+  "runtime": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01",
+  "state": {
+    "pid": 4188393,
+    "status": "running_verified_full_splits",
+    "time": 1794743799.724639,
+    "running": {
+      "('D', 'ood-s_chopped')": {
+        "pid": 4188394,
+        "slot": 0
+      }
+    },
+    "completed": [
+      [
+        "B",
+        "iid_chopped"
+      ],
+      [
+        "B",
+        "ood-t_chopped"
+      ],
+      [
+        "B",
+        "ood-s_chopped"
+      ],
+      [
+        "B",
+        "ood-st_chopped"
+      ],
+      [
+        "D",
+        "iid_chopped"
+      ],
+      [
+        "D",
+        "ood-t_chopped"
+      ],
+      [
+        "D",
+        "ood-st_chopped"
+      ]
+    ],
+    "pending": []
+  },
+  "plan": {
+    "runtime": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01",
+    "python": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+    "code": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_B51_six_tables_seed42_20261114/code",
+    "models": {
+      "B": {
+        "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_B51_six_tables_seed42_20261114/frozen/C1.pt",
+        "sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46"
+      },
+      "D": {
+        "checkpoint": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_BD_original_E2_20261115_01/frozen_D_C1.pt",
+        "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb"
+      }
+    },
+    "data_root": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/stage2_dc_eval_20261113_01",
+    "gpu_uuids": [
+      "GPU-6b066b99-857d-37d3-41ef-b5f7ddcfab04",
+      "GPU-9865b664-8f6f-5e91-ab81-bdac60b61b62",
+      "GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf",
+      "GPU-3e1f63df-7402-94f9-7695-d79678b39143"
+    ],
+    "splits": {
+      "iid_chopped": 2856,
+      "ood-t_chopped": 1904,
+      "ood-s_chopped": 10536,
+      "ood-st_chopped": 7024
+    },
+    "manifest_sha": {
+      "iid_chopped": "bb959cb65a07d142fdaec18f5718327d91e73e22816a5c75bb7268923c128663",
+      "ood-t_chopped": "65ae828bb3cad38dd6909b8b23f9be955cc234aa2d8459031ea1bdedc7fb0428",
+      "ood-s_chopped": "f09625a3d4fdd99833840817d3f45d4294cbf165bd18f3d1f90043c295cb1995",
+      "ood-st_chopped": "0bb537a9eb920a55e155c80c96e870dee62c6eaee3c9fd993fd18635ea14bde0"
+    },
+    "matched_counts": {
+      "iid_chopped": 2078,
+      "ood-t_chopped": 1632,
+      "ood-s_chopped": 7065,
+      "ood-st_chopped": 5577
+    },
+    "expected_counts": {
+      "iid_chopped": {
+        "suffix": 2066,
+        "day100": 1214
+      },
+      "ood-t_chopped": {
+        "suffix": 1605,
+        "day100": 884
+      },
+      "ood-s_chopped": {
+        "suffix": 6965,
+        "day100": 3549
+      },
+      "ood-st_chopped": {
+        "suffix": 5437,
+        "day100": 2731
+      }
+    }
+  },
+  "progress": {
+    "D/iid_chopped/progress.json": {
+      "done": 2078,
+      "total": 2078,
+      "seconds": 1905.9918277263641,
+      "eligible_counts": {
+        "suffix": 2066,
+        "day100": 1214
+      },
+      "time": 1794726896.79228
+    },
+    "D/iid_chopped/protocol_PASS.json": {
+      "status": "PASS",
+      "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+      "manifest_sha256": "bb959cb65a07d142fdaec18f5718327d91e73e22816a5c75bb7268923c128663",
+      "all_paths_mapped": true,
+      "only_state_replaced": true,
+      "prefix_steps": [
+        10
+      ],
+      "receiver_prior_geo_weather_held_fixed": true,
+      "states_unmodified": true,
+      "scoring": "same valid target pixels; float64 SSE; no standard-accuracy rerun"
+    },
+    "D/ood-t_chopped/progress.json": {
+      "done": 1632,
+      "total": 1632,
+      "seconds": 1498.295679807663,
+      "eligible_counts": {
+        "suffix": 1605,
+        "day100": 884
+      },
+      "time": 1794726900.7544694
+    },
+    "D/ood-t_chopped/protocol_PASS.json": {
+      "status": "PASS",
+      "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+      "manifest_sha256": "65ae828bb3cad38dd6909b8b23f9be955cc234aa2d8459031ea1bdedc7fb0428",
+      "all_paths_mapped": true,
+      "only_state_replaced": true,
+      "prefix_steps": [
+        10
+      ],
+      "receiver_prior_geo_weather_held_fixed": true,
+      "states_unmodified": true,
+      "scoring": "same valid target pixels; float64 SSE; no standard-accuracy rerun"
+    },
+    "D/ood-s_chopped/progress.json": {
+      "done": 6726,
+      "total": 7065,
+      "seconds": 6139.792484760284,
+      "eligible_counts": {
+        "suffix": 6648,
+        "day100": 3435
+      },
+      "time": 1794743790.9907577
+    },
+    "D/ood-s_chopped/protocol_PASS.json": {
+      "status": "PASS",
+      "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+      "manifest_sha256": "f09625a3d4fdd99833840817d3f45d4294cbf165bd18f3d1f90043c295cb1995",
+      "all_paths_mapped": true,
+      "only_state_replaced": true,
+      "prefix_steps": [
+        10
+      ],
+      "receiver_prior_geo_weather_held_fixed": true,
+      "states_unmodified": true,
+      "scoring": "same valid target pixels; float64 SSE; no standard-accuracy rerun"
+    },
+    "D/ood-st_chopped/progress.json": {
+      "done": 5577,
+      "total": 5577,
+      "seconds": 4909.739151477814,
+      "eligible_counts": {
+        "suffix": 5437,
+        "day100": 2731
+      },
+      "time": 1794742566.135561
+    },
+    "D/ood-st_chopped/protocol_PASS.json": {
+      "status": "PASS",
+      "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+      "manifest_sha256": "0bb537a9eb920a55e155c80c96e870dee62c6eaee3c9fd993fd18635ea14bde0",
+      "all_paths_mapped": true,
+      "only_state_replaced": true,
+      "prefix_steps": [
+        10
+      ],
+      "receiver_prior_geo_weather_held_fixed": true,
+      "states_unmodified": true,
+      "scoring": "same valid target pixels; float64 SSE; no standard-accuracy rerun"
+    },
+    "B/iid_chopped/progress.json": {
+      "done": 2078,
+      "total": 2078,
+      "seconds": 1582.7298476696014,
+      "eligible_counts": {
+        "suffix": 2066,
+        "day100": 1214
+      },
+      "time": 1794725383.371972
+    },
+    "B/iid_chopped/protocol_PASS.json": {
+      "status": "PASS",
+      "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+      "manifest_sha256": "bb959cb65a07d142fdaec18f5718327d91e73e22816a5c75bb7268923c128663",
+      "all_paths_mapped": true,
+      "only_state_replaced": true,
+      "prefix_steps": [
+        10
+      ],
+      "receiver_prior_geo_weather_held_fixed": true,
+      "states_unmodified": true,
+      "scoring": "same valid target pixels; float64 SSE; no standard-accuracy rerun"
+    },
+    "B/ood-t_chopped/progress.json": {
+      "done": 1632,
+      "total": 1632,
+      "seconds": 1154.9850664138794,
+      "eligible_counts": {
+        "suffix": 1605,
+        "day100": 884
+      },
+      "time": 1794724972.5315504
+    },
+    "B/ood-t_chopped/protocol_PASS.json": {
+      "status": "PASS",
+      "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+      "manifest_sha256": "65ae828bb3cad38dd6909b8b23f9be955cc234aa2d8459031ea1bdedc7fb0428",
+      "all_paths_mapped": true,
+      "only_state_replaced": true,
+      "prefix_steps": [
+        10
+      ],
+      "receiver_prior_geo_weather_held_fixed": true,
+      "states_unmodified": true,
+      "scoring": "same valid target pixels; float64 SSE; no standard-accuracy rerun"
+    },
+    "B/ood-s_chopped/progress.json": {
+      "done": 7065,
+      "total": 7065,
+      "seconds": 6217.614141225815,
+      "eligible_counts": {
+        "suffix": 6965,
+        "day100": 3549
+      },
+      "time": 1794739822.0102794
+    },
+    "B/ood-s_chopped/protocol_PASS.json": {
+      "status": "PASS",
+      "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+      "manifest_sha256": "f09625a3d4fdd99833840817d3f45d4294cbf165bd18f3d1f90043c295cb1995",
+      "all_paths_mapped": true,
+      "only_state_replaced": true,
+      "prefix_steps": [
+        10
+      ],
+      "receiver_prior_geo_weather_held_fixed": true,
+      "states_unmodified": true,
+      "scoring": "same valid target pixels; float64 SSE; no standard-accuracy rerun"
+    },
+    "B/ood-st_chopped/progress.json": {
+      "done": 5577,
+      "total": 5577,
+      "seconds": 4940.401497840881,
+      "eligible_counts": {
+        "suffix": 5437,
+        "day100": 2731
+      },
+      "time": 1794728758.5247302
+    },
+    "B/ood-st_chopped/protocol_PASS.json": {
+      "status": "PASS",
+      "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+      "manifest_sha256": "0bb537a9eb920a55e155c80c96e870dee62c6eaee3c9fd993fd18635ea14bde0",
+      "all_paths_mapped": true,
+      "only_state_replaced": true,
+      "prefix_steps": [
+        10
+      ],
+      "receiver_prior_geo_weather_held_fixed": true,
+      "states_unmodified": true,
+      "scoring": "same valid target pixels; float64 SSE; no standard-accuracy rerun"
+    }
+  },
+  "outputs": {
+    "D/iid_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 4061765,
+        "time": 1794726901.1130016
+      },
+      "result": {
+        "status": "PASS",
+        "variant": "D",
+        "split": "iid_chopped",
+        "pairs": 2078,
+        "counts": {
+          "suffix": 2066,
+          "day100": 1214
+        },
+        "rows": 20780,
+        "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+        "csv_sha256": "54c2c9391ddbdf30913c826af6b83fc9fd7c762aa002208be1e45b2811c3017d",
+        "seconds": 1906.067890405655
+      },
+      "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/D/iid_chopped/paired_per_horizon.csv"
+    },
+    "D/ood-t_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 4064865,
+        "time": 1794726911.228392
+      },
+      "result": {
+        "status": "PASS",
+        "variant": "D",
+        "split": "ood-t_chopped",
+        "pairs": 1632,
+        "counts": {
+          "suffix": 1605,
+          "day100": 884
+        },
+        "rows": 16320,
+        "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+        "csv_sha256": "7286cdccf5c32a3df839290b5b02a6e40801491eb221116f19b308f2593e03e0",
+        "seconds": 1498.3231189250946
+      },
+      "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/D/ood-t_chopped/paired_per_horizon.csv"
+    },
+    "D/ood-st_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 4188397,
+        "time": 1794742571.6765618
+      },
+      "result": {
+        "status": "PASS",
+        "variant": "D",
+        "split": "ood-st_chopped",
+        "pairs": 5577,
+        "counts": {
+          "suffix": 5437,
+          "day100": 2731
+        },
+        "rows": 55770,
+        "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+        "csv_sha256": "1e8fc8cf1965ab030bff3b31a142b93c3b81724cc230329ba2da02eaf7cb0a1e",
+        "seconds": 4909.780730724335
+      },
+      "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/D/ood-st_chopped/paired_per_horizon.csv"
+    },
+    "B/iid_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 4046425,
+        "time": 1794725391.1486413
+      },
+      "result": {
+        "status": "PASS",
+        "variant": "B",
+        "split": "iid_chopped",
+        "pairs": 2078,
+        "counts": {
+          "suffix": 2066,
+          "day100": 1214
+        },
+        "rows": 20780,
+        "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+        "csv_sha256": "8c2a32d7d913621060230ae43d35e66ebbc17ea3bca449dcb13e8ee902d42d2f",
+        "seconds": 1582.7509725093842
+      },
+      "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/B/iid_chopped/paired_per_horizon.csv"
+    },
+    "B/ood-t_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 4046720,
+        "time": 1794724978.4647832
+      },
+      "result": {
+        "status": "PASS",
+        "variant": "B",
+        "split": "ood-t_chopped",
+        "pairs": 1632,
+        "counts": {
+          "suffix": 1605,
+          "day100": 884
+        },
+        "rows": 16320,
+        "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+        "csv_sha256": "d954fe53d64442b40e4c370eea0b12a3c1c823c79d41f7903a1dc164e4dcb6bf",
+        "seconds": 1155.0309891700745
+      },
+      "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/B/ood-t_chopped/paired_per_horizon.csv"
+    },
+    "B/ood-s_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 4173638,
+        "time": 1794739832.3492966
+      },
+      "result": {
+        "status": "PASS",
+        "variant": "B",
+        "split": "ood-s_chopped",
+        "pairs": 7065,
+        "counts": {
+          "suffix": 6965,
+          "day100": 3549
+        },
+        "rows": 70650,
+        "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+        "csv_sha256": "af0bb24acc7d95e5a9d9f81753327e0389f07c03d045c4d29345ecc84986abbf",
+        "seconds": 6217.752780675888
+      },
+      "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/B/ood-s_chopped/paired_per_horizon.csv"
+    },
+    "B/ood-st_chopped": {
+      "exit": {
+        "exit": 0,
+        "pid": 4046723,
+        "time": 1794728763.6767192
+      },
+      "result": {
+        "status": "PASS",
+        "variant": "B",
+        "split": "ood-st_chopped",
+        "pairs": 5577,
+        "counts": {
+          "suffix": 5437,
+          "day100": 2731
+        },
+        "rows": 55770,
+        "checkpoint_sha256": "0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46",
+        "csv_sha256": "c77ec548448ffea8a3a8b98e2bf8dcea25267eb99f3cbc1518a18497c46094ac",
+        "seconds": 4940.435929298401
+      },
+      "path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/BD_E1_seed42_20261115_01/B/ood-st_chopped/paired_per_horizon.csv"
+    }
+  },
+  "controller_alive": true
+}

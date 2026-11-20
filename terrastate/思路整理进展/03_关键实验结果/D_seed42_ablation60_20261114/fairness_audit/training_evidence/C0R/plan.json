@@ -1,0 +1,112 @@
+{
+  "python": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/envs/SpanWorld/bin/python",
+  "argv": [
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/train/train_spanworld_full_base.py",
+    "--runtime-world-size",
+    "4",
+    "--config",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code/configs/spanworld_full_base/stage2_D_C0R.json",
+    "--stage",
+    "stage2",
+    "--variant",
+    "D",
+    "--arm",
+    "C0R",
+    "--factual-path",
+    "direct",
+    "--seed",
+    "42",
+    "--train-dir",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/data/greenearthnet_public/train",
+    "--val-dir",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/val_chopped",
+    "--val-split-manifest",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+    "--val-split-selector",
+    "validation_subsplit.val_dev.ids",
+    "--q4-partition-manifest",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+    "--parent-ckpt",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+    "--expected-parent-sha256",
+    "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+    "--num-workers",
+    "4",
+    "--log-interval",
+    "10",
+    "--verify-data-manifest",
+    "--expect-train-manifest-sha",
+    "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+    "--expect-val-manifest-sha",
+    "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+    "--device",
+    "cuda",
+    "--output-dir",
+    "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal",
+    "--history-state-only"
+  ],
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "GPU-6b066b99-857d-37d3-41ef-b5f7ddcfab04,GPU-9865b664-8f6f-5e91-ab81-bdac60b61b62,GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf,GPU-3e1f63df-7402-94f9-7695-d79678b39143",
+    "PYTHONPATH": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01/code",
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TMPDIR": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_stage2_DC_queue_20261113_01/tmp",
+    "TMP": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_stage2_DC_queue_20261113_01/tmp",
+    "TEMP": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_stage2_DC_queue_20261113_01/tmp",
+    "XDG_CACHE_HOME": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_stage2_DC_queue_20261113_01/cache",
+    "TORCH_NCCL_ASYNC_ERROR_HANDLING": "1",
+    "DIAG_RUN": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01",
+    "DIAG_CASE": "D_C0R",
+    "DIAG_TOKEN": "D_C0R909_20261113_01"
+  },
+  "output": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_C0R_selected_seed42_20261113_01/D/formal",
+  "parent": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/retrained_spanworld/spanworld_full_base_stage1_seed42_991_20261113_01/formal/best_val.pt",
+  "parent_sha": "438e8d93505827ce2a1b7ffaef78b64e46e5d65920cf79af25305af5b72e10fb",
+  "reference_config": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code/configs/spanworld_full_base/stage2_D.json",
+  "reference_source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D909_fast4x8_20261113_01/code",
+  "status": "prepared_not_launched",
+  "runtime": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_C0R909_4x8_20261113_01",
+  "resident_dir": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112/memory_only_909_20261113",
+  "holder_manager": {
+    "pid": 2496539,
+    "start": "87646440",
+    "cmd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/eo_chain_20261112/gpu_env/bin/python\u0000/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112/memory_only_909_20261113/resident.py\u0000/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/EO_WM_public/greenearthnet_eval_20261113_909\u0000",
+    "state": "S"
+  },
+  "holders": [
+    {
+      "pid": 2586915,
+      "start": "88514909",
+      "cmd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/eo_chain_20261112/gpu_env/bin/python\u0000/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112/memory_only_909_20261113/resident.py\u0000/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/EO_WM_public/greenearthnet_eval_20261113_909\u00000\u0000",
+      "state": "S"
+    },
+    {
+      "pid": 2586916,
+      "start": "88514914",
+      "cmd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/eo_chain_20261112/gpu_env/bin/python\u0000/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112/memory_only_909_20261113/resident.py\u0000/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/EO_WM_public/greenearthnet_eval_20261113_909\u00001\u0000",
+      "state": "S"
+    },
+    {
+      "pid": 2586917,
+      "start": "88514917",
+      "cmd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/eo_chain_20261112/gpu_env/bin/python\u0000/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112/memory_only_909_20261113/resident.py\u0000/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/EO_WM_public/greenearthnet_eval_20261113_909\u00002\u0000",
+      "state": "S"
+    },
+    {
+      "pid": 2586918,
+      "start": "88514919",
+      "cmd": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/eo_chain_20261112/gpu_env/bin/python\u0000/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/temporary30_20261112/memory_only_909_20261113/resident.py\u0000/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/EO_WM_public/greenearthnet_eval_20261113_909\u00003\u0000",
+      "state": "S"
+    }
+  ],
+  "gpu_uuids": [
+    "GPU-6b066b99-857d-37d3-41ef-b5f7ddcfab04",
+    "GPU-9865b664-8f6f-5e91-ab81-bdac60b61b62",
+    "GPU-a0f1ac63-09d2-121e-0a8c-e07289f945cf",
+    "GPU-3e1f63df-7402-94f9-7695-d79678b39143"
+  ],
+  "global_batch": 32,
+  "effective_updates": 74500
+}

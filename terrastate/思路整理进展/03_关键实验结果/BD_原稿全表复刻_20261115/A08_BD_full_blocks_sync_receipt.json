@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "time": "2026-11-15T07:33:30.377819",
+  "A08": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A08_E1主表_同协议重跑结果.md",
+  "old_bytes_preserved": 69477,
+  "old_sha256": "7ef786ddf4d8e9cdd5134886f602904314e2f1c0845e791f7f339b51ca9ae471",
+  "new_sha256": "aacaee587170252accc329aecd3225c9cc83f260efc4e65b0baaad39c908e660",
+  "source_tables": {
+    "B": {
+      "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A50_方案B_原稿对应表格结果追加记录_20261115.md",
+      "source_sha256": "9a26d0ecdbca7cc652bf0463d52ced64f240fd8d2e387449adf6e0903cc9bd93",
+      "table_lines_copied": 146,
+      "table_lines_exact": true
+    },
+    "D": {
+      "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A51_方案D_原稿对应表格结果追加记录_20261115.md",
+      "source_sha256": "77ad8c8920feb3f5ab676b7a848d4adcab8ea63861b7ba8ddee868c4a436774a",
+      "table_lines_copied": 152,
+      "table_lines_exact": true
+    }
+  },
+  "D_E2_artifact_audit": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\BD_原稿全表复刻_20261115\\e2_D_artifact_audit.json",
+  "historical_manuscript_unchanged": true
+}

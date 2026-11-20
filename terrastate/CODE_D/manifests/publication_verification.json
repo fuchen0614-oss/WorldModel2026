@@ -1,0 +1,29 @@
+{
+  "staged_files": 825,
+  "source_sha_verified": 97,
+  "result_sha_verified": 678,
+  "bytes": 77514026,
+  "errors": [],
+  "largest": [
+    [
+      9774731,
+      "terrastate/思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/ood-s_chopped/paired_per_horizon.csv"
+    ],
+    [
+      9774462,
+      "terrastate/思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/ood-s_chopped/paired_per_horizon.csv"
+    ],
+    [
+      7646560,
+      "terrastate/思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/D/ood-st_chopped/paired_per_horizon.csv"
+    ],
+    [
+      7646546,
+      "terrastate/思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/E1_20min_collector/B/ood-st_chopped/paired_per_horizon.csv"
+    ],
+    [
+      3773804,
+      "terrastate/思路整理进展/03_关键实验结果/BD_原稿全表复刻_20261115/bd_checkpoint_config_audit.json"
+    ]
+  ]
+}

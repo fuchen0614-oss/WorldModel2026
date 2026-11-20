@@ -1,0 +1,22 @@
+{
+  "standard_R2_actual_definition": "per-pixel temporal Pearson r squared, within-cube/LC mean then LC-balanced mean; not NSE",
+  "standard_three_models_four_splits": "12 rows complete, checkpoint SHA and split IDs verified",
+  "receiver_distribution": "648 all/group rows complete",
+  "target_MSE": "120 rows complete",
+  "suffix_R2": "NOT_COMPUTED",
+  "suffix_raw_stats_sufficient": false,
+  "missing_fields": [
+    "per-pixel n",
+    "sum_y",
+    "sum_pred",
+    "sum_y2",
+    "sum_pred2",
+    "sum_y_pred"
+  ],
+  "pending": [
+    "prediction-cache inventory beyond current non-caching suffix entry",
+    "minimum valid temporal observations and common zero-variance eligibility definition"
+  ],
+  "new_inference_started": false,
+  "does_not_replace_MSE": true
+}

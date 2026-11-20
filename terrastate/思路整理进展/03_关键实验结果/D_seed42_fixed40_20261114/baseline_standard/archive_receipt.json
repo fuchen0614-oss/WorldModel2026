@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "source_root": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/baseline_B_fixed40_completion_20261114",
+  "files": {
+    "result.json": "f4b5dbaf9c78beacbe1531d4f0b64bd2d4436c85533f9bb6a564102eeaa1ff87",
+    "acceptance.json": "34372e07e2bd340622f8336a5ef0eca900ca3803487cefd730d1da4f408ee8bb",
+    "summary.csv": "ba5f93fea31abd91df05c46cb64dd78b97a23741c7d38fb0d794b9976c59c045"
+  },
+  "source_receipt": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\执行交接\\额度优化_20261026\\personal_recovery_20261114\\b8_status3.json",
+  "note": "original D-tagged base-only source; B/D shared comparator config verified; actual60epoch training snapshot40, not retrained40"
+}

@@ -1,0 +1,30 @@
+{
+  "scope": "D seed42 formal 100-epoch stage; shared-parent training excluded",
+  "status": "log_reconstructed_approximation",
+  "first_segment": {
+    "steps": [
+      0,
+      27565
+    ],
+    "epochs": [
+      1,
+      37
+    ],
+    "seconds": 26803.84213192761,
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\releases\\spanworld_v2\\efficiency_v1_20261113\\evidence\\formal_D909_fast_staging.json",
+    "sha256": "a863218a06a6cd4dba56ad1b41d682502e8ec34966d2667829fa6a24281edb46"
+  },
+  "second_segment": {
+    "steps": [
+      27565,
+      74500
+    ],
+    "seconds": 26450.41035103798,
+    "source": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\BD_原稿全表复刻_20261115\\I1\\bd_i1_remaining.json"
+  },
+  "wall_hours_approx": 14.792847911934885,
+  "allocated_gpu_hours_approx": 59.17139164773954,
+  "C0R_wall_hours": 15.186002319455147,
+  "C0R_allocated_gpu_hours": 60.74400927782059,
+  "limitation": "First-segment epoch timers cover training and validation but exclude subsequent checkpoint-save and some initialization overhead. This is an approximate reconstruction, not an exact full-stage wall timer. Excludes discarded parallel attempts and migration waiting."
+}

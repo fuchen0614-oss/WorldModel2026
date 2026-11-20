@@ -1,0 +1,3938 @@
+{
+  "schema": "frozen_matched_donor_manifest_rebuild_v2_corrected_mask",
+  "status": "PASS_WITH_EXPLICIT_INVALID_EVAL_RECORDS",
+  "calibration": {
+    "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/calibration_train_v2_corrected_mask_20260909T134000Z/calibration.json",
+    "sha256": "56f6212b5ccf00ae58119b6ecb7f1ee4e0f852b868d29eb25d1a1451f4b9eefc",
+    "file_list_sha256": "2bd2e7c81e84f6e2a804e437d2c71d712728d4f892c1bd1372a4522f57873ec1"
+  },
+  "formal_manifest": {
+    "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/formal_suffix_v3_iid_full_20260908T100000Z/manifests/formal_donor_manifest.csv",
+    "rows": 2856,
+    "sha256": "b6b8adcda27ef5a4316a6e9a88bd61ec9b85193805ee4979cfd4a48906f1d223"
+  },
+  "feature_code": {
+    "path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/code/matched_donor_feature_extractor_v2.py",
+    "sha256": "aceb490a7b03fccea009152c91f53bd2acfafee6c7741db1143cb0d0d3844bb1"
+  },
+  "result": {
+    "requested": 2856,
+    "valid_records": 2078,
+    "invalid_records": 778,
+    "matched": 2078,
+    "unmatched_valid": 0,
+    "self_matches": 0,
+    "reuse_max": 1,
+    "distance_quantiles": {
+      "0": 0.0,
+      "0.25": 0.16479986639056182,
+      "0.5": 0.2649622610478938,
+      "0.75": 0.4572633474856094,
+      "1": 24.892846037848123
+    }
+  },
+  "comparison_to_old_manifest": {
+    "old_path": "/data/zs/terrastate_tip_runs/parallel_eval_20260908T075534Z/reports/matched_donor_manifest_iid_frozen_train_v2.csv",
+    "old_sha256": "99eea89a3872ba3e4bc41f597292b702170cc2f3b84dba4ee83e68aadab2237e",
+    "old_rows": 2078,
+    "common_receivers": 2078,
+    "pair_changed": 88,
+    "pair_changed_fraction": 0.04234841193455245,
+    "old_only_receivers": [],
+    "new_only_receivers": []
+  },
+  "invalid_records": [
+    {
+      "dataset_index": 0,
+      "relative_path": "JAS17/minicube_0_29SND_39.29_-8.56.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_0_29SND_39.29_-8.56.nc"
+    },
+    {
+      "dataset_index": 1,
+      "relative_path": "JAS17/minicube_100_32TPP_43.28_10.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_100_32TPP_43.28_10.58.nc"
+    },
+    {
+      "dataset_index": 11,
+      "relative_path": "JAS17/minicube_10_29TNE_39.87_-8.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_10_29TNE_39.87_-8.91.nc"
+    },
+    {
+      "dataset_index": 17,
+      "relative_path": "JAS17/minicube_115_32TQP_43.27_12.72.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_115_32TQP_43.27_12.72.nc"
+    },
+    {
+      "dataset_index": 18,
+      "relative_path": "JAS17/minicube_116_32UMC_52.08_8.88.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_116_32UMC_52.08_8.88.nc"
+    },
+    {
+      "dataset_index": 19,
+      "relative_path": "JAS17/minicube_117_32UMC_51.50_8.22.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_117_32UMC_51.50_8.22.nc"
+    },
+    {
+      "dataset_index": 20,
+      "relative_path": "JAS17/minicube_118_32UMC_51.86_7.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_118_32UMC_51.86_7.58.nc"
+    },
+    {
+      "dataset_index": 21,
+      "relative_path": "JAS17/minicube_119_32UNC_52.14_10.49.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_119_32UNC_52.14_10.49.nc"
+    },
+    {
+      "dataset_index": 22,
+      "relative_path": "JAS17/minicube_11_29TNE_39.87_-8.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_11_29TNE_39.87_-8.73.nc"
+    },
+    {
+      "dataset_index": 23,
+      "relative_path": "JAS17/minicube_120_32UNC_51.65_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_120_32UNC_51.65_10.40.nc"
+    },
+    {
+      "dataset_index": 24,
+      "relative_path": "JAS17/minicube_121_32UNC_52.09_10.49.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_121_32UNC_52.09_10.49.nc"
+    },
+    {
+      "dataset_index": 25,
+      "relative_path": "JAS17/minicube_122_32UNG_55.65_9.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_122_32UNG_55.65_9.28.nc"
+    },
+    {
+      "dataset_index": 26,
+      "relative_path": "JAS17/minicube_123_32UNG_55.55_10.30.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_123_32UNG_55.55_10.30.nc"
+    },
+    {
+      "dataset_index": 27,
+      "relative_path": "JAS17/minicube_124_32UNG_55.50_10.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_124_32UNG_55.50_10.70.nc"
+    },
+    {
+      "dataset_index": 28,
+      "relative_path": "JAS17/minicube_125_32UNU_48.36_9.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_125_32UNU_48.36_9.65.nc"
+    },
+    {
+      "dataset_index": 29,
+      "relative_path": "JAS17/minicube_126_32UNU_48.02_9.10.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_126_32UNU_48.02_9.10.nc"
+    },
+    {
+      "dataset_index": 31,
+      "relative_path": "JAS17/minicube_128_32UPC_52.07_11.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_128_32UPC_52.07_11.73.nc"
+    },
+    {
+      "dataset_index": 32,
+      "relative_path": "JAS17/minicube_129_32UPC_51.39_10.95.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_129_32UPC_51.39_10.95.nc"
+    },
+    {
+      "dataset_index": 34,
+      "relative_path": "JAS17/minicube_130_32UPC_51.41_11.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_130_32UPC_51.41_11.06.nc"
+    },
+    {
+      "dataset_index": 35,
+      "relative_path": "JAS17/minicube_131_32UQC_51.73_12.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_131_32UQC_51.73_12.23.nc"
+    },
+    {
+      "dataset_index": 36,
+      "relative_path": "JAS17/minicube_132_32UQC_51.72_13.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_132_32UQC_51.72_13.23.nc"
+    },
+    {
+      "dataset_index": 39,
+      "relative_path": "JAS17/minicube_135_32VMM_59.66_8.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_135_32VMM_59.66_8.90.nc"
+    },
+    {
+      "dataset_index": 40,
+      "relative_path": "JAS17/minicube_136_32VMM_59.56_8.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_136_32VMM_59.56_8.36.nc"
+    },
+    {
+      "dataset_index": 41,
+      "relative_path": "JAS17/minicube_13_29TPE_39.88_-7.17.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_13_29TPE_39.88_-7.17.nc"
+    },
+    {
+      "dataset_index": 45,
+      "relative_path": "JAS17/minicube_143_33TUN_47.78_12.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_143_33TUN_47.78_12.36.nc"
+    },
+    {
+      "dataset_index": 46,
+      "relative_path": "JAS17/minicube_144_33TUN_47.64_12.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_144_33TUN_47.64_12.37.nc"
+    },
+    {
+      "dataset_index": 47,
+      "relative_path": "JAS17/minicube_145_33TUN_47.78_12.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_145_33TUN_47.78_12.40.nc"
+    },
+    {
+      "dataset_index": 50,
+      "relative_path": "JAS17/minicube_148_33TVF_41.44_14.35.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_148_33TVF_41.44_14.35.nc"
+    },
+    {
+      "dataset_index": 52,
+      "relative_path": "JAS17/minicube_14_29TPE_40.38_-6.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_14_29TPE_40.38_-6.74.nc"
+    },
+    {
+      "dataset_index": 57,
+      "relative_path": "JAS17/minicube_154_33TXJ_43.62_16.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_154_33TXJ_43.62_16.81.nc"
+    },
+    {
+      "dataset_index": 58,
+      "relative_path": "JAS17/minicube_155_33TXN_47.56_16.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_155_33TXN_47.56_16.91.nc"
+    },
+    {
+      "dataset_index": 64,
+      "relative_path": "JAS17/minicube_160_33TYM_46.19_17.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_160_33TYM_46.19_17.62.nc"
+    },
+    {
+      "dataset_index": 69,
+      "relative_path": "JAS17/minicube_165_33UVR_50.02_13.78.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_165_33UVR_50.02_13.78.nc"
+    },
+    {
+      "dataset_index": 74,
+      "relative_path": "JAS17/minicube_16_29TPH_42.86_-7.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_16_29TPH_42.86_-7.62.nc"
+    },
+    {
+      "dataset_index": 75,
+      "relative_path": "JAS17/minicube_170_33UXP_48.23_16.83.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_170_33UXP_48.23_16.83.nc"
+    },
+    {
+      "dataset_index": 77,
+      "relative_path": "JAS17/minicube_172_33UXP_48.46_17.11.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_172_33UXP_48.46_17.11.nc"
+    },
+    {
+      "dataset_index": 78,
+      "relative_path": "JAS17/minicube_173_33UXQ_49.09_17.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_173_33UXQ_49.09_17.63.nc"
+    },
+    {
+      "dataset_index": 79,
+      "relative_path": "JAS17/minicube_174_33UXQ_48.94_17.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_174_33UXQ_48.94_17.24.nc"
+    },
+    {
+      "dataset_index": 80,
+      "relative_path": "JAS17/minicube_175_33UXQ_48.88_16.99.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_175_33UXQ_48.88_16.99.nc"
+    },
+    {
+      "dataset_index": 81,
+      "relative_path": "JAS17/minicube_176_33VUE_57.89_12.96.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_176_33VUE_57.89_12.96.nc"
+    },
+    {
+      "dataset_index": 82,
+      "relative_path": "JAS17/minicube_177_33VUE_58.26_13.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_177_33VUE_58.26_13.25.nc"
+    },
+    {
+      "dataset_index": 83,
+      "relative_path": "JAS17/minicube_178_33VUE_58.37_12.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_178_33VUE_58.37_12.63.nc"
+    },
+    {
+      "dataset_index": 84,
+      "relative_path": "JAS17/minicube_179_33VUF_59.25_13.11.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_179_33VUF_59.25_13.11.nc"
+    },
+    {
+      "dataset_index": 85,
+      "relative_path": "JAS17/minicube_17_29TPH_42.57_-6.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_17_29TPH_42.57_-6.91.nc"
+    },
+    {
+      "dataset_index": 88,
+      "relative_path": "JAS17/minicube_182_33VUG_59.61_11.54.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_182_33VUG_59.61_11.54.nc"
+    },
+    {
+      "dataset_index": 90,
+      "relative_path": "JAS17/minicube_184_33VUG_59.63_12.31.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_184_33VUG_59.63_12.31.nc"
+    },
+    {
+      "dataset_index": 93,
+      "relative_path": "JAS17/minicube_187_33VVG_59.54_14.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_187_33VVG_59.54_14.81.nc"
+    },
+    {
+      "dataset_index": 94,
+      "relative_path": "JAS17/minicube_189_33VWE_58.37_15.48.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_189_33VWE_58.37_15.48.nc"
+    },
+    {
+      "dataset_index": 95,
+      "relative_path": "JAS17/minicube_18_29TQF_40.76_-6.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_18_29TQF_40.76_-6.24.nc"
+    },
+    {
+      "dataset_index": 96,
+      "relative_path": "JAS17/minicube_190_33VWE_58.41_15.13.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_190_33VWE_58.41_15.13.nc"
+    },
+    {
+      "dataset_index": 97,
+      "relative_path": "JAS17/minicube_191_33VXG_59.95_18.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_191_33VXG_59.95_18.58.nc"
+    },
+    {
+      "dataset_index": 98,
+      "relative_path": "JAS17/minicube_192_33VXG_59.93_17.47.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_192_33VXG_59.93_17.47.nc"
+    },
+    {
+      "dataset_index": 99,
+      "relative_path": "JAS17/minicube_193_33VXG_59.68_18.55.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_193_33VXG_59.68_18.55.nc"
+    },
+    {
+      "dataset_index": 100,
+      "relative_path": "JAS17/minicube_194_33VXH_60.88_17.08.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_194_33VXH_60.88_17.08.nc"
+    },
+    {
+      "dataset_index": 101,
+      "relative_path": "JAS17/minicube_195_33VXH_60.61_17.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_195_33VXH_60.61_17.06.nc"
+    },
+    {
+      "dataset_index": 102,
+      "relative_path": "JAS17/minicube_196_33VXH_60.40_16.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_196_33VXH_60.40_16.91.nc"
+    },
+    {
+      "dataset_index": 106,
+      "relative_path": "JAS17/minicube_19_29TQF_40.87_-5.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_19_29TQF_40.87_-5.90.nc"
+    },
+    {
+      "dataset_index": 107,
+      "relative_path": "JAS17/minicube_1_29SND_39.34_-8.53.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_1_29SND_39.34_-8.53.nc"
+    },
+    {
+      "dataset_index": 108,
+      "relative_path": "JAS17/minicube_200_34SFF_36.97_22.64.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_200_34SFF_36.97_22.64.nc"
+    },
+    {
+      "dataset_index": 109,
+      "relative_path": "JAS17/minicube_201_34SFF_36.66_22.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_201_34SFF_36.66_22.89.nc"
+    },
+    {
+      "dataset_index": 110,
+      "relative_path": "JAS17/minicube_202_34SFF_36.88_22.55.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_202_34SFF_36.88_22.55.nc"
+    },
+    {
+      "dataset_index": 112,
+      "relative_path": "JAS17/minicube_204_34TCL_40.88_19.57.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_204_34TCL_40.88_19.57.nc"
+    },
+    {
+      "dataset_index": 116,
+      "relative_path": "JAS17/minicube_208_34TCQ_44.74_18.50.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_208_34TCQ_44.74_18.50.nc"
+    },
+    {
+      "dataset_index": 119,
+      "relative_path": "JAS17/minicube_210_34TDK_39.94_20.64.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_210_34TDK_39.94_20.64.nc"
+    },
+    {
+      "dataset_index": 124,
+      "relative_path": "JAS17/minicube_215_34TDP_43.66_20.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_215_34TDP_43.66_20.71.nc"
+    },
+    {
+      "dataset_index": 126,
+      "relative_path": "JAS17/minicube_217_34TDP_43.93_20.64.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_217_34TDP_43.93_20.64.nc"
+    },
+    {
+      "dataset_index": 127,
+      "relative_path": "JAS17/minicube_218_34TDQ_44.86_21.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_218_34TDQ_44.86_21.09.nc"
+    },
+    {
+      "dataset_index": 129,
+      "relative_path": "JAS17/minicube_21_30STJ_39.42_-5.68.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_21_30STJ_39.42_-5.68.nc"
+    },
+    {
+      "dataset_index": 135,
+      "relative_path": "JAS17/minicube_225_34TET_47.37_22.05.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_225_34TET_47.37_22.05.nc"
+    },
+    {
+      "dataset_index": 147,
+      "relative_path": "JAS17/minicube_236_34TFT_47.42_23.07.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_236_34TFT_47.42_23.07.nc"
+    },
+    {
+      "dataset_index": 148,
+      "relative_path": "JAS17/minicube_237_34TFT_47.24_22.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_237_34TFT_47.24_22.89.nc"
+    },
+    {
+      "dataset_index": 150,
+      "relative_path": "JAS17/minicube_239_34VCL_59.24_18.52.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_239_34VCL_59.24_18.52.nc"
+    },
+    {
+      "dataset_index": 151,
+      "relative_path": "JAS17/minicube_23_30STJ_39.19_-5.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_23_30STJ_39.19_-5.73.nc"
+    },
+    {
+      "dataset_index": 152,
+      "relative_path": "JAS17/minicube_240_34VCL_59.27_17.80.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_240_34VCL_59.27_17.80.nc"
+    },
+    {
+      "dataset_index": 153,
+      "relative_path": "JAS17/minicube_241_34VCL_59.04_17.96.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_241_34VCL_59.04_17.96.nc"
+    },
+    {
+      "dataset_index": 155,
+      "relative_path": "JAS17/minicube_25_30TTK_40.30_-5.51.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_25_30TTK_40.30_-5.51.nc"
+    },
+    {
+      "dataset_index": 167,
+      "relative_path": "JAS17/minicube_36_30TXS_46.61_-0.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_36_30TXS_46.61_-0.73.nc"
+    },
+    {
+      "dataset_index": 168,
+      "relative_path": "JAS17/minicube_37_30TXS_46.65_-0.52.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_37_30TXS_46.65_-0.52.nc"
+    },
+    {
+      "dataset_index": 180,
+      "relative_path": "JAS17/minicube_48_30UWB_50.96_-1.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_48_30UWB_50.96_-1.62.nc"
+    },
+    {
+      "dataset_index": 181,
+      "relative_path": "JAS17/minicube_49_30UWB_51.10_-1.69.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_49_30UWB_51.10_-1.69.nc"
+    },
+    {
+      "dataset_index": 183,
+      "relative_path": "JAS17/minicube_50_30UWB_51.10_-1.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_50_30UWB_51.10_-1.58.nc"
+    },
+    {
+      "dataset_index": 184,
+      "relative_path": "JAS17/minicube_51_30UXD_52.64_-1.33.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_51_30UXD_52.64_-1.33.nc"
+    },
+    {
+      "dataset_index": 185,
+      "relative_path": "JAS17/minicube_52_30UXD_52.36_-0.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_52_30UXD_52.36_-0.82.nc"
+    },
+    {
+      "dataset_index": 188,
+      "relative_path": "JAS17/minicube_55_30UYU_48.03_-0.29.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_55_30UYU_48.03_-0.29.nc"
+    },
+    {
+      "dataset_index": 192,
+      "relative_path": "JAS17/minicube_59_30UYV_48.77_0.56.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_59_30UYV_48.77_0.56.nc"
+    },
+    {
+      "dataset_index": 213,
+      "relative_path": "JAS17/minicube_78_31TEJ_43.47_3.31.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_78_31TEJ_43.47_3.31.nc"
+    },
+    {
+      "dataset_index": 215,
+      "relative_path": "JAS17/minicube_7_29SQB_37.00_-6.50.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_7_29SQB_37.00_-6.50.nc"
+    },
+    {
+      "dataset_index": 217,
+      "relative_path": "JAS17/minicube_81_31TGN_46.97_5.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_81_31TGN_46.97_5.90.nc"
+    },
+    {
+      "dataset_index": 218,
+      "relative_path": "JAS17/minicube_82_31TGN_46.86_5.72.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_82_31TGN_46.86_5.72.nc"
+    },
+    {
+      "dataset_index": 219,
+      "relative_path": "JAS17/minicube_83_31TGN_46.86_6.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_83_31TGN_46.86_6.97.nc"
+    },
+    {
+      "dataset_index": 222,
+      "relative_path": "JAS17/minicube_86_31UFP_48.13_5.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_86_31UFP_48.13_5.44.nc"
+    },
+    {
+      "dataset_index": 223,
+      "relative_path": "JAS17/minicube_87_31UFP_48.13_5.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_87_31UFP_48.13_5.44.nc"
+    },
+    {
+      "dataset_index": 225,
+      "relative_path": "JAS17/minicube_89_31UGS_50.75_7.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_89_31UGS_50.75_7.36.nc"
+    },
+    {
+      "dataset_index": 227,
+      "relative_path": "JAS17/minicube_90_31UGS_51.35_7.27.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_90_31UGS_51.35_7.27.nc"
+    },
+    {
+      "dataset_index": 235,
+      "relative_path": "JAS17/minicube_98_32TPP_43.52_11.19.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_98_32TPP_43.52_11.19.nc"
+    },
+    {
+      "dataset_index": 236,
+      "relative_path": "JAS17/minicube_99_32TPP_43.78_10.94.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS17/minicube_99_32TPP_43.78_10.94.nc"
+    },
+    {
+      "dataset_index": 243,
+      "relative_path": "JAS18/minicube_104_32TPS_46.09_10.99.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_104_32TPS_46.09_10.99.nc"
+    },
+    {
+      "dataset_index": 251,
+      "relative_path": "JAS18/minicube_111_32TQM_42.08_12.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_111_32TQM_42.08_12.44.nc"
+    },
+    {
+      "dataset_index": 252,
+      "relative_path": "JAS18/minicube_112_32TQM_42.36_12.39.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_112_32TQM_42.36_12.39.nc"
+    },
+    {
+      "dataset_index": 266,
+      "relative_path": "JAS18/minicube_125_32UNU_48.36_9.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_125_32UNU_48.36_9.65.nc"
+    },
+    {
+      "dataset_index": 287,
+      "relative_path": "JAS18/minicube_147_33TVF_41.18_14.17.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_147_33TVF_41.18_14.17.nc"
+    },
+    {
+      "dataset_index": 296,
+      "relative_path": "JAS18/minicube_155_33TXN_47.56_16.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_155_33TXN_47.56_16.91.nc"
+    },
+    {
+      "dataset_index": 381,
+      "relative_path": "JAS18/minicube_232_34TFN_42.38_22.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_232_34TFN_42.38_22.37.nc"
+    },
+    {
+      "dataset_index": 382,
+      "relative_path": "JAS18/minicube_233_34TFP_43.57_23.00.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_233_34TFP_43.57_23.00.nc"
+    },
+    {
+      "dataset_index": 384,
+      "relative_path": "JAS18/minicube_235_34TFP_43.67_22.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_235_34TFP_43.67_22.65.nc"
+    },
+    {
+      "dataset_index": 414,
+      "relative_path": "JAS18/minicube_44_30TYQ_44.48_-0.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_44_30TYQ_44.48_-0.46.nc"
+    },
+    {
+      "dataset_index": 448,
+      "relative_path": "JAS18/minicube_75_31TDK_44.37_2.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_75_31TDK_44.37_2.93.nc"
+    },
+    {
+      "dataset_index": 449,
+      "relative_path": "JAS18/minicube_76_31TDK_44.72_2.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS18/minicube_76_31TDK_44.72_2.87.nc"
+    },
+    {
+      "dataset_index": 499,
+      "relative_path": "JAS19/minicube_120_32UNC_51.65_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_120_32UNC_51.65_10.40.nc"
+    },
+    {
+      "dataset_index": 504,
+      "relative_path": "JAS19/minicube_125_32UNU_48.36_9.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_125_32UNU_48.36_9.65.nc"
+    },
+    {
+      "dataset_index": 505,
+      "relative_path": "JAS19/minicube_126_32UNU_48.02_9.10.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_126_32UNU_48.02_9.10.nc"
+    },
+    {
+      "dataset_index": 508,
+      "relative_path": "JAS19/minicube_129_32UPC_51.39_10.95.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_129_32UPC_51.39_10.95.nc"
+    },
+    {
+      "dataset_index": 510,
+      "relative_path": "JAS19/minicube_130_32UPC_51.41_11.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_130_32UPC_51.41_11.06.nc"
+    },
+    {
+      "dataset_index": 515,
+      "relative_path": "JAS19/minicube_135_32VMM_59.66_8.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_135_32VMM_59.66_8.90.nc"
+    },
+    {
+      "dataset_index": 516,
+      "relative_path": "JAS19/minicube_136_32VMM_59.56_8.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_136_32VMM_59.56_8.36.nc"
+    },
+    {
+      "dataset_index": 524,
+      "relative_path": "JAS19/minicube_146_33TVF_40.88_14.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_146_33TVF_40.88_14.87.nc"
+    },
+    {
+      "dataset_index": 527,
+      "relative_path": "JAS19/minicube_149_33TWE_40.33_15.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_149_33TWE_40.33_15.09.nc"
+    },
+    {
+      "dataset_index": 528,
+      "relative_path": "JAS19/minicube_14_29TPE_40.38_-6.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_14_29TPE_40.38_-6.74.nc"
+    },
+    {
+      "dataset_index": 530,
+      "relative_path": "JAS19/minicube_151_33TWE_40.62_16.18.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_151_33TWE_40.62_16.18.nc"
+    },
+    {
+      "dataset_index": 533,
+      "relative_path": "JAS19/minicube_154_33TXJ_43.62_16.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_154_33TXJ_43.62_16.81.nc"
+    },
+    {
+      "dataset_index": 534,
+      "relative_path": "JAS19/minicube_155_33TXN_47.56_16.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_155_33TXN_47.56_16.91.nc"
+    },
+    {
+      "dataset_index": 535,
+      "relative_path": "JAS19/minicube_156_33TXN_47.36_16.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_156_33TXN_47.36_16.70.nc"
+    },
+    {
+      "dataset_index": 541,
+      "relative_path": "JAS19/minicube_161_33TYN_47.69_18.48.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_161_33TYN_47.69_18.48.nc"
+    },
+    {
+      "dataset_index": 542,
+      "relative_path": "JAS19/minicube_162_33TYN_46.95_18.60.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_162_33TYN_46.95_18.60.nc"
+    },
+    {
+      "dataset_index": 543,
+      "relative_path": "JAS19/minicube_163_33TYN_47.01_18.77.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_163_33TYN_47.01_18.77.nc"
+    },
+    {
+      "dataset_index": 544,
+      "relative_path": "JAS19/minicube_164_33UVR_50.25_14.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_164_33UVR_50.25_14.71.nc"
+    },
+    {
+      "dataset_index": 545,
+      "relative_path": "JAS19/minicube_165_33UVR_50.02_13.78.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_165_33UVR_50.02_13.78.nc"
+    },
+    {
+      "dataset_index": 546,
+      "relative_path": "JAS19/minicube_166_33UVR_50.05_14.92.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_166_33UVR_50.05_14.92.nc"
+    },
+    {
+      "dataset_index": 548,
+      "relative_path": "JAS19/minicube_168_33UWT_51.61_15.92.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_168_33UWT_51.61_15.92.nc"
+    },
+    {
+      "dataset_index": 549,
+      "relative_path": "JAS19/minicube_169_33UWT_51.93_15.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_169_33UWT_51.93_15.97.nc"
+    },
+    {
+      "dataset_index": 551,
+      "relative_path": "JAS19/minicube_170_33UXP_48.23_16.83.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_170_33UXP_48.23_16.83.nc"
+    },
+    {
+      "dataset_index": 552,
+      "relative_path": "JAS19/minicube_171_33UXP_47.84_16.88.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_171_33UXP_47.84_16.88.nc"
+    },
+    {
+      "dataset_index": 553,
+      "relative_path": "JAS19/minicube_172_33UXP_48.46_17.11.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_172_33UXP_48.46_17.11.nc"
+    },
+    {
+      "dataset_index": 558,
+      "relative_path": "JAS19/minicube_177_33VUE_58.26_13.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_177_33VUE_58.26_13.25.nc"
+    },
+    {
+      "dataset_index": 564,
+      "relative_path": "JAS19/minicube_182_33VUG_59.61_11.54.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_182_33VUG_59.61_11.54.nc"
+    },
+    {
+      "dataset_index": 567,
+      "relative_path": "JAS19/minicube_185_33VVG_60.09_13.98.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_185_33VVG_60.09_13.98.nc"
+    },
+    {
+      "dataset_index": 569,
+      "relative_path": "JAS19/minicube_187_33VVG_59.54_14.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_187_33VVG_59.54_14.81.nc"
+    },
+    {
+      "dataset_index": 587,
+      "relative_path": "JAS19/minicube_203_34TCL_41.47_19.52.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_203_34TCL_41.47_19.52.nc"
+    },
+    {
+      "dataset_index": 595,
+      "relative_path": "JAS19/minicube_210_34TDK_39.94_20.64.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_210_34TDK_39.94_20.64.nc"
+    },
+    {
+      "dataset_index": 607,
+      "relative_path": "JAS19/minicube_221_34TEL_40.70_21.85.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_221_34TEL_40.70_21.85.nc"
+    },
+    {
+      "dataset_index": 608,
+      "relative_path": "JAS19/minicube_222_34TEL_40.81_22.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_222_34TEL_40.81_22.24.nc"
+    },
+    {
+      "dataset_index": 609,
+      "relative_path": "JAS19/minicube_223_34TEL_40.70_21.54.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_223_34TEL_40.70_21.54.nc"
+    },
+    {
+      "dataset_index": 610,
+      "relative_path": "JAS19/minicube_224_34TET_47.72_21.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_224_34TET_47.72_21.24.nc"
+    },
+    {
+      "dataset_index": 612,
+      "relative_path": "JAS19/minicube_226_34TET_46.98_21.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_226_34TET_46.98_21.74.nc"
+    },
+    {
+      "dataset_index": 613,
+      "relative_path": "JAS19/minicube_227_34TFL_40.83_22.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_227_34TFL_40.83_22.37.nc"
+    },
+    {
+      "dataset_index": 614,
+      "relative_path": "JAS19/minicube_228_34TFL_40.92_22.43.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_228_34TFL_40.92_22.43.nc"
+    },
+    {
+      "dataset_index": 615,
+      "relative_path": "JAS19/minicube_229_34TFL_41.15_22.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_229_34TFL_41.15_22.71.nc"
+    },
+    {
+      "dataset_index": 617,
+      "relative_path": "JAS19/minicube_230_34TFN_42.76_22.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_230_34TFN_42.76_22.81.nc"
+    },
+    {
+      "dataset_index": 618,
+      "relative_path": "JAS19/minicube_231_34TFN_43.02_22.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_231_34TFN_43.02_22.63.nc"
+    },
+    {
+      "dataset_index": 619,
+      "relative_path": "JAS19/minicube_232_34TFN_42.38_22.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_232_34TFN_42.38_22.37.nc"
+    },
+    {
+      "dataset_index": 620,
+      "relative_path": "JAS19/minicube_233_34TFP_43.57_23.00.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_233_34TFP_43.57_23.00.nc"
+    },
+    {
+      "dataset_index": 622,
+      "relative_path": "JAS19/minicube_235_34TFP_43.67_22.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_235_34TFP_43.67_22.65.nc"
+    },
+    {
+      "dataset_index": 640,
+      "relative_path": "JAS19/minicube_33_30TXR_45.17_-0.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_33_30TXR_45.17_-0.36.nc"
+    },
+    {
+      "dataset_index": 646,
+      "relative_path": "JAS19/minicube_39_30TYN_42.43_-0.51.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_39_30TYN_42.43_-0.51.nc"
+    },
+    {
+      "dataset_index": 650,
+      "relative_path": "JAS19/minicube_42_30TYQ_44.96_-0.34.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_42_30TYQ_44.96_-0.34.nc"
+    },
+    {
+      "dataset_index": 652,
+      "relative_path": "JAS19/minicube_44_30TYQ_44.48_-0.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_44_30TYQ_44.48_-0.46.nc"
+    },
+    {
+      "dataset_index": 654,
+      "relative_path": "JAS19/minicube_46_30TYR_45.49_0.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_46_30TYR_45.49_0.70.nc"
+    },
+    {
+      "dataset_index": 655,
+      "relative_path": "JAS19/minicube_47_30TYR_45.79_0.69.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_47_30TYR_45.79_0.69.nc"
+    },
+    {
+      "dataset_index": 693,
+      "relative_path": "JAS19/minicube_81_31TGN_46.97_5.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_81_31TGN_46.97_5.90.nc"
+    },
+    {
+      "dataset_index": 704,
+      "relative_path": "JAS19/minicube_91_31UGS_50.56_5.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_91_31UGS_50.56_5.89.nc"
+    },
+    {
+      "dataset_index": 708,
+      "relative_path": "JAS19/minicube_95_32TNR_45.18_9.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_95_32TNR_45.18_9.23.nc"
+    },
+    {
+      "dataset_index": 709,
+      "relative_path": "JAS19/minicube_96_32TNR_45.27_9.19.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_96_32TNR_45.27_9.19.nc"
+    },
+    {
+      "dataset_index": 711,
+      "relative_path": "JAS19/minicube_98_32TPP_43.52_11.19.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/JAS19/minicube_98_32TPP_43.52_11.19.nc"
+    },
+    {
+      "dataset_index": 714,
+      "relative_path": "MAM17/minicube_0_29SND_39.29_-8.56.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_0_29SND_39.29_-8.56.nc"
+    },
+    {
+      "dataset_index": 715,
+      "relative_path": "MAM17/minicube_100_32TPP_43.28_10.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_100_32TPP_43.28_10.58.nc"
+    },
+    {
+      "dataset_index": 716,
+      "relative_path": "MAM17/minicube_101_32TPR_45.53_11.26.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_101_32TPR_45.53_11.26.nc"
+    },
+    {
+      "dataset_index": 717,
+      "relative_path": "MAM17/minicube_102_32TPR_45.81_10.98.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_102_32TPR_45.81_10.98.nc"
+    },
+    {
+      "dataset_index": 718,
+      "relative_path": "MAM17/minicube_103_32TPR_45.49_10.47.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_103_32TPR_45.49_10.47.nc"
+    },
+    {
+      "dataset_index": 719,
+      "relative_path": "MAM17/minicube_104_32TPS_46.09_10.99.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_104_32TPS_46.09_10.99.nc"
+    },
+    {
+      "dataset_index": 720,
+      "relative_path": "MAM17/minicube_105_32TPS_46.20_11.26.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_105_32TPS_46.20_11.26.nc"
+    },
+    {
+      "dataset_index": 721,
+      "relative_path": "MAM17/minicube_106_32TPS_46.17_11.16.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_106_32TPS_46.17_11.16.nc"
+    },
+    {
+      "dataset_index": 722,
+      "relative_path": "MAM17/minicube_107_32TPT_47.73_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_107_32TPT_47.73_10.40.nc"
+    },
+    {
+      "dataset_index": 723,
+      "relative_path": "MAM17/minicube_108_32TPT_47.81_11.26.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_108_32TPT_47.81_11.26.nc"
+    },
+    {
+      "dataset_index": 724,
+      "relative_path": "MAM17/minicube_109_32TPT_47.77_10.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_109_32TPT_47.77_10.74.nc"
+    },
+    {
+      "dataset_index": 725,
+      "relative_path": "MAM17/minicube_10_29TNE_39.87_-8.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_10_29TNE_39.87_-8.91.nc"
+    },
+    {
+      "dataset_index": 726,
+      "relative_path": "MAM17/minicube_110_32TQM_41.47_12.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_110_32TQM_41.47_12.65.nc"
+    },
+    {
+      "dataset_index": 727,
+      "relative_path": "MAM17/minicube_111_32TQM_42.08_12.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_111_32TQM_42.08_12.44.nc"
+    },
+    {
+      "dataset_index": 728,
+      "relative_path": "MAM17/minicube_112_32TQM_42.36_12.39.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_112_32TQM_42.36_12.39.nc"
+    },
+    {
+      "dataset_index": 729,
+      "relative_path": "MAM17/minicube_113_32TQP_43.53_11.79.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_113_32TQP_43.53_11.79.nc"
+    },
+    {
+      "dataset_index": 730,
+      "relative_path": "MAM17/minicube_114_32TQP_43.53_11.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_114_32TQP_43.53_11.82.nc"
+    },
+    {
+      "dataset_index": 731,
+      "relative_path": "MAM17/minicube_115_32TQP_43.27_12.72.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_115_32TQP_43.27_12.72.nc"
+    },
+    {
+      "dataset_index": 732,
+      "relative_path": "MAM17/minicube_116_32UMC_52.08_8.88.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_116_32UMC_52.08_8.88.nc"
+    },
+    {
+      "dataset_index": 733,
+      "relative_path": "MAM17/minicube_117_32UMC_51.50_8.22.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_117_32UMC_51.50_8.22.nc"
+    },
+    {
+      "dataset_index": 734,
+      "relative_path": "MAM17/minicube_118_32UMC_51.86_7.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_118_32UMC_51.86_7.58.nc"
+    },
+    {
+      "dataset_index": 735,
+      "relative_path": "MAM17/minicube_119_32UNC_52.14_10.49.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_119_32UNC_52.14_10.49.nc"
+    },
+    {
+      "dataset_index": 736,
+      "relative_path": "MAM17/minicube_11_29TNE_39.87_-8.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_11_29TNE_39.87_-8.73.nc"
+    },
+    {
+      "dataset_index": 737,
+      "relative_path": "MAM17/minicube_120_32UNC_51.65_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_120_32UNC_51.65_10.40.nc"
+    },
+    {
+      "dataset_index": 739,
+      "relative_path": "MAM17/minicube_122_32UNG_55.65_9.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_122_32UNG_55.65_9.28.nc"
+    },
+    {
+      "dataset_index": 740,
+      "relative_path": "MAM17/minicube_123_32UNG_55.55_10.30.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_123_32UNG_55.55_10.30.nc"
+    },
+    {
+      "dataset_index": 741,
+      "relative_path": "MAM17/minicube_124_32UNG_55.50_10.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_124_32UNG_55.50_10.70.nc"
+    },
+    {
+      "dataset_index": 742,
+      "relative_path": "MAM17/minicube_125_32UNU_48.36_9.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_125_32UNU_48.36_9.65.nc"
+    },
+    {
+      "dataset_index": 743,
+      "relative_path": "MAM17/minicube_126_32UNU_48.02_9.10.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_126_32UNU_48.02_9.10.nc"
+    },
+    {
+      "dataset_index": 744,
+      "relative_path": "MAM17/minicube_127_32UNU_48.68_10.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_127_32UNU_48.68_10.25.nc"
+    },
+    {
+      "dataset_index": 745,
+      "relative_path": "MAM17/minicube_128_32UPC_52.07_11.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_128_32UPC_52.07_11.73.nc"
+    },
+    {
+      "dataset_index": 746,
+      "relative_path": "MAM17/minicube_129_32UPC_51.39_10.95.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_129_32UPC_51.39_10.95.nc"
+    },
+    {
+      "dataset_index": 747,
+      "relative_path": "MAM17/minicube_12_29TPE_39.71_-6.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_12_29TPE_39.71_-6.82.nc"
+    },
+    {
+      "dataset_index": 749,
+      "relative_path": "MAM17/minicube_131_32UQC_51.73_12.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_131_32UQC_51.73_12.23.nc"
+    },
+    {
+      "dataset_index": 750,
+      "relative_path": "MAM17/minicube_132_32UQC_51.72_13.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_132_32UQC_51.72_13.23.nc"
+    },
+    {
+      "dataset_index": 751,
+      "relative_path": "MAM17/minicube_133_32UQC_51.92_12.17.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_133_32UQC_51.92_12.17.nc"
+    },
+    {
+      "dataset_index": 752,
+      "relative_path": "MAM17/minicube_134_32VMM_59.68_8.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_134_32VMM_59.68_8.90.nc"
+    },
+    {
+      "dataset_index": 753,
+      "relative_path": "MAM17/minicube_135_32VMM_59.66_8.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_135_32VMM_59.66_8.90.nc"
+    },
+    {
+      "dataset_index": 754,
+      "relative_path": "MAM17/minicube_136_32VMM_59.56_8.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_136_32VMM_59.56_8.36.nc"
+    },
+    {
+      "dataset_index": 755,
+      "relative_path": "MAM17/minicube_13_29TPE_39.88_-7.17.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_13_29TPE_39.88_-7.17.nc"
+    },
+    {
+      "dataset_index": 756,
+      "relative_path": "MAM17/minicube_140_33SXD_39.00_16.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_140_33SXD_39.00_16.89.nc"
+    },
+    {
+      "dataset_index": 757,
+      "relative_path": "MAM17/minicube_141_33SXD_39.18_17.10.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_141_33SXD_39.18_17.10.nc"
+    },
+    {
+      "dataset_index": 758,
+      "relative_path": "MAM17/minicube_142_33SXD_39.00_16.86.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_142_33SXD_39.00_16.86.nc"
+    },
+    {
+      "dataset_index": 759,
+      "relative_path": "MAM17/minicube_143_33TUN_47.78_12.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_143_33TUN_47.78_12.36.nc"
+    },
+    {
+      "dataset_index": 760,
+      "relative_path": "MAM17/minicube_144_33TUN_47.64_12.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_144_33TUN_47.64_12.37.nc"
+    },
+    {
+      "dataset_index": 761,
+      "relative_path": "MAM17/minicube_145_33TUN_47.78_12.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_145_33TUN_47.78_12.40.nc"
+    },
+    {
+      "dataset_index": 762,
+      "relative_path": "MAM17/minicube_146_33TVF_40.88_14.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_146_33TVF_40.88_14.87.nc"
+    },
+    {
+      "dataset_index": 763,
+      "relative_path": "MAM17/minicube_147_33TVF_41.18_14.17.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_147_33TVF_41.18_14.17.nc"
+    },
+    {
+      "dataset_index": 764,
+      "relative_path": "MAM17/minicube_148_33TVF_41.44_14.35.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_148_33TVF_41.44_14.35.nc"
+    },
+    {
+      "dataset_index": 765,
+      "relative_path": "MAM17/minicube_149_33TWE_40.33_15.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_149_33TWE_40.33_15.09.nc"
+    },
+    {
+      "dataset_index": 766,
+      "relative_path": "MAM17/minicube_14_29TPE_40.38_-6.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_14_29TPE_40.38_-6.74.nc"
+    },
+    {
+      "dataset_index": 767,
+      "relative_path": "MAM17/minicube_150_33TWE_40.38_15.12.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_150_33TWE_40.38_15.12.nc"
+    },
+    {
+      "dataset_index": 768,
+      "relative_path": "MAM17/minicube_151_33TWE_40.62_16.18.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_151_33TWE_40.62_16.18.nc"
+    },
+    {
+      "dataset_index": 769,
+      "relative_path": "MAM17/minicube_152_33TXJ_43.27_16.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_152_33TXJ_43.27_16.74.nc"
+    },
+    {
+      "dataset_index": 770,
+      "relative_path": "MAM17/minicube_153_33TXJ_43.46_16.80.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_153_33TXJ_43.46_16.80.nc"
+    },
+    {
+      "dataset_index": 771,
+      "relative_path": "MAM17/minicube_154_33TXJ_43.62_16.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_154_33TXJ_43.62_16.81.nc"
+    },
+    {
+      "dataset_index": 774,
+      "relative_path": "MAM17/minicube_157_33TXN_46.91_17.39.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_157_33TXN_46.91_17.39.nc"
+    },
+    {
+      "dataset_index": 775,
+      "relative_path": "MAM17/minicube_158_33TYM_46.41_18.67.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_158_33TYM_46.41_18.67.nc"
+    },
+    {
+      "dataset_index": 776,
+      "relative_path": "MAM17/minicube_159_33TYM_46.57_18.14.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_159_33TYM_46.57_18.14.nc"
+    },
+    {
+      "dataset_index": 777,
+      "relative_path": "MAM17/minicube_15_29TPH_42.42_-7.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_15_29TPH_42.42_-7.23.nc"
+    },
+    {
+      "dataset_index": 778,
+      "relative_path": "MAM17/minicube_160_33TYM_46.19_17.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_160_33TYM_46.19_17.62.nc"
+    },
+    {
+      "dataset_index": 779,
+      "relative_path": "MAM17/minicube_161_33TYN_47.69_18.48.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_161_33TYN_47.69_18.48.nc"
+    },
+    {
+      "dataset_index": 780,
+      "relative_path": "MAM17/minicube_162_33TYN_46.95_18.60.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_162_33TYN_46.95_18.60.nc"
+    },
+    {
+      "dataset_index": 781,
+      "relative_path": "MAM17/minicube_163_33TYN_47.01_18.77.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_163_33TYN_47.01_18.77.nc"
+    },
+    {
+      "dataset_index": 783,
+      "relative_path": "MAM17/minicube_165_33UVR_50.02_13.78.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_165_33UVR_50.02_13.78.nc"
+    },
+    {
+      "dataset_index": 788,
+      "relative_path": "MAM17/minicube_16_29TPH_42.86_-7.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_16_29TPH_42.86_-7.62.nc"
+    },
+    {
+      "dataset_index": 795,
+      "relative_path": "MAM17/minicube_176_33VUE_57.89_12.96.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_176_33VUE_57.89_12.96.nc"
+    },
+    {
+      "dataset_index": 796,
+      "relative_path": "MAM17/minicube_177_33VUE_58.26_13.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_177_33VUE_58.26_13.25.nc"
+    },
+    {
+      "dataset_index": 797,
+      "relative_path": "MAM17/minicube_178_33VUE_58.37_12.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_178_33VUE_58.37_12.63.nc"
+    },
+    {
+      "dataset_index": 798,
+      "relative_path": "MAM17/minicube_179_33VUF_59.25_13.11.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_179_33VUF_59.25_13.11.nc"
+    },
+    {
+      "dataset_index": 799,
+      "relative_path": "MAM17/minicube_17_29TPH_42.57_-6.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_17_29TPH_42.57_-6.91.nc"
+    },
+    {
+      "dataset_index": 800,
+      "relative_path": "MAM17/minicube_180_33VUF_59.46_13.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_180_33VUF_59.46_13.23.nc"
+    },
+    {
+      "dataset_index": 801,
+      "relative_path": "MAM17/minicube_181_33VUF_59.44_13.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_181_33VUF_59.44_13.28.nc"
+    },
+    {
+      "dataset_index": 802,
+      "relative_path": "MAM17/minicube_182_33VUG_59.61_11.54.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_182_33VUG_59.61_11.54.nc"
+    },
+    {
+      "dataset_index": 803,
+      "relative_path": "MAM17/minicube_183_33VUG_60.04_12.05.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_183_33VUG_60.04_12.05.nc"
+    },
+    {
+      "dataset_index": 804,
+      "relative_path": "MAM17/minicube_184_33VUG_59.63_12.31.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_184_33VUG_59.63_12.31.nc"
+    },
+    {
+      "dataset_index": 805,
+      "relative_path": "MAM17/minicube_185_33VVG_60.09_13.98.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_185_33VVG_60.09_13.98.nc"
+    },
+    {
+      "dataset_index": 806,
+      "relative_path": "MAM17/minicube_186_33VVG_59.61_13.86.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_186_33VVG_59.61_13.86.nc"
+    },
+    {
+      "dataset_index": 807,
+      "relative_path": "MAM17/minicube_187_33VVG_59.54_14.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_187_33VVG_59.54_14.81.nc"
+    },
+    {
+      "dataset_index": 808,
+      "relative_path": "MAM17/minicube_189_33VWE_58.37_15.48.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_189_33VWE_58.37_15.48.nc"
+    },
+    {
+      "dataset_index": 809,
+      "relative_path": "MAM17/minicube_18_29TQF_40.76_-6.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_18_29TQF_40.76_-6.24.nc"
+    },
+    {
+      "dataset_index": 810,
+      "relative_path": "MAM17/minicube_190_33VWE_58.41_15.13.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_190_33VWE_58.41_15.13.nc"
+    },
+    {
+      "dataset_index": 811,
+      "relative_path": "MAM17/minicube_191_33VXG_59.95_18.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_191_33VXG_59.95_18.58.nc"
+    },
+    {
+      "dataset_index": 812,
+      "relative_path": "MAM17/minicube_192_33VXG_59.93_17.47.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_192_33VXG_59.93_17.47.nc"
+    },
+    {
+      "dataset_index": 813,
+      "relative_path": "MAM17/minicube_193_33VXG_59.68_18.55.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_193_33VXG_59.68_18.55.nc"
+    },
+    {
+      "dataset_index": 814,
+      "relative_path": "MAM17/minicube_194_33VXH_60.88_17.08.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_194_33VXH_60.88_17.08.nc"
+    },
+    {
+      "dataset_index": 815,
+      "relative_path": "MAM17/minicube_195_33VXH_60.61_17.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_195_33VXH_60.61_17.06.nc"
+    },
+    {
+      "dataset_index": 816,
+      "relative_path": "MAM17/minicube_196_33VXH_60.40_16.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_196_33VXH_60.40_16.91.nc"
+    },
+    {
+      "dataset_index": 817,
+      "relative_path": "MAM17/minicube_197_34SEJ_39.50_21.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_197_34SEJ_39.50_21.71.nc"
+    },
+    {
+      "dataset_index": 818,
+      "relative_path": "MAM17/minicube_198_34SEJ_39.24_21.03.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_198_34SEJ_39.24_21.03.nc"
+    },
+    {
+      "dataset_index": 819,
+      "relative_path": "MAM17/minicube_199_34SEJ_39.49_21.83.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_199_34SEJ_39.49_21.83.nc"
+    },
+    {
+      "dataset_index": 820,
+      "relative_path": "MAM17/minicube_19_29TQF_40.87_-5.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_19_29TQF_40.87_-5.90.nc"
+    },
+    {
+      "dataset_index": 821,
+      "relative_path": "MAM17/minicube_1_29SND_39.34_-8.53.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_1_29SND_39.34_-8.53.nc"
+    },
+    {
+      "dataset_index": 822,
+      "relative_path": "MAM17/minicube_200_34SFF_36.97_22.64.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_200_34SFF_36.97_22.64.nc"
+    },
+    {
+      "dataset_index": 823,
+      "relative_path": "MAM17/minicube_201_34SFF_36.66_22.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_201_34SFF_36.66_22.89.nc"
+    },
+    {
+      "dataset_index": 824,
+      "relative_path": "MAM17/minicube_202_34SFF_36.88_22.55.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_202_34SFF_36.88_22.55.nc"
+    },
+    {
+      "dataset_index": 825,
+      "relative_path": "MAM17/minicube_203_34TCL_41.47_19.52.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_203_34TCL_41.47_19.52.nc"
+    },
+    {
+      "dataset_index": 827,
+      "relative_path": "MAM17/minicube_205_34TCL_41.52_19.68.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_205_34TCL_41.52_19.68.nc"
+    },
+    {
+      "dataset_index": 828,
+      "relative_path": "MAM17/minicube_206_34TCQ_44.73_19.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_206_34TCQ_44.73_19.44.nc"
+    },
+    {
+      "dataset_index": 829,
+      "relative_path": "MAM17/minicube_207_34TCQ_44.59_19.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_207_34TCQ_44.59_19.09.nc"
+    },
+    {
+      "dataset_index": 830,
+      "relative_path": "MAM17/minicube_208_34TCQ_44.74_18.50.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_208_34TCQ_44.74_18.50.nc"
+    },
+    {
+      "dataset_index": 832,
+      "relative_path": "MAM17/minicube_20_29TQF_40.81_-5.66.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_20_29TQF_40.81_-5.66.nc"
+    },
+    {
+      "dataset_index": 833,
+      "relative_path": "MAM17/minicube_210_34TDK_39.94_20.64.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_210_34TDK_39.94_20.64.nc"
+    },
+    {
+      "dataset_index": 835,
+      "relative_path": "MAM17/minicube_212_34TDM_41.60_20.47.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_212_34TDM_41.60_20.47.nc"
+    },
+    {
+      "dataset_index": 837,
+      "relative_path": "MAM17/minicube_214_34TDM_42.27_20.41.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_214_34TDM_42.27_20.41.nc"
+    },
+    {
+      "dataset_index": 838,
+      "relative_path": "MAM17/minicube_215_34TDP_43.66_20.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_215_34TDP_43.66_20.71.nc"
+    },
+    {
+      "dataset_index": 839,
+      "relative_path": "MAM17/minicube_216_34TDP_43.54_21.03.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_216_34TDP_43.54_21.03.nc"
+    },
+    {
+      "dataset_index": 841,
+      "relative_path": "MAM17/minicube_218_34TDQ_44.86_21.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_218_34TDQ_44.86_21.09.nc"
+    },
+    {
+      "dataset_index": 842,
+      "relative_path": "MAM17/minicube_219_34TDQ_45.04_20.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_219_34TDQ_45.04_20.93.nc"
+    },
+    {
+      "dataset_index": 844,
+      "relative_path": "MAM17/minicube_220_34TDQ_44.39_20.55.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_220_34TDQ_44.39_20.55.nc"
+    },
+    {
+      "dataset_index": 845,
+      "relative_path": "MAM17/minicube_221_34TEL_40.70_21.85.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_221_34TEL_40.70_21.85.nc"
+    },
+    {
+      "dataset_index": 846,
+      "relative_path": "MAM17/minicube_222_34TEL_40.81_22.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_222_34TEL_40.81_22.24.nc"
+    },
+    {
+      "dataset_index": 847,
+      "relative_path": "MAM17/minicube_223_34TEL_40.70_21.54.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_223_34TEL_40.70_21.54.nc"
+    },
+    {
+      "dataset_index": 848,
+      "relative_path": "MAM17/minicube_224_34TET_47.72_21.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_224_34TET_47.72_21.24.nc"
+    },
+    {
+      "dataset_index": 850,
+      "relative_path": "MAM17/minicube_226_34TET_46.98_21.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_226_34TET_46.98_21.74.nc"
+    },
+    {
+      "dataset_index": 851,
+      "relative_path": "MAM17/minicube_227_34TFL_40.83_22.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_227_34TFL_40.83_22.37.nc"
+    },
+    {
+      "dataset_index": 852,
+      "relative_path": "MAM17/minicube_228_34TFL_40.92_22.43.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_228_34TFL_40.92_22.43.nc"
+    },
+    {
+      "dataset_index": 853,
+      "relative_path": "MAM17/minicube_229_34TFL_41.15_22.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_229_34TFL_41.15_22.71.nc"
+    },
+    {
+      "dataset_index": 855,
+      "relative_path": "MAM17/minicube_230_34TFN_42.76_22.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_230_34TFN_42.76_22.81.nc"
+    },
+    {
+      "dataset_index": 856,
+      "relative_path": "MAM17/minicube_231_34TFN_43.02_22.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_231_34TFN_43.02_22.63.nc"
+    },
+    {
+      "dataset_index": 857,
+      "relative_path": "MAM17/minicube_232_34TFN_42.38_22.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_232_34TFN_42.38_22.37.nc"
+    },
+    {
+      "dataset_index": 858,
+      "relative_path": "MAM17/minicube_233_34TFP_43.57_23.00.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_233_34TFP_43.57_23.00.nc"
+    },
+    {
+      "dataset_index": 859,
+      "relative_path": "MAM17/minicube_234_34TFP_43.81_23.48.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_234_34TFP_43.81_23.48.nc"
+    },
+    {
+      "dataset_index": 860,
+      "relative_path": "MAM17/minicube_235_34TFP_43.67_22.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_235_34TFP_43.67_22.65.nc"
+    },
+    {
+      "dataset_index": 862,
+      "relative_path": "MAM17/minicube_237_34TFT_47.24_22.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_237_34TFT_47.24_22.89.nc"
+    },
+    {
+      "dataset_index": 863,
+      "relative_path": "MAM17/minicube_238_34TFT_47.29_22.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_238_34TFT_47.29_22.46.nc"
+    },
+    {
+      "dataset_index": 864,
+      "relative_path": "MAM17/minicube_239_34VCL_59.24_18.52.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_239_34VCL_59.24_18.52.nc"
+    },
+    {
+      "dataset_index": 866,
+      "relative_path": "MAM17/minicube_240_34VCL_59.27_17.80.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_240_34VCL_59.27_17.80.nc"
+    },
+    {
+      "dataset_index": 867,
+      "relative_path": "MAM17/minicube_241_34VCL_59.04_17.96.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_241_34VCL_59.04_17.96.nc"
+    },
+    {
+      "dataset_index": 868,
+      "relative_path": "MAM17/minicube_24_30TTK_39.99_-6.07.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_24_30TTK_39.99_-6.07.nc"
+    },
+    {
+      "dataset_index": 870,
+      "relative_path": "MAM17/minicube_26_30TTK_39.70_-6.41.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_26_30TTK_39.70_-6.41.nc"
+    },
+    {
+      "dataset_index": 871,
+      "relative_path": "MAM17/minicube_27_30TWK_39.68_-2.64.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_27_30TWK_39.68_-2.64.nc"
+    },
+    {
+      "dataset_index": 872,
+      "relative_path": "MAM17/minicube_28_30TWK_39.82_-2.94.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_28_30TWK_39.82_-2.94.nc"
+    },
+    {
+      "dataset_index": 873,
+      "relative_path": "MAM17/minicube_29_30TWK_40.05_-2.43.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_29_30TWK_40.05_-2.43.nc"
+    },
+    {
+      "dataset_index": 874,
+      "relative_path": "MAM17/minicube_2_29SND_38.90_-8.35.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_2_29SND_38.90_-8.35.nc"
+    },
+    {
+      "dataset_index": 875,
+      "relative_path": "MAM17/minicube_30_30TWM_41.96_-1.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_30_30TWM_41.96_-1.70.nc"
+    },
+    {
+      "dataset_index": 876,
+      "relative_path": "MAM17/minicube_31_30TWM_41.81_-2.42.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_31_30TWM_41.81_-2.42.nc"
+    },
+    {
+      "dataset_index": 877,
+      "relative_path": "MAM17/minicube_32_30TWM_42.08_-2.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_32_30TWM_42.08_-2.23.nc"
+    },
+    {
+      "dataset_index": 878,
+      "relative_path": "MAM17/minicube_33_30TXR_45.17_-0.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_33_30TXR_45.17_-0.36.nc"
+    },
+    {
+      "dataset_index": 879,
+      "relative_path": "MAM17/minicube_34_30TXR_45.37_-0.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_34_30TXR_45.37_-0.87.nc"
+    },
+    {
+      "dataset_index": 880,
+      "relative_path": "MAM17/minicube_35_30TXR_45.39_-1.14.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_35_30TXR_45.39_-1.14.nc"
+    },
+    {
+      "dataset_index": 881,
+      "relative_path": "MAM17/minicube_36_30TXS_46.61_-0.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_36_30TXS_46.61_-0.73.nc"
+    },
+    {
+      "dataset_index": 882,
+      "relative_path": "MAM17/minicube_37_30TXS_46.65_-0.52.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_37_30TXS_46.65_-0.52.nc"
+    },
+    {
+      "dataset_index": 883,
+      "relative_path": "MAM17/minicube_38_30TXS_45.96_-0.42.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_38_30TXS_45.96_-0.42.nc"
+    },
+    {
+      "dataset_index": 884,
+      "relative_path": "MAM17/minicube_39_30TYN_42.43_-0.51.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_39_30TYN_42.43_-0.51.nc"
+    },
+    {
+      "dataset_index": 885,
+      "relative_path": "MAM17/minicube_3_29SPC_38.68_-7.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_3_29SPC_38.68_-7.65.nc"
+    },
+    {
+      "dataset_index": 886,
+      "relative_path": "MAM17/minicube_40_30TYN_42.38_-0.45.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_40_30TYN_42.38_-0.45.nc"
+    },
+    {
+      "dataset_index": 887,
+      "relative_path": "MAM17/minicube_41_30TYN_42.40_0.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_41_30TYN_42.40_0.70.nc"
+    },
+    {
+      "dataset_index": 888,
+      "relative_path": "MAM17/minicube_42_30TYQ_44.96_-0.34.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_42_30TYQ_44.96_-0.34.nc"
+    },
+    {
+      "dataset_index": 889,
+      "relative_path": "MAM17/minicube_43_30TYQ_44.35_0.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_43_30TYQ_44.35_0.09.nc"
+    },
+    {
+      "dataset_index": 890,
+      "relative_path": "MAM17/minicube_44_30TYQ_44.48_-0.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_44_30TYQ_44.48_-0.46.nc"
+    },
+    {
+      "dataset_index": 891,
+      "relative_path": "MAM17/minicube_45_30TYR_45.62_0.78.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_45_30TYR_45.62_0.78.nc"
+    },
+    {
+      "dataset_index": 892,
+      "relative_path": "MAM17/minicube_46_30TYR_45.49_0.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_46_30TYR_45.49_0.70.nc"
+    },
+    {
+      "dataset_index": 893,
+      "relative_path": "MAM17/minicube_47_30TYR_45.79_0.69.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_47_30TYR_45.79_0.69.nc"
+    },
+    {
+      "dataset_index": 894,
+      "relative_path": "MAM17/minicube_48_30UWB_50.96_-1.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_48_30UWB_50.96_-1.62.nc"
+    },
+    {
+      "dataset_index": 895,
+      "relative_path": "MAM17/minicube_49_30UWB_51.10_-1.69.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_49_30UWB_51.10_-1.69.nc"
+    },
+    {
+      "dataset_index": 896,
+      "relative_path": "MAM17/minicube_4_29SPC_38.66_-7.79.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_4_29SPC_38.66_-7.79.nc"
+    },
+    {
+      "dataset_index": 897,
+      "relative_path": "MAM17/minicube_50_30UWB_51.10_-1.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_50_30UWB_51.10_-1.58.nc"
+    },
+    {
+      "dataset_index": 898,
+      "relative_path": "MAM17/minicube_51_30UXD_52.64_-1.33.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_51_30UXD_52.64_-1.33.nc"
+    },
+    {
+      "dataset_index": 899,
+      "relative_path": "MAM17/minicube_52_30UXD_52.36_-0.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_52_30UXD_52.36_-0.82.nc"
+    },
+    {
+      "dataset_index": 900,
+      "relative_path": "MAM17/minicube_53_30UXD_52.34_-0.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_53_30UXD_52.34_-0.93.nc"
+    },
+    {
+      "dataset_index": 901,
+      "relative_path": "MAM17/minicube_54_30UYU_47.92_1.08.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_54_30UYU_47.92_1.08.nc"
+    },
+    {
+      "dataset_index": 902,
+      "relative_path": "MAM17/minicube_55_30UYU_48.03_-0.29.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_55_30UYU_48.03_-0.29.nc"
+    },
+    {
+      "dataset_index": 903,
+      "relative_path": "MAM17/minicube_56_30UYU_47.75_-0.16.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_56_30UYU_47.75_-0.16.nc"
+    },
+    {
+      "dataset_index": 904,
+      "relative_path": "MAM17/minicube_57_30UYV_48.99_-0.02.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_57_30UYV_48.99_-0.02.nc"
+    },
+    {
+      "dataset_index": 905,
+      "relative_path": "MAM17/minicube_58_30UYV_48.73_1.18.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_58_30UYV_48.73_1.18.nc"
+    },
+    {
+      "dataset_index": 906,
+      "relative_path": "MAM17/minicube_59_30UYV_48.77_0.56.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_59_30UYV_48.77_0.56.nc"
+    },
+    {
+      "dataset_index": 907,
+      "relative_path": "MAM17/minicube_5_29SPC_38.81_-6.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_5_29SPC_38.81_-6.73.nc"
+    },
+    {
+      "dataset_index": 908,
+      "relative_path": "MAM17/minicube_60_31TBF_41.35_-0.04.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_60_31TBF_41.35_-0.04.nc"
+    },
+    {
+      "dataset_index": 909,
+      "relative_path": "MAM17/minicube_61_31TBF_41.20_-0.55.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_61_31TBF_41.20_-0.55.nc"
+    },
+    {
+      "dataset_index": 910,
+      "relative_path": "MAM17/minicube_62_31TBF_41.07_0.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_62_31TBF_41.07_0.71.nc"
+    },
+    {
+      "dataset_index": 911,
+      "relative_path": "MAM17/minicube_63_31TCG_41.48_0.66.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_63_31TCG_41.48_0.66.nc"
+    },
+    {
+      "dataset_index": 912,
+      "relative_path": "MAM17/minicube_64_31TCG_41.73_1.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_64_31TCG_41.73_1.24.nc"
+    },
+    {
+      "dataset_index": 913,
+      "relative_path": "MAM17/minicube_65_31TCG_42.05_1.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_65_31TCG_42.05_1.63.nc"
+    },
+    {
+      "dataset_index": 914,
+      "relative_path": "MAM17/minicube_66_31TCN_47.02_1.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_66_31TCN_47.02_1.44.nc"
+    },
+    {
+      "dataset_index": 915,
+      "relative_path": "MAM17/minicube_67_31TCN_47.31_1.00.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_67_31TCN_47.31_1.00.nc"
+    },
+    {
+      "dataset_index": 916,
+      "relative_path": "MAM17/minicube_68_31TCN_47.21_0.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_68_31TCN_47.21_0.93.nc"
+    },
+    {
+      "dataset_index": 917,
+      "relative_path": "MAM17/minicube_69_31TDH_42.94_2.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_69_31TDH_42.94_2.93.nc"
+    },
+    {
+      "dataset_index": 919,
+      "relative_path": "MAM17/minicube_70_31TDH_42.55_2.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_70_31TDH_42.55_2.93.nc"
+    },
+    {
+      "dataset_index": 920,
+      "relative_path": "MAM17/minicube_71_31TDH_42.92_2.56.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_71_31TDH_42.92_2.56.nc"
+    },
+    {
+      "dataset_index": 921,
+      "relative_path": "MAM17/minicube_72_31TDJ_43.33_2.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_72_31TDJ_43.33_2.46.nc"
+    },
+    {
+      "dataset_index": 922,
+      "relative_path": "MAM17/minicube_73_31TDJ_43.29_2.49.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_73_31TDJ_43.29_2.49.nc"
+    },
+    {
+      "dataset_index": 923,
+      "relative_path": "MAM17/minicube_74_31TDJ_43.31_2.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_74_31TDJ_43.31_2.71.nc"
+    },
+    {
+      "dataset_index": 924,
+      "relative_path": "MAM17/minicube_75_31TDK_44.37_2.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_75_31TDK_44.37_2.93.nc"
+    },
+    {
+      "dataset_index": 925,
+      "relative_path": "MAM17/minicube_76_31TDK_44.72_2.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_76_31TDK_44.72_2.87.nc"
+    },
+    {
+      "dataset_index": 926,
+      "relative_path": "MAM17/minicube_77_31TDK_44.81_3.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_77_31TDK_44.81_3.09.nc"
+    },
+    {
+      "dataset_index": 927,
+      "relative_path": "MAM17/minicube_78_31TEJ_43.47_3.31.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_78_31TEJ_43.47_3.31.nc"
+    },
+    {
+      "dataset_index": 928,
+      "relative_path": "MAM17/minicube_79_31TEJ_43.90_4.08.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_79_31TEJ_43.90_4.08.nc"
+    },
+    {
+      "dataset_index": 930,
+      "relative_path": "MAM17/minicube_80_31TEJ_43.61_3.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_80_31TEJ_43.61_3.70.nc"
+    },
+    {
+      "dataset_index": 933,
+      "relative_path": "MAM17/minicube_83_31TGN_46.86_6.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_83_31TGN_46.86_6.97.nc"
+    },
+    {
+      "dataset_index": 934,
+      "relative_path": "MAM17/minicube_84_31UES_51.01_4.27.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_84_31UES_51.01_4.27.nc"
+    },
+    {
+      "dataset_index": 935,
+      "relative_path": "MAM17/minicube_85_31UES_50.62_3.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_85_31UES_50.62_3.97.nc"
+    },
+    {
+      "dataset_index": 936,
+      "relative_path": "MAM17/minicube_86_31UFP_48.13_5.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_86_31UFP_48.13_5.44.nc"
+    },
+    {
+      "dataset_index": 937,
+      "relative_path": "MAM17/minicube_87_31UFP_48.13_5.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_87_31UFP_48.13_5.44.nc"
+    },
+    {
+      "dataset_index": 938,
+      "relative_path": "MAM17/minicube_88_31UFP_48.47_4.66.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_88_31UFP_48.47_4.66.nc"
+    },
+    {
+      "dataset_index": 939,
+      "relative_path": "MAM17/minicube_89_31UGS_50.75_7.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_89_31UGS_50.75_7.36.nc"
+    },
+    {
+      "dataset_index": 942,
+      "relative_path": "MAM17/minicube_91_31UGS_50.56_5.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_91_31UGS_50.56_5.89.nc"
+    },
+    {
+      "dataset_index": 943,
+      "relative_path": "MAM17/minicube_92_32TML_41.11_9.03.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_92_32TML_41.11_9.03.nc"
+    },
+    {
+      "dataset_index": 944,
+      "relative_path": "MAM17/minicube_93_32TML_41.05_9.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_93_32TML_41.05_9.09.nc"
+    },
+    {
+      "dataset_index": 945,
+      "relative_path": "MAM17/minicube_94_32TML_41.02_8.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_94_32TML_41.02_8.97.nc"
+    },
+    {
+      "dataset_index": 946,
+      "relative_path": "MAM17/minicube_95_32TNR_45.18_9.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_95_32TNR_45.18_9.23.nc"
+    },
+    {
+      "dataset_index": 947,
+      "relative_path": "MAM17/minicube_96_32TNR_45.27_9.19.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_96_32TNR_45.27_9.19.nc"
+    },
+    {
+      "dataset_index": 948,
+      "relative_path": "MAM17/minicube_97_32TNR_45.45_9.59.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_97_32TNR_45.45_9.59.nc"
+    },
+    {
+      "dataset_index": 949,
+      "relative_path": "MAM17/minicube_98_32TPP_43.52_11.19.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_98_32TPP_43.52_11.19.nc"
+    },
+    {
+      "dataset_index": 950,
+      "relative_path": "MAM17/minicube_99_32TPP_43.78_10.94.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_99_32TPP_43.78_10.94.nc"
+    },
+    {
+      "dataset_index": 951,
+      "relative_path": "MAM17/minicube_9_29TNE_40.49_-7.88.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM17/minicube_9_29TNE_40.49_-7.88.nc"
+    },
+    {
+      "dataset_index": 953,
+      "relative_path": "MAM18/minicube_100_32TPP_43.28_10.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_100_32TPP_43.28_10.58.nc"
+    },
+    {
+      "dataset_index": 959,
+      "relative_path": "MAM18/minicube_106_32TPS_46.17_11.16.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_106_32TPS_46.17_11.16.nc"
+    },
+    {
+      "dataset_index": 960,
+      "relative_path": "MAM18/minicube_107_32TPT_47.73_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_107_32TPT_47.73_10.40.nc"
+    },
+    {
+      "dataset_index": 961,
+      "relative_path": "MAM18/minicube_108_32TPT_47.81_11.26.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_108_32TPT_47.81_11.26.nc"
+    },
+    {
+      "dataset_index": 965,
+      "relative_path": "MAM18/minicube_111_32TQM_42.08_12.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_111_32TQM_42.08_12.44.nc"
+    },
+    {
+      "dataset_index": 966,
+      "relative_path": "MAM18/minicube_112_32TQM_42.36_12.39.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_112_32TQM_42.36_12.39.nc"
+    },
+    {
+      "dataset_index": 967,
+      "relative_path": "MAM18/minicube_113_32TQP_43.53_11.79.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_113_32TQP_43.53_11.79.nc"
+    },
+    {
+      "dataset_index": 968,
+      "relative_path": "MAM18/minicube_114_32TQP_43.53_11.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_114_32TQP_43.53_11.82.nc"
+    },
+    {
+      "dataset_index": 970,
+      "relative_path": "MAM18/minicube_116_32UMC_52.08_8.88.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_116_32UMC_52.08_8.88.nc"
+    },
+    {
+      "dataset_index": 972,
+      "relative_path": "MAM18/minicube_118_32UMC_51.86_7.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_118_32UMC_51.86_7.58.nc"
+    },
+    {
+      "dataset_index": 975,
+      "relative_path": "MAM18/minicube_120_32UNC_51.65_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_120_32UNC_51.65_10.40.nc"
+    },
+    {
+      "dataset_index": 977,
+      "relative_path": "MAM18/minicube_122_32UNG_55.65_9.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_122_32UNG_55.65_9.28.nc"
+    },
+    {
+      "dataset_index": 978,
+      "relative_path": "MAM18/minicube_123_32UNG_55.55_10.30.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_123_32UNG_55.55_10.30.nc"
+    },
+    {
+      "dataset_index": 979,
+      "relative_path": "MAM18/minicube_124_32UNG_55.50_10.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_124_32UNG_55.50_10.70.nc"
+    },
+    {
+      "dataset_index": 982,
+      "relative_path": "MAM18/minicube_127_32UNU_48.68_10.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_127_32UNU_48.68_10.25.nc"
+    },
+    {
+      "dataset_index": 989,
+      "relative_path": "MAM18/minicube_133_32UQC_51.92_12.17.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_133_32UQC_51.92_12.17.nc"
+    },
+    {
+      "dataset_index": 990,
+      "relative_path": "MAM18/minicube_134_32VMM_59.68_8.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_134_32VMM_59.68_8.90.nc"
+    },
+    {
+      "dataset_index": 991,
+      "relative_path": "MAM18/minicube_135_32VMM_59.66_8.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_135_32VMM_59.66_8.90.nc"
+    },
+    {
+      "dataset_index": 992,
+      "relative_path": "MAM18/minicube_136_32VMM_59.56_8.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_136_32VMM_59.56_8.36.nc"
+    },
+    {
+      "dataset_index": 994,
+      "relative_path": "MAM18/minicube_140_33SXD_39.00_16.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_140_33SXD_39.00_16.89.nc"
+    },
+    {
+      "dataset_index": 996,
+      "relative_path": "MAM18/minicube_142_33SXD_39.00_16.86.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_142_33SXD_39.00_16.86.nc"
+    },
+    {
+      "dataset_index": 997,
+      "relative_path": "MAM18/minicube_143_33TUN_47.78_12.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_143_33TUN_47.78_12.36.nc"
+    },
+    {
+      "dataset_index": 998,
+      "relative_path": "MAM18/minicube_144_33TUN_47.64_12.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_144_33TUN_47.64_12.37.nc"
+    },
+    {
+      "dataset_index": 1006,
+      "relative_path": "MAM18/minicube_151_33TWE_40.62_16.18.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_151_33TWE_40.62_16.18.nc"
+    },
+    {
+      "dataset_index": 1007,
+      "relative_path": "MAM18/minicube_152_33TXJ_43.27_16.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_152_33TXJ_43.27_16.74.nc"
+    },
+    {
+      "dataset_index": 1008,
+      "relative_path": "MAM18/minicube_153_33TXJ_43.46_16.80.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_153_33TXJ_43.46_16.80.nc"
+    },
+    {
+      "dataset_index": 1009,
+      "relative_path": "MAM18/minicube_154_33TXJ_43.62_16.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_154_33TXJ_43.62_16.81.nc"
+    },
+    {
+      "dataset_index": 1010,
+      "relative_path": "MAM18/minicube_155_33TXN_47.56_16.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_155_33TXN_47.56_16.91.nc"
+    },
+    {
+      "dataset_index": 1013,
+      "relative_path": "MAM18/minicube_158_33TYM_46.41_18.67.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_158_33TYM_46.41_18.67.nc"
+    },
+    {
+      "dataset_index": 1014,
+      "relative_path": "MAM18/minicube_159_33TYM_46.57_18.14.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_159_33TYM_46.57_18.14.nc"
+    },
+    {
+      "dataset_index": 1016,
+      "relative_path": "MAM18/minicube_160_33TYM_46.19_17.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_160_33TYM_46.19_17.62.nc"
+    },
+    {
+      "dataset_index": 1017,
+      "relative_path": "MAM18/minicube_161_33TYN_47.69_18.48.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_161_33TYN_47.69_18.48.nc"
+    },
+    {
+      "dataset_index": 1021,
+      "relative_path": "MAM18/minicube_165_33UVR_50.02_13.78.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_165_33UVR_50.02_13.78.nc"
+    },
+    {
+      "dataset_index": 1022,
+      "relative_path": "MAM18/minicube_166_33UVR_50.05_14.92.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_166_33UVR_50.05_14.92.nc"
+    },
+    {
+      "dataset_index": 1023,
+      "relative_path": "MAM18/minicube_167_33UWT_51.42_16.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_167_33UWT_51.42_16.40.nc"
+    },
+    {
+      "dataset_index": 1025,
+      "relative_path": "MAM18/minicube_169_33UWT_51.93_15.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_169_33UWT_51.93_15.97.nc"
+    },
+    {
+      "dataset_index": 1027,
+      "relative_path": "MAM18/minicube_170_33UXP_48.23_16.83.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_170_33UXP_48.23_16.83.nc"
+    },
+    {
+      "dataset_index": 1028,
+      "relative_path": "MAM18/minicube_171_33UXP_47.84_16.88.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_171_33UXP_47.84_16.88.nc"
+    },
+    {
+      "dataset_index": 1029,
+      "relative_path": "MAM18/minicube_172_33UXP_48.46_17.11.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_172_33UXP_48.46_17.11.nc"
+    },
+    {
+      "dataset_index": 1031,
+      "relative_path": "MAM18/minicube_174_33UXQ_48.94_17.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_174_33UXQ_48.94_17.24.nc"
+    },
+    {
+      "dataset_index": 1032,
+      "relative_path": "MAM18/minicube_175_33UXQ_48.88_16.99.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_175_33UXQ_48.88_16.99.nc"
+    },
+    {
+      "dataset_index": 1033,
+      "relative_path": "MAM18/minicube_176_33VUE_57.89_12.96.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_176_33VUE_57.89_12.96.nc"
+    },
+    {
+      "dataset_index": 1034,
+      "relative_path": "MAM18/minicube_177_33VUE_58.26_13.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_177_33VUE_58.26_13.25.nc"
+    },
+    {
+      "dataset_index": 1035,
+      "relative_path": "MAM18/minicube_178_33VUE_58.37_12.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_178_33VUE_58.37_12.63.nc"
+    },
+    {
+      "dataset_index": 1038,
+      "relative_path": "MAM18/minicube_180_33VUF_59.46_13.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_180_33VUF_59.46_13.23.nc"
+    },
+    {
+      "dataset_index": 1039,
+      "relative_path": "MAM18/minicube_181_33VUF_59.44_13.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_181_33VUF_59.44_13.28.nc"
+    },
+    {
+      "dataset_index": 1041,
+      "relative_path": "MAM18/minicube_183_33VUG_60.04_12.05.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_183_33VUG_60.04_12.05.nc"
+    },
+    {
+      "dataset_index": 1043,
+      "relative_path": "MAM18/minicube_185_33VVG_60.09_13.98.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_185_33VVG_60.09_13.98.nc"
+    },
+    {
+      "dataset_index": 1044,
+      "relative_path": "MAM18/minicube_186_33VVG_59.61_13.86.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_186_33VVG_59.61_13.86.nc"
+    },
+    {
+      "dataset_index": 1045,
+      "relative_path": "MAM18/minicube_187_33VVG_59.54_14.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_187_33VVG_59.54_14.81.nc"
+    },
+    {
+      "dataset_index": 1046,
+      "relative_path": "MAM18/minicube_189_33VWE_58.37_15.48.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_189_33VWE_58.37_15.48.nc"
+    },
+    {
+      "dataset_index": 1048,
+      "relative_path": "MAM18/minicube_190_33VWE_58.41_15.13.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_190_33VWE_58.41_15.13.nc"
+    },
+    {
+      "dataset_index": 1052,
+      "relative_path": "MAM18/minicube_194_33VXH_60.88_17.08.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_194_33VXH_60.88_17.08.nc"
+    },
+    {
+      "dataset_index": 1053,
+      "relative_path": "MAM18/minicube_195_33VXH_60.61_17.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_195_33VXH_60.61_17.06.nc"
+    },
+    {
+      "dataset_index": 1054,
+      "relative_path": "MAM18/minicube_196_33VXH_60.40_16.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_196_33VXH_60.40_16.91.nc"
+    },
+    {
+      "dataset_index": 1060,
+      "relative_path": "MAM18/minicube_200_34SFF_36.97_22.64.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_200_34SFF_36.97_22.64.nc"
+    },
+    {
+      "dataset_index": 1061,
+      "relative_path": "MAM18/minicube_201_34SFF_36.66_22.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_201_34SFF_36.66_22.89.nc"
+    },
+    {
+      "dataset_index": 1063,
+      "relative_path": "MAM18/minicube_203_34TCL_41.47_19.52.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_203_34TCL_41.47_19.52.nc"
+    },
+    {
+      "dataset_index": 1066,
+      "relative_path": "MAM18/minicube_206_34TCQ_44.73_19.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_206_34TCQ_44.73_19.44.nc"
+    },
+    {
+      "dataset_index": 1067,
+      "relative_path": "MAM18/minicube_207_34TCQ_44.59_19.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_207_34TCQ_44.59_19.09.nc"
+    },
+    {
+      "dataset_index": 1068,
+      "relative_path": "MAM18/minicube_208_34TCQ_44.74_18.50.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_208_34TCQ_44.74_18.50.nc"
+    },
+    {
+      "dataset_index": 1073,
+      "relative_path": "MAM18/minicube_212_34TDM_41.60_20.47.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_212_34TDM_41.60_20.47.nc"
+    },
+    {
+      "dataset_index": 1074,
+      "relative_path": "MAM18/minicube_213_34TDM_41.53_20.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_213_34TDM_41.53_20.93.nc"
+    },
+    {
+      "dataset_index": 1075,
+      "relative_path": "MAM18/minicube_214_34TDM_42.27_20.41.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_214_34TDM_42.27_20.41.nc"
+    },
+    {
+      "dataset_index": 1079,
+      "relative_path": "MAM18/minicube_218_34TDQ_44.86_21.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_218_34TDQ_44.86_21.09.nc"
+    },
+    {
+      "dataset_index": 1080,
+      "relative_path": "MAM18/minicube_219_34TDQ_45.04_20.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_219_34TDQ_45.04_20.93.nc"
+    },
+    {
+      "dataset_index": 1086,
+      "relative_path": "MAM18/minicube_224_34TET_47.72_21.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_224_34TET_47.72_21.24.nc"
+    },
+    {
+      "dataset_index": 1087,
+      "relative_path": "MAM18/minicube_225_34TET_47.37_22.05.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_225_34TET_47.37_22.05.nc"
+    },
+    {
+      "dataset_index": 1088,
+      "relative_path": "MAM18/minicube_226_34TET_46.98_21.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_226_34TET_46.98_21.74.nc"
+    },
+    {
+      "dataset_index": 1103,
+      "relative_path": "MAM18/minicube_23_30STJ_39.19_-5.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_23_30STJ_39.19_-5.73.nc"
+    },
+    {
+      "dataset_index": 1117,
+      "relative_path": "MAM18/minicube_34_30TXR_45.37_-0.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_34_30TXR_45.37_-0.87.nc"
+    },
+    {
+      "dataset_index": 1128,
+      "relative_path": "MAM18/minicube_44_30TYQ_44.48_-0.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_44_30TYQ_44.48_-0.46.nc"
+    },
+    {
+      "dataset_index": 1137,
+      "relative_path": "MAM18/minicube_52_30UXD_52.36_-0.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_52_30UXD_52.36_-0.82.nc"
+    },
+    {
+      "dataset_index": 1138,
+      "relative_path": "MAM18/minicube_53_30UXD_52.34_-0.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_53_30UXD_52.34_-0.93.nc"
+    },
+    {
+      "dataset_index": 1162,
+      "relative_path": "MAM18/minicube_75_31TDK_44.37_2.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_75_31TDK_44.37_2.93.nc"
+    },
+    {
+      "dataset_index": 1164,
+      "relative_path": "MAM18/minicube_77_31TDK_44.81_3.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_77_31TDK_44.81_3.09.nc"
+    },
+    {
+      "dataset_index": 1169,
+      "relative_path": "MAM18/minicube_81_31TGN_46.97_5.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_81_31TGN_46.97_5.90.nc"
+    },
+    {
+      "dataset_index": 1171,
+      "relative_path": "MAM18/minicube_83_31TGN_46.86_6.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_83_31TGN_46.86_6.97.nc"
+    },
+    {
+      "dataset_index": 1173,
+      "relative_path": "MAM18/minicube_85_31UES_50.62_3.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_85_31UES_50.62_3.97.nc"
+    },
+    {
+      "dataset_index": 1176,
+      "relative_path": "MAM18/minicube_88_31UFP_48.47_4.66.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_88_31UFP_48.47_4.66.nc"
+    },
+    {
+      "dataset_index": 1177,
+      "relative_path": "MAM18/minicube_89_31UGS_50.75_7.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_89_31UGS_50.75_7.36.nc"
+    },
+    {
+      "dataset_index": 1179,
+      "relative_path": "MAM18/minicube_90_31UGS_51.35_7.27.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_90_31UGS_51.35_7.27.nc"
+    },
+    {
+      "dataset_index": 1180,
+      "relative_path": "MAM18/minicube_91_31UGS_50.56_5.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM18/minicube_91_31UGS_50.56_5.89.nc"
+    },
+    {
+      "dataset_index": 1208,
+      "relative_path": "MAM19/minicube_116_32UMC_52.08_8.88.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_116_32UMC_52.08_8.88.nc"
+    },
+    {
+      "dataset_index": 1209,
+      "relative_path": "MAM19/minicube_117_32UMC_51.50_8.22.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_117_32UMC_51.50_8.22.nc"
+    },
+    {
+      "dataset_index": 1210,
+      "relative_path": "MAM19/minicube_118_32UMC_51.86_7.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_118_32UMC_51.86_7.58.nc"
+    },
+    {
+      "dataset_index": 1211,
+      "relative_path": "MAM19/minicube_119_32UNC_52.14_10.49.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_119_32UNC_52.14_10.49.nc"
+    },
+    {
+      "dataset_index": 1213,
+      "relative_path": "MAM19/minicube_120_32UNC_51.65_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_120_32UNC_51.65_10.40.nc"
+    },
+    {
+      "dataset_index": 1214,
+      "relative_path": "MAM19/minicube_121_32UNC_52.09_10.49.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_121_32UNC_52.09_10.49.nc"
+    },
+    {
+      "dataset_index": 1215,
+      "relative_path": "MAM19/minicube_122_32UNG_55.65_9.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_122_32UNG_55.65_9.28.nc"
+    },
+    {
+      "dataset_index": 1216,
+      "relative_path": "MAM19/minicube_123_32UNG_55.55_10.30.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_123_32UNG_55.55_10.30.nc"
+    },
+    {
+      "dataset_index": 1217,
+      "relative_path": "MAM19/minicube_124_32UNG_55.50_10.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_124_32UNG_55.50_10.70.nc"
+    },
+    {
+      "dataset_index": 1220,
+      "relative_path": "MAM19/minicube_127_32UNU_48.68_10.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_127_32UNU_48.68_10.25.nc"
+    },
+    {
+      "dataset_index": 1221,
+      "relative_path": "MAM19/minicube_128_32UPC_52.07_11.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_128_32UPC_52.07_11.73.nc"
+    },
+    {
+      "dataset_index": 1224,
+      "relative_path": "MAM19/minicube_130_32UPC_51.41_11.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_130_32UPC_51.41_11.06.nc"
+    },
+    {
+      "dataset_index": 1225,
+      "relative_path": "MAM19/minicube_131_32UQC_51.73_12.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_131_32UQC_51.73_12.23.nc"
+    },
+    {
+      "dataset_index": 1227,
+      "relative_path": "MAM19/minicube_133_32UQC_51.92_12.17.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_133_32UQC_51.92_12.17.nc"
+    },
+    {
+      "dataset_index": 1228,
+      "relative_path": "MAM19/minicube_134_32VMM_59.68_8.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_134_32VMM_59.68_8.90.nc"
+    },
+    {
+      "dataset_index": 1229,
+      "relative_path": "MAM19/minicube_135_32VMM_59.66_8.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_135_32VMM_59.66_8.90.nc"
+    },
+    {
+      "dataset_index": 1238,
+      "relative_path": "MAM19/minicube_146_33TVF_40.88_14.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_146_33TVF_40.88_14.87.nc"
+    },
+    {
+      "dataset_index": 1254,
+      "relative_path": "MAM19/minicube_160_33TYM_46.19_17.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_160_33TYM_46.19_17.62.nc"
+    },
+    {
+      "dataset_index": 1256,
+      "relative_path": "MAM19/minicube_162_33TYN_46.95_18.60.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_162_33TYN_46.95_18.60.nc"
+    },
+    {
+      "dataset_index": 1258,
+      "relative_path": "MAM19/minicube_164_33UVR_50.25_14.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_164_33UVR_50.25_14.71.nc"
+    },
+    {
+      "dataset_index": 1260,
+      "relative_path": "MAM19/minicube_166_33UVR_50.05_14.92.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_166_33UVR_50.05_14.92.nc"
+    },
+    {
+      "dataset_index": 1262,
+      "relative_path": "MAM19/minicube_168_33UWT_51.61_15.92.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_168_33UWT_51.61_15.92.nc"
+    },
+    {
+      "dataset_index": 1263,
+      "relative_path": "MAM19/minicube_169_33UWT_51.93_15.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_169_33UWT_51.93_15.97.nc"
+    },
+    {
+      "dataset_index": 1268,
+      "relative_path": "MAM19/minicube_173_33UXQ_49.09_17.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_173_33UXQ_49.09_17.63.nc"
+    },
+    {
+      "dataset_index": 1271,
+      "relative_path": "MAM19/minicube_176_33VUE_57.89_12.96.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_176_33VUE_57.89_12.96.nc"
+    },
+    {
+      "dataset_index": 1282,
+      "relative_path": "MAM19/minicube_186_33VVG_59.61_13.86.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_186_33VVG_59.61_13.86.nc"
+    },
+    {
+      "dataset_index": 1283,
+      "relative_path": "MAM19/minicube_187_33VVG_59.54_14.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_187_33VVG_59.54_14.81.nc"
+    },
+    {
+      "dataset_index": 1286,
+      "relative_path": "MAM19/minicube_190_33VWE_58.41_15.13.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_190_33VWE_58.41_15.13.nc"
+    },
+    {
+      "dataset_index": 1291,
+      "relative_path": "MAM19/minicube_195_33VXH_60.61_17.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_195_33VXH_60.61_17.06.nc"
+    },
+    {
+      "dataset_index": 1292,
+      "relative_path": "MAM19/minicube_196_33VXH_60.40_16.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_196_33VXH_60.40_16.91.nc"
+    },
+    {
+      "dataset_index": 1306,
+      "relative_path": "MAM19/minicube_208_34TCQ_44.74_18.50.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_208_34TCQ_44.74_18.50.nc"
+    },
+    {
+      "dataset_index": 1311,
+      "relative_path": "MAM19/minicube_212_34TDM_41.60_20.47.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_212_34TDM_41.60_20.47.nc"
+    },
+    {
+      "dataset_index": 1321,
+      "relative_path": "MAM19/minicube_221_34TEL_40.70_21.85.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_221_34TEL_40.70_21.85.nc"
+    },
+    {
+      "dataset_index": 1322,
+      "relative_path": "MAM19/minicube_222_34TEL_40.81_22.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_222_34TEL_40.81_22.24.nc"
+    },
+    {
+      "dataset_index": 1325,
+      "relative_path": "MAM19/minicube_225_34TET_47.37_22.05.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_225_34TET_47.37_22.05.nc"
+    },
+    {
+      "dataset_index": 1327,
+      "relative_path": "MAM19/minicube_227_34TFL_40.83_22.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_227_34TFL_40.83_22.37.nc"
+    },
+    {
+      "dataset_index": 1328,
+      "relative_path": "MAM19/minicube_228_34TFL_40.92_22.43.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_228_34TFL_40.92_22.43.nc"
+    },
+    {
+      "dataset_index": 1329,
+      "relative_path": "MAM19/minicube_229_34TFL_41.15_22.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_229_34TFL_41.15_22.71.nc"
+    },
+    {
+      "dataset_index": 1332,
+      "relative_path": "MAM19/minicube_231_34TFN_43.02_22.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_231_34TFN_43.02_22.63.nc"
+    },
+    {
+      "dataset_index": 1334,
+      "relative_path": "MAM19/minicube_233_34TFP_43.57_23.00.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_233_34TFP_43.57_23.00.nc"
+    },
+    {
+      "dataset_index": 1337,
+      "relative_path": "MAM19/minicube_236_34TFT_47.42_23.07.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_236_34TFT_47.42_23.07.nc"
+    },
+    {
+      "dataset_index": 1338,
+      "relative_path": "MAM19/minicube_237_34TFT_47.24_22.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_237_34TFT_47.24_22.89.nc"
+    },
+    {
+      "dataset_index": 1339,
+      "relative_path": "MAM19/minicube_238_34TFT_47.29_22.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_238_34TFT_47.29_22.46.nc"
+    },
+    {
+      "dataset_index": 1354,
+      "relative_path": "MAM19/minicube_33_30TXR_45.17_-0.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_33_30TXR_45.17_-0.36.nc"
+    },
+    {
+      "dataset_index": 1357,
+      "relative_path": "MAM19/minicube_36_30TXS_46.61_-0.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_36_30TXS_46.61_-0.73.nc"
+    },
+    {
+      "dataset_index": 1367,
+      "relative_path": "MAM19/minicube_45_30TYR_45.62_0.78.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_45_30TYR_45.62_0.78.nc"
+    },
+    {
+      "dataset_index": 1368,
+      "relative_path": "MAM19/minicube_46_30TYR_45.49_0.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_46_30TYR_45.49_0.70.nc"
+    },
+    {
+      "dataset_index": 1371,
+      "relative_path": "MAM19/minicube_49_30UWB_51.10_-1.69.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_49_30UWB_51.10_-1.69.nc"
+    },
+    {
+      "dataset_index": 1375,
+      "relative_path": "MAM19/minicube_52_30UXD_52.36_-0.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_52_30UXD_52.36_-0.82.nc"
+    },
+    {
+      "dataset_index": 1376,
+      "relative_path": "MAM19/minicube_53_30UXD_52.34_-0.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_53_30UXD_52.34_-0.93.nc"
+    },
+    {
+      "dataset_index": 1380,
+      "relative_path": "MAM19/minicube_57_30UYV_48.99_-0.02.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_57_30UYV_48.99_-0.02.nc"
+    },
+    {
+      "dataset_index": 1382,
+      "relative_path": "MAM19/minicube_59_30UYV_48.77_0.56.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_59_30UYV_48.77_0.56.nc"
+    },
+    {
+      "dataset_index": 1395,
+      "relative_path": "MAM19/minicube_70_31TDH_42.55_2.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_70_31TDH_42.55_2.93.nc"
+    },
+    {
+      "dataset_index": 1397,
+      "relative_path": "MAM19/minicube_72_31TDJ_43.33_2.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_72_31TDJ_43.33_2.46.nc"
+    },
+    {
+      "dataset_index": 1406,
+      "relative_path": "MAM19/minicube_80_31TEJ_43.61_3.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_80_31TEJ_43.61_3.70.nc"
+    },
+    {
+      "dataset_index": 1410,
+      "relative_path": "MAM19/minicube_84_31UES_51.01_4.27.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_84_31UES_51.01_4.27.nc"
+    },
+    {
+      "dataset_index": 1411,
+      "relative_path": "MAM19/minicube_85_31UES_50.62_3.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_85_31UES_50.62_3.97.nc"
+    },
+    {
+      "dataset_index": 1412,
+      "relative_path": "MAM19/minicube_86_31UFP_48.13_5.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_86_31UFP_48.13_5.44.nc"
+    },
+    {
+      "dataset_index": 1413,
+      "relative_path": "MAM19/minicube_87_31UFP_48.13_5.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_87_31UFP_48.13_5.44.nc"
+    },
+    {
+      "dataset_index": 1414,
+      "relative_path": "MAM19/minicube_88_31UFP_48.47_4.66.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_88_31UFP_48.47_4.66.nc"
+    },
+    {
+      "dataset_index": 1415,
+      "relative_path": "MAM19/minicube_89_31UGS_50.75_7.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_89_31UGS_50.75_7.36.nc"
+    },
+    {
+      "dataset_index": 1417,
+      "relative_path": "MAM19/minicube_90_31UGS_51.35_7.27.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_90_31UGS_51.35_7.27.nc"
+    },
+    {
+      "dataset_index": 1418,
+      "relative_path": "MAM19/minicube_91_31UGS_50.56_5.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_91_31UGS_50.56_5.89.nc"
+    },
+    {
+      "dataset_index": 1422,
+      "relative_path": "MAM19/minicube_95_32TNR_45.18_9.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_95_32TNR_45.18_9.23.nc"
+    },
+    {
+      "dataset_index": 1423,
+      "relative_path": "MAM19/minicube_96_32TNR_45.27_9.19.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_96_32TNR_45.27_9.19.nc"
+    },
+    {
+      "dataset_index": 1424,
+      "relative_path": "MAM19/minicube_97_32TNR_45.45_9.59.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MAM19/minicube_97_32TNR_45.45_9.59.nc"
+    },
+    {
+      "dataset_index": 1430,
+      "relative_path": "MJJ17/minicube_101_32TPR_45.53_11.26.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_101_32TPR_45.53_11.26.nc"
+    },
+    {
+      "dataset_index": 1431,
+      "relative_path": "MJJ17/minicube_102_32TPR_45.81_10.98.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_102_32TPR_45.81_10.98.nc"
+    },
+    {
+      "dataset_index": 1432,
+      "relative_path": "MJJ17/minicube_103_32TPR_45.49_10.47.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_103_32TPR_45.49_10.47.nc"
+    },
+    {
+      "dataset_index": 1433,
+      "relative_path": "MJJ17/minicube_104_32TPS_46.09_10.99.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_104_32TPS_46.09_10.99.nc"
+    },
+    {
+      "dataset_index": 1434,
+      "relative_path": "MJJ17/minicube_105_32TPS_46.20_11.26.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_105_32TPS_46.20_11.26.nc"
+    },
+    {
+      "dataset_index": 1435,
+      "relative_path": "MJJ17/minicube_106_32TPS_46.17_11.16.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_106_32TPS_46.17_11.16.nc"
+    },
+    {
+      "dataset_index": 1436,
+      "relative_path": "MJJ17/minicube_107_32TPT_47.73_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_107_32TPT_47.73_10.40.nc"
+    },
+    {
+      "dataset_index": 1437,
+      "relative_path": "MJJ17/minicube_108_32TPT_47.81_11.26.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_108_32TPT_47.81_11.26.nc"
+    },
+    {
+      "dataset_index": 1438,
+      "relative_path": "MJJ17/minicube_109_32TPT_47.77_10.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_109_32TPT_47.77_10.74.nc"
+    },
+    {
+      "dataset_index": 1446,
+      "relative_path": "MJJ17/minicube_116_32UMC_52.08_8.88.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_116_32UMC_52.08_8.88.nc"
+    },
+    {
+      "dataset_index": 1447,
+      "relative_path": "MJJ17/minicube_117_32UMC_51.50_8.22.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_117_32UMC_51.50_8.22.nc"
+    },
+    {
+      "dataset_index": 1448,
+      "relative_path": "MJJ17/minicube_118_32UMC_51.86_7.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_118_32UMC_51.86_7.58.nc"
+    },
+    {
+      "dataset_index": 1449,
+      "relative_path": "MJJ17/minicube_119_32UNC_52.14_10.49.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_119_32UNC_52.14_10.49.nc"
+    },
+    {
+      "dataset_index": 1451,
+      "relative_path": "MJJ17/minicube_120_32UNC_51.65_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_120_32UNC_51.65_10.40.nc"
+    },
+    {
+      "dataset_index": 1452,
+      "relative_path": "MJJ17/minicube_121_32UNC_52.09_10.49.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_121_32UNC_52.09_10.49.nc"
+    },
+    {
+      "dataset_index": 1453,
+      "relative_path": "MJJ17/minicube_122_32UNG_55.65_9.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_122_32UNG_55.65_9.28.nc"
+    },
+    {
+      "dataset_index": 1454,
+      "relative_path": "MJJ17/minicube_123_32UNG_55.55_10.30.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_123_32UNG_55.55_10.30.nc"
+    },
+    {
+      "dataset_index": 1458,
+      "relative_path": "MJJ17/minicube_127_32UNU_48.68_10.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_127_32UNU_48.68_10.25.nc"
+    },
+    {
+      "dataset_index": 1460,
+      "relative_path": "MJJ17/minicube_129_32UPC_51.39_10.95.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_129_32UPC_51.39_10.95.nc"
+    },
+    {
+      "dataset_index": 1462,
+      "relative_path": "MJJ17/minicube_130_32UPC_51.41_11.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_130_32UPC_51.41_11.06.nc"
+    },
+    {
+      "dataset_index": 1465,
+      "relative_path": "MJJ17/minicube_133_32UQC_51.92_12.17.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_133_32UQC_51.92_12.17.nc"
+    },
+    {
+      "dataset_index": 1473,
+      "relative_path": "MJJ17/minicube_143_33TUN_47.78_12.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_143_33TUN_47.78_12.36.nc"
+    },
+    {
+      "dataset_index": 1474,
+      "relative_path": "MJJ17/minicube_144_33TUN_47.64_12.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_144_33TUN_47.64_12.37.nc"
+    },
+    {
+      "dataset_index": 1475,
+      "relative_path": "MJJ17/minicube_145_33TUN_47.78_12.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_145_33TUN_47.78_12.40.nc"
+    },
+    {
+      "dataset_index": 1476,
+      "relative_path": "MJJ17/minicube_146_33TVF_40.88_14.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_146_33TVF_40.88_14.87.nc"
+    },
+    {
+      "dataset_index": 1479,
+      "relative_path": "MJJ17/minicube_149_33TWE_40.33_15.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_149_33TWE_40.33_15.09.nc"
+    },
+    {
+      "dataset_index": 1487,
+      "relative_path": "MJJ17/minicube_156_33TXN_47.36_16.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_156_33TXN_47.36_16.70.nc"
+    },
+    {
+      "dataset_index": 1496,
+      "relative_path": "MJJ17/minicube_164_33UVR_50.25_14.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_164_33UVR_50.25_14.71.nc"
+    },
+    {
+      "dataset_index": 1497,
+      "relative_path": "MJJ17/minicube_165_33UVR_50.02_13.78.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_165_33UVR_50.02_13.78.nc"
+    },
+    {
+      "dataset_index": 1498,
+      "relative_path": "MJJ17/minicube_166_33UVR_50.05_14.92.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_166_33UVR_50.05_14.92.nc"
+    },
+    {
+      "dataset_index": 1499,
+      "relative_path": "MJJ17/minicube_167_33UWT_51.42_16.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_167_33UWT_51.42_16.40.nc"
+    },
+    {
+      "dataset_index": 1500,
+      "relative_path": "MJJ17/minicube_168_33UWT_51.61_15.92.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_168_33UWT_51.61_15.92.nc"
+    },
+    {
+      "dataset_index": 1501,
+      "relative_path": "MJJ17/minicube_169_33UWT_51.93_15.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_169_33UWT_51.93_15.97.nc"
+    },
+    {
+      "dataset_index": 1506,
+      "relative_path": "MJJ17/minicube_173_33UXQ_49.09_17.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_173_33UXQ_49.09_17.63.nc"
+    },
+    {
+      "dataset_index": 1508,
+      "relative_path": "MJJ17/minicube_175_33UXQ_48.88_16.99.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_175_33UXQ_48.88_16.99.nc"
+    },
+    {
+      "dataset_index": 1509,
+      "relative_path": "MJJ17/minicube_176_33VUE_57.89_12.96.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_176_33VUE_57.89_12.96.nc"
+    },
+    {
+      "dataset_index": 1510,
+      "relative_path": "MJJ17/minicube_177_33VUE_58.26_13.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_177_33VUE_58.26_13.25.nc"
+    },
+    {
+      "dataset_index": 1511,
+      "relative_path": "MJJ17/minicube_178_33VUE_58.37_12.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_178_33VUE_58.37_12.63.nc"
+    },
+    {
+      "dataset_index": 1512,
+      "relative_path": "MJJ17/minicube_179_33VUF_59.25_13.11.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_179_33VUF_59.25_13.11.nc"
+    },
+    {
+      "dataset_index": 1513,
+      "relative_path": "MJJ17/minicube_17_29TPH_42.57_-6.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_17_29TPH_42.57_-6.91.nc"
+    },
+    {
+      "dataset_index": 1514,
+      "relative_path": "MJJ17/minicube_180_33VUF_59.46_13.23.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_180_33VUF_59.46_13.23.nc"
+    },
+    {
+      "dataset_index": 1515,
+      "relative_path": "MJJ17/minicube_181_33VUF_59.44_13.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_181_33VUF_59.44_13.28.nc"
+    },
+    {
+      "dataset_index": 1516,
+      "relative_path": "MJJ17/minicube_182_33VUG_59.61_11.54.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_182_33VUG_59.61_11.54.nc"
+    },
+    {
+      "dataset_index": 1517,
+      "relative_path": "MJJ17/minicube_183_33VUG_60.04_12.05.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_183_33VUG_60.04_12.05.nc"
+    },
+    {
+      "dataset_index": 1518,
+      "relative_path": "MJJ17/minicube_184_33VUG_59.63_12.31.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_184_33VUG_59.63_12.31.nc"
+    },
+    {
+      "dataset_index": 1519,
+      "relative_path": "MJJ17/minicube_185_33VVG_60.09_13.98.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_185_33VVG_60.09_13.98.nc"
+    },
+    {
+      "dataset_index": 1520,
+      "relative_path": "MJJ17/minicube_186_33VVG_59.61_13.86.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_186_33VVG_59.61_13.86.nc"
+    },
+    {
+      "dataset_index": 1521,
+      "relative_path": "MJJ17/minicube_187_33VVG_59.54_14.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_187_33VVG_59.54_14.81.nc"
+    },
+    {
+      "dataset_index": 1528,
+      "relative_path": "MJJ17/minicube_194_33VXH_60.88_17.08.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_194_33VXH_60.88_17.08.nc"
+    },
+    {
+      "dataset_index": 1529,
+      "relative_path": "MJJ17/minicube_195_33VXH_60.61_17.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_195_33VXH_60.61_17.06.nc"
+    },
+    {
+      "dataset_index": 1530,
+      "relative_path": "MJJ17/minicube_196_33VXH_60.40_16.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_196_33VXH_60.40_16.91.nc"
+    },
+    {
+      "dataset_index": 1531,
+      "relative_path": "MJJ17/minicube_197_34SEJ_39.50_21.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_197_34SEJ_39.50_21.71.nc"
+    },
+    {
+      "dataset_index": 1532,
+      "relative_path": "MJJ17/minicube_198_34SEJ_39.24_21.03.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_198_34SEJ_39.24_21.03.nc"
+    },
+    {
+      "dataset_index": 1533,
+      "relative_path": "MJJ17/minicube_199_34SEJ_39.49_21.83.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_199_34SEJ_39.49_21.83.nc"
+    },
+    {
+      "dataset_index": 1546,
+      "relative_path": "MJJ17/minicube_20_29TQF_40.81_-5.66.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_20_29TQF_40.81_-5.66.nc"
+    },
+    {
+      "dataset_index": 1547,
+      "relative_path": "MJJ17/minicube_210_34TDK_39.94_20.64.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_210_34TDK_39.94_20.64.nc"
+    },
+    {
+      "dataset_index": 1552,
+      "relative_path": "MJJ17/minicube_215_34TDP_43.66_20.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_215_34TDP_43.66_20.71.nc"
+    },
+    {
+      "dataset_index": 1553,
+      "relative_path": "MJJ17/minicube_216_34TDP_43.54_21.03.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_216_34TDP_43.54_21.03.nc"
+    },
+    {
+      "dataset_index": 1554,
+      "relative_path": "MJJ17/minicube_217_34TDP_43.93_20.64.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_217_34TDP_43.93_20.64.nc"
+    },
+    {
+      "dataset_index": 1555,
+      "relative_path": "MJJ17/minicube_218_34TDQ_44.86_21.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_218_34TDQ_44.86_21.09.nc"
+    },
+    {
+      "dataset_index": 1557,
+      "relative_path": "MJJ17/minicube_21_30STJ_39.42_-5.68.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_21_30STJ_39.42_-5.68.nc"
+    },
+    {
+      "dataset_index": 1559,
+      "relative_path": "MJJ17/minicube_221_34TEL_40.70_21.85.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_221_34TEL_40.70_21.85.nc"
+    },
+    {
+      "dataset_index": 1560,
+      "relative_path": "MJJ17/minicube_222_34TEL_40.81_22.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_222_34TEL_40.81_22.24.nc"
+    },
+    {
+      "dataset_index": 1561,
+      "relative_path": "MJJ17/minicube_223_34TEL_40.70_21.54.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_223_34TEL_40.70_21.54.nc"
+    },
+    {
+      "dataset_index": 1562,
+      "relative_path": "MJJ17/minicube_224_34TET_47.72_21.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_224_34TET_47.72_21.24.nc"
+    },
+    {
+      "dataset_index": 1565,
+      "relative_path": "MJJ17/minicube_227_34TFL_40.83_22.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_227_34TFL_40.83_22.37.nc"
+    },
+    {
+      "dataset_index": 1566,
+      "relative_path": "MJJ17/minicube_228_34TFL_40.92_22.43.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_228_34TFL_40.92_22.43.nc"
+    },
+    {
+      "dataset_index": 1567,
+      "relative_path": "MJJ17/minicube_229_34TFL_41.15_22.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_229_34TFL_41.15_22.71.nc"
+    },
+    {
+      "dataset_index": 1568,
+      "relative_path": "MJJ17/minicube_22_30STJ_38.85_-5.31.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_22_30STJ_38.85_-5.31.nc"
+    },
+    {
+      "dataset_index": 1569,
+      "relative_path": "MJJ17/minicube_230_34TFN_42.76_22.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_230_34TFN_42.76_22.81.nc"
+    },
+    {
+      "dataset_index": 1570,
+      "relative_path": "MJJ17/minicube_231_34TFN_43.02_22.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_231_34TFN_43.02_22.63.nc"
+    },
+    {
+      "dataset_index": 1571,
+      "relative_path": "MJJ17/minicube_232_34TFN_42.38_22.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_232_34TFN_42.38_22.37.nc"
+    },
+    {
+      "dataset_index": 1572,
+      "relative_path": "MJJ17/minicube_233_34TFP_43.57_23.00.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_233_34TFP_43.57_23.00.nc"
+    },
+    {
+      "dataset_index": 1573,
+      "relative_path": "MJJ17/minicube_234_34TFP_43.81_23.48.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_234_34TFP_43.81_23.48.nc"
+    },
+    {
+      "dataset_index": 1574,
+      "relative_path": "MJJ17/minicube_235_34TFP_43.67_22.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_235_34TFP_43.67_22.65.nc"
+    },
+    {
+      "dataset_index": 1576,
+      "relative_path": "MJJ17/minicube_237_34TFT_47.24_22.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_237_34TFT_47.24_22.89.nc"
+    },
+    {
+      "dataset_index": 1577,
+      "relative_path": "MJJ17/minicube_238_34TFT_47.29_22.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_238_34TFT_47.29_22.46.nc"
+    },
+    {
+      "dataset_index": 1579,
+      "relative_path": "MJJ17/minicube_23_30STJ_39.19_-5.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_23_30STJ_39.19_-5.73.nc"
+    },
+    {
+      "dataset_index": 1583,
+      "relative_path": "MJJ17/minicube_25_30TTK_40.30_-5.51.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_25_30TTK_40.30_-5.51.nc"
+    },
+    {
+      "dataset_index": 1593,
+      "relative_path": "MJJ17/minicube_34_30TXR_45.37_-0.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_34_30TXR_45.37_-0.87.nc"
+    },
+    {
+      "dataset_index": 1594,
+      "relative_path": "MJJ17/minicube_35_30TXR_45.39_-1.14.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_35_30TXR_45.39_-1.14.nc"
+    },
+    {
+      "dataset_index": 1595,
+      "relative_path": "MJJ17/minicube_36_30TXS_46.61_-0.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_36_30TXS_46.61_-0.73.nc"
+    },
+    {
+      "dataset_index": 1596,
+      "relative_path": "MJJ17/minicube_37_30TXS_46.65_-0.52.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_37_30TXS_46.65_-0.52.nc"
+    },
+    {
+      "dataset_index": 1597,
+      "relative_path": "MJJ17/minicube_38_30TXS_45.96_-0.42.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_38_30TXS_45.96_-0.42.nc"
+    },
+    {
+      "dataset_index": 1608,
+      "relative_path": "MJJ17/minicube_48_30UWB_50.96_-1.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_48_30UWB_50.96_-1.62.nc"
+    },
+    {
+      "dataset_index": 1609,
+      "relative_path": "MJJ17/minicube_49_30UWB_51.10_-1.69.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_49_30UWB_51.10_-1.69.nc"
+    },
+    {
+      "dataset_index": 1611,
+      "relative_path": "MJJ17/minicube_50_30UWB_51.10_-1.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_50_30UWB_51.10_-1.58.nc"
+    },
+    {
+      "dataset_index": 1612,
+      "relative_path": "MJJ17/minicube_51_30UXD_52.64_-1.33.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_51_30UXD_52.64_-1.33.nc"
+    },
+    {
+      "dataset_index": 1613,
+      "relative_path": "MJJ17/minicube_52_30UXD_52.36_-0.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_52_30UXD_52.36_-0.82.nc"
+    },
+    {
+      "dataset_index": 1614,
+      "relative_path": "MJJ17/minicube_53_30UXD_52.34_-0.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_53_30UXD_52.34_-0.93.nc"
+    },
+    {
+      "dataset_index": 1615,
+      "relative_path": "MJJ17/minicube_54_30UYU_47.92_1.08.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_54_30UYU_47.92_1.08.nc"
+    },
+    {
+      "dataset_index": 1617,
+      "relative_path": "MJJ17/minicube_56_30UYU_47.75_-0.16.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_56_30UYU_47.75_-0.16.nc"
+    },
+    {
+      "dataset_index": 1618,
+      "relative_path": "MJJ17/minicube_57_30UYV_48.99_-0.02.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_57_30UYV_48.99_-0.02.nc"
+    },
+    {
+      "dataset_index": 1619,
+      "relative_path": "MJJ17/minicube_58_30UYV_48.73_1.18.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_58_30UYV_48.73_1.18.nc"
+    },
+    {
+      "dataset_index": 1620,
+      "relative_path": "MJJ17/minicube_59_30UYV_48.77_0.56.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_59_30UYV_48.77_0.56.nc"
+    },
+    {
+      "dataset_index": 1628,
+      "relative_path": "MJJ17/minicube_66_31TCN_47.02_1.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_66_31TCN_47.02_1.44.nc"
+    },
+    {
+      "dataset_index": 1629,
+      "relative_path": "MJJ17/minicube_67_31TCN_47.31_1.00.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_67_31TCN_47.31_1.00.nc"
+    },
+    {
+      "dataset_index": 1632,
+      "relative_path": "MJJ17/minicube_6_29SQB_37.12_-5.86.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_6_29SQB_37.12_-5.86.nc"
+    },
+    {
+      "dataset_index": 1643,
+      "relative_path": "MJJ17/minicube_7_29SQB_37.00_-6.50.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_7_29SQB_37.00_-6.50.nc"
+    },
+    {
+      "dataset_index": 1645,
+      "relative_path": "MJJ17/minicube_81_31TGN_46.97_5.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_81_31TGN_46.97_5.90.nc"
+    },
+    {
+      "dataset_index": 1646,
+      "relative_path": "MJJ17/minicube_82_31TGN_46.86_5.72.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_82_31TGN_46.86_5.72.nc"
+    },
+    {
+      "dataset_index": 1647,
+      "relative_path": "MJJ17/minicube_83_31TGN_46.86_6.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_83_31TGN_46.86_6.97.nc"
+    },
+    {
+      "dataset_index": 1648,
+      "relative_path": "MJJ17/minicube_84_31UES_51.01_4.27.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_84_31UES_51.01_4.27.nc"
+    },
+    {
+      "dataset_index": 1649,
+      "relative_path": "MJJ17/minicube_85_31UES_50.62_3.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_85_31UES_50.62_3.97.nc"
+    },
+    {
+      "dataset_index": 1652,
+      "relative_path": "MJJ17/minicube_88_31UFP_48.47_4.66.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_88_31UFP_48.47_4.66.nc"
+    },
+    {
+      "dataset_index": 1653,
+      "relative_path": "MJJ17/minicube_89_31UGS_50.75_7.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_89_31UGS_50.75_7.36.nc"
+    },
+    {
+      "dataset_index": 1655,
+      "relative_path": "MJJ17/minicube_90_31UGS_51.35_7.27.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_90_31UGS_51.35_7.27.nc"
+    },
+    {
+      "dataset_index": 1656,
+      "relative_path": "MJJ17/minicube_91_31UGS_50.56_5.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ17/minicube_91_31UGS_50.56_5.89.nc"
+    },
+    {
+      "dataset_index": 1667,
+      "relative_path": "MJJ18/minicube_100_32TPP_43.28_10.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_100_32TPP_43.28_10.58.nc"
+    },
+    {
+      "dataset_index": 1670,
+      "relative_path": "MJJ18/minicube_103_32TPR_45.49_10.47.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_103_32TPR_45.49_10.47.nc"
+    },
+    {
+      "dataset_index": 1674,
+      "relative_path": "MJJ18/minicube_107_32TPT_47.73_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_107_32TPT_47.73_10.40.nc"
+    },
+    {
+      "dataset_index": 1678,
+      "relative_path": "MJJ18/minicube_110_32TQM_41.47_12.65.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_110_32TQM_41.47_12.65.nc"
+    },
+    {
+      "dataset_index": 1679,
+      "relative_path": "MJJ18/minicube_111_32TQM_42.08_12.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_111_32TQM_42.08_12.44.nc"
+    },
+    {
+      "dataset_index": 1680,
+      "relative_path": "MJJ18/minicube_112_32TQM_42.36_12.39.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_112_32TQM_42.36_12.39.nc"
+    },
+    {
+      "dataset_index": 1681,
+      "relative_path": "MJJ18/minicube_113_32TQP_43.53_11.79.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_113_32TQP_43.53_11.79.nc"
+    },
+    {
+      "dataset_index": 1682,
+      "relative_path": "MJJ18/minicube_114_32TQP_43.53_11.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_114_32TQP_43.53_11.82.nc"
+    },
+    {
+      "dataset_index": 1683,
+      "relative_path": "MJJ18/minicube_115_32TQP_43.27_12.72.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_115_32TQP_43.27_12.72.nc"
+    },
+    {
+      "dataset_index": 1684,
+      "relative_path": "MJJ18/minicube_116_32UMC_52.08_8.88.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_116_32UMC_52.08_8.88.nc"
+    },
+    {
+      "dataset_index": 1686,
+      "relative_path": "MJJ18/minicube_118_32UMC_51.86_7.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_118_32UMC_51.86_7.58.nc"
+    },
+    {
+      "dataset_index": 1691,
+      "relative_path": "MJJ18/minicube_122_32UNG_55.65_9.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_122_32UNG_55.65_9.28.nc"
+    },
+    {
+      "dataset_index": 1692,
+      "relative_path": "MJJ18/minicube_123_32UNG_55.55_10.30.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_123_32UNG_55.55_10.30.nc"
+    },
+    {
+      "dataset_index": 1693,
+      "relative_path": "MJJ18/minicube_124_32UNG_55.50_10.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_124_32UNG_55.50_10.70.nc"
+    },
+    {
+      "dataset_index": 1696,
+      "relative_path": "MJJ18/minicube_127_32UNU_48.68_10.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_127_32UNU_48.68_10.25.nc"
+    },
+    {
+      "dataset_index": 1715,
+      "relative_path": "MJJ18/minicube_147_33TVF_41.18_14.17.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_147_33TVF_41.18_14.17.nc"
+    },
+    {
+      "dataset_index": 1721,
+      "relative_path": "MJJ18/minicube_152_33TXJ_43.27_16.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_152_33TXJ_43.27_16.74.nc"
+    },
+    {
+      "dataset_index": 1722,
+      "relative_path": "MJJ18/minicube_153_33TXJ_43.46_16.80.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_153_33TXJ_43.46_16.80.nc"
+    },
+    {
+      "dataset_index": 1723,
+      "relative_path": "MJJ18/minicube_154_33TXJ_43.62_16.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_154_33TXJ_43.62_16.81.nc"
+    },
+    {
+      "dataset_index": 1724,
+      "relative_path": "MJJ18/minicube_155_33TXN_47.56_16.91.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_155_33TXN_47.56_16.91.nc"
+    },
+    {
+      "dataset_index": 1725,
+      "relative_path": "MJJ18/minicube_156_33TXN_47.36_16.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_156_33TXN_47.36_16.70.nc"
+    },
+    {
+      "dataset_index": 1726,
+      "relative_path": "MJJ18/minicube_157_33TXN_46.91_17.39.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_157_33TXN_46.91_17.39.nc"
+    },
+    {
+      "dataset_index": 1728,
+      "relative_path": "MJJ18/minicube_159_33TYM_46.57_18.14.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_159_33TYM_46.57_18.14.nc"
+    },
+    {
+      "dataset_index": 1730,
+      "relative_path": "MJJ18/minicube_160_33TYM_46.19_17.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_160_33TYM_46.19_17.62.nc"
+    },
+    {
+      "dataset_index": 1732,
+      "relative_path": "MJJ18/minicube_162_33TYN_46.95_18.60.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_162_33TYN_46.95_18.60.nc"
+    },
+    {
+      "dataset_index": 1733,
+      "relative_path": "MJJ18/minicube_163_33TYN_47.01_18.77.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_163_33TYN_47.01_18.77.nc"
+    },
+    {
+      "dataset_index": 1734,
+      "relative_path": "MJJ18/minicube_164_33UVR_50.25_14.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_164_33UVR_50.25_14.71.nc"
+    },
+    {
+      "dataset_index": 1736,
+      "relative_path": "MJJ18/minicube_166_33UVR_50.05_14.92.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_166_33UVR_50.05_14.92.nc"
+    },
+    {
+      "dataset_index": 1737,
+      "relative_path": "MJJ18/minicube_167_33UWT_51.42_16.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_167_33UWT_51.42_16.40.nc"
+    },
+    {
+      "dataset_index": 1738,
+      "relative_path": "MJJ18/minicube_168_33UWT_51.61_15.92.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_168_33UWT_51.61_15.92.nc"
+    },
+    {
+      "dataset_index": 1739,
+      "relative_path": "MJJ18/minicube_169_33UWT_51.93_15.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_169_33UWT_51.93_15.97.nc"
+    },
+    {
+      "dataset_index": 1741,
+      "relative_path": "MJJ18/minicube_170_33UXP_48.23_16.83.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_170_33UXP_48.23_16.83.nc"
+    },
+    {
+      "dataset_index": 1743,
+      "relative_path": "MJJ18/minicube_172_33UXP_48.46_17.11.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_172_33UXP_48.46_17.11.nc"
+    },
+    {
+      "dataset_index": 1744,
+      "relative_path": "MJJ18/minicube_173_33UXQ_49.09_17.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_173_33UXQ_49.09_17.63.nc"
+    },
+    {
+      "dataset_index": 1745,
+      "relative_path": "MJJ18/minicube_174_33UXQ_48.94_17.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_174_33UXQ_48.94_17.24.nc"
+    },
+    {
+      "dataset_index": 1746,
+      "relative_path": "MJJ18/minicube_175_33UXQ_48.88_16.99.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_175_33UXQ_48.88_16.99.nc"
+    },
+    {
+      "dataset_index": 1749,
+      "relative_path": "MJJ18/minicube_178_33VUE_58.37_12.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_178_33VUE_58.37_12.63.nc"
+    },
+    {
+      "dataset_index": 1780,
+      "relative_path": "MJJ18/minicube_206_34TCQ_44.73_19.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_206_34TCQ_44.73_19.44.nc"
+    },
+    {
+      "dataset_index": 1781,
+      "relative_path": "MJJ18/minicube_207_34TCQ_44.59_19.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_207_34TCQ_44.59_19.09.nc"
+    },
+    {
+      "dataset_index": 1794,
+      "relative_path": "MJJ18/minicube_219_34TDQ_45.04_20.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_219_34TDQ_45.04_20.93.nc"
+    },
+    {
+      "dataset_index": 1796,
+      "relative_path": "MJJ18/minicube_220_34TDQ_44.39_20.55.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_220_34TDQ_44.39_20.55.nc"
+    },
+    {
+      "dataset_index": 1800,
+      "relative_path": "MJJ18/minicube_224_34TET_47.72_21.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_224_34TET_47.72_21.24.nc"
+    },
+    {
+      "dataset_index": 1801,
+      "relative_path": "MJJ18/minicube_225_34TET_47.37_22.05.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_225_34TET_47.37_22.05.nc"
+    },
+    {
+      "dataset_index": 1802,
+      "relative_path": "MJJ18/minicube_226_34TET_46.98_21.74.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_226_34TET_46.98_21.74.nc"
+    },
+    {
+      "dataset_index": 1807,
+      "relative_path": "MJJ18/minicube_230_34TFN_42.76_22.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_230_34TFN_42.76_22.81.nc"
+    },
+    {
+      "dataset_index": 1808,
+      "relative_path": "MJJ18/minicube_231_34TFN_43.02_22.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_231_34TFN_43.02_22.63.nc"
+    },
+    {
+      "dataset_index": 1809,
+      "relative_path": "MJJ18/minicube_232_34TFN_42.38_22.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_232_34TFN_42.38_22.37.nc"
+    },
+    {
+      "dataset_index": 1813,
+      "relative_path": "MJJ18/minicube_236_34TFT_47.42_23.07.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_236_34TFT_47.42_23.07.nc"
+    },
+    {
+      "dataset_index": 1814,
+      "relative_path": "MJJ18/minicube_237_34TFT_47.24_22.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_237_34TFT_47.24_22.89.nc"
+    },
+    {
+      "dataset_index": 1838,
+      "relative_path": "MJJ18/minicube_40_30TYN_42.38_-0.45.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_40_30TYN_42.38_-0.45.nc"
+    },
+    {
+      "dataset_index": 1839,
+      "relative_path": "MJJ18/minicube_41_30TYN_42.40_0.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_41_30TYN_42.40_0.70.nc"
+    },
+    {
+      "dataset_index": 1842,
+      "relative_path": "MJJ18/minicube_44_30TYQ_44.48_-0.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_44_30TYQ_44.48_-0.46.nc"
+    },
+    {
+      "dataset_index": 1843,
+      "relative_path": "MJJ18/minicube_45_30TYR_45.62_0.78.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_45_30TYR_45.62_0.78.nc"
+    },
+    {
+      "dataset_index": 1844,
+      "relative_path": "MJJ18/minicube_46_30TYR_45.49_0.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_46_30TYR_45.49_0.70.nc"
+    },
+    {
+      "dataset_index": 1845,
+      "relative_path": "MJJ18/minicube_47_30TYR_45.79_0.69.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_47_30TYR_45.79_0.69.nc"
+    },
+    {
+      "dataset_index": 1857,
+      "relative_path": "MJJ18/minicube_58_30UYV_48.73_1.18.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_58_30UYV_48.73_1.18.nc"
+    },
+    {
+      "dataset_index": 1860,
+      "relative_path": "MJJ18/minicube_60_31TBF_41.35_-0.04.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_60_31TBF_41.35_-0.04.nc"
+    },
+    {
+      "dataset_index": 1861,
+      "relative_path": "MJJ18/minicube_61_31TBF_41.20_-0.55.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_61_31TBF_41.20_-0.55.nc"
+    },
+    {
+      "dataset_index": 1862,
+      "relative_path": "MJJ18/minicube_62_31TBF_41.07_0.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_62_31TBF_41.07_0.71.nc"
+    },
+    {
+      "dataset_index": 1863,
+      "relative_path": "MJJ18/minicube_63_31TCG_41.48_0.66.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_63_31TCG_41.48_0.66.nc"
+    },
+    {
+      "dataset_index": 1864,
+      "relative_path": "MJJ18/minicube_64_31TCG_41.73_1.24.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_64_31TCG_41.73_1.24.nc"
+    },
+    {
+      "dataset_index": 1865,
+      "relative_path": "MJJ18/minicube_65_31TCG_42.05_1.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_65_31TCG_42.05_1.63.nc"
+    },
+    {
+      "dataset_index": 1870,
+      "relative_path": "MJJ18/minicube_6_29SQB_37.12_-5.86.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_6_29SQB_37.12_-5.86.nc"
+    },
+    {
+      "dataset_index": 1872,
+      "relative_path": "MJJ18/minicube_71_31TDH_42.92_2.56.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_71_31TDH_42.92_2.56.nc"
+    },
+    {
+      "dataset_index": 1873,
+      "relative_path": "MJJ18/minicube_72_31TDJ_43.33_2.46.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_72_31TDJ_43.33_2.46.nc"
+    },
+    {
+      "dataset_index": 1874,
+      "relative_path": "MJJ18/minicube_73_31TDJ_43.29_2.49.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_73_31TDJ_43.29_2.49.nc"
+    },
+    {
+      "dataset_index": 1875,
+      "relative_path": "MJJ18/minicube_74_31TDJ_43.31_2.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_74_31TDJ_43.31_2.71.nc"
+    },
+    {
+      "dataset_index": 1877,
+      "relative_path": "MJJ18/minicube_76_31TDK_44.72_2.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_76_31TDK_44.72_2.87.nc"
+    },
+    {
+      "dataset_index": 1886,
+      "relative_path": "MJJ18/minicube_84_31UES_51.01_4.27.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_84_31UES_51.01_4.27.nc"
+    },
+    {
+      "dataset_index": 1887,
+      "relative_path": "MJJ18/minicube_85_31UES_50.62_3.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_85_31UES_50.62_3.97.nc"
+    },
+    {
+      "dataset_index": 1888,
+      "relative_path": "MJJ18/minicube_86_31UFP_48.13_5.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_86_31UFP_48.13_5.44.nc"
+    },
+    {
+      "dataset_index": 1889,
+      "relative_path": "MJJ18/minicube_87_31UFP_48.13_5.44.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_87_31UFP_48.13_5.44.nc"
+    },
+    {
+      "dataset_index": 1890,
+      "relative_path": "MJJ18/minicube_88_31UFP_48.47_4.66.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_88_31UFP_48.47_4.66.nc"
+    },
+    {
+      "dataset_index": 1892,
+      "relative_path": "MJJ18/minicube_8_29SQB_37.77_-5.77.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_8_29SQB_37.77_-5.77.nc"
+    },
+    {
+      "dataset_index": 1894,
+      "relative_path": "MJJ18/minicube_91_31UGS_50.56_5.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_91_31UGS_50.56_5.89.nc"
+    },
+    {
+      "dataset_index": 1895,
+      "relative_path": "MJJ18/minicube_92_32TML_41.11_9.03.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_92_32TML_41.11_9.03.nc"
+    },
+    {
+      "dataset_index": 1896,
+      "relative_path": "MJJ18/minicube_93_32TML_41.05_9.09.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_93_32TML_41.05_9.09.nc"
+    },
+    {
+      "dataset_index": 1897,
+      "relative_path": "MJJ18/minicube_94_32TML_41.02_8.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_94_32TML_41.02_8.97.nc"
+    },
+    {
+      "dataset_index": 1901,
+      "relative_path": "MJJ18/minicube_98_32TPP_43.52_11.19.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_98_32TPP_43.52_11.19.nc"
+    },
+    {
+      "dataset_index": 1902,
+      "relative_path": "MJJ18/minicube_99_32TPP_43.78_10.94.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ18/minicube_99_32TPP_43.78_10.94.nc"
+    },
+    {
+      "dataset_index": 1912,
+      "relative_path": "MJJ19/minicube_107_32TPT_47.73_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_107_32TPT_47.73_10.40.nc"
+    },
+    {
+      "dataset_index": 1929,
+      "relative_path": "MJJ19/minicube_122_32UNG_55.65_9.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_122_32UNG_55.65_9.28.nc"
+    },
+    {
+      "dataset_index": 1930,
+      "relative_path": "MJJ19/minicube_123_32UNG_55.55_10.30.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_123_32UNG_55.55_10.30.nc"
+    },
+    {
+      "dataset_index": 1931,
+      "relative_path": "MJJ19/minicube_124_32UNG_55.50_10.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_124_32UNG_55.50_10.70.nc"
+    },
+    {
+      "dataset_index": 1934,
+      "relative_path": "MJJ19/minicube_127_32UNU_48.68_10.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_127_32UNU_48.68_10.25.nc"
+    },
+    {
+      "dataset_index": 1935,
+      "relative_path": "MJJ19/minicube_128_32UPC_52.07_11.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_128_32UPC_52.07_11.73.nc"
+    },
+    {
+      "dataset_index": 1943,
+      "relative_path": "MJJ19/minicube_135_32VMM_59.66_8.90.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_135_32VMM_59.66_8.90.nc"
+    },
+    {
+      "dataset_index": 1949,
+      "relative_path": "MJJ19/minicube_143_33TUN_47.78_12.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_143_33TUN_47.78_12.36.nc"
+    },
+    {
+      "dataset_index": 1951,
+      "relative_path": "MJJ19/minicube_145_33TUN_47.78_12.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_145_33TUN_47.78_12.40.nc"
+    },
+    {
+      "dataset_index": 1954,
+      "relative_path": "MJJ19/minicube_148_33TVF_41.44_14.35.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_148_33TVF_41.44_14.35.nc"
+    },
+    {
+      "dataset_index": 1972,
+      "relative_path": "MJJ19/minicube_164_33UVR_50.25_14.71.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_164_33UVR_50.25_14.71.nc"
+    },
+    {
+      "dataset_index": 1975,
+      "relative_path": "MJJ19/minicube_167_33UWT_51.42_16.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_167_33UWT_51.42_16.40.nc"
+    },
+    {
+      "dataset_index": 1976,
+      "relative_path": "MJJ19/minicube_168_33UWT_51.61_15.92.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_168_33UWT_51.61_15.92.nc"
+    },
+    {
+      "dataset_index": 1977,
+      "relative_path": "MJJ19/minicube_169_33UWT_51.93_15.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_169_33UWT_51.93_15.97.nc"
+    },
+    {
+      "dataset_index": 1982,
+      "relative_path": "MJJ19/minicube_173_33UXQ_49.09_17.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_173_33UXQ_49.09_17.63.nc"
+    },
+    {
+      "dataset_index": 1985,
+      "relative_path": "MJJ19/minicube_176_33VUE_57.89_12.96.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_176_33VUE_57.89_12.96.nc"
+    },
+    {
+      "dataset_index": 1986,
+      "relative_path": "MJJ19/minicube_177_33VUE_58.26_13.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_177_33VUE_58.26_13.25.nc"
+    },
+    {
+      "dataset_index": 1997,
+      "relative_path": "MJJ19/minicube_187_33VVG_59.54_14.81.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_187_33VVG_59.54_14.81.nc"
+    },
+    {
+      "dataset_index": 1998,
+      "relative_path": "MJJ19/minicube_189_33VWE_58.37_15.48.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_189_33VWE_58.37_15.48.nc"
+    },
+    {
+      "dataset_index": 2001,
+      "relative_path": "MJJ19/minicube_191_33VXG_59.95_18.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_191_33VXG_59.95_18.58.nc"
+    },
+    {
+      "dataset_index": 2002,
+      "relative_path": "MJJ19/minicube_192_33VXG_59.93_17.47.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_192_33VXG_59.93_17.47.nc"
+    },
+    {
+      "dataset_index": 2003,
+      "relative_path": "MJJ19/minicube_193_33VXG_59.68_18.55.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_193_33VXG_59.68_18.55.nc"
+    },
+    {
+      "dataset_index": 2039,
+      "relative_path": "MJJ19/minicube_225_34TET_47.37_22.05.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_225_34TET_47.37_22.05.nc"
+    },
+    {
+      "dataset_index": 2054,
+      "relative_path": "MJJ19/minicube_239_34VCL_59.24_18.52.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_239_34VCL_59.24_18.52.nc"
+    },
+    {
+      "dataset_index": 2056,
+      "relative_path": "MJJ19/minicube_240_34VCL_59.27_17.80.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_240_34VCL_59.27_17.80.nc"
+    },
+    {
+      "dataset_index": 2057,
+      "relative_path": "MJJ19/minicube_241_34VCL_59.04_17.96.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_241_34VCL_59.04_17.96.nc"
+    },
+    {
+      "dataset_index": 2084,
+      "relative_path": "MJJ19/minicube_48_30UWB_50.96_-1.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_48_30UWB_50.96_-1.62.nc"
+    },
+    {
+      "dataset_index": 2085,
+      "relative_path": "MJJ19/minicube_49_30UWB_51.10_-1.69.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_49_30UWB_51.10_-1.69.nc"
+    },
+    {
+      "dataset_index": 2087,
+      "relative_path": "MJJ19/minicube_50_30UWB_51.10_-1.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_50_30UWB_51.10_-1.58.nc"
+    },
+    {
+      "dataset_index": 2088,
+      "relative_path": "MJJ19/minicube_51_30UXD_52.64_-1.33.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_51_30UXD_52.64_-1.33.nc"
+    },
+    {
+      "dataset_index": 2089,
+      "relative_path": "MJJ19/minicube_52_30UXD_52.36_-0.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_52_30UXD_52.36_-0.82.nc"
+    },
+    {
+      "dataset_index": 2090,
+      "relative_path": "MJJ19/minicube_53_30UXD_52.34_-0.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_53_30UXD_52.34_-0.93.nc"
+    },
+    {
+      "dataset_index": 2092,
+      "relative_path": "MJJ19/minicube_55_30UYU_48.03_-0.29.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_55_30UYU_48.03_-0.29.nc"
+    },
+    {
+      "dataset_index": 2096,
+      "relative_path": "MJJ19/minicube_59_30UYV_48.77_0.56.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_59_30UYV_48.77_0.56.nc"
+    },
+    {
+      "dataset_index": 2128,
+      "relative_path": "MJJ19/minicube_88_31UFP_48.47_4.66.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_88_31UFP_48.47_4.66.nc"
+    },
+    {
+      "dataset_index": 2133,
+      "relative_path": "MJJ19/minicube_92_32TML_41.11_9.03.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_92_32TML_41.11_9.03.nc"
+    },
+    {
+      "dataset_index": 2163,
+      "relative_path": "SON17/minicube_119_32UNC_52.14_10.49.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_119_32UNC_52.14_10.49.nc"
+    },
+    {
+      "dataset_index": 2201,
+      "relative_path": "SON17/minicube_156_33TXN_47.36_16.70.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_156_33TXN_47.36_16.70.nc"
+    },
+    {
+      "dataset_index": 2224,
+      "relative_path": "SON17/minicube_177_33VUE_58.26_13.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_177_33VUE_58.26_13.25.nc"
+    },
+    {
+      "dataset_index": 2242,
+      "relative_path": "SON17/minicube_194_33VXH_60.88_17.08.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_194_33VXH_60.88_17.08.nc"
+    },
+    {
+      "dataset_index": 2243,
+      "relative_path": "SON17/minicube_195_33VXH_60.61_17.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_195_33VXH_60.61_17.06.nc"
+    },
+    {
+      "dataset_index": 2307,
+      "relative_path": "SON17/minicube_34_30TXR_45.37_-0.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_34_30TXR_45.37_-0.87.nc"
+    },
+    {
+      "dataset_index": 2309,
+      "relative_path": "SON17/minicube_36_30TXS_46.61_-0.73.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_36_30TXS_46.61_-0.73.nc"
+    },
+    {
+      "dataset_index": 2310,
+      "relative_path": "SON17/minicube_37_30TXS_46.65_-0.52.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_37_30TXS_46.65_-0.52.nc"
+    },
+    {
+      "dataset_index": 2322,
+      "relative_path": "SON17/minicube_48_30UWB_50.96_-1.62.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_48_30UWB_50.96_-1.62.nc"
+    },
+    {
+      "dataset_index": 2323,
+      "relative_path": "SON17/minicube_49_30UWB_51.10_-1.69.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_49_30UWB_51.10_-1.69.nc"
+    },
+    {
+      "dataset_index": 2326,
+      "relative_path": "SON17/minicube_51_30UXD_52.64_-1.33.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_51_30UXD_52.64_-1.33.nc"
+    },
+    {
+      "dataset_index": 2327,
+      "relative_path": "SON17/minicube_52_30UXD_52.36_-0.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_52_30UXD_52.36_-0.82.nc"
+    },
+    {
+      "dataset_index": 2328,
+      "relative_path": "SON17/minicube_53_30UXD_52.34_-0.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_53_30UXD_52.34_-0.93.nc"
+    },
+    {
+      "dataset_index": 2363,
+      "relative_path": "SON17/minicube_85_31UES_50.62_3.97.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON17/minicube_85_31UES_50.62_3.97.nc"
+    },
+    {
+      "dataset_index": 2410,
+      "relative_path": "SON18/minicube_127_32UNU_48.68_10.25.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON18/minicube_127_32UNU_48.68_10.25.nc"
+    },
+    {
+      "dataset_index": 2463,
+      "relative_path": "SON18/minicube_178_33VUE_58.37_12.63.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON18/minicube_178_33VUE_58.37_12.63.nc"
+    },
+    {
+      "dataset_index": 2464,
+      "relative_path": "SON18/minicube_179_33VUF_59.25_13.11.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON18/minicube_179_33VUF_59.25_13.11.nc"
+    },
+    {
+      "dataset_index": 2508,
+      "relative_path": "SON18/minicube_219_34TDQ_45.04_20.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON18/minicube_219_34TDQ_45.04_20.93.nc"
+    },
+    {
+      "dataset_index": 2614,
+      "relative_path": "SON18/minicube_97_32TNR_45.45_9.59.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON18/minicube_97_32TNR_45.45_9.59.nc"
+    },
+    {
+      "dataset_index": 2627,
+      "relative_path": "SON19/minicube_108_32TPT_47.81_11.26.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_108_32TPT_47.81_11.26.nc"
+    },
+    {
+      "dataset_index": 2638,
+      "relative_path": "SON19/minicube_118_32UMC_51.86_7.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_118_32UMC_51.86_7.58.nc"
+    },
+    {
+      "dataset_index": 2641,
+      "relative_path": "SON19/minicube_120_32UNC_51.65_10.40.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_120_32UNC_51.65_10.40.nc"
+    },
+    {
+      "dataset_index": 2643,
+      "relative_path": "SON19/minicube_122_32UNG_55.65_9.28.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_122_32UNG_55.65_9.28.nc"
+    },
+    {
+      "dataset_index": 2644,
+      "relative_path": "SON19/minicube_123_32UNG_55.55_10.30.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_123_32UNG_55.55_10.30.nc"
+    },
+    {
+      "dataset_index": 2652,
+      "relative_path": "SON19/minicube_130_32UPC_51.41_11.06.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_130_32UPC_51.41_11.06.nc"
+    },
+    {
+      "dataset_index": 2664,
+      "relative_path": "SON19/minicube_144_33TUN_47.64_12.37.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_144_33TUN_47.64_12.37.nc"
+    },
+    {
+      "dataset_index": 2708,
+      "relative_path": "SON19/minicube_184_33VUG_59.63_12.31.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_184_33VUG_59.63_12.31.nc"
+    },
+    {
+      "dataset_index": 2746,
+      "relative_path": "SON19/minicube_219_34TDQ_45.04_20.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_219_34TDQ_45.04_20.93.nc"
+    },
+    {
+      "dataset_index": 2783,
+      "relative_path": "SON19/minicube_34_30TXR_45.37_-0.87.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_34_30TXR_45.37_-0.87.nc"
+    },
+    {
+      "dataset_index": 2801,
+      "relative_path": "SON19/minicube_50_30UWB_51.10_-1.58.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_50_30UWB_51.10_-1.58.nc"
+    },
+    {
+      "dataset_index": 2802,
+      "relative_path": "SON19/minicube_51_30UXD_52.64_-1.33.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_51_30UXD_52.64_-1.33.nc"
+    },
+    {
+      "dataset_index": 2803,
+      "relative_path": "SON19/minicube_52_30UXD_52.36_-0.82.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_52_30UXD_52.36_-0.82.nc"
+    },
+    {
+      "dataset_index": 2804,
+      "relative_path": "SON19/minicube_53_30UXD_52.34_-0.93.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_53_30UXD_52.34_-0.93.nc"
+    },
+    {
+      "dataset_index": 2838,
+      "relative_path": "SON19/minicube_84_31UES_51.01_4.27.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_84_31UES_51.01_4.27.nc"
+    },
+    {
+      "dataset_index": 2843,
+      "relative_path": "SON19/minicube_89_31UGS_50.75_7.36.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_89_31UGS_50.75_7.36.nc"
+    },
+    {
+      "dataset_index": 2846,
+      "relative_path": "SON19/minicube_91_31UGS_50.56_5.89.nc",
+      "reason": "non-finite scalar feature: /data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/SON19/minicube_91_31UGS_50.56_5.89.nc"
+    }
+  ],
+  "rule": "Fixed training-pool median/IQR; exact YYYY-MM season; 0.5 Hellinger ESA WorldCover; deterministic path tie-break; donor reuse cap 1; no future target/weather; corrected mask contract prefers s2_dlmask when present.",
+  "formal_status": "rebuild_pending_quality_acceptance_and_intervention_rerun"
+}

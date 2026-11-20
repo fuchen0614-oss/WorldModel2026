@@ -1,0 +1,252 @@
+{
+  "source_arrays_sha": "4e5b9595d309427fd1aa5ee8aeefcd65902c9b6b5d2bdc015397f2c2fd2f5d32",
+  "source_renderer_sha": "20a51535427fc22e4af862c5daa37b01f4fea794aebb2a785f2b3442076b19a9",
+  "candidates": [
+    {
+      "day": 55,
+      "date": "2019-06-21",
+      "coverage": 0.98553466796875,
+      "valid_pixels": 16147,
+      "status": "rendered",
+      "image": "day055/figure3.png",
+      "metrics": [
+        {
+          "model": "SpanWorld",
+          "direct_mse": 0.0035181818529963493,
+          "continued_mse": 0.003685436677187681,
+          "direct_error_display_saturation_fraction": 0.000928965132842014,
+          "continued_error_display_saturation_fraction": 0.0008670341239858798
+        },
+        {
+          "model": "Direct-endpoint control",
+          "direct_mse": 0.003616178873926401,
+          "continued_mse": 0.004615409765392542,
+          "direct_error_display_saturation_fraction": 0.0008670341239858798,
+          "continued_error_display_saturation_fraction": 0.0010528271505542825
+        }
+      ]
+    },
+    {
+      "day": 60,
+      "date": "2019-06-26",
+      "coverage": 0.98553466796875,
+      "valid_pixels": 16147,
+      "status": "rendered",
+      "image": "day060/figure3.png",
+      "metrics": [
+        {
+          "model": "SpanWorld",
+          "direct_mse": 0.003083630930632353,
+          "continued_mse": 0.003200317034497857,
+          "direct_error_display_saturation_fraction": 6.193100885613426e-05,
+          "continued_error_display_saturation_fraction": 6.193100885613426e-05
+        },
+        {
+          "model": "Direct-endpoint control",
+          "direct_mse": 0.003262797836214304,
+          "continued_mse": 0.004213116597384214,
+          "direct_error_display_saturation_fraction": 0.00012386201771226853,
+          "continued_error_display_saturation_fraction": 6.193100885613426e-05
+        }
+      ]
+    },
+    {
+      "day": 65,
+      "date": "2019-07-01",
+      "coverage": 0.98553466796875,
+      "valid_pixels": 16147,
+      "status": "rendered",
+      "image": "day065/figure3.png",
+      "metrics": [
+        {
+          "model": "SpanWorld",
+          "direct_mse": 0.003015764057636261,
+          "continued_mse": 0.003122227266430855,
+          "direct_error_display_saturation_fraction": 0.00012386201771226853,
+          "continued_error_display_saturation_fraction": 0.00012386201771226853
+        },
+        {
+          "model": "Direct-endpoint control",
+          "direct_mse": 0.0032503544352948666,
+          "continued_mse": 0.004190302453935146,
+          "direct_error_display_saturation_fraction": 0.00012386201771226853,
+          "continued_error_display_saturation_fraction": 0.0001857930265684028
+        }
+      ]
+    },
+    {
+      "day": 70,
+      "date": "2019-07-06",
+      "coverage": 0.98553466796875,
+      "valid_pixels": 16147,
+      "status": "rendered",
+      "image": "day070/figure3.png",
+      "metrics": [
+        {
+          "model": "SpanWorld",
+          "direct_mse": 0.0032104633282870054,
+          "continued_mse": 0.003339767921715975,
+          "direct_error_display_saturation_fraction": 0.0001857930265684028,
+          "continued_error_display_saturation_fraction": 0.0001857930265684028
+        },
+        {
+          "model": "Direct-endpoint control",
+          "direct_mse": 0.0035314110573381186,
+          "continued_mse": 0.004856554791331291,
+          "direct_error_display_saturation_fraction": 0.0001857930265684028,
+          "continued_error_display_saturation_fraction": 0.00024772403542453706
+        }
+      ]
+    },
+    {
+      "day": 75,
+      "date": "2019-07-11",
+      "coverage": 0.98553466796875,
+      "valid_pixels": 16147,
+      "status": "rendered",
+      "image": "day075/figure3.png",
+      "metrics": [
+        {
+          "model": "SpanWorld",
+          "direct_mse": 0.0032656912226229906,
+          "continued_mse": 0.0033529172651469707,
+          "direct_error_display_saturation_fraction": 0.00024772403542453706,
+          "continued_error_display_saturation_fraction": 0.00024772403542453706
+        },
+        {
+          "model": "Direct-endpoint control",
+          "direct_mse": 0.003550154622644186,
+          "continued_mse": 0.005375673063099384,
+          "direct_error_display_saturation_fraction": 0.00024772403542453706,
+          "continued_error_display_saturation_fraction": 0.00024772403542453706
+        }
+      ]
+    },
+    {
+      "day": 80,
+      "date": "2019-07-16",
+      "coverage": 0.98553466796875,
+      "valid_pixels": 16147,
+      "status": "rendered",
+      "image": "day080/figure3.png",
+      "metrics": [
+        {
+          "model": "SpanWorld",
+          "direct_mse": 0.003350060200318694,
+          "continued_mse": 0.003459679428488016,
+          "direct_error_display_saturation_fraction": 6.193100885613426e-05,
+          "continued_error_display_saturation_fraction": 6.193100885613426e-05
+        },
+        {
+          "model": "Direct-endpoint control",
+          "direct_mse": 0.003668092656880617,
+          "continued_mse": 0.005748913623392582,
+          "direct_error_display_saturation_fraction": 6.193100885613426e-05,
+          "continued_error_display_saturation_fraction": 6.193100885613426e-05
+        }
+      ]
+    },
+    {
+      "day": 85,
+      "date": "2019-07-21",
+      "coverage": 0.98553466796875,
+      "valid_pixels": 16147,
+      "status": "rendered",
+      "image": "day085/figure3.png",
+      "metrics": [
+        {
+          "model": "SpanWorld",
+          "direct_mse": 0.0027007197495549917,
+          "continued_mse": 0.002807140816003084,
+          "direct_error_display_saturation_fraction": 0.00024772403542453706,
+          "continued_error_display_saturation_fraction": 0.0001857930265684028
+        },
+        {
+          "model": "Direct-endpoint control",
+          "direct_mse": 0.002973694819957018,
+          "continued_mse": 0.0051755113527178764,
+          "direct_error_display_saturation_fraction": 0.00024772403542453706,
+          "continued_error_display_saturation_fraction": 0.0001857930265684028
+        }
+      ]
+    },
+    {
+      "day": 90,
+      "date": "2019-07-26",
+      "coverage": 0.98553466796875,
+      "valid_pixels": 16147,
+      "status": "rendered",
+      "image": "day090/figure3.png",
+      "metrics": [
+        {
+          "model": "SpanWorld",
+          "direct_mse": 0.004080505575984716,
+          "continued_mse": 0.0037788725458085537,
+          "direct_error_display_saturation_fraction": 0.0,
+          "continued_error_display_saturation_fraction": 0.0
+        },
+        {
+          "model": "Direct-endpoint control",
+          "direct_mse": 0.004064501263201237,
+          "continued_mse": 0.005013452842831612,
+          "direct_error_display_saturation_fraction": 0.0,
+          "continued_error_display_saturation_fraction": 0.0
+        }
+      ]
+    },
+    {
+      "day": 95,
+      "date": "2019-07-31",
+      "coverage": 0.98553466796875,
+      "valid_pixels": 16147,
+      "status": "rendered",
+      "image": "day095/figure3.png",
+      "metrics": [
+        {
+          "model": "SpanWorld",
+          "direct_mse": 0.0037749509792774916,
+          "continued_mse": 0.003567948704585433,
+          "direct_error_display_saturation_fraction": 0.0,
+          "continued_error_display_saturation_fraction": 6.193100885613426e-05
+        },
+        {
+          "model": "Direct-endpoint control",
+          "direct_mse": 0.0038684916216880083,
+          "continued_mse": 0.0054052830673754215,
+          "direct_error_display_saturation_fraction": 6.193100885613426e-05,
+          "continued_error_display_saturation_fraction": 6.193100885613426e-05
+        }
+      ]
+    },
+    {
+      "day": 100,
+      "date": "2019-08-05",
+      "coverage": 0.98553466796875,
+      "valid_pixels": 16147,
+      "status": "rendered",
+      "image": "day100/figure3.png",
+      "metrics": [
+        {
+          "model": "SpanWorld",
+          "direct_mse": 0.0037632975727319717,
+          "continued_mse": 0.003599894931539893,
+          "direct_error_display_saturation_fraction": 0.00012386201771226853,
+          "continued_error_display_saturation_fraction": 6.193100885613426e-05
+        },
+        {
+          "model": "Direct-endpoint control",
+          "direct_mse": 0.0039539639838039875,
+          "continued_mse": 0.005366735626012087,
+          "direct_error_display_saturation_fraction": 6.193100885613426e-05,
+          "continued_error_display_saturation_fraction": 0.00012386201771226853
+        }
+      ]
+    }
+  ],
+  "qa": {
+    "input_arrays_identical_to_verified_raw": true,
+    "overview_visually_reviewed": true,
+    "all_10_eligible_dates_retained": true,
+    "manuscript_changed": false
+  }
+}

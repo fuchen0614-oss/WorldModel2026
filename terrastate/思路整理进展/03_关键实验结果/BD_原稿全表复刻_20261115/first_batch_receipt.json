@@ -1,0 +1,32 @@
+{
+  "status": "PASS_existing_core_and_own_standard_rows_only",
+  "audits": [
+    {
+      "variant": "B",
+      "rows_checked": 225,
+      "source_hashes": {
+        "Table1_C1.csv": "42539d3ec70100a37237558f4607b4917aa1ebb8a0d833ba7a27d3da153c1d56",
+        "C1_absolute_MSE_CI.csv": "9bdb66aa35ae1ef1a0be1edb5e31a8db3396dbbfa36324a35ce667b6711412eb",
+        "C2.csv": "53d7e854cc8d3bde14413c72359407ca716833bbd50596c194cafc0140662500",
+        "C3.csv": "442188abc63ffa8f3e61e51f7818193faaa65299f05d00ec1e092bb9d7fccb07",
+        "C4.csv": "dad5292b1022e6fb0072098b167f6084e0af5644d037eefdcc19a4d43143da69",
+        "B2_B3_standard_all_metrics.csv": "7ae82c11aa64f79a5b24d36d3d745700176e95be990d8b06174d29e93a9c4e19"
+      },
+      "output": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A50_方案B_原稿对应表格结果追加记录_20261115.md"
+    },
+    {
+      "variant": "D",
+      "rows_checked": 225,
+      "source_hashes": {
+        "Table1_C1.csv": "0b7af8cf627902811cbbcd87e57c56a1e8160f667dbd0307db4165a5fafc3209",
+        "C1_absolute_MSE_CI.csv": "9be09e90f5f24e066c1e7e3c1d3e36688ef43af3947f0015b99078e6e74fc7be",
+        "C2.csv": "566a8d9cd94982c029d7afe1230d1af3164df5d74e395cee582f4a6a2059fd83",
+        "C3.csv": "98ee15d95ab21ba24fcaa6b2629319ba2f2ec0ae2af8d232024d8b76a8cb6999",
+        "C4.csv": "9d14fb45cc5fc08d5fffea654c81bd39af31ea5f04b40663dc45c5e99a56317a",
+        "B2_B3_standard_all_metrics.csv": "1ee345e7358d2a6d4d78208d8535eba344dbfb626c3aea030cb2d78baff9fb1a"
+      },
+      "output": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\A51_方案D_原稿对应表格结果追加记录_20261115.md"
+    }
+  ],
+  "not_all_tables_complete": true
+}

@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"pid\": 3802992, \"exit\": null, \"state\": {\"pid\": 3802992, \"status\": \"running\", \"time\": 1794701684.329693, \"running\": {\"('B', 0)\": {\"pid\": 3802995, \"slot\": 0}, \"('B', 1)\": {\"pid\": 3803180, \"slot\": 1}, \"('D', 0)\": {\"pid\": 3803181, \"slot\": 2}, \"('D', 1)\": {\"pid\": 3803182, \"slot\": 3}}, \"pending\": [], \"done\": [], \"failed\": [], \"inspection_interval_seconds\": 1200}, \"repair\": \"Import scientific libraries before numpy compatibility aliases; same known-good E2 ordering, no environment/scoring changes\", \"B/0/protocol_PASS.json\": {\"status\": \"PASS\", \"same_endpoint_direct_error\": 0.0, \"train_candidates\": {\"10\": [[5, 5], [5, 3, 2]], \"15\": [[7, 8], [7, 4, 4]], \"20\": [[10, 10], [10, 5, 5], [5, 5, 5, 5]]}, \"all_nine_unseen\": true, \"mask\": \"cloud<1 and model lc_min..lc_max\", \"eligibility\": \"n>=64 and spatial target SST>0\", \"aggregation\": \"sum eligible SSE / sum eligible pixel count\", \"checkpoint_sha256\": \"0050a3f2d59a7bde8f85c02f7f8e8f413607735352f04dfc0a70cb95ab9afa46\"}, \"B/0/progress.json\": {\"done\": 26, \"total\": 1428, \"seconds\": 17.66532802581787, \"time\": 1794701684.714523, \"eligible\": {\"10\": 15, \"15\": 14, \"20\": 10}}, \"B_1.log\": \"\", \"controller.log\": \"\", \"B_0.log\": \"\", \"D_0.log\": \"\", \"D_1.log\": \"\"}\n",
+  "stderr": "",
+  "host": "909",
+  "started": 1794701638.842794,
+  "seconds": 54.425063371658325
+}

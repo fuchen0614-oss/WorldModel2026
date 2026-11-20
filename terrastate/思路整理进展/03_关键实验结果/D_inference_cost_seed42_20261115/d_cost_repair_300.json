@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"pid\": 2865, \"state\": {\"status\": \"running\", \"worker_pid\": 2866, \"pid\": 2865, \"time\": 1794742439.5663269}}\n",
+  "stderr": "",
+  "host": "909",
+  "started": 1794742376.6057396,
+  "seconds": 74.94792532920837
+}

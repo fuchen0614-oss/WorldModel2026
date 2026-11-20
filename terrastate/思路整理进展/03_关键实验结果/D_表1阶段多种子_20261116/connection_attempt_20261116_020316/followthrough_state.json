@@ -1,0 +1,10 @@
+{
+  "pid": 33236,
+  "time": 1794762212.0267768,
+  "status": "waiting_followup",
+  "interval_seconds": 10800,
+  "cycle": 1,
+  "next_attempt": 1794773012.0267706,
+  "completed": [],
+  "failures": {}
+}

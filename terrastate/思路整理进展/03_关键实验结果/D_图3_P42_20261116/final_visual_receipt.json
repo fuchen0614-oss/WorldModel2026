@@ -1,0 +1,30 @@
+{
+  "status": "PASS_PDF_VISUAL_AND_FULL_ARRAY_SHA",
+  "source_full_arrays_sha256": "4e5b9595d309427fd1aa5ee8aeefcd65902c9b6b5d2bdc015397f2c2fd2f5d32",
+  "source_metadata": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_图3_P42_20261116\\raw\\cases\\P42\\metadata.json",
+  "remote_business_exit": 0,
+  "local_render_exit": 0,
+  "case": "P42",
+  "day": 100,
+  "date": "2019-08-05",
+  "valid_pixels": 16147,
+  "total_pixels": 16384,
+  "pdf_visual_check": "Rendered via pdftoppm; visually inspected 2x5 original layout, labels, shared colorbars, masks, no clipping or overlap",
+  "pdf_preview": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_图3_P42_20261116\\fig3\\pdf_visual_check.png",
+  "outputs": [
+    {
+      "sha256": "40076b18d0c834f6b4aed1782e3657a3b61e7876040a6952a44e9dec62653385",
+      "path": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_图3_P42_20261116\\fig3\\fig3_prediction_routes_compact.png"
+    },
+    {
+      "sha256": "cf9009e7bf14d91e895b0390b8118023633e3c3d7fec506be32e51f7c68afaf4",
+      "path": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_图3_P42_20261116\\fig3\\fig3_prediction_routes_compact.pdf"
+    },
+    {
+      "sha256": "7abcf5bd6a03772ff3cb01c4962905770af2db39620817d1b078634faba06029",
+      "path": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_图3_P42_20261116\\figure3_D_P42_day100_original_crop.png"
+    }
+  ],
+  "subset_status": "Cancelled: main 946 full-array fetch succeeded; no subset rendering used",
+  "manuscript_modified": false
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "event": "LAUNCHED",
+    "pid": 2788854,
+    "runtime": "/data/zs/terrastate_tip_runs/G1_extended_PredRNN42_20261116",
+    "gpu": 2,
+    "time": 1794781360.7230453
+  },
+  {
+    "event": "FINISHED",
+    "business_exit": 1,
+    "receipt": {
+      "status": "FAILED",
+      "business_exit": 1,
+      "error": "Traceback (most recent call last):\n  File \"/data/zs/terrastate_tip_runs/G1_extended_PredRNN42_20261116/worker.py\", line 8, in <module>\n    import numpy as np,torch,xarray as xr\nModuleNotFoundError: No module named 'numpy'\n"
+    },
+    "log_tail": "Traceback (most recent call last):\n  File \"/data/zs/terrastate_tip_runs/G1_extended_PredRNN42_20261116/worker.py\", line 8, in <module>\n    import numpy as np,torch,xarray as xr\nModuleNotFoundError: No module named 'numpy'\n"
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "exit": 255,
+  "stdout_path": "E:\\MineProgram\\codexwork\\CVPRAAAI投稿\\WorldModel2026v2\\terrastate\\思路整理进展\\03_关键实验结果\\D_表1阶段多种子_20261116\\deploy_97_1.stdout",
+  "stderr": "channel 0: open failed: connect failed: Connection timed out\nstdio forwarding failed\nConnection closed by UNKNOWN port 65535\n"
+}

@@ -1,0 +1,48 @@
+{
+  "models": {
+    "27": {
+      "C1": {
+        "sha256": "7065e020626ea497185ef00b87a01ce246603e61fa07bc5ac79da114c3e5d38a",
+        "epoch": 34,
+        "selection_kind": "interim_validation_best"
+      },
+      "C0R": {
+        "sha256": "250786eff46469053e89b685ee56246882251a13a743c1e7166a5e2b0158c05e",
+        "epoch": 34,
+        "selection_kind": "interim_validation_best"
+      }
+    },
+    "97": {
+      "C1": {
+        "sha256": "bcf423992db4cffad96f5ce7aa3917c205553542d334556056bec2eef5f81356",
+        "epoch": 42,
+        "selection_kind": "interim_validation_best"
+      },
+      "C0R": {
+        "sha256": "9b5d115be43a18a682408df4e37b565b904d6a486f9f83c1ea1b2bcbdccac771",
+        "epoch": 42,
+        "selection_kind": "final_validation_best"
+      }
+    }
+  },
+  "reuse_seed42": true,
+  "splits": [
+    "IID"
+  ],
+  "receivers": 2837,
+  "window": "55–100 days",
+  "paths": [
+    "D20",
+    "A",
+    "B",
+    "C"
+  ],
+  "qualification": "interim multiseed preview; not all selected from completed 100epoch",
+  "sha256": {
+    "worker.py": "20b8175936464d23b86ab4d68bb315834968f50494785f0b84dacadf73b4fc34",
+    "controller.py": "53a5ad6429e93cf2b033cdaa2edb16128f53bb6484f61d677c1ec909eba50700",
+    "paper/code/suffix_statistics.py": "9c1a6e60727501ab1845cc3a8cf2d25d7aaaa9d41d126abb53241bd635339fe0",
+    "paper/legacy/postprocess_suffix.py": "a1a6cfc640834a9a7a061ca289ad920fb4ffdecfd6d60d3621e160ccf238e647",
+    "paper/legacy/spatial_bootstrap.py": "01e443f056390b3cd377389560ec6c44d967f7fa92fb32ff9891253e11c1d6b2"
+  }
+}

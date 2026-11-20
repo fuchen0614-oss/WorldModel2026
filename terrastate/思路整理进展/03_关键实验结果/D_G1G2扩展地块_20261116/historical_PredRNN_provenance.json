@@ -1,0 +1,113 @@
+{
+  "dataset_cube": "/data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped/MJJ19/minicube_23_30STJ_39.19_-5.73.nc",
+  "model_code": "/data/zs/_downloads/emp-v0.1.0",
+  "model_code_commit": "268943b10f78f69a79084ddda3291c35763c3612",
+  "greenearthnet_repo": "/data/zs/_downloads/greenearthnet",
+  "greenearthnet_commit": "a0329636631371a4aaa9a95c75ed0a37d27b8c4f",
+  "official_release": "https://zenodo.org/records/10793870",
+  "official_archive_md5": "d9f531a7e6e3e1d497af30760ca6fcf9",
+  "seed": 42,
+  "device": "cuda:0",
+  "gpu_name": "NVIDIA A100-SXM4-40GB",
+  "context_steps": 10,
+  "target_steps": 20,
+  "protocol": "official GreenEarthNet configuration and v0.1.0 earthnet-models-pytorch code; inference only",
+  "models": {
+    "convlstm": {
+      "display_name": "ConvLSTM 1M",
+      "architecture": "convlstm_ae",
+      "config": "/data/zs/_downloads/greenearthnet/model_configs/convlstm/convlstm1M/seed=42.yaml",
+      "config_sha256": "b7af37ff77ed334dfe8f26b3c8f5f43d591f30f3bfc6df435b067e629ceeeb11",
+      "checkpoint": "/data/zs/_downloads/greenearthnet_official_weights_20260912/model_weights/convlstm/convlstm1M/seed=42.ckpt",
+      "checkpoint_sha256": "943858aa59fe644beeaed87b90bdab0af3e33cf5afc7b5d5492fa175b89038d9",
+      "checkpoint_epoch": 95,
+      "checkpoint_global_step": 67872,
+      "checkpoint_lightning_version": "1.7.7",
+      "strict_load_missing": [],
+      "strict_load_unexpected": [],
+      "prediction_shape": [
+        20,
+        128,
+        128
+      ],
+      "prediction_min": 0.02295752242207527,
+      "prediction_max": 0.7618273496627808,
+      "elapsed_seconds_single_cube": 0.14740563230589032,
+      "peak_gpu_bytes": 98390016,
+      "p42_pooled_rmse": 0.0488124052825938,
+      "p42_valid_values": 274493
+    },
+    "predrnn": {
+      "display_name": "PredRNN 1M",
+      "architecture": "predrnn",
+      "config": "/data/zs/_downloads/greenearthnet/model_configs/predrnn/predrnn1M/seed=42.yaml",
+      "config_sha256": "f0ab89f5ddc6bebf46576d0d95fe9cc70be057d6e27a56e016fb37aba18c1b1e",
+      "checkpoint": "/data/zs/_downloads/greenearthnet_official_weights_20260912/model_weights/predrnn/predrnn1M/seed=42.ckpt",
+      "checkpoint_sha256": "7e84f48934e70b925cb47340aabd97b4c4ca82cd92b67385381a96515e3a5f02",
+      "checkpoint_epoch": 55,
+      "checkpoint_global_step": 41664,
+      "checkpoint_lightning_version": "1.6.4",
+      "strict_load_missing": [],
+      "strict_load_unexpected": [],
+      "prediction_shape": [
+        20,
+        128,
+        128
+      ],
+      "prediction_min": -0.30648618936538696,
+      "prediction_max": 0.7181789875030518,
+      "elapsed_seconds_single_cube": 0.2988425609655678,
+      "peak_gpu_bytes": 59507712,
+      "p42_pooled_rmse": 0.05603212553762319,
+      "p42_valid_values": 274493
+    },
+    "simvp": {
+      "display_name": "SimVP 6M",
+      "architecture": "simvp",
+      "config": "/data/zs/_downloads/greenearthnet/model_configs/simvp/simvp6M/seed=42.yaml",
+      "config_sha256": "79fc023cd8cf30c90e94576ccdb07a853ded9e131b1253e1874bb03920611f83",
+      "checkpoint": "/data/zs/_downloads/greenearthnet_official_weights_20260912/model_weights/simvp/simvp6M/seed=42.ckpt",
+      "checkpoint_sha256": "8192fe98228cb6fc2c73031751248a6dcdb5b163d099892d2379f1416b7526e3",
+      "checkpoint_epoch": 10,
+      "checkpoint_global_step": 4092,
+      "checkpoint_lightning_version": "1.6.4",
+      "strict_load_missing": [],
+      "strict_load_unexpected": [],
+      "prediction_shape": [
+        20,
+        128,
+        128
+      ],
+      "prediction_min": -0.3420715928077698,
+      "prediction_max": 0.7108908891677856,
+      "elapsed_seconds_single_cube": 1.15016313130036,
+      "peak_gpu_bytes": 416528384,
+      "p42_pooled_rmse": 0.05972064886537858,
+      "p42_valid_values": 274493
+    },
+    "contextformer": {
+      "display_name": "Contextformer 6M",
+      "architecture": "contextformer",
+      "config": "/data/zs/_downloads/greenearthnet/model_configs/contextformer/contextformer6M/seed=42.yaml",
+      "config_sha256": "2ec5107ac5c7aeccfa06462f9675217817100f680f7bda9d5e121d4e26d47879",
+      "checkpoint": "/data/zs/_downloads/greenearthnet_official_weights_20260912/model_weights/contextformer/contextformer6M/seed=42.ckpt",
+      "checkpoint_sha256": "ec6706e8a904bba8a195d542921f54c6ce058f8d0d7a9aaeb91f117237d4a4fa",
+      "checkpoint_epoch": 34,
+      "checkpoint_global_step": 26040,
+      "checkpoint_lightning_version": "1.7.7",
+      "strict_load_missing": [],
+      "strict_load_unexpected": [],
+      "prediction_shape": [
+        20,
+        128,
+        128
+      ],
+      "prediction_min": -0.5242210030555725,
+      "prediction_max": 0.783618152141571,
+      "elapsed_seconds_single_cube": 0.28372404305264354,
+      "peak_gpu_bytes": 584409088,
+      "p42_pooled_rmse": 0.06300959030289423,
+      "p42_valid_values": 274493
+    }
+  }
+}

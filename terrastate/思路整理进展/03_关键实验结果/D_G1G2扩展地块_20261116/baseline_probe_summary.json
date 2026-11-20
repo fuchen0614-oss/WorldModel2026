@@ -1,0 +1,25 @@
+{
+  "paths": {
+    "/data/zs/_downloads/emp-v0.1.0": {
+      "exists": true,
+      "sha256": null
+    },
+    "/data/zs/_downloads/greenearthnet": {
+      "exists": true,
+      "sha256": null
+    },
+    "/data/zs/_downloads/greenearthnet_official_weights_20260912/model_weights/predrnn/predrnn1M/seed=42.ckpt": {
+      "exists": true,
+      "sha256": "7e84f48934e70b925cb47340aabd97b4c4ca82cd92b67385381a96515e3a5f02"
+    },
+    "/data/zs/TrainData/EarthNet2021/earthnet2021x/iid_chopped": {
+      "exists": true,
+      "sha256": null
+    }
+  },
+  "python": "/usr/bin/python3",
+  "envs": [
+    "/data/zs/venv/bin/python"
+  ],
+  "processes": []
+}

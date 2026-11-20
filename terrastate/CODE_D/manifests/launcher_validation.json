@@ -1,0 +1,41 @@
+{
+  "results": [
+    {
+      "arm": "C1",
+      "seed": 27,
+      "status": "PASS_historical_config_validation",
+      "training_started": false
+    },
+    {
+      "arm": "C1",
+      "seed": 42,
+      "status": "PASS_historical_config_validation",
+      "training_started": false
+    },
+    {
+      "arm": "C1",
+      "seed": 97,
+      "status": "PASS_historical_config_validation",
+      "training_started": false
+    },
+    {
+      "arm": "C0R",
+      "seed": 27,
+      "status": "PASS_historical_config_validation",
+      "training_started": false
+    },
+    {
+      "arm": "C0R",
+      "seed": 42,
+      "status": "PASS_historical_config_validation",
+      "training_started": false
+    },
+    {
+      "arm": "C0R",
+      "seed": 97,
+      "status": "PASS_historical_config_validation",
+      "training_started": false
+    }
+  ],
+  "scope": "command generation + historical policy validation only; GPU runtime not tested"
+}

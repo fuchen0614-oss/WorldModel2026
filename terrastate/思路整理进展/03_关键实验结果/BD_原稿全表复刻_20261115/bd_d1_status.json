@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "stdout": "{\"time\": 1794701476.2709055, \"state\": {\"pid\": 3801327, \"status\": \"partial_blocked\", \"time\": 1794701421.4057024, \"done\": [], \"failed\": [[\"B\", 0], [\"B\", 1], [\"D\", 0], [\"D\", 1]], \"inspection_stopped\": true, \"remaining_project_tasks\": \"E1/F1/config/cost managed separately; not part of this controller\"}, \"B_1.log\": \"\", \"controller.log\": \"\", \"B_0_exit.json\": {\"exit\": -11, \"pid\": 3801330, \"time\": 1794701381.1484592}, \"B_0.log\": \"\", \"D_0.log\": \"\", \"D_1.log\": \"\", \"D_1_exit.json\": {\"exit\": -11, \"pid\": 3801493, \"time\": 1794701411.3449798}, \"D_0_exit.json\": {\"exit\": -11, \"pid\": 3801428, \"time\": 1794701401.2857695}, \"B_1_exit.json\": {\"exit\": -11, \"pid\": 3801379, \"time\": 1794701391.2109075}}\n",
+  "stderr": "",
+  "host": "909",
+  "started": 1794701452.7628963,
+  "seconds": 27.254420518875122
+}

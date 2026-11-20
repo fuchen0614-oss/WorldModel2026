@@ -1,0 +1,26 @@
+{
+  "exit.json": {
+    "pid": 586352,
+    "exit": 0,
+    "time": 1794759871.8281176
+  },
+  "D/progress.json": {
+    "done": 129,
+    "total": 129
+  },
+  "D/result.json": {
+    "status": "PASS",
+    "samples": 129,
+    "paired_manifest_count": 84,
+    "unique_normal_samples": 45,
+    "checkpoint_sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+    "max_abs_prediction_difference": 0.0,
+    "max_abs_original_mse_difference": 0.0,
+    "atol": 1E-06,
+    "rtol": 1E-05,
+    "scope": "actual-weather arm equivalence only; no new intervention or metric"
+  },
+  "log_tails": {
+    "worker.log": "PASS\n"
+  }
+}

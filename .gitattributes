@@ -1,0 +1,3 @@
+# Preserve exact archived bytes for SHA verification on Windows and Linux.
+terrastate/CODE_D/** -text
+"terrastate/思路整理进展/**" -text

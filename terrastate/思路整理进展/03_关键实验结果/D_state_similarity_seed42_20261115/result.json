@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "formal_evaluation": true,
+  "models": {
+    "C1": {
+      "sha256": "a7afea7307f87c282df02485f9107fccccc88119ed37e9c023d7280d61b08fdb",
+      "epoch": 51,
+      "step": 37995,
+      "seed": 42,
+      "variant": "D",
+      "arm": "C1"
+    },
+    "C0R": {
+      "sha256": "3557ac4b2a14b542effe22262bbae169cec081a0eb45dc8f07401e11c76f1b5b",
+      "epoch": 19,
+      "step": 14155,
+      "seed": 42,
+      "variant": "D",
+      "arm": "C0R"
+    }
+  },
+  "summary": {
+    "C1/25+25": {
+      "n": 2837,
+      "cosine_mean": 0.9269790340572714,
+      "state_rmse_mean": 0.14470693222729328
+    },
+    "C1/15+35": {
+      "n": 2837,
+      "cosine_mean": 0.9094441652387848,
+      "state_rmse_mean": 0.15758645483093286
+    },
+    "C0R/25+25": {
+      "n": 2837,
+      "cosine_mean": 0.6888995712919807,
+      "state_rmse_mean": 0.29831353764526714
+    },
+    "C0R/15+35": {
+      "n": 2837,
+      "cosine_mean": 0.6989543250932009,
+      "state_rmse_mean": 0.30015076053676987
+    }
+  },
+  "samples": 2837,
+  "split": "iid_chopped",
+  "selection": "existing accepted common-suffix sample manifest; no result-dependent selection",
+  "aggregation": "cosine across 256 channels per spatial token; mean tokens per sample, then equal-weight sample mean; RMSE descriptive within each model only",
+  "manifest_sha256": "a949d34253c520c2558013c428b3baf388d3013368f2979417aeb722867a6fe9",
+  "csv_sha256": "7ba6bd0ae5efb12a145e7eb4c6355cb8db85a6bec18ce481f6e7e1a3808f83d1",
+  "summary_sha256": "998ecf0aa865aaeed0a51c9d71591f8ba22e0fb013c35bdd90bc338b98072cd2",
+  "seconds": 1225.5355834960938,
+  "seed_scope": "single paired seed42; not multi-seed evidence"
+}
