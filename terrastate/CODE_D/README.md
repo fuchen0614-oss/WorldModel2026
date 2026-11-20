@@ -10,5 +10,7 @@
 - [权重身份与待补文件](<manifests/weights.json>)
 
 主表采用最终选定权重；固定40轮消融必须使用对应epoch40权重。不要用best替代固定轮次。
-权重二进制不进入Git历史，后续通过GitHub Releases分发。已有历史Release仅在SHA完全相同后复用。
+权重二进制不进入Git历史，后续通过GitHub Releases分发。本轮所需D权重全部作为新增资产上传，保留历史Release。
 该包以D为主；A08及复刻证据可能包含历史/B对照，不代表那些模型已纳入D训练入口。
+
+- [权重新增发布清单与审计](WEIGHT_RELEASE_AUDIT.md)
