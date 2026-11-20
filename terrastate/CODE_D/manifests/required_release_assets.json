@@ -90,44 +90,48 @@
       "seed": 42,
       "epoch": 40,
       "step": 29800,
-      "sha256": null,
-      "status": "identity_receipt_required",
+      "sha256": "0c6360b763ea7de7d35e1f105f547e015216e69c5160718955f210f72045d198",
+      "status": "identity_receipt_retrieved_binary_pending",
       "publication_required": true,
       "release_asset_uploaded": false,
-      "old_release_reuse": false
+      "old_release_reuse": false,
+      "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/C1.pt"
     },
     {
       "id": "D_fixed40_C0R",
       "seed": 42,
       "epoch": 40,
       "step": 29800,
-      "sha256": null,
-      "status": "identity_receipt_required",
+      "sha256": "2fd2bebddf7b1eef9d7cdca8ab97203be7b60a9aec723ccb8e1aaf1f8d3d8cef",
+      "status": "identity_receipt_retrieved_binary_pending",
       "publication_required": true,
       "release_asset_uploaded": false,
-      "old_release_reuse": false
+      "old_release_reuse": false,
+      "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/C0R.pt"
     },
     {
       "id": "D_fixed40_CONSISTENCY",
       "seed": 42,
       "epoch": 40,
       "step": 29800,
-      "sha256": null,
-      "status": "identity_receipt_required",
+      "sha256": "198d983bc8b205c1477f82f280090e08ceec6ca0d749acef7be8d64cc37b8d7a",
+      "status": "identity_receipt_retrieved_binary_pending",
       "publication_required": true,
       "release_asset_uploaded": false,
-      "old_release_reuse": false
+      "old_release_reuse": false,
+      "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/CONSISTENCY.pt"
     },
     {
       "id": "D_fixed40_BASELINE",
       "seed": 42,
       "epoch": 40,
       "step": 29800,
-      "sha256": null,
-      "status": "identity_receipt_required",
+      "sha256": "79307c23917b2bcd33fb867fd68ca9acbe582da28da7bd71004d08c1237d2e7d",
+      "status": "identity_receipt_retrieved_binary_pending",
       "publication_required": true,
       "release_asset_uploaded": false,
-      "old_release_reuse": false
+      "old_release_reuse": false,
+      "source": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/runtime/spanworld_D_multiseed_909_D_C0R_s97_20261114_01/eval_code_epoch40_seed42_20261114/frozen/BASELINE.pt"
     },
     {
       "id": "D_CONSISTENCY_best_seed42",

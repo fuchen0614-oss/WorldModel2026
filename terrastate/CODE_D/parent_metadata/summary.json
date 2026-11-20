@@ -1,0 +1,690 @@
+{
+ "accum": 1,
+ "arm": "C1",
+ "best_val_dev_RMSE_LC": {
+  "epoch": 34,
+  "score": 0.15034565024539956,
+  "step": 25330
+ },
+ "completion_reason": "schedule_complete",
+ "elapsed_sec": 9749.264332771301,
+ "endpoint_plan_note": "端点计划 RNG = (seed, step) 的纯函数（endpoint_rng），因此 C1 与 C0R 在同一 step 抽到同一组端点，且无需把该 RNG 状态写进 checkpoint 即可 exact resume。direct 臂照样抽一次索引后丢弃多段划分、改用 (endpoint,)，保证两臂 RNG 流逐位一致。",
+ "factual_path": "recursive",
+ "global_batch": 32,
+ "lambdas": {
+  "nc": 0.0,
+  "pair": 0.0,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "lineage": {
+  "fork_kind": "weights_only_full_base_stage1",
+  "inherited_n_tensors": 223,
+  "inherited_value_sha16": "8df37fa6be094b10",
+  "is_exact_resume": false,
+  "max_abs_diff_vs_parent": 0.0,
+  "missing_keys": [
+   "season_proj.weight"
+  ],
+  "parent_alias": "explicit_full_baseline",
+  "parent_file_sha256": "ec6706e8a904bba8a195d542921f54c6ce058f8d0d7a9aaeb91f117237d4a4fa",
+  "parent_logical_id": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/baseline_reference/greenearthnet_official_contextformer6M_seed42.ckpt",
+  "parent_optimizer_scheduler_deliberately_discarded": true,
+  "parent_path": "/oss-chengjuntao/makerdata/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/weights/baseline_reference/greenearthnet_official_contextformer6M_seed42.ckpt",
+  "parent_value_sha16": "8df37fa6be094b10",
+  "topology_migration": {
+   "best_source_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/final_checkpoint/best_val.pt",
+   "best_source_sha256": "2a7d79360171186b8f7f0e46d36f5ee57c71086f57d3df33a63c5338aae383ef",
+   "checkpoint_source_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/final_checkpoint/last.pt",
+   "checkpoint_source_sha256": "8c9b855e930d246dd9216c1a93eb62e589dd5c2f1b19ada600c24e40759d0442",
+   "inherited_best": {
+    "epoch": 13,
+    "score": 0.15066072430129002,
+    "step": 9685
+   },
+   "kind": "topology_continuation_not_bitwise_exact",
+   "original_source_manifest": {
+    "data/calendar_features.py": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc",
+    "data/greenearthnet_contextformer_dataset.py": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7",
+    "data/weather_contract.py": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e",
+    "models/encoders/contextformer_official.py": "ad577fe8d6f054c66fc9668128df0861392e0649807a817fdf9660158514931f",
+    "models/losses/supervision_v2.py": "f5acf24fc3fce1c3d48602b9b3363106a065b415a827ebe9d12aec8ea65f448b",
+    "models/plan_b_b4.py": "9b3638dbb58b282ebff188973065d2b2dc269361d4c521678873c9cd6687d2c3",
+    "models/plan_b_b4_exclusive.py": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+    "models/spanworld_full_base.py": "b19b9db319f77d661281577e30f0ea6e4dc2a51583ca0d41d9a0eddc1456b96c",
+    "models/terrastate_candidate_c.py": "7993bb8fc2e148e8b03a808f013d31c88e1b7469c008c45870c13e9d79e861e3",
+    "models/terrastate_v2.py": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+    "train/c1_checkpoint.py": "7ae1badbcd3994febaa0cec678458d01ba6ba3a46ceb0c9fd880520d309770e9",
+    "train/c1_validation.py": "f3ef83a0e763123919ace04fd3404bdf351704a501b4710997270d9c650c203b",
+    "train/full_base_policy.py": "e1e0ea2bb7fc3fd0188ee8944fd5edd07b245402cbda7a5d92690361633e24dd",
+    "train/terrastate_v2_common.py": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f",
+    "train/train_spanworld_full_base.py": "ddabc1c28c1f002fdd201a76dea244096ad4b2cafb9017821f069bc03bc4028d",
+    "train/train_terrastate_candidate_c.py": "1d6ddd49fb6469e1267c203b78ac7a002b0ecd84530b7a9a81516456e357b294",
+    "train/train_terrastate_v2.py": "167a22969e9c664434f6135465778ee28524ce4c565dbcec793023794a28ac37"
+   },
+   "rng_policy": "all ranks seed + completed_epoch*1000003 + local_rank",
+   "sample_policy": "same deterministic epoch permutation; changed rank grouping/reduction",
+   "source_accum": 2,
+   "source_epoch": 16,
+   "source_step": 11920,
+   "source_world": 2,
+   "target_accum": 1,
+   "target_world": 4
+  },
+  "unexpected_keys": []
+ },
+ "model_state_sha256": "269b55966caaf0f1015acdc6a2e92a092d392b5242867452dcbc1b47a34997d1",
+ "model_value_sha16": "269b55966caaf0f1",
+ "n_state_dict_tensors": 257,
+ "n_trainable_q": 0,
+ "not_a_formal_result_unless": "smoke/pilot 只能写工程结论；正式结果仅来自 arm=C1/C0R、四 λ=0、跑满预注册 total_steps 且 completion_reason=schedule_complete 的 run。",
+ "per_gpu_batch": 8,
+ "phase_step": 29800,
+ "schema": "candidate_c_run_summary_v1",
+ "seed": 42,
+ "sha": {
+  "config_sha256": "8d7ad94dd67e77373415d548d6674cc6e03295571b885d751da7b01f49a5ad30",
+  "inherited_value_sha16": "8df37fa6be094b10",
+  "parent_alias": "explicit_full_baseline",
+  "parent_file_sha256": "ec6706e8a904bba8a195d542921f54c6ce058f8d0d7a9aaeb91f117237d4a4fa",
+  "parent_logical_id": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/greenearthnet_official_contextformer6M_seed42.ckpt",
+  "parent_value_sha16": "8df37fa6be094b10",
+  "q4_partition_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_q4_partition_manifest_v1.json",
+  "q4_partition_manifest_sha256": "d0a4c6564516ea62f7eda9ebc4018433d1357391ad3a2a3bd8070de1a54e1e0e",
+  "scorer_reference_sha256": "cfbc6722174981daeabd880e27afaa90dce0de11269ecbba8365fe54de29bd2f",
+  "selected_config_content": {
+   "adaln": false,
+   "adaln_final_lr": null,
+   "adaln_peak_lr": null,
+   "arm": "C1",
+   "branch_final_lr": 1e-05,
+   "branch_peak_lr": 0.0001,
+   "decay_start": 22350,
+   "effective_updates": 29800,
+   "endpoint_weight": 0,
+   "epochs_equivalent": 40,
+   "expected_parent_sha256": "ec6706e8a904bba8a195d542921f54c6ce058f8d0d7a9aaeb91f117237d4a4fa",
+   "factual_path": "recursive",
+   "final_factor": 0.1,
+   "global_batch": 32,
+   "parent_ckpt": null,
+   "per_gpu_batch": 8,
+   "q_blocks": [],
+   "q_final_lr": 0.0,
+   "q_peak_lr": 0,
+   "seed": 42,
+   "selection": "val_dev476 official RMSE_LC minimum; first tie",
+   "stage": "stage1",
+   "stage2_parent": null,
+   "status": "requires verified parent path; no launch",
+   "token_season_final_lr": 0.0,
+   "token_season_lr": 0,
+   "trainer": "train/train_spanworld_full_base.py",
+   "traj_weight": 1,
+   "transition_season_final_lr": 1e-05,
+   "transition_season_peak_lr": 0.0001,
+   "variant": "A",
+   "warmup": 600,
+   "world_size": 4
+  },
+  "selected_config_sha256": "95ce51e2479a2b8696f0b1e33c0446c149d45c1cf6a22c31c7b0fcb1ae8479a8",
+  "selection_metric": "GreenEarthNet RMSE_LC HQ",
+  "source_sha256": {
+   "data/calendar_features.py": "0eee411ae78cf7b561df72a75bf7a4c2463df79badbfea88276dac3c79dae6dc",
+   "data/greenearthnet_contextformer_dataset.py": "319e5e442f0145376ff80eccc5be748630041efd55480531d37ab2626e0dacb7",
+   "data/weather_contract.py": "c876437ccf4b5f88658970de05604ca3f8907b7d1381106f1d4246d8c50d740e",
+   "models/encoders/contextformer_official.py": "ad577fe8d6f054c66fc9668128df0861392e0649807a817fdf9660158514931f",
+   "models/losses/supervision_v2.py": "f5acf24fc3fce1c3d48602b9b3363106a065b415a827ebe9d12aec8ea65f448b",
+   "models/plan_b_b4.py": "9b3638dbb58b282ebff188973065d2b2dc269361d4c521678873c9cd6687d2c3",
+   "models/plan_b_b4_exclusive.py": "06a775ffe40858440498f75aebc432b078d62618252cb628f0b3257e0af376b4",
+   "models/spanworld_full_base.py": "b19b9db319f77d661281577e30f0ea6e4dc2a51583ca0d41d9a0eddc1456b96c",
+   "models/terrastate_candidate_c.py": "7993bb8fc2e148e8b03a808f013d31c88e1b7469c008c45870c13e9d79e861e3",
+   "models/terrastate_v2.py": "7fdb0387c22d80b492b6bd41b99cd59749a53a94495bd9fb65050ed33cba87e9",
+   "train/c1_checkpoint.py": "7ae1badbcd3994febaa0cec678458d01ba6ba3a46ceb0c9fd880520d309770e9",
+   "train/c1_validation.py": "f3ef83a0e763123919ace04fd3404bdf351704a501b4710997270d9c650c203b",
+   "train/full_base_policy.py": "e1e0ea2bb7fc3fd0188ee8944fd5edd07b245402cbda7a5d92690361633e24dd",
+   "train/terrastate_v2_common.py": "1630823f6bfa4c10b9696fc0fb3d9bc15332569aa6a295e7a607e76cd0c1388f",
+   "train/topology_migration.py": "556c656efad17ff419b14f542d92e0df84c36bc10dd04c879cd70da8189ce15f",
+   "train/train_spanworld_full_base.py": "833b003c2e4c2486dbb0fcf868959d0a02c28b67ce1f4fa5d599d02562c8b2ba",
+   "train/train_terrastate_candidate_c.py": "1d6ddd49fb6469e1267c203b78ac7a002b0ecd84530b7a9a81516456e357b294",
+   "train/train_terrastate_v2.py": "167a22969e9c664434f6135465778ee28524ce4c565dbcec793023794a28ac37"
+  },
+  "train_manifest_sha256": "17c645d92e9dd4c38ce5bf14a412115c5f6622109cff3c19118b098e604b2554",
+  "val_manifest_sha256": "555d44c0d59ab3902cf7d929ca86ce8bf4e3ce7cfda66c1c72b45a2ed3fd76c9",
+  "val_split_manifest_path": "/shared/smartbot/chengjuntao/maker/chenzhisheng/WD_LA/SpanWorld_GreenEarthNet/migration_data/991_20261113_01/candidate_c_eo_split_manifest_v1.json",
+  "val_split_manifest_sha256": "160c3ccc5075d386ecdc235a61806610d8475cc46f17973b94a5a9a37ed3cd6b",
+  "val_split_n_ids": 476,
+  "val_split_selector": "validation_subsplit.val_dev.ids",
+  "warm_start_state_sha256": "ede68fb7ed1d4d4514956e91b5bae920c38fa39f57f3dc8daac5fcf13d33558b"
+ },
+ "simulator_status": "BLOCKED_SIMULATOR_LIBRARY_AND_FORMAL_SCENARIO_MANIFEST",
+ "status": "COMPLETE",
+ "step": 29800,
+ "stop_after_step": 29800,
+ "total_steps": 29800,
+ "training_stage": "stage1",
+ "validation_history": [
+  {
+   "RMSE_LC": 0.15173916839157175,
+   "best_updated": true,
+   "epoch": 1,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4872558080,
+   "seconds": 2179.351483736187,
+   "status": "ok",
+   "step": 745
+  },
+  {
+   "RMSE_LC": 0.15073119031512672,
+   "best_updated": true,
+   "epoch": 2,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4872558080,
+   "seconds": 1239.4159232005477,
+   "status": "ok",
+   "step": 1490
+  },
+  {
+   "RMSE_LC": 0.1512644553743604,
+   "best_updated": false,
+   "epoch": 3,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4873153536,
+   "seconds": 1061.27516631037,
+   "status": "ok",
+   "step": 2235
+  },
+  {
+   "RMSE_LC": 0.1509770506679223,
+   "best_updated": false,
+   "epoch": 4,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4874130944,
+   "seconds": 925.9995699189603,
+   "status": "ok",
+   "step": 2980
+  },
+  {
+   "RMSE_LC": 0.1506999854897624,
+   "best_updated": true,
+   "epoch": 5,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4872558080,
+   "seconds": 752.601071510464,
+   "status": "ok",
+   "step": 3725
+  },
+  {
+   "RMSE_LC": 0.15114290214574355,
+   "best_updated": false,
+   "epoch": 6,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4872558080,
+   "seconds": 924.2283088602126,
+   "status": "ok",
+   "step": 4470
+  },
+  {
+   "RMSE_LC": 0.15123825620451303,
+   "best_updated": false,
+   "epoch": 7,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4873153536,
+   "seconds": 809.3121524751186,
+   "status": "ok",
+   "step": 5215
+  },
+  {
+   "RMSE_LC": 0.1511474468507214,
+   "best_updated": false,
+   "epoch": 8,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4874130944,
+   "seconds": 723.3742257244885,
+   "status": "ok",
+   "step": 5960
+  },
+  {
+   "RMSE_LC": 0.15150285255590587,
+   "best_updated": false,
+   "epoch": 9,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4872558080,
+   "seconds": 727.0023274309933,
+   "status": "ok",
+   "step": 6705
+  },
+  {
+   "RMSE_LC": 0.15133311229809157,
+   "best_updated": false,
+   "epoch": 10,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4872558080,
+   "seconds": 723.1299433223903,
+   "status": "ok",
+   "step": 7450
+  },
+  {
+   "RMSE_LC": 0.15113369973801905,
+   "best_updated": false,
+   "epoch": 11,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4873153536,
+   "seconds": 727.3196128234267,
+   "status": "ok",
+   "step": 8195
+  },
+  {
+   "RMSE_LC": 0.15127528200148654,
+   "best_updated": false,
+   "epoch": 12,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4874130944,
+   "seconds": 723.2558255828917,
+   "status": "ok",
+   "step": 8940
+  },
+  {
+   "RMSE_LC": 0.15066072430129002,
+   "best_updated": true,
+   "epoch": 13,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4872558080,
+   "seconds": 728.6981563419104,
+   "status": "ok",
+   "step": 9685
+  },
+  {
+   "RMSE_LC": 0.1510935152677882,
+   "best_updated": false,
+   "epoch": 14,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4872558080,
+   "seconds": 722.5296017117798,
+   "status": "ok",
+   "step": 10430
+  },
+  {
+   "RMSE_LC": 0.1509160067678737,
+   "best_updated": false,
+   "epoch": 15,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4873153536,
+   "seconds": 737.5234834961593,
+   "status": "ok",
+   "step": 11175
+  },
+  {
+   "RMSE_LC": 0.15128122877733738,
+   "best_updated": false,
+   "epoch": 16,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4874130944,
+   "seconds": 831.81229281798,
+   "status": "ok",
+   "step": 11920
+  },
+  {
+   "RMSE_LC": 0.15116209338200903,
+   "best_updated": false,
+   "epoch": 17,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 430.22189586237073,
+   "status": "ok",
+   "step": 12665
+  },
+  {
+   "RMSE_LC": 0.15091322064376111,
+   "best_updated": false,
+   "epoch": 18,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 407.28322906792164,
+   "status": "ok",
+   "step": 13410
+  },
+  {
+   "RMSE_LC": 0.15122989340724197,
+   "best_updated": false,
+   "epoch": 19,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 402.6043703369796,
+   "status": "ok",
+   "step": 14155
+  },
+  {
+   "RMSE_LC": 0.15093674754239905,
+   "best_updated": false,
+   "epoch": 20,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 403.33675310760736,
+   "status": "ok",
+   "step": 14900
+  },
+  {
+   "RMSE_LC": 0.15144736754466082,
+   "best_updated": false,
+   "epoch": 21,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 400.0378963164985,
+   "status": "ok",
+   "step": 15645
+  },
+  {
+   "RMSE_LC": 0.15112456304453062,
+   "best_updated": false,
+   "epoch": 22,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 403.7488056719303,
+   "status": "ok",
+   "step": 16390
+  },
+  {
+   "RMSE_LC": 0.15123153752495144,
+   "best_updated": false,
+   "epoch": 23,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 404.41465029120445,
+   "status": "ok",
+   "step": 17135
+  },
+  {
+   "RMSE_LC": 0.15109559315887766,
+   "best_updated": false,
+   "epoch": 24,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 402.4912826307118,
+   "status": "ok",
+   "step": 17880
+  },
+  {
+   "RMSE_LC": 0.15113195880854352,
+   "best_updated": false,
+   "epoch": 25,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 402.92819415032864,
+   "status": "ok",
+   "step": 18625
+  },
+  {
+   "RMSE_LC": 0.15041166688443144,
+   "best_updated": true,
+   "epoch": 26,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 403.54040391743183,
+   "status": "ok",
+   "step": 19370
+  },
+  {
+   "RMSE_LC": 0.15056578610657742,
+   "best_updated": false,
+   "epoch": 27,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 405.74832413345575,
+   "status": "ok",
+   "step": 20115
+  },
+  {
+   "RMSE_LC": 0.15074663627363696,
+   "best_updated": false,
+   "epoch": 28,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 403.9192340001464,
+   "status": "ok",
+   "step": 20860
+  },
+  {
+   "RMSE_LC": 0.15073109762790446,
+   "best_updated": false,
+   "epoch": 29,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 409.1949227899313,
+   "status": "ok",
+   "step": 21605
+  },
+  {
+   "RMSE_LC": 0.15104489469196136,
+   "best_updated": false,
+   "epoch": 30,
+   "lr": [
+    0.0001,
+    0.0001
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 416.6728903912008,
+   "status": "ok",
+   "step": 22350
+  },
+  {
+   "RMSE_LC": 0.1507166467644846,
+   "best_updated": false,
+   "epoch": 31,
+   "lr": [
+    9.779754323328192e-05,
+    9.779754323328192e-05
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 410.11648056283593,
+   "status": "ok",
+   "step": 23095
+  },
+  {
+   "RMSE_LC": 0.1511227910630363,
+   "best_updated": false,
+   "epoch": 32,
+   "lr": [
+    9.140576474687264e-05,
+    9.140576474687264e-05
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 408.1588191576302,
+   "status": "ok",
+   "step": 23840
+  },
+  {
+   "RMSE_LC": 0.15112668897786566,
+   "best_updated": false,
+   "epoch": 33,
+   "lr": [
+    8.14503363531613e-05,
+    8.14503363531613e-05
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 403.6214850358665,
+   "status": "ok",
+   "step": 24585
+  },
+  {
+   "RMSE_LC": 0.15034565024539956,
+   "best_updated": true,
+   "epoch": 34,
+   "lr": [
+    6.890576474687263e-05,
+    6.890576474687263e-05
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 405.69643311575055,
+   "status": "ok",
+   "step": 25330
+  },
+  {
+   "RMSE_LC": 0.15043736419977294,
+   "best_updated": false,
+   "epoch": 35,
+   "lr": [
+    5.500000000000001e-05,
+    5.500000000000001e-05
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 403.61099234595895,
+   "status": "ok",
+   "step": 26075
+  },
+  {
+   "RMSE_LC": 0.1506756703521933,
+   "best_updated": false,
+   "epoch": 36,
+   "lr": [
+    4.109423525312738e-05,
+    4.109423525312738e-05
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 402.5139472819865,
+   "status": "ok",
+   "step": 26820
+  },
+  {
+   "RMSE_LC": 0.15095235581040017,
+   "best_updated": false,
+   "epoch": 37,
+   "lr": [
+    2.854966364683872e-05,
+    2.854966364683872e-05
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 397.08895702287555,
+   "status": "ok",
+   "step": 27565
+  },
+  {
+   "RMSE_LC": 0.1505625315306908,
+   "best_updated": false,
+   "epoch": 38,
+   "lr": [
+    1.8594235253127375e-05,
+    1.8594235253127375e-05
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 403.08089350908995,
+   "status": "ok",
+   "step": 28310
+  },
+  {
+   "RMSE_LC": 0.15052011223542586,
+   "best_updated": false,
+   "epoch": 39,
+   "lr": [
+    1.2202456766718093e-05,
+    1.2202456766718093e-05
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 402.51377107575536,
+   "status": "ok",
+   "step": 29055
+  },
+  {
+   "RMSE_LC": 0.1506546593965874,
+   "best_updated": false,
+   "epoch": 40,
+   "lr": [
+    1e-05,
+    1e-05
+   ],
+   "peak_cuda_bytes_rank0": 4844502016,
+   "seconds": 406.57222029939294,
+   "status": "ok",
+   "step": 29800
+  }
+ ],
+ "variant": "A",
+ "world_size": 4
+}
